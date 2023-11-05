@@ -1,0 +1,430 @@
+<?php
+class Emp_info_con extends CI_Controller {
+
+	function __construct()
+	{
+		parent::__construct();
+
+		/* Standard Libraries */
+		$this->load->model('processdb');
+		$this->load->model('acl_model');
+		$this->load->model('common_model');
+		$this->load->model('mars_model');
+		$access_level = 1;
+		$acl = $this->acl_model->acl_check($access_level);
+	}
+
+	function at_a_glance_info_view()
+	{
+		$report_date = date("Y-m-d");
+		$unit_id = $this->session->userdata('data')->unit_name;
+		$data['values'] = $this->mars_model->dashboard_summary($report_date, $unit_id);
+
+		$data['title'] 		 = 'Daily Attendance Summary';
+		$data['report_date'] = $report_date;
+		$data['unit_id']    = $unit_id;
+		$this->load->view('at_a_glance',$data);
+	}
+
+	function personal_info_view1()
+	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('empid', 'Employee ID', 'trim|required');
+		$this->form_validation->set_rules('name', 'Employee Name', 'trim');
+		$this->form_validation->set_rules('bname', 'Employee Bangla Name', 'trim');
+		$this->form_validation->set_rules('mname', 'Employee Mother\'s Name', 'trim');
+		$this->form_validation->set_rules('fname', 'Employee Father\'s Name', 'trim');
+		$this->form_validation->set_rules('padd', 'Present Address', 'trim');
+		$this->form_validation->set_rules('fadd', 'Parmanent Address', 'trim');
+		$this->form_validation->set_rules('dob', 'Date of Birth', 'trim');
+		$this->form_validation->set_rules('nomini_name', 'Nomini Name', 'trim');
+		$this->form_validation->set_rules('ejd', 'Date of Joining', 'trim|required');
+		$this->form_validation->set_rules('text2', 'Last Degree', 'trim');
+		$this->form_validation->set_rules('text3', 'Passing Year', 'trim');
+		$this->form_validation->set_rules('text4', 'Institute Name', 'trim');
+		$this->form_validation->set_rules('text5', 'Skill Department', 'trim');
+		$this->form_validation->set_rules('text6', 'Year(s) of Skill', 'trim');
+		$this->form_validation->set_rules('text7', 'Company Name', 'trim');
+		$this->form_validation->set_rules('text8', 'Gross Salary', 'trim|required');
+		$this->form_validation->set_rules('n_id', 'Mobile No', 'trim');
+
+		if($this->input->post('pi_save') != '')
+		{
+			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim|callback_proxi_id_check_for_save');
+			$this->form_validation->set_rules('units', 'Unit', 'trim|required|callback_unit_check');
+		}
+		elseif($this->input->post('pi_edit') != '')
+		{
+			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim|callback_proxi_id_check_for_edit');
+		}
+		else
+		{
+			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim');
+		}
+
+		$this->form_validation->set_error_delimiters("","");
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('form/all_info');
+		}
+		else
+		{
+			if($this->input->post('pi_save') != '')
+			{
+				$result = $this->per_info1();
+			}
+			elseif($this->input->post('pi_edit') != '')
+			{
+				$result = $this->per_update1();
+				if($result == true)
+				{
+					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info_view1';</SCRIPT>";
+				}
+				else
+				{
+					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Error Occurred'); window.location='personal_info_view1';</SCRIPT>";
+				}
+			}
+		}
+	}
+
+
+
+
+
+
+
+	// old code
+	function per_info1()
+	{
+		$data = $this->processdb->insertdb1();
+	}
+
+	function check_id()
+	{
+		$result = $this->processdb->check_id_db();
+		echo $result;
+	}
+
+	function personal_info_view1_old()
+	{
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('empid', 'Employee ID', 'trim|required');
+		$this->form_validation->set_rules('name', 'Employee Name', 'trim');
+		$this->form_validation->set_rules('bname', 'Employee Bangla Name', 'trim');
+		$this->form_validation->set_rules('mname', 'Employee Mother\'s Name', 'trim');
+		$this->form_validation->set_rules('fname', 'Employee Father\'s Name', 'trim');
+		$this->form_validation->set_rules('padd', 'Present Address', 'trim');
+		$this->form_validation->set_rules('fadd', 'Parmanent Address', 'trim');
+		$this->form_validation->set_rules('dob', 'Date of Birth', 'trim|required|callback_date_check_for_save');
+		$this->form_validation->set_rules('ejd', 'Date of Joining', 'trim|required|callback_date_check_for_save');
+		$this->form_validation->set_rules('text2', 'Last Degree', 'trim');
+		$this->form_validation->set_rules('text3', 'Passing Year', 'trim');
+		$this->form_validation->set_rules('text4', 'Institute Name', 'trim');
+		$this->form_validation->set_rules('text5', 'Skill Department', 'trim');
+		$this->form_validation->set_rules('text6', 'Year(s) of Skill', 'trim');
+		$this->form_validation->set_rules('text7', 'Company Name', 'trim');
+		$this->form_validation->set_rules('text8', 'Gross Salary', 'trim|required');
+		// $this->form_validation->set_rules('text9', 'Complience Gross Salary', 'trim|required');
+		$this->form_validation->set_rules('id_skill','ID', 'trim');
+
+		if($this->input->post('pi_save') != '')
+		{
+			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim|callback_proxi_id_check_for_save');
+			// $this->form_validation->set_rules('empid', 'Employee ID', 'trim|required|numeric|exact_length[6]|callback_emp_id_existance_check');
+			$this->form_validation->set_rules('units', 'Unit', 'trim|required|callback_unit_check');
+
+
+		}
+		elseif($this->input->post('pi_edit') != '')
+		{
+			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim|callback_proxi_id_check_for_edit');
+		}
+		else
+		{
+			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim');
+		}
+
+		$this->form_validation->set_error_delimiters("","");
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('form/all_info');
+		}
+		else
+		{
+			if($this->input->post('pi_save') != '')
+			{
+				$result = $this->per_info1();
+
+			}
+			elseif($this->input->post('pi_edit') != '')
+			{
+				$result = $this->per_update1();
+				//print_r($result["values"]);
+				//echo $result['msg'];
+				if($result['msg'] == "true")
+				{
+                    echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully');</SCRIPT>";
+					$this->all_info_view($result);
+				}
+				else if($result['msg'] == "Please Select Unit!")
+				{
+					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Please Select Unit!');</SCRIPT>";
+					$this->all_info_view($result);
+				}
+				else
+				{
+					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Error Occurred'); window.location='personal_info_view1';</SCRIPT>";
+					//$this->personal_info_view1();
+				}
+			}
+			elseif($this->input->post('pi_delete') != '')
+			{
+				$result = $this->processdb->deletedb();
+				//print_r($result);exit;
+				if($result == "Delete all data successfully")
+				{
+                    echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Delete all data successfully');</SCRIPT>";
+					$this->all_info_view($result);
+				}
+				else
+				{
+					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Delete failed'); window.location='personal_info_view1';</SCRIPT>";
+				}
+			}
+		}
+	}
+
+
+
+	function all_info_view($result)
+	{
+		$this->load->view('form/all_info',$result);
+	}
+
+	function emp_id_existance_check($emp_id)
+	{
+		$check = $this->processdb->emp_id_existance_check($emp_id);
+		if ($check == false)
+		{
+			$this->form_validation->set_message('emp_id_existance_check', 'Sorry! Change your employee ID.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	function unit_check ($unit_id)
+	{
+		if ($unit_id == "Select")
+		{
+			$this->form_validation->set_message('unit_check', 'Sorry! Select Unit.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+
+	}
+
+	function proxi_id_check_for_save($proxi_id)
+	{
+		$emp_id = $this->input->post('empid');
+		$check = $this->processdb->proxi_id_check_for_save($emp_id, $proxi_id);
+		if ($check == false)
+		{
+			$this->form_validation->set_message('proxi_id_check_for_save', 'Sorry! Punch Card No. already Exist.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+
+	function date_check_for_save($date)
+	{
+
+		if (preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/",$date))
+		{
+			$check = "True";
+		}else{
+			$check = "false";
+		}
+
+		if ($check == "false")
+		{
+			$this->form_validation->set_message('date_check_for_save', 'Sorry! Date of Birth or Join Date Format is invalid.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+
+	}
+
+	function proxi_id_check_for_edit($proxi_id)
+	{
+		$emp_id = $this->input->post('empid');
+		$check = $this->processdb->proxi_id_check_for_edit($emp_id, $proxi_id);
+		if ($check == false)
+		{
+			$this->form_validation->set_message('proxi_id_check_for_edit', 'Sorry! Punch Card No. already Exist.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+
+	function all()
+	{
+
+		if($this->session->userdata('logged_in')==FALSE)
+		{
+			$this->load->view('login_message');
+		}
+		else
+		{
+			if($this->input->post('pi_save') != '')
+			{
+				$this->per_info();
+			}
+			elseif($this->input->post('pi_edit') != '')
+			{
+				$this->per_update();
+			}
+			$this->load->view('form/all_info');
+		}
+
+	}
+
+	function com_info_search1(){
+		$emp_id = $this->input->post('empid');
+		// echo $emp_id; die;
+		// $emp_id = '11000440';
+		$result = $this->processdb->com_info_search1($emp_id);
+		// echo "<pre>"; print_r($result); die;
+		echo $result;
+	}
+	/*//Test Function
+	function test(){
+		$emp_id='19030022';
+		$result = $this->processdb->com_info_search1($emp_id);
+		echo $result;
+	}*/
+
+
+	function com_info_next_Search1()
+	{
+		$id_skill = $this->input->post('id_skill');
+		$next_id_skill = $this->next_id_skill($id_skill);
+		$emp_id = $this->db->where("id",$next_id_skill)->get('pr_emp_skill')->row()->emp_id;
+		$result = $this->processdb->com_info_search1($emp_id);
+		echo $result;
+	}
+
+	function com_info_prev_Search1()
+	{
+		$id_skill = $this->input->post('id_skill');
+		$prev_id_skill = $this->prev_id_skill($id_skill);
+		$emp_id = $this->db->where("id",$prev_id_skill)->get('pr_emp_skill')->row()->emp_id;
+		$result = $this->processdb->com_info_search1($emp_id);
+		echo $result;
+	}
+
+	function next_id_skill($id_skill)
+	{
+		$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+		$this->db->select('id');
+		$this->db->from('pr_emp_skill');
+		if($get_session_user_unit != 0)
+		{
+			$this->db->from('pr_emp_com_info');
+			$this->db->where('pr_emp_com_info.unit_id',$get_session_user_unit);
+			$this->db->where('pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
+
+		}
+		$this->db->where('id >', $id_skill);
+		$this->db->order_by("id","asc");
+		$this->db->limit(1);
+		$query = $this->db->get();
+		if($query->num_rows()>0){
+		  $rows = $query->row();
+		  $next_id_skill = $rows->id;
+		}else{
+		  $this->db->select_min('id');
+		  $this->db->from('pr_emp_skill');
+		  if($get_session_user_unit != 0){
+			 $this->db->from('pr_emp_com_info');
+			$this->db->where('pr_emp_com_info.unit_id',$get_session_user_unit);
+			$this->db->where('pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
+		  }
+
+		  $query1 = $this->db->get();
+		  $rows = $query1->row();
+		  $next_id_skill = $rows->id;
+		}
+		//echo $next_id_skill ;
+		return $next_id_skill;
+	}
+
+	function prev_id_skill($id_skill)
+	{
+		$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+		$this->db->select('id');
+		$this->db->from('pr_emp_skill');
+		if($get_session_user_unit != 0)
+		{
+			$this->db->from('pr_emp_com_info');
+			$this->db->where('pr_emp_com_info.unit_id',$get_session_user_unit);
+			$this->db->where('pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
+
+		}
+		$this->db->where('id <', $id_skill);
+		$this->db->order_by("id","desc");
+		$this->db->limit(1);
+		$query = $this->db->get();
+		if($query->num_rows()>0)
+		{
+		  $rows = $query->row();
+		  $next_id_skill = $rows->id;
+		}
+		else
+		{
+		  $this->db->select_max('id');
+		  $this->db->from('pr_emp_skill');
+		if($get_session_user_unit != 0)
+		{
+			$this->db->from('pr_emp_com_info');
+			$this->db->where('pr_emp_com_info.unit_id',$get_session_user_unit);
+			$this->db->where('pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
+
+		}
+		  $query1 = $this->db->get();
+		  $rows = $query1->row();
+		  $next_id_skill = $rows->id;
+		}
+		return $next_id_skill;
+	}
+
+	function per_update1()
+	{
+		$result = $this->processdb->updatedb1();
+		return $result;
+	}
+
+	function dept()
+	{
+		$result = $this->processdb->com_all_info();
+		echo $result;
+	}
+}
+
