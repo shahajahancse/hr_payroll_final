@@ -273,9 +273,82 @@ class Setup_con extends CI_Controller {
 
 
 
+	//----------------------------------------------------------------------------------
+	// CRUD for Section
+	//----------------------------------------------------------------------------------
+	function section($start=0)
+	{
+		// $this->load->library('pagination');
+		// $param = array();
+		// $limit = 10;
+		// $config['base_url'] = base_url()."index.php/setup_con/section/";
+		// $config['per_page'] = $limit;
+		// $this->load->model('crud_model');
+		// $pr_sec = $this->crud_model->sec_infos($limit,$start);
+		// $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
+		// $config['total_rows'] = $total;
+		// $config["uri_segment"] = 3;
+		//  // $this->load->library('pagination');
+
+		//  $this->pagination->initialize($config);
+		//  $param['links'] = $this->pagination->create_links();
+
+		// $param['pr_sec'] = $pr_sec;
+
+		
+		$this->data['title'] = 'Section List';
+		$this->data['username'] = $this->data['user_data']->id_number;
+
+		$this->data['subview'] = 'setup/sec_list';
+		$this->load->view('layout/template', $this->data);
+	}
+	function sec_name_check($str)
+	{
+		$id = $this->uri->segment(4);
+		$unit_id = $_POST['unit_id'];
+		if(!empty($id) && is_numeric($id))
+		{
+			$sec_name_old = $this->db->where("sec_id",$id)->get('pr_section')->row()->sec_name;
+			$this->db->where("sec_name !=",$sec_name_old);
+		}
+		$num_row = $this->db->where('sec_name',$str)->where('unit_id',$unit_id)->get('pr_section')->num_rows();
+		if ($num_row >= 1)
+		{
+			$this->form_validation->set_message('sec_name_check', $str.' already exists');
+			return FALSE;
+		}
+		else
+		{
+			return true;
+		}
+	}
 
 
+	function floor_name_check($str)
+	{
+		$unit_id = $_POST['unit_id'];
+		$id = $this->uri->segment(4);
+		if(!empty($id) && is_numeric($id))
+		{
+			$line_name_old = $this->db->where("floor_name",$id)->get('pr_floor')->row()->line_name;
+			$this->db->where("floor_name !=",$line_namee_old);
+		}
+		$num_row = $this->db->where('floor_name',$str)->where('unit_id',$unit_id)->get('pr_floor')->num_rows();
+		if ($num_row >= 1)
+		{
+			$this->form_validation->set_message('floor_name_check', $str.' already exists');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
 
+
+	//----------------------------------------------------------------------------------
+	// End CRUD Section
+	//----------------------------------------------------------------------------------
 
 
 
@@ -351,73 +424,7 @@ class Setup_con extends CI_Controller {
 
 	}
 
-	//-------------------------------------------------------------------------------------------------------
-	// CRUD for Section
-	//-------------------------------------------------------------------------------------------------------
-	function section($start=0)
-	{
-		$this->load->library('pagination');
-		$param = array();
-		$limit = 10;
-		$config['base_url'] = base_url()."index.php/setup_con/section/";
-		$config['per_page'] = $limit;
-		$this->load->model('crud_model');
-		$pr_sec = $this->crud_model->sec_infos($limit,$start);
-		$total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-		$config['total_rows'] = $total;
-		$config["uri_segment"] = 3;
-		 // $this->load->library('pagination');
 
-		 $this->pagination->initialize($config);
-		 $param['links'] = $this->pagination->create_links();
-
-		$param['pr_sec'] = $pr_sec;
-
-		 $this->load->view('sec_list',$param);
-
-	}
-	function sec_name_check($str)
-	{
-		$id = $this->uri->segment(4);
-		$unit_id = $_POST['unit_id'];
-		if(!empty($id) && is_numeric($id))
-		{
-			$sec_name_old = $this->db->where("sec_id",$id)->get('pr_section')->row()->sec_name;
-			$this->db->where("sec_name !=",$sec_name_old);
-		}
-		$num_row = $this->db->where('sec_name',$str)->where('unit_id',$unit_id)->get('pr_section')->num_rows();
-		if ($num_row >= 1)
-		{
-			$this->form_validation->set_message('sec_name_check', $str.' already exists');
-			return FALSE;
-		}
-		else
-		{
-			return true;
-		}
-	}
-
-
-	function floor_name_check($str)
-	{
-		$unit_id = $_POST['unit_id'];
-		$id = $this->uri->segment(4);
-		if(!empty($id) && is_numeric($id))
-		{
-			$line_name_old = $this->db->where("floor_name",$id)->get('pr_floor')->row()->line_name;
-			$this->db->where("floor_name !=",$line_namee_old);
-		}
-		$num_row = $this->db->where('floor_name',$str)->where('unit_id',$unit_id)->get('pr_floor')->num_rows();
-		if ($num_row >= 1)
-		{
-			$this->form_validation->set_message('floor_name_check', $str.' already exists');
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
 	//-------------------------------------------------------------------------------------------------------
 	// CRUD for Line
 	//-------------------------------------------------------------------------------------------------------
