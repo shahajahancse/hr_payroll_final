@@ -19,6 +19,7 @@ class Setup_con extends CI_Controller {
 		$this->data['user_data'] = $this->session->userdata('data');
 		if (!check_acl_list($this->data['user_data']->id,2)) {
 			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+			redirect("payroll_con");
 			exit;
 		}
 	}
@@ -69,15 +70,7 @@ class Setup_con extends CI_Controller {
 	 	$this->form_validation->set_rules('dept_name', 'dept Name', 'trim|required');
 	 	$this->form_validation->set_rules('dept_bangla', 'dept Bangla Name', 'trim|required');
 
-		if($this->form_validation->run() == false)
-		{
-        	$this->data['title'] = 'Add Department';
-			$this->data['username'] = $this->data['user_data']->id_number;
-	
-			$this->data['subview'] = 'setup/dept_add';
-			$this->load->view('layout/template', $this->data);
-		}
-		else
+		if($this->form_validation->run() == true)
 		{
             $formArray = array(
             	'dept_name' => $this->input->post('dept_name'),
@@ -92,6 +85,12 @@ class Setup_con extends CI_Controller {
 			}
 			redirect(base_url('setup_con/department'));
 		}
+
+    	$this->data['title'] = 'Add Department';
+		$this->data['username'] = $this->data['user_data']->id_number;
+
+		$this->data['subview'] = 'setup/dept_add';
+		$this->load->view('layout/template', $this->data);
 	}
 
 	// department update

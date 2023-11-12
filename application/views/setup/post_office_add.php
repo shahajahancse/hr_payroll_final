@@ -120,6 +120,7 @@
       $('#division').change(function(){
         $('.district_val').addClass('form-control input-sm');
         $(".district_val > option").remove();
+        $(".upazila_thana > option").remove();
         var id = $('#division').val();
         $.ajax({
             type: "POST",

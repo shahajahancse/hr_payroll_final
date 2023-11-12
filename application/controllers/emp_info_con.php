@@ -10,23 +10,34 @@ class Emp_info_con extends CI_Controller {
 		$this->load->model('acl_model');
 		$this->load->model('common_model');
 		$this->load->model('mars_model');
-		$access_level = 1;
-		$acl = $this->acl_model->acl_check($access_level);
+
+		if($this->session->userdata('logged_in')==FALSE)
+		{
+			redirect("authentication");
+		}
+		$this->data['user_data'] = $this->session->userdata('data');
+		if (!check_acl_list($this->data['user_data']->id,1)) {
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+			redirect("payroll_con");
+			exit;
+		}
 	}
 
-	function at_a_glance_info_view()
+	function personal_info()
 	{
-		$report_date = date("Y-m-d");
-		$unit_id = $this->session->userdata('data')->unit_name;
-		$data['values'] = $this->mars_model->dashboard_summary($report_date, $unit_id);
+        $this->data['units'] = $this->db->select('pr_units.*')->get('pr_units')->result();
 
-		$data['title'] 		 = 'Daily Attendance Summary';
-		$data['report_date'] = $report_date;
-		$data['unit_id']    = $unit_id;
-		$this->load->view('at_a_glance',$data);
+		$this->data['title'] = 'Personal Information';
+		$this->data['username'] = $this->data['user_data']->id_number;
+
+		$this->data['subview'] = 'empInfo/personal_info';
+		$this->load->view('layout/template', $this->data);
 	}
 
-	function personal_info_view1()
+
+
+
+	function personal_info1()
 	{
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('empid', 'Employee ID', 'trim|required');
@@ -88,6 +99,30 @@ class Emp_info_con extends CI_Controller {
 			}
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+	// old code
+
+	function at_a_glance_info_view()
+	{
+		$report_date = date("Y-m-d");
+		$unit_id = $this->session->userdata('data')->unit_name;
+		$data['values'] = $this->mars_model->dashboard_summary($report_date, $unit_id);
+
+		$data['title'] 		 = 'Daily Attendance Summary';
+		$data['report_date'] = $report_date;
+		$data['unit_id']    = $unit_id;
+		$this->load->view('at_a_glance',$data);
+	}
+
 
 
 
