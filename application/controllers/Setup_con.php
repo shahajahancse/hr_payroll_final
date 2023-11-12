@@ -256,6 +256,18 @@ class Setup_con extends CI_Controller {
 		$this->load->view('layout/template', $this->data);
 	}
 
+	// Post Office delete
+	function post_office_delete($id)
+	{
+		$post =  $this->db->where('id',$id)->get('emp_post_offices')->row();
+		if (empty($post)) {
+			$this->session->set_flashdata('failuer','Record Not Found in DataBase!');
+			redirect('setup_con/post_office');
+		}
+		$this->db->where('id',$id)->delete('emp_post_offices');
+		$this->session->set_flashdata('success','Record Deleted successfully!');
+			redirect('setup_con/post_office');
+	}
 	//----------------------------------------------------------------------------------
 	// End CRUD Post Office
 	//----------------------------------------------------------------------------------

@@ -91,18 +91,26 @@
           <div class="form-group">
             <label>পোস্ট অফিস</label>
             <?php echo form_error('post_office'); ?>
-            <input type="text" name="post_office"value="" class="form-control" value="<?= $post->name_bn ?>" required>
+            <input type="text" name="post_office" class="form-control" value="<?= $post->name_bn ?>" required>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Post Office English</label>
-            <input type="text" name="post_office_en"value="" class="form-control" value="<?= $post->name_en ?>" required>
             <?php echo form_error('post_office_en');?>
+            <input type="text" name="post_office_en" class="form-control" value="<?= $post->name_en ?>" required>
           </div>
         </div>
 
+        <br>
+        <div class="col-md-12">
+          <div class="form-group pull-right">
+            <button class="btn btn-primary">Save</button>
+            <a href=""class="btn-warning btn">Cancel</a>
+          </div>
+        </div>
+        
       </div>
     </form>
 
