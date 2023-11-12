@@ -1,22 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	 <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
-  <link rel="stylesheet" href="<?php echo base_url('/css/dataTables.min.css'); ?>">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-
-  <script src="<?php echo base_url('/js/jquery-3.5.1.min.js') ?>"></script>
-  <script src="<?php echo base_url('/js/dataTables.min.js') ?>"></script>
-  <script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
 
 <style type='text/css'>
-body
-{
-	font-family: Arial;
-	font-size: 14px;
-}
+
 a {
     color: blue;
     text-decoration: none;
@@ -57,8 +41,6 @@ table.dataTable.no-footer {
   border-bottom: none;
 }
 </style>
-</head>
-<body style="background-color:#FCE9D9;">
 
     <div class="container" style="padding-top: 10px;">
 
@@ -194,5 +176,3 @@ table.dataTable.no-footer {
         });
       </script>
 
-</body>
-</html>
