@@ -23,17 +23,6 @@ class Setup_con extends CI_Controller {
 		}
 	}
 
-	//-------------------------------------------------------------------------------------------------------
-	// Company info Setup
-	//-------------------------------------------------------------------------------------------------------
-	function company_info_setup()
-	{
-		$company_infos = $this->common_model->company_information();
-		$data = array();
-		$data['company_infos'] = $company_infos;
-		$this->load->view('output2',$data);
-	}
-
 	//----------------------------------------------------------------------------------
 	// CRUD for Department
 	//----------------------------------------------------------------------------------
@@ -67,7 +56,7 @@ class Setup_con extends CI_Controller {
 		$this->data['title'] = 'Department List';
 		$this->data['username'] = $this->data['user_data']->id_number;
 
-		$this->data['subview'] = 'dept_list';
+		$this->data['subview'] = 'setup/dept_list';
 		$this->load->view('layout/template', $this->data);
 	}
 
@@ -85,7 +74,7 @@ class Setup_con extends CI_Controller {
         	$this->data['title'] = 'Add Department';
 			$this->data['username'] = $this->data['user_data']->id_number;
 	
-			$this->data['subview'] = 'dept_add';
+			$this->data['subview'] = 'setup/dept_add';
 			$this->load->view('layout/template', $this->data);
 		}
 		else
@@ -99,12 +88,11 @@ class Setup_con extends CI_Controller {
 			if ($this->db->insert('pr_dept',$formArray)) {
 				$this->session->set_flashdata('success','Record adder successfully!');
 			} else {
-				$this->session->set_flashdata('success','Sorry!, Something wrong.');
+				$this->session->set_flashdata('failuer','Sorry!, Something wrong.');
 			}
 			redirect(base_url('setup_con/department'));
 		}
 	}
-
 
 	// department update
 	function dept_edit($deptId)
@@ -123,7 +111,7 @@ class Setup_con extends CI_Controller {
         	$this->data['title'] = 'Update Department';
 			$this->data['username'] = $this->data['user_data']->id_number;
 	
-			$this->data['subview'] = 'dept_edit';
+			$this->data['subview'] = 'setup/dept_edit';
 			$this->load->view('layout/template', $this->data);
 		}
 		else
@@ -146,13 +134,12 @@ class Setup_con extends CI_Controller {
 	// Department delete
 	function dept_delete($deptId)
 	{
-		$this->load->model('crud_model');
 		$dept =  $this->db->where('dept_id',$deptId)->get('pr_dept')->row();
 		if (empty($dept)) {
-			$this->session->set_flashdata('failure','Record Not Found in DataBase!');
+			$this->session->set_flashdata('failuer','Record Not Found in DataBase!');
 			redirect('setup_con/department');
 		}
-		$this->crud_model->dept_delete($deptId);
+		$this->db->where('dept_id',$deptId)->delete('pr_dept');
 		$this->session->set_flashdata('success','Record Deleted successfully!');
 			redirect('setup_con/department');
 	}
@@ -161,7 +148,117 @@ class Setup_con extends CI_Controller {
 	//----------------------------------------------------------------------------------
 
 
+	//----------------------------------------------------------------------------------
+	// CRUD for Post Office
+	//----------------------------------------------------------------------------------
+	function post_office($start=0)
+	{
 
+		$this->load->library('pagination');
+		$limit = 10;
+		$config['base_url'] = base_url()."setup_con/post_office/";
+		$config['per_page'] = $limit;
+
+		$condition = 0;
+		if ($this->input->get('request')) {
+			$query = $this->input->get('request');
+			$condition = "(pr_units.unit_name LIKE '" . $query . "%' OR pr_dept.dept_name LIKE '%" . $query . "%' OR pr_dept.dept_bangla LIKE '%" . $query . "%')";
+		}
+
+		$this->load->model('crud_model');
+		$pr_dept = $this->crud_model->get_post_office($limit,$start, $condition);
+		$total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
+		$config['total_rows'] = $total;
+		$config["uri_segment"] = 3;
+		 // $this->load->library('pagination');
+
+		 $this->pagination->initialize($config);
+		 $this->data['links'] = $this->pagination->create_links();
+  		 $this->data['pr_dept'] = $pr_dept;
+
+  		 // dd($this->data);
+
+		$this->data['title'] = 'Post Office List';
+		$this->data['username'] = $this->data['user_data']->id_number;
+
+		$this->data['subview'] = 'setup/post_office_list';
+		$this->load->view('layout/template', $this->data);
+	}
+
+	// Post Office create
+	function post_office_add(){
+
+	 	$this->form_validation->set_rules('division', 'Division Name', 'trim|required');
+	 	$this->form_validation->set_rules('district', 'District Name', 'trim|required');
+	 	$this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
+	 	$this->form_validation->set_rules('post_office', 'Post Office Bangla Name', 'trim|required');
+	 	$this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
+		if($this->form_validation->run() == true)
+		{
+            $formArray = array(
+            	'div_id' => $this->input->post('division'),
+            	'dis_id' => $this->input->post('district'),
+            	'up_zil_id' => $this->input->post('upazila'),
+            	'name_bn' => $this->input->post('post_office'),
+            	'name_en' => $this->input->post('post_office_en'),
+            	'status'  => 1
+            );
+
+			if ($this->db->insert('emp_post_offices',$formArray)) {
+				$this->session->set_flashdata('success','Record adder successfully!');
+			} else {
+				$this->session->set_flashdata('failuer','Sorry!, Something wrong.');
+			}
+			redirect(base_url('setup_con/post_office'));
+		}
+
+        $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();
+	    $this->data['title'] = 'Add Post Office';
+		$this->data['username'] = $this->data['user_data']->id_number;
+
+		$this->data['subview'] = 'setup/post_office_add';
+		$this->load->view('layout/template', $this->data);
+	}
+
+	// Post Office update
+	function post_office_edit($id)
+	{
+
+	 	$this->form_validation->set_rules('division', 'Division Name', 'trim|required');
+	 	$this->form_validation->set_rules('district', 'District Name', 'trim|required');
+	 	$this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
+	 	$this->form_validation->set_rules('post_office', 'Post Office Bangla Name', 'trim|required');
+	 	$this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
+
+	 	if($this->form_validation->run() == true)
+		{
+            $formArray = array(
+            	'div_id' => $this->input->post('division'),
+            	'dis_id' => $this->input->post('district'),
+            	'up_zil_id' => $this->input->post('upazila'),
+            	'name_bn' => $this->input->post('post_office'),
+            	'name_en' => $this->input->post('post_office_en'),
+            	'status'  => 1
+            );
+            $this->db->where('id',$id);
+            $this->db->update('emp_post_offices',$formArray);
+
+			$this->session->set_flashdata('success','Record Updated successfully!');
+			redirect('/setup_con/post_office');
+		}
+
+        $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();
+    	$this->data['post'] = $this->db->where('id',$id)->get('emp_post_offices')->row();
+	    $this->data['title'] = 'Update Post Office';
+		$this->data['username'] = $this->data['user_data']->id_number;
+
+		$this->data['subview'] = 'setup/post_office_edit';
+		$this->load->view('layout/template', $this->data);
+	}
+
+	//----------------------------------------------------------------------------------
+	// End CRUD Post Office
+	//----------------------------------------------------------------------------------
 
 
 
@@ -174,6 +271,17 @@ class Setup_con extends CI_Controller {
 
 
 	// old code
+
+	//-------------------------------------------------------------------------------------------------------
+	// Company info Setup
+	//-------------------------------------------------------------------------------------------------------
+	function company_info_setup()
+	{
+		$company_infos = $this->common_model->company_information();
+		$data = array();
+		$data['company_infos'] = $company_infos;
+		$this->load->view('output2',$data);
+	}
 
 	//-------------------------------------------------------------------------------------------------------
 	// CRUD output method

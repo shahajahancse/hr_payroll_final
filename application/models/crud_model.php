@@ -9,6 +9,114 @@ class Crud_model extends CI_Model{
     }
 
 
+    //==========================Department===============================//
+    function dept_infos($limit, $start, $condition = 0)
+    {
+        $this->db->select('SQL_CALC_FOUND_ROWS pr_dept.*, pr_units.unit_name', false);
+        $this->db->from('pr_dept');
+        $this->db->join('pr_units','pr_dept.unit_id = pr_units.unit_id', 'left');
+        if (!empty($condition)) {
+            $this->db->where($condition);
+        }
+        // $this->db->limit($limit,$start);
+        return $this->db->get()->result_array();
+    }
+
+
+    //==========================Department===============================//
+    function get_post_office($limit, $start, $condition = 0)
+    {
+        $this->db->select('
+                SQL_CALC_FOUND_ROWS epo.*, 
+                ediv.name_bn as div_name_bn, 
+                ediv.name_en as div_name_en, 
+                edis.name_bn as dis_name_bn, 
+                edis.name_en as dis_name_en, 
+                eup.name_bn upa_name_bn, 
+                eup.name_en upa_name_en', false
+            );
+        $this->db->from('emp_post_offices epo');
+        $this->db->join('emp_divisions ediv','ediv.id = epo.div_id', 'left');
+        $this->db->join('emp_districts edis','edis.id = epo.dis_id', 'left');
+        $this->db->join('emp_upazilas eup','eup.id = epo.up_zil_id', 'left');
+        if (!empty($condition)) {
+            $this->db->where($condition);
+        }
+        // $this->db->limit($limit,$start);
+        return $this->db->get()->result_array();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // old code
+
+    function getdept($deptId)
+    {
+        $this->db->where('dept_id',$deptId);
+        return $this->db->get('pr_dept')->row();
+    }
+
+    function dept_fetch()
+    {
+        $this->db->select('pr_units.*');
+        return $this->db->get('pr_units')->result_array();
+
+    }
+
+
+     function dept_add($fromArray)
+        {
+
+            $comData = array(
+                'dept_name' => $fromArray['name'],
+                'dept_bangla' => $fromArray['bname'],
+                'unit_id' => $fromArray['dept'],
+
+            );
+            // print_r($comData);exit('obaydullah');
+
+              $this->db->insert('pr_dept',$comData);
+
+        }
+
+
+     function dept_edit($deptId)
+        {
+             $formArray = array();
+
+             $formArray['dept_name'] = $this->input->post('name');
+             $formArray['dept_bangla'] = $this->input->post('bname');
+             $formArray['unit_id'] = $this->input->post('dept');
+
+             $this->db->where('dept_id',$deptId);
+             $this->db->update('pr_dept',$formArray);
+
+        }
+
+     function dept_delete($deptId)
+        {
+            $this->db->where('dept_id',$deptId);
+            $this->db->delete('pr_dept');
+        }
+
+
+//===========================================Section===============================================//
+
+
     function company_add($fromArray)
     {
         // print_r($_FILES);exit('hi');
@@ -196,78 +304,6 @@ class Crud_model extends CI_Model{
         {
             $this->db->where('id',$floorId);
             $this->db->delete('pr_floor');
-        }
-
-
-    //==========================Department===============================//
-
-
-
-
-
-    function getdept($deptId)
-    {
-        $this->db->where('dept_id',$deptId);
-        return $this->db->get('pr_dept')->row();
-    }
-
-    function dept_infos($limit, $start, $condition = 0)
-    {
-        $this->db->select('SQL_CALC_FOUND_ROWS pr_dept.*, pr_units.unit_name', false);
-        $this->db->from('pr_dept');
-        $this->db->join('pr_units','pr_dept.unit_id = pr_units.unit_id', 'left');
-        if (!empty($condition)) {
-            $this->db->where($condition);
-        }
-        // $this->db->limit($limit,$start);
-        return $this->db->get()->result_array();
-    }
-
-    function dept_fetch()
-    {
-        $this->db->select('pr_units.*');
-        return $this->db->get('pr_units')->result_array();
-
-    }
-
-
-
-
-
-
-     function dept_add($fromArray)
-        {
-
-            $comData = array(
-                'dept_name' => $fromArray['name'],
-                'dept_bangla' => $fromArray['bname'],
-                'unit_id' => $fromArray['dept'],
-
-            );
-            // print_r($comData);exit('obaydullah');
-
-              $this->db->insert('pr_dept',$comData);
-
-        }
-
-
-     function dept_edit($deptId)
-        {
-             $formArray = array();
-
-             $formArray['dept_name'] = $this->input->post('name');
-             $formArray['dept_bangla'] = $this->input->post('bname');
-             $formArray['unit_id'] = $this->input->post('dept');
-
-             $this->db->where('dept_id',$deptId);
-             $this->db->update('pr_dept',$formArray);
-
-        }
-
-     function dept_delete($deptId)
-        {
-            $this->db->where('dept_id',$deptId);
-            $this->db->delete('pr_dept');
         }
 
 

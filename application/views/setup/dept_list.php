@@ -111,10 +111,10 @@
                   <td><?php echo $pr_depts['dept_bangla'] ?></td>
                   <td><?php echo $pr_depts['unit_name'] ?></td>
                   <td >
-                    <a href="<?=base_url('setup_con/dept_edit').'/'.$pr_depts['dept_id']?>" class="btn btn-primary" role="button">Edit</a>
+                    <a href="<?=base_url('setup_con/dept_edit/'.$pr_depts['dept_id'])?>" class="btn btn-primary" role="button">Edit</a>
                   </td>
                   <td>
-                    <a href="<?=base_url('crud_con/dept_delete').'/'.$pr_depts["dept_id"]?>" class="btn btn-danger" role="button">Delete</a>
+                    <a href="<?=base_url('setup_con/dept_delete/'.$pr_depts["dept_id"])?>" class="btn btn-danger" role="button">Delete</a>
                   </td>
               </tr>
             <?php } }else{?>

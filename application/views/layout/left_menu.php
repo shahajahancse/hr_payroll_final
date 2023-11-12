@@ -36,6 +36,8 @@
           <li class="start "> <a href="<?=base_url()?>setup_con/weekend_allowance_setup" class="anchor_cls">Weekend Allowance</a> </li>
           <li class="start "> <a href="<?=base_url()?>setup_con/night_allowance_setup" class="anchor_cls">Night Allowance</a> </li>
           <li class="start "> <a href="<?=base_url()?>setup_con/holiday_allowance_setup" class="anchor_cls">Holiday Allowance</a> </li>
+
+          <li class="start <?= activate_method('post_office') ?>"> <a href="<?=base_url('setup_con/post_office')?>" class="anchor_cls">Post Office</a> </li>
         </ul>
       </li>
       <?php } ?>

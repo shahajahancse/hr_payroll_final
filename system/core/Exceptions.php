@@ -160,19 +160,19 @@ class CI_Exceptions {
 		$templates_path = config_item('error_views_path');
 		if (empty($templates_path))
 		{
-			$templates_path = FCPATH.'errors'.DIRECTORY_SEPARATOR;
+			$templates_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
 		}
 
 		if (is_cli())
 		{
 			$message = "\t".(is_array($message) ? implode("\n\t", $message) : $message);
-			$template = DIRECTORY_SEPARATOR.$template;
+			$template = 'cli'.DIRECTORY_SEPARATOR.$template;
 		}
 		else
 		{
 			set_status_header($status_code);
 			$message = '<p>'.(is_array($message) ? implode('</p><p>', $message) : $message).'</p>';
-			$template = DIRECTORY_SEPARATOR.$template;
+			$template = 'html'.DIRECTORY_SEPARATOR.$template;
 		}
 
 		if (ob_get_level() > $this->ob_level + 1)
@@ -193,7 +193,7 @@ class CI_Exceptions {
 		$templates_path = config_item('error_views_path');
 		if (empty($templates_path))
 		{
-			$templates_path = 'errors'.DIRECTORY_SEPARATOR;
+			$templates_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
 		}
 
 		$message = $exception->getMessage();
@@ -239,7 +239,7 @@ class CI_Exceptions {
 		$templates_path = config_item('error_views_path');
 		if (empty($templates_path))
 		{
-			$templates_path = FCPATH.'errors'.DIRECTORY_SEPARATOR;
+			$templates_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
 		}
 
 		$severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
@@ -254,11 +254,11 @@ class CI_Exceptions {
 				$filepath = $x[count($x)-2].'/'.end($x);
 			}
 
-			$template = DIRECTORY_SEPARATOR.'error_php';
+			$template = 'html'.DIRECTORY_SEPARATOR.'error_php';
 		}
 		else
 		{
-			$template = DIRECTORY_SEPARATOR.'error_php';
+			$template = 'cli'.DIRECTORY_SEPARATOR.'error_php';
 		}
 
 		if (ob_get_level() > $this->ob_level + 1)
@@ -266,7 +266,6 @@ class CI_Exceptions {
 			ob_end_flush();
 		}
 		ob_start();
-		// echo $templates_path; exit;
 		include($templates_path.$template.'.php');
 		$buffer = ob_get_contents();
 		ob_end_clean();
