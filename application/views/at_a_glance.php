@@ -53,7 +53,7 @@
                 <span class="" data-value="" data-animation-duration="1200">
                   <?php
                      $this->db->select('*');
-                     $this->db->from('pr_dept');
+                     $this->db->from('emp_depertment');
                      echo $query = $this->db->get()->num_rows();
                   ?>
                 </span>
@@ -74,7 +74,7 @@
               <span class="" data-value="" data-animation-duration="1200" >
                 <?php
                   $this->db->select('*');
-                  $this->db->from('pr_section');
+                  $this->db->from('emp_section');
                   echo $query = $this->db->get()->num_rows();
                 ?>
               </span>
@@ -94,7 +94,7 @@
               <span class="" data-value="" data-animation-duration="1000">
                 <?php
                   $this->db->select('*');
-                  $this->db->from('pr_designation');
+                  $this->db->from('emp_designation');
                   echo $query = $this->db->get()->num_rows();
                  ?>
               </span>
@@ -114,7 +114,7 @@
                 <span class="" data-value="" data-animation-duration="1200" >
                   <?php
                     $this->db->select('*');
-                    $this->db->from('pr_line_num');
+                    $this->db->from('emp_line_num');
                     $query = $this->db->get()->num_rows();
                      echo $gtotal_line = $query - 1;
                    ?>

@@ -302,7 +302,7 @@ class Mars_model extends CI_Model{
 	{
 		//echo $report_date;exit;
 		$data = array();
-		$query = $this->db->select()->where('unit_id', $unit_id)->order_by('dept_name')->get('pr_dept');
+		$query = $this->db->select()->where('unit_id', $unit_id)->order_by('dept_name')->get('emp_depertment');
 		$monthly_join_id = $this->monthly_join_emp($report_date);
 		$monthly_resign_id = $this->monthly_resign_emp($report_date);
 		$monthly_left_id = $this->monthly_left_emp($report_date);
@@ -388,7 +388,7 @@ class Mars_model extends CI_Model{
 	{
 		//echo $report_date;exit;
 		$data = array();
-		$query = $this->db->select()->where('unit_id', $unit_id)->order_by('dept_name')->get('pr_dept');
+		$query = $this->db->select()->where('unit_id', $unit_id)->order_by('dept_name')->get('emp_depertment');
 
 		foreach($query->result() as $rows)
 		{
