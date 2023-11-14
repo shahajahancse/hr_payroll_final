@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Add Section</title>
-  <meta charset="utf-8">
-  <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
-</head>
-<body>
 
+<div class="content">
 
-
-<div class="container" style="padding-top: 10px;">
 <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -59,6 +46,15 @@
   <form enctype="multipart/form-data" method="post" name="creatsection" action="<?php echo base_url().'index.php/crud_con/sec_add'?>">
 	  <div class="row">
 	    <div class="col-md-6">
+      <div class="form-group">
+          <select name="department" id="department" class="form-control input-lg">
+            <option value="">Select Department</option>
+            <?php foreach ($department as $key => $value) {
+              ?>
+              <option value="<?php echo $value['unit_id']; ?>"><?php echo $value['unit_name']; ?></option>
+            <?php } ?>
+          </select>
+        </div>
 	      <div class="form-group">
 	        <label>Section Name</label>
 	        <input type="text" name="name"value="" class="form-control">
@@ -69,40 +65,14 @@
 	        <input type="text" name="bname"value="" class="form-control">
 	        <?php echo form_error('bname');?>
 	      </div>
-	      <div class="form-group">
-	        <label>Strength</label>
-	        <input type="text" name="strn"value="" class="form-control">
-	        <?php echo form_error('strn');?>
-	      </div>
-	      <div class="form-group">
-	        <label>Str staff</label>
-	        <input type="text" name="strf"value="" class="form-control">
-	        <?php echo form_error('strf');?>
-	      </div>
-	      <div class="form-group">
-	        <label>Sec index</label>
-	        <input type="text" name="indx"value="" class="form-control">
-	        <?php echo form_error('indx');?>
-	      </div>
-	      <div class="form-group">
-	        <label>Absent report index</label>
-	        <input type="text" name="aindx"value="" class="form-control">
-	        <?php echo form_error('aindx');?>
-	      </div>
         <div class="form-group">
-          <select name="sec" id= "sec" class="form-control input-lg">
+          <select name="unit" id="unit" class="form-control input-lg">
             <option value="">Select Unit</option>
-            <?php
-            // print_r($sec);exit('mafiz');
-              foreach ($sec as $row)
-              {
-
-                 echo '<option value="'.$row[unit_id].'">'.$row[unit_name].
-                 '</option>';
-              }
-
-             ?>
-
+            <?php foreach ($sec as $key => $value) {
+           
+              ?>
+              <option value="<?php echo $value['unit_id']; ?>"><?php echo $value['unit_name']; ?></option>
+            <?php } ?>
           </select>
         </div>
 

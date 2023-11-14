@@ -318,9 +318,9 @@ class Crud_model extends CI_Model{
         return $this->db->get('pr_section')->row();
     }
 
-    function sec_infos($limit,$start)
+    function sec_infos()
     {
-        $this->db->select('SQL_CALC_FOUND_ROWS pr_section.*,pr_units.unit_name', false);
+        $this->db->select('SQL_CALC_FOUND_ROWS pr_section.*,pr_units.unit_name,pr_units.unit_name_bangla', false);
         $this->db->from('pr_section');
         $this->db->join('pr_units','pr_units.unit_id = pr_section.unit_id');
         // $this->db->limit($limit,$start);

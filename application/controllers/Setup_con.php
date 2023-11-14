@@ -279,72 +279,99 @@ class Setup_con extends CI_Controller {
 	//----------------------------------------------------------------------------------
 	function section($start=0)
 	{
-		// $this->load->library('pagination');
-		// $param = array();
-		// $limit = 10;
-		// $config['base_url'] = base_url()."index.php/setup_con/section/";
-		// $config['per_page'] = $limit;
-		// $this->load->model('crud_model');
-		// $pr_sec = $this->crud_model->sec_infos($limit,$start);
-		// $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-		// $config['total_rows'] = $total;
-		// $config["uri_segment"] = 3;
-		//  // $this->load->library('pagination');
-
-		//  $this->pagination->initialize($config);
-		//  $param['links'] = $this->pagination->create_links();
-
-		// $param['pr_sec'] = $pr_sec;
-
-		
+		$this->load->model('crud_model');
+		$this->data['pr_sec'] = $this->crud_model->sec_infos();
 		$this->data['title'] = 'Section List';
 		$this->data['username'] = $this->data['user_data']->id_number;
-
 		$this->data['subview'] = 'setup/sec_list';
 		$this->load->view('layout/template', $this->data);
 	}
-	function sec_name_check($str)
-	{
-		$id = $this->uri->segment(4);
-		$unit_id = $_POST['unit_id'];
-		if(!empty($id) && is_numeric($id))
-		{
-			$sec_name_old = $this->db->where("sec_id",$id)->get('pr_section')->row()->sec_name;
-			$this->db->where("sec_name !=",$sec_name_old);
-		}
-		$num_row = $this->db->where('sec_name',$str)->where('unit_id',$unit_id)->get('pr_section')->num_rows();
-		if ($num_row >= 1)
-		{
-			$this->form_validation->set_message('sec_name_check', $str.' already exists');
-			return FALSE;
-		}
-		else
-		{
-			return true;
-		}
-	}
+
+	function sec_add(){
+
+		$this->load->library('form_validation');
+		$this->load->model('crud_model');
+		$this->data['sec'] = $this->crud_model->sec_fetch();
+		$this->form_validation->set_rules('name', 'sec Name', 'trim|required');
+		$this->form_validation->set_rules('bname', 'sec Bangla Name', 'trim|required');
 
 
-	function floor_name_check($str)
-	{
-		$unit_id = $_POST['unit_id'];
-		$id = $this->uri->segment(4);
-		if(!empty($id) && is_numeric($id))
-		{
-			$line_name_old = $this->db->where("floor_name",$id)->get('pr_floor')->row()->line_name;
-			$this->db->where("floor_name !=",$line_namee_old);
-		}
-		$num_row = $this->db->where('floor_name',$str)->where('unit_id',$unit_id)->get('pr_floor')->num_rows();
-		if ($num_row >= 1)
-		{
-			$this->form_validation->set_message('floor_name_check', $str.' already exists');
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
+		   if($this->form_validation->run() == false)
+		   {
+			$this->data['title'] = 'Add Section';
+			$this->data['username'] = $this->data['user_data']->id_number;
+			$this->data['subview'] = 'setup/sec_add';
+			$this->load->view('layout/template', $this->data);
+		   }
+		   else
+		   {
+		
+			   $formArray = array();
+			   $formArray['name'] = $this->input->post('name');
+			   $formArray['bname'] = $this->input->post('bname');
+			   $formArray['strn'] = $this->input->post('strn');
+			   $formArray['strf'] = $this->input->post('strf');
+			   $formArray['indx'] = $this->input->post('indx');
+			   $formArray['aindx'] = $this->input->post('aindx');
+			   $formArray['sec'] = $this->input->post('sec');
+
+			   $this->crud_model->sec_add($formArray);
+			   $this->session->set_flashdata('success','Record adder successfully!');
+				 //alert('Record adder successfully!');
+			   redirect(base_url().'index.php/setup_con/section');
+
+
+		   }
+
+	   }
+
+
+	   function sec_edit($secId)
+	   {
+		   $data = array();
+		   $this->load->model('crud_model');
+		   $this->load->library('form_validation');
+
+
+			$this->form_validation->set_rules('name', 'sec Name', 'trim|required');
+		   $data['sec'] = $this->crud_model->sec_fetch();
+
+
+			if($this->form_validation->run() == false)
+		   {
+
+		   $data['pr_section'] = $this->crud_model->getsec($secId);
+
+		   $this->load->view('sec_edit',$data);
+
+		   }
+		   else
+		   {
+			   $this->crud_model->sec_edit($secId);
+			   $this->session->set_flashdata('success','Record Updated successfully!');
+				 //alert('Record adder successfully!');
+			   redirect('/setup_con/section');
+
+
+		   }
+
+
+	   }
+
+
+	   function sec_delete($secId)
+	   {
+		   $this->load->model('crud_model');
+		   $sec = $this->crud_model->getsec($secId);
+		   if (empty($sec)) {
+			   $this->session->set_flashdata('failure','Record Not Found in DataBase!');
+			   redirect('/setup_con/section');
+		   }
+		   $this->crud_model->sec_delete($secId);
+		   $this->session->set_flashdata('success','Record Deleted successfully!');
+			   redirect('/setup_con/section');
+	   }
+
 
 
 	//----------------------------------------------------------------------------------
