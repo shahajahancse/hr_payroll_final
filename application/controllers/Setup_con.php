@@ -451,28 +451,7 @@ class Setup_con extends CI_Controller {
 	//-------------------------------------------------------------------------------------------------------
 	// CRUD for Section
 	//-------------------------------------------------------------------------------------------------------
-	function section($start=0)
-	{
-		$this->load->library('pagination');
-		$param = array();
-		$limit = 10;
-		$config['base_url'] = base_url()."index.php/setup_con/section/";
-		$config['per_page'] = $limit;
-		$this->load->model('crud_model');
-		$pr_sec = $this->crud_model->sec_infos($limit,$start);
-		$total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-		$config['total_rows'] = $total;
-		$config["uri_segment"] = 3;
-		 // $this->load->library('pagination');
 
-		 $this->pagination->initialize($config);
-		 $param['links'] = $this->pagination->create_links();
-
-		$param['pr_sec'] = $pr_sec;
-
-		 $this->load->view('sec_list',$param);
-
-	}
 	function sec_name_check($str)
 	{
 		$id = $this->uri->segment(4);
