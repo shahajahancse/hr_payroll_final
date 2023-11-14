@@ -11,6 +11,8 @@ class Setup_con extends CI_Controller {
 		$this->load->model('common_model');
 		$this->load->library('pagination_bootstrap');
 		$this->load->helper('url');
+		$this->load->model('crud_model');
+
 
 		if($this->session->userdata('logged_in')==FALSE)
 		{
@@ -287,17 +289,36 @@ class Setup_con extends CI_Controller {
 		$this->load->view('layout/template', $this->data);
 	}
 
+	function get_unit(){
+		$department_id=$_POST['department_id'];
+		$this->db->select('emp_depertment.*,pr_units.*');
+		$this->db->from('emp_depertment');
+		$this->db->join('pr_units','pr_units.unit_id=emp_depertment.unit_id');
+		$this->db->where('emp_depertment.dept_id',$department_id);
+		$unit=$this->db->get()->result_array();
+		echo json_encode($unit);
+		
+	}
 	function sec_add(){
 
 		$this->load->library('form_validation');
 		$this->load->model('crud_model');
-		$this->data['sec'] = $this->crud_model->sec_fetch();
-		$this->form_validation->set_rules('name', 'sec Name', 'trim|required');
-		$this->form_validation->set_rules('bname', 'sec Bangla Name', 'trim|required');
+		$this->form_validation->set_rules('sec_name_en', 'Section Name', 'trim|required');
+		$this->form_validation->set_rules('sec_name_bn', 'Section Bangla Name', 'trim|required');
+		$this->form_validation->set_rules('depertment_id', 'Department', 'required');
+		$this->form_validation->set_rules('unit_id', 'Unit', 'required');
 
 
 		   if($this->form_validation->run() == false)
 		   {
+			if ($_SERVER["REQUEST_METHOD"] == "POST") {
+				$this->session->set_flashdata('failure', $this->form_validation->error_array());
+			}
+
+			$this->db->select('emp_depertment.*');
+			$this->data['department'] = $this->db->get('emp_depertment')->result();
+			$this->db->select('pr_units.*');
+			$this->data['unit'] = $this->db->get('pr_units')->result();
 			$this->data['title'] = 'Add Section';
 			$this->data['username'] = $this->data['user_data']->id_number;
 			$this->data['subview'] = 'setup/sec_add';
@@ -306,21 +327,19 @@ class Setup_con extends CI_Controller {
 		   else
 		   {
 		
-			   $formArray = array();
-			   $formArray['name'] = $this->input->post('name');
-			   $formArray['bname'] = $this->input->post('bname');
-			   $formArray['strn'] = $this->input->post('strn');
-			   $formArray['strf'] = $this->input->post('strf');
-			   $formArray['indx'] = $this->input->post('indx');
-			   $formArray['aindx'] = $this->input->post('aindx');
-			   $formArray['sec'] = $this->input->post('sec');
-
-			   $this->crud_model->sec_add($formArray);
-			   $this->session->set_flashdata('success','Record adder successfully!');
-				 //alert('Record adder successfully!');
-			   redirect(base_url().'index.php/setup_con/section');
-
-
+			 $formArray = array(
+				 'sec_name_en' => $this->input->post('sec_name_en'),
+				 'sec_name_bn' => $this->input->post('sec_name_bn'),
+				 'depertment_id' => $this->input->post('depertment_id'),
+				 'unit_id' => $this->input->post('unit_id')
+			 );
+			 
+			 if($this->db->insert('emp_section', $formArray)){
+				 $this->session->set_flashdata('success','Record adder successfully!');
+			 }else{
+				 $this->session->set_flashdata('failure','Record adder failed!');
+			 }
+			redirect(base_url().'index.php/setup_con/section');
 		   }
 
 	   }
@@ -328,29 +347,44 @@ class Setup_con extends CI_Controller {
 
 	   function sec_edit($secId)
 	   {
-		   $data = array();
 		   $this->load->model('crud_model');
 		   $this->load->library('form_validation');
-
-
-			$this->form_validation->set_rules('name', 'sec Name', 'trim|required');
-		   $data['sec'] = $this->crud_model->sec_fetch();
-
-
+		   $this->form_validation->set_rules('sec_name_en', 'Section Name', 'trim|required');
+		   $this->form_validation->set_rules('sec_name_bn', 'Section Bangla Name', 'trim|required');
+		   $this->form_validation->set_rules('depertment_id', 'Department', 'required');
+		   $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+			   
 			if($this->form_validation->run() == false)
 		   {
+			if ($_SERVER["REQUEST_METHOD"] == "POST") {
+				$this->session->set_flashdata('failure', $this->form_validation->error_array());
+			}
+			$this->db->select('emp_depertment.*');
+			$this->data['department'] = $this->db->get('emp_depertment')->result();
+			$this->db->select('pr_units.*');
+			$this->data['unit'] = $this->db->get('pr_units')->result();
 
-		   $data['pr_section'] = $this->crud_model->getsec($secId);
-
-		   $this->load->view('sec_edit',$data);
-
+		   $this->data['emp_section'] = $this->crud_model->getsec($secId);
+		   $this->data['title'] = 'Edit Section';
+		   $this->data['username'] = $this->data['user_data']->id_number;
+		   $this->data['subview'] = 'setup/sec_edit';
+		   $this->load->view('layout/template', $this->data);
 		   }
 		   else
 		   {
-			   $this->crud_model->sec_edit($secId);
-			   $this->session->set_flashdata('success','Record Updated successfully!');
-				 //alert('Record adder successfully!');
-			   redirect('/setup_con/section');
+			$formArray = array(
+				'sec_name_en' => $this->input->post('sec_name_en'),
+				'sec_name_bn' => $this->input->post('sec_name_bn'),
+				'depertment_id' => $this->input->post('depertment_id'),
+				'unit_id' => $this->input->post('unit_id')
+			);
+			$this->db->where('id',$secId);
+			if($this->db->update('emp_section', $formArray)){
+				$this->session->set_flashdata('success','Record Updated successfully!');
+			}else{
+				$this->session->set_flashdata('failure','Record Update failed!');
+			}
+		   redirect(base_url().'index.php/setup_con/section');
 
 
 		   }
@@ -365,18 +399,153 @@ class Setup_con extends CI_Controller {
 		   $sec = $this->crud_model->getsec($secId);
 		   if (empty($sec)) {
 			   $this->session->set_flashdata('failure','Record Not Found in DataBase!');
-			   redirect('/setup_con/section');
-		   }
+			   redirect(base_url().'index.php/setup_con/section');
+			}
 		   $this->crud_model->sec_delete($secId);
 		   $this->session->set_flashdata('success','Record Deleted successfully!');
-			   redirect('/setup_con/section');
+		   redirect(base_url().'index.php/setup_con/section');
+	   }
+
+
+
+	//----------------------------------------------------------------------------------
+	// CRUD for Section END
+	//----------------------------------------------------------------------------------
+
+
+	//----------------------------------------------------------------------------------
+	// CRUD for LINE start
+	//----------------------------------------------------------------------------------
+
+
+	function line()
+	{
+	
+		$this->data['pr_line'] = $this->crud_model->line_infos();
+		$this->data['title'] = 'Line List';
+		$this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'setup/line_list';
+		$this->load->view('layout/template', $this->data);
+	}
+
+	function get_unit_s(){
+		$section_id=$_POST['section_id'];
+		$this->db->select('emp_section.*,pr_units.*');
+		$this->db->from('emp_section');
+		$this->db->join('pr_units','pr_units.unit_id=emp_section.unit_id');
+		$this->db->where('emp_section.id',$section_id);
+		$unit=$this->db->get()->result_array();
+		echo json_encode($unit);
+	}
+		
+	
+	function line_add(){
+
+		$this->load->library('form_validation');
+		$this->load->model('crud_model');
+		$this->form_validation->set_rules('line_name_en', 'Line English Name', 'trim|required');
+		$this->form_validation->set_rules('line_name_bn', 'Line Bangla Name', 'trim|required');
+		$this->form_validation->set_rules('section_id', 'Section', 'required');
+		$this->form_validation->set_rules('unit_id', 'Unit', 'required');
+
+
+		   if($this->form_validation->run() == false)
+		   {
+			   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+				$this->session->set_flashdata('failure', $this->form_validation->error_array());
+			}
+
+			$this->db->select('emp_section.*');
+			$this->data['emp_section'] = $this->db->get('emp_section')->result();
+			$this->data['title'] = 'Add Line';
+			$this->data['username'] = $this->data['user_data']->id_number;
+			$this->data['subview'] = 'setup/line_add';
+			$this->load->view('layout/template', $this->data);
+		   }
+		   else
+		   {
+		
+			 $formArray = array(
+				 'line_name_en' => $this->input->post('line_name_en'),
+				 'line_name_bn' => $this->input->post('line_name_bn'),
+				 'section_id' => $this->input->post('section_id'),
+				 'unit_id' => $this->input->post('unit_id')
+			 );
+			 
+			 if($this->db->insert('emp_line_num', $formArray)){
+				 $this->session->set_flashdata('success','Record adder successfully!');
+			 }else{
+				 $this->session->set_flashdata('failure','Record adder failed!');
+			 }
+			redirect(base_url().'index.php/setup_con/line');
+		   }
+
+	   }
+
+
+	   function line_edit($line_id)
+	   {
+		$this->load->library('form_validation');
+		$this->load->model('crud_model');
+		$this->form_validation->set_rules('line_name_en', 'Line English Name', 'trim|required');
+		$this->form_validation->set_rules('line_name_bn', 'Line Bangla Name', 'trim|required');
+		$this->form_validation->set_rules('section_id', 'Section', 'required');
+		$this->form_validation->set_rules('unit_id', 'Unit', 'required');
+
+
+		   if($this->form_validation->run() == false)
+		   {
+			   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+				$this->session->set_flashdata('failure', $this->form_validation->error_array());
+			}
+			$this->db->select('emp_section.*');
+			$this->data['emp_section'] = $this->db->get('emp_section')->result();
+
+		   $this->data['line'] = $this->crud_model->getline($line_id);
+		   $this->data['title'] = 'Edit Section';
+		   $this->data['username'] = $this->data['user_data']->id_number;
+		   $this->data['subview'] = 'setup/line_edit';
+		   $this->load->view('layout/template', $this->data);
+		   }
+		   else
+		   {
+			$formArray = array(
+				'line_name_en' => $this->input->post('line_name_en'),
+				'line_name_bn' => $this->input->post('line_name_bn'),
+				'section_id' => $this->input->post('section_id'),
+				'unit_id' => $this->input->post('unit_id')
+			);
+			$this->db->where('id',$line_id);
+			if($this->db->update('emp_line_num', $formArray)){
+				$this->session->set_flashdata('success','Record Updated successfully!');
+			}else{
+				$this->session->set_flashdata('failure','Record Update failed!');
+			}
+		   redirect(base_url().'index.php/setup_con/line');
+
+
+		   }
+
+
+	   }
+
+
+	   function line_delete($line_id)
+	   {
+		   $this->db->where('id',$line_id);
+		   $this->db->delete('emp_line_num');
+		   $this->session->set_flashdata('success','Record Deleted successfully!');
+		   redirect(base_url().'index.php/setup_con/line');
 	   }
 
 
 
 
 
-
+	
+	//----------------------------------------------------------------------------------
+	// CRUD for LINE end
+	//----------------------------------------------------------------------------------
 
 	// old code
 
@@ -458,10 +627,10 @@ class Setup_con extends CI_Controller {
 		$unit_id = $_POST['unit_id'];
 		if(!empty($id) && is_numeric($id))
 		{
-			$sec_name_old = $this->db->where("sec_id",$id)->get('pr_section')->row()->sec_name;
+			$sec_name_old = $this->db->where("sec_id",$id)->get('emp_section')->row()->sec_name;
 			$this->db->where("sec_name !=",$sec_name_old);
 		}
-		$num_row = $this->db->where('sec_name',$str)->where('unit_id',$unit_id)->get('pr_section')->num_rows();
+		$num_row = $this->db->where('sec_name',$str)->where('unit_id',$unit_id)->get('emp_section')->num_rows();
 		if ($num_row >= 1)
 		{
 			$this->form_validation->set_message('sec_name_check', $str.' already exists');
@@ -497,29 +666,7 @@ class Setup_con extends CI_Controller {
 	//-------------------------------------------------------------------------------------------------------
 	// CRUD for Line
 	//-------------------------------------------------------------------------------------------------------
-	function line($start=0)
-	{
-		$this->load->library('pagination');
-		$param = array();
-		$limit = 10;
-		$config['base_url'] = base_url()."index.php/setup_con/line/";
-		$config['per_page'] = $limit;
-		$this->load->model('crud_model');
-		$pr_line = $this->crud_model->line_infos($limit,$start);
-		$total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-		$config['total_rows'] = $total;
-		$config["uri_segment"] = 3;
-		 // $this->load->library('pagination');
-
-		 $this->pagination->initialize($config);
-		 $param['links'] = $this->pagination->create_links();
-
-		$param['pr_line'] = $pr_line;
-		 $this->load->view('line_list',$param);
-
-
-
-	}
+	
 	function line_name_check($str)
 	{
 		$unit_id = $_POST['unit_id'];
@@ -1000,7 +1147,7 @@ class Setup_con extends CI_Controller {
 				->display_as( 'allowance_time' , 'Time' );
 
 		//$crud->unset_delete();
-		$crud->set_relation_n_n('Section', 'pr_tiffin_allowance_level','pr_section','rules_id','sec_id','sec_name','priority');
+		$crud->set_relation_n_n('Section', 'pr_tiffin_allowance_level','emp_section','rules_id','sec_id','sec_name','priority');
 		//$crud->unset_add();
 		//$crud->change_field_type('emp_category','readonly');
 		$output = $crud->render();

@@ -1,3 +1,22 @@
+<script>
+  function showMessage(icon, message) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+    });
+    Toast.fire({
+        icon: icon,
+        title: message,
+    });
+}
+</script>
 
   <!-- BEGIN CORE JS FRAMEWORK-->
   <script src="<?=base_url()?>awedget/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
