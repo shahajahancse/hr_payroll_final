@@ -38,7 +38,7 @@ class Setup_con extends CI_Controller {
 		$condition = 0;
 		if ($this->input->get('request')) {
 			$query = $this->input->get('request');
-			$condition = "(pr_units.unit_name LIKE '" . $query . "%' OR pr_dept.dept_name LIKE '%" . $query . "%' OR pr_dept.dept_bangla LIKE '%" . $query . "%')";
+			$condition = "(pr_units.unit_name LIKE '" . $query . "%' OR emp_depertment.dept_name LIKE '%" . $query . "%' OR emp_depertment.dept_bangla LIKE '%" . $query . "%')";
 		}
 
 		$this->load->model('crud_model');
@@ -78,7 +78,7 @@ class Setup_con extends CI_Controller {
             	'unit_id' => $this->input->post('unit_id'),
             );
 
-			if ($this->db->insert('pr_dept',$formArray)) {
+			if ($this->db->insert('emp_depertment',$formArray)) {
 				$this->session->set_flashdata('success','Record adder successfully!');
 			} else {
 				$this->session->set_flashdata('failuer','Sorry!, Something wrong.');
@@ -105,7 +105,7 @@ class Setup_con extends CI_Controller {
 	 	if($this->form_validation->run() == false)
 		{
 			$this->db->where('dept_id',$deptId);
-        	$this->data['pr_dept'] = $this->db->get('pr_dept')->row();
+        	$this->data['pr_dept'] = $this->db->get('emp_depertment')->row();
 
         	$this->data['title'] = 'Update Department';
 			$this->data['username'] = $this->data['user_data']->id_number;
@@ -122,7 +122,7 @@ class Setup_con extends CI_Controller {
             	'unit_id' => $this->input->post('unit_id'),
             );
             $this->db->where('dept_id',$deptId);
-            $this->db->update('pr_dept',$formArray);
+            $this->db->update('emp_depertment',$formArray);
 
 			$this->session->set_flashdata('success','Record Updated successfully!');
 				//alert('Record adder successfully!');
@@ -133,12 +133,12 @@ class Setup_con extends CI_Controller {
 	// Department delete
 	function dept_delete($deptId)
 	{
-		$dept =  $this->db->where('dept_id',$deptId)->get('pr_dept')->row();
+		$dept =  $this->db->where('dept_id',$deptId)->get('emp_depertment')->row();
 		if (empty($dept)) {
 			$this->session->set_flashdata('failuer','Record Not Found in DataBase!');
 			redirect('setup_con/department');
 		}
-		$this->db->where('dept_id',$deptId)->delete('pr_dept');
+		$this->db->where('dept_id',$deptId)->delete('emp_depertment');
 		$this->session->set_flashdata('success','Record Deleted successfully!');
 			redirect('setup_con/department');
 	}
@@ -161,7 +161,7 @@ class Setup_con extends CI_Controller {
 		$condition = 0;
 		if ($this->input->get('request')) {
 			$query = $this->input->get('request');
-			$condition = "(pr_units.unit_name LIKE '" . $query . "%' OR pr_dept.dept_name LIKE '%" . $query . "%' OR pr_dept.dept_bangla LIKE '%" . $query . "%')";
+			$condition = "(pr_units.unit_name LIKE '" . $query . "%' OR emp_depertment.dept_name LIKE '%" . $query . "%' OR emp_depertment.dept_bangla LIKE '%" . $query . "%')";
 		}
 
 		$this->load->model('crud_model');
@@ -273,82 +273,9 @@ class Setup_con extends CI_Controller {
 
 
 
-	//----------------------------------------------------------------------------------
-	// CRUD for Section
-	//----------------------------------------------------------------------------------
-	function section($start=0)
-	{
-		// $this->load->library('pagination');
-		// $param = array();
-		// $limit = 10;
-		// $config['base_url'] = base_url()."index.php/setup_con/section/";
-		// $config['per_page'] = $limit;
-		// $this->load->model('crud_model');
-		// $pr_sec = $this->crud_model->sec_infos($limit,$start);
-		// $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-		// $config['total_rows'] = $total;
-		// $config["uri_segment"] = 3;
-		//  // $this->load->library('pagination');
-
-		//  $this->pagination->initialize($config);
-		//  $param['links'] = $this->pagination->create_links();
-
-		// $param['pr_sec'] = $pr_sec;
-
-		
-		$this->data['title'] = 'Section List';
-		$this->data['username'] = $this->data['user_data']->id_number;
-
-		$this->data['subview'] = 'setup/sec_list';
-		$this->load->view('layout/template', $this->data);
-	}
-	function sec_name_check($str)
-	{
-		$id = $this->uri->segment(4);
-		$unit_id = $_POST['unit_id'];
-		if(!empty($id) && is_numeric($id))
-		{
-			$sec_name_old = $this->db->where("sec_id",$id)->get('pr_section')->row()->sec_name;
-			$this->db->where("sec_name !=",$sec_name_old);
-		}
-		$num_row = $this->db->where('sec_name',$str)->where('unit_id',$unit_id)->get('pr_section')->num_rows();
-		if ($num_row >= 1)
-		{
-			$this->form_validation->set_message('sec_name_check', $str.' already exists');
-			return FALSE;
-		}
-		else
-		{
-			return true;
-		}
-	}
 
 
-	function floor_name_check($str)
-	{
-		$unit_id = $_POST['unit_id'];
-		$id = $this->uri->segment(4);
-		if(!empty($id) && is_numeric($id))
-		{
-			$line_name_old = $this->db->where("floor_name",$id)->get('pr_floor')->row()->line_name;
-			$this->db->where("floor_name !=",$line_namee_old);
-		}
-		$num_row = $this->db->where('floor_name',$str)->where('unit_id',$unit_id)->get('pr_floor')->num_rows();
-		if ($num_row >= 1)
-		{
-			$this->form_validation->set_message('floor_name_check', $str.' already exists');
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
 
-
-	//----------------------------------------------------------------------------------
-	// End CRUD Section
-	//----------------------------------------------------------------------------------
 
 
 
@@ -424,7 +351,73 @@ class Setup_con extends CI_Controller {
 
 	}
 
+	//-------------------------------------------------------------------------------------------------------
+	// CRUD for Section
+	//-------------------------------------------------------------------------------------------------------
+	function section($start=0)
+	{
+		$this->load->library('pagination');
+		$param = array();
+		$limit = 10;
+		$config['base_url'] = base_url()."index.php/setup_con/section/";
+		$config['per_page'] = $limit;
+		$this->load->model('crud_model');
+		$pr_sec = $this->crud_model->sec_infos($limit,$start);
+		$total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
+		$config['total_rows'] = $total;
+		$config["uri_segment"] = 3;
+		 // $this->load->library('pagination');
 
+		 $this->pagination->initialize($config);
+		 $param['links'] = $this->pagination->create_links();
+
+		$param['pr_sec'] = $pr_sec;
+
+		 $this->load->view('sec_list',$param);
+
+	}
+	function sec_name_check($str)
+	{
+		$id = $this->uri->segment(4);
+		$unit_id = $_POST['unit_id'];
+		if(!empty($id) && is_numeric($id))
+		{
+			$sec_name_old = $this->db->where("sec_id",$id)->get('pr_section')->row()->sec_name;
+			$this->db->where("sec_name !=",$sec_name_old);
+		}
+		$num_row = $this->db->where('sec_name',$str)->where('unit_id',$unit_id)->get('pr_section')->num_rows();
+		if ($num_row >= 1)
+		{
+			$this->form_validation->set_message('sec_name_check', $str.' already exists');
+			return FALSE;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+
+	function floor_name_check($str)
+	{
+		$unit_id = $_POST['unit_id'];
+		$id = $this->uri->segment(4);
+		if(!empty($id) && is_numeric($id))
+		{
+			$line_name_old = $this->db->where("floor_name",$id)->get('pr_floor')->row()->line_name;
+			$this->db->where("floor_name !=",$line_namee_old);
+		}
+		$num_row = $this->db->where('floor_name',$str)->where('unit_id',$unit_id)->get('pr_floor')->num_rows();
+		if ($num_row >= 1)
+		{
+			$this->form_validation->set_message('floor_name_check', $str.' already exists');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
 	//-------------------------------------------------------------------------------------------------------
 	// CRUD for Line
 	//-------------------------------------------------------------------------------------------------------
