@@ -16,13 +16,21 @@
         $acl = check_acl_list($user_id);
       ?>
 
+      <?php if(in_array(1,$acl)) { ?>
+      <li class="start <?= activate_class('emp_info_con') ?>"> <a href="javascript:;">
+        <span class="title">HRM</span> <span class="selected"></span> <span class="arrow <?= arrow_open('emp_info_con') ?>"></span> </a>
+        <ul class="sub-menu ">
+          <li class="start <?= activate_method('personal_info') ?>"> <a href="<?=base_url('emp_info_con/personal_info')?>" >Emp Information</a></li>
+        </ul>
+      </li>
+      <?php } ?>
+
       <?php if(in_array(2,$acl)) { ?>
       <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;">
         <span class="title">Setup Section </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setup_con') ?>"></span> </a>
         <ul class="sub-menu ">
 
           <li class="start <?= activate_method('department') ?>"> <a href="<?=base_url('setup_con/department')?>" class="anchor_cls">Department</a> </li>
-
           <li class="start "> <a href="<?=base_url('setup_con/section')?>" class="anchor_cls">Section</a> </li>
           <li class="start "> <a href="<?=base_url('setup_con/line')?>" class="anchor_cls">Line</a> </li>
           <li class="start "> <a href="<?=base_url('setup_con/designation')?>" class="anchor_cls">Designation</a> </li>
@@ -38,15 +46,6 @@
           <li class="start "> <a href="<?=base_url()?>setup_con/holiday_allowance_setup" class="anchor_cls">Holiday Allowance</a> </li>
 
           <li class="start <?= activate_method('post_office') ?>"> <a href="<?=base_url('setup_con/post_office')?>" class="anchor_cls">Post Office</a> </li>
-        </ul>
-      </li>
-      <?php } ?>
-
-      <?php if(in_array(2,$acl)) { ?>
-      <li class="start <?= activate_class('emp_info_con') ?>"> <a href="javascript:;">
-        <span class="title">HRM</span> <span class="selected"></span> <span class="arrow <?= arrow_open('emp_info_con') ?>"></span> </a>
-        <ul class="sub-menu ">
-          <li class="start <?= activate_method('personal_info_view1') ?>"> <a href="<?=base_url()?>emp_info_con/personal_info_view1" >Emp Information</a></li>
         </ul>
       </li>
       <?php } ?>
