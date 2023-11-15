@@ -364,6 +364,8 @@ $(document).ready(function () {
             console.log("Menu is already condensed");
         } else {
             if ($('#main-menu').hasClass('mini')) {
+                $('#company_info_menu').html('Company Information');
+
                 $('body').removeClass('grey');
                 $('#main-menu').removeClass('mini');
                 $('.page-content').removeClass('condensed');
@@ -373,6 +375,7 @@ $(document).ready(function () {
                 $('.header-seperation').css('height', '61px');
                 $('.footer-widget').show();
             } else {
+                $('#company_info_menu').html('');
                 $('body').addClass('grey');
                 $('#main-menu').addClass('mini');
                 $('.page-content').addClass('condensed');

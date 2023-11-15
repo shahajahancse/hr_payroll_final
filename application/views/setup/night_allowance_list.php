@@ -10,7 +10,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/tiffin_bill_add') ?>">Add Night  Allowance</a>
+                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/tiffin_bill_add') ?>">Add Night
+                    Allowance</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -54,24 +55,24 @@ if ($failuer) {
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
-                <h3 style="margin-top: 0px; margin-bottom: 8px;" >Night  Allowance List</h3>
+                <h3 style="margin-top: 0px; margin-bottom: 8px;">Night Allowance List</h3>
             </div>
             <div class="col-md-6 text-right">
                 <a href="<?=base_url('index.php/setup_con/tiffin_bill_add')?>" target='_blank' class="btn btn-info"
-                    role="button">Add Night  Allowance</a>
+                    role="button">Add Night Allowance</a>
             </div>
         </div>
     </div>
-    
+
     <!-- <br> -->
     <div class="row">
 
         <div class="col-md-12">
 
-        <table class="table table-striped" id="mytable">
+            <table class="table table-striped" id="mytable">
                 <thead>
                     <tr>
-                      <th>Sl</th>
+                        <th>Sl</th>
                         <th>Rules Name </th>
                         <th>Unit Name </th>
                         <th>Time </th>
@@ -79,12 +80,7 @@ if ($failuer) {
                     </tr>
                 </thead>
                 <tbody>
-
-
                     <?php
-                         // print_r($pr_line);exit('keno?');
-
-
                             if(!empty($allowance_night_rules)){ foreach($allowance_night_rules as $key => $night_allowance){?>
 
                     <tr>
