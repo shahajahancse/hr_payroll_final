@@ -47,7 +47,9 @@
   <script src="<?=base_url()?>awedget/assets/croper/js/main.js"></script>
 
   <!-- END CORE TEMPLATE JS -->
-  <!-- <script src="<?=base_url()?>awedget/assets/js/dashboard_v2.js" type="text/javascript"></script> -->
+  <script src="<?=base_url()?>js/common.js" type="text/javascript"></script>
+  
+
   <script type="text/javascript">
     $(document).ready(function () {
         // $(".live-tile,.flip-list").liveTile();
@@ -74,205 +76,201 @@
       }
     }
   </script>
-<script>
-  // $(function () {
-  //   CKEDITOR.replace('editor1');
-  // });
+  <script>
 
-
-  $(function() {
-    // Call SuperBox - that's it!
-    $('.superbox').SuperBox();
-  });
-
-
-    // Designation Dropdown
-    $('#office').change(function(){
-      $("#employee > option").remove();
-      var office_id = $('#office').val();
-      $.ajax({
-        type: "POST",
-        url: hostname +"common/ajax_get_employee_by_office/" + office_id,
-        success: function(func_data)
-        {
-          $.each(func_data['union'],function(id,ut_name)
-          {
-            var opt = $('<option />');
-            opt.val(id);
-            opt.text(ut_name);
-            $('#employee').append(opt);
-          });
-
-        }
-      });
-    });
-
-    // estimated Budget check
-    $(".exits").hide();
-    $('#checking_lrb').change(function(){
-      var fiscal_year = $('#checking_lrb').val();
-      $.ajax({
-        type: "POST",
-        url: hostname +"common/ajax_get_lrb_estimated_exits_by_fiscal_year/" + fiscal_year,
-        success: function(fiscal_year)
-        {
-          if(fiscal_year){
-            $(".used").hide();
-            $(".exits").show();
-          }else{
-            $(".exits").hide();
-            $(".used").show();
-          }
-        }
-      });
-    });
-    $('#checking_sa').change(function(){
-      var fiscal_year = $('#checking_sa').val();
-      $.ajax({
-        type: "POST",
-        url: hostname +"common/ajax_get_sa_estimated_exits_by_fiscal_year/" + fiscal_year,
-        success: function(fiscal_year)
-        {
-          if(fiscal_year){
-            $(".used").hide();
-            $(".exits").show();
-          }else{
-            $(".exits").hide();
-            $(".used").show();
-          }
-        }
-      });
-    });
-    $('#checking_la').change(function(){
-      var fiscal_year = $('#checking_la').val();
-      $.ajax({
-        type: "POST",
-        url: hostname +"common/ajax_get_la_estimated_exits_by_fiscal_year/" + fiscal_year,
-        success: function(fiscal_year)
-        {
-          if(fiscal_year){
-            $(".used").hide();
-            $(".exits").show();
-          }else{
-            $(".exits").hide();
-            $(".used").show();
-          }
-        }
-      });
-    });
-
-    $('#checking_upazila').change(function(){
-      var fiscal_year = $('#checking_upazila').val();
-      $.ajax({
-        type: "POST",
-        url: hostname +"common/ajax_get_upazila_estimated_exits_by_fiscal_year/" + fiscal_year,
-        success: function(fiscal_year)
-        {
-          if(fiscal_year){
-            $(".used").hide();
-            $(".exits").show();
-          }else{
-            $(".exits").hide();
-            $(".used").show();
-          }
-        }
-      });
-    });
-
-    $('#checking_circle').change(function(){
-      var fiscal_year = $('#checking_circle').val();
-      $.ajax({
-        type: "POST",
-        url: hostname +"common/ajax_get_circle_estimated_exits_by_fiscal_year/" + fiscal_year,
-        success: function(fiscal_year)
-        {
-          if(fiscal_year){
-            $(".used").hide();
-            $(".exits").show();
-          }else{
-            $(".exits").hide();
-            $(".used").show();
-          }
-        }
-      });
-    });
-
-    $('#checking_union').change(function(){
-      var fiscal_year = $('#checking_union').val();
-      $.ajax({
-        type: "POST",
-        url: hostname +"common/ajax_get_union_estimated_exits_by_fiscal_year/" + fiscal_year,
-        success: function(fiscal_year)
-        {
-          if(fiscal_year){
-            $(".used").hide();
-            $(".exits").show();
-          }else{
-            $(".exits").hide();
-            $(".used").show();
-          }
-        }
-      });
+    $(function() {
+      // Call SuperBox - that's it!
+      $('.superbox').SuperBox();
     });
 
 
-    // Jquery Onload
-    $(document).ready(function() {
-      // console.log( "run!" );
-
-      //Datepicker
-      $('.datetime').datepicker({
-        format: "dd-mm-yyyy",
-        autoclose: true
-      });
-
-
-
-
-      $('#letter_form_submit').on('click',function(){
-        //alert("hh");
-        var division_id = $('#division').val();
-        if(division_id == null || typeof(division_id) == 'undefined' || division_id == '')division_id = '0';
-
-        var district_id = $('#district').val();
-        if(district_id == null || typeof(district_id) == 'undefined' || district_id == '')district_id = '0';
-
-        var upazila_id = $('#upazila').val();
-        if(upazila_id == null || typeof(upazila_id) == 'undefined' || upazila_id == '')upazila_id = '0';
-
-        var union_id = $('#union').val();
-        if(union_id == null || typeof(union_id) == 'undefined' || union_id == '')union_id = '0';
-
-        var office_id = $('#offices').val();
-        if(office_id == null || typeof(office_id) == 'undefined' || office_id == '')office_id = '0';
-
-        var budget_fiscal_year_id = $('#budget_fiscal_year').val();
-        if(budget_fiscal_year_id == null || typeof(budget_fiscal_year_id) == 'undefined' || budget_fiscal_year_id == '')budget_fiscal_year_id = '0';
-
-        var budget_file_id = $('#budget_files').val();
-        if(budget_file_id == null || typeof(budget_file_id) == 'undefined' || budget_file_id == '')budget_file_id = '0';
+      // Designation Dropdown
+      $('#office').change(function(){
+        $("#employee > option").remove();
+        var office_id = $('#office').val();
         $.ajax({
           type: "POST",
-          url: "budget_setting/budget_letter_add/",
-          data: { "division_id": division_id, "district_id": district_id, "upazila_id" : upazila_id, "union_id" : union_id, "office_id" : office_id, "budget_fiscal_year_id" : budget_fiscal_year_id, "budget_file_id" : budget_file_id },
-          success: function(data)
+          url: hostname +"common/ajax_get_employee_by_office/" + office_id,
+          success: function(func_data)
+          {
+            $.each(func_data['union'],function(id,ut_name)
             {
+              var opt = $('<option />');
+              opt.val(id);
+              opt.text(ut_name);
+              $('#employee').append(opt);
+            });
 
-            }
-          });
+          }
+        });
       });
-    });
 
-function loadOffices(data){
-   $.each(data,function(id,name)
-    {
-      var opt = $('<option />');
-      opt.val(id);
-      opt.text(name);
-      $('.office_val').append(opt);
-    });
-}
-</script>
+      // estimated Budget check
+      $(".exits").hide();
+      $('#checking_lrb').change(function(){
+        var fiscal_year = $('#checking_lrb').val();
+        $.ajax({
+          type: "POST",
+          url: hostname +"common/ajax_get_lrb_estimated_exits_by_fiscal_year/" + fiscal_year,
+          success: function(fiscal_year)
+          {
+            if(fiscal_year){
+              $(".used").hide();
+              $(".exits").show();
+            }else{
+              $(".exits").hide();
+              $(".used").show();
+            }
+          }
+        });
+      });
+      $('#checking_sa').change(function(){
+        var fiscal_year = $('#checking_sa').val();
+        $.ajax({
+          type: "POST",
+          url: hostname +"common/ajax_get_sa_estimated_exits_by_fiscal_year/" + fiscal_year,
+          success: function(fiscal_year)
+          {
+            if(fiscal_year){
+              $(".used").hide();
+              $(".exits").show();
+            }else{
+              $(".exits").hide();
+              $(".used").show();
+            }
+          }
+        });
+      });
+      $('#checking_la').change(function(){
+        var fiscal_year = $('#checking_la').val();
+        $.ajax({
+          type: "POST",
+          url: hostname +"common/ajax_get_la_estimated_exits_by_fiscal_year/" + fiscal_year,
+          success: function(fiscal_year)
+          {
+            if(fiscal_year){
+              $(".used").hide();
+              $(".exits").show();
+            }else{
+              $(".exits").hide();
+              $(".used").show();
+            }
+          }
+        });
+      });
+
+      $('#checking_upazila').change(function(){
+        var fiscal_year = $('#checking_upazila').val();
+        $.ajax({
+          type: "POST",
+          url: hostname +"common/ajax_get_upazila_estimated_exits_by_fiscal_year/" + fiscal_year,
+          success: function(fiscal_year)
+          {
+            if(fiscal_year){
+              $(".used").hide();
+              $(".exits").show();
+            }else{
+              $(".exits").hide();
+              $(".used").show();
+            }
+          }
+        });
+      });
+
+      $('#checking_circle').change(function(){
+        var fiscal_year = $('#checking_circle').val();
+        $.ajax({
+          type: "POST",
+          url: hostname +"common/ajax_get_circle_estimated_exits_by_fiscal_year/" + fiscal_year,
+          success: function(fiscal_year)
+          {
+            if(fiscal_year){
+              $(".used").hide();
+              $(".exits").show();
+            }else{
+              $(".exits").hide();
+              $(".used").show();
+            }
+          }
+        });
+      });
+
+      $('#checking_union').change(function(){
+        var fiscal_year = $('#checking_union').val();
+        $.ajax({
+          type: "POST",
+          url: hostname +"common/ajax_get_union_estimated_exits_by_fiscal_year/" + fiscal_year,
+          success: function(fiscal_year)
+          {
+            if(fiscal_year){
+              $(".used").hide();
+              $(".exits").show();
+            }else{
+              $(".exits").hide();
+              $(".used").show();
+            }
+          }
+        });
+      });
+
+
+      // Jquery Onload
+      $(document).ready(function() {
+        // console.log( "run!" );
+
+        //Datepicker
+        $('.datetime').datepicker({
+          format: "dd-mm-yyyy",
+          autoclose: true
+        });
+
+
+
+
+        $('#letter_form_submit').on('click',function(){
+          //alert("hh");
+          var division_id = $('#division').val();
+          if(division_id == null || typeof(division_id) == 'undefined' || division_id == '')division_id = '0';
+
+          var district_id = $('#district').val();
+          if(district_id == null || typeof(district_id) == 'undefined' || district_id == '')district_id = '0';
+
+          var upazila_id = $('#upazila').val();
+          if(upazila_id == null || typeof(upazila_id) == 'undefined' || upazila_id == '')upazila_id = '0';
+
+          var union_id = $('#union').val();
+          if(union_id == null || typeof(union_id) == 'undefined' || union_id == '')union_id = '0';
+
+          var office_id = $('#offices').val();
+          if(office_id == null || typeof(office_id) == 'undefined' || office_id == '')office_id = '0';
+
+          var budget_fiscal_year_id = $('#budget_fiscal_year').val();
+          if(budget_fiscal_year_id == null || typeof(budget_fiscal_year_id) == 'undefined' || budget_fiscal_year_id == '')budget_fiscal_year_id = '0';
+
+          var budget_file_id = $('#budget_files').val();
+          if(budget_file_id == null || typeof(budget_file_id) == 'undefined' || budget_file_id == '')budget_file_id = '0';
+          $.ajax({
+            type: "POST",
+            url: "budget_setting/budget_letter_add/",
+            data: { "division_id": division_id, "district_id": district_id, "upazila_id" : upazila_id, "union_id" : union_id, "office_id" : office_id, "budget_fiscal_year_id" : budget_fiscal_year_id, "budget_file_id" : budget_file_id },
+            success: function(data)
+              {
+
+              }
+            });
+        });
+      });
+
+    function loadOffices(data){
+       $.each(data,function(id,name)
+        {
+          var opt = $('<option />');
+          opt.val(id);
+          opt.text(name);
+          $('.office_val').append(opt);
+        });
+    }
+  </script>
 
 <script>
       setTimeout(function() {

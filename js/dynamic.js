@@ -1,13 +1,31 @@
-/*!
- * Ext JS Library 3.3.1
- * Copyright(c) 2006-2010 Sencha Inc.
- * licensing@sencha.com
- * http://www.sencha.com/license
- */
 
-// Sample desktop configuration
-// <!--
-//Browser Support Code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// old code
 
 var eempid=null;
 var personalinfo = new Array();
@@ -2091,55 +2109,6 @@ ajaxRequest.onreadystatechange = function(){
 }
 }
 
-/*function com_info_delete(){
- var ajaxRequest;  // The variable that makes Ajax possible!
-
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
- // Create a function that will receive data
- // sent from the server and will update
- // div section in the same page.
-
- // Now get the value from user and pass it to
- // server script.
- var com_empid = document.getElementById("com_empid").value;
- if(com_empid=='' || com_empid==null){
- 	alert("Please insert employee ID");
- }
- else
- {
-
-	var queryString="com_empid="+com_empid;
-
-	ajaxRequest.open("POST", "com_info_delete/", true);
- 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
- 	ajaxRequest.send(queryString);
-
-ajaxRequest.onreadystatechange = function(){
-	if(ajaxRequest.readyState == 4){
-		var resp = ajaxRequest.responseText;
-		alert(resp);
-	}
-}
-
-
-}
-}*/
 function com_basic_sal_cal(){
    var ajaxRequest;  // The variable that makes Ajax possible!
 
@@ -2180,44 +2149,6 @@ function com_basic_sal_cal(){
 	// var com_hrent = Math.round(com_bsal * 0.5);
    var com_hrent = Math.round(com_gsal - (mallow + trans_allow + lunch_allow + com_bsal));
 	document.getElementById('com_hrent').value = com_hrent;
-	//==================================LOCAL Salary Rule===================================
-}
-function basic_sal_cal(){
-   var ajaxRequest;  // The variable that makes Ajax possible!
-
-   try{
-      // Opera 8.0+, Firefox, Safari
-      ajaxRequest = new XMLHttpRequest();
-   }catch (e){
-      // Internet Explorer Browsers
-      try{
-         ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-      }catch (e) {
-         try{
-            ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-         }catch (e){
-            // Something went wrong
-            alert("Your browser broke!");
-            return false;
-         }
-      }
-   }
- 	var gsal = document.getElementById('gsal').value;
-	//==================================BGMEA Salary Rule===================================
-	var mallow = 600;
-   var trans_allow = 350;
-   var lunch_allow = 900;
-
-   document.getElementById('mallow').value = mallow;
-   document.getElementById('transport_allow').value = trans_allow;
-	document.getElementById('lunch_allow').value = lunch_allow;
-
-	var bsal = Math.round((gsal - (mallow + trans_allow + lunch_allow)) / 1.5);
-	document.getElementById('bsal').value = bsal;
-
-	// var hrent = Math.round(bsal * 0.5);
-   var hrent = Math.round(gsal - (mallow + trans_allow + lunch_allow + bsal));
-	document.getElementById('hrent').value = hrent;
 	//==================================LOCAL Salary Rule===================================
 }
 
