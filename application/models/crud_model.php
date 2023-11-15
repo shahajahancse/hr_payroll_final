@@ -314,15 +314,16 @@ class Crud_model extends CI_Model{
 
      function getsec($secId)
     {
-        $this->db->where('sec_id',$secId);
-        return $this->db->get('pr_section')->row();
+        $this->db->where('id',$secId);
+        return $this->db->get('emp_section')->row();
     }
 
     function sec_infos()
     {
-        $this->db->select('SQL_CALC_FOUND_ROWS pr_section.*,pr_units.unit_name,pr_units.unit_name_bangla', false);
-        $this->db->from('pr_section');
-        $this->db->join('pr_units','pr_units.unit_id = pr_section.unit_id');
+        $this->db->select('SQL_CALC_FOUND_ROWS emp_section.*,pr_units.unit_name,pr_units.unit_name_bangla', false);
+        $this->db->from('emp_section');
+        $this->db->join('pr_units','pr_units.unit_id = emp_section.unit_id');
+        $this->db->order_by('id','desc');
         // $this->db->limit($limit,$start);
         return $this->db->get()->result_array();
     }
@@ -354,7 +355,7 @@ class Crud_model extends CI_Model{
             );
             // print_r($comData);exit('obaydullah');
 
-              $this->db->insert('pr_section',$comData);
+              $this->db->insert('emp_section',$comData);
 
         }
 
@@ -372,14 +373,14 @@ class Crud_model extends CI_Model{
              $formArray['unit_id'] = $this->input->post('sec');
 
              $this->db->where('sec_id',$secId);
-             $this->db->update('pr_section',$formArray);
+             $this->db->update('emp_section',$formArray);
 
         }
 
      function sec_delete($secId)
         {
-            $this->db->where('sec_id',$secId);
-            $this->db->delete('pr_section');
+            $this->db->where('id',$secId);
+            $this->db->delete('emp_section');
         }
 
 
@@ -391,16 +392,15 @@ class Crud_model extends CI_Model{
 
      function getline($lineId)
     {
-        $this->db->where('line_id',$lineId);
-        return $this->db->get('pr_line_num')->row();
+        $this->db->where('id',$lineId);
+        return $this->db->get('emp_line_num')->row();
     }
 
-    function line_infos($limit,$start)
+    function line_infos()
     {
-        $this->db->select('SQL_CALC_FOUND_ROWS pr_line_num.*,pr_units.unit_name', false);
-        $this->db->from('pr_line_num');
-        $this->db->join('pr_units','pr_units.unit_id = pr_line_num.unit_id');
-        // $this->db->limit($limit,$start);
+        $this->db->select('SQL_CALC_FOUND_ROWS emp_line_num.*,pr_units.unit_name', false);
+        $this->db->from('emp_line_num');
+        $this->db->join('pr_units','pr_units.unit_id = emp_line_num.unit_id');
         return $this->db->get()->result_array();
     }
 
@@ -429,7 +429,7 @@ class Crud_model extends CI_Model{
             );
             // print_r($comData);exit('obaydullah');
 
-              $this->db->insert('pr_line_num',$comData);
+              $this->db->insert('emp_line_num',$comData);
 
         }
 
@@ -447,14 +447,14 @@ class Crud_model extends CI_Model{
 
              $this->db->where('line_id',$lineId);
              // echo $lineId;exit('khalid');
-             $this->db->update('pr_line_num',$formArray);
+             $this->db->update('emp_line_num',$formArray);
 
         }
 
      function line_delete($lineId)
         {
             $this->db->where('line_id',$lineId);
-            $this->db->delete('pr_line_num');
+            $this->db->delete('emp_line_num');
         }
 
 

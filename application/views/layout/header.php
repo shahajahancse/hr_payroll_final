@@ -42,6 +42,9 @@
   <link rel="stylesheet" href="<?php echo base_url('css/dataTables.min.css'); ?>">
   <script src="<?php echo base_url('/js/dataTables.min.js') ?>"></script>
     <!--/.data table-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
 
   <script type="text/javascript">var hostname='<?=base_url()?>';</script>
 
