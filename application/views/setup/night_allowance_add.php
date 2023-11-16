@@ -10,11 +10,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Update Holyday/Weekend Allowance</a>
+                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/night_allowance_setup')?>">Back To
+                    List</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
+                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con')?>">Home</a></li>
                 </ul>
 
             </div>
@@ -22,14 +23,23 @@
         </div>
         <!--/.container-fluid -->
     </nav>
-    <?php
-
+    <div class="row">
+        <div class="col-md-12">
+            <?php
+          $success = $this->session->flashdata('success');
+          if ($success != "") {
+           ?>
+            <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php
+            }
             $failuer = $this->session->flashdata('failure');
             ?>
+        </div>
+    </div>
 
-    <h3>Update Holyday/Weekend Allowance</h3>
+    <h3>Create Night Allowance</h3>
     <hr>
-    <form action="<?= base_url('index.php/setup_con/weekend_allowance_edit').'/'.$attbn->id?> " enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('index.php/setup_con/night_allowance_add')?>" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -37,7 +47,7 @@
                         <option value="">Select Unit</option>
                         <?php foreach ($pr_units as $key => $value) {
                     ?>
-                        <option value="<?php echo $value->unit_id; ?>" <?= ($value->unit_id == $attbn->unit_id) ? 'selected' : '' ?>><?php echo $value->unit_name; ?></option>
+                        <option value="<?php echo $value->unit_id; ?>"><?php echo $value->unit_name; ?></option>
                         <?php } ?>
                     </select>
                     <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
@@ -45,19 +55,25 @@
                 <div class="form-group">
 
                     <label>Rule Name</label>
-                    <input type="text" name="rule_name" value="<?php echo $attbn->rule_name; ?>" placeholder="Rule Name" class="form-control">
+                    <input type="text" name="rule_name" value="" placeholder="Rule Name" class="form-control">
                     <?=(isset($failuer['rule_name'])) ? '<div class="alert alert-failuer">' . $failuer['rule_name'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
-                    <label>Rule</label>
-                    <input type="text" name="rule" value="<?php echo $attbn->allowance_amount; ?>" placeholder="Amount" class="form-control">
+
+                    <label>Night Time</label>
+                    <input type="time" name="night_time" value="" placeholder="Night Time" class="form-control">
+                    <?=(isset($failuer['night_time'])) ? '<div class="alert alert-failuer">' . $failuer['night_time'] . '</div>' : ''; ?>
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="text" name="rule" value="" placeholder="Amount" class="form-control">
                     <?=(isset($failuer['rule'])) ? '<div class="alert alert-failuer">' . $failuer['rule'] . '</div>' : ''; ?>
                 </div>
                 <br>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary ">Submit</button></button>
-                    <a href="<?php echo base_url('index.php/setup_con/attendance_bonus') ?>" class="btn-warning btn">Cancel</a>
+                    <a href="<?= base_url('index.php/setup_con/night_allowance_setup') ?>" class="btn-warning btn">Cancel</a>
                 </div>
             </div>
         </div>

@@ -144,7 +144,7 @@ table.dataTable.no-footer {
                             if(!empty($pr_holiday_allowance_rules)){ foreach($pr_holiday_allowance_rules as $holiday_allowance){?>
 
                                 <tr>
-                                    <td><?php echo $holiday_allowance['rules_name'] ?></td>
+                                    <td><?php echo $holiday_allowance['rule_name'] ?></td>
                                     <td><?php echo $holiday_allowance['unit_name'] ?></td>
                                     <td><?php echo $holiday_allowance['allowance_amount'] ?></td>
                                     <td><?php echo $holiday_allowance['desig_name'] ?></td>

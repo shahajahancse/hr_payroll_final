@@ -91,7 +91,7 @@ if ($failuer) {
 
                     <tr>
                         <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $pr_lines['rules_name'] ?></td>
+                        <td><?php echo $pr_lines['rule_name'] ?></td>
                         <td><?php echo $pr_lines['allowance_amount'] ?></td>
                         <td><?php echo $pr_lines['unit_name'] ?></td>
                         <td>

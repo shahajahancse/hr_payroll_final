@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/tiffin_bill_add') ?>">Add Tiffin Bill  Allowance</a>
+                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/designation_add') ?>">Add Designation</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -54,11 +54,11 @@ if ($failuer) {
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
-                <h3 style="margin-top: 0px; margin-bottom: 8px;">Tiffin Bill  Allowance List</h3>
+                <h3 style="margin-top: 0px; margin-bottom: 8px;">Designation List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/tiffin_bill_add')?>" target='_blank' class="btn btn-info"
-                    role="button">Add Tiffin Bill  Allowance</a>
+                <a href="<?=base_url('index.php/setup_con/designation_add')?>" target='_blank' class="btn btn-info"
+                    role="button">Add Designation</a>
             </div>
         </div>
     </div>
@@ -71,40 +71,56 @@ if ($failuer) {
             <table class="table table-striped" id="mytable">
                 <thead>
                     <tr>
-                        <th>SL</th>
-                        <th>Rule Name</th>
-                        <th>Allowance Amount</th>
-                        <th>Unit name</th>
+                    <!-- [id] => 1
+            [desig_name] => A P M
+            [desig_bangla] => 
+            [unit_id] => 1
+            [attn_id] => 0
+            [holiday_weekend_id] => 0
+            [iftar_id] => 0
+            [night_al_id] => 0
+            [tiffin_id] => 0
+            [unit_name] => A J FASHIONS LTD.
+            [allowance_attn_bonus] => none
+            [allowance_holiday_weekend] => none
+            [allowance_iftar] => none
+            [allowance_night_rules] => none
+            [allowance_tiffin] => none -->
+                        <th>Sl</th>
+                        <th>Designation Name </th>
+                        <th>Unit Name </th>
+                        <th>Attendance Bonus</th>
+                        <th>Holiday Weekend Allowance </th>
+                        <th>Iftar Allowance </th>
+                        <th>Night Allowance </th>
+                        <th>Tiffin Allowance </th>
                         <th width="80">Edit</th>
                         <th>Delete</th>
-
                     </tr>
                 </thead>
-
-                </thead>
-
                 <tbody>
-
                     <?php
-
-                  if (!empty($allowance_tiffin_bill)) {foreach ($allowance_tiffin_bill as $key => $pr_lines) {?>
+                            if(!empty($emp_designation)){ foreach($emp_designation as $key => $data){?>
 
                     <tr>
-                        <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $pr_lines['rule_name'] ?></td>
-                        <td><?php echo $pr_lines['allowance_amount'] ?></td>
-                        <td><?php echo $pr_lines['unit_name'] ?></td>
+                        <td><?php echo $key+1?></td>
+                        <td><?php echo $data['desig_name'] ?></td>
+                        <td><?php echo $data['unit_name'] ?></td>
+                        <td><?php echo $data['allowance_attn_bonus'] ?></td>
+                        <td><?php echo $data['allowance_holiday_weekend'] ?></td>
+                        <td><?php echo $data['allowance_iftar'] ?></td>
+                        <td><?php echo $data['allowance_night_rules'] ?></td>
+                        <td><?php echo $data['allowance_tiffin'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/tiffin_bill_edit') . '/' . $pr_lines["id"]?>"
+                            <a href="<?=base_url('index.php/setup_con/designation_edit') . '/' . $data["id"]?>"
                                 target='_blank' class="btn btn-primary" role="button">Edit</a>
                         </td>
-
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/tiffin_bill_delete') . '/' . $pr_lines["id"]?>"
+                            <a href="<?=base_url('index.php/setup_con/designation_delete') . '/' . $data["id"]?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
-                    <?php }} else {?>
+                    <?php } }else{?>
 
                     <tr>
                         <td colspan="12">Records not Found</td>

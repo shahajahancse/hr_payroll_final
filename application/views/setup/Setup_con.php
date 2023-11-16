@@ -652,7 +652,7 @@ class Setup_con extends CI_Controller
         } else {
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
-                'rules_name' => $this->input->post('rule_name'),
+                'rule_name' => $this->input->post('rule_name'),
                 'allowance_amount' => $this->input->post('rule'),
             );
             if ($this->db->insert('allowance_holiday_weekend_rules', $formArray)) {
@@ -689,7 +689,7 @@ class Setup_con extends CI_Controller
         } else {
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
-                'rules_name' => $this->input->post('rule_name'),
+                'rule_name' => $this->input->post('rule_name'),
                 'allowance_amount' => $this->input->post('rule'),
             );
             $this->db->where('id', $id);
@@ -755,7 +755,7 @@ class Setup_con extends CI_Controller
         } else {
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
-                'rules_name' => $this->input->post('rule_name'),
+                'rule_name' => $this->input->post('rule_name'),
                 'allowance_amount' => $this->input->post('rule'),
             );
             if ($this->db->insert('allowance_tiffin_bill', $formArray)) {
@@ -792,7 +792,7 @@ class Setup_con extends CI_Controller
         } else {
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
-                'rules_name' => $this->input->post('rule_name'),
+                'rule_name' => $this->input->post('rule_name'),
                 'allowance_amount' => $this->input->post('rule'),
             );
             $this->db->where('id', $id);
@@ -1309,8 +1309,8 @@ return TRUE;
 
         $crud->set_table('pr_tiffin_allowance_rules');
         $crud->set_subject('Tiffin Allowance Rules');
-        $crud->required_fields('rules_name', 'allowance_amount', 'allowance_time');
-        $crud->display_as('rules_name', 'Rules Name')
+        $crud->required_fields('rule_name', 'allowance_amount', 'allowance_time');
+        $crud->display_as('rule_name', 'Rules Name')
             ->display_as('allowance_amount', 'Amount')
             ->display_as('allowance_time', 'Time');
 

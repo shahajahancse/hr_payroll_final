@@ -45,7 +45,7 @@
                 <div class="form-group">
 
                     <label>Rule Name</label>
-                    <input type="text" name="rule_name" value="<?php echo $attbn->rules_name; ?>" placeholder="Rule Name" class="form-control">
+                    <input type="text" name="rule_name" value="<?php echo $attbn->rule_name; ?>" placeholder="Rule Name" class="form-control">
                     <?=(isset($failuer['rule_name'])) ? '<div class="alert alert-failuer">' . $failuer['rule_name'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">

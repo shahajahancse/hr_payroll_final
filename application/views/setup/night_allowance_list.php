@@ -58,7 +58,7 @@ if ($failuer) {
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Night Allowance List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/tiffin_bill_add')?>" target='_blank' class="btn btn-info"
+                <a href="<?=base_url('index.php/setup_con/night_allowance_add')?>" target='_blank' class="btn btn-info"
                     role="button">Add Night Allowance</a>
             </div>
         </div>
@@ -77,6 +77,8 @@ if ($failuer) {
                         <th>Unit Name </th>
                         <th>Time </th>
                         <th>Night Allowance</th>
+                        <th width="80">Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,10 +87,19 @@ if ($failuer) {
 
                     <tr>
                         <td><?php echo $key+1?></td>
-                        <td><?php echo $night_allowance['rules_name'] ?></td>
+                        <td><?php echo $night_allowance['rule_name'] ?></td>
                         <td><?php echo $night_allowance['unit_name'] ?></td>
                         <td><?php echo $night_allowance['night_time'] ?></td>
                         <td><?php echo $night_allowance['night_allowance'] ?></td>
+                        <td>
+                            <a href="<?=base_url('index.php/setup_con/night_allowance_edit') . '/' . $night_allowance["id"]?>"
+                                target='_blank' class="btn btn-primary" role="button">Edit</a>
+                        </td>
+
+                        <td>
+                            <a href="<?=base_url('index.php/setup_con/night_allowance_delete') . '/' . $night_allowance["id"]?>"
+                                class="btn btn-danger" role="button">Delete</a>
+                        </td>
                     </tr>
                     <?php } }else{?>
 

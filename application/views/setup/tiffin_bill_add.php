@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/iftar_bill_list')?>">Back To
+                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/tiffin_bill')?>">Back To
                     List</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
@@ -37,9 +37,9 @@
         </div>
     </div>
 
-    <h3>Create Iftar Allowance</h3>
+    <h3>Create Tiffin Allowance</h3>
     <hr>
-    <form action="<?= base_url('index.php/setup_con/iftar_bill_add')?>" enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('index.php/setup_con/tiffin_bill_add')?>" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
