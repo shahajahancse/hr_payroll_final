@@ -98,40 +98,43 @@ class Processdb extends CI_Model{
 			'exp_designation'	=> $this->input->post('exp_designation'),
 			'personal_mobile'	=> $this->input->post('personal_mobile'),
 			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
-			'img_source'		=> $img,
 		);
 
 		if($this->db->insert('pr_emp_com_info', $data))
 		{
 			$per_data['emp_id'] = $this->db->insert_id();
+
+			$img ="";
 			if($_FILES["img_source"]["name"] != '')
 			{
-				$config['upload_path'] = './uploads/photo/';
-				$config['allowed_types'] = '*';
-				$config['max_size']	= '4000';
-				$config['max_width']  = '5000';
-				$config['max_height']  = '7000';
-				$this->load->library('upload', $config);
-				if ( ! $this->upload->do_upload())
+				$imgs = explode('.', $_FILES["img_source"]["name"]);
+				$ext = end($imgs);
+
+				$config['upload_path']    = './uploads/photo';
+	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['file_name'] 	  =  $per_data['emp_id'] .'.'. $ext;
+				$config['max_size']	 	  = '4000';
+				$config['max_width']  	  = '5000';
+				$config['max_height']     = '7000';
+	        	$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				if ( ! $this->upload->do_upload('img_source'))
 				{
 					$error = array('error' => $this->upload->display_errors());
 					echo $error["error"];
 				}
 				else
 				{
-					$data = array('upload_data' => $this->upload->data());
-					$img = $data["upload_data"]["file_name"];
+					$img_upload = array('upload_data' => $this->upload->data());
+					$img = $img_upload["upload_data"]["file_name"];
 				}
-			}
-			else
-			{
-				$img ="";
-			}
-			$per_data = $img;
-			$this->db->insert('pr_emp_per_info', $per_data);
-			exit('ppp');
 
-			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Inserted Successfully.'); window.location='personal_info_view1';</SCRIPT>";
+			}
+
+			$per_data['img_source'] = $img;
+			$this->db->insert('pr_emp_per_info', $per_data);
+
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Inserted Successfully.'); window.location='personal_info';</SCRIPT>";
 		} else {
 		  echo "FAILED" ;
 		  return ;

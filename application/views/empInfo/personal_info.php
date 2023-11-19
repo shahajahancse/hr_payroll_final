@@ -669,44 +669,53 @@
 	          </div>	
 	        </div>
 
-          <h3 style="font-weight: 600;">Experience</h3>
+          <h3 style="font-weight: 600;">Experience And Photo</h3>
 	        <hr style="margin-bottom: 0px !important;">
 	        <div style="background-color: white; padding: 15px !important;">
 	          <div class="row">
-	            <div class="col-md-3">
-	              <div class="form-group">
-	                <label>Exp. Factory Name <span style="color: red;">*</span> </label>
-	                <?php echo form_error('exp_factory_name');?>
-	                <input type="text" name="exp_factory_name" id="exp_factory_name" class="form-control input-sm" required>
-	              </div>
-	            </div>
-	            <div class="col-md-3">
-	              <div class="form-group">
-	                <label>Exp, Duration <span style="color: red;">*</span> </label>
-	                <?php echo form_error('exp_duration');?>
-	                <input type="text" name="exp_duration" id="exp_duration" class="form-control input-sm" required>
-	              </div>
-	            </div>
-	            <?php $desig = $this->db->get('emp_designation')->result(); ?>
-	            <div class="col-md-3">
-	              <div class="form-group">
-	                <label>Designation<span style="color: red;">*</span> </label>
-	                <?php echo form_error('exp_designation');?>	                
-	                <select name="exp_designation" id= "exp_designation" class="form-control input-sm" required>
-	                	<option value="">-- Select --</option>
-	                	<?php foreach ($desig as $key => $row) { ?>
-		                  <option value="<?= $row->desig_id ?>"><?= $row->desig_name; ?></option>
-	                	<?php } ?>
-		              </select>
-	              </div>
-	            </div>
-	            <div class="col-md-3">
-	              <div class="form-group">
-	                <label>Image<span style="color: red;">*</span> </label>
-	                <?php echo form_error('img_source');?>	                
-	                <input type="file" name="img_source" id="img_source" class="form-control" style="height: 35px !important; line-height: 20px !important;">
-	              </div>
-	            </div>
+	          	<div class="col-md-9">
+		            <div class="col-md-6">
+		              <div class="form-group">
+		                <label>Exp. Factory Name <span style="color: red;">*</span> </label>
+		                <?php echo form_error('exp_factory_name');?>
+		                <input type="text" name="exp_factory_name" id="exp_factory_name" class="form-control input-sm" required>
+		              </div>
+		            </div>
+		            <div class="col-md-6">
+		              <div class="form-group">
+		                <label>Exp, Duration <span style="color: red;">*</span> </label>
+		                <?php echo form_error('exp_duration');?>
+		                <input type="text" name="exp_duration" id="exp_duration" class="form-control input-sm" required>
+		              </div>
+		            </div>
+
+		            <?php $desig = $this->db->get('emp_designation')->result(); ?>
+		            <div class="col-md-6">
+		              <div class="form-group">
+		                <label>Designation<span style="color: red;">*</span> </label>
+		                <?php echo form_error('exp_designation');?>	                
+		                <select name="exp_designation" id= "exp_designation" class="form-control input-sm" required>
+		                	<option value="">-- Select --</option>
+		                	<?php foreach ($desig as $key => $row) { ?>
+			                  <option value="<?= $row->desig_id ?>"><?= $row->desig_name; ?></option>
+		                	<?php } ?>
+			              </select>
+		              </div>
+		            </div>
+		            <div class="col-md-6">
+		              <div class="form-group">
+		                <label>Image<span style="color: red;">*</span> </label>
+		                <?php echo form_error('img_source');?>	                
+		                <input type="file" name="img_source" id="img_source" class="form-control" style="height: 35px !important; line-height: 20px !important;">
+		              </div>
+		            </div>
+							</div>
+	          	<div class="col-md-3">
+		            <div class="col-12">
+	                <label>Employee Photo</label>
+	                <img id="image" style="max-height: 100%; max-width: 100%;" src="" alt="image">
+		            </div>
+							</div>
 	          </div>
 	        </div>
 

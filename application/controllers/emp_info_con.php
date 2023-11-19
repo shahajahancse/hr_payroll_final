@@ -38,7 +38,7 @@ class Emp_info_con extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('unit_id', 'Unit', 'trim|required');
 		$this->form_validation->set_rules('emp_id', 'Employee ID', 'trim|required');
-		$this->form_validation->set_rules('proxi_id', 'Punch ID', 'trim|required|is_unique[pr_emp_com_info.proxi_id]');
+		$this->form_validation->set_rules('proxi_id', 'Punch ID', 'trim');  //|is_unique[pr_emp_com_info.proxi_id]
 		$this->form_validation->set_rules('name_en', 'Employee Name', 'trim|required');
 		$this->form_validation->set_rules('name_bn', 'Employee Bangla Name', 'trim|required');
 		$this->form_validation->set_rules('mother_name', 'Employee Mother\'s Name', 'trim|required');
@@ -110,13 +110,12 @@ class Emp_info_con extends CI_Controller {
 
 			} elseif($this->input->post('pi_edit') != ''){
 				if($this->processdb->updatedb1()) {
-					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info_view1';</SCRIPT>";
+					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info';</SCRIPT>";
 				}
 			} else {
-				echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Error Occurred'); window.location='personal_info_view1';</SCRIPT>";
+				echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Error Occurred'); window.location='personal_info';</SCRIPT>";
 			}
 		} else {
-			dd("redirect");
 			redirect(base_url('emp_info_con/personal_info'));
 		}
 	}
