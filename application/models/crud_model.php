@@ -468,22 +468,22 @@ class Crud_model extends CI_Model{
      function getdesig($desigId)
     {
         $this->db->where('desig_id',$desigId);
-        return $this->db->get('pr_designation')->row();
+        return $this->db->get('emp_designation')->row();
     }
 
     function desig_infos($limit,$start)
     {
-        $this->db->select('pr_designation.*,pr_units.unit_name');
-        $this->db->from('pr_designation');
-        $this->db->join('pr_units','pr_units.unit_id = pr_designation.unit_id');
+        $this->db->select('emp_designation.*,pr_units.unit_name');
+        $this->db->from('emp_designation');
+        $this->db->join('pr_units','pr_units.unit_id = emp_designation.unit_id');
         // $this->db->limit(10);
         // $this->db->limit($limit,$start);
         $query = $this->db->get()->result_array();
         // print_r($query);exit('ali');
         return $query;
-        /*$this->db->select('pr_designation.*,pr_units.unit_name');
-        $this->db->from('pr_designation');
-        $this->db->join('pr_units','pr_units.unit_id = pr_designation.unit_id');
+        /*$this->db->select('emp_designation.*,pr_units.unit_name');
+        $this->db->from('emp_designation');
+        $this->db->join('pr_units','pr_units.unit_id = emp_designation.unit_id');
         return $this->db->get()->result_array();*/
     }
 
@@ -510,7 +510,7 @@ class Crud_model extends CI_Model{
             );
             // print_r($comData);exit('obaydullah');
 
-              $this->db->insert('pr_designation',$comData);
+              $this->db->insert('emp_designation',$comData);
 
         }
 
@@ -524,14 +524,14 @@ class Crud_model extends CI_Model{
              $formArray['unit_id'] = $this->input->post('desig');
 
              $this->db->where('desig_id',$desigId);
-             $this->db->update('pr_designation',$formArray);
+             $this->db->update('emp_designation',$formArray);
 
         }
 
      function desig_delete($desigId)
         {
             $this->db->where('desig_id',$desigId);
-            $this->db->delete('pr_designation');
+            $this->db->delete('emp_designation');
         }
 
 
@@ -544,8 +544,8 @@ class Crud_model extends CI_Model{
 
      function getattbn($attbnId)
     {
-        $this->db->where('ab_id',$attbnId);
-        return $this->db->get('pr_attn_bonus')->row();
+        $this->db->where('id',$attbnId);
+        return $this->db->get('allowance_attn_bonus')->row();
     }
 
     function attbn_infos($limit,$start)
@@ -940,7 +940,7 @@ class Crud_model extends CI_Model{
         $this->db->from('pr_weekend_allowance_rules rules');
         $this->db->join('pr_units units','units.unit_id = rules.unit_id','LEFT');
         $this->db->join('pr_weekend_allowance_level level','level.rules_id = rules.rules_id','LEFT');
-        $this->db->join('pr_designation desig','desig.desig_id = level.desig_id','LEFT');
+        $this->db->join('emp_designation desig','desig.desig_id = level.desig_id','LEFT');
         // $this->db->limit($limit,$start);
         $query = $this->db->get()->result_array();
         // print_r($query);exit('ali');
@@ -954,13 +954,11 @@ class Crud_model extends CI_Model{
     //==============================Night Allowence============================//
 
 
-    function nightallowence_infos($limit,$start){
-        $this->db->select('SQL_CALC_FOUND_ROWS rules.*,units.unit_name,desig.desig_name', false);
-
-        $this->db->from('pr_night_allowance_rules rules');
+    function nightallowence_infos(){
+        $this->db->select('SQL_CALC_FOUND_ROWS rules.*,units.unit_name', false);
+        $this->db->from('allowance_night_rules rules');
         $this->db->join('pr_units units','units.unit_id = rules.unit_id','LEFT');
         $this->db->join('pr_night_allowance_level level','level.rules_id = rules.rules_id','LEFT');
-        $this->db->join('pr_designation desig','desig.desig_id = level.desig_id','LEFT');
         // $this->db->limit($limit,$start);
         return $this->db->get()->result_array();
     }
@@ -976,7 +974,7 @@ class Crud_model extends CI_Model{
         $this->db->from('pr_holiday_allowance_rules rules');
         $this->db->join('pr_units units','units.unit_id = rules.unit_id','LEFT');
         $this->db->join('pr_holiday_allowance_level level','level.rules_id = rules.rules_id','LEFT');
-        $this->db->join('pr_designation desig','desig.desig_id = level.desig_id','LEFT');
+        $this->db->join('emp_designation desig','desig.desig_id = level.desig_id','LEFT');
         return $this->db->get()->result_array();
     }
 

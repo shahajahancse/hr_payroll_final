@@ -816,408 +816,8 @@ class Setup_con extends CI_Controller
     }
 
     //----------------------------------------------------------------------------------
-    // CRUD for Tiffin Bill end
+    // CRUD for holiday/weekend allowance end
     //----------------------------------------------------------------------------------
-
-
-    public function iftar_bill_setup()
-    {
-		$this->db->select('allowance_iftar_bill.*,pr_units.unit_name');
-		$this->db->from('allowance_iftar_bill');
-		$this->db->join('pr_units', 'pr_units.unit_id=allowance_iftar_bill.unit_id');
-        $this->data['allowance_iftar_bill'] = $this->db->get()->result_array();
-        $this->data['title'] = 'Attendance Bonus List';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/iftar_bill_list';
-        $this->load->view('layout/template', $this->data);
-    }
-
-
-
-    public function iftar_bill_add()
-    {
-
-        $this->load->library('form_validation');
-        $this->load->model('crud_model');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
-        $this->form_validation->set_rules('rule', 'Amount', 'required');
-
-        if ($this->form_validation->run() == false) {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $this->session->set_flashdata('failure', $this->form_validation->error_array());
-            }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
-            $this->data['title'] = 'Add Holyday/Weekend Allowance';
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'setup/iftar_bill_add';
-            $this->load->view('layout/template', $this->data);
-        } else {
-            $formArray = array(
-                'unit_id' => $this->input->post('unit_id'),
-                'rule_name' => $this->input->post('rule_name'),
-                'allowance_amount' => $this->input->post('rule'),
-            );
-            if ($this->db->insert('allowance_iftar_bill', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
-            }
-            redirect(base_url() . 'index.php/setup_con/iftar_bill_setup');
-        }
-
-    }
-
-    public function iftar_bill_edit($id)
-    {
-        $this->load->library('form_validation');
-        $this->load->model('crud_model');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
-        $this->form_validation->set_rules('rule', 'Amount', 'required');
-
-        if ($this->form_validation->run() == false) {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $this->session->set_flashdata('failure', $this->form_validation->error_array());
-            }
-			$this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
-
-            $this->db->where('id', $id);
-            $this->data['attbn'] = $this->db->get('allowance_iftar_bill')->row($id);
-            $this->data['title'] = 'Edit Holyday/Weekend Allowance';
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'setup/iftar_bill_edit';
-            $this->load->view('layout/template', $this->data);
-        } else {
-            $formArray = array(
-                'unit_id' => $this->input->post('unit_id'),
-                'rule_name' => $this->input->post('rule_name'),
-                'allowance_amount' => $this->input->post('rule'),
-            );
-            $this->db->where('id', $id);
-            if ($this->db->update('allowance_iftar_bill', $formArray)) {
-                $this->session->set_flashdata('success', 'Record Updated successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record Update failed!');
-            }
-            redirect(base_url() . 'index.php/setup_con/iftar_bill_setup');
-
-        }
-
-    }
-
-    public function iftar_bill_delete($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('allowance_iftar_bill');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/iftar_bill_setup');
-    }
-
-    //----------------------------------------------------------------------------------
-    // CRUD for Ifter end
-    //----------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------
-    // CRUD for Night Allowance Start
-    //----------------------------------------------------------------------------------
-    public function night_allowance_setup()
-    {
-		$this->db->select('allowance_night_rules.*,pr_units.unit_name');
-		$this->db->from('allowance_night_rules');
-		$this->db->join('pr_units', 'pr_units.unit_id=allowance_night_rules.unit_id');
-        $this->data['allowance_night_rules'] = $this->db->get()->result_array();
-        $this->data['title'] = 'Night Allowance List';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/night_allowance_list';
-        $this->load->view('layout/template', $this->data);
-    }
-
-
-
-    public function night_allowance_add()
-    {
-        $this->load->library('form_validation');
-        $this->load->model('crud_model');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
-        $this->form_validation->set_rules('rule', 'Amount', 'required');
-        $this->form_validation->set_rules('night_time', 'Time', 'required');
-
-
-        if ($this->form_validation->run() == false) {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $this->session->set_flashdata('failure', $this->form_validation->error_array());
-            }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
-            $this->data['title'] = 'Add Night Allowance';
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'setup/night_allowance_add';
-            $this->load->view('layout/template', $this->data);
-        } else {
-            $formArray = array(
-                'unit_id' => $this->input->post('unit_id'),
-                'rule_name' => $this->input->post('rule_name'),
-                'night_allowance' => $this->input->post('rule'),
-                'night_time' => $this->input->post('night_time'),
-            );
-            if ($this->db->insert('allowance_night_rules', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
-            }
-            redirect(base_url() . 'index.php/setup_con/night_allowance_setup');
-        }
-
-    }
-
-    public function night_allowance_edit($id)
-    {
-        $this->load->library('form_validation');
-        $this->load->model('crud_model');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
-        $this->form_validation->set_rules('rule', 'Amount', 'required');
-        $this->form_validation->set_rules('night_time', 'Time', 'required');
-
-        if ($this->form_validation->run() == false) {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $this->session->set_flashdata('failure', $this->form_validation->error_array());
-            }
-			$this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
-
-            $this->db->where('id', $id);
-            $this->data['attbn'] = $this->db->get('allowance_night_rules')->row($id);
-            $this->data['title'] = 'Edit Night Allowance';
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'setup/night_allowance_edit';
-            $this->load->view('layout/template', $this->data);
-        } else {
-            $formArray = array(
-                'unit_id' => $this->input->post('unit_id'),
-                'rule_name' => $this->input->post('rule_name'),
-                'night_allowance' => $this->input->post('rule'),
-                'night_time' => $this->input->post('night_time'),
-            );
-            $this->db->where('id', $id);
-            if ($this->db->update('allowance_night_rules', $formArray)) {
-                $this->session->set_flashdata('success', 'Record Updated successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record Update failed!');
-            }
-            redirect(base_url() . 'index.php/setup_con/night_allowance_setup');
-
-        }
-
-    }
-    public function night_allowance_delete($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('allowance_night_rules');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/night_allowance_setup');
-    }
-    //----------------------------------------------------------------------------------
-    // CRUD for Night Allowance end
-    //----------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------
-    // CRUD for Night Allowance Start
-    //----------------------------------------------------------------------------------
-    public function designation()
-    {
-        $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name, 
-        IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus, 
-        IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend, 
-        IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar, 
-        IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules, 
-        IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin');
-        $this->db->from('emp_designation');
-        $this->db->join('pr_units', 'pr_units.unit_id=emp_designation.unit_id', 'left');
-        $this->db->join('allowance_attn_bonus', 'allowance_attn_bonus.id=emp_designation.attn_id', 'left');
-        $this->db->join('allowance_holiday_weekend_rules', 'allowance_holiday_weekend_rules.id=emp_designation.holiday_weekend_id', 'left');
-        $this->db->join('allowance_iftar_bill', 'allowance_iftar_bill.id=emp_designation.iftar_id', 'left');
-        $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
-        $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
-$this->data['emp_designation'] = $this->db->get()->result_array();
-// dd($this->data['emp_designation']);
-        $this->data['title'] = 'Designation List';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/desig_list';
-        $this->load->view('layout/template', $this->data);
-    }
-
-    public function get_data_degi()
-    {
-        $unit_id = $_POST['unit_id'];
-    
-        $data = [];
-    
-        $data['attn_bonus'] = $this->db->where('allowance_attn_bonus.unit_id', $unit_id)
-                                       ->get('allowance_attn_bonus')
-                                       ->result_array();
-    
-        $data['holiday_weekend'] = $this->db->where('allowance_holiday_weekend_rules.unit_id', $unit_id)
-                                             ->get('allowance_holiday_weekend_rules')
-                                             ->result_array();
-    
-        $data['iftar'] = $this->db->where('allowance_iftar_bill.unit_id', $unit_id)
-                                  ->get('allowance_iftar_bill')
-                                  ->result_array();
-    
-        $data['night'] = $this->db->where('allowance_night_rules.unit_id', $unit_id)
-                                  ->get('allowance_night_rules')
-                                  ->result_array();
-    
-        $data['tiffin'] = $this->db->where('allowance_tiffin_bill.unit_id', $unit_id)
-                                   ->get('allowance_tiffin_bill')
-                                   ->result_array();
-    
-        echo json_encode($data);
-    }
-
-
-
-    public function designation_add()
-    {
-        $this->load->library('form_validation');
-        $this->load->model('crud_model');
-        $this->form_validation->set_rules('desig_name', 'Designation Name English', 'required');
-        $this->form_validation->set_rules('desig_bangla', 'Designation Bangla', 'required');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('attn_id', 'Attendence Bonus', 'required');
-        $this->form_validation->set_rules('holiday_weekend_id', 'Holiday Weekend', 'required');
-        $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
-        $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
-        $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
-
-
-
-
-        if ($this->form_validation->run() == false) {
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-                $this->session->set_flashdata('failure', $this->form_validation->error_array());
-            
-            }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
-            $this->data['title'] = 'Add Designation';
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'setup/desig_add';
-            $this->load->view('layout/template', $this->data);
-        } else {
-            // dd($_POST);
-            // Array
-            // (
-            //     [desig_name] => Hello
-            //     [desig_bangla] => hi
-            //     [unit_id] => 1
-            //     [attn_id] => 9
-            //     [holiday_weekend_id] => 8
-            //     [iftar_id] => 8
-            //     [night_al_id] => 22
-            //     [tiffin_id] => 0
-            // )
-            $formArray = array(
-                'unit_id' => $this->input->post('unit_id'),
-                'desig_name' => $this->input->post('desig_name'),
-                'desig_bangla' => $this->input->post('desig_bangla'),
-                'attn_id' => $this->input->post('attn_id'),
-                'holiday_weekend_id' => $this->input->post('holiday_weekend_id'),
-                'iftar_id' => $this->input->post('iftar_id'),
-                'night_al_id' => $this->input->post('night_al_id'),
-                'tiffin_id' => $this->input->post('tiffin_id'),
-            );
-            if ($this->db->insert('emp_designation', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
-            }
-            redirect(base_url() . 'index.php/setup_con/designation');
-        }
-
-    }
-
-    public function designation_edit($id)
-    {
-        $this->load->library('form_validation');
-        $this->load->model('crud_model');
-        $this->form_validation->set_rules('desig_name', 'Designation Name English', 'required');
-        $this->form_validation->set_rules('desig_bangla', 'Designation Bangla', 'required');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('attn_id', 'Attendence Bonus', 'required');
-        $this->form_validation->set_rules('holiday_weekend_id', 'Holiday Weekend', 'required');
-        $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
-        $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
-        $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
-
-        if ($this->form_validation->run() == false) {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $this->session->set_flashdata('failure', $this->form_validation->error_array());
-            }
-			$this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
-
-            $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name, 
-            IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus, 
-            IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend, 
-            IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar, 
-            IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules, 
-            IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin');
-            $this->db->from('emp_designation');
-            $this->db->join('pr_units', 'pr_units.unit_id=emp_designation.unit_id', 'left');
-            $this->db->join('allowance_attn_bonus', 'allowance_attn_bonus.id=emp_designation.attn_id', 'left');
-            $this->db->join('allowance_holiday_weekend_rules', 'allowance_holiday_weekend_rules.id=emp_designation.holiday_weekend_id', 'left');
-            $this->db->join('allowance_iftar_bill', 'allowance_iftar_bill.id=emp_designation.iftar_id', 'left');
-            $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
-            $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
-            $this->db->where('emp_designation.id', $id);
-    $this->data['emp_designation'] = $this->db->get()->row();
-
-            $this->data['title'] = 'Edit Designation';
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'setup/desig_edit';
-            $this->load->view('layout/template', $this->data);
-        } else {
-            $formArray = array(
-                'unit_id' => $this->input->post('unit_id'),
-                'desig_name' => $this->input->post('desig_name'),
-                'desig_bangla' => $this->input->post('desig_bangla'),
-                'attn_id' => $this->input->post('attn_id'),
-                'holiday_weekend_id' => $this->input->post('holiday_weekend_id'),
-                'iftar_id' => $this->input->post('iftar_id'),
-                'night_al_id' => $this->input->post('night_al_id'),
-                'tiffin_id' => $this->input->post('tiffin_id'),
-            );
-            $this->db->where('id', $id);
-            if ($this->db->update('emp_designation', $formArray)) {
-                $this->session->set_flashdata('success', 'Record Updated successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record Update failed!');
-            }
-            redirect(base_url() . 'index.php/setup_con/designation');
-
-        }
-
-    }
-    public function designation_delete($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('emp_designation');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/designation');
-    }
-    //----------------------------------------------------------------------------------
-    // CRUD for Night Allowance end
-    //----------------------------------------------------------------------------------
-
-
 
     // old code
 
@@ -1348,7 +948,67 @@ $this->data['emp_designation'] = $this->db->get()->result_array();
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Designation
     //-------------------------------------------------------------------------------------------------------
-   
+    public function designation($start = 0)
+    {
+
+        $this->load->library('pagination');
+        $param = array();
+        $limit = 10;
+        $config['base_url'] = base_url() . "index.php/setup_con/designation/";
+        $config['per_page'] = $limit;
+        /*$config['num_links'] = 5;*/
+        $config['total_rows'] = $this->db->get('pr_designation')->num_rows();
+        $config["uri_segment"] = 3;
+        // $this->load->library('pagination');
+
+        $this->pagination->initialize($config);
+        $param['links'] = $this->pagination->create_links();
+        $this->load->model('crud_model');
+        $pr_designation = $this->crud_model->desig_infos($limit, $start);
+        // print_r($pr_designation);exit('ali');
+
+        $param['pr_designation'] = $pr_designation;
+        /* echo "<pre>";
+        print_r($param);exit('mafiz'); */
+        $this->load->view('desig_list', $param);
+
+        /*$this->load->model('crud_model');
+    $data['pr_designation'] = $this->crud_model->desig_infos();
+    // print_r($pr_designation);exit('ali');
+
+    // $this->pagination_bootstrap->offset(10);
+    // $data['pr_designation'] = $this->pagination_bootstrap->config("setup_con/designation",$pr_designation);
+    // print_r($data['pr_designation']);exit('mafiz');
+    // $data['pr_designation'] =
+
+    $this->load->library('pagination');
+
+    $config['base_url'] = base_url('setup_con/designation');
+    $config['total_rows'] = count($data['pr_designation']);
+    $config['per_page'] = 20;
+
+    $config['full_tag_open'] = "<ul class='pagination'>";
+    $config['full_tag_close'] ="</ul>";
+    $config['num_tag_open'] = '<li>';
+    $config['num_tag_close'] = '</li>';
+    $config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+    $config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+    $config['next_tag_open'] = "<li>";
+    $config['next_tagl_close'] = "</li>";
+    $config['prev_tag_open'] = "<li>";
+    $config['prev_tagl_close'] = "</li>";
+    $config['first_tag_open'] = "<li>";
+    $config['first_tagl_close'] = "</li>";
+    $config['last_tag_open'] = "<li>";
+    $config['last_tagl_close'] = "</li>";
+
+    $this->pagination->initialize($config);
+
+    $data['pagginations'] = $this->pagination->create_links();
+
+    $this->load->view('desig_list',$data);*/
+
+    }
 
     public function desig_name_check($str)
     {
@@ -1585,7 +1245,30 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Night Allowance Setup
     //-------------------------------------------------------------------------------------------------------
-  
+    public function night_allowance_setup($start = 0)
+    {
+
+        $this->load->model('crud_model');
+        $this->load->library('pagination');
+        $param = array();
+        $limit = 10;
+        $config['base_url'] = base_url() . "index.php/setup_con/night_allowance_setup/";
+        $config['per_page'] = $limit;
+        $pr_night_allowance_rules = $this->crud_model->nightallowence_infos($limit, $start);
+        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
+        $config['total_rows'] = $total;
+        $config["uri_segment"] = 3;
+        // $this->load->library('pagination');
+
+        $this->pagination->initialize($config);
+        $param['links'] = $this->pagination->create_links();
+
+        $param['pr_night_allowance_rules'] = $pr_night_allowance_rules;
+
+        // print_r($pr_night_allowance_rules);exit('ali');
+        $this->load->view('night_allowance_list', $param);
+
+    }
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Holiday Allowance Setup
     //-------------------------------------------------------------------------------------------------------

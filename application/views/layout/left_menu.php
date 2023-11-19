@@ -51,7 +51,7 @@
       <?php } ?>
 
           
-      <li class="start"> <a href="<?=base_url('setup_con/company_info_setup')?>" class="anchor_cls">Company Information</a> </li>
+      <li class="start"> <a href="<?=base_url('setup_con/company_info_setup')?>" class="anchor_cls" id="company_info_menu">Company Information</a> </li>
 
       <li class="start"> <a href="javascript:;" > <i class="fa fa-users"></i> <span class="title">HRM</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu ">
