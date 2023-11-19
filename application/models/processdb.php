@@ -11,6 +11,138 @@ class Processdb extends CI_Model{
 		$this->load->model('common_model');
 	}
 
+	//==================================Employee Information Insert==============================
+	//=========================================================================================
+	function insert_emp_info()
+	{
+		if($this->input->post('emp_id') == '')
+		{
+			return ;
+		}
+
+		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
+		$data = array(
+			'emp_id'			=> $this->input->post('emp_id'),
+			'unit_id'			=> $this->input->post('unit_id'),
+			'emp_dept_id'  		=> $this->input->post('emp_dept_id'),
+			'emp_sec_id' 		=> $this->input->post('emp_sec_id'),
+			'emp_line_id' 		=> $this->input->post('emp_line_id'),
+			'emp_desi_id'  		=> $this->input->post('emp_desi_id'),
+
+			'emp_sal_gra_id'  	=> $this->input->post('emp_sal_gra_id'),
+			'emp_cat_id'		=> $this->input->post('emp_cat_id'),
+			'proxi_id'			=> $this->input->post('proxi_id'),
+			'emp_shift'  		=> $this->input->post('emp_shift'),
+			'gross_sal'			=> $this->input->post('gross_sal'),
+			'com_gross_sal'		=> $this->input->post('gross_sal'),
+
+			'ot_entitle'		=> $this->input->post('ot_entitle'),
+			'lunch'				=> $this->input->post('lunch'),
+			'transport'			=> $this->input->post('transport'),
+			'salary_draw'		=> $this->input->post('salary_draw'),
+			'salary_type'		=> $this->input->post('salary_type'),
+			'emp_join_date'		=> $ejd,
+		);
+
+		$dob = date("Y-m-d", strtotime($this->input->post('emp_dob')));
+		$per_data = array(
+			'name_en' 			=> $this->input->post('name_en'),
+			'name_bn' 			=> $this->input->post('name_bn'),
+			'father_name' 		=> $this->input->post('father_name'),
+			'mother_name' 		=> $this->input->post('mother_name'),
+			'per_village'		=> $this->input->post('per_village'),
+			'per_village_bn'	=> $this->input->post('per_village_bn'),
+
+			'per_post'			=> $this->input->post('per_post'),
+			'per_thana'			=> $this->input->post('per_thana'),
+			'per_district'		=> $this->input->post('per_district'),
+			'pre_home_owner'	=> $this->input->post('pre_home_owner'),
+			'holding_num'		=> $this->input->post('holding_num'),
+			'home_own_mobile'	=> $this->input->post('home_own_mobile'),
+
+			'pre_village'		=> $this->input->post('pre_village'),
+			'pre_village_bn'	=> $this->input->post('pre_village_bn'),
+			'pre_post'			=> $this->input->post('pre_post'),
+			'pre_thana'			=> $this->input->post('pre_thana'),
+			'pre_district'		=> $this->input->post('pre_district'),
+			'spouse_name' 		=> $this->input->post('spouse_name'),
+
+			'emp_dob' 			=> $dob,
+			'gender' 			=> $this->input->post('gender'),
+			'marital_status' 	=> $this->input->post('marital_status'),
+			'religion'  		=> $this->input->post('religion'),
+			'blood'  			=> $this->input->post('blood'),
+			'm_child'			=> $this->input->post('m_child'),
+
+			'f_child'			=> $this->input->post('f_child'),
+			'nominee_name'		=> $this->input->post('nominee_name'),
+			'nominee_vill'		=> $this->input->post('nominee_vill'),
+			'nomi_post'			=> $this->input->post('nomi_post'),
+			'nomi_thana'		=> $this->input->post('nomi_thana'),
+			'nomi_district'		=> $this->input->post('nomi_district'),
+
+			'nomi_age'			=> $this->input->post('nomi_age'),
+			'nomi_mobile'		=> $this->input->post('nomi_mobile'),
+			'nomi_relation'		=> $this->input->post('nomi_relation'),
+			'refer_name'		=> $this->input->post('refer_name'),
+			'refer_address'		=> $this->input->post('refer_address'),
+			'refer_mobile'		=> $this->input->post('refer_mobile'),
+
+			'refer_relation'	=> $this->input->post('refer_relation'),
+			'education'			=> $this->input->post('education'),
+			'nid_dob_id'		=> $this->input->post('nid_dob_id'),
+			'nid_dob_check'		=> $this->input->post('nid_dob_check'),
+			'exp_factory_name'	=> $this->input->post('exp_factory_name'),
+			'exp_duration'		=> $this->input->post('exp_duration'),
+
+			'exp_designation'	=> $this->input->post('exp_designation'),
+			'personal_mobile'	=> $this->input->post('personal_mobile'),
+			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
+			'img_source'		=> $img,
+		);
+
+		if($this->db->insert('pr_emp_com_info', $data))
+		{
+			$per_data['emp_id'] = $this->db->insert_id();
+			if($_FILES["img_source"]["name"] != '')
+			{
+				$config['upload_path'] = './uploads/photo/';
+				$config['allowed_types'] = '*';
+				$config['max_size']	= '4000';
+				$config['max_width']  = '5000';
+				$config['max_height']  = '7000';
+				$this->load->library('upload', $config);
+				if ( ! $this->upload->do_upload())
+				{
+					$error = array('error' => $this->upload->display_errors());
+					echo $error["error"];
+				}
+				else
+				{
+					$data = array('upload_data' => $this->upload->data());
+					$img = $data["upload_data"]["file_name"];
+				}
+			}
+			else
+			{
+				$img ="";
+			}
+			$per_data = $img;
+			$this->db->insert('pr_emp_per_info', $per_data);
+			exit('ppp');
+
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Inserted Successfully.'); window.location='personal_info_view1';</SCRIPT>";
+		} else {
+		  echo "FAILED" ;
+		  return ;
+		}
+	}
+
+
+
+
+
+
 	//==================================Employee Information View==============================
 	//=========================================================================================
 

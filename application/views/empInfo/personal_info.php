@@ -51,7 +51,7 @@
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>	Punch Card No. <span style="color: red;">*</span> </label>
-	                <input type="text" name="proxi_id" id="proxi_id" class="form-control input-sm" required>
+	                <input type="text" name="proxi_id" id="proxi_id" readonly class="form-control input-sm" required>
 	                <?php echo form_error('proxi_id');?>
 	              </div>
 	            </div>
@@ -299,14 +299,14 @@
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Village Name (English) <span style="color: red;">*</span> </label>
-	                <input type="text" name="per_village" class="form-control input-sm" required>
+	                <input type="text" name="per_village" id="per_village" class="form-control input-sm" required>
 	                <?php echo form_error('per_village');?>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Village Name (Bangla) <span style="color: red;">*</span> </label>
-	                <input type="text" name="per_district" class="form-control input-sm" required>
+	                <input type="text" name="per_village_bn" id="per_village_bn" class="form-control input-sm" required>
 	                <?php echo form_error('per_village_bn');?>
 	              </div>
 	            </div>
@@ -673,14 +673,14 @@
 	        <hr style="margin-bottom: 0px !important;">
 	        <div style="background-color: white; padding: 15px !important;">
 	          <div class="row">
-	            <div class="col-md-4">
+	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Exp. Factory Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('exp_factory_name');?>
 	                <input type="text" name="exp_factory_name" id="exp_factory_name" class="form-control input-sm" required>
 	              </div>
 	            </div>
-	            <div class="col-md-4">
+	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Exp, Duration <span style="color: red;">*</span> </label>
 	                <?php echo form_error('exp_duration');?>
@@ -688,7 +688,7 @@
 	              </div>
 	            </div>
 	            <?php $desig = $this->db->get('emp_designation')->result(); ?>
-	            <div class="col-md-4">
+	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Designation<span style="color: red;">*</span> </label>
 	                <?php echo form_error('exp_designation');?>	                
@@ -700,6 +700,13 @@
 		              </select>
 	              </div>
 	            </div>
+	            <div class="col-md-3">
+	              <div class="form-group">
+	                <label>Image<span style="color: red;">*</span> </label>
+	                <?php echo form_error('img_source');?>	                
+	                <input type="file" name="img_source" id="img_source" class="form-control" style="height: 35px !important; line-height: 20px !important;">
+	              </div>
+	            </div>
 	          </div>
 	        </div>
 
@@ -708,7 +715,8 @@
             <div class="col-md-12">
               <div class="form-group pull-right">
                 <a href=""class="btn-warning btn">Cancel</a>
-                <button class="btn btn-primary">Create</button>
+                <input class="btn btn-success" type="submit" name="pi_edit" id="pi_edit" value="EDIT">
+                <input class="btn btn-primary" type="submit" name="pi_save" value="SAVE">
               </div>
             </div>
           </div>
@@ -722,7 +730,14 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
-      //Line dropdown
+      //Designation dropdown
+      $('#emp_id').change(function(){
+        var emp_id = $('#emp_id').val();
+        $("#proxi_id").empty();
+        $('#proxi_id').val(emp_id);
+      });
+
+      //Designation dropdown
       $('#emp_line_id').change(function(){
         $('.emp_desi_id').addClass('form-control input-sm');
         $(".emp_desi_id > option").remove();
@@ -790,7 +805,52 @@
         });
       });
 
-      //division dropdown
+      //nominee Upazila dropdown
+      $('#nomi_district').change(function(){
+        $('.nomi_thana').addClass('form-control input-sm');
+        $(".nomi_thana > option").remove();
+        $(".nomi_post > option").remove();
+        var id = $('#nomi_district').val();
+        $.ajax({
+            type: "POST",
+            url: hostname +"common/ajax_upazila_by_dis/" + id,
+            success: function(func_data)
+            {
+              $('.nomi_thana').append("<option value=''>-- Select District --</option>");
+              $.each(func_data,function(id,name)
+              {
+                  var opt = $('<option />');
+                  opt.val(id);
+                  opt.text(name);
+                  $('.nomi_thana').append(opt);
+              });
+            }
+        });
+      });
+
+      //nominee post office dropdown
+      $('#nomi_thana').change(function(){
+        $('.nomi_post').addClass('form-control input-sm');
+        $(".nomi_post > option").remove();
+        var id = $('#nomi_thana').val();
+        $.ajax({
+            type: "POST",
+            url: hostname +"common/ajax_post_office_by_upa_id/" + id,
+            success: function(func_data)
+            {
+              $('.nomi_post').append("<option value=''>-- Select District --</option>");
+              $.each(func_data,function(id,name)
+              {
+                  var opt = $('<option />');
+                  opt.val(id);
+                  opt.text(name);
+                  $('.nomi_post').append(opt);
+              });
+            }
+        });
+      });
+
+      //Upazila dropdown
       $('#pre_district').change(function(){
         $('.pre_thana').addClass('form-control input-sm');
         $(".pre_thana > option").remove();
@@ -813,7 +873,7 @@
         });
       });
 
-      //district dropdown
+      //Post Office dropdown
       $('#pre_thana').change(function(){
         $('.pre_post').addClass('form-control input-sm');
         $(".pre_post > option").remove();
@@ -835,7 +895,7 @@
         });
       });
 
-      //division dropdown
+      //Upazila dropdown
       $('#per_district').change(function(){
         $('.per_thana').addClass('form-control input-sm');
         $(".per_thana > option").remove();
@@ -858,7 +918,7 @@
         });
       });
 
-      //district dropdown
+      //Post Office dropdown
       $('#per_thana').change(function(){
         $('.per_post').addClass('form-control input-sm');
         $(".per_post > option").remove();

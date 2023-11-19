@@ -34,12 +34,11 @@ class Emp_info_con extends CI_Controller {
 		$this->load->view('layout/template', $this->data);
 	}
 
-	function personal_info_add()
-	{
+	function personal_info_add() {
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('unit_id', 'Unit', 'trim|required');
 		$this->form_validation->set_rules('emp_id', 'Employee ID', 'trim|required');
-		$this->form_validation->set_rules('proxi_id', 'Punch ID', 'trim|required');
+		$this->form_validation->set_rules('proxi_id', 'Punch ID', 'trim|required|is_unique[pr_emp_com_info.proxi_id]');
 		$this->form_validation->set_rules('name_en', 'Employee Name', 'trim|required');
 		$this->form_validation->set_rules('name_bn', 'Employee Bangla Name', 'trim|required');
 		$this->form_validation->set_rules('mother_name', 'Employee Mother\'s Name', 'trim|required');
@@ -50,62 +49,75 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_rules('marital_status', 'Marital Status', 'trim|required');
 		$this->form_validation->set_rules('religion', 'Employee Religion', 'trim|required');
 		$this->form_validation->set_rules('blood', 'Employee Blood Group', 'trim|required');
-
 		$this->form_validation->set_rules('nid_dob_id', 'NID or DOB Card', 'trim|required');
 		$this->form_validation->set_rules('nid_dob_check', 'NID or DOB Status', 'trim|required');
+		$this->form_validation->set_rules('personal_mobile', 'Personal Mobile', 'trim|required');
+		$this->form_validation->set_rules('bank_bkash_no', 'Bank Account', 'trim|required');
 
-		$this->form_validation->set_rules('padd', 'Present Address', 'trim|required');
-		$this->form_validation->set_rules('fadd', 'Parmanent Address', 'trim|required');
-		$this->form_validation->set_rules('dob', 'Date of Birth', 'trim');
-		$this->form_validation->set_rules('nomini_name', 'Nomini Name', 'trim');
-		$this->form_validation->set_rules('ejd', 'Date of Joining', 'trim|required');
-		$this->form_validation->set_rules('text2', 'Last Degree', 'trim');
-		$this->form_validation->set_rules('text3', 'Passing Year', 'trim');
-		$this->form_validation->set_rules('text4', 'Institute Name', 'trim');
-		$this->form_validation->set_rules('text5', 'Skill Department', 'trim');
-		$this->form_validation->set_rules('text6', 'Year(s) of Skill', 'trim');
-		$this->form_validation->set_rules('text7', 'Company Name', 'trim');
-		$this->form_validation->set_rules('text8', 'Gross Salary', 'trim|required');
-		$this->form_validation->set_rules('n_id', 'Mobile No', 'trim');
+		$this->form_validation->set_rules('pre_home_owner', 'Home Owner Name', 'trim|required');
+		$this->form_validation->set_rules('holding_num', 'Holding No.', 'trim|required');
+		$this->form_validation->set_rules('home_own_mobile', 'Home Owner Mobile', 'trim|required');
+		$this->form_validation->set_rules('pre_village', 'Present Village', 'trim|required');
+		$this->form_validation->set_rules('pre_village_bn', 'Present Village Bangla', 'trim|required');
+		$this->form_validation->set_rules('pre_district', 'Present District', 'trim|required');
+		$this->form_validation->set_rules('pre_thana', 'Present Upazila', 'trim|required');
+		$this->form_validation->set_rules('pre_post', 'Present Post Office', 'trim|required');
+		
+		$this->form_validation->set_rules('per_village', 'Parmanent Village', 'trim|required');
+		$this->form_validation->set_rules('per_village_bn', 'Parmanent Village Bangla', 'trim|required');
+		$this->form_validation->set_rules('per_district', 'Parmanent District', 'trim|required');
+		$this->form_validation->set_rules('per_thana', 'Parmanent Upazila', 'trim|required');
+		$this->form_validation->set_rules('per_post', 'Parmanent Post Office', 'trim|required');
 
-		if($this->input->post('pi_save') != '')
-		{
-			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim|callback_proxi_id_check_for_save');
-			$this->form_validation->set_rules('units', 'Unit', 'trim|required|callback_unit_check');
-		}
-		elseif($this->input->post('pi_edit') != '')
-		{
-			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim|callback_proxi_id_check_for_edit');
-		}
-		else
-		{
-			$this->form_validation->set_rules('idcard', 'Punch Card No.', 'trim');
-		}
+
+		$this->form_validation->set_rules('emp_dept_id', 'Department Name', 'trim|required');
+		$this->form_validation->set_rules('emp_sec_id', 'Section Name', 'trim|required');
+		$this->form_validation->set_rules('emp_line_id', 'Line Name', 'trim|required');
+		$this->form_validation->set_rules('emp_desi_id', 'Designation Name', 'trim|required');
+		$this->form_validation->set_rules('emp_cat_id', 'Employee Status', 'trim|required');
+		$this->form_validation->set_rules('emp_shift', 'Employee Shift', 'trim|required');
+		$this->form_validation->set_rules('emp_join_date', 'Date of Joining', 'trim|required');
+		$this->form_validation->set_rules('emp_sal_gra_id', 'Salary Grade ', 'trim|required');
+		$this->form_validation->set_rules('salary_type', 'Salary Type', 'trim|required');
+		$this->form_validation->set_rules('salary_draw', 'Salary Withdraw', 'trim|required');
+		$this->form_validation->set_rules('ot_entitle', 'OT Entitle', 'trim|required');
+		$this->form_validation->set_rules('gross_sal', 'Gross Salary', 'trim|required');
+		$this->form_validation->set_rules('lunch', 'Lunch', 'trim');
+		$this->form_validation->set_rules('transport', 'Transport', 'trim');
+
+		$this->form_validation->set_rules('nominee_name', 'Nominee Name', 'trim|required');
+		$this->form_validation->set_rules('nominee_vill', 'Nominee Village', 'trim|required');
+		$this->form_validation->set_rules('nomi_district', 'Nominee District', 'trim|required');
+		$this->form_validation->set_rules('nomi_thana', 'Nominee Upazila', 'trim|required');
+		$this->form_validation->set_rules('nomi_post', 'Nominee Post Office', 'trim|required');
+		$this->form_validation->set_rules('nomi_age', 'Nominee DOB', 'trim|required');
+		$this->form_validation->set_rules('nomi_mobile', 'Nominee Mobile', 'trim|required');
+		$this->form_validation->set_rules('nomi_relation', 'Nominee Relation', 'trim|required');
+
+		$this->form_validation->set_rules('refer_name', 'Referance Name', 'trim');
+		$this->form_validation->set_rules('refer_address', 'Referance Address', 'trim');
+		$this->form_validation->set_rules('refer_mobile', 'Referance Mobile', 'trim');
+		$this->form_validation->set_rules('refer_relation', 'Referance Relation', 'trim');
+		$this->form_validation->set_rules('exp_factory_name', 'Exp. Factory Name', 'trim');
+		$this->form_validation->set_rules('exp_duration', 'Exp. Duration', 'trim');
+		$this->form_validation->set_rules('exp_designation', 'Exp. Designation', 'trim');
 
 		$this->form_validation->set_error_delimiters("","");
+		if ($this->form_validation->run() == TRUE) {
+			if($this->input->post('pi_save') != '') {
+				$this->processdb->insert_emp_info();
+				dd($_POST);
 
-		if ($this->form_validation->run() == FALSE)
-		{
-			$this->load->view('form/all_info');
-		}
-		else
-		{
-			if($this->input->post('pi_save') != '')
-			{
-				$result = $this->per_info1();
-			}
-			elseif($this->input->post('pi_edit') != '')
-			{
-				$result = $this->per_update1();
-				if($result == true)
-				{
+			} elseif($this->input->post('pi_edit') != ''){
+				if($this->processdb->updatedb1()) {
 					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info_view1';</SCRIPT>";
 				}
-				else
-				{
-					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Error Occurred'); window.location='personal_info_view1';</SCRIPT>";
-				}
+			} else {
+				echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Error Occurred'); window.location='personal_info_view1';</SCRIPT>";
 			}
+		} else {
+			dd("redirect");
+			redirect(base_url('emp_info_con/personal_info'));
 		}
 	}
 
