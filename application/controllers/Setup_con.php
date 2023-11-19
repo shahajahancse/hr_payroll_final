@@ -1210,7 +1210,7 @@ $this->data['emp_designation'] = $this->db->get()->result_array();
     {
         $this->db->where('id', $id);
         $this->db->delete('emp_designation');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');   
         redirect(base_url() . 'index.php/setup_con/designation');
     }
     //----------------------------------------------------------------------------------
