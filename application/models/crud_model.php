@@ -22,7 +22,6 @@ class Crud_model extends CI_Model{
         return $this->db->get()->result_array();
     }
 
-
     //==========================Department===============================//
     function get_post_office($limit, $start, $condition = 0)
     {
@@ -46,7 +45,20 @@ class Crud_model extends CI_Model{
         return $this->db->get()->result_array();
     }
 
-
+    //==========================attn file upload===============================//
+    function file_upload($limit, $start, $condition = 0)
+    {
+        $this->db->select('SQL_CALC_FOUND_ROWS attn_file_upload.*, pr_units.unit_name', false);
+        $this->db->from('attn_file_upload');
+        $this->db->join('pr_units','attn_file_upload.unit_id = pr_units.unit_id', 'left');
+        if (!empty($condition)) {
+            $this->db->where($condition);
+        }
+        if (!empty($this->data['user_data']->unit_name)) {
+            $this->db->where('attn_file_upload.unit_id', $this->data['user_data']->unit_name);
+        }
+        return $this->db->get()->result();
+    }
 
 
 
@@ -63,7 +75,6 @@ class Crud_model extends CI_Model{
 
 
     // old code
-
     function getdept($deptId)
     {
         $this->db->where('dept_id',$deptId);

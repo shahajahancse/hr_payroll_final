@@ -30,7 +30,6 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     public function department($start = 0)
     {
-
         $this->load->library('pagination');
         $limit = 10;
         $config['base_url'] = base_url() . "setup_con/department/";

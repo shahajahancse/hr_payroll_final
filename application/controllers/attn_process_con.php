@@ -7,17 +7,73 @@ class Attn_process_con extends CI_Controller {
 	{
 		parent::__construct();
 
+		ini_set('memory_limit', -1);
+		ini_set('max_execution_time', 0);
+	    set_time_limit(0);
 		/* Standard Libraries */
 		$this->load->library('grocery_CRUD');
 		$this->load->model('attn_process_model');
 		$this->load->model('log_model');
-		ini_set('memory_limit', -1);
-		ini_set('max_execution_time', 0);
-	    set_time_limit(0);
-		
 		$this->load->model('acl_model');
 		$this->load->model('common_model');
+
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['user_data'] = $this->session->userdata('data');
+        if (!check_acl_list($this->data['user_data']->id, 4)) {
+            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+            redirect("payroll_con");
+            exit;
+        }
 	}
+	//-------------------------------------------------------------------------------------------------------
+	// Form display for Attendance Process
+	//-------------------------------------------------------------------------------------------------------
+	function file_upload()
+	{
+        $this->load->library('pagination');
+        $limit = 10;
+        $config['base_url'] = base_url() . "attn_process_con/file_upload/";
+        $config['per_page'] = $limit;
+        $condition = 0;
+
+        $this->load->model('crud_model');
+        $results = $this->crud_model->file_upload($limit, $start, $condition);
+        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
+        $config['total_rows'] = $total;
+        $config["uri_segment"] = 3;
+
+        $this->pagination->initialize($config);
+        $this->data['links'] = $this->pagination->create_links();
+        $this->data['results'] = $results;
+        // dd($this->data['results']);
+
+        $this->data['title'] = 'File Upload';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'attn_con/file_upload';
+        $this->load->view('layout/template', $this->data);
+	}
+
+
+	function file_add()
+	{
+		$this->data['title'] = 'File Upload';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'attn_con/file_add';
+        $this->load->view('layout/template', $this->data);
+	}
+
+
+
+
+
+
+
+
+
+
+	// old code
 	//-------------------------------------------------------------------------------------------------------
 	// Form display for Attendance Process
 	//-------------------------------------------------------------------------------------------------------
@@ -301,42 +357,4 @@ class Attn_process_con extends CI_Controller {
 		}
 	}
 
-	function file_upload()
-	{
-		$crud = new grocery_CRUD();
-
-		$crud->set_table('pr_attn_file_upload');
-		$crud->set_subject('Factory File Upload');
-
-		$state = $crud->getState();
-		// echo $state;
-		if($state == 'add' || $state == 'insert_validation')
-		{
-			if ($state == 'insert_validation') {
-				$input_date = explode('/', $_POST['upload_date']);
-				$where = $input_date[2].'-'.$input_date[1].'-'.$input_date[0];
-				$file_checking = $this->db->where('pr_attn_file_upload.upload_date',$where)->get('pr_attn_file_upload')->num_rows();
-				if ($file_checking > 0) {
-					throw new Exception('duplication date is not allowed to do this operation');
-					die();
-				} else {
-					$crud->required_fields( 'file_name','upload_date');
-					$crud->set_rules('upload_date','Date','trim|required');
-				}
-			}
-		}
-		elseif($state == 'edit'  || $state == 'update_validation')
-		{
-			$crud->required_fields( 'file_name');
-			$crud->change_field_type('upload_date','readonly');
-		}
-
-		$crud->set_field_upload('file_name','data/');
-
-		$crud->fields('file_name','upload_date');
-		$crud->order_by('upload_date','DESC');
-		//$crud->unset_delete();
-		$output = $crud->render();
-		$this->crud_output($output);
-	}
 }

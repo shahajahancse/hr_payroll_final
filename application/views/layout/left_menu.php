@@ -17,7 +17,7 @@
       ?>
 
       <?php if(in_array(1,$acl)) { ?>
-      <li class="start <?= activate_class('emp_info_con') ?>"> <a href="javascript:;">
+      <li class="start <?= activate_class('emp_info_con') ?>"> <a href="javascript:;"> <i class="fa fa-users"></i>
         <span class="title">HRM</span> <span class="selected"></span> <span class="arrow <?= arrow_open('emp_info_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <li class="start <?= activate_method('personal_info') ?>"> <a href="<?=base_url('emp_info_con/personal_info')?>" >Emp Information</a></li>
@@ -25,8 +25,17 @@
       </li>
       <?php } ?>
 
+      <?php if(in_array(4,$acl)) { ?>
+      <li class="start <?= activate_class('attn_process_con') ?>"> <a href="javascript:;"> <i class="fa fa-star-o"></i>
+        <span class="title">Attendance</span> <span class="selected"></span> <span class="arrow <?= arrow_open('emp_info_con') ?>"></span> </a>
+        <ul class="sub-menu ">
+          <li class="start <?= activate_method('file_upload') ?>"> <a href="<?=base_url('attn_process_con/file_upload')?>" >File Upload</a></li>
+        </ul>
+      </li>
+      <?php } ?>
+
       <?php if(in_array(2,$acl)) { ?>
-      <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;">
+      <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
         <span class="title">Setup Section </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setup_con') ?>"></span> </a>
         <ul class="sub-menu ">
           

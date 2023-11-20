@@ -899,7 +899,7 @@ class Attn_process_model extends CI_Model{
 	    }
 	}
 
-	function hour_difference($start_date_time, $end_date_time, $emp_id, $date,$status = "", $in_time)
+	function hour_difference($start_date_time, $end_date_time, $emp_id, $date,$status = "", $in_time=null)
 	{
 		$start_date_time= strtotime("$start_date_time");
 		$end_date_time 	= strtotime("$end_date_time");
@@ -1403,7 +1403,7 @@ class Attn_process_model extends CI_Model{
 		return $minutes_to_hour;
 	}*/
 
-	function minute_difference($datetime1,$datetime2,$emp_id, $date,$status = "", $in_time)
+	function minute_difference($datetime1,$datetime2,$emp_id, $date,$status = "", $in_time=null)
 	{
 		// echo $in_time.'=='.$shift_in_time;
 
