@@ -768,7 +768,7 @@ class Crud_model extends CI_Model{
     {
         $this->db->select('pr_emp_shift.*');
         // $this->db->join('pr_emp_shift_schedule','pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_id');
-        $this->db->where('shift_id',$shiftmanagementId);
+        $this->db->where('id',$shiftmanagementId);
         return $this->db->get('pr_emp_shift')->row();
     }
 
@@ -804,14 +804,14 @@ class Crud_model extends CI_Model{
              $formArray['shift_duty'] = $this->input->post('stype');
 
 
-             $this->db->where('shift_id',$shiftmanagementId);
+             $this->db->where('id',$shiftmanagementId);
              $this->db->update('pr_emp_shift',$formArray);
 
         }
 
      function shiftmanagement_delete($shiftmanagementId)
         {
-            $this->db->where('shift_id',$shiftmanagementId);
+            $this->db->where('id',$shiftmanagementId);
             $this->db->delete('pr_emp_shift');
         }
 

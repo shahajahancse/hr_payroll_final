@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?=base_url('index.php/crud_con/shiftmanagement_add')?>">Add Shift
+                <a class="navbar-brand" href="<?=base_url('index.php/setup_con/shiftmanagement_add')?>">Add Shift
                     Management</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
@@ -58,7 +58,8 @@
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Shift Management List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/crud_con/shiftmanagement_add')?>" class="btn btn-info" role="button">Add
+                <a href="<?=base_url('index.php/setup_con/shiftmanagement_add')?>" class="btn btn-info"
+                    role="button">Add
                     Shift Management</a>
             </div>
         </div>
@@ -84,11 +85,11 @@
                         <td><?php echo $pr_emp_shifts['unit_id'] ?></td>
                         <td><?php echo $pr_emp_shifts['sh_type'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/crud_con/shiftmanagement_edit').'/'.$pr_emp_shifts["id"]?>"
+                            <a href="<?=base_url('index.php/setup_con/shiftmanagement_edit').'/'.$pr_emp_shifts["id"]?>"
                                 class="btn btn-primary" role="button">Edit</a>
                         </td>
                         <td>
-                            <a href="<?=base_url('index.php/crud_con/shiftmanagement_delete').'/'.$pr_emp_shifts["id"]?>"
+                            <a href="<?=base_url('index.php/setup_con/shiftmanagement_delete').'/'.$pr_emp_shifts["id"]?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
