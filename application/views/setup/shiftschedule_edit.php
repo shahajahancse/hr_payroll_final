@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Shift Schedule Edit</title>
-  <meta charset="utf-8">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
-</head>
-<body>
 
-
-
-<div class="container" style="padding-top: 10px;">
+<div class="content">
 <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -37,28 +23,18 @@
 
   <h3>Update Shift Schedule</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="editshiftschedule" action="<?php echo base_url().'index.php/crud_con/shiftschedule_edit/'.$pr_emp_shift_schedule->shift_id;?>">
+  <form enctype="multipart/form-data" method="post" name="editshiftschedule" action="<?php echo base_url().'index.php/setup_con/shiftschedule_edit/'.$pr_emp_shift_schedule->shift_id;?>">
   <div class="row">
     <div class="col-md-6">
       <input type="hidden" name="id"value="<?=$pr_emp_shift_schedule->shift_id;?>" class="form-control"> 
       <div class="form-group">
-          <select name="uname" id= "uname" class="form-control input-lg">
+          <select name="uname" id= "uname" class="form-control input-lg select22">
             <option value="">Select Unit</option>
-            <?php 
-            // print_r($shiftschedule);exit('mafiz');
-              foreach ($shiftschedule as $row)
-              {
-              	if($row[unit_id]==$pr_emp_shift_schedule->unit_id){
-              		$select_data="selected";
-              	}else{
-              		$select_data='';
-              	}
-                 echo '<option '.$select_data.'  value="'.$row[unit_id].'">'.$row[unit_name].
-                 '</option>';                  
-              }
+            <?php
+            foreach ($allUnit as  $row){?>
+              <option value="<?=$row['unit_id']?>"<?php if($row['unit_id']==$pr_emp_shift_schedule->unit_id){echo 'selected';}?>><?=$row['unit_name']?></option>">Select Unit</option>
 
-             ?>
-            
+            <?php } ?>
           </select>
         </div>
 
@@ -137,6 +113,3 @@
   </div>
 </form>
 </div>
-
-</body>
-</html>

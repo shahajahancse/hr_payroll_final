@@ -18,6 +18,7 @@
 }
 </script>
 
+
   <!-- BEGIN CORE JS FRAMEWORK-->
   <script src="<?=base_url()?>awedget/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
   <script src="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
@@ -604,6 +605,10 @@
     });
  });
  </script>
- 
+ <script>
+  $(document).ready(function() {
+    $('.select22').select2();
+  });
+</script>
 </body>
 </html>

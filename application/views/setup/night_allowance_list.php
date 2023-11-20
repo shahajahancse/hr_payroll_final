@@ -58,14 +58,14 @@ if ($failuer) {
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Night Allowance List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/night_allowance_add')?>" target='_blank' class="btn btn-info"
+                <a href="<?=base_url('index.php/setup_con/night_allowance_add')?>"  class="btn btn-info"
                     role="button">Add Night Allowance</a>
             </div>
         </div>
     </div>
 
     <!-- <br> -->
-    <div class="row">
+    <div class="row tablebox">
 
         <div class="col-md-12">
 
@@ -93,7 +93,7 @@ if ($failuer) {
                         <td><?php echo $night_allowance['night_allowance'] ?></td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/night_allowance_edit') . '/' . $night_allowance["id"]?>"
-                                target='_blank' class="btn btn-primary" role="button">Edit</a>
+                                 class="btn btn-primary" role="button">Edit</a>
                         </td>
 
                         <td>

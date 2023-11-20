@@ -52,7 +52,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <select name="unit_id" id= "unit_id" class="form-control input-sm">
+                <select name="unit_id" id= "unit_id" class="form-control input-sm select22">
                   <option value="">Select Unit</option>
                   <?php 
                     foreach ($dept as $row) {
@@ -60,7 +60,7 @@
                         $select_data="selected";
                       }else{
                         $select_data='';
-                      }
+                      }  
                        echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
                        '</option>';
                     }

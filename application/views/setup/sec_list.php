@@ -111,14 +111,14 @@ table.dataTable.no-footer {
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Section List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/sec_add')?>" target='_blank' class="btn btn-info"
+                <a href="<?=base_url('index.php/setup_con/sec_add')?>"  class="btn btn-info"
                     role="button">Add Section</a>
             </div>
         </div>
     </div>
 
     <!-- <br> -->
-    <div class="row">
+    <div class="row tablebox">
 
         <div class="col-md-12">
 
@@ -149,7 +149,7 @@ table.dataTable.no-footer {
                         <td><?php echo $pr_secs['unit_name'] ?></td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/sec_edit') . '/' . $pr_secs["id"]?>"
-                                target='_blank' class="btn btn-primary" role="button">Edit</a>
+                                 class="btn btn-primary" role="button">Edit</a>
                         </td>
 
                         <td>

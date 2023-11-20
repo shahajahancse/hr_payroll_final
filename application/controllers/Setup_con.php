@@ -1206,11 +1206,152 @@ class Setup_con extends CI_Controller
     // CRUD for Night Allowance end
     //----------------------------------------------------------------------------------
 
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Shift Schedules start
+    //-------------------------------------------------------------------------------------------------------
+    public function shift_schedule()
+    {
+        $pr_emp_shift_schedule = $this->crud_model->shiftschedule_infos();
+        $this->data['pr_emp_shift_schedule'] = $pr_emp_shift_schedule;
+        $this->data['title'] = 'Shift Schedule List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/shift_schedule_list';
+        $this->load->view('layout/template', $this->data);
+    }
+    function shiftschedule_add(){
+
+        $this->load->library('form_validation');
+        $this->load->model('crud_model');
+        $data['shiftscheduleinfo'] = $this->crud_model->shiftschedule_fetch();
+        // print_r($data);exit();
+        $this->form_validation->set_rules('stype', 'shiftschedule Shift Type', 'trim|required');
+        $this->form_validation->set_rules('instrt', 'shiftschedule In Start', 'trim|required');
+        $this->form_validation->set_rules('intime', 'shiftschedule In Time', 'trim|required');
+        $this->form_validation->set_rules('ltstart', 'shiftschedule Late Start', 'trim|required');
+        $this->form_validation->set_rules('inend', 'shiftschedule In End', 'trim|required');
+        $this->form_validation->set_rules('outstart', 'shiftschedule Out Start', 'trim|required');
+        $this->form_validation->set_rules('outend', 'shiftschedule Out End', 'trim|required');
+        $this->form_validation->set_rules('otstart', 'shiftschedule Ot Start', 'trim|required');
+        $this->form_validation->set_rules('otminute', 'shiftschedule Ot Minute', 'trim|required');
+        $this->form_validation->set_rules('onehrottime', 'shiftschedule One Hour Ot Time', 'trim|required');
+        $this->form_validation->set_rules('twohrottime', 'shiftschedule Two Hour Ot Time', 'trim|required');
 
 
+       if($this->form_validation->run() == false){
+
+            $this->data['title'] = 'Shift Schedule Add';
+            $this->data['allUnit'] = $this->crud_model->getallUnit();
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/shiftschedule_add';
+            $this->load->view('layout/template', $this->data);
+       }else{
+           // print_r($_FILES['logoAAAAA']);
+           // print_r($_POST);exit();
+            $formArray = array();
+            $formArray['unit_id'] = $this->input->post('uname');
+            $formArray['sh_type'] = $this->input->post('stype');
+            $formArray['in_start'] = $this->input->post('instrt');
+            $formArray['in_time'] = $this->input->post('intime');
+            $formArray['late_start'] = $this->input->post('ltstart');
+            $formArray['in_end'] = $this->input->post('inend');
+            $formArray['out_start'] = $this->input->post('outstart');
+            $formArray['out_end'] = $this->input->post('outend');
+            $formArray['ot_start'] = $this->input->post('otstart');
+            $formArray['ot_minute_to_one_hour'] = $this->input->post('otminute');
+            $formArray['one_hour_ot_out_time'] = $this->input->post('onehrottime');
+            $formArray['two_hour_ot_out_time'] = $this->input->post('twohrottime');
 
 
+           $this->crud_model->shiftschedule_add($formArray);
+           $this->session->set_flashdata('success','Record adder successfully!');
+           redirect(base_url().'index.php/setup_con/shift_schedule');
+       }
 
+   }
+
+
+       function shiftschedule_edit($shiftscheduleId)
+       {
+           $data = array();
+           $this->load->model('crud_model');
+           $this->load->library('form_validation');
+            $data['shiftschedule'] = $this->crud_model->shiftschedule_fetch();
+
+
+            $this->form_validation->set_rules('uname', 'shiftschedule Unit Name', 'trim|required');
+            $this->form_validation->set_rules('stype', 'shiftschedule Shift Type', 'trim|required');
+            $this->form_validation->set_rules('instrt', 'shiftschedule In Start', 'trim|required');
+            $this->form_validation->set_rules('intime', 'shiftschedule In Time', 'trim|required');
+            $this->form_validation->set_rules('ltstart', 'shiftschedule Late Start', 'trim|required');
+            $this->form_validation->set_rules('inend', 'shiftschedule In End', 'trim|required');
+            $this->form_validation->set_rules('outstart', 'shiftschedule Out Start', 'trim|required');
+            $this->form_validation->set_rules('outend', 'shiftschedule Out End', 'trim|required');
+            $this->form_validation->set_rules('otstart', 'shiftschedule Ot Start', 'trim|required');
+            $this->form_validation->set_rules('otminute', 'shiftschedule Ot Minute', 'trim|required');
+            $this->form_validation->set_rules('onehrottime', 'shiftschedule One Hour Ot Time', 'trim|required');
+            $this->form_validation->set_rules('twohrottime', 'shiftschedule Two Hour Ot Time', 'trim|required');
+
+           $data['shiftschedule'] = $this->crud_model->shiftschedule_fetch();
+
+
+            if($this->form_validation->run() == false)
+           {
+            $this->data['allUnit'] = $this->crud_model->getallUnit();
+
+           $this->data['pr_emp_shift_schedule'] = $this->crud_model->getshiftschedule($shiftscheduleId);
+           $this->data['title'] = 'Shift Schedule Edit';
+           $this->data['username'] = $this->data['user_data']->id_number;
+           $this->data['subview'] = 'setup/shiftschedule_edit';
+           $this->load->view('layout/template', $this->data);
+           }
+           else
+           {
+               $this->crud_model->shiftschedule_edit($shiftscheduleId);
+               $this->session->set_flashdata('success','Record Updated successfully!');
+
+               redirect('/setup_con/shift_schedule');
+
+
+           }
+
+
+       }
+
+
+       function shiftschedule_delete($shiftscheduleId)
+       {
+           $this->load->model('crud_model');
+           $shiftschedule = $this->crud_model->getshiftschedule($shiftscheduleId);
+           if (empty($shiftschedule)) {
+               $this->session->set_flashdata('failure','Record Not Found in DataBase!');
+               redirect('/setup_con/shift_schedule');
+           }
+           $this->crud_model->shiftschedule_delete($shiftscheduleId);
+           $this->session->set_flashdata('success','Record Deleted successfully!');
+               redirect('/setup_con/shift_schedule');
+       }
+
+  //-------------------------------------------------------------------------------------------------------
+    // CRUD for Shift Schedules end
+    //-------------------------------------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------------------------------------
+    // CRUD for Shift Management start
+    //-------------------------------------------------------------------------------------------------------
+    public function shift_management()
+    {
+        $pr_emp_shift = $this->crud_model->shiftmanagement_infos();
+        $this->data['pr_emp_shift'] = $pr_emp_shift;
+        $this->data['title'] = 'Shift Management List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/shift_management_list';
+        $this->load->view('layout/template', $this->data);
+
+    }
+
+//-------------------------------------------------------------------------------------------------------
+// CRUD for Shift Management end
+//-------------------------------------------------------------------------------------------------------
 
 
     // old code
@@ -1483,57 +1624,8 @@ return TRUE;
         $this->load->view('salgrd_list', $param);
 
     }
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for Shift Schedules
-    //-------------------------------------------------------------------------------------------------------
-    public function shift_schedule($start = 0)
-    {
-
-        $this->load->library('pagination');
-        $param = array();
-        $limit = 10;
-        $config['base_url'] = base_url() . "index.php/setup_con/shift_schedule/";
-        $config['per_page'] = $limit;
-        $this->load->model('crud_model');
-        $pr_emp_shift_schedule = $this->crud_model->shiftschedule_infos($limit, $start);
-        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-        $config['total_rows'] = $total;
-        $config["uri_segment"] = 3;
-        // $this->load->library('pagination');
-
-        $this->pagination->initialize($config);
-        $param['links'] = $this->pagination->create_links();
-
-        $param['pr_emp_shift_schedule'] = $pr_emp_shift_schedule;
-
-        $this->load->view('shift_schedule_list', $param);
-
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for Shift Management
-    //-------------------------------------------------------------------------------------------------------
-    public function shift_management($start = 0)
-    {
-
-        $this->load->library('pagination');
-        $param = array();
-        $limit = 10;
-        $config['base_url'] = base_url() . "index.php/setup_con/shift_management/";
-        $config['per_page'] = $limit;
-        $this->load->model('crud_model');
-        $pr_emp_shift = $this->crud_model->shiftmanagement_infos($limit, $start);
-        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-        $config['total_rows'] = $total;
-        $config["uri_segment"] = 3;
-        // $this->load->library('pagination');
-
-        $this->pagination->initialize($config);
-        $param['links'] = $this->pagination->create_links();
-
-        $param['pr_emp_shift'] = $pr_emp_shift;
-        $this->load->view('shift_management_list', $param);
-
-    }
+  
+  
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Leave Setup
     //-------------------------------------------------------------------------------------------------------

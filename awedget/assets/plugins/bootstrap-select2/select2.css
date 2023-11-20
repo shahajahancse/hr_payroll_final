@@ -27,7 +27,7 @@ Version: 3.4.3 Timestamp: Tue Sep 17 06:47:14 PDT 2013
 }
 
 .select2-container .select2-choice {
-    display: block;
+    display: contents;
     height: 26px;
     padding: 0 0 0 8px;
     overflow: hidden;

@@ -55,7 +55,7 @@
         <?php echo form_error('unitid');?>
       </div>
      <div class="form-group">
-          <select name="stype" id= "stype" class="form-control input-lg">
+          <select name="stype" id= "stype" class="form-control input-lg select22">
             <option value="">Shift Type</option>
             <?php 
             // print_r($shiftmanagement);exit('mafiz');
