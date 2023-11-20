@@ -57,14 +57,14 @@ if ($failuer) {
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Designation List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/designation_add')?>" target='_blank' class="btn btn-info"
+                <a href="<?=base_url('index.php/setup_con/designation_add')?>"  class="btn btn-info"
                     role="button">Add Designation</a>
             </div>
         </div>
     </div>
 
     <!-- <br> -->
-    <div class="row">
+    <div class="row tablebox">
 
         <div class="col-md-12">
 
@@ -98,7 +98,7 @@ if ($failuer) {
                         <td><?php echo $data['allowance_tiffin'] ?></td>
                         <td>
                             <a href="<?=base_url('setup_con/designation_edit') . '/' . $data["id"]?>"
-                                target='_blank' class="btn btn-primary" role="button">Edit</a>
+                                 class="btn btn-primary" role="button">Edit</a>
                         </td>
                         <td>
                             <a href="<?=base_url('setup_con/designation_delete') . '/' . $data["id"]?>"

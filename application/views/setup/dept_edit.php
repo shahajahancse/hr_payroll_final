@@ -54,7 +54,7 @@
           <input type="hidden" name="id" value="<?=$pr_dept->dept_id?>" class="form-control"> 
 
           <div class="form-group">
-            <select name="unit_id" id= "unit_id" class="form-control input-sm">
+            <select name="unit_id" id= "unit_id" class="form-control input-sm select22">
               <option value="">Select Unit</option>
               <?php 
                 foreach ($dept as $row)

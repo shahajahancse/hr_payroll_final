@@ -57,14 +57,14 @@ if ($failuer) {
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Line List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/line_add')?>" target='_blank' class="btn btn-info"
+                <a href="<?=base_url('index.php/setup_con/line_add')?>"  class="btn btn-info"
                     role="button">Add Line</a>
             </div>
         </div>
     </div>
 
     <!-- <br> -->
-    <div class="row">
+    <div class="row tablebox">
 
         <div class="col-md-12">
 
@@ -94,7 +94,7 @@ if ($failuer) {
                         <td><?php echo $pr_lines['line_name_bn'] ?></td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/line_edit') . '/' . $pr_lines["id"]?>"
-                                target='_blank' class="btn btn-primary" role="button">Edit</a>
+                                 class="btn btn-primary" role="button">Edit</a>
                         </td>
 
                         <td>

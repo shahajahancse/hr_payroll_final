@@ -183,10 +183,14 @@ class Crud_model extends CI_Model{
 
     }
 
-    function getUnit($comId)
+    function getUnit($comId=null)
     {
         $this->db->where('id',$comId);
         return $this->db->get('company_infos')->row();
+    }
+    function getallUnit()
+    {
+        return $this->db->get('pr_units')->result_array();
     }
 
 
@@ -694,12 +698,11 @@ class Crud_model extends CI_Model{
         return $this->db->get('pr_emp_shift_schedule')->row();
     }
 
-    function shiftschedule_infos($limit,$start)
+    function shiftschedule_infos()
     {
         $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_shift_schedule.*,pr_units.unit_name', false);
         $this->db->from('pr_emp_shift_schedule');
         $this->db->join('pr_units','pr_units.unit_id = pr_emp_shift_schedule.unit_id');
-        // $this->db->limit($limit,$start);
         return $this->db->get()->result_array();
     }
 
@@ -780,13 +783,13 @@ class Crud_model extends CI_Model{
         return $this->db->get('pr_emp_shift')->row();
     }
 
-    function shiftmanagement_infos($limit,$start)
+    function shiftmanagement_infos()
     {
         $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_shift.*,pr_emp_shift_schedule.sh_type', false);
         $this->db->from('pr_emp_shift');
         $this->db->join('pr_emp_shift_schedule','pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_duty');
-        // $this->db->limit($limit,$start);
         return $this->db->get()->result_array();
+        
     }
 
     function shiftmanagement_fetch(){

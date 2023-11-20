@@ -35,19 +35,19 @@
     <div class="row">
         <div class="col-md-12">
             <?php
-$success = $this->session->flashdata('success');
-if ($success != "") {
-    ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php
-}
-$failuer = $this->session->flashdata('failuer');
-if ($failuer) {
-    ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-            <?php
-}
-?>
+            $success = $this->session->flashdata('success');
+            if ($success != "") {
+                ?>
+                        <div class="alert alert-success"><?php echo $success; ?></div>
+                        <?php
+            }
+            $failuer = $this->session->flashdata('failuer');
+            if ($failuer) {
+                ?>
+                        <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+                        <?php
+            }
+            ?>
 
         </div>
     </div>
@@ -57,17 +57,15 @@ if ($failuer) {
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Tiffin Bill  Allowance List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/tiffin_bill_add')?>" target='_blank' class="btn btn-info"
+                <a href="<?=base_url('index.php/setup_con/tiffin_bill_add')?>"  class="btn btn-info"
                     role="button">Add Tiffin Bill  Allowance</a>
             </div>
         </div>
     </div>
 
     <!-- <br> -->
-    <div class="row">
-
+    <div class="row tablebox">
         <div class="col-md-12">
-
             <table class="table table-striped" id="mytable">
                 <thead>
                     <tr>
@@ -96,7 +94,7 @@ if ($failuer) {
                         <td><?php echo $pr_lines['unit_name'] ?></td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/tiffin_bill_edit') . '/' . $pr_lines["id"]?>"
-                                target='_blank' class="btn btn-primary" role="button">Edit</a>
+                                 class="btn btn-primary" role="button">Edit</a>
                         </td>
 
                         <td>

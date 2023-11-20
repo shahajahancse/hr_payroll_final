@@ -91,7 +91,7 @@
       </div>
     </div>
 
-    <div id="target-div">
+    <div id="target-div" class="row tablebox">
       <div class="container-fluid">
         <table class="table table-striped" id="mytable">
           <thead>

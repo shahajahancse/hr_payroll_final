@@ -46,7 +46,7 @@
                 </div>
                 <!-- unit -->
                 <div class="form-group">
-                    <select name="unit_id" onchange="get_data()" id="unit_id" class="form-control input-lg">
+                    <select name="unit_id" onchange="get_data()" id="unit_id" class="select22 form-control input-lg">
                         <option value="">Select Unit</option>
                         <?php foreach ($pr_units as $key => $value) {?>
                         <option value="<?php echo $value->unit_id; ?>" <?php echo $value->unit_id == $emp_designation->unit_id ? 'selected' : ''; ?>><?php echo $value->unit_name; ?></option>
@@ -58,7 +58,7 @@
 
                 <!-- attendance bonus -->
                 <div class="form-group">
-                    <select name="attn_id"  id="attn_id" class="form-control input-lg">
+                    <select name="attn_id"  id="attn_id" class="form-control input-lg select22">
                         <option value="">Select Attendance Bonus</option>
                         <option value="<?php echo $emp_designation->attn_id; ?>" selected><?= $emp_designation->allowance_attn_bonus ?></option>
                     </select>
@@ -66,7 +66,7 @@
                 </div>
                 <!-- Holyday/week off -->
                 <div class="form-group">
-                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg">
+                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg select22">
                         <option value="">Select Holyday/Weekend</option>
                         <option value="<?php echo $emp_designation->holiday_weekend_id; ?>" selected><?= $emp_designation->allowance_holiday_weekend ?></option>
                     </select>
@@ -74,7 +74,7 @@
                 </div>
                 <!-- iftar-->
                 <div class="form-group">
-                    <select name="iftar_id"  id="iftar_id" class="form-control input-lg">
+                    <select name="iftar_id"  id="iftar_id" class="form-control input-lg select22">
                         <option value="">Select Iftar Allowance</option>
                         <option value="<?php echo $emp_designation->iftar_id; ?>" selected><?= $emp_designation->allowance_iftar ?></option>
                     </select>
@@ -82,7 +82,7 @@
                 </div>
                 <!-- night allowance -->
                 <div class="form-group">
-                    <select name="night_al_id"  id="night_al_id" class="form-control input-lg">
+                    <select name="night_al_id"  id="night_al_id" class="form-control input-lg select22">
                         <option value="">Select Night Allowance</option>
                         <option value="<?php echo $emp_designation->night_al_id; ?>" selected><?= $emp_designation->allowance_night_rules ?></option>
                     </select>
@@ -90,7 +90,7 @@
                 </div>
                 <!-- tiffin -->
                 <div class="form-group">
-                    <select name="tiffin_id"  id="tiffin_id" class="form-control input-lg">
+                    <select name="tiffin_id"  id="tiffin_id" class="form-control input-lg select22">
                         <option value="">Select Tiffin Allowance</option>
                         <option value="<?php echo $emp_designation->tiffin_id; ?>" selected><?= $emp_designation->allowance_tiffin ?></option>
                     </select>

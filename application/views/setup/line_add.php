@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <select name="section_id" id="section_id" onchange="get_unit()" class="form-control input-lg">
+                <select name="section_id" id="section_id" onchange="get_unit()" class="form-control input-lg select22">
                   <option value="">Select Section</option>
                   <?php foreach ($emp_section as $key => $value) {
                     ?>

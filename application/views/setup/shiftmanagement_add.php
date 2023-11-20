@@ -72,7 +72,7 @@
 	      </div>
 
 	      <div class="form-group">
-          <select name="stype" id= "stype" class="form-control input-lg">
+          <select name="stype" id= "stype" class="form-control input-lg select22">
             <option value="">Shift Type</option>
             <?php
               foreach ($shiftmanagementinfo as  $row){

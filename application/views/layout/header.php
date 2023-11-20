@@ -304,5 +304,11 @@
     background: #c3e6e2;
     color:#fff;
   }
+  .tablebox {
+    box-shadow: 0 0 3px 0px #8900ed;
+    background: #fbfbfb;
+    padding: 14px 1px;
+    margin: 0;
+}
 </style>
 

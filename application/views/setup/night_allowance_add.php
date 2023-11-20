@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <select name="unit_id" id="unit_id" class="form-control input-lg">
+                    <select name="unit_id" id="unit_id" class="form-control input-lg select22">
                         <option value="">Select Unit</option>
                         <?php foreach ($pr_units as $key => $value) {
                     ?>

@@ -1,5 +1,4 @@
 <div class="content">
-
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -10,11 +9,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/weekend_allowance_add') ?>">Add Holyday/Weekend Allowance</a>
+                <a class="navbar-brand" href="<?=base_url('index.php/crud_con/shiftmanagement_add')?>">Add Shift
+                    Management</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
+                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con')?>">Home</a></li>
                 </ul>
                 <div class="pull-right">
                     <form class="navbar-form pull-right" role="search">
@@ -27,85 +27,72 @@
                         </div>
                     </form>
                 </div>
+
             </div>
             <!--/.nav-collapse -->
         </div>
         <!--/.container-fluid -->
     </nav>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <?php
-$success = $this->session->flashdata('success');
-if ($success != "") {
-    ?>
+          $success = $this->session->flashdata('success');
+          if ($success != "") {
+           ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
             <?php
-}
-$failuer = $this->session->flashdata('failuer');
-if ($failuer) {
-    ?>
+            }
+            $failuer = $this->session->flashdata('failuer');
+            if ($failuer) {
+             ?>
             <div class="alert alert-failuer"><?php echo $failuer; ?></div>
             <?php
-}
-?>
+            }
+            ?>
 
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
-                <h3 style="margin-top: 0px; margin-bottom: 8px;">Holyday/Weekend Allowance List</h3>
+                <h3 style="margin-top: 0px; margin-bottom: 8px;">Shift Management List</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/weekend_allowance_add')?>"  class="btn btn-info"
-                    role="button">Add Holyday/Weekend Allowance</a>
+                <a href="<?=base_url('index.php/crud_con/shiftmanagement_add')?>" class="btn btn-info" role="button">Add
+                    Shift Management</a>
             </div>
         </div>
     </div>
-
     <!-- <br> -->
     <div class="row tablebox">
-
         <div class="col-md-12">
-
             <table class="table table-striped" id="mytable">
                 <thead>
                     <tr>
-                        <th>SL</th>
-                        <th>Rule Name</th>
-                        <th>Allowance Amount</th>
-                        <th>Unit name</th>
+                        <th>Shift Name</th>
+                        <th>Unit ID </th>
+                        <th>Shift Type</th>
                         <th width="80">Edit</th>
                         <th>Delete</th>
-
                     </tr>
                 </thead>
-
-                </thead>
-
                 <tbody>
-
                     <?php
-
-                  if (!empty($allowance_holiday_weekend_rules)) {foreach ($allowance_holiday_weekend_rules as $key => $pr_lines) {?>
-
+                            if(!empty($pr_emp_shift)){ foreach($pr_emp_shift as $pr_emp_shifts){?>
                     <tr>
-                        <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $pr_lines['rule_name'] ?></td>
-                        <td><?php echo $pr_lines['allowance_amount'] ?></td>
-                        <td><?php echo $pr_lines['unit_name'] ?></td>
+                        <td><?php echo $pr_emp_shifts['shift_name'] ?></td>
+                        <td><?php echo $pr_emp_shifts['unit_id'] ?></td>
+                        <td><?php echo $pr_emp_shifts['sh_type'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/weekend_allowance_edit') . '/' . $pr_lines["id"]?>"
-                                 class="btn btn-primary" role="button">Edit</a>
+                            <a href="<?=base_url('index.php/crud_con/shiftmanagement_edit').'/'.$pr_emp_shifts["id"]?>"
+                                class="btn btn-primary" role="button">Edit</a>
                         </td>
-
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/weekend_allowance_delete') . '/' . $pr_lines["id"]?>"
+                            <a href="<?=base_url('index.php/crud_con/shiftmanagement_delete').'/'.$pr_emp_shifts["id"]?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
-                    <?php }} else {?>
-
+                    <?php } }else{?>
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
@@ -117,7 +104,6 @@ if ($failuer) {
     </div>
     <br><br>
 </div>
-
 <script type="text/javascript">
 $(document).ready(function() {
     $("#mytable").dataTable();
