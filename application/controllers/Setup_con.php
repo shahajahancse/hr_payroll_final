@@ -524,8 +524,6 @@ class Setup_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-
-
     public function attn_bonus_add()
     {
 
@@ -628,8 +626,6 @@ class Setup_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-
-
     public function weekend_allowance_add()
     {
 
@@ -731,8 +727,6 @@ class Setup_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-
-
     public function tiffin_bill_add()
     {
 
@@ -831,8 +825,6 @@ class Setup_con extends CI_Controller
         $this->data['subview'] = 'setup/iftar_bill_list';
         $this->load->view('layout/template', $this->data);
     }
-
-
 
     public function iftar_bill_add()
     {
@@ -934,8 +926,6 @@ class Setup_con extends CI_Controller
         $this->data['subview'] = 'setup/night_allowance_list';
         $this->load->view('layout/template', $this->data);
     }
-
-
 
     public function night_allowance_add()
     {
@@ -1043,8 +1033,8 @@ class Setup_con extends CI_Controller
         $this->db->join('allowance_iftar_bill', 'allowance_iftar_bill.id=emp_designation.iftar_id', 'left');
         $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
         $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
-$this->data['emp_designation'] = $this->db->get()->result_array();
-// dd($this->data['emp_designation']);
+        $this->data['emp_designation'] = $this->db->get()->result_array();
+        // dd($this->data['emp_designation']);
         $this->data['title'] = 'Designation List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/desig_list';
@@ -1079,7 +1069,6 @@ $this->data['emp_designation'] = $this->db->get()->result_array();
     
         echo json_encode($data);
     }
-
 
 
     public function designation_add()
@@ -1178,7 +1167,7 @@ $this->data['emp_designation'] = $this->db->get()->result_array();
             $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
             $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
             $this->db->where('emp_designation.id', $id);
-    $this->data['emp_designation'] = $this->db->get()->row();
+            $this->data['emp_designation'] = $this->db->get()->row();
 
             $this->data['title'] = 'Edit Designation';
             $this->data['username'] = $this->data['user_data']->id_number;
@@ -1216,6 +1205,11 @@ $this->data['emp_designation'] = $this->db->get()->result_array();
     //----------------------------------------------------------------------------------
     // CRUD for Night Allowance end
     //----------------------------------------------------------------------------------
+
+
+
+
+
 
 
 
@@ -1595,7 +1589,7 @@ return TRUE;
         $this->load->library('pagination');
         $param = array();
         $limit = 10;
-        $config['base_url'] = base_url() . "index.php/setup_con/holiday_allowance_setup/";
+        $config['base_url'] = base_url() . "setup_con/holiday_allowance_setup/";
         $config['per_page'] = $limit;
         $this->load->model('crud_model');
         $pr_holiday_allowance_rules = $this->crud_model->holidayallowence_infos($limit, $start);

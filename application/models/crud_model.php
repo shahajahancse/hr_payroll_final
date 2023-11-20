@@ -969,12 +969,12 @@ class Crud_model extends CI_Model{
 
 
     function holidayallowence_infos($limit,$start){
-        $this->db->select('SQL_CALC_FOUND_ROWS rules.*,units.unit_name,desig.desig_name', false);
+        $this->db->select('SQL_CALC_FOUND_ROWS rules.*, units.unit_name, desig.desig_name', false);
 
         $this->db->from('pr_holiday_allowance_rules rules');
         $this->db->join('pr_units units','units.unit_id = rules.unit_id','LEFT');
         $this->db->join('pr_holiday_allowance_level level','level.rules_id = rules.rules_id','LEFT');
-        $this->db->join('emp_designation desig','desig.desig_id = level.desig_id','LEFT');
+        $this->db->join('emp_designation desig','desig.id = level.desig_id','LEFT');
         return $this->db->get()->result_array();
     }
 

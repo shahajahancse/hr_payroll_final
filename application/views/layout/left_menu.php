@@ -29,21 +29,29 @@
       <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;">
         <span class="title">Setup Section </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setup_con') ?>"></span> </a>
         <ul class="sub-menu ">
+          
+          <li class="start"> <a href="<?=base_url('setup_con/company_info_setup')?>" class="anchor_cls" id="company_info_menu">Company Information</a> </li>
 
           <li class="start <?= activate_method('department') ?>"> <a href="<?=base_url('setup_con/department')?>" class="anchor_cls">Department</a> </li>
-          <li class="start "> <a href="<?=base_url('setup_con/section')?>" class="anchor_cls">Section</a> </li>
-          <li class="start "> <a href="<?=base_url('setup_con/line')?>" class="anchor_cls">Line</a> </li>
-          <li class="start "> <a href="<?=base_url('setup_con/designation')?>" class="anchor_cls">Designation</a> </li>
+          <li class="start <?= activate_method('section') ?>"> <a href="<?=base_url('setup_con/section')?>" class="anchor_cls">Section</a> </li>
+          <li class="start <?= activate_method('line') ?>"> <a href="<?=base_url('setup_con/line')?>" class="anchor_cls">Line</a> </li>
+          <li class="start <?= activate_method('designation') ?>"> <a href="<?=base_url('setup_con/designation')?>" class="anchor_cls">Designation</a> </li>
 
-          <li class="start "> <a href="<?=base_url()?>setup_con/attendance_bonus" class="anchor_cls">Attendance Bonus</a> </li>
-          <li class="start "> <a href="<?=base_url()?>setup_con/salary_grade" class="anchor_cls">Salary Grade</a> </li>
-          <li class="start "> <a href="<?=base_url()?>setup_con/shift_schedule" class="anchor_cls">Shift Schedules</a> </li>
-          <li class="start "> <a href="<?=base_url()?>setup_con/shift_management" class="anchor_cls">Shift Manage</a> </li>
+          <li class="start <?= activate_method('attendance_bonus') ?>"> <a href="<?=base_url()?>setup_con/attendance_bonus" class="anchor_cls">Attendance Bonus</a> </li>
+          <li class="start <?= activate_method('weekend_allowance_setup') ?>"> <a href="<?=base_url()?>setup_con/weekend_allowance_setup" >Weekend Allowance</a> </li>
+          <li class="start <?= activate_method('night_allowance_setup') ?>"> <a href="<?=base_url('setup_con/night_allowance_setup')?>" >Night Allowance</a> </li>
+          <li class="start <?= activate_method('tiffin_bill_setup') ?>"> <a href="<?=base_url('setup_con/tiffin_bill_setup')?>" >Tiffin Bill</a> </li>
+          <li class="start <?= activate_method('iftar_bill_setup') ?>"> <a href="<?=base_url('setup_con/iftar_bill_setup')?>" >Iftar Allowance</a> </li>
+
+
+
+          <li class="start <?= activate_method('department') ?>"> <a href="<?=base_url('setup_con/salary_grade')?>" class="anchor_cls">Salary Grade</a> </li>
+          <li class="start <?= activate_method('department') ?>"> <a href="<?=base_url('setup_con/shift_schedule')?>" class="anchor_cls">Shift Schedules</a> </li>
+          <li class="start "> <a href="<?=base_url('setup_con/shift_management')?>" class="anchor_cls">Shift Manage</a> </li>
           <li class="start "> <a href="<?=base_url()?>setup_con/leave_setup" class="anchor_cls">Leave</a> </li>
           <li class="start "> <a href="<?=base_url()?>setup_con/bonus_setup" class="anchor_cls">Bonus</a> </li>
-          <li class="start "> <a href="<?=base_url()?>setup_con/weekend_allowance_setup" class="anchor_cls">Weekend Allowance</a> </li>
-          <li class="start "> <a href="<?=base_url()?>setup_con/night_allowance_setup" class="anchor_cls">Night Allowance</a> </li>
-          <li class="start "> <a href="<?=base_url()?>setup_con/holiday_allowance_setup" class="anchor_cls">Holiday Allowance</a> </li>
+
+          <!-- <li class="start <?= activate_method('holiday_allowance_setup') ?>"> <a href="<?=base_url('setup_con/holiday_allowance_setup')?>" >Holiday Allowance</a> </li> -->
 
           <li class="start <?= activate_method('post_office') ?>"> <a href="<?=base_url('setup_con/post_office')?>" class="anchor_cls">Post Office</a> </li>
         </ul>
@@ -51,8 +59,6 @@
       <?php } ?>
 
           
-      <li class="start"> <a href="<?=base_url('setup_con/company_info_setup')?>" class="anchor_cls" id="company_info_menu">Company Information</a> </li>
-
       <li class="start"> <a href="javascript:;" > <i class="fa fa-users"></i> <span class="title">HRM</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu ">
 

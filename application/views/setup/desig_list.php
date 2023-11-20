@@ -71,21 +71,6 @@ if ($failuer) {
             <table class="table table-striped" id="mytable">
                 <thead>
                     <tr>
-                    <!-- [id] => 1
-            [desig_name] => A P M
-            [desig_bangla] => 
-            [unit_id] => 1
-            [attn_id] => 0
-            [holiday_weekend_id] => 0
-            [iftar_id] => 0
-            [night_al_id] => 0
-            [tiffin_id] => 0
-            [unit_name] => A J FASHIONS LTD.
-            [allowance_attn_bonus] => none
-            [allowance_holiday_weekend] => none
-            [allowance_iftar] => none
-            [allowance_night_rules] => none
-            [allowance_tiffin] => none -->
                         <th>Sl</th>
                         <th>Designation Name </th>
                         <th>Unit Name </th>
@@ -112,11 +97,11 @@ if ($failuer) {
                         <td><?php echo $data['allowance_night_rules'] ?></td>
                         <td><?php echo $data['allowance_tiffin'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/designation_edit') . '/' . $data["id"]?>"
+                            <a href="<?=base_url('setup_con/designation_edit') . '/' . $data["id"]?>"
                                 target='_blank' class="btn btn-primary" role="button">Edit</a>
                         </td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/designation_delete') . '/' . $data["id"]?>"
+                            <a href="<?=base_url('setup_con/designation_delete') . '/' . $data["id"]?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
