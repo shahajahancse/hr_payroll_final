@@ -513,9 +513,9 @@ class Setup_con extends CI_Controller
 
     public function attendance_bonus()
     {
-		$this->db->select('allowance_attn_bonus.*,pr_units.unit_name');
-		$this->db->from('allowance_attn_bonus');
-		$this->db->join('pr_units', 'pr_units.unit_id=allowance_attn_bonus.unit_id');
+        $this->db->select('allowance_attn_bonus.*,pr_units.unit_name');
+        $this->db->from('allowance_attn_bonus');
+        $this->db->join('pr_units', 'pr_units.unit_id=allowance_attn_bonus.unit_id');
         $this->data['attendance_bonus'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -564,7 +564,7 @@ class Setup_con extends CI_Controller
     {
         $this->load->library('form_validation');
         $this->load->model('crud_model');
-		$this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Rule', 'required');
 
@@ -572,7 +572,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-			$this->db->select('pr_units.*');
+            $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
             $this->data['attbn'] = $this->crud_model->getattbn($rule_id);
@@ -581,7 +581,7 @@ class Setup_con extends CI_Controller
             $this->data['subview'] = 'setup/attbn_edit';
             $this->load->view('layout/template', $this->data);
         } else {
-			$formArray = array(
+            $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
                 'rule_name' => $this->input->post('rule_name'),
                 'rule' => $this->input->post('rule'),
@@ -615,9 +615,9 @@ class Setup_con extends CI_Controller
 
     public function weekend_allowance_setup()
     {
-		$this->db->select('allowance_holiday_weekend_rules.*,pr_units.unit_name');
-		$this->db->from('allowance_holiday_weekend_rules');
-		$this->db->join('pr_units', 'pr_units.unit_id=allowance_holiday_weekend_rules.unit_id');
+        $this->db->select('allowance_holiday_weekend_rules.*,pr_units.unit_name');
+        $this->db->from('allowance_holiday_weekend_rules');
+        $this->db->join('pr_units', 'pr_units.unit_id=allowance_holiday_weekend_rules.unit_id');
         $this->data['allowance_holiday_weekend_rules'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -672,7 +672,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-			$this->db->select('pr_units.*');
+            $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
             $this->db->where('id', $id);
@@ -716,9 +716,9 @@ class Setup_con extends CI_Controller
 
     public function tiffin_bill_setup()
     {
-		$this->db->select('allowance_tiffin_bill.*,pr_units.unit_name');
-		$this->db->from('allowance_tiffin_bill');
-		$this->db->join('pr_units', 'pr_units.unit_id=allowance_tiffin_bill.unit_id');
+        $this->db->select('allowance_tiffin_bill.*,pr_units.unit_name');
+        $this->db->from('allowance_tiffin_bill');
+        $this->db->join('pr_units', 'pr_units.unit_id=allowance_tiffin_bill.unit_id');
         $this->data['allowance_tiffin_bill'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -773,7 +773,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-			$this->db->select('pr_units.*');
+            $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
             $this->db->where('id', $id);
@@ -812,12 +812,11 @@ class Setup_con extends CI_Controller
     // CRUD for Tiffin Bill end
     //----------------------------------------------------------------------------------
 
-
     public function iftar_bill_setup()
     {
-		$this->db->select('allowance_iftar_bill.*,pr_units.unit_name');
-		$this->db->from('allowance_iftar_bill');
-		$this->db->join('pr_units', 'pr_units.unit_id=allowance_iftar_bill.unit_id');
+        $this->db->select('allowance_iftar_bill.*,pr_units.unit_name');
+        $this->db->from('allowance_iftar_bill');
+        $this->db->join('pr_units', 'pr_units.unit_id=allowance_iftar_bill.unit_id');
         $this->data['allowance_iftar_bill'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -872,7 +871,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-			$this->db->select('pr_units.*');
+            $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
             $this->db->where('id', $id);
@@ -916,9 +915,9 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     public function night_allowance_setup()
     {
-		$this->db->select('allowance_night_rules.*,pr_units.unit_name');
-		$this->db->from('allowance_night_rules');
-		$this->db->join('pr_units', 'pr_units.unit_id=allowance_night_rules.unit_id');
+        $this->db->select('allowance_night_rules.*,pr_units.unit_name');
+        $this->db->from('allowance_night_rules');
+        $this->db->join('pr_units', 'pr_units.unit_id=allowance_night_rules.unit_id');
         $this->data['allowance_night_rules'] = $this->db->get()->result_array();
         $this->data['title'] = 'Night Allowance List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -934,7 +933,6 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
         $this->form_validation->set_rules('night_time', 'Time', 'required');
-
 
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -976,7 +974,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-			$this->db->select('pr_units.*');
+            $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
             $this->db->where('id', $id);
@@ -1019,11 +1017,11 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     public function designation()
     {
-        $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name, 
-        IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus, 
-        IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend, 
-        IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar, 
-        IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules, 
+        $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name,
+        IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
+        IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
+        IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
+        IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules,
         IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin');
         $this->db->from('emp_designation');
         $this->db->join('pr_units', 'pr_units.unit_id=emp_designation.unit_id', 'left');
@@ -1043,32 +1041,31 @@ class Setup_con extends CI_Controller
     public function get_data_degi()
     {
         $unit_id = $_POST['unit_id'];
-    
+
         $data = [];
-    
+
         $data['attn_bonus'] = $this->db->where('allowance_attn_bonus.unit_id', $unit_id)
-                                       ->get('allowance_attn_bonus')
-                                       ->result_array();
-    
+            ->get('allowance_attn_bonus')
+            ->result_array();
+
         $data['holiday_weekend'] = $this->db->where('allowance_holiday_weekend_rules.unit_id', $unit_id)
-                                             ->get('allowance_holiday_weekend_rules')
-                                             ->result_array();
-    
+            ->get('allowance_holiday_weekend_rules')
+            ->result_array();
+
         $data['iftar'] = $this->db->where('allowance_iftar_bill.unit_id', $unit_id)
-                                  ->get('allowance_iftar_bill')
-                                  ->result_array();
-    
+            ->get('allowance_iftar_bill')
+            ->result_array();
+
         $data['night'] = $this->db->where('allowance_night_rules.unit_id', $unit_id)
-                                  ->get('allowance_night_rules')
-                                  ->result_array();
-    
+            ->get('allowance_night_rules')
+            ->result_array();
+
         $data['tiffin'] = $this->db->where('allowance_tiffin_bill.unit_id', $unit_id)
-                                   ->get('allowance_tiffin_bill')
-                                   ->result_array();
-    
+            ->get('allowance_tiffin_bill')
+            ->result_array();
+
         echo json_encode($data);
     }
-
 
     public function designation_add()
     {
@@ -1083,15 +1080,12 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
 
-
-
-
         if ($this->form_validation->run() == false) {
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
-            
+
             }
             $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
@@ -1149,14 +1143,14 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-			$this->db->select('pr_units.*');
+            $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
-            $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name, 
-            IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus, 
-            IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend, 
-            IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar, 
-            IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules, 
+            $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name,
+            IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
+            IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
+            IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
+            IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules,
             IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin');
             $this->db->from('emp_designation');
             $this->db->join('pr_units', 'pr_units.unit_id=emp_designation.unit_id', 'left');
@@ -1198,7 +1192,7 @@ class Setup_con extends CI_Controller
     {
         $this->db->where('id', $id);
         $this->db->delete('emp_designation');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');   
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url() . 'index.php/setup_con/designation');
     }
     //----------------------------------------------------------------------------------
@@ -1217,7 +1211,8 @@ class Setup_con extends CI_Controller
         $this->data['subview'] = 'setup/shift_schedule_list';
         $this->load->view('layout/template', $this->data);
     }
-    function shiftschedule_add(){
+    public function shiftschedule_add()
+    {
 
         $this->load->library('form_validation');
         $this->load->model('crud_model');
@@ -1235,17 +1230,16 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('onehrottime', 'shiftschedule One Hour Ot Time', 'trim|required');
         $this->form_validation->set_rules('twohrottime', 'shiftschedule Two Hour Ot Time', 'trim|required');
 
-
-       if($this->form_validation->run() == false){
+        if ($this->form_validation->run() == false) {
 
             $this->data['title'] = 'Shift Schedule Add';
             $this->data['allUnit'] = $this->crud_model->getallUnit();
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/shiftschedule_add';
             $this->load->view('layout/template', $this->data);
-       }else{
-           // print_r($_FILES['logoAAAAA']);
-           // print_r($_POST);exit();
+        } else {
+            // print_r($_FILES['logoAAAAA']);
+            // print_r($_POST);exit();
             $formArray = array();
             $formArray['unit_id'] = $this->input->post('uname');
             $formArray['sh_type'] = $this->input->post('stype');
@@ -1260,198 +1254,265 @@ class Setup_con extends CI_Controller
             $formArray['one_hour_ot_out_time'] = $this->input->post('onehrottime');
             $formArray['two_hour_ot_out_time'] = $this->input->post('twohrottime');
 
+            $this->crud_model->shiftschedule_add($formArray);
+            $this->session->set_flashdata('success', 'Record adder successfully!');
+            redirect(base_url() . 'index.php/setup_con/shift_schedule');
+        }
 
-           $this->crud_model->shiftschedule_add($formArray);
-           $this->session->set_flashdata('success','Record adder successfully!');
-           redirect(base_url().'index.php/setup_con/shift_schedule');
-       }
+    }
 
-   }
+    public function shiftschedule_edit($shiftscheduleId)
+    {
+        $data = array();
+        $this->load->model('crud_model');
+        $this->load->library('form_validation');
+        $data['shiftschedule'] = $this->crud_model->shiftschedule_fetch();
 
+        $this->form_validation->set_rules('uname', 'shiftschedule Unit Name', 'trim|required');
+        $this->form_validation->set_rules('stype', 'shiftschedule Shift Type', 'trim|required');
+        $this->form_validation->set_rules('instrt', 'shiftschedule In Start', 'trim|required');
+        $this->form_validation->set_rules('intime', 'shiftschedule In Time', 'trim|required');
+        $this->form_validation->set_rules('ltstart', 'shiftschedule Late Start', 'trim|required');
+        $this->form_validation->set_rules('inend', 'shiftschedule In End', 'trim|required');
+        $this->form_validation->set_rules('outstart', 'shiftschedule Out Start', 'trim|required');
+        $this->form_validation->set_rules('outend', 'shiftschedule Out End', 'trim|required');
+        $this->form_validation->set_rules('otstart', 'shiftschedule Ot Start', 'trim|required');
+        $this->form_validation->set_rules('otminute', 'shiftschedule Ot Minute', 'trim|required');
+        $this->form_validation->set_rules('onehrottime', 'shiftschedule One Hour Ot Time', 'trim|required');
+        $this->form_validation->set_rules('twohrottime', 'shiftschedule Two Hour Ot Time', 'trim|required');
 
-       function shiftschedule_edit($shiftscheduleId)
-       {
-           $data = array();
-           $this->load->model('crud_model');
-           $this->load->library('form_validation');
-            $data['shiftschedule'] = $this->crud_model->shiftschedule_fetch();
+        $data['shiftschedule'] = $this->crud_model->shiftschedule_fetch();
 
-
-            $this->form_validation->set_rules('uname', 'shiftschedule Unit Name', 'trim|required');
-            $this->form_validation->set_rules('stype', 'shiftschedule Shift Type', 'trim|required');
-            $this->form_validation->set_rules('instrt', 'shiftschedule In Start', 'trim|required');
-            $this->form_validation->set_rules('intime', 'shiftschedule In Time', 'trim|required');
-            $this->form_validation->set_rules('ltstart', 'shiftschedule Late Start', 'trim|required');
-            $this->form_validation->set_rules('inend', 'shiftschedule In End', 'trim|required');
-            $this->form_validation->set_rules('outstart', 'shiftschedule Out Start', 'trim|required');
-            $this->form_validation->set_rules('outend', 'shiftschedule Out End', 'trim|required');
-            $this->form_validation->set_rules('otstart', 'shiftschedule Ot Start', 'trim|required');
-            $this->form_validation->set_rules('otminute', 'shiftschedule Ot Minute', 'trim|required');
-            $this->form_validation->set_rules('onehrottime', 'shiftschedule One Hour Ot Time', 'trim|required');
-            $this->form_validation->set_rules('twohrottime', 'shiftschedule Two Hour Ot Time', 'trim|required');
-
-           $data['shiftschedule'] = $this->crud_model->shiftschedule_fetch();
-
-
-            if($this->form_validation->run() == false)
-           {
+        if ($this->form_validation->run() == false) {
             $this->data['allUnit'] = $this->crud_model->getallUnit();
 
-           $this->data['pr_emp_shift_schedule'] = $this->crud_model->getshiftschedule($shiftscheduleId);
-           $this->data['title'] = 'Shift Schedule Edit';
-           $this->data['username'] = $this->data['user_data']->id_number;
-           $this->data['subview'] = 'setup/shiftschedule_edit';
-           $this->load->view('layout/template', $this->data);
-           }
-           else
-           {
-               $this->crud_model->shiftschedule_edit($shiftscheduleId);
-               $this->session->set_flashdata('success','Record Updated successfully!');
+            $this->data['pr_emp_shift_schedule'] = $this->crud_model->getshiftschedule($shiftscheduleId);
+            $this->data['title'] = 'Shift Schedule Edit';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/shiftschedule_edit';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $this->crud_model->shiftschedule_edit($shiftscheduleId);
+            $this->session->set_flashdata('success', 'Record Updated successfully!');
 
-               redirect('/setup_con/shift_schedule');
+            redirect('/setup_con/shift_schedule');
 
+        }
 
-           }
+    }
 
+    public function shiftschedule_delete($shiftscheduleId)
+    {
+        $this->load->model('crud_model');
+        $shiftschedule = $this->crud_model->getshiftschedule($shiftscheduleId);
+        if (empty($shiftschedule)) {
+            $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
+            redirect('/setup_con/shift_schedule');
+        }
+        $this->crud_model->shiftschedule_delete($shiftscheduleId);
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect('/setup_con/shift_schedule');
+    }
 
-       }
-
-
-       function shiftschedule_delete($shiftscheduleId)
-       {
-           $this->load->model('crud_model');
-           $shiftschedule = $this->crud_model->getshiftschedule($shiftscheduleId);
-           if (empty($shiftschedule)) {
-               $this->session->set_flashdata('failure','Record Not Found in DataBase!');
-               redirect('/setup_con/shift_schedule');
-           }
-           $this->crud_model->shiftschedule_delete($shiftscheduleId);
-           $this->session->set_flashdata('success','Record Deleted successfully!');
-               redirect('/setup_con/shift_schedule');
-       }
-
-  //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
     // CRUD for Shift Schedules end
     //-------------------------------------------------------------------------------------------------------
 
-  //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
     // CRUD for Shift Management start
     //-------------------------------------------------------------------------------------------------------
     public function shift_management()
     {
-        $pr_emp_shift = $this->crud_model->shiftmanagement_infos();
-        $this->data['pr_emp_shift'] = $pr_emp_shift;
+        $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
+        $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_duty');
+        $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result_array();
         $this->data['title'] = 'Shift Management List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/shift_management_list';
         $this->load->view('layout/template', $this->data);
 
     }
-    function shiftmanagement_add(){
-
+    public function get_shift()
+    {
+        $unit_id = $this->input->post('unit_id');
+        $this->db->where('unit_id', $unit_id);
+        $query = $this->db->get('pr_emp_shift_schedule')->result();
+        echo json_encode($query);
+    }
+    public function shiftmanagement_add()
+    {
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $data['shiftmanagementinfo'] = $this->crud_model->shiftmanagement_fetch();
-        $this->form_validation->set_rules('stype', 'shiftmanagement Shift Type', 'trim|required');
-        $this->form_validation->set_rules('stname', 'shiftmanagement In Start', 'trim|required');
-        $this->form_validation->set_rules('unitid', 'shiftmanagement In Time', 'trim|required');
-       if($this->form_validation->run() == false){
+        $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
+        if ($this->form_validation->run() == false) {
+            $this->db->select('pr_units.*');
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['title'] = 'Shift Management Add';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/shiftmanagement_add';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $formArray = array(
+                'shift_name' => $this->input->post('shift_name'),
+                'unit_id' => $this->input->post('unit_id'),
+                'shift_duty' => $this->input->post('shift_type'),
+            );
+            if ($this->db->insert('pr_emp_shift', $formArray)) {
+                $this->session->set_flashdata('success', 'Record adder successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record adder failed!');
+            }
+            redirect(base_url() . 'index.php/setup_con/shift_management');
+        }
+    }
 
-        $this->data['title'] = 'Shift Management Add';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/shiftmanagement_add';
-        $this->load->view('layout/template', $this->data);
+    public function shiftmanagement_edit($shiftmanagementId)
+    {
+        $this->load->library('form_validation');
+        $this->load->model('crud_model');
+        $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
 
-       }else{
-           // print_r($_FILES['logoAAAAA']);
-           // print_r($_POST);exit();
-            $formArray = array();
-            $formArray['shift_name'] = $this->input->post('stname');
-            $formArray['unit_id'] = $this->input->post('unitid');
-            $formArray['shift_duty'] = $this->input->post('stype');
+        if ($this->form_validation->run() == false) {
+            $this->db->select('pr_units.*');
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
+            $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type,pr_emp_shift_schedule.shift_id');
+            $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
+            $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_duty');
+            $this->db->where('id', $shiftmanagementId);
+            $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->row();
 
+            $unit_id = $this->data['pr_emp_shift']->unit_id;
+            $this->db->where('unit_id', $unit_id);
+            $this->data['shift_type'] = $this->db->get('pr_emp_shift_schedule')->result();
 
-           $this->crud_model->shiftmanagement_add($formArray);
-           $this->session->set_flashdata('success','Record adder successfully!');
-           redirect(base_url().'index.php/setup_con/shift_management');
-       }
+            $this->data['title'] = 'Shift Management Edit';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/shiftmanagement_edit';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $formArray = array(
+                'shift_name' => $this->input->post('shift_name'),
+                'unit_id' => $this->input->post('unit_id'),
+                'shift_duty' => $this->input->post('shift_type'),
 
-   }
+            );
+            $this->db->where('id', $shiftmanagementId);
+            if ($this->db->update('pr_emp_shift', $formArray)) {
+                $this->session->set_flashdata('success', 'Record updated successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record update failed!');
+            }
+            redirect(base_url() . 'index.php/setup_con/shift_management');
+        }
 
+    }
 
-       function shiftmanagement_edit($shiftmanagementId)
-       {
-           $data = array();
-           $this->load->model('crud_model');
-           $this->load->library('form_validation');
-            $data['shiftmanagement'] = $this->crud_model->shiftmanagement_fetch();
-
-           // print_r($data);
-
-            $this->form_validation->set_rules('stype', 'shiftmanagement Shift Type', 'trim|required');
-            $this->form_validation->set_rules('stname', 'shiftmanagement Shift Name', 'trim|required');
-            $this->form_validation->set_rules('unitid', 'shiftmanagement Unit ID', 'trim|required');
-
-
-           // $data['shiftmanagement'] = $this->crud_model->shiftmanagement_fetch();
-
-
-            if($this->form_validation->run() == false)
-           {
-                $this->data['pr_emp_shift'] = $this->crud_model->getshiftmanagement($shiftmanagementId);
-                $this->data['title'] = 'Shift Management Edit';
-                $this->data['username'] = $this->data['user_data']->id_number;
-                $this->data['subview'] = 'setup/shiftmanagement_edit';
-                $this->load->view('layout/template', $this->data);
-           }
-           else
-           {
-
-               $this->crud_model->shiftmanagement_edit($shiftmanagementId);
-               $this->session->set_flashdata('success','Record Updated successfully!');
-
-               redirect('/setup_con/shift_management');
-
-
-           }
-
-
-       }
-
-
-       function shiftmanagement_delete($shiftmanagementId)
-       {
-           $this->load->model('crud_model');
-           $shiftmanagement = $this->crud_model->getshiftmanagement($shiftmanagementId);
-           if (empty($shiftmanagement)) {
-               $this->session->set_flashdata('failure','Record Not Found in DataBase!');
-               redirect('/setup_con/shift_management');
-           }
-           $this->crud_model->shiftmanagement_delete($shiftmanagementId);
-           $this->session->set_flashdata('success','Record Deleted successfully!');
-               redirect('/setup_con/shift_management');
-       }
-
-
+    public function shiftmanagement_delete($shiftmanagementId)
+    {
+        $this->load->model('crud_model');
+        $shiftmanagement = $this->crud_model->getshiftmanagement($shiftmanagementId);
+        if (empty($shiftmanagement)) {
+            $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
+            redirect('/setup_con/shift_management');
+        }
+        $this->crud_model->shiftmanagement_delete($shiftmanagementId);
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect('/setup_con/shift_management');
+    }
 
 //-------------------------------------------------------------------------------------------------------
 // CRUD for Shift Management end
 //-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+// CRUD for Company Info Setup
+//-------------------------------------------------------------------------------------------------------
 
+public function company_info_setup()
+{
+    $company_infos = $this->common_model->company_information();
+    $this->data['company_infos'] = $company_infos;
+    $this->data['title'] = 'Company Info';
+    $this->data['username'] = $this->data['user_data']->id_number;
+    $this->data['subview'] = 'setup/company_info';
+    $this->load->view('layout/template', $this->data);
+}
+public function company_add()
+{
+    $this->load->library('form_validation');
+    $this->load->model('crud_model');
+    $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
+    $this->form_validation->set_rules('en_add', 'Company Address English ', 'trim|required');
+    if ($this->form_validation->run() == false) {
+        $this->data['title'] = 'Company Add';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/company_add';
+        $this->load->view('layout/template', $this->data);
+    } else {
+        $formArray = array();
+        $formArray['name'] = $this->input->post('name');
+        $formArray['bname'] = $this->input->post('bname');
+        $formArray['en_add'] = $this->input->post('en_add');
+        $formArray['bn_add'] = $this->input->post('bn_add');
+        $formArray['phn'] = $this->input->post('phn');
+        $formArray['comlogo'] = $this->input->post('comlogo');
+        $formArray['comsign'] = $this->input->post('comsign');
+        $this->crud_model->company_add($formArray);
+        $this->session->set_flashdata('success', 'Record adder successfully!');
+        redirect(base_url() . 'index.php/setup_con/company_info_setup');
+    }
+
+}
+
+public function company_edit($comId)
+{
+    $this->load->model('crud_model');
+    $this->load->library('form_validation');
+    $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
+    $this->form_validation->set_rules('bname', 'Company Bangla Name', 'trim|required');
+    $this->form_validation->set_rules('en_add', 'Company Address English ', 'trim|required');
+    $this->form_validation->set_rules('bn_add', 'Company Address Bangla', 'trim|required');
+    if ($this->form_validation->run() == false) {
+        $this->data['company_infos'] = $this->crud_model->getUnit($comId);
+        $this->data['title'] = 'Company Info';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/company_edit';
+        $this->load->view('layout/template', $this->data);
+    } else {
+        $this->crud_model->company_edit($comId);
+        $this->session->set_flashdata('success', 'Record Updated successfully!');
+        redirect('/setup_con/company_info_setup');
+    }
+}
+
+public function company_delete($comId)
+{
+    $this->load->model('crud_model');
+    $company = $this->crud_model->getUnit($comId);
+    if (empty($company)) {
+        $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
+        redirect('/setup_con/company_info_setup');
+    }
+    $this->crud_model->company_delete($comId);
+    $this->session->set_flashdata('success', 'Record Deleted successfully!');
+    redirect('/setup_con/company_info_setup');
+}
+//-------------------------------------------------------------------------------------------------------
+// CRUD for Company Info Setup end
+//-------------------------------------------------------------------------------------------------------
 
     // old code
 
     //-------------------------------------------------------------------------------------------------------
     // Company info Setup
     //-------------------------------------------------------------------------------------------------------
-    public function company_info_setup()
-    {
-        $company_infos = $this->common_model->company_information();
-        $data = array();
-        $data['company_infos'] = $company_infos;
-        $this->load->view('output2', $data);
-    }
+   
 
     //-------------------------------------------------------------------------------------------------------
     // CRUD output method
@@ -1569,7 +1630,6 @@ class Setup_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Designation
     //-------------------------------------------------------------------------------------------------------
-   
 
     public function desig_name_check($str)
     {
@@ -1685,7 +1745,7 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Attendance Bonus
     //-------------------------------------------------------------------------------------------------------
-  
+
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Salary Grade
     //-------------------------------------------------------------------------------------------------------
@@ -1710,8 +1770,7 @@ return TRUE;
         $this->load->view('salgrd_list', $param);
 
     }
-  
-  
+
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Leave Setup
     //-------------------------------------------------------------------------------------------------------
@@ -1757,7 +1816,7 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Night Allowance Setup
     //-------------------------------------------------------------------------------------------------------
-  
+
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Holiday Allowance Setup
     //-------------------------------------------------------------------------------------------------------

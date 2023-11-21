@@ -787,9 +787,10 @@ class Crud_model extends CI_Model{
 
     function shiftmanagement_infos()
     {
-        $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_shift.*,pr_emp_shift_schedule.sh_type', false);
+        $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_shift.*,pr_emp_shift_schedule.sh_type,unit_name', false);
         $this->db->from('pr_emp_shift');
         $this->db->join('pr_emp_shift_schedule','pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_duty');
+
         return $this->db->get()->result_array();
         
     }
