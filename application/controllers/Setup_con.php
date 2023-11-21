@@ -1347,6 +1347,93 @@ class Setup_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
 
     }
+    function shiftmanagement_add(){
+
+        $this->load->library('form_validation');
+        $this->load->model('crud_model');
+        $data['shiftmanagementinfo'] = $this->crud_model->shiftmanagement_fetch();
+        $this->form_validation->set_rules('stype', 'shiftmanagement Shift Type', 'trim|required');
+        $this->form_validation->set_rules('stname', 'shiftmanagement In Start', 'trim|required');
+        $this->form_validation->set_rules('unitid', 'shiftmanagement In Time', 'trim|required');
+       if($this->form_validation->run() == false){
+
+        $this->data['title'] = 'Shift Management Add';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/shiftmanagement_add';
+        $this->load->view('layout/template', $this->data);
+
+       }else{
+           // print_r($_FILES['logoAAAAA']);
+           // print_r($_POST);exit();
+            $formArray = array();
+            $formArray['shift_name'] = $this->input->post('stname');
+            $formArray['unit_id'] = $this->input->post('unitid');
+            $formArray['shift_duty'] = $this->input->post('stype');
+
+
+
+           $this->crud_model->shiftmanagement_add($formArray);
+           $this->session->set_flashdata('success','Record adder successfully!');
+           redirect(base_url().'index.php/setup_con/shift_management');
+       }
+
+   }
+
+
+       function shiftmanagement_edit($shiftmanagementId)
+       {
+           $data = array();
+           $this->load->model('crud_model');
+           $this->load->library('form_validation');
+            $data['shiftmanagement'] = $this->crud_model->shiftmanagement_fetch();
+
+           // print_r($data);
+
+            $this->form_validation->set_rules('stype', 'shiftmanagement Shift Type', 'trim|required');
+            $this->form_validation->set_rules('stname', 'shiftmanagement Shift Name', 'trim|required');
+            $this->form_validation->set_rules('unitid', 'shiftmanagement Unit ID', 'trim|required');
+
+
+           // $data['shiftmanagement'] = $this->crud_model->shiftmanagement_fetch();
+
+
+            if($this->form_validation->run() == false)
+           {
+                $this->data['pr_emp_shift'] = $this->crud_model->getshiftmanagement($shiftmanagementId);
+                $this->data['title'] = 'Shift Management Edit';
+                $this->data['username'] = $this->data['user_data']->id_number;
+                $this->data['subview'] = 'setup/shiftmanagement_edit';
+                $this->load->view('layout/template', $this->data);
+           }
+           else
+           {
+
+               $this->crud_model->shiftmanagement_edit($shiftmanagementId);
+               $this->session->set_flashdata('success','Record Updated successfully!');
+
+               redirect('/setup_con/shift_management');
+
+
+           }
+
+
+       }
+
+
+       function shiftmanagement_delete($shiftmanagementId)
+       {
+           $this->load->model('crud_model');
+           $shiftmanagement = $this->crud_model->getshiftmanagement($shiftmanagementId);
+           if (empty($shiftmanagement)) {
+               $this->session->set_flashdata('failure','Record Not Found in DataBase!');
+               redirect('/setup_con/shift_management');
+           }
+           $this->crud_model->shiftmanagement_delete($shiftmanagementId);
+           $this->session->set_flashdata('success','Record Deleted successfully!');
+               redirect('/setup_con/shift_management');
+       }
+
+
 
 //-------------------------------------------------------------------------------------------------------
 // CRUD for Shift Management end

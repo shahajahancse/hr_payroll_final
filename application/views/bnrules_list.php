@@ -55,6 +55,7 @@ table.dataTable thead th, table.dataTable thead td {
 }
 table.dataTable.no-footer {
   border-bottom: none;
+  border-top: none;
 }
 
 </style>
