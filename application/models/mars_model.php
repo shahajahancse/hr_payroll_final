@@ -15,6 +15,9 @@ class Mars_model extends CI_Model{
 	{
 
 		$data = array();
+		if (empty($unit_id)) {
+			$unit_id = 1;
+		}
 		$all_id = get_all_emp_id(array(1,2), $unit_id);
 	 	$data = $this->weekly_attendance_summary($report_date,$all_id);
 

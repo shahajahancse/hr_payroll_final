@@ -59,6 +59,7 @@ class Crud_model extends CI_Model{
         }
 
         $this->db->order_by('attn_file_upload.upload_date', 'DESC');
+        // dd($this->db->get()->result());
         return $this->db->get()->result();
     }
 

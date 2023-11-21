@@ -96,21 +96,23 @@
         <table class="table table-striped" id="mytable">
           <thead>
             <tr>
+              <th>SL.</th>
               <th>Unit Name </th>
-              <th>File Name </th>
               <th>Date</th>
+              <th>File Name </th>
               <th>Delete</th>
             </tr>
           </thead>
 
           <tbody>
-            <?php if(!empty($results)){ foreach($results as $row){?>
+            <?php if(!empty($results)){ $i=0; foreach($results as $row){?>
               <tr>
+                  <td><?php echo ++$i; ?></td>
                   <td><?php echo $row->unit_name; ?></td>
-                  <td><a href="<?=base_url('data/'.$row->file_name)?>"><?php echo $row->file_name; ?></a></td>
                   <td><?php echo $row->upload_date; ?></td>
+                  <td><a href="<?=base_url('data/'.$row->file_name)?>"><?php echo $row->file_name; ?></a></td>
                   <td>
-                    <a href="<?=base_url('attn_process_con/file_delete/'.$row->id)?>" class="btn btn-danger btn-mini" role="button">Delete</a>
+                    <a href="<?=base_url('attn_process_con/delete_attn_file/'.$row->id)?>" class="btn btn-danger btn-mini" role="button">Delete</a>
                   </td>
               </tr>
             <?php } }else{?>

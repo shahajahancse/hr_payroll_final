@@ -55,19 +55,28 @@ class Attn_process_con extends CI_Controller {
         $this->load->view('layout/template', $this->data);
 	}
 
-
 	// daily attendance file upload   19-11-2023 shahajahan
 	function file_add()
 	{
+		// file upload
+
 		if (!empty($_FILES['upload_file']['name'])) {
 			$unit_id = $this->input->post('unit_id');
 			$upload_date = date('Y-m-d', strtotime($this->input->post('upload_date')));
+			$not_allow = date("Y-m-d",strtotime("-24 months"));
+
+			// not permission to two years ago file upload
+			if ($upload_date <= $not_allow && !empty($this->input->post('upload_date'))) {
+				$this->session->set_flashdata('success', 'Sorry! Not Allowed');
+				redirect(base_url('attn_process_con/file_upload'));
+			}
+
 			$check = $this->db->where('unit_id', $unit_id)->where('upload_date', $upload_date)
 							->get('attn_file_upload')->num_rows();
 
 			if ($check == 0) {
+				$this->delete_attn_file_two_ago($not_allow, $unit_id); // delete 2 years ago data
 				$file_name = $this->upload_attn_file($upload_date, $unit_id, $_FILES['upload_file']);
-
 				$comData = array(
 		            'file_name'   => $file_name,
 		            'unit_id' 	  => $unit_id,
@@ -78,6 +87,7 @@ class Attn_process_con extends CI_Controller {
 				$this->file_process_for_attendance($upload_date, $unit_id);
 
 				$this->session->set_flashdata('success', 'Successfully Insert Done');
+				redirect(base_url('attn_process_con/file_upload'));
 			} else {
 				$this->session->set_flashdata('error', 'Sorry Already exist.');
 			}
@@ -114,14 +124,16 @@ class Attn_process_con extends CI_Controller {
         }
     }
 
-	//machine row data (attendance file data) read
+	//machine row data (attendance file data) read and insert
 	function file_process_for_attendance($upload_date, $unit_id){
 		date_default_timezone_set('Asia/Dhaka');
 		$this->db->select('file_name')->where('unit_id', $unit_id)->where('upload_date',$upload_date);
 		$query = $this->db->get('attn_file_upload');
 
+		// check attendance file exist or not
 		if($query->num_rows() == 0){
 			echo "Please upload attendance file.";
+			return false;
 			exit;	
 		}
 
@@ -129,6 +141,7 @@ class Attn_process_con extends CI_Controller {
 		$file_name = "data/$rawfile_name";
 		if (file_exists($file_name)){
 
+			// check att_year_month table exist or not create the table
 			$att_table = "att_". date("Y_m", strtotime($upload_date));
 			if (!$this->db->table_exists($att_table)){
 				$this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(	
@@ -140,6 +153,14 @@ class Attn_process_con extends CI_Controller {
 					  KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
 				);	
 			}
+
+
+			// delete the att_year_month table (two years ago)
+			$delete_table = "att_". date("Y_m",strtotime("-25 months", strtotime($upload_date)));
+			if ($this->db->table_exists($delete_table)){
+				$this->db->query('DROP TABLE `'.$delete_table.'`');
+			}
+
 
 			$lines = file($file_name);
 			$out = array();
@@ -182,7 +203,37 @@ class Attn_process_con extends CI_Controller {
 		}
 	}
 
+	// delete attn file
+	public function delete_attn_file($id)
+	{
+		$path = realpath(APPPATH . '../data/');
+		$row = $this->db->where('id', $id)->get('attn_file_upload')->row();
+		if (!empty($row)) {
+			$file_name = $path .'/'. $row->file_name;
+			@unlink($file_name);
+		}
 
+		$this->db->where('id', $id);
+        $this->db->delete('attn_file_upload');
+
+        $this->session->set_flashdata('success', 'Successfully attendance file deleted');
+	    redirect(base_url('attn_process_con/file_upload'));
+	}
+
+	// delete attn file
+	public function delete_attn_file_two_ago($date, $unit_id)
+	{
+		$path = realpath(APPPATH . '../data/');
+		$row = $this->db->where('unit_id', $unit_id)->where('upload_date', $date)->get('attn_file_upload')->row();
+
+		if (!empty($row)) {
+			$file_name = $path .'/'. $row->file_name;
+			@unlink($file_name);
+		}
+
+		$this->db->where('unit_id', $unit_id)->where('upload_date', $date)->delete('attn_file_upload');
+        return;
+	}
 
 
 
