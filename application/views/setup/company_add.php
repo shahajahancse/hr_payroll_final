@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Company Edit</title>
-  <meta charset="utf-8">
-  <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
-</head>
-<body>
 
-
-
-<div class="container" style="padding-top: 10px;">
+<div class="content" >
 <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -56,7 +42,7 @@
 
   <h3>Create Company Unit</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url().'index.php/crud_con/company_add'?>">
+  <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url().'index.php/setup_con/company_add'?>">
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
@@ -87,11 +73,11 @@
       <div class="form-group">
         <label>Company Logo</label>
 
-        <input type="file" name="comlogo" id="comlogo" value="" class="form-control">
+        <input style="padding: 0px;" type="file" name="comlogo" id="comlogo" value="" class="form-control">
       </div>
       <div class="form-group">
         <label>Company Signature</label>
-        <input type="file" name="comsign" id="comsign" value="" class="form-control">
+        <input style="padding: 0px;" type="file" name="comsign" id="comsign" value="" class="form-control">
       </div>
       <div class="form-group">
         <button class="btn btn-primary">Create</button>
@@ -101,6 +87,3 @@
   </div>
 </form>
 </div>
-
-</body>
-</html>

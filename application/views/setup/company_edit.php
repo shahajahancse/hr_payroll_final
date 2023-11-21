@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Company Edit</title>
-  <meta charset="utf-8">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
-</head>
-<body>
 
 
-
-<div class="container" style="padding-top: 10px;">
+<div class="content">
 <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -37,7 +24,7 @@
 
   <h3>Update Company Unit</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url().'index.php/crud_con/company_edit/'.$company_infos->id;?>">
+  <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url().'index.php/setup_con/company_edit/'.$company_infos->id;?>">
   <div class="row">
     <div class="col-md-6">
       <input type="hidden" name="id"value="<?=$company_infos->id?>" class="form-control">
@@ -85,6 +72,3 @@
   </div>
 </form>
 </div>
-
-</body>
-</html>
