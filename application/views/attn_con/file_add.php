@@ -36,9 +36,9 @@
         if ($success != "") { ?>
          <div class="alert alert-success"><?php echo $success; ?></div>
          <?php } 
-         $failuer = $this->session->flashdata('failuer');
-         if ($failuer) { ?>
-         <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+         $error = $this->session->flashdata('error');
+         if ($error) { ?>
+         <div class="alert alert-failuer"><?php echo $error; ?></div>
          <?php } ?>
       </div>
     </div>
@@ -52,7 +52,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <select name="unit_id" id= "unit_id" class="form-control input-sm">
+                <select name="unit_id" id= "unit_id" class="form-control input-sm" required>
                   <option value="">Select Unit</option>
                   <?php 
                     foreach ($dept as $row) {
@@ -69,21 +69,22 @@
               </div>
 
               <div class="form-group">
-                <label>Department Name</label>
-                <input type="text" name="dept_name"value="" class="form-control">
-                <?php echo form_error('dept_name');?>
+                <label>Date</label>
+                <input type="date" name="upload_date"value="" class="form-control" required>
+                <?php echo form_error('upload_date');?>
               </div>
+
               <div class="form-group">
-                <label>Department Name Bangla</label>
-                <input type="text" name="dept_bangla"value="" class="form-control">
-                <?php echo form_error('dept_bangla');?>
+                <label>Select File</label>
+                <input type="file" name="upload_file" class="form-control" required style="height: 35px !important; line-height: 20px !important;" accept=".txt">
+                <?php echo form_error('upload_file');?>
               </div>
 
 
               <br>
 
               <div class="form-group">
-                <button class="btn btn-primary">Create</button>
+                <button class="btn btn-primary">Save</button>
                 <a href=""class="btn-warning btn">Cancel</a>
               </div>
             </div>

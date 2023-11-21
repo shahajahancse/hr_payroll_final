@@ -56,13 +56,134 @@ class Attn_process_con extends CI_Controller {
 	}
 
 
+	// daily attendance file upload   19-11-2023 shahajahan
 	function file_add()
 	{
+		if (!empty($_FILES['upload_file']['name'])) {
+			$unit_id = $this->input->post('unit_id');
+			$upload_date = date('Y-m-d', strtotime($this->input->post('upload_date')));
+			$check = $this->db->where('unit_id', $unit_id)->where('upload_date', $upload_date)
+							->get('attn_file_upload')->num_rows();
+
+			if ($check == 0) {
+				$file_name = $this->upload_attn_file($upload_date, $unit_id, $_FILES['upload_file']);
+
+				$comData = array(
+		            'file_name'   => $file_name,
+		            'unit_id' 	  => $unit_id,
+		            'upload_date' => $upload_date,
+		            'status'      => 'Yes',
+		        );
+		        $this->db->insert('attn_file_upload',$comData);
+				$this->file_process_for_attendance($upload_date, $unit_id);
+
+				$this->session->set_flashdata('success', 'Successfully Insert Done');
+			} else {
+				$this->session->set_flashdata('error', 'Sorry Already exist.');
+			}
+		}
+
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
 		$this->data['title'] = 'File Upload';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'attn_con/file_add';
         $this->load->view('layout/template', $this->data);
 	}
+
+    // attendance file upload
+    public function upload_attn_file($upload_date, $unit_id, $upload_file = array())
+    {
+		if($upload_file["name"] != ''){
+            $config['upload_path'] = './data'; //'./data/';
+            $config['allowed_types'] = 'txt';
+			$config['file_name'] 	  =  $upload_date .'-'. $unit_id .'.txt';
+            $config['max_size'] = '20000';
+            $config['max_width']  = '10000';
+            $config['max_height']  = '10000';
+
+            $this->load->library('upload', $config);
+			$this->upload->initialize($config);
+
+            if ( ! $this->upload->do_upload('upload_file')){
+                $error = array('error' => $this->upload->display_errors());
+            }else{
+                $data = array('upload_data' => $this->upload->data());
+                return $upload_file = $data["upload_data"]["file_name"];
+            }
+        }
+    }
+
+	//machine row data (attendance file data) read
+	function file_process_for_attendance($upload_date, $unit_id){
+		date_default_timezone_set('Asia/Dhaka');
+		$this->db->select('file_name')->where('unit_id', $unit_id)->where('upload_date',$upload_date);
+		$query = $this->db->get('attn_file_upload');
+
+		if($query->num_rows() == 0){
+			echo "Please upload attendance file.";
+			exit;	
+		}
+
+		$rawfile_name = $query->row()->file_name;
+		$file_name = "data/$rawfile_name";
+		if (file_exists($file_name)){
+
+			$att_table = "att_". date("Y_m", strtotime($upload_date));
+			if (!$this->db->table_exists($att_table)){
+				$this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(	
+				     `att_id` int(11) NOT NULL AUTO_INCREMENT,
+				     `device_id` int(11) NOT NULL,
+				     `proxi_id` varchar(30) NOT NULL,
+				     `date_time` datetime NOT NULL,
+				      PRIMARY KEY (`att_id`),
+					  KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
+				);	
+			}
+
+			$lines = file($file_name);
+			$out = array();
+			$prox_no = $date = $time = $format = $device_id = $f = 0;
+			foreach(array_values($lines)  as $line) {
+
+				if (!empty(strlen(chop($line)))) {
+					// list($prox_no, $date, $time, $format, $device_id, $f) = preg_split('/\s+/', trim($line));
+					$prox_no = trim(substr(trim($line),0,7));
+					$date = trim(substr(trim(substr(trim($line),7)),0,8));
+					$time = trim(substr(trim(substr(trim(substr(trim($line),7)),8)),0,8));
+					$format = trim(substr(trim(substr(trim(substr(trim($line),7)),8)),8));
+					$device_id= 1;	
+					if ($prox_no == 'No.') {
+						continue;
+					}
+
+					list($d,$m,$y) = explode('/', trim($date));		
+					$date_time = date("Y-m-d H:i:s", strtotime($y.'-'.$m.'-'.$d.' '.$time .' '.$format));
+
+					$this->db->where("proxi_id", $prox_no);
+					$this->db->where("date_time", $date_time);
+					$query1 = $this->db->get($att_table);
+					$num_rows1 = $query1->num_rows();
+					if($num_rows1 == 0 ){
+						$data = array(
+									'device_id' => ($device_id == 0 || $device_id =='')? 33:$device_id,
+									'proxi_id' 	=> $prox_no,
+									'date_time'	=> $date_time
+								);
+
+						$this->db->insert($att_table , $data);
+						
+					}
+				}
+			}
+			return true;
+		}else{
+			exit('Please Put the Data File.');
+		}
+	}
+
+
+
 
 
 
@@ -286,56 +407,7 @@ class Attn_process_con extends CI_Controller {
 	{
 		$this->load->view('output.php',$output);
 	}
-	function attn_file_upload()
-	{
-		$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
-		$acl     = $this->acl_model->get_acl_list($user_id);
 
-		$crud = new grocery_CRUD();
-
-		$crud->set_table('pr_attn_file_upload');
-		$crud->set_subject('Attendance File Upload');
-
-		$get_session_user_unit = $this->common_model->get_session_unit_id_name();
-		if($get_session_user_unit != 0)
-		{
-			$crud->where('pr_attn_file_upload.unit_id',$get_session_user_unit);
-		}
-		$state = $crud->getState();
- 		$crud->display_as( 'unit_id' , 'Unit' );
-
-		if($state == 'add' || $state == 'insert_validation')
-		{
-			$crud->required_fields( 'file_name','upload_date','unit_id');
-			$crud->set_rules('upload_date','Date','trim|required|callback_date_duplication_check_for_unit');
-			$crud->callback_before_insert(array($this,'upload_file_name_change'));
-		}
-
-		/*elseif($state == 'edit'  || $state == 'update_validation')
-		{
-			$crud->required_fields( 'file_name');
-			$crud->change_field_type('upload_date','readonly');
-		}*/
-		if($get_session_user_unit != 0)
-		{
-			$crud->set_relation( 'unit_id' , 'pr_units','unit_name',array('unit_id' => $get_session_user_unit) );
-		}
-		else
-		{
-			$crud->set_relation( 'unit_id' , 'pr_units','unit_name' );
-		}
-
-		$crud->set_field_upload('file_name','data/');
-		$crud->unset_edit();
-		if(in_array(10,$acl)){
-		$crud->columns('unit_id','upload_date','status','last_process_time','username');
-		}
-		$crud->fields('unit_id','file_name','upload_date');
-		$crud->order_by('upload_date','DESC');
-		//$crud->unset_delete();
-		$output = $crud->render();
-		$this->crud_output($output);
-	}
 
 	function date_duplication_check_for_unit($upload_date)
 	{

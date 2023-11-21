@@ -57,6 +57,8 @@ class Crud_model extends CI_Model{
         if (!empty($this->data['user_data']->unit_name)) {
             $this->db->where('attn_file_upload.unit_id', $this->data['user_data']->unit_name);
         }
+
+        $this->db->order_by('attn_file_upload.upload_date', 'DESC');
         return $this->db->get()->result();
     }
 

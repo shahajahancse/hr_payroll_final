@@ -105,8 +105,8 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_error_delimiters("","");
 		if ($this->form_validation->run() == TRUE) {
 			if($this->input->post('pi_save') != '') {
+				
 				$this->processdb->insert_emp_info();
-				dd($_POST);
 
 			} elseif($this->input->post('pi_edit') != ''){
 				if($this->processdb->updatedb1()) {
