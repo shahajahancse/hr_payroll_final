@@ -433,7 +433,6 @@ input {
     border-radius: 4px;
     padding: 14px 14px;
     margin: 0;
-
 }
 
 .tablebox {

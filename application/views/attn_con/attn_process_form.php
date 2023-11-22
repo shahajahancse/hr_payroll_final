@@ -26,7 +26,7 @@
 	    </div>
 
 		<!-- <div class="container-fluid">	 -->
-			<div class="col-md-8">
+			<div class="col-md-7 tablebox">
 	          	<h3 style="font-weight: 600;"><?= $title ?></h3>
 		        <hr style="margin-bottom: 0px !important;">
 		        <div style="background-color: white; padding: 15px !important;">

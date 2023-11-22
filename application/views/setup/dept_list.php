@@ -44,7 +44,6 @@
     </div>
 
     <div id="target-div" class="row tablebox">
-      <div class="container-fluid">
         <table class="table table-striped" id="mytable">
           <thead>
             <tr>
@@ -77,7 +76,6 @@
         	</tbody>
         </table>
           <!-- <div class="pagination"><?php //echo $this->pagination->create_links(); ?></div> -->
-      </div>
     </div>
 
   </div>
