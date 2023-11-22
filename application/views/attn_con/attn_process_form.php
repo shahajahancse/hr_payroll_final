@@ -27,9 +27,8 @@
 
 		<!-- <div class="container-fluid">	 -->
 			<div class="col-md-8">
-	          	<h3 style="font-weight: 600;"><?= $title ?></h3>
-		        <hr style="margin-bottom: 0px !important;">
-			        <div class="row tablebox" style="display: block;">
+				<div class="row tablebox" style="display: block;">
+					<h3 style="font-weight: 600;"><?= $title ?></h3>
 			            <div class="col-md-6">
 			              	<div class="form-group">
 				              	<label>Unit <span style="color: red;">*</span> </label>
@@ -116,14 +115,14 @@
 				<div id="loader"  align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
 					<img src="<?php echo base_url('images/ajax-loader.gif');?>" />
 				</div>
-				<div class="row">
+				<div class="row nav_head">
 				  <div class="col-lg-4">
 					<span style="font-size: 20px;">Attendance Process </span>
 				  </div><!-- /.col-lg-6 -->
 				  <div class="col-lg-6">
-				    <div class="input-group">
+				    <div class="input-group" style="display:flex; gap: 14px">
 				      <input type="date" class="form-control" id="date" placeholder="select date">
-				      <span class="input-group-btn">
+				        <span class="input-group-btn">
 				        <input class="btn btn-primary" onclick='attendance_process()' type="button" value='Process' />
 				      </span>
 				    </div><!-- /input-group -->
@@ -131,8 +130,8 @@
 				</div><!-- /.row -->		        
 		    </div>
 
-			<div class="col-md-4" style="padding-right: 0px !important; padding-left: 0px !important;">
-				<div style="height: 80vh; overflow-y: scroll; background: #fff !important">
+			<div class="col-md-4 tablebox" >
+				<div style="height: 80vh; overflow-y: scroll;">
 					<table class="table table-hover" id="fileDiv">
 						<tr style="position: sticky;top: 0;z-index:1">
 					      <th class="active" style="width:10%"><input type="checkbox" id="select_all" class="select-all checkbox" name="select-all"></th>
