@@ -357,20 +357,6 @@
             color: #fff;
         }
 
-<<<<<<< HEAD
-        .tablebox {
-            box-shadow: 0 0 3px 0px #8900ed;
-            background: #fbfbfb;
-            padding: 14px 1px;
-            margin: 0;
-        }
-
-        table.dataTable.no-footer {
-            border-bottom: none;
-            border-top: none;
-        }
-    </style>
-=======
 /* .tablebox {
     box-shadow: 0 0 6px 1px #a9a9a9;
     background: #fbfbfb;
@@ -452,4 +438,4 @@ input {
     border: 1px solid #eeeef0;
 }
 </style>
->>>>>>> ad7f79af4adde91339f88aab984e4bfbe2d91336
+
