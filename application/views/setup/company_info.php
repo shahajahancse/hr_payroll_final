@@ -1,7 +1,7 @@
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
-            <div class="navbar-header col-md-3">
+            <div class="navbar-header col-md-6">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -15,7 +15,7 @@
                     <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="">
                         <form class="navbar-form pull-right" role="search">

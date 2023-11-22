@@ -15,7 +15,7 @@
                             <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="">
                         <form class="navbar-form pull-right" role="search">

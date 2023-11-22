@@ -2,7 +2,7 @@
 
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
-            <div class="navbar-header col-md-3">
+            <div class="navbar-header col-md-6">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
