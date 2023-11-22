@@ -26,11 +26,10 @@
 	    </div>
 
 		<!-- <div class="container-fluid">	 -->
-			<div class="col-md-7 tablebox">
+			<div class="col-md-8">
 	          	<h3 style="font-weight: 600;"><?= $title ?></h3>
 		        <hr style="margin-bottom: 0px !important;">
-		        <div style="background-color: white; padding: 15px !important;">
-			        <div class="row">
+			        <div class="row tablebox" style="display: block;">
 			            <div class="col-md-6">
 			              	<div class="form-group">
 				              	<label>Unit <span style="color: red;">*</span> </label>
@@ -112,7 +111,6 @@
 			              	</div>
 			            </div>
 			        </div>
-		        </div>
 
 				<br>
 				<div id="loader"  align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
