@@ -24,7 +24,6 @@
             <?php } ?>
         </div>
     </div>
-
     <!-- <div class="container-fluid">	 -->
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
@@ -48,7 +47,6 @@
                     </select>
                 </div>
             </div>
-
             <!-- department -->
             <div class="col-md-6">
                 <div class="form-group">
@@ -64,7 +62,6 @@
                     </select>
                 </div>
             </div>
-
             <!-- section -->
             <div class="col-md-6">
                 <div class="form-group">
@@ -74,7 +71,6 @@
                     </select>
                 </div>
             </div>
-
             <!-- line -->
             <div class="col-md-6">
                 <div class="form-group">
@@ -84,7 +80,6 @@
                     </select>
                 </div>
             </div>
-
             <!-- Designation -->
             <div class="col-md-6">
                 <div class="form-group">
@@ -94,7 +89,6 @@
                     </select>
                 </div>
             </div>
-
             <!-- status -->
             <div class="col-md-6">
                 <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
