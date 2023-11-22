@@ -1,8 +1,7 @@
 <div class="content">
-    <!-- Static navbar -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
+    <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
+            <div class="navbar-header col-md-3" style="padding: 7px;">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -10,22 +9,33 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Add Comapny Unit</a>
+                <div>
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/company_info_setup') ?>">
+                        < < Back</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
-                </ul>
-
+            <div class="col-md-9">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="">
+                        <form class="navbar-form pull-right" role="search">
+                            <div class="input-group">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <!--/.nav-collapse -->
         </div>
         <!--/.container-fluid -->
     </nav>
-
-    <h3>Update Company Unit</h3>
-    <hr>
-    <div class="row tablebox">
+    <div class="row">
+        <?php
+            $failuer = $this->session->flashdata('failure');
+            ?>
+    </div>
+    <div class="tablebox">
+        <h3>Update Company Unit</h3>
         <form enctype="multipart/form-data" method="post" name="creatcompanyunit"
             action="<?php echo base_url().'index.php/setup_con/company_edit/'.$company_infos->id;?>">
             <input type="hidden" name="id" value="<?=$company_infos->id?>" class="form-control">

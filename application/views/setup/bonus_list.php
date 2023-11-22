@@ -1,7 +1,8 @@
 <div class="content">
+
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
-            <div class="navbar-header col-md-3">
+            <div class="navbar-header col-md-5">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -10,12 +11,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/company_add') ?>">Add Company
-                        Info</a>
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/bonus_add') ?>">Add Bonus</a>
                     <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="">
                         <form class="navbar-form pull-right" role="search">
@@ -51,50 +51,67 @@
     </div>
     <!-- <br> -->
     <div class="row tablebox">
+
         <div class="col-md-12">
             <table class="table table-striped" id="mytable">
                 <thead>
                     <tr>
-                        <th>Company Name </th>
-                        <th>Company Address</th>
-                        <th>Company Phone No</th>
-                        <th>Company Logo</th>
-                        <th>Company Signature</th>
-                        <th>Edit</th>
+                        <th>Unit Name</th>
+                        <th>Emp type</th>
+                        <th>Bonus first month</th>
+                        <th>Bonus second month</th>
+                        <th>Bonus amount</th>
+                        <th>Bonus amount fraction</th>
+                        <th>Bonus percent</th>
+                        <th>Effective date</th>
+                        <th width="80">Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                            if (!empty($company_infos)) {foreach ($company_infos as $cominfos) {?>
+                         // print_r($pr_bonus_rules);exit('keno?');
+
+
+                            if(!empty($pr_bonus_rules)){ foreach($pr_bonus_rules as $pr_bonus_rule){?>
 
                     <tr>
-                        <td><?php echo $cominfos['company_name_bangla'] ?></td>
-                        <td><?php echo $cominfos['company_add_bangla'] ?></td>
-                        <td><?php echo $cominfos['company_phone'] ?></td>
-                        <td><img width="55" height="55" src="<?=base_url()?>images/<?=$cominfos['company_logo']?>" />
-                        </td>
-                        <td><img width="55" height="55"
-                                src="<?=base_url()?>images/<?=$cominfos['company_signature']?>" /></td>
+                        <td><?php echo $pr_bonus_rule['unit_name'] ?></td>
+                        <td><?php echo $pr_bonus_rule['emp_type'] ?></td>
+                        <td><?php echo $pr_bonus_rule['bonus_first_month'] ?></td>
+                        <td><?php echo $pr_bonus_rule['bonus_second_month'] ?></td>
+                        <td><?php echo $pr_bonus_rule['bonus_amount'] ?></td>
+                        <td><?php echo $pr_bonus_rule['bonus_amount_fraction'] ?></td>
+                        <td><?php echo $pr_bonus_rule['bonus_percent'] ?></td>
+                        <td><?php echo $pr_bonus_rule['effective_date'] ?></td>
+
+
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/company_edit') . '/' . $cominfos["id"]?>"
-                                class="btn btn-primary" role="button">Edit</a>
+                            <a href="<?=base_url('index.php/setup_con/bonus_edit').'/'.$pr_bonus_rule["id"]?>"
+                                target='_blank' class="btn btn-primary" role="button">Edit</a>
                         </td>
+
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/company_delete') . '/' . $cominfos["id"]?>"
+                            <a href="<?=base_url('index.php/setup_con/bonus_delete').'/'.$pr_bonus_rule["id"]?>"
                                 class="btn btn-danger" role="button">Delete</a>
+
                         </td>
                     </tr>
-                    <?php }} else {?>
+                    <?php } }else{?>
+
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
                     <?php }?>
+
                 </tbody>
             </table>
+
         </div>
     </div>
+    <br><br>
 </div>
+
 <script type="text/javascript">
 $(document).ready(function() {
     $("#mytable").dataTable();

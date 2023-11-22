@@ -836,11 +836,10 @@ class Crud_model extends CI_Model{
 
 
 
-    function leave_infos($limit,$start)
+    function leave_infos()
     {
         $this->db->select('SQL_CALC_FOUND_ROWS pr_leave.*', false);
         $this->db->from('pr_leave');
-        // $this->db->limit($limit,$start);
         return $this->db->get()->result_array();
     }
 

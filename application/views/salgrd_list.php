@@ -114,7 +114,7 @@ table.dataTable.no-footer {
           <div class="col-md-8">
               <div class="col-md-6"><h3 style="margin-top: 0px; margin-bottom: 8px;">Salary Grade List</h3></div>
               <div class="col-md-6 text-right">
-                  <a href="<?=base_url('index.php/crud_con/salgrd_add')?>" target='_blank' class="btn btn-info" role="button">Add Salary Grade</a>
+                  <a href="<?=base_url('index.php/crud_con/salgrd_add')?>" class="btn btn-info" role="button">Add Salary Grade</a>
               </div>
          </div>
       </div>

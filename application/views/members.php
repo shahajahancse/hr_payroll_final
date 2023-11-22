@@ -83,7 +83,7 @@ a:hover
           <div class="col-md-8">
               <div class="col-md-6"><h3>Member List</h3></div>
               <div class="col-md-6 text-right">
-                  <a href="<?=base_url('index.php/acl_con/member_add')?>" target='_blank' class="btn btn-info" role="button">Add Member</a>
+                  <a href="<?=base_url('index.php/acl_con/member_add')?>" class="btn btn-info" role="button">Add Member</a>
               </div>
          </div>
       </div>

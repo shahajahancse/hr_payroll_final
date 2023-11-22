@@ -79,7 +79,7 @@ class Setup_con extends CI_Controller
             );
 
             if ($this->db->insert('emp_depertment', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
                 $this->session->set_flashdata('failuer', 'Sorry!, Something wrong.');
             }
@@ -122,7 +122,7 @@ class Setup_con extends CI_Controller
             $this->db->update('emp_depertment', $formArray);
 
             $this->session->set_flashdata('success', 'Record Updated successfully!');
-            //alert('Record adder successfully!');
+            //alert('Record add successfully!');
             redirect('/setup_con/department');
         }
     }
@@ -200,7 +200,7 @@ class Setup_con extends CI_Controller
             );
 
             if ($this->db->insert('emp_post_offices', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
                 $this->session->set_flashdata('failuer', 'Sorry!, Something wrong.');
             }
@@ -323,9 +323,9 @@ class Setup_con extends CI_Controller
             );
 
             if ($this->db->insert('emp_section', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/section');
         }
@@ -447,9 +447,9 @@ class Setup_con extends CI_Controller
             );
 
             if ($this->db->insert('emp_line_num', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/line');
         }
@@ -551,9 +551,9 @@ class Setup_con extends CI_Controller
             );
 
             if ($this->db->insert('allowance_attn_bonus', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/attendance_bonus');
         }
@@ -651,9 +651,9 @@ class Setup_con extends CI_Controller
                 'allowance_amount' => $this->input->post('rule'),
             );
             if ($this->db->insert('allowance_holiday_weekend_rules', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/weekend_allowance_setup');
         }
@@ -752,9 +752,9 @@ class Setup_con extends CI_Controller
                 'allowance_amount' => $this->input->post('rule'),
             );
             if ($this->db->insert('allowance_tiffin_bill', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/tiffin_bill_setup');
         }
@@ -850,9 +850,9 @@ class Setup_con extends CI_Controller
                 'allowance_amount' => $this->input->post('rule'),
             );
             if ($this->db->insert('allowance_iftar_bill', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/iftar_bill_setup');
         }
@@ -952,9 +952,9 @@ class Setup_con extends CI_Controller
                 'night_time' => $this->input->post('night_time'),
             );
             if ($this->db->insert('allowance_night_rules', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/night_allowance_setup');
         }
@@ -1117,9 +1117,9 @@ class Setup_con extends CI_Controller
                 'tiffin_id' => $this->input->post('tiffin_id'),
             );
             if ($this->db->insert('emp_designation', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/designation');
         }
@@ -1255,7 +1255,7 @@ class Setup_con extends CI_Controller
             $formArray['two_hour_ot_out_time'] = $this->input->post('twohrottime');
 
             $this->crud_model->shiftschedule_add($formArray);
-            $this->session->set_flashdata('success', 'Record adder successfully!');
+            $this->session->set_flashdata('success', 'Record add successfully!');
             redirect(base_url() . 'index.php/setup_con/shift_schedule');
         }
 
@@ -1362,9 +1362,9 @@ class Setup_con extends CI_Controller
                 'shift_duty' => $this->input->post('shift_type'),
             );
             if ($this->db->insert('pr_emp_shift', $formArray)) {
-                $this->session->set_flashdata('success', 'Record adder successfully!');
+                $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
-                $this->session->set_flashdata('failure', 'Record adder failed!');
+                $this->session->set_flashdata('failure', 'Record add failed!');
             }
             redirect(base_url() . 'index.php/setup_con/shift_management');
         }
@@ -1434,77 +1434,319 @@ class Setup_con extends CI_Controller
 // CRUD for Company Info Setup
 //-------------------------------------------------------------------------------------------------------
 
-public function company_info_setup()
-{
-    $company_infos = $this->common_model->company_information();
-    $this->data['company_infos'] = $company_infos;
-    $this->data['title'] = 'Company Info';
-    $this->data['username'] = $this->data['user_data']->id_number;
-    $this->data['subview'] = 'setup/company_info';
-    $this->load->view('layout/template', $this->data);
-}
-public function company_add()
-{
-    $this->load->library('form_validation');
-    $this->load->model('crud_model');
-    $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
-    $this->form_validation->set_rules('en_add', 'Company Address English ', 'trim|required');
-    if ($this->form_validation->run() == false) {
-        $this->data['title'] = 'Company Add';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/company_add';
-        $this->load->view('layout/template', $this->data);
-    } else {
-        $formArray = array();
-        $formArray['name'] = $this->input->post('name');
-        $formArray['bname'] = $this->input->post('bname');
-        $formArray['en_add'] = $this->input->post('en_add');
-        $formArray['bn_add'] = $this->input->post('bn_add');
-        $formArray['phn'] = $this->input->post('phn');
-        $formArray['comlogo'] = $this->input->post('comlogo');
-        $formArray['comsign'] = $this->input->post('comsign');
-        $this->crud_model->company_add($formArray);
-        $this->session->set_flashdata('success', 'Record adder successfully!');
-        redirect(base_url() . 'index.php/setup_con/company_info_setup');
-    }
-
-}
-
-public function company_edit($comId)
-{
-    $this->load->model('crud_model');
-    $this->load->library('form_validation');
-    $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
-    $this->form_validation->set_rules('bname', 'Company Bangla Name', 'trim|required');
-    $this->form_validation->set_rules('en_add', 'Company Address English ', 'trim|required');
-    $this->form_validation->set_rules('bn_add', 'Company Address Bangla', 'trim|required');
-    if ($this->form_validation->run() == false) {
-        $this->data['company_infos'] = $this->crud_model->getUnit($comId);
+    public function company_info_setup()
+    {
+        $company_infos = $this->common_model->company_information();
+        $this->data['company_infos'] = $company_infos;
         $this->data['title'] = 'Company Info';
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/company_edit';
+        $this->data['subview'] = 'setup/company_info';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function company_add()
+    {
+        $this->load->library('form_validation');
+        $this->load->model('crud_model');
+        $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
+        $this->form_validation->set_rules('en_add', 'Company Address English ', 'trim|required');
+        if ($this->form_validation->run() == false) {
+            $this->data['title'] = 'Company Add';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/company_add';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $formArray = array();
+            $formArray['name'] = $this->input->post('name');
+            $formArray['bname'] = $this->input->post('bname');
+            $formArray['en_add'] = $this->input->post('en_add');
+            $formArray['bn_add'] = $this->input->post('bn_add');
+            $formArray['phn'] = $this->input->post('phn');
+            $formArray['comlogo'] = $this->input->post('comlogo');
+            $formArray['comsign'] = $this->input->post('comsign');
+            $this->crud_model->company_add($formArray);
+            $this->session->set_flashdata('success', 'Record add successfully!');
+            redirect(base_url() . 'index.php/setup_con/company_info_setup');
+        }
+
+    }
+
+    public function company_edit($comId)
+    {
+        $this->load->model('crud_model');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
+        $this->form_validation->set_rules('bname', 'Company Bangla Name', 'trim|required');
+        $this->form_validation->set_rules('en_add', 'Company Address English ', 'trim|required');
+        $this->form_validation->set_rules('bn_add', 'Company Address Bangla', 'trim|required');
+        if ($this->form_validation->run() == false) {
+            $this->data['company_infos'] = $this->crud_model->getUnit($comId);
+            $this->data['title'] = 'Company Info';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/company_edit';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $this->crud_model->company_edit($comId);
+            $this->session->set_flashdata('success', 'Record Updated successfully!');
+            redirect('/setup_con/company_info_setup');
+        }
+    }
+
+    public function company_delete($comId)
+    {
+        $this->load->model('crud_model');
+        $company = $this->crud_model->getUnit($comId);
+        if (empty($company)) {
+            $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
+            redirect('/setup_con/company_info_setup');
+        }
+        $this->crud_model->company_delete($comId);
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect('/setup_con/company_info_setup');
+    }
+//-------------------------------------------------------------------------------------------------------
+// CRUD for Company Info Setup end
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+// CRUD for Leave Setup start
+//-------------------------------------------------------------------------------------------------------
+
+    public function leave_setup()
+    {
+        $this->db->select('pr_leave.*,pr_units.unit_name');
+        $this->db->from('pr_leave');
+        $this->db->join('pr_units','pr_units.unit_id = pr_leave.unit_id');
+        $this->data['pr_leave'] = $this->db->get()->result_array();
+        $this->data['title'] = 'Leave Setup';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/leave_list';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function leave_add()
+    {
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('leave_name', 'Leave_name', 'required');
+        $this->form_validation->set_rules('sick_leave', 'Sick Leave', 'required');
+        $this->form_validation->set_rules('casual_leave', 'Casual Leave', 'required');
+        $this->form_validation->set_rules('maternity_leave', 'Maternity Leave', 'required');
+        $this->form_validation->set_rules('paternity_leave', 'Paternity Leave', 'required');
+     
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+            $this->db->select('pr_units.*');
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['title'] = 'Leave Add';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/leave_add';
+            $this->load->view('layout/template', $this->data);
+        } else {
+
+
+            $formArray = array(
+                'unit_id' => $this->input->post('unit_id'),
+                'lv_name' => $this->input->post('leave_name'),
+                'lv_sl' => $this->input->post('sick_leave'),
+                'lv_cl' => $this->input->post('casual_leave'),
+                'lv_ml' => $this->input->post('maternity_leave'),
+                'lv_pl' => $this->input->post('paternity_leave'),
+            );
+            if ($this->db->insert('pr_leave', $formArray)) {
+                $this->session->set_flashdata('success', 'Record add successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record add failed!');
+            }
+            redirect(base_url() . 'index.php/setup_con/leave_setup');
+        }
+    }
+
+    public function leave_edit($shiftmanagementId)
+    {
+      
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('leave_name', 'Leave_name', 'required');
+        $this->form_validation->set_rules('sick_leave', 'Sick Leave', 'required');
+        $this->form_validation->set_rules('casual_leave', 'Casual Leave', 'required');
+        $this->form_validation->set_rules('maternity_leave', 'Maternity Leave', 'required');
+        $this->form_validation->set_rules('paternity_leave', 'Paternity Leave', 'required');
+     
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+
+            $this->db->select('pr_units.*');
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
+            $this->db->select('pr_leave.*');
+            $this->db->where('lv_id', $shiftmanagementId);
+            $this->data['pr_leave'] = $this->db->get('pr_leave')->row();
+
+            $this->data['title'] = 'Leave Edit';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/leave_edit';
+            $this->load->view('layout/template', $this->data);
+        } else {
+
+
+            $formArray = array(
+                'unit_id' => $this->input->post('unit_id'),
+                'lv_name' => $this->input->post('leave_name'),
+                'lv_sl' => $this->input->post('sick_leave'),
+                'lv_cl' => $this->input->post('casual_leave'),
+                'lv_ml' => $this->input->post('maternity_leave'),
+                'lv_pl' => $this->input->post('paternity_leave'),
+            );
+            $this->db->where('lv_id', $shiftmanagementId);
+            if ($this->db->update('pr_leave', $formArray)) {
+                $this->session->set_flashdata('success', 'Record updated successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record Update failed!');
+            }
+            redirect(base_url() . 'index.php/setup_con/leave_setup');
+        }
+
+    }
+
+    public function leave_delete($shiftmanagementId)
+    {
+        $this->crud_model->shiftmanagement_delete($shiftmanagementId);
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect('/setup_con/leave_setup');
+    }
+
+//-------------------------------------------------------------------------------------------------------
+// CRUD for Leave Setup end
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+// CRUD for Bonus Setup start
+//-------------------------------------------------------------------------------------------------------
+public function bonus_setup()
+{
+    $this->db->select('pr_bonus_rules.*,pr_units.unit_name');
+    $this->db->from('pr_bonus_rules');
+    $this->db->join('pr_units','pr_units.unit_id = pr_bonus_rules.unit_id');
+    $this->data['pr_bonus_rules'] = $this->db->get()->result_array();
+    $this->data['title'] = 'Bonus Setup';
+    $this->data['username'] = $this->data['user_data']->id_number;
+    $this->data['subview'] = 'setup/bonus_list';
+    $this->load->view('layout/template', $this->data);
+
+}
+
+public function bonus_add()
+{
+    $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+    $this->form_validation->set_rules('emp_type', 'Employee Type', 'required');
+    $this->form_validation->set_rules('bonus_first_month', 'Bonus First Month', 'required');
+    $this->form_validation->set_rules('bonus_second_month', 'Bonus Second Month', 'required');
+    $this->form_validation->set_rules('bonus_amount', 'Bonus Amount', 'required');
+    $this->form_validation->set_rules('bonus_amount_fraction', 'Bonus Amount Fraction', 'required');
+    $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
+    $this->form_validation->set_rules('festival', 'Festival', 'required');
+    $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
+ 
+    if ($this->form_validation->run() == false) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->session->set_flashdata('failure', $this->form_validation->error_array());
+        }
+        $this->db->select('pr_units.*');
+        $this->data['pr_units'] = $this->db->get('pr_units')->result();
+        $this->data['title'] = 'Bonus Add';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/bonus_add';
         $this->load->view('layout/template', $this->data);
     } else {
-        $this->crud_model->company_edit($comId);
-        $this->session->set_flashdata('success', 'Record Updated successfully!');
-        redirect('/setup_con/company_info_setup');
+
+        $formArray = array(
+            'unit_id' => $this->input->post('unit_id'),
+            'emp_type' => $this->input->post('emp_type'),
+            'bonus_first_month' => $this->input->post('bonus_first_month'),
+            'bonus_second_month' => $this->input->post('bonus_second_month'),
+            'bonus_amount' => $this->input->post('bonus_amount'),
+            'bonus_amount_fraction' => $this->input->post('bonus_amount_fraction'),
+            'bonus_percent' => $this->input->post('bonus_percent'),
+            'festival' => $this->input->post('festival'),
+            'effective_date' => $this->input->post('effective_date')
+        );
+        if ($this->db->insert('pr_bonus_rules', $formArray)) {
+            $this->session->set_flashdata('success', 'Record add successfully!');
+        } else {
+            $this->session->set_flashdata('failure', 'Record add failed!');
+        }
+        redirect(base_url() . 'index.php/setup_con/bonus_setup');
     }
 }
 
-public function company_delete($comId)
+public function bonus_edit($shiftmanagementId)
 {
-    $this->load->model('crud_model');
-    $company = $this->crud_model->getUnit($comId);
-    if (empty($company)) {
-        $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
-        redirect('/setup_con/company_info_setup');
+    $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+    $this->form_validation->set_rules('emp_type', 'Employee Type', 'required');
+    $this->form_validation->set_rules('bonus_first_month', 'Bonus First Month', 'required');
+    $this->form_validation->set_rules('bonus_second_month', 'Bonus Second Month', 'required');
+    $this->form_validation->set_rules('bonus_amount', 'Bonus Amount', 'required');
+    $this->form_validation->set_rules('bonus_amount_fraction', 'Bonus Amount Fraction', 'required');
+    $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
+    $this->form_validation->set_rules('festival', 'Festival', 'required');
+    $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
+ 
+    if ($this->form_validation->run() == false) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->session->set_flashdata('failure', $this->form_validation->error_array());
+        }
+
+        $this->db->select('pr_units.*');
+        $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
+        $this->db->select('pr_bonus_rules.*');
+        $this->db->where('id', $shiftmanagementId);
+        $this->data['pr_bonus_rules'] = $this->db->get('pr_bonus_rules')->row();
+
+        $this->data['title'] = 'Bonus Edit';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/bonus_edit';
+        $this->load->view('layout/template', $this->data);
+    } else {
+
+        $formArray = array(
+            'unit_id' => $this->input->post('unit_id'),
+            'emp_type' => $this->input->post('emp_type'),
+            'bonus_first_month' => $this->input->post('bonus_first_month'),
+            'bonus_second_month' => $this->input->post('bonus_second_month'),
+            'bonus_amount' => $this->input->post('bonus_amount'),
+            'bonus_amount_fraction' => $this->input->post('bonus_amount_fraction'),
+            'bonus_percent' => $this->input->post('bonus_percent'),
+            'festival' => $this->input->post('festival'),
+            'effective_date' => $this->input->post('effective_date')
+        );
+        $this->db->where('id', $shiftmanagementId);
+        if ($this->db->update('pr_bonus_rules', $formArray)) {
+            $this->session->set_flashdata('success', 'Record add successfully!');
+        } else {
+            $this->session->set_flashdata('failure', 'Record add failed!');
+        }
+        redirect(base_url() . 'index.php/setup_con/bonus_setup');
     }
-    $this->crud_model->company_delete($comId);
-    $this->session->set_flashdata('success', 'Record Deleted successfully!');
-    redirect('/setup_con/company_info_setup');
+
 }
+
+public function bonus_delete($shiftmanagementId)
+{
+   $this->db->where('id', $shiftmanagementId);
+   if ($this->db->delete('pr_bonus_rules')) {
+       $this->session->set_flashdata('success', 'Record Deleted successfully!');
+    
+   }else{
+       $this->session->set_flashdata('failure', 'Record Delete failed!');
+   };
+    redirect('/setup_con/bonus_setup');
+}
+
+
+
 //-------------------------------------------------------------------------------------------------------
-// CRUD for Company Info Setup end
+// CRUD for Bonus Setup end
 //-------------------------------------------------------------------------------------------------------
 
     // old code
@@ -1512,7 +1754,6 @@ public function company_delete($comId)
     //-------------------------------------------------------------------------------------------------------
     // Company info Setup
     //-------------------------------------------------------------------------------------------------------
-   
 
     //-------------------------------------------------------------------------------------------------------
     // CRUD output method
@@ -1774,28 +2015,6 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Leave Setup
     //-------------------------------------------------------------------------------------------------------
-    public function leave_setup($start = 0)
-    {
-
-        $this->load->library('pagination');
-        $param = array();
-        $limit = 10;
-        $config['base_url'] = base_url() . "index.php/setup_con/floor/";
-        $config['per_page'] = $limit;
-        $this->load->model('crud_model');
-        $pr_leave = $this->crud_model->leave_infos($limit, $start);
-        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-        $config['total_rows'] = $total;
-        $config["uri_segment"] = 3;
-        // $this->load->library('pagination');
-
-        $this->pagination->initialize($config);
-        $param['links'] = $this->pagination->create_links();
-
-        $param['pr_leave'] = $pr_leave;
-        $this->load->view('leave_list', $param);
-
-    }
 
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Deduction Setup
@@ -1872,29 +2091,7 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Festival Bonus Setup
     //-------------------------------------------------------------------------------------------------------
-    public function bonus_setup($start = 0)
-    {
-        $this->load->library('pagination');
-        $param = array();
-        $limit = 10;
-        $config['base_url'] = base_url() . "index.php/setup_con/bonus_setup/";
-        $config['per_page'] = $limit;
-        $this->load->model('crud_model');
-        $pr_bonus_rules = $this->crud_model->bnruls_infos($limit, $start);
-        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-        $config['total_rows'] = $total;
-        $config["uri_segment"] = 3;
-        // $this->load->library('pagination');
-
-        $this->pagination->initialize($config);
-        $param['links'] = $this->pagination->create_links();
-
-        $param['pr_bonus_rules'] = $pr_bonus_rules;
-
-        $this->load->view('bnrules_list', $param);
-
-    }
-
+  
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Providend Fund Setup
     //-------------------------------------------------------------------------------------------------------
