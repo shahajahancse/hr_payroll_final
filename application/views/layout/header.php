@@ -368,4 +368,15 @@ table.dataTable.no-footer {
     border-bottom: none;
     border-top: none;
 }
+select {
+    height: 37px!important;
+    padding: 2px!important;
+    border: 1px solid #0aa699!important;
+}
+.footer_button {
+    justify-content: right;
+    display: flex;
+    gap: 16px;
+    padding-right: 17px;
+}
 </style>
