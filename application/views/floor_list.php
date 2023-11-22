@@ -114,7 +114,7 @@ table.dataTable.no-footer {
           <div class="col-md-8">
               <div class="col-md-6"><h3 style="margin-top: 0px; margin-bottom: 8px;">Floor List</h3></div>
               <div class="col-md-6 text-right">
-                  <a href="<?=base_url('index.php/crud_con/floor_add')?>" target='_blank' class="btn btn-info" role="button">Add Floor</a>
+                  <a href="<?=base_url('index.php/crud_con/floor_add')?>" class="btn btn-info" role="button">Add Floor</a>
               </div>
          </div>
       </div>

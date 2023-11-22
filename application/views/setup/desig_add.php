@@ -63,8 +63,6 @@
                     </select>
                     <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
                 </div>
-                <!-- attn_id	holiday_weekend_id	iftar_id	night_al_id	tiffin_id	 -->
-
                 <!-- attendance bonus -->
                 <div class="form-group">
                     <select name="attn_id"  id="attn_id" class="form-control input-lg select22">

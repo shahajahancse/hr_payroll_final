@@ -102,7 +102,7 @@ table.dataTable.no-footer {
           <div class="col-md-8">
               <div class="col-md-6"><h3 style="margin-top: 0px; margin-bottom: 8px;">Tax & Others List</h3></div>
               <div class="col-md-6 text-right">
-                  <a href="<?=base_url('index.php/crud_con/taxnother_add')?>" target='_blank' class="btn btn-info" role="button">Add Tax & Others Deduct</a>
+                  <a href="<?=base_url('index.php/crud_con/taxnother_add')?>" class="btn btn-info" role="button">Add Tax & Others Deduct</a>
               </div>
          </div>
       </div>

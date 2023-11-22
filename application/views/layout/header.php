@@ -357,6 +357,7 @@
             color: #fff;
         }
 
+<<<<<<< HEAD
         .tablebox {
             box-shadow: 0 0 3px 0px #8900ed;
             background: #fbfbfb;
@@ -369,3 +370,86 @@
             border-top: none;
         }
     </style>
+=======
+/* .tablebox {
+    box-shadow: 0 0 6px 1px #a9a9a9;
+    background: #fbfbfb;
+    padding: 14px 14px;
+    margin: 0;
+    border-radius: 4px;
+} */
+
+table.dataTable.no-footer {
+    border-bottom: none;
+    border-top: none;
+}
+select {
+    height: 37px!important;
+    padding: 2px!important;
+    border: 1px solid #0aa699!important;
+}
+.footer_button {
+    justify-content: right;
+    display: flex;
+    gap: 16px;
+    padding-right: 17px;
+}
+/* .nav_head{
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 0 3px 2px #b1b1b1;
+    align-items: center;
+    display: flex;
+} */
+.nav_head{
+    position: relative;
+    display: flex;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-radius: 4px;
+    padding: 14px 14px;
+    margin: 0;
+    align-items: center;
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.08), -5px -6px 10px 0  rgb(205 205 205 / 90%);
+    -webkit-box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.08), -5px -6px 10px 0  rgb(205 205 205 / 90%);
+    -moz-box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.08), -5px -6px 10px 0  rgb(205 205 205 / 90%);
+    -ms-box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.08), -5px -6px 10px 0  rgb(205 205 205 / 90%);
+    background-image: linear-gradient(to top, #f1f2f5, rgba(255, 255, 255, 0)), linear-gradient(to bottom, #f6f6f9, #f6f6f9);
+    border: 1px solid #eeeef0;
+}
+
+.bg_none {
+    background: none;
+}
+input {
+    border-radius: 4px !important;
+}
+.btn{
+    font-weight: bold;
+}
+.tablebox {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #e7eaed;
+    border-radius: 4px;
+    padding: 14px 14px;
+    margin: 0;
+
+}
+.tablebox {
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.08), -5px -6px 10px 0  rgb(205 205 205 / 90%);
+    -webkit-box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.08), -5px -6px 10px 0  rgb(205 205 205 / 90%);
+    -moz-box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.08), -5px -6px 10px 0  rgb(205 205 205 / 90%);
+    -ms-box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.08), -5px -6px 10px 0  rgb(205 205 205 / 90%);
+    background-image: linear-gradient(to top, #f1f2f5, rgba(255, 255, 255, 0)), linear-gradient(to bottom, #f6f6f9, #f6f6f9);
+    border: 1px solid #eeeef0;
+}
+</style>
+>>>>>>> ad7f79af4adde91339f88aab984e4bfbe2d91336
