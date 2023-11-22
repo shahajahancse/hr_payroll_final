@@ -360,7 +360,7 @@ body {
 .tablebox {
     box-shadow: 0 0 3px 0px #8900ed;
     background: #fbfbfb;
-    padding: 14px 1px;
+    padding: 14px 14px;
     margin: 0;
 }
 

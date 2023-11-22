@@ -89,7 +89,6 @@ if ($failuer) {
                         </td>
                     </tr>
                     <?php }} else {?>
-
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
