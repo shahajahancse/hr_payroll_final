@@ -27,10 +27,76 @@ class Attn_process_con extends CI_Controller {
             exit;
         }
 	}
+
 	//-------------------------------------------------------------------------------------------------------
 	// Form display for Attendance Process
 	//-------------------------------------------------------------------------------------------------------
-	function file_upload()
+	function attn_process_form()
+	{
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name)) {
+	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
+
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title'] = 'Attendance Process';
+        $this->data['subview'] = 'attn_con/attn_process_form';
+        $this->load->view('layout/template', $this->data);
+
+	}
+
+	function get_emp_by_unit($id){
+		$this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
+		$this->db->where('com.emp_cat_id', 1);
+		$this->db->group_by('com.id');
+		return $this->db->where('com.unit_id', $id)->get()->result();
+	}
+
+	function attn_process(){
+		$access_level = 4;
+		$acl = $this->acl_model->acl_check($access_level);
+
+		$unit = $this->input->post('unit_id');
+		$date = $this->input->post('p_start_date');
+		$spl = $this->input->post('spl');
+		$input_date = date("Y-m-d", strtotime($date));
+		$grid_emp_id = explode('xxx', $spl);
+		//print_r($grid_emp_id);exit;
+		//$this->earn_leave_process($input_date);
+		// For Shift Auto Change
+		// $this->auto_shift_change($input_date);
+		$this->db->trans_start();
+		ini_set('memory_limit', '-1M');
+		set_time_limit(0);
+		$data = $this->attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE){
+			exit('fiz');
+			$this->db->trans_rollback();
+			echo "Process failed";
+		}else{
+			$this->db->trans_commit();
+			if(is_array($data)){
+				// ATTENDANCE PROCESS LOG Generate
+				$this->log_model->log_attn_process($input_date);
+				echo "Process completed sucessfully";
+			}else{
+				echo $data;
+			}
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	// List display for file upload
+	//-------------------------------------------------------------------------------------------------------
+	function file_upload($start = 0)
 	{
         $this->load->library('pagination');
         $limit = 10;
@@ -246,17 +312,6 @@ class Attn_process_con extends CI_Controller {
 
 
 	// old code
-	//-------------------------------------------------------------------------------------------------------
-	// Form display for Attendance Process
-	//-------------------------------------------------------------------------------------------------------
-	function attn_process_form()
-	{
-		if($this->session->userdata('logged_in')==FALSE)
-		$this->load->view('login_message');
-		else
-		$this->load->view('form/attn_process');
-	}
-
 	function auto_shift_change($input_date)
 	{
 		$this->load->model('acl_model');
@@ -363,40 +418,6 @@ class Attn_process_con extends CI_Controller {
 				$this->db->insert('pr_emp_shift_process', $data);
 		}
 	  }
-	}
-
-	function attn_process(){
-		$access_level = 4;
-		$acl = $this->acl_model->acl_check($access_level);
-
-		$unit = $this->input->post('unit_id');
-		$date = $this->input->post('p_start_date');
-		$spl = $this->input->post('spl');
-		$input_date = date("Y-m-d", strtotime($date));
-		$grid_emp_id = explode('xxx', $spl);
-		//print_r($grid_emp_id);exit;
-		//$this->earn_leave_process($input_date);
-		// For Shift Auto Change
-		// $this->auto_shift_change($input_date);
-		$this->db->trans_start();
-		ini_set('memory_limit', '-1M');
-		set_time_limit(0);
-		$data = $this->attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
-		$this->db->trans_complete();
-		if ($this->db->trans_status() === FALSE){
-			exit('fiz');
-			$this->db->trans_rollback();
-			echo "Process failed";
-		}else{
-			$this->db->trans_commit();
-			if(is_array($data)){
-				// ATTENDANCE PROCESS LOG Generate
-				$this->log_model->log_attn_process($input_date);
-				echo "Process completed sucessfully";
-			}else{
-				echo $data;
-			}
-		}
 	}
 
 	function attn_process_month(){

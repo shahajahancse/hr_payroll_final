@@ -73,20 +73,11 @@
 
 <!-- jQuery 2.2.3 -->
 <!-- <script src="http://mysoftheaven.com/mipos-cloud/theme/plugins/jQuery/jquery-2.2.3.min.js"></script> -->
-<script src="<?=base_url()?>awedget/assets/plugins/jquery-1.9.1.min.js"></script>
+<script src="<?=base_url()?>awedget/assets/plugins/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/js/icheck.min.js"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
+
 <script type="text/javascript" >
 $(function($) { // this script needs to be loaded on every page where an ajax POST may happen
     $.ajaxSetup({ data: {'csrf_test_name' : 'b4df53659d7baec0b06216d99a4f9359' }  }); });

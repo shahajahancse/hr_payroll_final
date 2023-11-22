@@ -82,9 +82,12 @@
 
 
               <br>
+              <div id="loader"  align="center" style="margin:0 auto; width:600px; overflow:hidden; display:none; margin-top:10px;">
+                <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
+              </div>
 
               <div class="form-group">
-                <button class="btn btn-primary">Save</button>
+                <button class="btn btn-primary" onclick="loading_open()">Save</button>
                 <a href=""class="btn-warning btn">Cancel</a>
               </div>
             </div>
@@ -94,3 +97,10 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function loading_open() {
+      $('#loader').css('display','block');
+    }
+
+  </script>

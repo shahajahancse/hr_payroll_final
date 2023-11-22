@@ -1,26 +1,6 @@
-<script>
-  function showMessage(icon, message) {
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-    });
-    Toast.fire({
-        icon: icon,
-        title: message,
-    });
-}
-</script>
 
+ <!-- BEGIN CORE JS FRAMEWORK-->
 
-  <!-- BEGIN CORE JS FRAMEWORK-->
-  <script src="<?=base_url()?>awedget/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
   <script src="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
   <script src="<?=base_url()?>awedget/assets/plugins/breakpoints.js" type="text/javascript"></script>
   <script src="<?=base_url()?>awedget/assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
@@ -69,230 +49,38 @@
   <!-- END CORE TEMPLATE JS -->
   <script src="<?=base_url()?>js/common.js" type="text/javascript"></script>
   
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-        // $(".live-tile,.flip-list").liveTile();
-        $(".source").select2();
-    });
-  </script>
-
-  <script src="<?=base_url()?>awedget/assets/js/jquery.bongabdo.js"></script>
-  <!-- <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script> -->
-  <script type="text/javascript">
-    var iFrameID = document.getElementById('idIframe');
-     // iFrameID.style.backgroundColor = 'green';
-    function iframeLoaded() {
-        var iFrameID = document.getElementById('idIframe');
-
-          if(iFrameID){
-          // iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-          var autoheight = iFrameID.contentWindow.document.body.scrollHeight;
-          if(autoheight < '500'){
-            iFrameID.height = "500px";
-          }else{
-            iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-          }
-      }
+  <script>
+    function showMessage(icon, message) {
+      const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+      });
+      Toast.fire({
+          icon: icon,
+          title: message,
+      });
     }
   </script>
+
   <script>
-
-    $(function() {
-      // Call SuperBox - that's it!
-      $('.superbox').SuperBox();
-    });
-
-
-      // Designation Dropdown
-      $('#office').change(function(){
-        $("#employee > option").remove();
-        var office_id = $('#office').val();
-        $.ajax({
-          type: "POST",
-          url: hostname +"common/ajax_get_employee_by_office/" + office_id,
-          success: function(func_data)
-          {
-            $.each(func_data['union'],function(id,ut_name)
-            {
-              var opt = $('<option />');
-              opt.val(id);
-              opt.text(ut_name);
-              $('#employee').append(opt);
-            });
-
-          }
-        });
-      });
-
-      // estimated Budget check
-      $(".exits").hide();
-      $('#checking_lrb').change(function(){
-        var fiscal_year = $('#checking_lrb').val();
-        $.ajax({
-          type: "POST",
-          url: hostname +"common/ajax_get_lrb_estimated_exits_by_fiscal_year/" + fiscal_year,
-          success: function(fiscal_year)
-          {
-            if(fiscal_year){
-              $(".used").hide();
-              $(".exits").show();
-            }else{
-              $(".exits").hide();
-              $(".used").show();
-            }
-          }
-        });
-      });
-      $('#checking_sa').change(function(){
-        var fiscal_year = $('#checking_sa').val();
-        $.ajax({
-          type: "POST",
-          url: hostname +"common/ajax_get_sa_estimated_exits_by_fiscal_year/" + fiscal_year,
-          success: function(fiscal_year)
-          {
-            if(fiscal_year){
-              $(".used").hide();
-              $(".exits").show();
-            }else{
-              $(".exits").hide();
-              $(".used").show();
-            }
-          }
-        });
-      });
-      $('#checking_la').change(function(){
-        var fiscal_year = $('#checking_la').val();
-        $.ajax({
-          type: "POST",
-          url: hostname +"common/ajax_get_la_estimated_exits_by_fiscal_year/" + fiscal_year,
-          success: function(fiscal_year)
-          {
-            if(fiscal_year){
-              $(".used").hide();
-              $(".exits").show();
-            }else{
-              $(".exits").hide();
-              $(".used").show();
-            }
-          }
-        });
-      });
-
-      $('#checking_upazila').change(function(){
-        var fiscal_year = $('#checking_upazila').val();
-        $.ajax({
-          type: "POST",
-          url: hostname +"common/ajax_get_upazila_estimated_exits_by_fiscal_year/" + fiscal_year,
-          success: function(fiscal_year)
-          {
-            if(fiscal_year){
-              $(".used").hide();
-              $(".exits").show();
-            }else{
-              $(".exits").hide();
-              $(".used").show();
-            }
-          }
-        });
-      });
-
-      $('#checking_circle').change(function(){
-        var fiscal_year = $('#checking_circle').val();
-        $.ajax({
-          type: "POST",
-          url: hostname +"common/ajax_get_circle_estimated_exits_by_fiscal_year/" + fiscal_year,
-          success: function(fiscal_year)
-          {
-            if(fiscal_year){
-              $(".used").hide();
-              $(".exits").show();
-            }else{
-              $(".exits").hide();
-              $(".used").show();
-            }
-          }
-        });
-      });
-
-      $('#checking_union').change(function(){
-        var fiscal_year = $('#checking_union').val();
-        $.ajax({
-          type: "POST",
-          url: hostname +"common/ajax_get_union_estimated_exits_by_fiscal_year/" + fiscal_year,
-          success: function(fiscal_year)
-          {
-            if(fiscal_year){
-              $(".used").hide();
-              $(".exits").show();
-            }else{
-              $(".exits").hide();
-              $(".used").show();
-            }
-          }
-        });
-      });
-
-
       // Jquery Onload
       $(document).ready(function() {
-        // console.log( "run!" );
-
         //Datepicker
         $('.datetime').datepicker({
           format: "dd-mm-yyyy",
           autoclose: true
         });
-
-
-
-
-        $('#letter_form_submit').on('click',function(){
-          //alert("hh");
-          var division_id = $('#division').val();
-          if(division_id == null || typeof(division_id) == 'undefined' || division_id == '')division_id = '0';
-
-          var district_id = $('#district').val();
-          if(district_id == null || typeof(district_id) == 'undefined' || district_id == '')district_id = '0';
-
-          var upazila_id = $('#upazila').val();
-          if(upazila_id == null || typeof(upazila_id) == 'undefined' || upazila_id == '')upazila_id = '0';
-
-          var union_id = $('#union').val();
-          if(union_id == null || typeof(union_id) == 'undefined' || union_id == '')union_id = '0';
-
-          var office_id = $('#offices').val();
-          if(office_id == null || typeof(office_id) == 'undefined' || office_id == '')office_id = '0';
-
-          var budget_fiscal_year_id = $('#budget_fiscal_year').val();
-          if(budget_fiscal_year_id == null || typeof(budget_fiscal_year_id) == 'undefined' || budget_fiscal_year_id == '')budget_fiscal_year_id = '0';
-
-          var budget_file_id = $('#budget_files').val();
-          if(budget_file_id == null || typeof(budget_file_id) == 'undefined' || budget_file_id == '')budget_file_id = '0';
-          $.ajax({
-            type: "POST",
-            url: "budget_setting/budget_letter_add/",
-            data: { "division_id": division_id, "district_id": district_id, "upazila_id" : upazila_id, "union_id" : union_id, "office_id" : office_id, "budget_fiscal_year_id" : budget_fiscal_year_id, "budget_file_id" : budget_file_id },
-            success: function(data)
-              {
-
-              }
-            });
-        });
       });
-
-    function loadOffices(data){
-       $.each(data,function(id,name)
-        {
-          var opt = $('<option />');
-          opt.val(id);
-          opt.text(name);
-          $('.office_val').append(opt);
-        });
-    }
   </script>
 
-<script>
+  <script>
       setTimeout(function() {
         $('#mydivdanger').fadeOut('fast');
       }, 4000); // <-- time in milliseconds
@@ -304,205 +92,43 @@
           window.print();
           document.body.innerHTML = originalContents;
       }
-    function printSpecificContents(id)
-    {
-          var divContents = document.getElementById(id).innerHTML;
-          var printWindow = window.open('', '', 'height=800,width=1000');
-          printWindow.document.write(divContents);
+      function printSpecificContents(id)
+      {
+            var divContents = document.getElementById(id).innerHTML;
+            var printWindow = window.open('', '', 'height=800,width=1000');
+            printWindow.document.write(divContents);
 
-          printWindow.print();
+            printWindow.print();
 
+      }
+  </script>
+
+  <script type="text/javascript">
+    $(".edit-text").on("keyup", function() {
+        $(".default-text").html($(".edit-text").val());
+    });
+
+    function en2bn(sum){
+      var finalEnlishToBanglaNumber={'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+
+      String.prototype.getDigitBanglaFromEnglish = function() {
+          var retStr = this;
+          for (var x in finalEnlishToBanglaNumber) {
+               retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+          }
+          return retStr;
+      };
+
+      var english_number=String(sum);
+
+      var bangla_converted_number=english_number.getDigitBanglaFromEnglish();
+
+      return bangla_converted_number;
     }
-</script>
 
-<script type="text/javascript">
-  function subTotal(sl, sl2){
-      var sum = 0;
-      $(".sum_"+sl).each(function(){
-          sum += +$(this).val();
-      });
+  </script>
 
-      $("#sum_"+sl).val(sum);
-
-      var extra = $(".before_extra_"+sl2).val()-0;
-      var budget = $(".single_"+sl2).val()-0;
-      var after_extra = extra-budget;
-
-      if(extra<budget){
-          alert('বাজেট লিমিটেড ।');
-          $(".single_"+sl2).val(0);
-          var extra = $(".before_extra_"+sl2).val()-0;
-          var budget = $(".single_"+sl2).val()-0;
-          var after_extra = extra-budget;
-      }
-
-      $(".after_extra_"+sl2).val(after_extra);
-
-      var extra = 0;
-      $(".after_extra").each(function(){
-          extra += +$(this).val();
-      });
-      $("#after_extra").val(extra);
-
-      var sum = 0;
-      $(".sum").each(function(){
-          sum += +$(this).val();
-      });
-      $("#sum").val(sum);
-
-  }
-
-</script>
-
-<script type="text/javascript">
-  $(".sum").on("keyup", function() {
-    var sum = 0;
-    $(".sum").each(function(){
-        sum += +$(this).val();
-    });
-    $("#sum").val(sum);
-    var bangla_converted_number=en2bn(sum);
-    var convert_in_word =convertNumberToWords(sum);
-    $("#total-amount").html(bangla_converted_number + ' ('+convert_in_word+')');
-    $(".edit-text").val($(".default-text").html());
-
-    var extra = 0;
-    $(".after_extra").each(function(){
-        extra += +$(this).val();
-    });
-    $("#after_extra").val(extra);
-  });
-</script>
-
-<script type="text/javascript">
-  $(".edit-text").on("keyup", function() {
-      $(".default-text").html($(".edit-text").val());
-  });
-
-  function en2bn(sum){
-    var finalEnlishToBanglaNumber={'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
-
-    String.prototype.getDigitBanglaFromEnglish = function() {
-        var retStr = this;
-        for (var x in finalEnlishToBanglaNumber) {
-             retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
-        }
-        return retStr;
-    };
-
-    var english_number=String(sum);
-
-    var bangla_converted_number=english_number.getDigitBanglaFromEnglish();
-
-    return bangla_converted_number;
-  }
-
-</script>
-
-
-<!-- Privious year calculation -->
-<script type="text/javascript">
-  function subreceived(sl, sl2){
-      var remaining=$(".received_"+sl2).val()-$(".expenditure_"+sl2).val();
-      $(".remaining_"+sl2).val(remaining);
-
-      var sub_received = 0;
-      $(".received_"+sl).each(function(){
-          sub_received += +$(this).val();
-      });
-
-      $("#received_"+sl).val(sub_received);
-
-      var sub_remaining=$("#received_"+sl).val()-$("#expenditure_"+sl).val();
-      $("#remaining_"+sl).val(sub_remaining);
-
-
-      var total_received = 0;
-      $(".received").each(function(){
-          total_received += +$(this).val();
-      });
-
-      $("#received").val(total_received);
-
-      var total_remaining=$("#received").val()-$("#expenditure").val();
-      $("#remaining").val(total_remaining);
-
-  }
-
-  function subexpenditure(sl, sl2){
-      var remaining=$(".received_"+sl2).val()-$(".expenditure_"+sl2).val();
-      $(".remaining_"+sl2).val(remaining);
-
-      var sub_received = 0;
-      $(".expenditure_"+sl).each(function(){
-          sub_received += +$(this).val();
-      });
-
-      $("#expenditure_"+sl).val(sub_received);
-
-      var sub_remaining=$("#received_"+sl).val()-$("#expenditure_"+sl).val();
-      $("#remaining_"+sl).val(sub_remaining);
-
-
-      var total_received = 0;
-      $(".expenditure").each(function(){
-          total_received += +$(this).val();
-      });
-
-      $("#expenditure").val(total_received);
-
-      var total_remaining=$("#received").val()-$("#expenditure").val();
-      $("#remaining").val(total_remaining);
-
-  }
-
-  function update() {
-    $("#notification_div").html('Loading..');
-    $.ajax({
-      type: 'GET',
-      url: '',
-      timeout: 2000,
-      success: function(data) {
-        //console.log(data);
-        //$("#some_div").html(data);
-        $("#notification_div").html('');
-        window.setTimeout(update, 10000);
-      },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        $("#notification_div").html('Timeout contacting server..');
-        window.setTimeout(update, 60000);
-      }
-  });
-}
-
- $(document).ready(function () {
-    $('.memorandum_no').bind('keydown', function(e){
-
-        var num = this.value;
-
-        if(e.keyCode== 32){
-          e.preventDefault();
-        }
-
-        if(e.key!= 0 && e.key != 1 && e.key!= 2 && e.key!= 3 && e.key!= 4 && e.key!= 5 && e.key!= 6 && e.key!= 7 && e.key!= 8 && e.key!= 9 && e.keyCode!= 8 && e.keyCode!= 9 && e.keyCode!= 16 && e.keyCode!= 37 && e.keyCode!= 38 && e.keyCode!= 39 && e.keyCode!= 40){
-          e.preventDefault();
-        }
-
-        if(num.length >= 5 && e.keyCode!= 8 && e.keyCode!= 9 && e.keyCode!= 16 && e.keyCode!= 37 && e.keyCode!= 38 && e.keyCode!= 39 && e.keyCode!= 40){
-          e.preventDefault();
-        }
-
-    });
-    // update();
-  });
-
-</script>
-
-<script language="javascript" type="text/javascript">
-     $(window).load(function() {
-       $('#loading').hide();
-    });
-
+  <script language="javascript" type="text/javascript">
     function convertNumberToWords(amount) {
         var words = new Array();
         words[0] = '';
@@ -584,31 +210,30 @@
         }
         return words_string;
     }
+  </script>
 
-</script>
+  <script>
+     $(document).ready(function() {
+
+        $("#main-menu ul > li").click(function(e) {
+            $(this).siblings('li.active').removeClass("active");
+            $(this).find('li.open').removeClass("open");
+            $(this).addClass("active");
+         });
 
 
-<script>
- $(document).ready(function() {
-
-    $("#main-menu ul > li").click(function(e) {
-        $(this).siblings('li.active').removeClass("active");
-        $(this).find('li.open').removeClass("open");
-        $(this).addClass("active");
+        $('.anchor_cls').on('click', function(){
+          $('#main-menu ul > li').siblings('ul li').find("a.mactive").removeClass("mactive");
+          $(this).parent().siblings().find('.mactive').removeClass('mactive');
+          $(this).addClass('mactive');
+        });
      });
+  </script>
 
-
-    $('.anchor_cls').on('click', function(){
-      $('#main-menu ul > li').siblings('ul li').find("a.mactive").removeClass("mactive");
-      $(this).parent().siblings().find('.mactive').removeClass('mactive');
-      $(this).addClass('mactive');
+  <script>
+    $(document).ready(function() {
+      $('.select22').select2();
     });
- });
- </script>
- <script>
-  $(document).ready(function() {
-    $('.select22').select2();
-  });
-</script>
+  </script>
 </body>
 </html>

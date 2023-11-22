@@ -30,6 +30,7 @@
         <span class="title">Attendance</span> <span class="selected"></span> <span class="arrow <?= arrow_open('emp_info_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <li class="start <?= activate_method('file_upload') ?>"> <a href="<?=base_url('attn_process_con/file_upload')?>" >File Upload</a></li>
+          <li class="start <?= activate_method('attn_process_form') ?>"> <a href="<?=base_url('attn_process_con/attn_process_form')?>" class="anchor_cls">Attendance Process</a> </li>
         </ul>
       </li>
       <?php } ?>
@@ -52,13 +53,12 @@
           <li class="start <?= activate_method('tiffin_bill_setup') ?>"> <a href="<?=base_url('setup_con/tiffin_bill_setup')?>" >Tiffin Bill</a> </li>
           <li class="start <?= activate_method('iftar_bill_setup') ?>"> <a href="<?=base_url('setup_con/iftar_bill_setup')?>" >Iftar Allowance</a> </li>
 
+          <li class="start <?= activate_method('shift_schedule') ?>"> <a href="<?=base_url('setup_con/shift_schedule')?>" class="anchor_cls">Shift Schedules</a> </li>
+          <li class="start <?= activate_method('shift_management') ?>"> <a href="<?=base_url('setup_con/shift_management')?>" class="anchor_cls">Shift Manage</a> </li>
 
-
-          <li class="start <?= activate_method('department') ?>"> <a href="<?=base_url('setup_con/salary_grade')?>" class="anchor_cls">Salary Grade</a> </li>
-          <li class="start <?= activate_method('department') ?>"> <a href="<?=base_url('setup_con/shift_schedule')?>" class="anchor_cls">Shift Schedules</a> </li>
-          <li class="start "> <a href="<?=base_url('setup_con/shift_management')?>" class="anchor_cls">Shift Manage</a> </li>
-          <li class="start "> <a href="<?=base_url()?>setup_con/leave_setup" class="anchor_cls">Leave</a> </li>
-          <li class="start "> <a href="<?=base_url()?>setup_con/bonus_setup" class="anchor_cls">Bonus</a> </li>
+          <li class="start <?= activate_method('salary_grade') ?>"> <a href="<?=base_url('setup_con/salary_grade')?>" class="anchor_cls">Salary Grade</a> </li>
+          <li class="start <?= activate_method('leave_setup') ?>"> <a href="<?=base_url()?>setup_con/leave_setup" class="anchor_cls">Leave</a> </li>
+          <li class="start <?= activate_method('bonus_setup') ?>"> <a href="<?=base_url()?>setup_con/bonus_setup" class="anchor_cls">Bonus</a> </li>
 
           <!-- <li class="start <?= activate_method('holiday_allowance_setup') ?>"> <a href="<?=base_url('setup_con/holiday_allowance_setup')?>" >Holiday Allowance</a> </li> -->
 
@@ -93,12 +93,7 @@
               <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/proximity_card_edit" class="anchor_cls">Proximity Card Edit</a> </li>
             </ul>
           </li>
-          <li class="start "> <a href="javascript:;"><span class="title">Process</span> <span class="selected"></span> <span class="arrow"></span> </a>
-            <ul class="sub-menu">
-              <li class="start "> <a class="anchor_cls" href="<?=base_url()?>index.php/attn_process_con/file_upload">File Upload</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/attn_process_con/attn_process_form" class="anchor_cls">Attendance Process</a> </li>
-            </ul>
-          </li>
+
           <li class="start "> <a href="javascript:;"><span class="title">Reports</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
               <li class="start "> <a href="<?=base_url()?>index.php/grid_con/grid_window" class="anchor_cls">All Report</a> </li>
