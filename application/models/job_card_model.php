@@ -27,7 +27,7 @@ class Job_card_model extends CI_Model{
 		$this->db->select("work_off_date");
 		$this->db->where("work_off_date BETWEEN '$sStartDate' AND '$sEndDate'");
 		$this->db->where("emp_id = '$emp_id'");
-		$query = $this->db->get("pr_work_off");
+		$query = $this->db->get("attn_work_off");
 		$weekend = array();
 		foreach ($query->result() as $row)
 		{
@@ -40,7 +40,7 @@ class Job_card_model extends CI_Model{
 	{
 		$this->db->select("holiday_date as start_date");
 		$this->db->where("holiday_date BETWEEN '$sStartDate' AND '$sEndDate'");
-		$query = $this->db->get("pr_holiday");
+		$query = $this->db->get("attn_holiday");
 		$holiday = array();
 		foreach ($query->result() as $row)
 		{

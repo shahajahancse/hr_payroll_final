@@ -1628,13 +1628,13 @@ class Grid_model extends CI_Model{
 		$i = 0;
 		foreach($days as $day)
 		{
-			$holiday_check = $this->db->where('emp_id',$emp_id)->where('holiday_date',$day)->get('pr_holiday')->num_rows();
+			$holiday_check = $this->db->where('emp_id',$emp_id)->where('holiday_date',$day)->get('attn_holiday')->num_rows();
 			if($holiday_check > 0)
 			{
 				continue;
 			}
 
-			$weekend_check = $this->db->where('emp_id',$emp_id)->where('work_off_date',$day)->get('pr_work_off')->num_rows();
+			$weekend_check = $this->db->where('emp_id',$emp_id)->where('work_off_date',$day)->get('attn_work_off')->num_rows();
 			if($weekend_check > 0)
 			{
 				continue;
@@ -4789,7 +4789,7 @@ class Grid_model extends CI_Model{
 	function check_holiday($id, $att_date)
 	{
 		$this->db->select("holiday_date");
-		$this->db->from("pr_holiday");
+		$this->db->from("attn_holiday");
 		$this->db->where("emp_id", $id);
 		$this->db->where("holiday_date", $att_date);
 		$query = $this->db->get();
@@ -4871,7 +4871,7 @@ class Grid_model extends CI_Model{
 		$this->db->select("work_off_date");
 		$this->db->where("work_off_date BETWEEN '$sStartDate' AND '$sEndDate'");
 		$this->db->where("emp_id = '$emp_id'");
-		$query = $this->db->get("pr_work_off");
+		$query = $this->db->get("attn_work_off");
 		$weekend = array();
 		foreach ($query->result() as $row)
 		{
@@ -4884,7 +4884,7 @@ class Grid_model extends CI_Model{
 	{
 		$this->db->select("holiday_date");
 		$this->db->where("holiday_date BETWEEN '$sStartDate' AND '$sEndDate'");
-		$query = $this->db->get("pr_holiday");
+		$query = $this->db->get("attn_holiday");
 		$holiday = array();
 		foreach ($query->result() as $row)
 		{
@@ -5847,7 +5847,7 @@ class Grid_model extends CI_Model{
 			 $this->db->select("*");
 			 $this->db->where('work_off_date',$year_month);
 			 $this->db->where('emp_id',$work_off_empid);
-			 $query = $this->db->get("pr_work_off");
+			 $query = $this->db->get("attn_work_off");
 			 $num_row = $query->num_rows();
 			 if($num_row == 0 ){
 					$data = array(
@@ -5857,7 +5857,7 @@ class Grid_model extends CI_Model{
 					'replace_val'	=> $friday_val
 					);
 					//print_r($data);
-					$this->db->insert('pr_work_off', $data) ;
+					$this->db->insert('attn_work_off', $data) ;
 				}
 			}
 		return "Insert Successfully";
@@ -5876,7 +5876,7 @@ class Grid_model extends CI_Model{
 			 $year_month = $grid_firstdate ;
 			 $this->db->where('work_off_date',$year_month);
 			 $this->db->where('emp_id',$work_off_empid);
-			 $query = $this->db->delete("pr_work_off");
+			 $query = $this->db->delete("attn_work_off");
 		}
 		 return "Delete Successfully";
 	}
@@ -5895,7 +5895,7 @@ class Grid_model extends CI_Model{
 			 $this->db->select("*");
 			 $this->db->where('holiday_date',$year_month);
 			 $this->db->where('emp_id',$holiday_empid);
-			 $query = $this->db->get("pr_holiday");
+			 $query = $this->db->get("attn_holiday");
 			 $num_row = $query->num_rows();
 			 if($num_row == 0 )
 			 {
@@ -5907,7 +5907,7 @@ class Grid_model extends CI_Model{
 				'replace_val'	=> $holiday_val
 				);
 				//print_r($data);
-				$this->db->insert('pr_holiday', $data) ;
+				$this->db->insert('attn_holiday', $data) ;
 
 			 }
 		}
@@ -5926,7 +5926,7 @@ class Grid_model extends CI_Model{
 			 $year_month = $grid_firstdate ;
 			 $this->db->where('holiday_date',$year_month);
 			 $this->db->where('emp_id',$holiday_empid);
-			 $query = $this->db->delete("pr_holiday");
+			 $query = $this->db->delete("attn_holiday");
 
 		}
 		return "Delete Successfully.";
@@ -9807,7 +9807,7 @@ class Grid_model extends CI_Model{
 	function get_holiday_allowance_rules($desig_id)
 	{
 		$this->db->select('rules_id');
-		$this->db->from('pr_holiday_allowance_level');
+		$this->db->from('attn_holiday_allowance_level');
 		$this->db->where("desig_id", $desig_id);
 		$query = $this->db->get();
 		if($query->num_rows()>0)
@@ -10081,7 +10081,7 @@ class Grid_model extends CI_Model{
 
 			if($holiday_allowance_rules['msg'] == "OK")
 			{
-					$holiday_allowance_rate = $this->db->where("rules_id",$holiday_allowance_rules['rules_id'])->get('pr_holiday_allowance_rules')->row()->allowance_amount;
+					$holiday_allowance_rate = $this->db->where("rules_id",$holiday_allowance_rules['rules_id'])->get('attn_holiday_allowance_rules')->row()->allowance_amount;
 					$holiday_allowance = $holiday_allowance_rate;
 			}
 			else
@@ -10977,7 +10977,7 @@ class Grid_model extends CI_Model{
 		$where="holiday_date  BETWEEN '$from' and '$to'" ;
 		$this->db->select('*');
 		$this->db->where($where);
-		$query=$this->db->get('pr_holiday');
+		$query=$this->db->get('attn_holiday');
 
 		$num_holyday = $query->num_rows();
 		return $num_holyday;

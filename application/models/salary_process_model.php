@@ -936,7 +936,7 @@ class Salary_process_model extends CI_Model{
 
 		if($holiday_allowance_rules['msg'] == "OK" )
 		{
-				$holiday_allowance_rate = $this->db->where("rules_id",$holiday_allowance_rules['rules_id'])->get('pr_holiday_allowance_rules')->row()->allowance_amount;
+				$holiday_allowance_rate = $this->db->where("rules_id",$holiday_allowance_rules['rules_id'])->get('attn_holiday_allowance_rules')->row()->allowance_amount;
 				$holiday_allowance	 	= $holiday_allowance_rate * $holiday_alo_count;
 		}
 		else
@@ -951,7 +951,7 @@ class Salary_process_model extends CI_Model{
 	function get_holiday_allowance_rules($desig_id)
 	{
 		$this->db->select('rules_id');
-		$this->db->from('pr_holiday_allowance_level');
+		$this->db->from('attn_holiday_allowance_level');
 		$this->db->where("desig_id", $desig_id);
 		$query = $this->db->get();
 		if($query->num_rows()>0)

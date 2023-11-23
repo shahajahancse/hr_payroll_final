@@ -1281,7 +1281,7 @@ return TRUE;
         $config['base_url'] = base_url() . "index.php/setup_con/holiday_allowance_setup/";
         $config['per_page'] = $limit;
         $this->load->model('crud_model');
-        $pr_holiday_allowance_rules = $this->crud_model->holidayallowence_infos($limit, $start);
+        $attn_holiday_allowance_rules = $this->crud_model->holidayallowence_infos($limit, $start);
         $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
         $config['total_rows'] = $total;
         $config["uri_segment"] = 3;
@@ -1290,7 +1290,7 @@ return TRUE;
         $this->pagination->initialize($config);
         $param['links'] = $this->pagination->create_links();
 
-        $param['pr_holiday_allowance_rules'] = $pr_holiday_allowance_rules;
+        $param['attn_holiday_allowance_rules'] = $attn_holiday_allowance_rules;
 
         $this->load->view('holiday_allowance_list', $param);
 

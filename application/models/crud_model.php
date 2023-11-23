@@ -988,9 +988,9 @@ class Crud_model extends CI_Model{
     function holidayallowence_infos($limit,$start){
         $this->db->select('SQL_CALC_FOUND_ROWS rules.*, units.unit_name, desig.desig_name', false);
 
-        $this->db->from('pr_holiday_allowance_rules rules');
+        $this->db->from('attn_holiday_allowance_rules rules');
         $this->db->join('pr_units units','units.unit_id = rules.unit_id','LEFT');
-        $this->db->join('pr_holiday_allowance_level level','level.rules_id = rules.rules_id','LEFT');
+        $this->db->join('attn_holiday_allowance_level level','level.rules_id = rules.rules_id','LEFT');
         $this->db->join('emp_designation desig','desig.id = level.desig_id','LEFT');
         return $this->db->get()->result_array();
     }
@@ -1028,19 +1028,19 @@ class Crud_model extends CI_Model{
 
 
 
-    function weekend_infos($limit,$page){
-        $this->db->select('SQL_CALC_FOUND_ROWS pr_work_off.*,pr_units.unit_name',false);
-        $this->db->from('pr_work_off');
-        $this->db->join('pr_units','pr_units.unit_id = pr_work_off.unit_id');
-        // $this->db->limit($limit,$page);
-        return $this->db->get()->result_array();
-    }
+function weekend_infos(){
+    $this->db->select('attn_work_off.*, pr_units.unit_name'); 
+    $this->db->from('attn_work_off');
+    $this->db->join('pr_units', 'pr_units.unit_id = attn_work_off.unit_id');
+    return $this->db->get()->result_array();
+}
+
 
 
     function getweekend($weekendId)
     {
         $this->db->where('id',$weekendId);
-        return $this->db->get('pr_work_off')->row();
+        return $this->db->get('attn_work_off')->row();
     }
 
 
@@ -1049,7 +1049,7 @@ class Crud_model extends CI_Model{
     function weekend_delete($weekendId)
     {
       $this->db->where('id',$weekendId);
-      $this->db->delete('pr_work_off');
+      $this->db->delete('attn_work_off');
     }
 
 
@@ -1057,9 +1057,9 @@ class Crud_model extends CI_Model{
 
 
     function holiday_infos($limit,$start){
-        $this->db->select('pr_holiday.*,pr_units.unit_name');
-        $this->db->from('pr_holiday');
-        $this->db->join('pr_units','pr_units.unit_id = pr_holiday.unit_id');
+        $this->db->select('attn_holiday.*,pr_units.unit_name');
+        $this->db->from('attn_holiday');
+        $this->db->join('pr_units','pr_units.unit_id = attn_holiday.unit_id');
         // $this->db->limit(10);
         $this->db->limit($limit,$start);
         $query = $this->db->get()->result_array();
@@ -1070,7 +1070,7 @@ class Crud_model extends CI_Model{
       function getholiday($holidayId)
     {
         $this->db->where('id',$holidayId);
-        return $this->db->get('pr_holiday')->row();
+        return $this->db->get('attn_holiday')->row();
     }
 
 
@@ -1079,7 +1079,7 @@ class Crud_model extends CI_Model{
      function holiday_delete($holidayId)
         {
             $this->db->where('id',$holidayId);
-            $this->db->delete('pr_holiday');
+            $this->db->delete('attn_holiday');
         }
 
 

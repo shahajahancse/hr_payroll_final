@@ -162,13 +162,13 @@ class Leave_model extends CI_Model{
 
 		foreach($days as $day)
 		{
-			$holiday_check = $this->db->where('emp_id',$empid_leave)->where('holiday_date',$day)->get('pr_holiday')->num_rows();
+			$holiday_check = $this->db->where('emp_id',$empid_leave)->where('holiday_date',$day)->get('attn_holiday')->num_rows();
 			if($holiday_check > 0)
 			{
 				continue;
 			}
 			
-			$weekend_check = $this->db->where('emp_id',$empid_leave)->where('work_off_date',$day)->get('pr_work_off')->num_rows();
+			$weekend_check = $this->db->where('emp_id',$empid_leave)->where('work_off_date',$day)->get('attn_work_off')->num_rows();
 			if($weekend_check > 0)
 			{
 				continue;

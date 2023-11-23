@@ -1138,7 +1138,7 @@ class Attn_process_model extends CI_Model{
 	function check_weekend($emp_id, $att_date)
 	{
 		$this->db->select("emp_id");
-		$this->db->from("pr_work_off");
+		$this->db->from("attn_work_off");
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("work_off_date", $att_date);
 		$query = $this->db->get();
@@ -1156,7 +1156,7 @@ class Attn_process_model extends CI_Model{
 	function check_holiday($id, $att_date)
 	{
 		$this->db->select("emp_id");
-		$this->db->from("pr_holiday");
+		$this->db->from("attn_holiday");
 		$this->db->where("emp_id", $id);
 		$this->db->where("holiday_date", $att_date);
 		$query = $this->db->get();
@@ -1456,7 +1456,7 @@ class Attn_process_model extends CI_Model{
 	{
 		$this->db->select("holiday_date");
 		$this->db->where("holiday_date = '$date'");
-		$query = $this->db->get("pr_holiday");
+		$query = $this->db->get("attn_holiday");
 		if($query->num_rows > 0)
 		{
 			return true;

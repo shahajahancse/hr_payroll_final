@@ -141,7 +141,7 @@ table.dataTable.no-footer {
                          // print_r($pr_line);exit('keno?');
 
 
-                            if(!empty($pr_holiday_allowance_rules)){ foreach($pr_holiday_allowance_rules as $holiday_allowance){?>
+                            if(!empty($attn_holiday_allowance_rules)){ foreach($attn_holiday_allowance_rules as $holiday_allowance){?>
 
                                 <tr>
                                     <td><?php echo $holiday_allowance['rule_name'] ?></td>

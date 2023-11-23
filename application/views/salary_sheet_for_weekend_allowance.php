@@ -103,7 +103,7 @@ $k = 0;
 			$grand_total_allowance = 0;
 			
 		$this->db->select('*');
-		$this->db->from('pr_work_off');
+		$this->db->from('attn_work_off');
 		$this->db->where("trim(substr(work_off_date,1,7)) = '$year_month'");
 		$this->db->group_by("work_off_date");
 		$query = $this->db->get();

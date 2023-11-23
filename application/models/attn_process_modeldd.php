@@ -580,20 +580,20 @@ class Attn_process_model extends CI_Model{
 	function weekend_holday_eot_calculation_04_07_2022($emp_id, $date,$status,$present_status)
 	{
 		//echo $emp_id;
-		$this->db->select("pr_work_off.replace_val");
-		$this->db->from("pr_work_off");
-		$this->db->where("pr_work_off.emp_id = '$emp_id'");
-		$this->db->where("pr_work_off.work_off_date = '$date'");
-		$this->db->where("pr_work_off.replace_val = ", 1);
+		$this->db->select("attn_work_off.replace_val");
+		$this->db->from("attn_work_off");
+		$this->db->where("attn_work_off.emp_id = '$emp_id'");
+		$this->db->where("attn_work_off.work_off_date = '$date'");
+		$this->db->where("attn_work_off.replace_val = ", 1);
 		$replace_val = $this->db->get();
 		$val = $replace_val->row();
 		$f_val = $val->replace_val;
 
-		$this->db->select("pr_holiday.replace_val");
-		$this->db->from("pr_holiday");
-		$this->db->where("pr_holiday.emp_id = '$emp_id'");
-		$this->db->where("pr_holiday.holiday_date = '$date'");
-		$this->db->where("pr_holiday.replace_val = ", 1);
+		$this->db->select("attn_holiday.replace_val");
+		$this->db->from("attn_holiday");
+		$this->db->where("attn_holiday.emp_id = '$emp_id'");
+		$this->db->where("attn_holiday.holiday_date = '$date'");
+		$this->db->where("attn_holiday.replace_val = ", 1);
 		$replace_val = $this->db->get();
 		$val = $replace_val->row();
 		$h_val = $val->replace_val;
@@ -927,7 +927,7 @@ class Attn_process_model extends CI_Model{
 	function check_weekend($emp_id, $att_date)
 	{
 		$this->db->select("emp_id");
-		$this->db->from("pr_work_off");
+		$this->db->from("attn_work_off");
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("work_off_date", $att_date);
 		$query = $this->db->get();
@@ -944,7 +944,7 @@ class Attn_process_model extends CI_Model{
 	function check_holiday($id, $att_date)
 	{
 		$this->db->select("emp_id");
-		$this->db->from("pr_holiday");
+		$this->db->from("attn_holiday");
 		$this->db->where("emp_id", $id);
 		$this->db->where("holiday_date", $att_date);
 		$query = $this->db->get();
@@ -1977,7 +1977,7 @@ class Attn_process_model extends CI_Model{
 	{
 		$this->db->select("holiday_date");
 		$this->db->where("holiday_date = '$date'");
-		$query = $this->db->get("pr_holiday");
+		$query = $this->db->get("attn_holiday");
 		if($query->num_rows > 0)
 		{
 			return true;
@@ -2883,20 +2883,20 @@ class Attn_process_model extends CI_Model{
 	{
 		// echo $emp_id;
 		// exit();
-		$this->db->select("pr_work_off.replace_val");
-		$this->db->from("pr_work_off");
-		$this->db->where("pr_work_off.emp_id = '$emp_id'");
-		$this->db->where("pr_work_off.work_off_date = '$date'");
-		$this->db->where("pr_work_off.replace_val = ", 1);
+		$this->db->select("attn_work_off.replace_val");
+		$this->db->from("attn_work_off");
+		$this->db->where("attn_work_off.emp_id = '$emp_id'");
+		$this->db->where("attn_work_off.work_off_date = '$date'");
+		$this->db->where("attn_work_off.replace_val = ", 1);
 		$replace_val = $this->db->get();
 		$val = $replace_val->row();
 		$f_val = $val->replace_val;
 
-		$this->db->select("pr_holiday.replace_val");
-		$this->db->from("pr_holiday");
-		$this->db->where("pr_holiday.emp_id = '$emp_id'");
-		$this->db->where("pr_holiday.holiday_date = '$date'");
-		$this->db->where("pr_holiday.replace_val = ", 1);
+		$this->db->select("attn_holiday.replace_val");
+		$this->db->from("attn_holiday");
+		$this->db->where("attn_holiday.emp_id = '$emp_id'");
+		$this->db->where("attn_holiday.holiday_date = '$date'");
+		$this->db->where("attn_holiday.replace_val = ", 1);
 		$replace_val = $this->db->get();
 		$val = $replace_val->row();
 		$h_val = $val->replace_val;

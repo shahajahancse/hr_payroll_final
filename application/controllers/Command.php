@@ -204,7 +204,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	// Delete pr_holiday table data 2013-10-30 to 2021-10-01 
+	// Delete attn_holiday table data 2013-10-30 to 2021-10-01 
 	public function holiday()
 	{
 		echo "hello, ci";
@@ -212,10 +212,10 @@ class Command extends CI_Controller {
 
 		while ($i >= '2013-10-30') {
 
-			$rs = $this->db->where('holiday_date', $i)->get('pr_holiday')->row();;
+			$rs = $this->db->where('holiday_date', $i)->get('attn_holiday')->row();;
 			if (!empty($rs))
 			{
-				$this->db->where('holiday_date', $i)->delete('pr_holiday');
+				$this->db->where('holiday_date', $i)->delete('attn_holiday');
 				echo "<pre> $i Delete data";
 			}
 
@@ -225,7 +225,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	// Delete pr_work_off table data 2013-10-30 to 2021-10-01 
+	// Delete attn_work_off table data 2013-10-30 to 2021-10-01 
 	public function work_off()
 	{
 		echo "hello, ci";
@@ -233,10 +233,10 @@ class Command extends CI_Controller {
 
 		while ($i >= '2013-10-30') {
 
-			$rs = $this->db->where('work_off_date', $i)->get('pr_work_off')->row();;
+			$rs = $this->db->where('work_off_date', $i)->get('attn_work_off')->row();;
 			if (!empty($rs))
 			{
-				$this->db->where('work_off_date', $i)->delete('pr_work_off');
+				$this->db->where('work_off_date', $i)->delete('attn_work_off');
 				echo "<pre> $i Delete data";
 			}
 
