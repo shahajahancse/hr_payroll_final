@@ -29,11 +29,24 @@
         </div>
         <!--/.container-fluid -->
     </nav>
-    <div class="row">
-        <?php
-            $failuer = $this->session->flashdata('failure');
-            ?>
-    </div>
+    <div class="col-md-12">
+            <?php
+                $success = $this->session->flashdata('success');
+                if ($success != "") {
+                    ?>
+            <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php
+                }
+                $failuer = $this->session->flashdata('failuer');
+                if ($failuer) {
+                    ?>
+            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            <?php
+                }
+                ?>
+
+        </div>
+
     <div class="row tablebox">
 
         <div class="col-md-12">
