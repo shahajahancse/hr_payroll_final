@@ -270,8 +270,11 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     public function section($start = 0)
     {
-        $this->load->model('crud_model');
-        $this->data['pr_sec'] = $this->crud_model->sec_infos();
+       $this->db->select('emp_depertment.*,pr_units.unit_name,emp_section.*');
+        $this->db->from('emp_section');
+        $this->db->join('emp_depertment', 'emp_depertment.dept_id=emp_section.depertment_id');
+        $this->db->join('pr_units', 'pr_units.unit_id=emp_section.unit_id');
+        $this->data['pr_sec'] = $this->db->get()->result_array();
         $this->data['title'] = 'Section List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/sec_list';
@@ -289,6 +292,16 @@ class Setup_con extends CI_Controller
         echo json_encode($unit);
 
     }
+
+    public function get_department()
+    {
+        $unit_id = $_POST['unit_id'];
+        $this->db->select('emp_depertment.*');
+        $this->db->from('emp_depertment');
+        $this->db->where('emp_depertment.unit_id', $unit_id);
+        $department = $this->db->get()->result_array();
+        echo json_encode($department);
+    }
     public function sec_add()
     {
 
@@ -298,7 +311,6 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('sec_name_bn', 'Section Bangla Name', 'trim|required');
         $this->form_validation->set_rules('depertment_id', 'Department', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -313,7 +325,6 @@ class Setup_con extends CI_Controller
             $this->data['subview'] = 'setup/sec_add';
             $this->load->view('layout/template', $this->data);
         } else {
-
             $formArray = array(
                 'sec_name_en' => $this->input->post('sec_name_en'),
                 'sec_name_bn' => $this->input->post('sec_name_bn'),
@@ -344,12 +355,11 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('emp_depertment.*');
-            $this->data['department'] = $this->db->get('emp_depertment')->result();
+
             $this->db->select('pr_units.*');
             $this->data['unit'] = $this->db->get('pr_units')->result();
 
-            $this->data['emp_section'] = $this->crud_model->getsec($secId);
+            $this->data['sec'] = $this->crud_model->getsec($secId);
             $this->data['title'] = 'Edit Section';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/sec_edit';
@@ -396,23 +406,26 @@ class Setup_con extends CI_Controller
 
     public function line()
     {
-
-        $this->data['pr_line'] = $this->crud_model->line_infos();
+        $this->db->select('emp_line_num.*,emp_depertment.dept_name,pr_units.unit_name,emp_section.sec_name_en');
+        $this->db->from('emp_line_num');
+        $this->db->join('emp_depertment', 'emp_depertment.dept_id = emp_line_num.dept_id');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_line_num.unit_id');
+        $this->db->join('emp_section', 'emp_section.id = emp_line_num.section_id');
+        $this->data['pr_line'] = $this->db->get()->result_array();
         $this->data['title'] = 'Line List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/line_list';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function get_unit_s()
+    public function get_section()
     {
-        $section_id = $_POST['section_id'];
-        $this->db->select('emp_section.*,pr_units.*');
+        $depertment_id = $_POST['depertment_id'];
+        $this->db->select('emp_section.*');
         $this->db->from('emp_section');
-        $this->db->join('pr_units', 'pr_units.unit_id=emp_section.unit_id');
-        $this->db->where('emp_section.id', $section_id);
-        $unit = $this->db->get()->result_array();
-        echo json_encode($unit);
+        $this->db->where('emp_section.depertment_id', $depertment_id);
+        $section = $this->db->get()->result_array();
+        echo json_encode($section);
     }
 
     public function line_add()
@@ -424,14 +437,15 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('line_name_bn', 'Line Bangla Name', 'trim|required');
         $this->form_validation->set_rules('section_id', 'Section', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('depertment_id', 'Department', 'required');
 
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
 
-            $this->db->select('emp_section.*');
-            $this->data['emp_section'] = $this->db->get('emp_section')->result();
+            $this->db->select('pr_units.*');
+            $this->data['unit'] = $this->db->get('pr_units')->result();
             $this->data['title'] = 'Add Line';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/line_add';
@@ -443,6 +457,7 @@ class Setup_con extends CI_Controller
                 'line_name_bn' => $this->input->post('line_name_bn'),
                 'section_id' => $this->input->post('section_id'),
                 'unit_id' => $this->input->post('unit_id'),
+                'dept_id' => $this->input->post('depertment_id'),
             );
 
             if ($this->db->insert('emp_line_num', $formArray)) {
@@ -463,14 +478,16 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('line_name_bn', 'Line Bangla Name', 'trim|required');
         $this->form_validation->set_rules('section_id', 'Section', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('depertment_id', 'Department', 'required');
 
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('emp_section.*');
-            $this->data['emp_section'] = $this->db->get('emp_section')->result();
-
+          
+            $this->db->select('pr_units.*');
+            $this->data['unit'] = $this->db->get('pr_units')->result();
+            
             $this->data['line'] = $this->crud_model->getline($line_id);
             $this->data['title'] = 'Edit Section';
             $this->data['username'] = $this->data['user_data']->id_number;
@@ -482,6 +499,7 @@ class Setup_con extends CI_Controller
                 'line_name_bn' => $this->input->post('line_name_bn'),
                 'section_id' => $this->input->post('section_id'),
                 'unit_id' => $this->input->post('unit_id'),
+                'dept_id' => $this->input->post('depertment_id'),
             );
             $this->db->where('id', $line_id);
             if ($this->db->update('emp_line_num', $formArray)) {

@@ -1,8 +1,7 @@
 <div class="content">
-    <!-- Static navbar -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
+    <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
+            <div class="navbar-header col-md-3" style="padding: 7px;">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -10,87 +9,99 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Update Section</a>
+                <div>
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/section') ?>">
+                        < < Back</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
-                </ul>
-
+            <div class="col-md-6">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="">
+                        <form class="navbar-form pull-right" role="search">
+                            <div class="input-group">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <!--/.nav-collapse -->
         </div>
         <!--/.container-fluid -->
     </nav>
+    <div class="row">
+        <?php
+            $failuer = $this->session->flashdata('failure');
+            ?>
+    </div>
+    <div class="tablebox">
+        <h3>Update Section</h3>
+        <hr>
+        <form action="<?= base_url('index.php/setup_con/sec_edit').'/'. $sec->id?>" enctype="multipart/form-data" method="post"
+            name="creatsection">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group col-md-6">
+                        <label for="unit_id">Unit</label>
+                        <select name="unit_id" id="unit_id" onchange="getDepertment(this.value)" class="form-control">
+                            <option value="">Select Unit</option>
+                            <?php foreach ($unit as $key => $value) { ?>
+                            <option value="<?php echo $value->unit_id; ?>" <?= ($value->unit_id == $sec->unit_id) ? 'selected' : '';?>><?php echo $value->unit_name; ?></option>
+                            <?php } ?>
+                        </select>
+                        <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="unit_id">Department</label>
+                        <select name="depertment_id" id="depertment_id" class="form-control">
+                            <option value="">Select Depertment</option>
+                        </select>
+                        <?= (isset($failuer['depertment_id'])) ? '<div class="alert alert-failuer">' . $failuer['depertment_id'] . '</div>' : ''; ?>
+                    </div>
 
-    <h3>Update Section</h3>
-    <hr>
-    <form action="<?= base_url('index.php/setup_con/sec_edit').'/'. $emp_section->id?> " enctype="multipart/form-data" method="post"
-        >
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                <select onchange="get_unit()" name="depertment_id" id="department" class="select22 form-control input-lg">
-                        <option value="">Select Department</option>
-                        <?php foreach ($department as $key => $value) {
-                    ?>
-                        <option value="<?php echo $value->dept_id; ?>" <?= $value->dept_id == $emp_section->depertment_id ? 'selected' : '' ?>><?php echo $value->dept_name; ?></option>
-                        <?php } ?>
-                    </select>
-                    <?= (isset($failuer['depertment_id'])) ? '<div class="alert alert-failuer">' . $failuer['depertment_id'] . '</div>' : ''; ?>
-                </div>
-                <div class="form-group">
-
-                    <label>Section Name</label>
-                    <input type="text" name="sec_name_en" value="<?= $emp_section->sec_name_en?>" placeholder="Section Name English"
-                        class="form-control">
-                    <?=(isset($failuer['sec_name_en'])) ? '<div class="alert alert-failuer">' . $failuer['sec_name_en'] . '</div>' : ''; ?>
-                </div>
-                <div class="form-group">
-                    <label>Section Name Bangla</label>
-                    <input type="text" name="sec_name_bn" value="<?= $emp_section->sec_name_bn?>" placeholder="Section Name Bangla"
-                        class="form-control">
-                    <?=(isset($failuer['sec_name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['sec_name_bn'] . '</div>' : ''; ?>
-                </div>
-                <div class="form-group">
-                   <!-- <select name="unit_id" id="unit" class="form-control input-lg" readonly>
-                       <option value="">Select Unit</option>
-                       <?php foreach ($unit as $key => $value) { ?>
-                           <option value="<?php echo $value->unit_id; ?>"><?php echo $value->unit_name; ?></option>
-                       <?php } ?>
-                   </select> -->
-                   <input type="hidden" name="unit_id" id="unit_id" >
-                   <input type="text" name="unit_name" id="unit_name" class="form-control"  readonly>
-                   <?=(isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
-               </div>
-
-                <br>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary ">Submit</button></button>
-                    <a href="" class="btn-warning btn">Cancel</a>
+                    <div class="form-group col-md-6">
+                        <label>Section Name</label>
+                        <input type="text" name="sec_name_en" value="<?= $sec->sec_name_en ?>" placeholder="Section Name English"
+                            class="form-control">
+                        <?=(isset($failuer['sec_name_en'])) ? '<div class="alert alert-failuer">' . $failuer['sec_name_en'] . '</div>' : ''; ?>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Section Name Bangla</label>
+                        <input type="text" name="sec_name_bn" value="<?= $sec->sec_name_bn ?>" placeholder="Section Name Bangla"
+                            class="form-control">
+                        <?=(isset($failuer['sec_name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['sec_name_bn'] . '</div>' : ''; ?>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary ">Submit</button></button>
+                        <a href="" class="btn-warning btn">Cancel</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 <script>
-
-  function get_unit(){
-    var department_id = $('#department').val();
+function getDepertment(unit_id) {
     $.ajax({
-      
-      url:"<?php echo base_url('index.php/setup_con/get_unit') ?>",
-      method:"POST",
-      data:{department_id:department_id},
+
+        url: "<?php echo base_url('index.php/setup_con/get_department') ?>",
+        method: "POST",
+        data: {
+          unit_id: unit_id
+        },
         success: function(data) {
-       
-          var parsedData = JSON.parse(data)[0];
-          // console.log(parsedData.unit_id);
-          $('#unit_id').val(parsedData.unit_id);
-          $('#unit_name').val(parsedData.unit_name);
+            var parsedData = JSON.parse(data);
+            var item = '<option value="">Select Depertment</option>';
+            for (let index = 0; index < parsedData.length; index++) {
+             item+=`<option value="${parsedData[index].dept_id}" >${parsedData[index].dept_name}</option>`
+            }
+            $('#depertment_id').html(item);
+
+            $('#depertment_id').val(<?=$sec->depertment_id?>); 
+            console.log(<?=$sec->depertment_id?>);
         }
     })
-  }
-  get_unit()
+}
+getDepertment(<?=$sec->unit_id?>)
 </script>
