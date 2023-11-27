@@ -46,3 +46,78 @@ function salary_structure_cal(){
    document.getElementById('house_rent').value = hrent;
    //==================================LOCAL Salary Rule==================================
 }
+
+// ===========================================
+// Attendance Process
+// ===========================================
+function attendance_process()
+{
+
+   var ajaxRequest = new XMLHttpRequest();
+   unit_id = document.getElementById('unit_id').value;
+   if(unit_id == '')
+   {
+     alert('Please select Unit');
+     return ;
+   }   
+
+   process_date = document.getElementById('process_date').value;
+   if(process_date == '')
+   {
+     alert('Please select process date');
+     return ;
+   }
+
+   var checkboxes = document.getElementsByName('emp_id[]');
+   var sql = get_checked_value(checkboxes);
+   if(sql =='')
+   {
+     alert('Please select employee Id');
+     return ;
+   }
+
+   var okyes;
+   okyes=confirm('Are you sure you want to start process?');
+   if(okyes==false) return;
+
+   loading_open();
+   var data = "process_date="+process_date+"&unit_id="+unit_id+'&sql='+sql;
+   
+   // console.log(data); return;
+   url = hostname + "attn_process_con/attendance_process";
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(data);
+
+   ajaxRequest.onreadystatechange = function(){
+     if(ajaxRequest.readyState == 4){
+       // console.log(ajaxRequest);
+       var resp = ajaxRequest.responseText;
+       loading_close();
+       alert(resp);
+     }
+   }
+}
+
+// get check box select value
+function get_checked_value(checkboxes) {
+   var vals = "";
+   for (var i=0, n=checkboxes.length;i<n;i++) 
+   {
+       if (checkboxes[i].checked) 
+       {
+           vals += ","+checkboxes[i].value;
+       }
+   }
+   if (vals) vals = vals.substring(1);
+   return vals;
+}
+
+function loading_open() {
+    $('#loader').css('display', 'block');
+}
+
+function loading_close() {
+    $('#loader').css('display', 'none');
+}
+

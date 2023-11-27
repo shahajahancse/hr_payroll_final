@@ -59,21 +59,17 @@ class Attn_process_con extends CI_Controller {
 		return $this->db->where('com.unit_id', $id)->get()->result();
 	}
 
-	function attn_process(){
-		$access_level = 4;
-		$acl = $this->acl_model->acl_check($access_level);
+	function attendance_process(){
 
 		$unit = $this->input->post('unit_id');
-		$date = $this->input->post('p_start_date');
-		$spl = $this->input->post('spl');
+		$date = $this->input->post('process_date');
+		$sql = $this->input->post('sql');
+
 		$input_date = date("Y-m-d", strtotime($date));
-		$grid_emp_id = explode('xxx', $spl);
-		//print_r($grid_emp_id);exit;
-		//$this->earn_leave_process($input_date);
-		// For Shift Auto Change
-		// $this->auto_shift_change($input_date);
+		$grid_emp_id = explode(',', $sql);
+
 		$this->db->trans_start();
-		ini_set('memory_limit', '-1M');
+		ini_set('memory_limit', '-1');
 		set_time_limit(0);
 		$data = $this->attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
 		$this->db->trans_complete();
