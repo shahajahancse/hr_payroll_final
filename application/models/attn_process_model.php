@@ -54,10 +54,6 @@ class Attn_process_model extends CI_Model{
                 continue;
 			} else {
 
-				//WEEKEND CHECK FOR SPECIFIC ID: RETURN TRUE OR FALSE
-				$weekend 	= $this->check_weekend($emp_id, $process_date);
-				$holiday = $this->check_holiday($emp_id, $process_date);
-
 				//GET CURRENT SHIFT INFORMATION
 				$emp_shift = $this->emp_shift_check_process($emp_id, $shift_id, $schedule_id, $process_date);
 				$schedule  = $this->get_emp_schedule($emp_shift->schedule_id);
@@ -106,12 +102,11 @@ class Attn_process_model extends CI_Model{
 				$ot_eot_4pm        = 0;
 				$deduction_hour    = 0;
 				$late_status 	   = 0;
-				$night_allowance   = 0;
-				$holiday_allowance = 0;
+				$night_allo        = 0;
+				$holiday_allo 	   = 0;
 				$weekly_allo 	   = 0;
 
 
-                $two_hour_ot 		= $schedule[0]["two_hour_ot_out_time"];
                 $ot_last_hour 		= $schedule[0]["ot_minute_to_one_hour"];
                 $lunch_start   		= $schedule[0]["lunch_start"];
                 $lunch_minute  		= $schedule[0]["lunch_minute"];
@@ -134,15 +129,11 @@ class Attn_process_model extends CI_Model{
                 }
 				$tiffin_break_time2 = date("Y-m-d H:i:s",strtotime("+ $tiffin_minute2 minutes",strtotime($tiffin_break2)));
 
-				$this->db->select("nar.night_time");
-				$this->db->from('pr_night_allowance_rules as nar');	
-				$this->db->from('pr_night_allowance_level as nal');	
-				$this->db->where("unit_id",$unit);
-				$this->db->where("nal.desig_id",$emp_desi_id);
-				$this->db->where('nar.rules_id = nal.rules_id');
-				$night_al_time = $this->db->get();
+				//WEEKEND CHECK FOR SPECIFIC ID: RETURN TRUE OR FALSE
+				$weekend 	= $this->check_weekend($emp_id, $process_date);
+				$holiday = $this->check_holiday($emp_id, $process_date);
+				$night_rules = $this->get_night_allowance_rules($process_date, $unit, $emp_desi_id);
 
-				// echo "<pre>";print_r($night_al_time->row());exit;
 				//============= Working day/Weeked/Holiday OT Calculation =============
 				if ($ot_entitle == 0) {
 					//======= Weeked/Holiday Extra OT Calculation==========
@@ -152,40 +143,40 @@ class Attn_process_model extends CI_Model{
 
 	                		$start_date_time = strtotime($in_time);
 							$end_date_time 	= strtotime($out_time);
+							$minute = ($end_date_time - $start_date_time)/60;
 
-							$minute 		= ($end_date_time - $start_date_time)/60;
-							if (($out_time > $lunch_in_time) && ( $lunch_minute != 0)) {
+							// Lunch break Deduction 
+							if (($out_time > $lunch_in_time) && ($lunch_minute != 0)) {
 								$minute = $minute - $lunch_minute;
 							}
 
-							// Tiffin break Deduction Hour
+							// Tiffin break Deduction 
 							if ($out_time > $tiffin_break_end1 && $tiffin_minute != 0) {
 								$minute = $minute - $tiffin_minute;
 							}
-							// Tiffin break Deduction Hour
+							// Tiffin break Deduction 
 							if ($out_time > $tiffin_break_time2 && $tiffin_minute2 != 0) {
 								$minute = $minute - $tiffin_minute2;
 							}
 
+							// Total eot cal...
 							$eot_hour 	= floor($minute / 60);
-							// echo $eot_hour;exit;
 							if ($minute % 60 >= $ot_last_hour) {
 								$eot_hour = $eot_hour + 1;
 							}
-							// echo $eot_hour;exit;
-							// week andholiday allowns
+
+							// week and holiday allownance check
 							if ($eot_hour != 0) {
 								if ($process_date == $weekend) {
 									$weekly_allo = 1;
-								}else{
-									$holiday_allowance = 1;
+								} else {
+									$holiday_allo = 1;
 								}
 							}
 
 		                }
-		                // echo $eot_hour;exit;
-						// night allowns
 
+						// night allownance check
 						if ($night_al_time->num_rows() > 0 ) {
 							if ($out_time > $night_al_time->row()->night_time) {
 								$night_allowance = 1;
@@ -284,10 +275,10 @@ class Attn_process_model extends CI_Model{
 						 	// exit; 
 							if ($out_time > $b) {
 								// echo "1";exit;
-								$night_allowance = 1;
+								$night_allo = 1;
 							}
 							else{
-							$night_allowance = 0;
+							$night_allo = 0;
 						}
 							// else echo "0";exit;
 						}
@@ -304,18 +295,16 @@ class Attn_process_model extends CI_Model{
 						}*/
 					}
 				}
-
-				// echo "<pre>";print_r($tiffin_break_time2);exit;
+				//============ End  Working day/Weeked/Holiday OT Calculation =============
 
 				// Night Allowance unit
-
 				if ($night_al_time->num_rows() > 0 ) {
 					$a= $process_date." ".$night_al_time->row()->night_time;
 					$b = date('Y-m-d H:i:s', strtotime($a. ' + 1 days'));
 					if ($out_time > $b) {
-						$night_allowance = 1;
+						$night_allo = 1;
 					} else{
-						$night_allowance = 0;
+						$night_allo = 0;
 					}
 				}
 
@@ -349,6 +338,10 @@ class Attn_process_model extends CI_Model{
 				 else{
 				 	$holiday_allowance=0;					 	
 				 } 
+
+
+
+
 				 // echo "<pre>";print_r($result[$emp_id]);exit;
 				// echo $weekend;exit;	
 				// echo $unit; exit();		
@@ -361,11 +354,11 @@ class Attn_process_model extends CI_Model{
 					'ot_eot_4pm' 		=> $ot_eot_4pm,
 					'ot_eot_12am' 		=> $ot_eot_12am,
 					'deduction_hour' 	=> $deduction_hour,
-					'night_allo' 		=> $night_allowance,
+					'night_allo' 		=> $night_allo,
 					'late_status' 		=> $late_status,
 					'present_status' 	=> $result[$emp_id],
 					'tiffin_allo' 		=> 0,
-					'holiday_allowance'	=> $holiday_allowance,
+					'holiday_allowance'	=> $holiday_allo,
 					'weekly_allo'		=> $weekly_allo
 				);
 				// dd($data);
@@ -572,7 +565,7 @@ class Attn_process_model extends CI_Model{
 		}
 	}
 
-    public function leave_chech($process_date, $emp_id)
+    function leave_chech($process_date, $emp_id)
     {
 
         $this->db->where("leave_start <=", $process_date);
@@ -586,6 +579,24 @@ class Attn_process_model extends CI_Model{
             return false;
         }
     }
+
+	function get_night_allowance_rules($process_date, $unit_id, $desig_id){
+
+		$this->db->select("anr.night_time");
+		$this->db->from('emp_designation as ed');	
+		$this->db->join('allowance_night_rules as anr', 'ed.night_al_id = anr.id', 'left');	
+
+		$this->db->where("anr.unit_id", $unit_id);
+		$this->db->where("ed.id", $desig_id);
+		$query = $this->db->get()->row();
+
+        $time = '';
+        if (!empty($query) && strtotime($query->night_time) < strtotime('12:00:00')){
+        	$process_date = "$process_date $query->night_time";
+            $time = date('Y-m-d H:i:s', strtotime($process_date .' + 1 days'));
+        }
+		return $time;
+	}
 
 	// employee shift check from pr_emp_shift_log table
 	function emp_shift_check_process($emp_id, $shift_id, $schedule_id, $process_date){
@@ -1373,7 +1384,7 @@ class Attn_process_model extends CI_Model{
 
 	function get_night_allowance($date,$out_time,$emp_id){
 		$desig_id = $this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->emp_desi_id;
-		$night_allowance_rules = $this->get_night_allowance_rules($desig_id);
+		$night_allowance_rules = $this->get_night_allowance_ruless($desig_id);
 
 		$night_allow  = 0;
 		if($night_allowance_rules['msg'] == "OK" ){
@@ -1415,7 +1426,7 @@ class Attn_process_model extends CI_Model{
 
 		return  $data;
 	}
-	function get_night_allowance_rules($desig_id){
+	function get_night_allowance_ruless($desig_id){
 		$this->db->select('rules_id');
 		$this->db->from('pr_night_allowance_level');
 		$this->db->where("desig_id", $desig_id);
@@ -1431,35 +1442,6 @@ class Attn_process_model extends CI_Model{
 
 		return $data;
 	}
-	function get_night_allowance_check($out_time)
-	{
-		$night_allowance_check = $this->get_setup_attributes(8);
-		if($out_time >= $night_allowance_check)
-		{
-			$night_allowance_status = 1;
-		}
-		else
-		{
-			$night_allowance_status = 0;
-		}
-		return $night_allowance_status;
-	}
-	function holiday_calculation($date)
-	{
-		$this->db->select("holiday_date");
-		$this->db->where("holiday_date = '$date'");
-		$query = $this->db->get("attn_holiday");
-		if($query->num_rows > 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-
 
 	function present_check($date, $emp_id)
 	{
