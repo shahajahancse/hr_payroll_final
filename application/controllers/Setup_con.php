@@ -302,6 +302,15 @@ class Setup_con extends CI_Controller
         $department = $this->db->get()->result_array();
         echo json_encode($department);
     }
+    public function get_line()
+    {
+        $sec_id = $_POST['id'];
+        $this->db->select('emp_line_num.*');
+        $this->db->from('emp_line_num');
+        $this->db->where('emp_line_num.section_id', $sec_id);
+        $department = $this->db->get()->result_array();
+        echo json_encode($department);
+    }
     public function sec_add()
     {
 
@@ -1111,18 +1120,6 @@ class Setup_con extends CI_Controller
             $this->data['subview'] = 'setup/desig_add';
             $this->load->view('layout/template', $this->data);
         } else {
-            // dd($_POST);
-            // Array
-            // (
-            //     [desig_name] => Hello
-            //     [desig_bangla] => hi
-            //     [unit_id] => 1
-            //     [attn_id] => 9
-            //     [holiday_weekend_id] => 8
-            //     [iftar_id] => 8
-            //     [night_al_id] => 22
-            //     [tiffin_id] => 0
-            // )
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
                 'desig_name' => $this->input->post('desig_name'),
@@ -1133,8 +1130,19 @@ class Setup_con extends CI_Controller
                 'night_al_id' => $this->input->post('night_al_id'),
                 'tiffin_id' => $this->input->post('tiffin_id'),
             );
-            if ($this->db->insert('emp_designation', $formArray)) {
-                $this->session->set_flashdata('success', 'Record add successfully!');
+            // dd($formArray);
+            // emp_dasignation_line_acl
+            if ($this->db->insert('emp_designation', $formArray)) {                
+                $data = array(
+                    'unit_id'    =>$formArray['unit_id'],
+                    'dept_id'    =>$this->input->post('emp_dept_id'),
+                    'section_id' =>$this->input->post('emp_sec_id'),
+                    'line_id'    =>$this->input->post('emp_line_id'),
+                    'designation_id' =>  $this->db->insert_id()
+                );
+                if ($this->db->insert('emp_dasignation_line_acl', $data)){
+                    $this->session->set_flashdata('success', 'Record add successfully!');
+                }
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
@@ -1163,7 +1171,7 @@ class Setup_con extends CI_Controller
             $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
-            $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name,
+            $this->db->select('emp_designation.*,emp_dasignation_line_acl.*, IFNULL(pr_units.unit_name, "none") as unit_name,
             IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
             IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
             IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
@@ -1176,9 +1184,9 @@ class Setup_con extends CI_Controller
             $this->db->join('allowance_iftar_bill', 'allowance_iftar_bill.id=emp_designation.iftar_id', 'left');
             $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
             $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
+            $this->db->join('emp_dasignation_line_acl', 'emp_dasignation_line_acl.designation_id=emp_designation.id', 'left');
             $this->db->where('emp_designation.id', $id);
             $this->data['emp_designation'] = $this->db->get()->row();
-
             $this->data['title'] = 'Edit Designation';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/desig_edit';

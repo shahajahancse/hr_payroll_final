@@ -521,159 +521,282 @@ class Processdb extends CI_Model{
 		}
 	}
 
+	// function updatedb1(){
+	// 	// echo "<pre>"; print_r($_FILES); exit;
+	// 	$id =  $this->input->post('empid');
+	// 	$dob = $this->input->post('dob');
+	// 	$dob = date("Y-m-d", strtotime($dob));
+	// 	$ejd = $this->input->post('ejd');
+	// 	$ejd = date("Y-m-d", strtotime($ejd));
+	// 	if($_FILES["userfile"]["name"] != '')
+	// 	{
+	// 		$config['upload_path'] = './uploads/photo/';
+	// 		$config['allowed_types'] = '*';
+	// 		$config['max_size']	= '4000';
+	// 		$config['max_width']  = '5000';
+	// 		$config['max_height']  = '7000';
+	// 		$this->load->library('upload', $config);
+	// 		// echo "<br> <pre>"; print_r($this->upload->data()); exit;
+
+	// 		if ( ! $this->upload->do_upload())
+	// 		{
+	// 			$error = array('error' => $this->upload->display_errors());
+	// 			$img_error =  $error["error"];
+	// 			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert($img_error);</SCRIPT>";
+	// 			$data = array(
+	// 				'emp_full_name' 	=> $this->input->post('name'),
+	// 				'bangla_nam' 		=> $this->input->post('bname'),
+	// 				'emp_mname' 		=> $this->input->post('mname'),
+	// 				'emp_fname' 		=> $this->input->post('fname'),
+	// 				'spouse_name' 		=> $this->input->post('sname'),
+	// 				'emp_n_id'			=> $this->input->post('n_id'),
+	// 				'emp_dob'  			=> $dob,
+	// 				'emp_religion'  	=> $this->input->post('reli'),
+	// 				'emp_sex'  			=> $this->input->post('sex'),
+	// 				'emp_marital_status'=> $this->input->post('ms'),
+	// 				'emp_blood'			=> $this->input->post('bgroup'),
+	// 				// 'emp_nomini_name'	=> $this->input->post('emp_nomini_name'),
+	// 				// 'nomini_relation'	=> $this->input->post('nomini_relation'),
+	// 				// 'emp_child_no'		=> $this->input->post('emp_child_no')
+	// 			);
+	// 		}else{
+	// 			$data_up = array('upload_data' => $this->upload->data());
+	// 			//print_r($data);
+	// 			$img = $data_up["upload_data"]["file_name"];
+	// 			$data = array(
+	// 				'emp_full_name' 	=> $this->input->post('name'),
+	// 				'bangla_nam' 		=> $this->input->post('bname'),
+	// 				'emp_mname' 		=> $this->input->post('mname'),
+	// 				'emp_fname' 		=> $this->input->post('fname'),
+	// 				'spouse_name' 		=> $this->input->post('sname'),
+	// 				// 'emp_ident_mark'	=> $this->input->post('ident_marks'),
+	// 				'emp_n_id'			=> $this->input->post('n_id'),
+	// 				'bank_ac_no'  		=> $this->input->post('bank_ac_no'),
+	// 				'emp_dob'  			=> $dob,
+	// 				'emp_religion'  	=> $this->input->post('reli'),
+	// 				'emp_sex'  			=> $this->input->post('sex'),
+	// 				'emp_marital_status'=> $this->input->post('ms'),
+	// 				'emp_blood'			=> $this->input->post('bgroup'),
+	// 				// 'emp_nomini_name'	=> $this->input->post('emp_nomini_name'),
+	// 				// 'nomini_relation'	=> $this->input->post('nomini_relation'),
+	// 				// 'emp_child_no'		=> $this->input->post('emp_child_no'),
+	// 				'img_source'		=> $img
+	// 			);
+	// 		}
+	// 	}else{
+	// 		$data = array(
+	// 			'emp_full_name'  		=> $this->input->post('name'),
+	// 			'bangla_nam' 			=> $this->input->post('bname'),
+	// 			'emp_mname' 			=> $this->input->post('mname'),
+	// 			'emp_fname' 			=> $this->input->post('fname'),
+	// 			'spouse_name' 			=> $this->input->post('sname'),
+	// 			// 'emp_ident_mark'		=> $this->input->post('ident_marks'),
+	// 			'emp_n_id'				=> $this->input->post('n_id'),
+	// 			'bank_ac_no'  			=> $this->input->post('bank_ac_no'),
+	// 			'emp_dob'  				=> $dob,
+	// 			'emp_religion'  		=> $this->input->post('reli'),
+	// 			'emp_sex'  				=> $this->input->post('sex'),
+	// 			'emp_marital_status'	=> $this->input->post('ms'),
+	// 			'emp_blood'				=> $this->input->post('bgroup'),
+	// 			// 'emp_nomini_name'		=> $this->input->post('nomini_name'),
+	// 			// 'nomini_relation'		=> $this->input->post('nomini_relation'),
+	// 			// 'emp_child_no'			=> $this->input->post('child_no')
+	// 		);
+	// 	}
+
+	// 	//print_r($data);
+	// 	$this->db->where('emp_id',$id);
+	// 	$v1 = $this->db->update('pr_emp_per_info', $data);
+	// 	$adddata = array(
+	// 		'emp_pre_add' 	=> $this->input->post('padd'),
+	// 		'emp_par_add'	=> $this->input->post('fadd'),
+	// 		'mobile'	=> $this->input->post('mobile_no'),
+	// 	);
+	// 	//print_r(adddata);
+	// 	$this->db->where('emp_id',$id);
+	// 	$v2 = $this->db->update('pr_emp_add', $adddata);
+	// 	$data2 = array(
+	// 		'emp_dept_id'  		=> $this->input->post('dept'),
+	// 		'emp_sec_id' 		=> $this->input->post('sec'),
+	// 		'emp_line_id' 		=> $this->input->post('line'),
+	// 		'emp_desi_id'  		=> $this->input->post('desig'),
+	// 		'emp_operation_id'	=> $this->input->post('operation'),
+	// 		'emp_position_id'  	=> $this->input->post('position'),
+	// 		'floor_id'			=> $this->input->post('emp_floor'),
+	// 		// 'emp_process'  		=> $this->input->post('process'),
+	// 		// 'emp_process_qty'  	=> $this->input->post('process_qty'),
+	// 		'emp_sal_gra_id'	=> $this->input->post('salg'),
+	// 		'emp_sts_id'  		=> $this->input->post('emp_sts_id'),
+	// 		'emp_shift'  		=> $this->input->post('empshift'),
+	// 		'gross_sal'  		=> $this->input->post('text8'),
+	// 		'ot_entitle'  		=> $this->input->post('otentitle'),
+	// 		'transport'  		=> $this->input->post('transport'),
+	// 		'lunch'  			=> $this->input->post('lunch'),
+	// 		'att_bonus'  		=> $this->input->post('attbonus'),
+	// 		'emp_join_date'		=> $ejd,
+	// 		'salary_draw'		=> $this->input->post('saldraw'),
+	// 		'salary_type'		=> $this->input->post('saltype'),
+	// 		// 'district_id'		=> $this->input->post('emp_district'),
+	// 		// 'zone_id'			=> $this->input->post('zone')
+	// 	);
+
+	// 	//print_r(data2);
+	// 	//echo $this->input->post('emp_district');
+	// 	$this->db->where('emp_id',$id);
+	// 	$v3 = $this->db->update('pr_emp_com_info', $data2);
+
+	// 	$data_edu = array(
+	// 		'emp_degree'  => $this->input->post('text2'),
+	// 		'emp_pass_yr' => $this->input->post('text3'),
+	// 		'emp_ins' => $this->input->post('text4')
+	// 	);
+	// 	$this->db->where('emp_id',$id);
+	// 	$v4 =$this->db->update('pr_emp_edu', $data_edu);
+	// 	$data_skill = array(
+	// 		'emp_skill'  => $this->input->post('text5'),
+	// 		'emp_yr_skill' => $this->input->post('text6'),
+	// 		'emp_com_name' => $this->input->post('text7')
+	// 	);
+
+	// 	//print_r(data_skill);
+	// 	$this->db->where('emp_id',$id);
+	// 	$v5= $this->db->update('pr_emp_skill', $data_skill);
+	// 	$pr_id_proxi = array('proxi_id'  => $this->input->post('idcard'));
+	// 	$this->db->where('emp_id',$id);
+	// 	$v6 = $this->db->update('pr_id_proxi', $pr_id_proxi);
+	// 	if( $v1 or $v2 or $v3 or $v4 or $v5 or $v6){
+	// 		// PROFILE LOG Generate
+	// 		$log_username = $this->session->userdata('username');
+	// 		$log_emp_id   = $this->input->post('empid');
+	// 		$this->log_model->log_profile_update($log_username, $log_emp_id);
+	// 		//echo "Updated successfully";
+	// 		return true;
+	// 	}else{
+	// 		return false;
+	// 	}
+	// }
 	function updatedb1()
 	{
-		// echo "<pre>"; print_r($_FILES); exit;
-		$id =  $this->input->post('empid');
-		$dob = $this->input->post('dob');
-		$dob = date("Y-m-d", strtotime($dob));
-		$ejd = $this->input->post('ejd');
-		$ejd = date("Y-m-d", strtotime($ejd));
-		if($_FILES["userfile"]["name"] != '')
-		{
-			$config['upload_path'] = './uploads/photo/';
-			$config['allowed_types'] = '*';
-			$config['max_size']	= '4000';
-			$config['max_width']  = '5000';
-			$config['max_height']  = '7000';
-			$this->load->library('upload', $config);
-			// echo "<br> <pre>"; print_r($this->upload->data()); exit;
+		$id = $this->input->post('emp_id');
+		// dd($id);
+		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
+		$data = array(
+			'unit_id'			=> $this->input->post('unit_id'),
+			'emp_dept_id'  		=> $this->input->post('emp_dept_id'),
+			'emp_sec_id' 		=> $this->input->post('emp_sec_id'),
+			'emp_line_id' 		=> $this->input->post('emp_line_id'),
+			'emp_desi_id'  		=> $this->input->post('emp_desi_id'),
 
-			if ( ! $this->upload->do_upload())
-			{
-				$error = array('error' => $this->upload->display_errors());
-				$img_error =  $error["error"];
-				echo "<SCRIPT LANGUAGE=\"JavaScript\">alert($img_error);</SCRIPT>";
-				$data = array(
-					'emp_full_name' 	=> $this->input->post('name'),
-					'bangla_nam' 		=> $this->input->post('bname'),
-					'emp_mname' 		=> $this->input->post('mname'),
-					'emp_fname' 		=> $this->input->post('fname'),
-					'spouse_name' 		=> $this->input->post('sname'),
-					'emp_n_id'			=> $this->input->post('n_id'),
-					'emp_dob'  			=> $dob,
-					'emp_religion'  	=> $this->input->post('reli'),
-					'emp_sex'  			=> $this->input->post('sex'),
-					'emp_marital_status'=> $this->input->post('ms'),
-					'emp_blood'			=> $this->input->post('bgroup'),
-					// 'emp_nomini_name'	=> $this->input->post('emp_nomini_name'),
-					// 'nomini_relation'	=> $this->input->post('nomini_relation'),
-					// 'emp_child_no'		=> $this->input->post('emp_child_no')
-				);
-			}else{
-				$data_up = array('upload_data' => $this->upload->data());
-				//print_r($data);
-				$img = $data_up["upload_data"]["file_name"];
-				$data = array(
-					'emp_full_name' 	=> $this->input->post('name'),
-					'bangla_nam' 		=> $this->input->post('bname'),
-					'emp_mname' 		=> $this->input->post('mname'),
-					'emp_fname' 		=> $this->input->post('fname'),
-					'spouse_name' 		=> $this->input->post('sname'),
-					// 'emp_ident_mark'	=> $this->input->post('ident_marks'),
-					'emp_n_id'			=> $this->input->post('n_id'),
-					'bank_ac_no'  		=> $this->input->post('bank_ac_no'),
-					'emp_dob'  			=> $dob,
-					'emp_religion'  	=> $this->input->post('reli'),
-					'emp_sex'  			=> $this->input->post('sex'),
-					'emp_marital_status'=> $this->input->post('ms'),
-					'emp_blood'			=> $this->input->post('bgroup'),
-					// 'emp_nomini_name'	=> $this->input->post('emp_nomini_name'),
-					// 'nomini_relation'	=> $this->input->post('nomini_relation'),
-					// 'emp_child_no'		=> $this->input->post('emp_child_no'),
-					'img_source'		=> $img
-				);
-			}
-		}else{
-			$data = array(
-				'emp_full_name'  		=> $this->input->post('name'),
-				'bangla_nam' 			=> $this->input->post('bname'),
-				'emp_mname' 			=> $this->input->post('mname'),
-				'emp_fname' 			=> $this->input->post('fname'),
-				'spouse_name' 			=> $this->input->post('sname'),
-				// 'emp_ident_mark'		=> $this->input->post('ident_marks'),
-				'emp_n_id'				=> $this->input->post('n_id'),
-				'bank_ac_no'  			=> $this->input->post('bank_ac_no'),
-				'emp_dob'  				=> $dob,
-				'emp_religion'  		=> $this->input->post('reli'),
-				'emp_sex'  				=> $this->input->post('sex'),
-				'emp_marital_status'	=> $this->input->post('ms'),
-				'emp_blood'				=> $this->input->post('bgroup'),
-				// 'emp_nomini_name'		=> $this->input->post('nomini_name'),
-				// 'nomini_relation'		=> $this->input->post('nomini_relation'),
-				// 'emp_child_no'			=> $this->input->post('child_no')
-			);
-		}
+			'emp_sal_gra_id'  	=> $this->input->post('emp_sal_gra_id'),
+			'emp_cat_id'		=> $this->input->post('emp_cat_id'),
+			'proxi_id'			=> $this->input->post('proxi_id'),
+			'emp_shift'  		=> $this->input->post('emp_shift'),
+			'gross_sal'			=> $this->input->post('gross_sal'),
+			'com_gross_sal'		=> $this->input->post('gross_sal'),
 
-		//print_r($data);
-		$this->db->where('emp_id',$id);
-		$v1 = $this->db->update('pr_emp_per_info', $data);
-		$adddata = array(
-			'emp_pre_add' 	=> $this->input->post('padd'),
-			'emp_par_add'	=> $this->input->post('fadd'),
-			'mobile'	=> $this->input->post('mobile_no'),
-		);
-		//print_r(adddata);
-		$this->db->where('emp_id',$id);
-		$v2 = $this->db->update('pr_emp_add', $adddata);
-		$data2 = array(
-			'emp_dept_id'  		=> $this->input->post('dept'),
-			'emp_sec_id' 		=> $this->input->post('sec'),
-			'emp_line_id' 		=> $this->input->post('line'),
-			'emp_desi_id'  		=> $this->input->post('desig'),
-			'emp_operation_id'	=> $this->input->post('operation'),
-			'emp_position_id'  	=> $this->input->post('position'),
-			'floor_id'			=> $this->input->post('emp_floor'),
-			// 'emp_process'  		=> $this->input->post('process'),
-			// 'emp_process_qty'  	=> $this->input->post('process_qty'),
-			'emp_sal_gra_id'	=> $this->input->post('salg'),
-			'emp_sts_id'  		=> $this->input->post('emp_sts_id'),
-			'emp_shift'  		=> $this->input->post('empshift'),
-			'gross_sal'  		=> $this->input->post('text8'),
-			'ot_entitle'  		=> $this->input->post('otentitle'),
-			'transport'  		=> $this->input->post('transport'),
-			'lunch'  			=> $this->input->post('lunch'),
-			'att_bonus'  		=> $this->input->post('attbonus'),
+			'ot_entitle'		=> $this->input->post('ot_entitle'),
+			'lunch'				=> $this->input->post('lunch'),
+			'transport'			=> $this->input->post('transport'),
+			'salary_draw'		=> $this->input->post('salary_draw'),
+			'salary_type'		=> $this->input->post('salary_type'),
 			'emp_join_date'		=> $ejd,
-			'salary_draw'		=> $this->input->post('saldraw'),
-			'salary_type'		=> $this->input->post('saltype'),
-			// 'district_id'		=> $this->input->post('emp_district'),
-			// 'zone_id'			=> $this->input->post('zone')
 		);
 
-		//print_r(data2);
-		//echo $this->input->post('emp_district');
-		$this->db->where('emp_id',$id);
-		$v3 = $this->db->update('pr_emp_com_info', $data2);
+		$dob = date("Y-m-d", strtotime($this->input->post('emp_dob')));
+		$per_data = array(
+			'name_en' 			=> $this->input->post('name_en'),
+			'name_bn' 			=> $this->input->post('name_bn'),
+			'father_name' 		=> $this->input->post('father_name'),
+			'mother_name' 		=> $this->input->post('mother_name'),
+			'per_village'		=> $this->input->post('per_village'),
+			'per_village_bn'	=> $this->input->post('per_village_bn'),
 
-		$data_edu = array(
-			'emp_degree'  => $this->input->post('text2'),
-			'emp_pass_yr' => $this->input->post('text3'),
-			'emp_ins' => $this->input->post('text4')
-		);
-		$this->db->where('emp_id',$id);
-		$v4 =$this->db->update('pr_emp_edu', $data_edu);
-		$data_skill = array(
-			'emp_skill'  => $this->input->post('text5'),
-			'emp_yr_skill' => $this->input->post('text6'),
-			'emp_com_name' => $this->input->post('text7')
+			'per_post'			=> $this->input->post('per_post'),
+			'per_thana'			=> $this->input->post('per_thana'),
+			'per_district'		=> $this->input->post('per_district'),
+			'pre_home_owner'	=> $this->input->post('pre_home_owner'),
+			'holding_num'		=> $this->input->post('holding_num'),
+			'home_own_mobile'	=> $this->input->post('home_own_mobile'),
+
+			'pre_village'		=> $this->input->post('pre_village'),
+			'pre_village_bn'	=> $this->input->post('pre_village_bn'),
+			'pre_post'			=> $this->input->post('pre_post'),
+			'pre_thana'			=> $this->input->post('pre_thana'),
+			'pre_district'		=> $this->input->post('pre_district'),
+			'spouse_name' 		=> $this->input->post('spouse_name'),
+
+			'emp_dob' 			=> $dob,
+			'gender' 			=> $this->input->post('gender'),
+			'marital_status' 	=> $this->input->post('marital_status'),
+			'religion'  		=> $this->input->post('religion'),
+			'blood'  			=> $this->input->post('blood'),
+			'm_child'			=> $this->input->post('m_child'),
+
+			'f_child'			=> $this->input->post('f_child'),
+			'nominee_name'		=> $this->input->post('nominee_name'),
+			'nominee_vill'		=> $this->input->post('nominee_vill'),
+			'nomi_post'			=> $this->input->post('nomi_post'),
+			'nomi_thana'		=> $this->input->post('nomi_thana'),
+			'nomi_district'		=> $this->input->post('nomi_district'),
+
+			'nomi_age'			=> $this->input->post('nomi_age'),
+			'nomi_mobile'		=> $this->input->post('nomi_mobile'),
+			'nomi_relation'		=> $this->input->post('nomi_relation'),
+			'refer_name'		=> $this->input->post('refer_name'),
+			'refer_address'		=> $this->input->post('refer_address'),
+			'refer_mobile'		=> $this->input->post('refer_mobile'),
+
+			'refer_relation'	=> $this->input->post('refer_relation'),
+			'education'			=> $this->input->post('education'),
+			'nid_dob_id'		=> $this->input->post('nid_dob_id'),
+			'nid_dob_check'		=> $this->input->post('nid_dob_check'),
+			'exp_factory_name'	=> $this->input->post('exp_factory_name'),
+			'exp_duration'		=> $this->input->post('exp_duration'),
+
+			'exp_designation'	=> $this->input->post('exp_designation'),
+			'personal_mobile'	=> $this->input->post('personal_mobile'),
+			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
 		);
 
-		//print_r(data_skill);
-		$this->db->where('emp_id',$id);
-		$v5= $this->db->update('pr_emp_skill', $data_skill);
-		$pr_id_proxi = array('proxi_id'  => $this->input->post('idcard'));
-		$this->db->where('emp_id',$id);
-		$v6 = $this->db->update('pr_id_proxi', $pr_id_proxi);
-		if( $v1 or $v2 or $v3 or $v4 or $v5 or $v6){
-			// PROFILE LOG Generate
-			$log_username = $this->session->userdata('username');
-			$log_emp_id   = $this->input->post('empid');
-			$this->log_model->log_profile_update($log_username, $log_emp_id);
-			//echo "Updated successfully";
-			return true;
-		}else{
-			return false;
+		if($this->db->where('emp_id',$id)->update('pr_emp_com_info', $data))
+		{
+			$ids = $this->db->where('emp_id',$id)->get('pr_emp_com_info')->row()->id;
+
+			$per_data['emp_id'] =$ids;
+			$img ="";
+			if($_FILES["img_source"]["name"] != '')
+			{
+				$imgs = explode('.', $_FILES["img_source"]["name"]);
+				$ext = end($imgs);
+
+				$config['upload_path']    = './uploads/photo';
+	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['file_name'] 	  =  $per_data['emp_id'] .'.'. $ext;
+				$config['max_size']	 	  = '4000';
+				$config['max_width']  	  = '5000';
+				$config['max_height']     = '7000';
+	        	$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				if ( ! $this->upload->do_upload('img_source'))
+				{
+					$error = array('error' => $this->upload->display_errors());
+					echo $error["error"];
+				}
+				else
+				{
+					$img_upload = array('upload_data' => $this->upload->data());
+					$img = $img_upload["upload_data"]["file_name"];
+					$per_data['img_source'] = $img;
+				}
+
+			}
+
+			$this->db->where('emp_id',$ids)->update('pr_emp_per_info', $per_data);
+
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Update Successfully.'); window.location='personal_info';</SCRIPT>";
+		} else {
+		  echo "FAILED" ;
+		  return ;
 		}
 	}
 
@@ -1306,25 +1429,20 @@ class Processdb extends CI_Model{
 
 	}
 
-	function com_info_search1($emp_id)
-	{
+	function com_info_search1($emp_id){
 		$data = array();
-		// echo $emp_id;exit;
 		$this->db->select('
 				pr_emp_com_info.emp_id as emp_id,
 				pr_emp_com_info.unit_id as unit_id,
-				pr_id_proxi.proxi_id as proxi_id,
 				pr_units.unit_name as unit_name,
-				pr_dept.dept_name as dept_name,
-				pr_section.sec_name as sec_name,
-				pr_section.sec_bangla,
-				pr_line_num.line_name as line_name,
-				pr_designation.desig_name,
-				pr_designation.desig_bangla, 
-				pr_emp_operation.ope_name as ope_name, 
-				pr_emp_position.posi_name as posi_name, 
+				emp_depertment.dept_name as dept_name,
+				emp_section.sec_name as sec_name,
+				emp_section.sec_bangla,
+				emp_line_num.line_name as line_name,
+				emp_designation.desig_name,
+				emp_designation.desig_bangla, 
 				pr_grade.gr_name as gr_name,
-				pr_emp_status.stat_type as stat_type, 
+				emp_category_status.stat_type as stat_type, 
 				pr_emp_com_info.gross_sal as gross_sal, 
 				pr_emp_com_info.emp_join_date as emp_join_date,
 				pr_emp_com_info.ot_entitle as ot_entitle,
@@ -1336,30 +1454,24 @@ class Processdb extends CI_Model{
 				pr_emp_shift.shift_name as shift_name,
 				pr_emp_com_info.com_gross_sal as com_gross_sal,
 				pr_emp_com_info.emp_sts_id,
-				pr_floor.floor_name,
-				pr_emp_nid_wk_typ.wk_type,
-				pr_emp_sts.*,
-				pr_work_process.*,
 				pr_ot_show_or_not.*
 			');
 		$this->db->from('pr_emp_com_info');
-
-		$this->db->join('pr_id_proxi','pr_id_proxi.emp_id = pr_emp_com_info.emp_id','LEFT');
 		$this->db->join('pr_units','pr_units.unit_id = pr_emp_com_info.unit_id','LEFT');
-		$this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
-		$this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id','LEFT');
-		$this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id','LEFT');
-		$this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id','LEFT');
-		$this->db->join('pr_emp_operation','pr_emp_operation.ope_id = pr_emp_com_info.emp_operation_id','LEFT');
-		$this->db->join('pr_emp_position','pr_emp_position.posi_id = pr_emp_com_info.emp_position_id','LEFT');
-		$this->db->join('pr_floor','pr_floor.id = pr_emp_com_info.floor_id','LEFT');
-		$this->db->join('pr_emp_nid_wk_typ','pr_emp_nid_wk_typ.id = pr_emp_com_info.wk_type_id','LEFT');
+		$this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
+		$this->db->join('emp_section','emp_section.sec_id = pr_emp_com_info.emp_sec_id','LEFT');
+		$this->db->join('emp_line_num','emp_line_num.line_id = pr_emp_com_info.emp_line_id','LEFT');
+		$this->db->join('emp_designation','emp_designation.desig_id = pr_emp_com_info.emp_desi_id','LEFT');
+		// $this->db->join('pr_emp_operation','pr_emp_operation.ope_id = pr_emp_com_info.emp_operation_id','LEFT');
+		// $this->db->join('pr_emp_position','pr_emp_position.posi_id = pr_emp_com_info.emp_position_id','LEFT');
+		// $this->db->join('pr_floor','pr_floor.id = pr_emp_com_info.floor_id','LEFT');
+		// $this->db->join('pr_emp_nid_wk_typ','pr_emp_nid_wk_typ.id = pr_emp_com_info.wk_type_id','LEFT');
 		$this->db->join('pr_grade','pr_grade.gr_id = pr_emp_com_info.emp_sal_gra_id','LEFT');
-		$this->db->join('pr_emp_status','pr_emp_status.stat_id = pr_emp_com_info.emp_cat_id','LEFT');
+		$this->db->join('emp_category_status','emp_category_status.id = pr_emp_com_info.emp_cat_id','LEFT');
 		$this->db->join('pr_emp_shift','pr_emp_shift.shift_id = pr_emp_com_info.emp_shift','LEFT');
-		$this->db->join('pr_emp_sts','pr_emp_sts.id = pr_emp_com_info.emp_sts_id','LEFT');
-		$this->db->join('pr_work_process','pr_work_process.id = pr_emp_com_info.work_process_id','LEFT');
-		$this->db->join('pr_ot_show_or_not','pr_ot_show_or_not.id = pr_emp_com_info.ot_show_in','LEFT');
+		// // $this->db->join('pr_emp_sts','pr_emp_sts.id = pr_emp_com_info.emp_sts_id','LEFT');
+		// $this->db->join('pr_work_process','pr_work_process.id = pr_emp_com_info.work_process_id','LEFT');
+		// $this->db->join('pr_ot_show_or_not','pr_ot_show_or_not.id = pr_emp_com_info.ot_show_in','LEFT');
 
 		$this->db->where("pr_emp_com_info.emp_id", $emp_id);
 
@@ -2126,6 +2238,205 @@ class Processdb extends CI_Model{
 		}
 	}
 	//==============Advance loan deduction function=======================<<
+
+
+
+
+	// get employees info , search by id
+	// [id] => 1
+    // [emp_id] => 1
+    // [name_en] => Md.Kabir Hossain Mir
+    // [name_bn] => কবির হোসেন
+    // [father_name] => 
+    // [mother_name] => 
+    // [per_village] => 
+    // [per_post] => 0
+    // [per_thana] => 0
+    // [per_district] => 0
+    // [per_village_bn] => 
+    // [pre_home_owner] => 
+    // [holding_num] => 
+    // [home_own_mobile] => 
+    // [pre_village] => 
+    // [pre_post] => 0
+    // [pre_thana] => 0
+    // [pre_district] => 0
+    // [pre_village_bn] => 
+    // [spouse_name] => 
+    // [emp_dob] => 1973-04-10
+    // [gender] => Male
+    // [marital_status] => Married
+    // [religion] => Islam
+    // [blood] => None
+    // [m_child] => 0
+    // [f_child] => 0
+    // [nominee_name] => 
+    // [nominee_vill] => 
+    // [nomi_post] => 0
+    // [nomi_thana] => 0
+    // [nomi_district] => 0
+    // [nomi_age] => 2023-10-26
+    // [nomi_relation] => 0
+    // [nomi_mobile] => 
+    // [refer_name] => 
+    // [refer_address] => 
+    // [refer_mobile] => 
+    // [refer_relation] => 0
+    // [education] => 
+    // [nid_dob_id] => 0
+    // [nid_dob_check] => 0
+    // [exp_factory_name] => 
+    // [exp_duration] => 
+    // [exp_dasignation] => 0
+    // [personal_mobile] => 
+    // [bank_bkash_no] => 
+    // [img_source] => scan0044.jpg
+
+	function get_emp_info($emp_id){
+		// dd($emp_id);
+		$d =  $this->db->select('pr_emp_per_info.*,pr_emp_com_info.*')
+					   ->from('pr_emp_per_info')
+					   ->join('pr_emp_com_info','pr_emp_com_info.id = pr_emp_per_info.emp_id')
+					   ->where('pr_emp_com_info.emp_id',$emp_id)
+					   ->get()->row();
+		   
+		if ($d == null) {
+			return ['status'=>false,'data'=>'No data found'];
+		}else{
+			return ['status'=>true,'data'=>$d];
+			// return $d;
+		}
+	
+	}
+
+
+	function insert_emp_inf0o(){
+		if($this->input->post('emp_id') == '')
+		{
+			return ;
+		}
+
+		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
+		$data = array(
+			'emp_id'			=> $this->input->post('emp_id'),
+			'unit_id'			=> $this->input->post('unit_id'),
+			'emp_dept_id'  		=> $this->input->post('emp_dept_id'),
+			'emp_sec_id' 		=> $this->input->post('emp_sec_id'),
+			'emp_line_id' 		=> $this->input->post('emp_line_id'),
+			'emp_desi_id'  		=> $this->input->post('emp_desi_id'),
+
+			'emp_sal_gra_id'  	=> $this->input->post('emp_sal_gra_id'),
+			'emp_cat_id'		=> $this->input->post('emp_cat_id'),
+			'proxi_id'			=> $this->input->post('proxi_id'),
+			'emp_shift'  		=> $this->input->post('emp_shift'),
+			'gross_sal'			=> $this->input->post('gross_sal'),
+			'com_gross_sal'		=> $this->input->post('gross_sal'),
+
+			'ot_entitle'		=> $this->input->post('ot_entitle'),
+			'lunch'				=> $this->input->post('lunch'),
+			'transport'			=> $this->input->post('transport'),
+			'salary_draw'		=> $this->input->post('salary_draw'),
+			'salary_type'		=> $this->input->post('salary_type'),
+			'emp_join_date'		=> $ejd,
+		);
+
+		$dob = date("Y-m-d", strtotime($this->input->post('emp_dob')));
+		$per_data = array(
+			'name_en' 			=> $this->input->post('name_en'),
+			'name_bn' 			=> $this->input->post('name_bn'),
+			'father_name' 		=> $this->input->post('father_name'),
+			'mother_name' 		=> $this->input->post('mother_name'),
+			'per_village'		=> $this->input->post('per_village'),
+			'per_village_bn'	=> $this->input->post('per_village_bn'),
+
+			'per_post'			=> $this->input->post('per_post'),
+			'per_thana'			=> $this->input->post('per_thana'),
+			'per_district'		=> $this->input->post('per_district'),
+			'pre_home_owner'	=> $this->input->post('pre_home_owner'),
+			'holding_num'		=> $this->input->post('holding_num'),
+			'home_own_mobile'	=> $this->input->post('home_own_mobile'),
+
+			'pre_village'		=> $this->input->post('pre_village'),
+			'pre_village_bn'	=> $this->input->post('pre_village_bn'),
+			'pre_post'			=> $this->input->post('pre_post'),
+			'pre_thana'			=> $this->input->post('pre_thana'),
+			'pre_district'		=> $this->input->post('pre_district'),
+			'spouse_name' 		=> $this->input->post('spouse_name'),
+
+			'emp_dob' 			=> $dob,
+			'gender' 			=> $this->input->post('gender'),
+			'marital_status' 	=> $this->input->post('marital_status'),
+			'religion'  		=> $this->input->post('religion'),
+			'blood'  			=> $this->input->post('blood'),
+			'm_child'			=> $this->input->post('m_child'),
+
+			'f_child'			=> $this->input->post('f_child'),
+			'nominee_name'		=> $this->input->post('nominee_name'),
+			'nominee_vill'		=> $this->input->post('nominee_vill'),
+			'nomi_post'			=> $this->input->post('nomi_post'),
+			'nomi_thana'		=> $this->input->post('nomi_thana'),
+			'nomi_district'		=> $this->input->post('nomi_district'),
+
+			'nomi_age'			=> $this->input->post('nomi_age'),
+			'nomi_mobile'		=> $this->input->post('nomi_mobile'),
+			'nomi_relation'		=> $this->input->post('nomi_relation'),
+			'refer_name'		=> $this->input->post('refer_name'),
+			'refer_address'		=> $this->input->post('refer_address'),
+			'refer_mobile'		=> $this->input->post('refer_mobile'),
+
+			'refer_relation'	=> $this->input->post('refer_relation'),
+			'education'			=> $this->input->post('education'),
+			'nid_dob_id'		=> $this->input->post('nid_dob_id'),
+			'nid_dob_check'		=> $this->input->post('nid_dob_check'),
+			'exp_factory_name'	=> $this->input->post('exp_factory_name'),
+			'exp_duration'		=> $this->input->post('exp_duration'),
+
+			'exp_designation'	=> $this->input->post('exp_designation'),
+			'personal_mobile'	=> $this->input->post('personal_mobile'),
+			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
+		);
+
+		if($this->db->insert('pr_emp_com_info', $data))
+		{
+			$per_data['emp_id'] = $this->db->insert_id();
+
+			$img ="";
+			if($_FILES["img_source"]["name"] != '')
+			{
+				$imgs = explode('.', $_FILES["img_source"]["name"]);
+				$ext = end($imgs);
+
+				$config['upload_path']    = './uploads/photo';
+	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['file_name'] 	  =  $per_data['emp_id'] .'.'. $ext;
+				$config['max_size']	 	  = '4000';
+				$config['max_width']  	  = '5000';
+				$config['max_height']     = '7000';
+	        	$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				if ( ! $this->upload->do_upload('img_source'))
+				{
+					$error = array('error' => $this->upload->display_errors());
+					echo $error["error"];
+				}
+				else
+				{
+					$img_upload = array('upload_data' => $this->upload->data());
+					$img = $img_upload["upload_data"]["file_name"];
+				}
+
+			}
+
+			$per_data['img_source'] = $img;
+			$this->db->insert('pr_emp_per_info', $per_data);
+
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Inserted Successfully.'); window.location='personal_info';</SCRIPT>";
+		} else {
+		  echo "FAILED" ;
+		  return ;
+		}
+	}
+
 
 
 }
