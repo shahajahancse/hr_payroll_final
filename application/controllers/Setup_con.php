@@ -337,7 +337,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/section');
+            redirect(base_url() . 'setup_con/section');
         }
 
     }
@@ -377,7 +377,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/section');
+            redirect(base_url() . 'setup_con/section');
 
         }
 
@@ -389,11 +389,11 @@ class Setup_con extends CI_Controller
         $sec = $this->crud_model->getsec($secId);
         if (empty($sec)) {
             $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
-            redirect(base_url() . 'index.php/setup_con/section');
+            redirect(base_url() . 'setup_con/section');
         }
         $this->crud_model->sec_delete($secId);
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/section');
+        redirect(base_url() . 'setup_con/section');
     }
 
     //----------------------------------------------------------------------------------
@@ -465,7 +465,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/line');
+            redirect(base_url() . 'setup_con/line');
         }
 
     }
@@ -507,7 +507,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/line');
+            redirect(base_url() . 'setup_con/line');
 
         }
 
@@ -518,7 +518,7 @@ class Setup_con extends CI_Controller
         $this->db->where('id', $line_id);
         $this->db->delete('emp_line_num');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/line');
+        redirect(base_url() . 'setup_con/line');
     }
 
     //----------------------------------------------------------------------------------
@@ -572,7 +572,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/attendance_bonus');
+            redirect(base_url() . 'setup_con/attendance_bonus');
         }
 
     }
@@ -609,7 +609,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/attendance_bonus');
+            redirect(base_url() . 'setup_con/attendance_bonus');
 
         }
 
@@ -620,7 +620,7 @@ class Setup_con extends CI_Controller
         $this->db->where('id', $line_id);
         $this->db->delete('allowance_attn_bonus');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/attendance_bonus');
+        redirect(base_url() . 'setup_con/attendance_bonus');
     }
 
     //----------------------------------------------------------------------------------
@@ -672,7 +672,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/weekend_allowance_setup');
+            redirect(base_url() . 'setup_con/weekend_allowance_setup');
         }
 
     }
@@ -710,7 +710,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/weekend_allowance_setup');
+            redirect(base_url() . 'setup_con/weekend_allowance_setup');
 
         }
 
@@ -721,7 +721,7 @@ class Setup_con extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('allowance_holiday_weekend_rules');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/weekend_allowance_setup');
+        redirect(base_url() . 'setup_con/weekend_allowance_setup');
     }
 
     //----------------------------------------------------------------------------------
@@ -773,7 +773,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/tiffin_bill_setup');
+            redirect(base_url() . 'setup_con/tiffin_bill_setup');
         }
 
     }
@@ -811,7 +811,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/tiffin_bill_setup');
+            redirect(base_url() . 'setup_con/tiffin_bill_setup');
 
         }
 
@@ -822,7 +822,7 @@ class Setup_con extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('allowance_tiffin_bill');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/tiffin_bill_setup');
+        redirect(base_url() . 'setup_con/tiffin_bill_setup');
     }
 
     //----------------------------------------------------------------------------------
@@ -871,7 +871,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/iftar_bill_setup');
+            redirect(base_url() . 'setup_con/iftar_bill_setup');
         }
 
     }
@@ -909,7 +909,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/iftar_bill_setup');
+            redirect(base_url() . 'setup_con/iftar_bill_setup');
 
         }
 
@@ -920,7 +920,7 @@ class Setup_con extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('allowance_iftar_bill');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/iftar_bill_setup');
+        redirect(base_url() . 'setup_con/iftar_bill_setup');
     }
 
     //----------------------------------------------------------------------------------
@@ -973,7 +973,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/night_allowance_setup');
+            redirect(base_url() . 'setup_con/night_allowance_setup');
         }
 
     }
@@ -1013,7 +1013,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/night_allowance_setup');
+            redirect(base_url() . 'setup_con/night_allowance_setup');
 
         }
 
@@ -1023,7 +1023,7 @@ class Setup_con extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('allowance_night_rules');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/night_allowance_setup');
+        redirect(base_url() . 'setup_con/night_allowance_setup');
     }
     //----------------------------------------------------------------------------------
     // CRUD for Night Allowance end
@@ -1138,7 +1138,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/designation');
+            redirect(base_url() . 'setup_con/designation');
         }
 
     }
@@ -1200,7 +1200,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/designation');
+            redirect(base_url() . 'setup_con/designation');
 
         }
 
@@ -1210,7 +1210,7 @@ class Setup_con extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('emp_designation');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/setup_con/designation');
+        redirect(base_url() . 'setup_con/designation');
     }
     //----------------------------------------------------------------------------------
     // CRUD for Night Allowance end
@@ -1273,7 +1273,7 @@ class Setup_con extends CI_Controller
 
             $this->crud_model->shiftschedule_add($formArray);
             $this->session->set_flashdata('success', 'Record add successfully!');
-            redirect(base_url() . 'index.php/setup_con/shift_schedule');
+            redirect(base_url() . 'setup_con/shift_schedule');
         }
 
     }
@@ -1383,7 +1383,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/shift_management');
+            redirect(base_url() . 'setup_con/shift_management');
         }
     }
 
@@ -1426,7 +1426,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/shift_management');
+            redirect(base_url() . 'setup_con/shift_management');
         }
 
     }
@@ -1482,7 +1482,7 @@ class Setup_con extends CI_Controller
             $formArray['comsign'] = $this->input->post('comsign');
             $this->crud_model->company_add($formArray);
             $this->session->set_flashdata('success', 'Record add successfully!');
-            redirect(base_url() . 'index.php/setup_con/company_info_setup');
+            redirect(base_url() . 'setup_con/company_info_setup');
         }
 
     }
@@ -1574,7 +1574,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/leave_setup');
+            redirect(base_url() . 'setup_con/leave_setup');
         }
     }
 
@@ -1621,7 +1621,7 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-            redirect(base_url() . 'index.php/setup_con/leave_setup');
+            redirect(base_url() . 'setup_con/leave_setup');
         }
 
     }
@@ -1692,7 +1692,7 @@ public function bonus_add()
         } else {
             $this->session->set_flashdata('failure', 'Record add failed!');
         }
-        redirect(base_url() . 'index.php/setup_con/bonus_setup');
+        redirect(base_url() . 'setup_con/bonus_setup');
     }
 }
 
@@ -1743,7 +1743,7 @@ public function bonus_edit($shiftmanagementId)
         } else {
             $this->session->set_flashdata('failure', 'Record add failed!');
         }
-        redirect(base_url() . 'index.php/setup_con/bonus_setup');
+        redirect(base_url() . 'setup_con/bonus_setup');
     }
 
 }
@@ -2012,7 +2012,7 @@ return TRUE;
         $this->load->library('pagination');
         $param = array();
         $limit = 10;
-        $config['base_url'] = base_url() . "index.php/setup_con/salary_grade/";
+        $config['base_url'] = base_url() . "setup_con/salary_grade/";
         $config['per_page'] = $limit;
         $this->load->model('crud_model');
         $pr_grade = $this->crud_model->salgrd_infos($limit, $start);

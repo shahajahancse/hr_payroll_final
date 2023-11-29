@@ -262,7 +262,7 @@ class Mars_model extends CI_Model{
 			$this->db->select("pr_emp_per_info.emp_id");
 			$this->db->from('pr_emp_per_info');
 			$this->db->where_in("pr_emp_per_info.emp_id", $all_emp_id);
-			$this->db->where("pr_emp_per_info.emp_sex = 1");
+			$this->db->where("pr_emp_per_info.gender", 'Male');
 			$data['all_male'] = $this->db->get()->num_rows();
 			$data['all_female'] = $data['all_emp'] - $data['all_male'];
 		}
