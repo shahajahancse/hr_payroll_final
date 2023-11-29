@@ -177,7 +177,8 @@
                         <div class="col-md-8">
                             <div style="display: flex; gap: 10px">
                                 <span>
-                                    <img id="profile_image" style="height: 68px;width: 86px;" class="img-responsive" alt="">
+                                    <img id="profile_image" style="height: 68px;width: 86px;" class="img-responsive"
+                                        alt="">
                                 </span>
                                 <p style="font-size: 20px;">Name: <span id="emp_name"> </span></p>
                             </div>
@@ -532,30 +533,10 @@ function get_leave_balance() {
             year: bal_get_year
         },
         success: function(d) {
-var data = JSON.parse(d);
-        //    console.log(data.leave_entitle_casual);
+            var data = JSON.parse(d);
             $("#loader").hide();
-            // {
-            //     "epm_info": {
-            //         "name_en": "Abdul Motin",
-            //         "img_source": "1000003.jpg"
-            //     },
-            //     "leave_entitle_casual": "10",
-            //     "leave_entitle_sick": "14",
-            //     "leave_entitle_maternity": "112",
-            //     "leave_entitle_paternity": "0",
-            //     "leave_taken_casual": 3,
-            //     "leave_taken_sick": 1,
-            //     "leave_taken_maternity": 0,
-            //     "leave_taken_paternity": 0,
-            //     "leave_balance_casual": 7,
-            //     "leave_balance_sick": 13,
-            //     "leave_balance_maternity": 112,
-            //     "leave_balance_paternity": 0
-            // }
             $("#leave_balance_check").show();
-
-            $('#profile_image').attr('src', hostname+'assets/uploads/'+ data.epm_info.img_source);
+            $('#profile_image').attr('src', hostname + 'uploads/photo/' + data.epm_info.img_source);
             $('#emp_name').html(data.epm_info.name_en);
             $('#leave_entitle_casual').html(data.leave_entitle_casual);
             $('#leave_entitle_sick').html(data.leave_entitle_sick);
