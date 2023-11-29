@@ -740,11 +740,11 @@ class Entry_system_con extends CI_Controller
 
     public function holiday_delete()
     {
-        $this->db->select('attn_holiday.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
-        $this->db->from('attn_holiday');
-        $this->db->join('pr_units', 'pr_units.unit_id = attn_holiday.unit_id');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holiday.emp_id');
-        $this->data['attn_holiday'] = $this->db->get()->result_array();
+        $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
+        $this->db->from('attn_holyday_off');
+        $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
+        $this->data['attn_holyday_off'] = $this->db->get()->result_array();
         $this->data['title'] = 'Weekend Delete'; 
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/holiday_del_list';
@@ -762,9 +762,9 @@ class Entry_system_con extends CI_Controller
 	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
         }
         
-        $this->data['title'] = 'Weekend Add'; 
+        $this->data['title'] = 'Holiday Add'; 
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/emp_weekend_add';
+        $this->data['subview'] = 'entry_system/emp_holiday_add';
         $this->load->view('layout/template', $this->data);
     }
     public function holiday_add_ajax()
@@ -772,7 +772,7 @@ class Entry_system_con extends CI_Controller
         $date = $this->input->post('date');
         $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
         $this->db->where('work_off_date <=', $deldate);
-        $this->db->delete('attn_work_off');
+        $this->db->delete('attn_holyday_off');
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
@@ -780,7 +780,7 @@ class Entry_system_con extends CI_Controller
         foreach ($emp_ids as $value) {
             $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
-        if ( $this->db->insert_batch('attn_work_off', $data)) {      
+        if ( $this->db->insert_batch('attn_holyday_off', $data)) {      
             echo 'success';
         }else{
             echo 'error';
@@ -788,9 +788,9 @@ class Entry_system_con extends CI_Controller
     }
     public function emp_holiday_del($id){
         $this->db->where('id', $id);
-        $this->db->delete('attn_work_off');
+        $this->db->delete('attn_holyday_off');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/entry_system_con/weekend_delete');
+        redirect(base_url() . 'index.php/entry_system_con/holiday_delete');
 
     }
 

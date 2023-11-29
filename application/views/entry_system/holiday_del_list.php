@@ -1,7 +1,8 @@
-<div class="container" style="padding-top: 10px;">
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
+<div class="content">
+
+    <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
+            <div class="navbar-header col-md-5">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -9,22 +10,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?=base_url('index.php/crud_con/sec_add')?>">Add Section</a>
+                <div>
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/entry_system_con/emp_holiday_add') ?>">Add Holiday</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?=base_url('index.php/payroll_con')?>">Home</a></li>
-                </ul>
-                <div class="pull-right">
-                    <form class="navbar-form pull-right" role="search">
-                        <div class="input-group">
-                            <input id="deptSearch" type="text" class="form-control" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><span
-                                        class="glyphicon glyphicon-search"></span></button>
+            <div class="col-md-7">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="">
+                        <form class="navbar-form pull-right" role="search">
+                            <div class="input-group">
+                                <input id="deptSearch" type="text" class="form-control" placeholder="Search">
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!--/.nav-collapse -->
@@ -34,66 +33,72 @@
     <div class="row">
         <div class="col-md-12">
             <?php
-          $success = $this->session->flashdata('success');
-          if ($success != "") {
-           ?>
+                $success = $this->session->flashdata('success');
+                if ($success != "") {
+                    ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
             <?php
-            }
-            $failuer = $this->session->flashdata('failuer');
-            if ($failuer) {
-             ?>
+                }
+                $failuer = $this->session->flashdata('failuer');
+                if ($failuer) {
+                    ?>
             <div class="alert alert-failuer"><?php echo $failuer; ?></div>
             <?php
-            }
-            ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <h3 style="margin-top: 0px; margin-bottom: 8px;">Holiday List</h3>
-            </div>
+                }
+                ?>
+
         </div>
     </div>
     <!-- <br> -->
-    <div class="row">
-        <div class="col-md-8">
-            <table class="table table-striped">
-                <tbody>
+    <div class="row tablebox">
+
+        <div class="col-md-12">
+
+            <table class="table table-striped" id="mytable">
+                <thead>
                     <tr>
-                        <th>Unit</th>
-                        <th>Emp. ID </th>
+                        <th>SL</th>
+                        <th>Unit name</th>
+                        <th>User name </th>
                         <th>Holiday Date</th>
-                        <th>Replace Val</th>
-                        <th>Description</th>
+                        <th>Holiday Day</th>
                         <th>Delete</th>
                     </tr>
-                    <?php 
-                if(!empty($attn_holiday)){ foreach($attn_holiday as $attn_holidays){?>
+                </thead>
+
+                </thead>
+
+                <tbody>
+
+                    <?php
+
+                  if (!empty($attn_holyday_off)) {foreach ($attn_holyday_off as $key => $pr_lines) {?>
+
                     <tr>
-                        <td><?php echo $attn_holidays['unit_name'] ?></td>
-                        <td><?php echo $attn_holidays['emp_id'] ?></td>
-                        <td><?php echo $attn_holidays['holiday_date'] ?></td>
-                        <td><?php echo $attn_holidays['replace_val'] ?></td>
-                        <td><?php echo $attn_holidays['description'] ?></td>
+                        <td><?php echo $key + 1  ?></td>
+                        <td><?php echo $pr_lines['unit_name'] ?></td>
+                        <td><?php echo $pr_lines['user_name'] ?></td>
+                        <td><?php echo $pr_lines['work_off_date'] ?></td>
+                        <td><?php echo date('l', strtotime($pr_lines['work_off_date']))?></td>
                         <td>
-                            <a href="<?=base_url('index.php/crud_con/holiday_delete').'/'.$attn_holidays["id"]?>"
+                            <a href="<?=base_url('index.php/entry_system_con/emp_holiday_del') . '/' . $pr_lines["id"]?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
-                    <?php } }else{?>
+                    <?php }} else {?>
+
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
                     <?php }?>
+
                 </tbody>
             </table>
-            <div class="pagination"><?php echo $this->pagination->create_links(); ?></div>
         </div>
     </div>
     <br><br>
 </div>
+
 <script type="text/javascript">
 $(document).ready(function() {
     $("#mytable").dataTable();
