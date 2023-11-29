@@ -97,8 +97,58 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     public function leave_transation()
     {
-        //$this->load->view('form/leave_transation');
-        $this->load->view('form/leave_view');
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name)) {
+	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
+        
+        $this->data['title'] = 'Leave Transaction'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/leave_view';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function setup_leave_one(){
+       $data = $this->db->get('pr_leave_trans')->result();
+
+        $id_start=0;
+        $emp_id='';
+       foreach ($data as $d){
+       
+        if ($emp_id == $d->emp_id) {
+            $leave_end=$d->start_date;
+            $total_leave +=1;
+        }else{
+            if ($id_start == 1)  {
+                echo"insert ";
+                $formArray = array(
+                    'emp_id' => $emp_id,
+                    'unit_id' => $unit_id,
+                    'start_date' => $start_date,
+                    'leave_type' => $leave_type,
+                    'leave_start' => $leave_start,
+                    'leave_end' => $leave_end,
+                    'total_leave' => $total_leave,
+                    'leave_descrip' => '',
+                );
+                $this->db->insert('pr_leave_transs', $formArray);
+            }
+            $id_start=1;
+            $total_leave=0;
+            $emp_id = $d->emp_id;
+            $unit_id = $d->unit_id;
+            $leave_start = $d->start_date;
+            $start_date = $d->start_date;
+            $leave_end=$d->start_date;
+            $leave_type=$d->leave_type;
+            $total_leave +=1;
+        }	
+       }
     }
     //-------------------------------------------------------------------------------------------------------
     // Leave entry to the Database
