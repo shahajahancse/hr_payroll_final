@@ -95,7 +95,7 @@ class Common extends CI_Controller {
         $data = array();
         $this->db->select('dl.*, dg.desig_name, dg.desig_bangla');
         $this->db->from('emp_dasignation_line_acl dl');
-        $this->db->join('emp_designation dg', 'dg.desig_id = dl.designation_id', 'left');
+        $this->db->join('emp_designation dg', 'dg.id = dl.designation_id', 'left');
         $this->db->where('line_id', $id);
         $this->db->order_by('designation_id', 'ASC');
         $query = $this->db->get()->result();

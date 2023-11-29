@@ -105,9 +105,7 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_error_delimiters("","");
 		if ($this->form_validation->run() == TRUE) {
 			if($this->input->post('pi_save') != '') {
-				
 				$this->processdb->insert_emp_info();
-
 			} elseif($this->input->post('pi_edit') != ''){
 				if($this->processdb->updatedb1()) {
 					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info';</SCRIPT>";
@@ -120,15 +118,6 @@ class Emp_info_con extends CI_Controller {
 		}
 	}
 
-
-
-
-
-
-
-
-
-
 	// old code
 
 	function at_a_glance_info_view()
@@ -136,7 +125,6 @@ class Emp_info_con extends CI_Controller {
 		$report_date = date("Y-m-d");
 		$unit_id = $this->session->userdata('data')->unit_name;
 		$data['values'] = $this->mars_model->dashboard_summary($report_date, $unit_id);
-
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $report_date;
 		$data['unit_id']    = $unit_id;
@@ -539,6 +527,15 @@ class Emp_info_con extends CI_Controller {
 	{
 		$result = $this->processdb->com_all_info();
 		echo $result;
+	}
+
+	function get_employees_info(){
+
+		$emp_id = $_POST['id'];
+		$data = $this->processdb->get_emp_info($emp_id);
+		$this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($data));
 	}
 }
 
