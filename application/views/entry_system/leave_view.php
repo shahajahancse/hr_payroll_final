@@ -122,49 +122,52 @@
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
         <div id="leave_entry" class="row nav_head" style="margin-top: 13px;">
-            <div class="col-md-12">
-                <div class="raw">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label">From Date</label>
-                            <input type="date" class="form-control input-sm" id="from_date" name="from_date"
-                                value="<?= date('Y-m-d') ?>">
+            <form class="col-md-12" action="<?= base_url('entry_system_con/leave_entry') ?>" method="post"
+                id="leave_entry_form">
+                <div class="col-md-12">
+                    <div class="raw">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">From Date</label>
+                                <input type="date" class="form-control input-sm" id="from_date" name="from_date"
+                                    value="<?= date('Y-m-d') ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">To Date</label>
+                                <input type="date" class="form-control input-sm" id="to_date" name="to_date"
+                                    value="<?= date('Y-m-d') ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Leave Type</label>
+                                <select class="form-control select22" name='leave_type' id='leave_type'
+                                    style="padding: 1px 12px; height: 29px;">
+                                    <option value='cl'>Casual</option>
+                                    <option value='sl'>Sick</option>
+                                    <option value='pl'>Paternity</option>
+                                    <option value='ml'>Maternity</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label">To Date</label>
-                            <input type="date" class="form-control input-sm" id="to_date" name="to_date"
-                                value="<?= date('Y-m-d') ?>">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin: 8px 16px;">
+                                <label class="control-label">Description</label>
+                                <textarea class="form-control input-sm" id="reason" name="reason"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label">Leave Type</label>
-                            <select class="form-control select22" name='leave_type' id='leave_type'
-                                style="padding: 1px 12px; height: 29px;">
-                                <option value='cl'>Casual</option>
-                                <option value='sl'>Sick</option>
-                                <option value='pl'>Paternity</option>
-                                <option value='ml'>Maternity</option>
-                            </select>
+                    <div class="row">
+                        <div class="col-md-12" style="margin: 8px -16px; display: flex; justify-content: flex-end;">
+                            <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary">
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group" style="margin: 8px 16px;">
-                            <label class="control-label">Description</label>
-                            <textarea class="form-control input-sm" id="reason" name="reason"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12" style="margin: 8px -16px; display: flex; justify-content: flex-end;">
-                        <input type="submit" value="Submit" class="btn btn-primary">
-                    </div>
-                </div>
-            </div>
+            </form>
         </div><!-- /.row -->
         <div id="leave_balance_check" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
@@ -174,10 +177,9 @@
                         <div class="col-md-8">
                             <div style="display: flex; gap: 10px">
                                 <span>
-                                    <img style="height: 68px;width: 86px;" src="<?= base_url('images/desktop3.jpg') ?>"
-                                        class="img-responsive" alt="">
+                                    <img id="profile_image" style="height: 68px;width: 86px;" class="img-responsive" alt="">
                                 </span>
-                                <p style="font-size: 20px;">Name: <span>test name </span></p>
+                                <p style="font-size: 20px;">Name: <span id="emp_name"> </span></p>
                             </div>
 
 
@@ -186,10 +188,10 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="year">Select Year:</label>
-                                <select id="year" name="year" style="width: 98px;"></select>
+                                <select id="bal_get_year" name="year" style="width: 98px;"></select>
                                 <script>
                                 const currentYear = new Date().getFullYear();
-                                const yearSelect = document.getElementById('year');
+                                const yearSelect = document.getElementById('bal_get_year');
                                 for (let year = currentYear; year >= 1900; year--) {
                                     const option = document.createElement('option');
                                     option.value = year;
@@ -197,7 +199,8 @@
                                     yearSelect.add(option);
                                 }
                                 </script>
-                                <a class="btn btn-primary" style="margin: -5px 0px 0px 12px;" onclick='get_leave_balance()'>Get</a>
+                                <a class="btn btn-primary" style="margin: -5px 0px 0px 12px;"
+                                    onclick='get_leave_balance()'>Get</a>
                             </div>
                         </div>
                     </div>
@@ -215,27 +218,27 @@
                         <tbody id="leave_balance">
                             <tr>
                                 <th>Casual Leave</th>
-                                <td id="leave_balance_casual">12</td>
-                                <td id="leave_balance_casual">6</td>
+                                <td id="leave_entitle_casual">12</td>
+                                <td id="leave_taken_casual">6</td>
                                 <td id="leave_balance_casual">5</td>
                             </tr>
                             <tr>
                                 <th>Sick Leave</th>
-                                <td id="leave_balance_sick">12</td>
-                                <td id="leave_balance_sick">4</td>
+                                <td id="leave_entitle_sick">12</td>
+                                <td id="leave_taken_sick">4</td>
                                 <td id="leave_balance_sick">8</td>
                             </tr>
                             <tr>
                                 <th>Maternity Leave</th>
-                                <td id="leave_balance_sick">12</td>
-                                <td id="leave_balance_sick">4</td>
-                                <td id="leave_balance_sick">8</td>
+                                <td id="leave_entitle_maternity">12</td>
+                                <td id="leave_taken_maternity">4</td>
+                                <td id="leave_balance_maternity">8</td>
                             </tr>
                             <tr>
                                 <th>Paternity Leave</th>
-                                <td id="leave_balance_sick">12</td>
-                                <td id="leave_balance_sick">4</td>
-                                <td id="leave_balance_sick">8</td>
+                                <td id="leave_entitle_paternity">12</td>
+                                <td id="leave_taken_paternity">4</td>
+                                <td id="leave_balance_paternity">8</td>
                             </tr>
                         </tbody>
 
@@ -498,7 +501,80 @@ function add_weekend() {
 </script>
 <script>
 function get_leave_balance() {
-      
+    $("#loader").show();
+    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var sql = get_checked_value(checkboxes);
+    let numbersArray = sql.split(",");
+    if (numbersArray == '') {
+        alert('Please select employee Id');
+        $("#loader").hide();
+        setTimeout(() => {
+            $("#leave_balance_check").hide();
+        }, 500);
+    }
+    if (numbersArray.length > 1) {
+        alert('Please select max one employee');
+        $("#loader").hide();
+        setTimeout(() => {
+            $("#leave_balance_check").hide();
+        }, 100);
+    }
+    var bal_get_year = $('#bal_get_year').val();
+    if (bal_get_year == '') {
+        alert('Please select Year');
+        $("#loader").hide();
+    }
+    $.ajax({
+        type: "POST",
+        url: hostname + "entry_system_con/leave_balance_ajax",
+        data: {
+            emp_id: numbersArray[0],
+            year: bal_get_year
+        },
+        success: function(d) {
+var data = JSON.parse(d);
+        //    console.log(data.leave_entitle_casual);
+            $("#loader").hide();
+            // {
+            //     "epm_info": {
+            //         "name_en": "Abdul Motin",
+            //         "img_source": "1000003.jpg"
+            //     },
+            //     "leave_entitle_casual": "10",
+            //     "leave_entitle_sick": "14",
+            //     "leave_entitle_maternity": "112",
+            //     "leave_entitle_paternity": "0",
+            //     "leave_taken_casual": 3,
+            //     "leave_taken_sick": 1,
+            //     "leave_taken_maternity": 0,
+            //     "leave_taken_paternity": 0,
+            //     "leave_balance_casual": 7,
+            //     "leave_balance_sick": 13,
+            //     "leave_balance_maternity": 112,
+            //     "leave_balance_paternity": 0
+            // }
+            $("#leave_balance_check").show();
+
+            $('#profile_image').attr('src', hostname+'assets/uploads/'+ data.epm_info.img_source);
+            $('#emp_name').html(data.epm_info.name_en);
+            $('#leave_entitle_casual').html(data.leave_entitle_casual);
+            $('#leave_entitle_sick').html(data.leave_entitle_sick);
+            $('#leave_entitle_maternity').html(data.leave_entitle_maternity);
+            $('#leave_entitle_paternity').html(data.leave_entitle_paternity);
+            $('#leave_taken_casual').html(data.leave_taken_casual);
+            $('#leave_taken_sick').html(data.leave_taken_sick);
+            $('#leave_taken_maternity').html(data.leave_taken_maternity);
+            $('#leave_taken_paternity').html(data.leave_taken_paternity);
+            $('#leave_balance_casual').html(data.leave_balance_casual);
+            $('#leave_balance_sick').html(data.leave_balance_sick);
+            $('#leave_balance_maternity').html(data.leave_balance_maternity);
+            $('#leave_balance_paternity').html(data.leave_balance_paternity);
+        },
+        error: function() {
+            $("#loader").hide();
+            alert('Something went wrong');
+        }
+    })
 }
 </script>
 <script>
@@ -513,4 +589,45 @@ function toggleSection(sectionId) {
 }
 // Initial hiding of both sections
 $("#leave_entry, #leave_balance_check").hide();
+</script>
+<script>
+function leave_add(e) {
+    e.preventDefault();
+    $("#loader").show();
+    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var sql = get_checked_value(checkboxes);
+    let numbersArray = sql.split(",");
+    if (numbersArray == '') {
+        alert('Please select employee Id');
+    }
+    if (numbersArray.length > 1) {
+        alert('Please select max one employee');
+    }
+    var unit_id = $('#unit_id').val();
+    if (unit_id == '') {
+        alert('Please select Unit');
+    }
+
+    var formdata = $("#leave_entry_form").serialize();
+    var data = "unit_id=" + unit_id + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
+    console.log(data);
+
+    $.ajax({
+        type: "POST",
+        url: hostname + "entry_system_con/leave_entry",
+        data: data,
+        success: function(data) {
+            $("#loader").hide();
+            if (data == 'success') {
+                showMessage('success', 'Leave Added Successfully');
+            } else {
+                showMessage('error', 'Leave Not Added');
+            }
+        },
+        error: function(data) {
+            $("#loader").hide();
+            showMessage('error', 'Leave Not Added');
+        }
+    })
+}
 </script>

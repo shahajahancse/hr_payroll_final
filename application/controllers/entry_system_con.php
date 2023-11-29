@@ -112,44 +112,122 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/leave_view';
         $this->load->view('layout/template', $this->data);
     }
-
-    public function setup_leave_one(){
-       $data = $this->db->get('pr_leave_trans')->result();
-
-        $id_start=0;
-        $emp_id='';
-       foreach ($data as $d){
-       
-        if ($emp_id == $d->emp_id) {
-            $leave_end=$d->start_date;
-            $total_leave +=1;
+    public function leave_entry(){
+        // dd($_POST);
+        $emp_id = $this->db->where('id', $_POST['emp_id'])->get('pr_emp_com_info')->row()->emp_id;
+        $from_date = $_POST['from_date'];
+        $to_date = $_POST['to_date'];
+        $leave_type = $_POST['leave_type'];
+        $reason = $_POST['reason'];
+        $unit_id = $_POST['unit_id'];  
+        $leave_start = date("Y-m-d", strtotime($from_date));
+        $leave_end = date("Y-m-d", strtotime($to_date));
+        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
+        $formArray = array(
+            'emp_id' => $emp_id,
+            'unit_id' => $unit_id,
+            'start_date' => $leave_start,
+            'leave_type' => $leave_type,
+            'leave_start' => $leave_start,
+            'leave_end' => $leave_end,
+            'total_leave' => $total_leave+1,
+            'leave_descrip' => $reason,
+        );
+        if ($this->db->insert('pr_leave_trans', $formArray)) {
+            echo "success";
         }else{
-            if ($id_start == 1)  {
-                echo"insert ";
-                $formArray = array(
-                    'emp_id' => $emp_id,
-                    'unit_id' => $unit_id,
-                    'start_date' => $start_date,
-                    'leave_type' => $leave_type,
-                    'leave_start' => $leave_start,
-                    'leave_end' => $leave_end,
-                    'total_leave' => $total_leave,
-                    'leave_descrip' => '',
-                );
-                $this->db->insert('pr_leave_transs', $formArray);
-            }
-            $id_start=1;
-            $total_leave=0;
-            $emp_id = $d->emp_id;
-            $unit_id = $d->unit_id;
-            $leave_start = $d->start_date;
-            $start_date = $d->start_date;
-            $leave_end=$d->start_date;
-            $leave_type=$d->leave_type;
-            $total_leave +=1;
-        }	
-       }
+            echo "error";
+        };
     }
+    public function leave_balance_ajax(){
+        $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
+        $this->db->where('emp_id', $_POST['emp_id']);
+        $data['epm_info']=$this->db->get('pr_emp_per_info')->row();
+
+        $this->db->where('id', $_POST['emp_id']);
+        $unit_id=$this->db->get('pr_emp_com_info')->row()->unit_id;
+
+        $this->db->where('unit_id', $unit_id);
+        $leave_entitle=$this->db->get('pr_leave')->row();
+       
+        $data['leave_entitle_casual']= $leave_entitle->lv_cl;
+        $data['leave_entitle_sick']= $leave_entitle->lv_sl;
+        $data['leave_entitle_maternity']= $leave_entitle->lv_ml;
+        $data['leave_entitle_paternity']= $leave_entitle->lv_pl;
+
+        $emp_id = $this->db->where('id', $_POST['emp_id'])->get('pr_emp_com_info')->row()->emp_id;
+        $year = date( $_POST['year']);
+        $first_date = $year . "-01-01";
+        $last_date = $year . "-12-31";
+        $this->db->where('emp_id', $emp_id);
+        $this->db->where('leave_start >=', $first_date);
+        $this->db->where('leave_end <=', $last_date);
+        $leavei = $this->db->get('pr_leave_trans')->result();
+
+        $leave_taken_casual =0;
+        $leave_taken_sick =0;
+        $leave_taken_maternity =0;
+        $leave_taken_paternity =0;
+
+        foreach ($leavei as $key => $value) {
+            if($value->leave_type == 'cl'){
+                $leave_taken_casual += $value->total_leave;
+            }else if($value->leave_type == 'sl'){
+                $leave_taken_sick += $value->total_leave;
+            }else if($value->leave_type == 'ml'){
+                $leave_taken_maternity += $value->total_leave;
+            }else if($value->leave_type == 'pl'){
+                $leave_taken_paternity += $value->total_leave;
+            }
+        }
+        $data['leave_taken_casual'] = $leave_taken_casual;
+        $data['leave_taken_sick'] = $leave_taken_sick;
+        $data['leave_taken_maternity'] = $leave_taken_maternity;
+        $data['leave_taken_paternity'] = $leave_taken_paternity;
+        
+        $data['leave_balance_casual'] = $data['leave_entitle_casual'] - $data['leave_taken_casual'];
+        $data['leave_balance_sick'] = $data['leave_entitle_sick'] - $data['leave_taken_sick'];
+        $data['leave_balance_maternity'] = $data['leave_entitle_maternity'] - $data['leave_taken_maternity'];
+        $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
+        echo json_encode($data);   
+    }
+    // public function setup_leave_one(){
+    //    $data = $this->db->get('pr_leave_trans')->result();
+
+    //     $id_start=0;
+    //     $emp_id='';
+    //    foreach ($data as $d){
+       
+    //     if ($emp_id == $d->emp_id) {
+    //         $leave_end=$d->start_date;
+    //         $total_leave +=1;
+    //     }else{
+    //         if ($id_start == 1)  {
+    //             echo"insert ";
+    //             $formArray = array(
+    //                 'emp_id' => $emp_id,
+    //                 'unit_id' => $unit_id,
+    //                 'start_date' => $start_date,
+    //                 'leave_type' => $leave_type,
+    //                 'leave_start' => $leave_start,
+    //                 'leave_end' => $leave_end,
+    //                 'total_leave' => $total_leave,
+    //                 'leave_descrip' => '',
+    //             );
+    //             $this->db->insert('pr_leave_transs', $formArray);
+    //         }
+    //         $id_start=1;
+    //         $total_leave=0;
+    //         $emp_id = $d->emp_id;
+    //         $unit_id = $d->unit_id;
+    //         $leave_start = $d->start_date;
+    //         $start_date = $d->start_date;
+    //         $leave_end=$d->start_date;
+    //         $leave_type=$d->leave_type;
+    //         $total_leave +=1;
+    //     }	
+    //    }
+    // }
     //-------------------------------------------------------------------------------------------------------
     // Leave entry to the Database
     //-------------------------------------------------------------------------------------------------------
