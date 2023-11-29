@@ -72,19 +72,19 @@ class Attn_process_con extends CI_Controller {
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
 		$data = $this->attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
+
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE){
-			exit('fiz');
 			$this->db->trans_rollback();
 			echo "Process failed";
 		}else{
 			$this->db->trans_commit();
-			if(is_array($data)){
+			if($data == true){
 				// ATTENDANCE PROCESS LOG Generate
 				$this->log_model->log_attn_process($input_date);
 				echo "Process completed sucessfully";
 			}else{
-				echo $data;
+				echo "Process failed";
 			}
 		}
 	}
