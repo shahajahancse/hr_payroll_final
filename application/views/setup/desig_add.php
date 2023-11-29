@@ -1,5 +1,4 @@
 <div class="content" style="padding-top: 10px;">
-    <!-- Static navbar -->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -17,11 +16,8 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="<?php echo base_url('index.php/payroll_con')?>">Home</a></li>
                 </ul>
-
             </div>
-            <!--/.nav-collapse -->
         </div>
-        <!--/.container-fluid -->
     </nav>
     <div class="row">
         <div class="col-md-12">
@@ -36,78 +32,120 @@
             ?>
         </div>
     </div>
-
     <h3>Create Designation</h3>
     <hr>
     <form action="<?= base_url('index.php/setup_con/designation_add')?>" enctype="multipart/form-data"
         method="post">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Designation Name English</label>
-                    <input type="text" name="desig_name" value="" placeholder="Designation Name" class="form-control">
-                    <?=(isset($failuer['desig_name'])) ? '<div class="alert alert-failuer">' . $failuer['desig_name'] . '</div>' : ''; ?>
+            <div class="tablebox">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select name="unit_id" onchange="get_data();getDepertment(this.value)" id="unit_id" class="form-control input-lg select22">
+                                <option value="">Select Unit</option>
+                                <?php foreach ($pr_units as $key => $value) {?>
+                                <option value="<?php echo $value->unit_id; ?>"><?php echo $value->unit_name; ?></option>
+                                <?php } ?>
+                            </select>
+                            <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select name="attn_id"  id="attn_id" class="form-control input-lg  select22">
+                                <option value="">Select Attendance Bonus</option>
+                            </select>
+                            <?= (isset($failuer['attn_id'])) ? '<div class="alert alert-failuer">' . $failuer['attn_id'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                            <div class="form-group">
+                            <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg select22">
+                                <option value="">Select Holyday/Weekend</option>
+                            </select>
+                            <?= (isset($failuer['holiday_weekend_id'])) ? '<div class="alert alert-failuer">' . $failuer['holiday_weekend_id'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Designation Name Bangla</label>
-                    <input type="text" name="desig_bangla" value="" placeholder="Designation Name Bangla" class="form-control">
-                    <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select name="iftar_id"  id="iftar_id" class="form-control input-lg select22">
+                                <option value="">Select Iftar Allowance</option>
+                            </select>
+                            <?= (isset($failuer['iftar_id'])) ? '<div class="alert alert-failuer">' . $failuer['iftar_id'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select name="night_al_id"  id="night_al_id" class="form-control input-lg select22">
+                                <option value="">Select Night Allowance</option>
+                            </select>
+                            <?= (isset($failuer['night_al_id'])) ? '<div class="alert alert-failuer">' . $failuer['night_al_id'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                                        <div class="form-group">
+                            <select name="tiffin_id"  id="tiffin_id" class="">
+                                <option value="">Select Tiffin Allowance</option>
+                            </select>
+                            <?= (isset($failuer['tiffin_id'])) ? '<div class="alert alert-failuer">' . $failuer['tiffin_id'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
                 </div>
-                <!-- unit -->
-                <div class="form-group">
-                    <select name="unit_id" onchange="get_data()" id="unit_id" class="form-control input-lg select22">
-                        <option value="">Select Unit</option>
-                        <?php foreach ($pr_units as $key => $value) {?>
-                        <option value="<?php echo $value->unit_id; ?>"><?php echo $value->unit_name; ?></option>
-                        <?php } ?>
-                    </select>
-                    <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Department <span style="color: red;">*</span> </label>
+                            <?php echo form_error('emp_dept_id');?>
+                            <select name="emp_dept_id" id= "emp_dept_id" onchange="get_section(this.value)" class="form-control input-lg select22" required>
+                                <option  >Select Department</option>
+                             
+                            </select>
+                        </div>
+	                </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Section <span style="color: red;">*</span> </label>
+                        <?php echo form_error('emp_sec_id');?>
+                        <select name="emp_sec_id" id= "emp_sec_id" onchange="get_line(this.value) " class="emp_sec_id form-control input-lg select22" required>
+                            <option  >Select Section</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-md-4" style="padding-left: 0px !important;">
+                    <div class="form-group">
+                        <label>Line<span style="color: red;">*</span> </label>
+                        <?php echo form_error('emp_line_id');?>
+                        <select name="emp_line_id" id= "emp_line_id" class="emp_line_id form-control input-lg select22" required>
+                            <option  >Select Line</option>
+                        </select>
+                    </div>
+                    </div>
                 </div>
-                <!-- attendance bonus -->
-                <div class="form-group">
-                    <select name="attn_id"  id="attn_id" class="form-control input-lg select22">
-                        <option value="">Select Attendance Bonus</option>
-                    </select>
-                    <?= (isset($failuer['attn_id'])) ? '<div class="alert alert-failuer">' . $failuer['attn_id'] . '</div>' : ''; ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Designation Name English</label>
+                            <input type="text" name="desig_name" value="" placeholder="Designation Name" class="form-control">
+                            <?=(isset($failuer['desig_name'])) ? '<div class="alert alert-failuer">' . $failuer['desig_name'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                            <div class="form-group">
+                            <label>Designation Name Bangla</label>
+                            <input type="text" name="desig_bangla" value="" placeholder="Designation Name Bangla" class="form-control">
+                            <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
                 </div>
-                <!-- Holyday/week off -->
-                <div class="form-group">
-                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg select22">
-                        <option value="">Select Holyday/Weekend</option>
-                    </select>
-                    <?= (isset($failuer['holiday_weekend_id'])) ? '<div class="alert alert-failuer">' . $failuer['holiday_weekend_id'] . '</div>' : ''; ?>
-                </div>
-                <!-- iftar-->
-                <div class="form-group">
-                    <select name="iftar_id"  id="iftar_id" class="form-control input-lg select22">
-                        <option value="">Select Iftar Allowance</option>
-                    </select>
-                    <?= (isset($failuer['iftar_id'])) ? '<div class="alert alert-failuer">' . $failuer['iftar_id'] . '</div>' : ''; ?>
-                </div>
-                <!-- night allowance -->
-                <div class="form-group">
-                    <select name="night_al_id"  id="night_al_id" class="form-control input-lg select22">
-                        <option value="">Select Night Allowance</option>
-                    </select>
-                    <?= (isset($failuer['night_al_id'])) ? '<div class="alert alert-failuer">' . $failuer['night_al_id'] . '</div>' : ''; ?>
-                </div>
-                <!-- tiffin -->
-                <div class="form-group">
-                    <select name="tiffin_id"  id="tiffin_id" class="form-control input-lg select22">
-                        <option value="">Select Tiffin Allowance</option>
-                    </select>
-                    <?= (isset($failuer['tiffin_id'])) ? '<div class="alert alert-failuer">' . $failuer['tiffin_id'] . '</div>' : ''; ?>
-                </div>
-               
-                <br>
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary ">Submit</button></button>
-                    <a href="<?= base_url('index.php/setup_con/designation') ?>"
-                        class="btn-warning btn">Cancel</a>
+                    <a href="<?= base_url('index.php/setup_con/designation') ?>" class="btn-warning btn">Cancel</a>
                 </div>
-            </div>
-        </div>
+            </div>    
+
+
+
     </form>
 </div>
 <script>
@@ -182,4 +220,61 @@
         })
 
     }
+</script>
+<script>
+function getDepertment(unit_id) {
+    $.ajax({
+
+        url: "<?php echo base_url('index.php/setup_con/get_department') ?>",
+        method: "POST",
+        data: {
+          unit_id: unit_id
+        },
+        success: function(data) {
+            var parsedData = JSON.parse(data);
+            var item = '<option value="">Select Depertment</option>';
+            for (let index = 0; index < parsedData.length; index++) {
+             item+=`<option value="${parsedData[index].dept_id}">${parsedData[index].dept_name}</option>`
+            }
+            $('#emp_dept_id').html(item);
+        }
+    })
+}
+function get_section(depertment_id) {
+    $.ajax({
+
+        url: "<?php echo base_url('index.php/setup_con/get_section') ?>",
+        method: "POST",
+        data: {
+            depertment_id: depertment_id
+        },
+        success: function(data) {
+            var parsedData = JSON.parse(data);
+            var item = '<option value="">Select Section</option>';
+            for (let index = 0; index < parsedData.length; index++) {
+                item +=
+                    `<option value="${parsedData[index].id}">${parsedData[index].sec_name_en}</option>`
+            }
+            $('#emp_sec_id').html(item);
+        }
+    })
+}
+function get_line(id) {
+    $.ajax({
+        url: "<?php echo base_url('index.php/setup_con/get_line') ?>",
+        method: "POST",
+        data: {
+            id: id
+        },
+        success: function(data) {
+            var parsedData = JSON.parse(data);
+            var item = '<option value="">Select Line</option>';
+            for (let index = 0; index < parsedData.length; index++) {
+                item +=
+                    `<option value="${parsedData[index].id}">${parsedData[index].line_name_en}</option>`
+            }
+            $('#emp_line_id').html(item);
+        }
+    })
+}
 </script>
