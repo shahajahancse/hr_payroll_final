@@ -191,6 +191,17 @@ class Entry_system_con extends CI_Controller
         $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
         echo json_encode($data);   
     }
+    public function leave_delete()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['title'] = 'Leave List'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/leave_del_list';
+        $this->load->view('layout/template', $this->data);
+    }
+    
     // public function setup_leave_one(){
     //    $data = $this->db->get('pr_leave_trans')->result();
 
@@ -1041,32 +1052,7 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Leave Modification
     //-------------------------------------------------------------------------------------------------------
-    public function leave_delete($start = 0)
-    {
-        // Load pagination library
-        $this->load->library('pagination');
-        $this->load->model('crud_model');
-        $param = array();
-        $limit = 1;
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
-        $pr_leave_trans = $this->crud_model->leave_del_infos($limit, $page);
-        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-
-        // Pagination configuration
-        $config['base_url'] = base_url('index.php/entry_system_con/leave_delete');
-        $config['total_rows'] = $total;
-        $config['per_page'] = $limit;
-
-        // Initialize pagination library
-        $this->pagination->initialize($config);
-        $param['links'] = $this->pagination->create_links();
-        $param['pr_leave_trans'] = $pr_leave_trans;
-        // Load the list page view
-        // echo "<pre>"; print_r($param); exit;
-        $this->load->view('leave_del_list', $param);
-
-    }
+ 
 
     /* function leave_delete($start=0)
     {
