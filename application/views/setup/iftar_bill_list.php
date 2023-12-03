@@ -1,8 +1,7 @@
 <div class="content">
-
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
+    <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
+            <div class="navbar-header col-md-5" style="padding: 7px;">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -10,48 +9,41 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/iftar_bill_add') ?>">Add Iftar Bill  Allowance</a>
+                <div>
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/iftar_bill_add') ?>">Add Iftar Bill  Allowance</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
-                </ul>
-                <div class="pull-right">
-                    <form class="navbar-form pull-right" role="search">
-                        <div class="input-group">
-                            <input id="deptSearch" type="text" class="form-control" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><span
-                                        class="glyphicon glyphicon-search"></span></button>
+            <div class="col-md-7">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="">
+                        <form class="navbar-form pull-right" role="search">
+                            <div class="input-group">
+                                <input id="deptSearch" type="text" class="form-control" placeholder="Search">
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!--/.nav-collapse -->
         </div>
-        <!--/.container-fluid -->
+            <!--/.container-fluid -->
     </nav>
     <div class="row">
         <div class="col-md-12">
             <?php
-$success = $this->session->flashdata('success');
-if ($success != "") {
-    ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php
-}
-$failuer = $this->session->flashdata('failuer');
-if ($failuer) {
-    ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-            <?php
-}
-?>
-
-        </div>
+                $success = $this->session->flashdata('success');
+                    if ($success != "") {?>
+                        <div class="alert alert-success"><?php echo $success; ?></div>
+                    <?php
+                    }
+                    $failuer = $this->session->flashdata('failuer');
+                    if ($failuer) { ?>
+                    <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            <?php }?>
     </div>
-    <div class="row">
+    </div>
+    <!-- <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Iftar Bill  Allowance List</h3>
@@ -61,7 +53,7 @@ if ($failuer) {
                     role="button">Add Iftar Bill  Allowance</a>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- <br> -->
     <div class="row tablebox">

@@ -23,10 +23,10 @@
 
   <h3>Update Shift Schedule</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="editshiftschedule" action="<?php echo base_url().'index.php/setup_con/shiftschedule_edit/'.$pr_emp_shift_schedule->shift_id;?>">
+  <form enctype="multipart/form-data" method="post" name="editshiftschedule" action="<?php echo base_url().'index.php/setup_con/shiftschedule_edit/'.$pr_emp_shift_schedule->id;?>">
   <div class="row">
     <div class="col-md-6">
-      <input type="hidden" name="id"value="<?=$pr_emp_shift_schedule->shift_id;?>" class="form-control"> 
+      <input type="hidden" name="id"value="<?=$pr_emp_shift_schedule->id;?>" class="form-control"> 
       <div class="form-group">
           <select name="uname" id= "uname" class="form-control input-lg select22">
             <option value="">Select Unit</option>

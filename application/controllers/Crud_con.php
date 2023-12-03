@@ -11,6 +11,7 @@ class Crud_con extends CI_Controller
 
         $this->load->model('common_model');
         $this->load->model('crud_model');
+          $this->data['user_data'] = $this->session->userdata('data');
 
     }
 
@@ -382,26 +383,18 @@ class Crud_con extends CI_Controller
 
         $this->form_validation->set_rules('name', 'salgrd Name', 'trim|required');
         $this->form_validation->set_rules('bname', 'salgrd Name Bangla', 'trim|required');
-
-        // $data['salgrd'] = $this->crud_model->salgrd_fetch();
-
         if ($this->form_validation->run() == false) {
-
-            $data['pr_grade'] = $this->crud_model->getsalgrd($salgrdId);
-            // print_r($data);
-
-            $this->load->view('salgrd_edit', $data);
-
+            $this->data['title'] = 'Edit Salary Grade';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['pr_grade'] = $this->crud_model->getsalgrd($salgrdId);
+            $this->data['subview'] = 'salgrd_edit';
+            $this->load->view('layout/template', $this->data);
         } else {
             $this->crud_model->salgrd_edit($salgrdId);
             $this->session->set_flashdata('success', 'Record Updated successfully!');
-
             redirect('/setup_con/salary_grade');
-
         }
-
     }
-
     public function salgrd_delete($salgrdId)
     {
         $this->load->model('crud_model');

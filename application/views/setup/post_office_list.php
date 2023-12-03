@@ -1,34 +1,34 @@
 
   <div class="content">
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand"  href="<?=base_url('setup_con/post_office_add')?>">Add Post Office</a>
+    <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
+        <div class="navbar-header col-md-5" style="padding: 7px;">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div>
+                <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/post_office_add')?>">Add Post Office</a>
+                        <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+            </div>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="<?=base_url('payroll_con')?>" >Home</a></li>
-          </ul>
-          <div class="pull-right">
-            <form class="navbar-form pull-right" role="search">
-              <div class="input-group">
-                <input id="deptSearch" type="text" class="form-control" placeholder="Search">
-                <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        <div class="col-md-7">
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="">
+                    <form class="navbar-form pull-right" role="search">
+                        <div class="input-group">
+                            <input id="deptSearch" type="text" class="form-control" placeholder="Search">
+                        </div>
+                    </form>
                 </div>
-              </div>
-            </form>
-          </div>
-        </div><!--/.nav-collapse -->
-      </div><!--/.container-fluid -->
-    </nav>
-
+            </div>
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+  </nav>
     <div class="row">
       <div class="col-md-8">
         <?php $success = $this->session->flashdata('success');

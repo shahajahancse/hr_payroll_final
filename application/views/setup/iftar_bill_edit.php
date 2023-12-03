@@ -29,7 +29,7 @@
 
     <h3>Update Tiffin Bill Allowance</h3>
     <hr>
-    <form action="<?= base_url('index.php/setup_con/tiffin_bill_edit').'/'.$attbn->id?> " enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('index.php/setup_con/iftar_bill_edit').'/'.$attbn->id?> " enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

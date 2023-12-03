@@ -194,7 +194,7 @@ class Setup_con extends CI_Controller
                 'dis_id' => $this->input->post('district'),
                 'up_zil_id' => $this->input->post('upazila'),
                 'name_bn' => $this->input->post('post_office'),
-                'name_en' => $this->input->post('post_office_en'),
+                'name_en' => $this->input->post('post_officuser_datae_en'),
                 'status' => 1,
             );
 
@@ -1350,7 +1350,7 @@ class Setup_con extends CI_Controller
     {
         $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
-        $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_duty');
+        $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
         $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result_array();
         $this->data['title'] = 'Shift Management List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1384,7 +1384,7 @@ class Setup_con extends CI_Controller
             $formArray = array(
                 'shift_name' => $this->input->post('shift_name'),
                 'unit_id' => $this->input->post('unit_id'),
-                'shift_duty' => $this->input->post('shift_type'),
+                'schedule_id' => $this->input->post('shift_type'),
             );
             if ($this->db->insert('pr_emp_shift', $formArray)) {
                 $this->session->set_flashdata('success', 'Record add successfully!');
@@ -1407,10 +1407,10 @@ class Setup_con extends CI_Controller
             $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
-            $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type,pr_emp_shift_schedule.shift_id');
+            $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type,pr_emp_shift_schedule.id');
             $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
-            $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_duty');
-            $this->db->where('id', $shiftmanagementId);
+            $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
+            $this->db->where('pr_emp_shift.id', $shiftmanagementId);
             $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->row();
 
             $unit_id = $this->data['pr_emp_shift']->unit_id;
@@ -1425,7 +1425,7 @@ class Setup_con extends CI_Controller
             $formArray = array(
                 'shift_name' => $this->input->post('shift_name'),
                 'unit_id' => $this->input->post('unit_id'),
-                'shift_duty' => $this->input->post('shift_type'),
+                'schedule_id' => $this->input->post('shift_type'),
 
             );
             $this->db->where('id', $shiftmanagementId);
@@ -2017,23 +2017,13 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     public function salary_grade($start = 0)
     {
-        $this->load->library('pagination');
-        $param = array();
-        $limit = 10;
-        $config['base_url'] = base_url() . "setup_con/salary_grade/";
-        $config['per_page'] = $limit;
-        $this->load->model('crud_model');
-        $pr_grade = $this->crud_model->salgrd_infos($limit, $start);
-        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-        $config['total_rows'] = $total;
-        $config["uri_segment"] = 3;
-        // $this->load->library('pagination');
 
-        $this->pagination->initialize($config);
-        $param['links'] = $this->pagination->create_links();
-
-        $param['pr_grade'] = $pr_grade;
-        $this->load->view('salgrd_list', $param);
+        $this->data['title'] = 'Salary Grade Setup';
+        $this->data['salary_grade'] = $this->db->get('pr_grade')->result_array();
+        
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'salgrd_list';
+        $this->load->view('layout/template', $this->data);
 
     }
 

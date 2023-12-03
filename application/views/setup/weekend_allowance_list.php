@@ -1,37 +1,35 @@
 <div class="content">
-
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/weekend_allowance_add') ?>">Add Holyday/Weekend Allowance</a>
+<nav class="navbar navbar-inverse bg_none">
+    <div class="container-fluid nav_head">
+        <div class="navbar-header col-md-5" style="padding: 7px;">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div>
+                <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/weekend_allowance_add') ?>">Add Holyday/Weekend Allowance</a>
+                        <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
             </div>
+        </div>
+        <div class="col-md-7">
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
-                </ul>
-                <div class="pull-right">
+                <div class="">
                     <form class="navbar-form pull-right" role="search">
                         <div class="input-group">
                             <input id="deptSearch" type="text" class="form-control" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><span
-                                        class="glyphicon glyphicon-search"></span></button>
-                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <!--/.nav-collapse -->
         </div>
-        <!--/.container-fluid -->
-    </nav>
+        <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+</nav>
+
     <div class="row">
         <div class="col-md-12">
             <?php
@@ -51,17 +49,13 @@ if ($failuer) {
 
         </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
                 <h3 style="margin-top: 0px; margin-bottom: 8px;">Holyday/Weekend Allowance List</h3>
             </div>
-            <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/weekend_allowance_add')?>"  class="btn btn-info"
-                    role="button">Add Holyday/Weekend Allowance</a>
-            </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- <br> -->
     <div class="row tablebox">

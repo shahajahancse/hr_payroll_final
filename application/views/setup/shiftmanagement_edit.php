@@ -66,7 +66,7 @@
                     <select name="shift_type" id="shift_type" class="form-control input-lg select22">
                         <option value="">Select Shift Type</option>
                         <?php foreach ($shift_type as $key => $value) {?>
-                        <option value="<?php echo $value->shift_id; ?>" <?= ($value->shift_id == $pr_emp_shift->shift_duty) ? 'selected' : ''; ?>><?php echo $value->sh_type; ?></option>
+                        <option value="<?php echo $value->id; ?>" <?= ($value->id == $pr_emp_shift->schedule_id) ? 'selected' : ''; ?>><?php echo $value->sh_type; ?></option>
                         <?php } ?>
                     </select>
                     <?= (isset($failuer['shift_type'])) ? '<div class="alert alert-failuer">' . $failuer['shift_type'] . '</div>' : ''; ?>
@@ -98,7 +98,7 @@ function get_data() {
             var item;
             if (parsedData.length != 0) {
                 for (var i = 0; i < parsedData.length; i++) {
-                    item+='<option value="'+parsedData[i].shift_id+'">'+parsedData[i].sh_type+'</option>';
+                    item+='<option value="'+parsedData[i].id+'">'+parsedData[i].sh_type+'</option>';
                 }
             }
             $('#shift_type').html(item);
