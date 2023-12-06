@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/tiffin_bill_add') ?>">Add Night
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/night_allowance_add') ?>">Add Night
                         Allowance</a>
                             <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
                 </div>
@@ -34,35 +34,23 @@
     <div class="row">
         <div class="col-md-12">
             <?php
-$success = $this->session->flashdata('success');
-if ($success != "") {
-    ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php
-}
-$failuer = $this->session->flashdata('failuer');
-if ($failuer) {
-    ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-            <?php
-}
-?>
+            $success = $this->session->flashdata('success');
+            if ($success != "") {
+                ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+                <?php
+            }
+            $failuer = $this->session->flashdata('failuer');
+            if ($failuer) {
+                ?>
+                <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+                <?php
+            }
+            ?>
 
         </div>
     </div>
-    <!-- <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <h3 style="margin-top: 0px; margin-bottom: 8px;">Night Allowance List</h3>
-            </div>
-            <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/night_allowance_add')?>"  class="btn btn-info"
-                    role="button">Add Night Allowance</a>
-            </div>
-        </div>
-    </div> -->
 
-    <!-- <br> -->
     <div class="row tablebox">
 
         <div class="col-md-12">
@@ -81,7 +69,7 @@ if ($failuer) {
                 </thead>
                 <tbody>
                     <?php
-                            if(!empty($allowance_night_rules)){ foreach($allowance_night_rules as $key => $night_allowance){?>
+                        if(!empty($allowance_night_rules)){ foreach($allowance_night_rules as $key => $night_allowance){?>
 
                     <tr>
                         <td><?php echo $key+1?></td>

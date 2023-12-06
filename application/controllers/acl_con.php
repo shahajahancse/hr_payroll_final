@@ -1,11 +1,11 @@
 <?php
 class Acl_con extends CI_Controller {
 
-	function __construct()
-	{
+	function __construct(){
 		parent::__construct();
 
 		/* Standard Libraries */
+		$this->data['user_data'] = $this->session->userdata('data');
 		$this->load->library('grocery_CRUD');
 		$this->load->model('acl_model');
 		$this->load->model('common_model');
@@ -15,58 +15,34 @@ class Acl_con extends CI_Controller {
 	//-------------------------------------------------------------------------------------------------------
 	// CRUD output method
 	//-------------------------------------------------------------------------------------------------------
-	function crud_output($output = null)
-	{
+	function crud_output($output = null){
 		$this->load->view('output.php',$output);
 	}
 	//-------------------------------------------------------------------------------------------------------
 	// Access Control List
 	//-------------------------------------------------------------------------------------------------------
-	function acl_check($get_user_id )
-	{
+	function acl_check($get_user_id){
 		$access_level = 11;
 		$num_row = $this->db->where('username_id',$get_user_id)->where('acl_id',$access_level)->get('member_acl_level')->num_rows();
-		if($num_row > 0)
-		{
+		if($num_row > 0){
 			return "true";
 		}
-		else
-		{
+		else{
 			return "false";
 		}
-
 	}
 
-	function acl($start=0)
-	{
-
-		$this->load->library('pagination');
-		$param = array();
-		$limit = 10;
-		$config['base_url'] = base_url()."index.php/acl_con/acl/";
-		$config['per_page'] = $limit;
-
+	function acl($start=0){
+		$this->data['username'] = $this->data['user_data']->id_number;
 		$this->db->select('SQL_CALC_FOUND_ROWS members.*, pr_units.unit_name', false);
 		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
-		// $this->db->join('member_acl_level mal', 'mal.username_id = members.id', 'left');
-		// $this->db->join('member_acl_list mals', 'mals.id = mal.acl_id', 'left');
-        // $this->db->group_by('members.id');
-        $this->db->limit($limit,$start);
-		$param['members'] = $this->db->get('members')->result_array();
-
-		$total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-		$config['total_rows'] = $total;
-		$config["uri_segment"] = 3;
-		 // $this->load->library('pagination');
-
-		 $this->pagination->initialize($config);
-		 $param['links'] = $this->pagination->create_links();
-
-		$this->load->view('members', $param);
+		$this->data['members'] = $this->db->get('members')->result_array();
+		$this->data['subview'] = 'members';
+        $this->load->view('layout/template', $this->data);
+		// $this->load->view('', $param);
 	}
 
-	function member_add()
-	{
+	function member_add(){
 		$this->db->select('pr_units.*', false);
 		$param['pr_units'] = $this->db->get('pr_units')->result();
 		$acls = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
@@ -74,8 +50,7 @@ class Acl_con extends CI_Controller {
 		$this->load->view('member_add', $param);
 	}
 
-	function member_insert()
-	{
+	function member_insert(){
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('id_number', 'Member Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -104,23 +79,26 @@ class Acl_con extends CI_Controller {
 		redirect(base_url('index.php/acl_con/acl'));
 	}
 
-	function member_edit($id)
-	{
+	function member_edit($id){
 		$this->db->select('members.*, members.unit_name as u_id, pr_units.unit_name', false);
 		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
         $this->db->where('members.id', $id);
-		$param['member'] = $this->db->get('members')->row();
+		$this->data['member'] = $this->db->get('members')->row();
 
 		$acls = $this->db->select('cl.*, mcl.acl_id')
 							->join('member_acl_level mcl', 'cl.id = mcl.acl_id and mcl.username_id = "'.$id.'"', 'left')
 							->get('member_acl_list as cl')->result();
 
-		$param['acls'] = $acls;
-		$this->load->view('member_edit', $param);
+		$this->data['acls'] = $acls;
+        $this->data['username'] = $this->data['user_data']->id_number;
+
+		$this->data['subview'] = 'member_edit';
+        $this->load->view('layout/template', $this->data);
+		// $this->load->view('', $param);
+		// $this->load->view('member_edit', $param);
 	}
 
-	function update_member($id=0)
-	{
+	function update_member($id=0){
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('id_number', 'Member Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -152,8 +130,7 @@ class Acl_con extends CI_Controller {
 		redirect(base_url('index.php/acl_con/acl'));
 	}
 
-	function member_delete($id=0)
-	{
+	function member_delete($id=0){
 		$this->db->where('members.id',$id);
 		$data=$this->db->delete('members');
 		$this->session->set_flashdata('success','Record Deleted successfully!');
@@ -161,8 +138,7 @@ class Acl_con extends CI_Controller {
 	}
 
 
-	function acl_copy_08_09_21()
-	{
+	function acl_copy_08_09_21(){
 		$username = $this->session->userdata('username');
 		$get_user_id = $this->acl_model->get_user_id($username);
 		$acl_check = $this->acl_check($get_user_id );
@@ -217,8 +193,7 @@ class Acl_con extends CI_Controller {
 		$this->crud_output($output);
 	}
 
-	function id_number_check($str)
-	{
+	function id_number_check($str){
 		$id = $this->uri->segment(4);
 		if(!empty($id) && is_numeric($id))
 		{
@@ -257,13 +232,9 @@ class Acl_con extends CI_Controller {
 			return TRUE;
 		}
 	}
-
-
-
 	// do not run the code
 	//  temp table create
-	public function temp_create()
-	{
+	public function temp_create(){
 		$result = $this->db->select("emp_id")->get("pr_emp_com_info")->result();
 		foreach ($result as $key => $row) {
 			// echo "<pre>"; print_r($row->emp_id);

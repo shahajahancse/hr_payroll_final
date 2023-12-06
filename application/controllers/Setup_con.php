@@ -2015,12 +2015,10 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Salary Grade
     //-------------------------------------------------------------------------------------------------------
-    public function salary_grade($start = 0)
+    public function salary_grade()
     {
-
         $this->data['title'] = 'Salary Grade Setup';
         $this->data['salary_grade'] = $this->db->get('pr_grade')->result_array();
-        
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'salgrd_list';
         $this->load->view('layout/template', $this->data);

@@ -2242,56 +2242,6 @@ class Processdb extends CI_Model{
 
 
 
-	// get employees info , search by id
-	// [id] => 1
-    // [emp_id] => 1
-    // [name_en] => Md.Kabir Hossain Mir
-    // [name_bn] => কবির হোসেন
-    // [father_name] => 
-    // [mother_name] => 
-    // [per_village] => 
-    // [per_post] => 0
-    // [per_thana] => 0
-    // [per_district] => 0
-    // [per_village_bn] => 
-    // [pre_home_owner] => 
-    // [holding_num] => 
-    // [home_own_mobile] => 
-    // [pre_village] => 
-    // [pre_post] => 0
-    // [pre_thana] => 0
-    // [pre_district] => 0
-    // [pre_village_bn] => 
-    // [spouse_name] => 
-    // [emp_dob] => 1973-04-10
-    // [gender] => Male
-    // [marital_status] => Married
-    // [religion] => Islam
-    // [blood] => None
-    // [m_child] => 0
-    // [f_child] => 0
-    // [nominee_name] => 
-    // [nominee_vill] => 
-    // [nomi_post] => 0
-    // [nomi_thana] => 0
-    // [nomi_district] => 0
-    // [nomi_age] => 2023-10-26
-    // [nomi_relation] => 0
-    // [nomi_mobile] => 
-    // [refer_name] => 
-    // [refer_address] => 
-    // [refer_mobile] => 
-    // [refer_relation] => 0
-    // [education] => 
-    // [nid_dob_id] => 0
-    // [nid_dob_check] => 0
-    // [exp_factory_name] => 
-    // [exp_duration] => 
-    // [exp_dasignation] => 0
-    // [personal_mobile] => 
-    // [bank_bkash_no] => 
-    // [img_source] => scan0044.jpg
-
 	function get_emp_info($emp_id){
 		// dd($emp_id);
 		$d =  $this->db->select('pr_emp_per_info.*,pr_emp_com_info.*')

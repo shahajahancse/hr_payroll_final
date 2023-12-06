@@ -10,7 +10,6 @@ class Newcon extends CI_Controller {
 		$this->load->model('admin/admin_model');
 		$this->load->model('log_model');
 	}
-
 	function index()
 	{
 		if($this->session->userdata('admin_logged_in') == true)
@@ -21,7 +20,6 @@ class Newcon extends CI_Controller {
 		{
 			$this->load->view('admin/admin');
 		}
-
 	}
 
 

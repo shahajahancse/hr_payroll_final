@@ -656,9 +656,7 @@ class Crud_model extends CI_Model{
         {
 
             $comData = array(
-                'gr_name' => $fromArray['name'],
-                'gr_name' => $fromArray['bname'],
-
+                'gr_name' => $fromArray['gr_name'],
 
             );
             // print_r($comData);exit('obaydullah');
@@ -672,9 +670,7 @@ class Crud_model extends CI_Model{
         {
              $formArray = array();
 
-             $formArray['gr_name'] = $this->input->post('name');
-             $formArray['gr_name'] = $this->input->post('bname');
-
+             $formArray['gr_name'] = $this->input->post('gr_name');
 
              $this->db->where('id',$salgrdId);
              $this->db->update('pr_grade',$formArray);
@@ -683,7 +679,7 @@ class Crud_model extends CI_Model{
 
      function salgrd_delete($salgrdId)
         {
-            $this->db->where('gr_id',$salgrdId);
+            $this->db->where('id',$salgrdId);
             $this->db->delete('pr_grade');
         }
 

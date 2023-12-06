@@ -33,14 +33,8 @@
       <div class="form-group">
     
         <label>Rule Name</label>
-        <input type="text" name="name"value="<?=set_value('gr_name',$pr_grade->gr_name)?>" class="form-control">
-        <?php echo form_error('name');?>
-      </div>
-      <div class="form-group">
-    
-        <label>Amount</label>
-        <input type="text" name="bname"value="<?=set_value('gr_name',$pr_grade->gr_name)?>" class="form-control">
-        <?php echo form_error('bname');?>
+        <input type="text" name="gr_name"value="<?=set_value('gr_name',$pr_grade->gr_name)?>" class="form-control">
+        <?php echo form_error('gr_name');?>
       </div>
      
      

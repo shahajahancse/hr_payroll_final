@@ -56,25 +56,25 @@
         <div class="col-md-12">
 
             <table class="table table-striped" id="mytable">
-              <thead>
+              <thead >
                 <tr>
-                  <th>Rule Name </th>
-                  <th>Amount</th>
-                  <th width="80">Edit</th>
-                  <th>Delete</th>
+                  <th class="text-center">Sl. No. </th>
+                  <th class="text-center">Salary Grade</th>
+                  <th class="text-center" width="80">Edit</th>
+                  <th class="text-center">Delete</th>
                 </tr>
               </thead>
                 <tbody>
                     <?php
                   // print_r($pr_grade);exit('keno?');
-                    if(!empty($salary_grade)){ foreach($salary_grade as $pr_grades){?>
+                    if(!empty($salary_grade)){$i=1; foreach($salary_grade as $pr_grades){?>
                         <tr>
-                            <td><?php echo $pr_grades['gr_name'] ?></td>
-                            <td><?php echo $pr_grades['gr_name'] ?></td>
-                            <td >
+                            <td class="text-center"><?php echo $i++ ?></td>
+                            <td class="text-center"><?php echo $pr_grades['gr_name'] ?></td>
+                            <td class="text-center" >
                                 <a href="<?=base_url('index.php/crud_con/salgrd_edit').'/'.$pr_grades["id"]?>"target='_blank' class="btn btn-primary" role="button">Edit</a>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <a href="<?=base_url('index.php/crud_con/salgrd_delete').'/'.$pr_grades["id"]?>" class="btn btn-danger" role="button">Delete</a>
                             </td>
                         </tr>
@@ -85,7 +85,6 @@
                     <?php }?>
               </tbody>
             </table>
-            <!-- <div class="pagination"><?php echo $this->pagination->create_links(); ?></div> -->
           </div>
     </div>
     <br><br>

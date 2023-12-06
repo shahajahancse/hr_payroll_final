@@ -47,6 +47,7 @@
         <table class="table table-striped" id="mytable">
           <thead>
             <tr>
+              <th>Sl. No.</th>
               <th>Departent Name </th>
               <th>Departent Name Bangla </th>
               <th>Company Unit</th>
@@ -56,8 +57,9 @@
           </thead>
 
           <tbody>
-            <?php if(!empty($pr_dept)){ foreach($pr_dept as $pr_depts){?>
+            <?php if(!empty($pr_dept)){$i=1; foreach($pr_dept as $pr_depts){?>
               <tr>
+                  <td><?php echo $i++ ?></td>
                   <td><?php echo $pr_depts['dept_name'] ?></td>
                   <td><?php echo $pr_depts['dept_bangla'] ?></td>
                   <td><?php echo $pr_depts['unit_name'] ?></td>

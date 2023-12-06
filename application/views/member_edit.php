@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Department Edit</title>
-  <meta charset="utf-8">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
-</head>
-<body>
-
-
-
-<div class="container" style="padding-top: 10px;">
+<div class="content">
 <!-- Static navbar -->
-      <nav class="navbar navbar-inverse">
+     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -24,7 +9,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Update Member</a>
+            <a class="btn" href="#">Update Member</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -101,6 +86,3 @@
   </div>
 
 </div>
-
-</body>
-</html>

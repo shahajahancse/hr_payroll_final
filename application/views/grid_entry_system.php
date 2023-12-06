@@ -1,66 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>MSH Payroll Reports</title>
+<div class="content">
+	
+	<?php 
+	// dd($username);
+	$this->load->model('common_model');
+	$unit = $this->common_model->get_unit_id_name();
+	$id   = $this->session->userdata('data');
+	$user_id = $this->acl_model->get_user_id($id->id_number);
+	$acl     = $this->acl_model->get_acl_list($user_id);
 
-<?php $base_url = base_url(); ?>
-
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url; ?>themes/redmond/jquery-ui-1.8.2.custom.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url; ?>themes/ui.jqgrid.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url; ?>css/calendar.css" />
-	<link href="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-	<link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  	<script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
-
-	<script src="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
-
-	<script type="text/javascript" src="<?php echo $base_url; ?>js/jquery.min.js"></script>
-	<script src="<?php echo base_url(); ?>js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>
-	<script src="<?php echo $base_url; ?>js/i18n/grid.locale-en.js" type="text/javascript"></script>
-	<script src="<?php echo $base_url; ?>js/jquery.jqGrid.min.js" type="text/javascript"></script>
-	<script src="<?php echo $base_url; ?>js/grid_content.js" type="text/javascript"></script>
-	<script src="<?php echo $base_url; ?>js/calendar_eu.js" type="text/javascript"></script>
-
-	<style>
-		.hints{
-			color: #436D19;
-			font-weight:bold;
-		}
-		fieldset{border:1px solid; margin-top: 10px; padding-bottom: 10px;}
-		legend{border:1px solid;}
-
-		.form-control {
-			height: 30px !important;
-		}
-	</style>
-
-	<script>
-    $(function() {
-            $( ".clearfix" ).dialog({
-                autoOpen: false,
-                height: 370,
-                width: 300,
-                resizable: false,
-                modal: true
-            });
-
-            $(".ui-dialog-titlebar").hide();
-        });
-    </script>
-</head>
-<body bgcolor="#ECE9D8" style="font-family:'Arial Black', Gadget, sans-serif; font-size:13px;">
-	<?php
-		$this->load->model('common_model');
-		$unit = $this->common_model->get_unit_id_name();
-		$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
-		$acl     = $this->acl_model->get_acl_list($user_id);
-
-	  $usr_arr = array(3,7,8);
-	  $usr_arr_2 = array(6,11);
+	  $usr_arr = array(3,7,8,77);
+	  $usr_arr_2 = array(6,11,77);
 	?>
-	<form name="grid">
+		<form name="grid">
 		<div class="form-group">
 			<div class="container">
 				<div class="col-sm-12 col-md-8">
@@ -226,150 +177,101 @@
 				</div>
 			</div><!-- End Container -->
 		</div>
+	</form>
+	<div align="center" style=" margin:0 auto; width:1000px; min-height:555px; overflow:hidden;">
+		<div style="float:left; overflow:hidden; width:65%; height:auto; padding:10px;">
+			<div style="margin:0 auto; width:100%; overflow:hidden;">
+				<br />
+				<?php
+				$usr_arr = array(3,7,8);
+				$usr_arr_2 = array(6,11);
+				$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
+				$acl = $this->acl_model->get_acl_list($user_id);
+				?>
+				<fieldset style="width:100%;"><legend><font size='+1'><b>Entry Management</b></font></legend>
+					<div style="margin:0 auto; width:100%;overflow:hidden; height:auto;">
+						<?php if(!in_array($user_id,$usr_arr_2)){  ?>
+						<?php } ?>
+						<div style="margin:0 auto; width:100%; overflow:hidden; float:left;">
+							<fieldset style='width:95%;'><legend><font size='+1'><b>Weekend</b></font></legend>
+								<form name='manual_attendance'>
+									<table>
+										<tr>
+											<td  style='text-align-last: center;'><input class="btn btn-primary mb-2" type='button' name='btn' id='btn' onclick='save_work_off()' value='Insert' size='15'>
+											</td>
+											<?php if(!in_array($user_id,$usr_arr_2)){  ?>
+											<td  style='text-align-last: center;'> <input  type='checkbox' name='chek' id='chek' value='1'>Fridy Replace Duty
+											</td>
+											<?php } ?>
+										</tr>
+										<tr><td><span style="font-size:12px;">[Select First date and employee ID]</span></td></tr>
+									</table>
+								</form>
+							</fieldset>
+						</div>
 
+						<div style="margin:0 auto; width:100%; overflow:hidden; float:right; ">
+							<fieldset style=' background-color:#CCC;'><legend><font size='+1'><b>Holiday</b></font></legend>
+								<form name='manual_attendance'>
+									<table>
+										<tr>
+											<td>Description &nbsp;</td>
+											<td class="form-inline">&nbsp;<input  class="form-control" style="width: 200px" type='text' size='12px' id='holiday_description'>&nbsp;<input class="btn btn-primary" type='button' name='holiday_save_id'  onclick='save_holiday()' value='Insert'/>
+											</td>
+										<?php if(!in_array($user_id,$usr_arr_2)){  ?>
+										<td  style='text-align-last: center;'> &nbsp;<input  type='checkbox' name='h_chek' id='h_chek' value='1'>Holiday Replace Duty
+											</td>
+											<?php } ?>
+										</tr>
+										<tr><td colspan="2" style="text-align-last: center;"><span style="font-size:12px;">[Type description]</span></td>
+										</tr>
+									</table>
+								</form>
+							</fieldset>
+						</div>
+						<br />
+						<?php if(!in_array($user_id,$usr_arr_2)){  ?>
+							<div style="margin:0 auto; width:100%; overflow:hidden; float:right;">
+								<fieldset style=' background-color:#CCC;'><legend><font size='+1'><b>OT Abstract Search</b></font></legend>
+									<form name='manual_attendance'>
+										<table>
+											<tr>
+												<td>OT Hour &nbsp;</td> &nbsp;&nbsp;
+												<td class="form-inline">
+													<input class="form-control" style="width: 200px" type='text' size='12px' id='ot_hour'>&nbsp;&nbsp;
+													<input class="btn btn-primary mb-2" type='button' name='ot_hour'  onclick='ot_hour_search()' value='Searching'/>
+												</td>
+											</tr>
+										</table>
+									</form>
+								</fieldset>
+							</div>
+						<?php } ?>
+						<br />
+						<?php //} ?>
 
-<div align="center" style=" margin:0 auto; width:1000px; min-height:555px; overflow:hidden;">
-<div style="float:left; overflow:hidden; width:65%; height:auto; padding:10px;">
+						<?php if(!in_array(10,$acl)){ ?>
+							<?php if(in_array(13,$acl)){ ?>
+								<div style="margin:0 auto; width:100%;  overflow:hidden; float:right;">
+									<fieldset style=''><legend><font size='+1'><b> Job Card Modify</b></font></legend>
+										<form name='ot_eot_modify'>
+											<table>
+												<tr >
+													<td>Emp. ID </td>
+													<td>:</td>
+													<td><input class="form-control" type='text' size='12' name='manual_eot_emp_id' id='manual_eot_emp_id'></td>
+													<td><input class="btn-primary mb-2" type='button' size='18' name='btn' id='btn' onclick='manual_eot_modification()' value='Modify' style="width: 100px;"></td>
+												</tr>
+											</table>
+										</form>
+									</fieldset>
+								</div>
 
-</form>
-
-<div style="margin:0 auto; width:100%; overflow:hidden;">
-<br />
- <?php
-  $usr_arr = array(3,7,8);
-  $usr_arr_2 = array(6,11);
-  $user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
-  $acl = $this->acl_model->get_acl_list($user_id);
- ?>
-<fieldset style="width:100%;"><legend><font size='+1'><b>Entry Management</b></font></legend>
-<div style="margin:0 auto; width:100%;overflow:hidden; height:auto;">
-<?php if(!in_array($user_id,$usr_arr_2)){  ?>
-
-<?php } ?>
-<div style="margin:0 auto; width:100%; overflow:hidden; float:left;">
-<fieldset style='width:95%;'><legend><font size='+1'><b>Weekend</b></font></legend>
-<form name='manual_attendance'>
-<table>
-<tr>
-	<td  style='text-align-last: center;'><input class="btn btn-primary mb-2" type='button' name='btn' id='btn' onclick='save_work_off()' value='Insert' size='15'>
-	</td>
-	<?php if(!in_array($user_id,$usr_arr_2)){  ?>
-	<td  style='text-align-last: center;'> <input  type='checkbox' name='chek' id='chek' value='1'>Fridy Replace Duty
-	</td>
-	<?php } ?>
-</tr>
-<tr><td><span style="font-size:12px;">[Select First date and employee ID]</span></td></tr>
-</table>
-</form>
-</fieldset>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
 </div>
-
-<div style="margin:0 auto; width:100%; overflow:hidden; float:right; ">
-<fieldset style=' background-color:#CCC;'><legend><font size='+1'><b>Holiday</b></font></legend>
-<form name='manual_attendance'>
-<table>
-<tr>
-	<td>Description &nbsp;</td>
-	<td class="form-inline">&nbsp;<input  class="form-control" style="width: 200px" type='text' size='12px' id='holiday_description'>&nbsp;<input class="btn btn-primary" type='button' name='holiday_save_id'  onclick='save_holiday()' value='Insert'/>
-	</td>
-<?php if(!in_array($user_id,$usr_arr_2)){  ?>
-<td  style='text-align-last: center;'> &nbsp;<input  type='checkbox' name='h_chek' id='h_chek' value='1'>Holiday Replace Duty
-	</td>
-	<?php } ?>
-</tr>
-<tr><td colspan="2" style="text-align-last: center;"><span style="font-size:12px;">[Type description]</span></td>
-</tr>
-</table>
-</form>
-</fieldset>
-</div>
-<br />
-<?php if(!in_array($user_id,$usr_arr_2)){  ?>
-<div style="margin:0 auto; width:100%; overflow:hidden; float:right;">
-<fieldset style=' background-color:#CCC;'><legend><font size='+1'><b>OT Abstract Search</b></font></legend>
-<form name='manual_attendance'>
-<table>
-<tr>
-	<td>OT Hour &nbsp;</td> &nbsp;&nbsp;
-	<td class="form-inline">
-		<input class="form-control" style="width: 200px" type='text' size='12px' id='ot_hour'>&nbsp;&nbsp;
-		<input class="btn btn-primary mb-2" type='button' name='ot_hour'  onclick='ot_hour_search()' value='Searching'/>
-	</td>
-</tr>
-</table>
-</form>
-</fieldset>
-</div>
-<?php } ?>
-<?php //if(!in_array(14,$acl) or !in_array(10,$acl)){?>
-<!--
-<div style="margin:0 auto; width:48%; overflow:hidden; float:left; ">
-<fieldset style=''><legend><font size='+1'><b>Weekend Delete</b></font></legend>
-<form name='manual_attendance'>
-<table>
-<tr><td><input class="form-control" type='button' name='btn' id='btn' onclick='delete_work_off()' value='Delete' size='15'></td></tr>
-<tr><td><span style="font-size:12px;">[Select First date and employee ID]</span></td></tr>
-</table>
-</form>
-</fieldset>
-</div>
-
-<div style="margin:0 auto; width:48%; overflow:hidden; float:right; ">
-<fieldset style=''><legend><font size='+1'><b>Holiday Delete</b></font></legend>
-<form name='manual_attendance'>
-<table>
-<tr><td><input class="form-control" type='button' name='btn' id='btn' onclick='delete_holiday()' value='Delete' size='15'></td></tr>
-<tr><td><span style="font-size:12px;">[Select First date and employee ID]</span></td></tr>
-</table>
-</form>
-</fieldset>
-</div> -->
-<br />
-
-<?php //} ?>
-
-<?php if(!in_array(10,$acl)){ ?>
-<?php if(in_array(13,$acl)){ ?>
-
-<div style="margin:0 auto; width:100%;  overflow:hidden; float:right;">
-<fieldset style=''><legend><font size='+1'><b> Job Card Modify</b></font></legend>
-<form name='ot_eot_modify'>
-<table>
-<tr >
-<td>Emp. ID </td>
-<td>:</td>
-<td><input class="form-control" type='text' size='12' name='manual_eot_emp_id' id='manual_eot_emp_id'></td>
-<td><input class="btn-primary mb-2" type='button' size='18' name='btn' id='btn' onclick='manual_eot_modification()' value='Modify' style="width: 100px;"></td>
-<!-- <td><span class="hints" style="font-size:12px;">[EOT Modification for A Employee]</span></td> -->
-</tr>
-
-<!-- <tr >
-<td>Extra OT</td>
-<td>:</td>
-<td><input class="form-control" type='text'size='12' name='manual_eot_hour_for_multiple_employee' id='manual_eot_hour_for_multiple_employee'></td>
-
-
-<td><input class="form-control" type='button' name='btn' id='btn' onclick='manual_ot_eot_modification_for_multiple_employee()' value='EOT Modify' style="width: 100px;"></td>
-<td><span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span></td>
-</tr> -->
-
-</table>
-
-
-
-
-</form>
-</fieldset>
-</div>
-
-<?php } ?>
-<?php } ?>
-</div>
-</fieldset>
-</div>
-
-</div>
-
-</div>
-</body>
-</html>

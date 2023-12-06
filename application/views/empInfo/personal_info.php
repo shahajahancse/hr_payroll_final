@@ -442,7 +442,7 @@
 	              </div>
 	            </div>	          	
 
-	            <?php $sl_grade = $this->db->get('sl_grade')->result(); ?>
+	            <?php $sl_grade = $this->db->get('pr_grade')->result(); ?>
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Salary Grade <span style="color: red;">*</span> </label>
@@ -518,7 +518,8 @@
 	          </div>
 
 	          <div class="row">
-	            <div class="col-md-2">
+
+				<div class="col-md-2">
 	              <div class="form-group">
 	                <label>Gross Salary <span style="color: red;">*</span> </label>
 	                <?php echo form_error('gross_sal');?>
@@ -562,7 +563,54 @@
 	              </div>
 	            </div>
 	          </div>
-					</div>
+
+
+			<div class="row">
+	            <div class="col-md-2">
+	              <div class="form-group">
+	                <label>Salary <span style="color: red;">*</span> </label>
+	                <?php echo form_error('com_gross_sal');?>
+	                <input type="text" onchange="salary_structure_cal()" name="com_gross_sal" id="com_gross_sal" class="form-control input-sm" required>
+	              </div>
+	            </div>
+	            <div class="col-md-2">
+	              <div class="form-group">
+	                <label>Basic Salary </label>
+	                <?php echo form_error('basic_sall');?>
+	                <input type="text" name="basic_sall" id="basic_sall" disabled class="form-control input-sm" required>
+	              </div>
+	            </div>
+	            <div class="col-md-2">
+	              <div class="form-group">
+	                <label>House </label>
+	                <?php echo form_error('house_rentt');?>
+	                <input type="text" name="house_rentt" id="house_rentt" disabled class="form-control input-sm" required>
+	              </div>
+	            </div>
+
+	            <div class="col-md-2">
+	              <div class="form-group">
+	                <label>Medical </label>
+	                <?php echo form_error('medicall');?>
+	                <input type="text" name="medicall" id="medicall" disabled class="form-control input-sm" required>
+	              </div>
+	            </div>
+	            <div class="col-md-2">
+	              <div class="form-group">
+	                <label>Transport </label>
+	                <?php echo form_error('trans_alloww');?>
+	                <input type="text" name="trans_alloww" id="trans_alloww" disabled class="form-control input-sm" required>
+	              </div>
+	            </div>
+	            <div class="col-md-2">
+	              <div class="form-group">
+	                <label>	Food </label>
+	                <?php echo form_error('foodd');?>
+	                <input type="text" name="foodd" id="foodd" disabled class="form-control input-sm" required>
+	              </div>
+	            </div>
+	          </div>
+		</div>
 
           <h3 style="font-weight: 600;">Nominee Information</h3>
 	        <hr style="margin-bottom: 0px !important;">
@@ -723,7 +771,7 @@
 		              <div class="form-group">
 		                <label>Image<span style="color: red;">*</span> </label>
 		                <?php echo form_error('img_source');?>	                
-		                <input type="file" name="img_source" id="img_source" class="form-control" style="height: 35px !important; line-height: 20px !important;">
+		                <input type="file" name="img_source" id="img_source" class="form-control input-sm" style="height: 35px !important; line-height: 20px !important;">
 		              </div>
 		            </div>
 				</div>
@@ -746,6 +794,7 @@
             </div>
           </div>
         </form>
+		
 
       </div>
     </div>
@@ -810,7 +859,7 @@ function set_desi_item() {
 
   </script>
   <script>
-		function emp_id_search(){
+	function emp_id_search(){
 		var id	= $('#employee_id').val();
 		if(id == ''){
 			alert('Field can not be empty');
@@ -1098,7 +1147,4 @@ function set_desi_item() {
 			});
 		});
 	});
-
-
-
 </script>

@@ -37,12 +37,6 @@ class Payroll_con extends CI_Controller {
 
 
 
-
-
-
-
-
-
 	// old code
 	function main_header()
 	{
