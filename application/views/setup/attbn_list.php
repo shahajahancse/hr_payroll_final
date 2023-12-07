@@ -1,15 +1,36 @@
-<div class="content">
+<style>
+    #mytable {
+        border-collapse: collapse;
+    }
 
+    #mytable, th, td {
+        border: 1px solid #b0c0df;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+    .table td {
+        padding: 0px 3px !important;
+        font-size: 13px;
+      
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        border-bottom: none;
+      white-space: nowrap;
+
+    }
+    table.dataTable tbody th, table.dataTable tbody td {
+      padding: 4px !important;
+      white-space: nowrap;
+    }
+    .center-text {
+        vertical-align: center;
+        padding: 5px 10px;
+    }
+</style>
+<div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/attn_bonus_add') ?>">Add Attendence Bonus</a>
                     <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
@@ -51,55 +72,44 @@
     </div>
     <!-- <br> -->
     <div class="row tablebox">
-
-        <div class="col-md-12">
-
-            <table class="table table-striped" id="mytable">
+        <div class="col-md-6" style="margin-left:-16px">
+          <h3 style="font-weight:bold">Attendance Bonus List</h3>
+        </div>
+            <table class="table" id="mytable">
                 <thead>
                     <tr>
-                        <th>SL</th>
+                        <th>Sl. No.</th>
                         <th>Rule Name</th>
                         <th>Rule</th>
                         <th>Unit name</th>
                         <th width="80">Edit</th>
                         <th>Delete</th>
-
                     </tr>
                 </thead>
-
-                </thead>
-
                 <tbody>
-
                     <?php
-
-                  if (!empty($attendance_bonus)) {foreach ($attendance_bonus as $key => $pr_lines) {?>
-
-                    <tr>
-                        <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $pr_lines['rule_name'] ?></td>
-                        <td><?php echo $pr_lines['rule'] ?></td>
-                        <td><?php echo $pr_lines['unit_name'] ?></td>
-                        <td>
-                            <a href="<?=base_url('index.php/setup_con/attn_bonus_edit') . '/' . $pr_lines["id"]?>"
-                                class="btn btn-primary" role="button">Edit</a>
-                        </td>
-
-                        <td>
-                            <a href="<?=base_url('index.php/setup_con/attn_bonus_delete') . '/' . $pr_lines["id"]?>"
-                                class="btn btn-danger" role="button">Delete</a>
-                        </td>
-                    </tr>
+                         if (!empty($attendance_bonus)) {foreach ($attendance_bonus as $key => $pr_lines) {?>
+                            <tr>
+                                <td><?php echo $key + 1  ?></td>
+                                <td><?php echo $pr_lines['rule_name'] ?></td>
+                                <td><?php echo $pr_lines['rule'] ?></td>
+                                <td><?php echo $pr_lines['unit_name'] ?></td>
+                                <td>
+                                    <a href="<?=base_url('index.php/setup_con/attn_bonus_edit') . '/' . $pr_lines["id"]?>"
+                                    class="btn btn-primary center-text" role="button">Edit</a>
+                                </td>
+                                <td>
+                                    <a href="<?=base_url('index.php/setup_con/attn_bonus_delete') . '/' . $pr_lines["id"]?>"
+                                    class="btn btn-danger center-text" role="button">Delete</a>
+                                </td>
+                            </tr>
                     <?php }} else {?>
-
-                    <tr>
-                        <td colspan="12">Records not Found</td>
-                    </tr>
+                        <tr>
+                            <td colspan="12">Records not Found</td>
+                        </tr>
                     <?php }?>
-
                 </tbody>
             </table>
-        </div>
     </div>
     <br><br>
 </div>

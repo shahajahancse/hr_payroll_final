@@ -1,18 +1,34 @@
-<div class="content">
+<style>
+    #mytable {
+        border-collapse: collapse;
+        /* width: 100%; */
+    }
 
-        <nav class="navbar navbar-inverse bg_none">
-            <div class="container-fluid nav_head">
+    #mytable, th, td {
+        border: 1px solid #b0c0df;
+          text-align: center;
+          vertical-align: middle !important;
+
+    }
+    .table td {
+    /* border-top: 1px solid #e8edf1; */
+    padding: 0px 3px !important;
+    font-size: 13px;
+    width: 100%;
+}
+table.dataTable thead th, table.dataTable thead td {
+    /* padding: 10px 18px; */
+    border-bottom: none;
+}
+</style>
+
+<div class="content">
+    <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5" style="padding: 7px;">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/shiftschedule_add')?>">Add Shift Schedule</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -26,72 +42,56 @@
                     </div>
                 </div>
             </div>
-            <!--/.nav-collapse -->
-        </div>
-            <!--/.container-fluid -->
+      </div>
     </nav>
     <div class="row">
         <div class="col-md-12">
             <?php
-          $success = $this->session->flashdata('success');
-          if ($success != "") {
-           ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php
-            }
-            $failuer = $this->session->flashdata('failuer');
-            if ($failuer) {
-             ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-            <?php
-            }
+                $success = $this->session->flashdata('success');
+                if ($success != "") {
             ?>
-
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php
+                }
+                $failuer = $this->session->flashdata('failuer');
+                if ($failuer) {
+            ?>
+                <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            <?php }  ?>
         </div>
     </div>
-    <!-- <div class="row">
-        <div class="col-md-12">
+
+    <div class="row tablebox table-responsive">
             <div class="col-md-6">
-                <h3 style="margin-top: 0px; margin-bottom: 8px;">Shift Schedule List</h3>
+                <h4 style="font-weight:bold">Shift Schedule List</h4>
             </div>
-            <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/shiftschedule_add')?>"  class="btn btn-info"
-                    role="button">Add Shift Schedule</a>
-            </div>
-        </div>
-    </div> -->
-    <!-- <br> -->
-    <div class="row tablebox">
         <div class="col-md-12">
-
-            <table class="table table-striped" id="mytable">
+            <table class="table table-responsive" id="mytable">
                 <thead>
-                    <tr>
-                        <th>Unit Name </th>
-                        <th>Shift Type</th>
-                        <th>IN Start</th>
-                        <th>IN Time</th>
-                        <th>Late Start</th>
-                        <th>IN End</th>
-                        <th>OUT Start</th>
-                        <th>OUT End</th>
-                        <th>OT Start</th>
-                        <th>OT Minute</th>
-                        <th>One Hour OT Time</th>
-                        <th>Two Hour OT Time</th>
-                        <th width="80">Edit</th>
+                    <tr >
+                        <th>Sl.No.</th></th>
+                        <th>Unit_Name </th>
+                        <th >Shift_Type</th>
+                        <th>IN_Start</th>
+                        <th>IN_Time</th>
+                        <th>Late_Start</th>
+                        <th>IN_End</th>
+                        <th>OUT_Start</th>
+                        <th>OUT_End</th>
+                        <th>OT_Start</th>
+                        <th>OT_Minute</th>
+                        <th >One_Hour_OT_Time</th>
+                        <th >Two_Hour_OT_Time</th>
+                        <th style="width:80px !important">Edit</th>
                         <th>Delete</th>
-
                     </tr>
                 </thead>
                 <tbody>
-
-
                     <?php
-                            if(!empty($pr_emp_shift_schedule)){ foreach($pr_emp_shift_schedule as $pr_emp_shift_schedules){  ?>
-                          
+                        if(!empty($pr_emp_shift_schedule)){ $i=1; foreach($pr_emp_shift_schedule as $pr_emp_shift_schedules){  ?>
                     <tr>
-                        <td><?php echo $pr_emp_shift_schedules['unit_name'] ?></td>
+                        <td><?php echo $i++ ?></td>
+                        <td style="white-space: nowrap;"><?php echo $pr_emp_shift_schedules['unit_name'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['sh_type'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['in_start'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['in_time'] ?></td>
@@ -105,20 +105,18 @@
                         <td><?php echo $pr_emp_shift_schedules['two_hour_ot_out_time'] ?></td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/shiftschedule_edit').'/'.$pr_emp_shift_schedules["id"]?>"
-                                 class="btn btn-primary" role="button">Edit</a>
+                                 class="btn btn-primary input-sm" role="button">Edit</a>
                         </td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/shiftschedule_delete').'/'.$pr_emp_shift_schedules["id"]?>"
-                                class="btn btn-danger" role="button">Delete</a>
+                                class="btn btn-danger input-sm" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php } }else{?>
-
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
                     <?php }?>
-
                 </tbody>
             </table>
         </div>

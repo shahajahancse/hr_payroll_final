@@ -1286,8 +1286,7 @@ class Setup_con extends CI_Controller
 
     }
 
-    public function shiftschedule_edit($shiftscheduleId)
-    {
+    public function shiftschedule_edit($shiftscheduleId){
         $data = array();
         $this->load->model('crud_model');
         $this->load->library('form_validation');
@@ -1346,8 +1345,7 @@ class Setup_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Shift Management start
     //-------------------------------------------------------------------------------------------------------
-    public function shift_management()
-    {
+    public function shift_management(){
         $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
         $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
@@ -1356,17 +1354,14 @@ class Setup_con extends CI_Controller
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/shift_management_list';
         $this->load->view('layout/template', $this->data);
-
     }
-    public function get_shift()
-    {
+    public function get_shift() {
         $unit_id = $this->input->post('unit_id');
         $this->db->where('unit_id', $unit_id);
         $query = $this->db->get('pr_emp_shift_schedule')->result();
         echo json_encode($query);
     }
-    public function shiftmanagement_add()
-    {
+    public function shiftmanagement_add(){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $data['shiftmanagementinfo'] = $this->crud_model->shiftmanagement_fetch();
@@ -1395,8 +1390,7 @@ class Setup_con extends CI_Controller
         }
     }
 
-    public function shiftmanagement_edit($shiftmanagementId)
-    {
+    public function shiftmanagement_edit($shiftmanagementId){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');

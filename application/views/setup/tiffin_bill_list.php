@@ -1,5 +1,33 @@
-<div class="content">
+<style>
+    #mytable {
+        border-collapse: collapse;
+    }
 
+    #mytable, th, td {
+        border: 1px solid #b0c0df;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+    .table td {
+        padding: 0px 3px !important;
+        font-size: 13px;
+      
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        border-bottom: none;
+      white-space: nowrap;
+
+    }
+    table.dataTable tbody th, table.dataTable tbody td {
+      padding: 4px !important;
+      white-space: nowrap;
+    }
+    .center-text {
+        vertical-align: center;
+        padding: 5px 10px;
+    }
+</style>
+<div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5" style="padding: 7px;">
@@ -49,22 +77,11 @@
 
         </div>
     </div>
-    <!-- <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <h3 style="margin-top: 0px; margin-bottom: 8px;">Tiffin Bill  Allowance List</h3>
-            </div>
-            <div class="col-md-6 text-right">
-                <a href="<?=base_url('index.php/setup_con/tiffin_bill_add')?>"  class="btn btn-info"
-                    role="button">Add Tiffin Bill  Allowance</a>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <br> -->
     <div class="row tablebox">
-        <div class="col-md-12">
-            <table class="table table-striped" id="mytable">
+            <div class="col-md-6" style="margin-left:-16px">
+                <h4 style="font-weight:bold">Tiffin Bill  Allowance List</h4>
+            </div>
+            <table class="table" id="mytable">
                 <thead>
                     <tr>
                         <th>SL</th>
@@ -76,15 +93,9 @@
 
                     </tr>
                 </thead>
-
-                </thead>
-
                 <tbody>
-
                     <?php
-
                   if (!empty($allowance_tiffin_bill)) {foreach ($allowance_tiffin_bill as $key => $pr_lines) {?>
-
                     <tr>
                         <td><?php echo $key + 1  ?></td>
                         <td><?php echo $pr_lines['rule_name'] ?></td>
@@ -92,24 +103,20 @@
                         <td><?php echo $pr_lines['unit_name'] ?></td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/tiffin_bill_edit') . '/' . $pr_lines["id"]?>"
-                                 class="btn btn-primary" role="button">Edit</a>
+                                 class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>
-
                         <td>
                             <a href="<?=base_url('index.php/setup_con/tiffin_bill_delete') . '/' . $pr_lines["id"]?>"
-                                class="btn btn-danger" role="button">Delete</a>
+                                class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php }} else {?>
-
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
                     <?php }?>
-
                 </tbody>
             </table>
-        </div>
     </div>
     <br><br>
 </div>

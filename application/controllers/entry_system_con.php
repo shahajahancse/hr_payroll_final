@@ -945,9 +945,7 @@ class Entry_system_con extends CI_Controller
         $this->db->delete('pr_attn_holiday');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url() . 'index.php/entry_system_con/holiday_delete');
-
     }
-
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Others Deduction and Tax
     //-------------------------------------------------------------------------------------------------------

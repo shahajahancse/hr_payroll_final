@@ -33,6 +33,7 @@ a:hover
   margin-right:5px;
   background: #0d9488;
   color:#fff;
+}
 </style>
 </head>
 <body style="background-color:#FCE9D9;">
@@ -97,10 +98,7 @@ a:hover
                     <form method='post' action="<?= base_url() ?>index.php/entry_system_con/leave_delete/" >
                           <input type='text' name='search' value='<?= $search ?>'><input type='submit' name='submit' value='Submit'>
                        </form>
-                       
                      </div>     
-                
-
                     <table class="table table-striped">
 
                     		

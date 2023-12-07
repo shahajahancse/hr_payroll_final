@@ -1,15 +1,37 @@
-<div class="content">
 
+<style>
+    #mytable {
+        border-collapse: collapse;
+    }
+
+    #mytable, th, td {
+        border: 1px solid #b0c0df;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+    .table td {
+        padding: 0px 3px !important;
+        font-size: 13px;
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        border-bottom: none;
+        white-space: nowrap;
+
+    }
+    table.dataTable tbody th, table.dataTable tbody td {
+      padding: 4px !important;
+      white-space: nowrap;
+    }
+    .center-text {
+        vertical-align: center;
+        padding: 5px 10px;
+        /* line-height: 40px; Should be equal to the button's height */
+    }
+</style>
+<div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-6">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
               <div>
                 <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/leave_add') ?>">Add Leave</a>
                 <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
@@ -42,34 +64,35 @@
               $failuer = $this->session->flashdata('failuer');
               if ($failuer) {
                   ?>
-                          <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-                          <?php
-              }
-              ?>
-
+                    <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            <?php } ?>
         </div>
     </div>
     <!-- <br> -->
     <div class="row tablebox">
-        <div class="col-md-12">
-            <table class="table table-striped" id="mytable">
+        <div class="col-md-6" style="margin-left:-16px">
+            <h4 style="font-weight:bold">Leave List</h4>
+        </div>
+          
+        <!-- <div class="col-md-12"> -->
+            <table class="table" id="mytable">
                 <thead>
                     <tr>
+                        <th>Sl. No.</th>
                         <th>Leave Name</th>
                         <th>Unit Name</th>
                         <th>Sick Leave</th>
                         <th>Casual Leave</th>
                         <th>Maternity Leave</th>
                         <th>Paternity Leave</th>
-                        <th width="80">Edit</th>
-                        <th width="80">Delete</th>
-
-
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if(!empty($pr_leave)){ foreach($pr_leave as $pr_leaves){?>
                     <tr>
+                        <td><?php echo @++$i ?></td>
                         <td><?php echo $pr_leaves['lv_name'] ?></td>
                         <td><?php echo $pr_leaves['unit_name'] ?></td>
                         <td><?php echo $pr_leaves['lv_sl'] ?></td>
@@ -78,11 +101,11 @@
                         <td><?php echo $pr_leaves['lv_pl'] ?></td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/leave_edit').'/'.$pr_leaves["lv_id"]?>"
-                                class="btn btn-primary" role="button">Edit</a>
+                                class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/leave_delete').'/'.$pr_leaves["lv_id"]?>"
-                                class="btn btn-danger" role="button">Delete</a>
+                                class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php } }else{?>
@@ -90,11 +113,9 @@
                         <td colspan="12">Records not Found</td>
                     </tr>
                     <?php }?>
-
                 </tbody>
             </table>
-
-        </div>
+        <!-- </div> -->
     </div>
     <br><br>
 </div>
