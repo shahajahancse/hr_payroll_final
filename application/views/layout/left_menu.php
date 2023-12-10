@@ -39,9 +39,7 @@
       <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
         <span class="title">Setup Section </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setup_con') ?>"></span> </a>
         <ul class="sub-menu ">
-          
-          <li class="start"> <a href="<?=base_url('setup_con/company_info_setup')?>" class="anchor_cls" id="company_info_menu">Company Information</a> </li>
-
+          <li class="start <?= activate_method('company_info_setup') ?>"> <a href="<?=base_url('setup_con/company_info_setup')?>" class="anchor_cls">Company Information</a> </li>
           <li class="start <?= activate_method('department') ?>"> <a href="<?=base_url('setup_con/department')?>" class="anchor_cls">Department</a> </li>
           <li class="start <?= activate_method('section') ?>"> <a href="<?=base_url('setup_con/section')?>" class="anchor_cls">Section</a> </li>
           <li class="start <?= activate_method('line') ?>"> <a href="<?=base_url('setup_con/line')?>" class="anchor_cls">Line</a> </li>
@@ -70,34 +68,26 @@
           
       <li class="start"> <a href="javascript:;" > <i class="fa fa-users"></i> <span class="title">HRM</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu ">
-
           <li class="start "> <a href="javascript:;"><span class="title">Entry System</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
-              <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/grid_entry_system" class="anchor_cls">All Entry</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/tax_others_deduction" class="anchor_cls">Tax & Others Deduction</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/weekend_delete" class="anchor_cls">Weeked Delete</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/holiday_delete" class="anchor_cls">Holiday Delete</a> </li>
-
-              <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/leave_transation" class="anchor_cls">Leave Transaction</a> </li>
-              <li class="start"> <a href="<?=base_url()?>index.php/entry_system_con/leave_delete" class="anchor_cls">Leave Delete</a></li>
-
-              <li class="start"> <a class="anchor_cls" href="<?php echo base_url();?>index.php/entry_system_con/left_delete">Left Delete</a></li>
-
-
-              <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/advance_loan" class="anchor_cls">Advance Loan</a> </li>
-
-              <li class="start "> <a href="<?=base_url()?>index.php/left_resign_con/left_resign_entry" class="anchor_cls">Left/Resign Entry</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/new_to_regular" class="anchor_cls">New To Regular</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/emp_increment_con/increment_info" class="anchor_cls">Increment Entry</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/emp_increment_con/promotion_info" class="anchor_cls">Promotion Entry</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/entry_system_con/proximity_card_edit" class="anchor_cls">Proximity Card Edit</a> </li>
+              <li class="start <?= activate_method('grid_entry_system')?> "><a href="<?= base_url('entry_system_con/grid_entry_system')?>" class="anchor_cls">All Entry</a> </li>
+              <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li>
+              <li class="start <?= activate_method('weekend_delete')?> "><a href="<?= base_url('entry_system_con/weekend_delete')?>" class="anchor_cls">Weeked Delete</a> </li>
+              <li class="start <?= activate_method('holiday_delete')?> "><a href="<?= base_url('entry_system_con/holiday_delete')?>" class="anchor_cls">Holiday Delete</a> </li>
+              <li class="start <?= activate_method('leave_transation')?> "><a href="<?= base_url('entry_system_con/leave_transation')?>" class="anchor_cls">Leave Transaction</a> </li>
+              <li class="start <?= activate_method('leave_delete')?> "><a href="<?= base_url('entry_system_con/leave_delete')?>" class="anchor_cls">Leave Delete</a></li>
+              <li class="start <?= activate_method('left_delete')?> "><a href="<?= base_url('entry_system_con/left_delete');?>" class="anchor_cls" >Left Delete</a></li>
+              <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan</a> </li>
+              <li class="start <?= activate_method('left_resign_entry')?> "><a href="<?= base_url('left_resign_con/left_resign_entry')?>" class="anchor_cls">Left/Resign Entry</a> </li>
+              <li class="start <?= activate_method('new_to_regular')?> "><a href="<?= base_url('entry_system_con/new_to_regular')?>" class="anchor_cls">New To Regular</a> </li>
+              <li class="start <?= activate_method('increment_info')?> "><a href="<?= base_url('emp_increment_con/increment_info')?>" class="anchor_cls">Increment Entry</a> </li>
+              <li class="start <?= activate_method('promotion_info')?> "><a href="<?= base_url('emp_increment_con/promotion_info')?>" class="anchor_cls">Promotion Entry</a> </li>
+              <li class="start <?= activate_method('proximity_card_edit')?> "><a href="<?= base_url('entry_system_con/proximity_card_edit')?>" class="anchor_cls">Proximity Card Edit</a> </li>
             </ul>
           </li>
-
           <li class="start "> <a href="javascript:;"><span class="title">Reports</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
               <li class="start "> <a href="<?=base_url()?>index.php/grid_con/grid_window" class="anchor_cls">All Report</a> </li>
-
               <li class="start "> <a href="<?=base_url()?>index.php/mars_con/others_report_front_end" class="anchor_cls">Others Report</a> </li>
             </ul>
           </li>
@@ -122,7 +112,6 @@
       </li>
       <li class="start "> <a href="javascript:;" > <i class="fa fa-tasks"></i> <span class="title">Maintenance</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu">
-
           <li class="start "> <a href="javascript:;"><span class="title">User</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
               <li class="start "> <a href="<?=base_url()?>index.php/acl_con/acl" class="anchor_cls">ACL</a> </li>

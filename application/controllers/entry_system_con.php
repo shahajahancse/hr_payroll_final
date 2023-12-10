@@ -18,7 +18,7 @@ class Entry_system_con extends CI_Controller
         $this->load->model('acl_model');
         $this->load->helper('url');
         $this->load->model('crud_model');
-		// $this->data['user_data'] = $this->session->userdata('data');
+		
         $access_level = 3;
         $acl = $this->acl_model->acl_check($access_level);
         if ($this->session->userdata('logged_in') == false) {
@@ -49,7 +49,11 @@ class Entry_system_con extends CI_Controller
         if ($this->session->userdata('logged_in') == false) {
             $this->load->view('login_message');
         } else {
-            $this->load->view('form/advance_loan');
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'form/advance_loan';
+            $this->load->view('layout/template', $this->data);
+
+            // $this->load->view('form/advance_loan');
         }
 
     }
@@ -201,6 +205,7 @@ class Entry_system_con extends CI_Controller
             redirect("authentication");
         }
         $this->data['title'] = 'Leave List'; 
+        $this->data[''] = $this->crud_model->leave_del_infos($limit,$start);
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/leave_del_list';
         $this->load->view('layout/template', $this->data);
@@ -830,6 +835,7 @@ class Entry_system_con extends CI_Controller
         $this->data['pr_attn_work_off'] = $this->db->get()->result_array();
         $this->data['title'] = 'Weekend Delete'; 
         $this->data['username'] = $this->data['user_data']->id_number;
+        // dd($this->data);
         $this->data['subview'] = 'entry_system/emp_weekend_del_list';
         $this->load->view('layout/template', $this->data);
     }
@@ -855,14 +861,14 @@ class Entry_system_con extends CI_Controller
     {
         $date = $this->input->post('date');
         $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
-        $this->db->where('work_off_date <=', $deldate);
+        $this->db->where('holiday_date <=', $deldate);
         $this->db->delete('pr_attn_work_off');
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
         $data = [];
         foreach ($emp_ids as $value) {
-            $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
         if ( $this->db->insert_batch('pr_attn_work_off', $data)) {      
             echo 'success';
@@ -891,6 +897,7 @@ class Entry_system_con extends CI_Controller
         $this->data['pr_attn_holiday'] = $this->db->get()->result_array();
         $this->data['title'] = 'Weekend Delete'; 
         $this->data['username'] = $this->data['user_data']->id_number;
+        // dd($this->data);
         $this->data['subview'] = 'entry_system/holiday_del_list';
         $this->load->view('layout/template', $this->data);
     }
@@ -921,18 +928,17 @@ class Entry_system_con extends CI_Controller
         $query = $this->db->get();
         // dd($query->result_array());
     }
-    public function holiday_add_ajax()
-    {
+    public function holiday_add_ajax(){
         $date = $this->input->post('date');
         $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
-        $this->db->where('work_off_date <=', $deldate);
+        $this->db->where('holiday_date <=', $deldate);
         $this->db->delete('pr_attn_holiday');
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
         $data = [];
         foreach ($emp_ids as $value) {
-            $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
         if ( $this->db->insert_batch('pr_attn_holiday', $data)) {      
             echo 'success';
@@ -951,13 +957,17 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     public function tax_others_deduction()
     {
-
+        
         $this->load->model('crud_model');
         $pr_deduct = $this->crud_model->taxnother_infos();
         // print_r($pr_deduct);exit('ali');
-        $data = array();
-        $data['pr_deduct'] = $pr_deduct;
-        $this->load->view('taxnother_list', $data);
+        $this->data = array();
+        $this->data['user_data'] = $this->session->userdata('data');
+        $this->data['username'] = $this->data['user_data']->id_number;
+        // dd($this->data['username']);
+        $this->data['pr_deduct'] = $pr_deduct;
+        $this->data['subview'] = 'taxnother_list';
+        $this->load->view('layout/template', $this->data);
     }
 
     public function deduct_month_check($str)
@@ -1095,28 +1105,27 @@ class Entry_system_con extends CI_Controller
     public function left_delete($start = 0)
     {
         // Load pagination library
-        $this->load->library('pagination');
+        // $this->load->library('pagination');
         $this->load->model('crud_model');
-        $param = array();
-        $limit = 1;
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        // $param = array();
+        // $limit = 1;
+        // $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-        $pr_left_trans = $this->crud_model->left_del_infos($limit, $page);
-        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-
+        // $pr_left_trans = $this->crud_model->left_del_infos($limit, $page);
+        $this->data['total_rows'] = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
         // Pagination configuration
-        $config['base_url'] = base_url('index.php/entry_system_con/left_delete');
-        $config['total_rows'] = $total;
-        $config['per_page'] = $limit;
-
+        // $config['base_url'] = base_url('index.php/entry_system_con/left_delete');
+        // $config['total_rows'] = $total;
+        // $config['per_page'] = $limit;
         // Initialize pagination library
-        $this->pagination->initialize($config);
-        $param['links'] = $this->pagination->create_links();
-        $param['pr_leave_trans'] = $pr_left_trans;
-        // Load the list page view
-        // echo "<pre>"; print_r($param); exit;
-        $this->load->view('left_del_list', $param);
-
+        // $this->pagination->initialize($config);
+        // $param['links'] = $this->pagination->create_links();
+        $this->data['user_data'] = $this->session->userdata('data');
+        $this->data['username'] =  $this->data['user_data']->id_number;
+        $this->data['subview'] = 'left_del_list';
+        $this->load->view('layout/template', $this->data);
+        // $param['pr_leave_trans'] = $pr_left_trans;
+        // $this->load->view('left_del_list', $param);
     }
 
     public function stop_salary($start = 0)

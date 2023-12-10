@@ -81,7 +81,7 @@ class Crud_model extends CI_Model{
     function getdept($deptId)
     {
         $this->db->where('dept_id',$deptId);
-        return $this->db->get('pr_dept')->row();
+        return $this->db->get('emp_depertment')->row();
     }
 
     function dept_fetch()
@@ -103,7 +103,7 @@ class Crud_model extends CI_Model{
             );
             // print_r($comData);exit('obaydullah');
 
-              $this->db->insert('pr_dept',$comData);
+              $this->db->insert('emp_depertment',$comData);
 
         }
 
@@ -117,14 +117,14 @@ class Crud_model extends CI_Model{
              $formArray['unit_id'] = $this->input->post('dept');
 
              $this->db->where('dept_id',$deptId);
-             $this->db->update('pr_dept',$formArray);
+             $this->db->update('emp_depertment',$formArray);
 
         }
 
      function dept_delete($deptId)
         {
             $this->db->where('dept_id',$deptId);
-            $this->db->delete('pr_dept');
+            $this->db->delete('emp_depertment');
         }
 
 
@@ -1148,7 +1148,7 @@ function weekend_infos(){
 
 
     function left_del_infos($limit,$start){
-      $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_left_history.*,per.emp_full_name,com.emp_join_date,pr_units.unit_name', false);
+      $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_left_history.*,per.name_en,com.emp_join_date,pr_units.unit_name', false);
       $this->db->from('pr_emp_left_history');
       $this->db->join('pr_units','pr_units.unit_id = pr_emp_left_history.unit_id');
       $this->db->join('pr_emp_per_info as per','per.emp_id = pr_emp_left_history.emp_id');

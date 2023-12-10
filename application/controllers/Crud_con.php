@@ -537,22 +537,25 @@ class Crud_con extends CI_Controller
 
 //==============================================Tax & Others===================================================//
 
-    public function taxnother_add()
-    {
-
+    public function taxnother_add(){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
-        $data['taxnother'] = $this->crud_model->units();
-
+        $this->data['taxnother'] = $this->crud_model->units();
+        // = $taxnother;
+        // dd($this->data);
+        
         $this->form_validation->set_rules('unit', 'taxnother Unit', 'trim|required');
         $this->form_validation->set_rules('empid', 'taxnother EMP ID', 'trim|required');
         $this->form_validation->set_rules('tax', 'taxnother Tax Amount', 'trim|required');
         $this->form_validation->set_rules('other', 'taxnother Other', 'trim|required');
         $this->form_validation->set_rules('date_out', 'taxnother Month', 'trim|required');
-
+        
         if ($this->form_validation->run() == false) {
-
-            $this->load->view('taxnother_add', $data);
+            // $this->load->view('taxnother_add', $data);
+            $this->data['user_data'] = $this->session->userdata('data');
+            $this->data['username'] = $this->data['user_data']->id_number;  
+            $this->data['subview'] = 'taxnother_add';
+            $this->load->view('layout/template', $this->data);
         } else {
             // print_r($_FILES['logoAAAAA']);
             // print_r($_POST);exit();

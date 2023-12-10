@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>AddTaxnOther</title>
-  <meta charset="utf-8">
-  <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
-</head>
-<body>
-
-
-
 <div class="container" style="padding-top: 10px;">
 <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
@@ -65,9 +50,10 @@
             <option value="">Select Unit</option>
             <?php
             // print_r($taxnother);exit('mafiz');
+            // dd($taxnother);
               foreach ($taxnother as $row)
               {
-                 echo '<option value="'.$row[unit_id].'">'.$row[unit_name].
+                 echo '<option value="'.$row['unit_id'].'">'.$row['unit_name'].
                  '</option>';
               }
 
@@ -107,6 +93,3 @@
 	  </div>
 </form>
 </div>
-
-</body>
-</html>

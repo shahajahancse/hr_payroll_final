@@ -3,13 +3,6 @@
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('index.php/entry_system_con/emp_holiday_add') ?>">Add Holiday</a>
                     <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
@@ -60,8 +53,8 @@
                         <th>SL</th>
                         <th>Unit name</th>
                         <th>User name </th>
-                        <th>Holiday Date</th>
-                        <th>Holiday Day</th>
+                        <th>Leave Date</th>
+                        <th>Leave Day</th>
                         <th>Delete</th>
                     </tr>
                 </thead>

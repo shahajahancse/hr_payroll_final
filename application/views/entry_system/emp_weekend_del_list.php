@@ -70,9 +70,10 @@
 
                 <tbody>
 
-                    <?php
+                    <?php 
+                    // dd($attn_work_off);
 
-                  if (!empty($attn_work_off)) {foreach ($attn_work_off as $key => $pr_lines) {?>
+                  if (!empty($pr_attn_work_off)) { foreach ($pr_attn_work_off as $key => $pr_lines) {?>
                     <tr>
                         <td><?php echo $key + 1  ?></td>
                         <td><?php echo $pr_lines['unit_name'] ?></td>

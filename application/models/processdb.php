@@ -1163,7 +1163,7 @@ class Processdb extends CI_Model{
 	function dept_search($unit_id)
 	{
 		$this->db->select('*');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->where("unit_id",$unit_id);
 		$this->db->order_by('dept_name','ASC');
 		$query = $this->db->get();
