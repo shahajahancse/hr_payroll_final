@@ -51,9 +51,7 @@
     </div>
     <!-- <br> -->
     <div class="row tablebox">
-
         <div class="col-md-12">
-
             <table class="table table-striped" id="mytable">
                 <thead>
                     <tr>
@@ -65,33 +63,26 @@
                         <th>Delete</th>
                     </tr>
                 </thead>
-
-                </thead>
-
                 <tbody>
-
-                    <?php 
+                    <?php
                     // dd($attn_work_off);
-
                   if (!empty($pr_attn_work_off)) { foreach ($pr_attn_work_off as $key => $pr_lines) {?>
                     <tr>
                         <td><?php echo $key + 1  ?></td>
                         <td><?php echo $pr_lines['unit_name'] ?></td>
                         <td><?php echo $pr_lines['user_name'] ?></td>
-                        <td><?php echo $pr_lines['work_off_date'] ?></td>
-                        <td><?php echo date('l', strtotime($pr_lines['work_off_date']))?></td>
+                        <td><?php echo $pr_lines['holiday_date'] ?></td>
+                        <td><?php echo date('l', strtotime($pr_lines['holiday_date']))?></td>
                         <td>
                             <a href="<?=base_url('index.php/entry_system_con/emp_weekend_del') . '/' . $pr_lines["id"]?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php }} else {?>
-
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
                     <?php }?>
-
                 </tbody>
             </table>
         </div>

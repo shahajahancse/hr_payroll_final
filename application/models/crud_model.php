@@ -1117,28 +1117,28 @@ function weekend_infos(){
     //==========================Leave Delete=================================//
 
 
-    function leave_del_infos($limit,$start){
-        $this->db->select('SQL_CALC_FOUND_ROWS pr_leave_trans.*,pr_units.unit_name', false);
+    function leave_del_infos($limit,$start,$searchQuery){
+        $this->db->select('SQL_CALC_FOUND_ROWS pr_leave_trans.*,pr_units.unit_name,pr_emp_per_info.name_en', false);
         $this->db->from('pr_leave_trans');
-        $this->db->join('pr_units','pr_units.unit_id = pr_leave_trans.unit_id');
-        // $this->db->limit(10);
-        // $this->db->limit($limit,$start);
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_leave_trans.unit_id');
+        $this->db->join('pr_emp_com_info', 'pr_emp_com_info.emp_id = pr_leave_trans.emp_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_com_info.id = pr_emp_per_info.emp_id');
+        $this->db->limit($limit, $start);
+
+        if ($searchQuery != '') {
+            $this->db->like('pr_emp_per_info.name_en', $searchQuery);
+        }
         $query = $this->db->get()->result_array();
-
+        
         return $query;
-
     }
 
-
-    function getleavedel($leaveId)
-    {
+    function getleavedel($leaveId){
         $this->db->where('id',$leaveId);
         return $this->db->get('pr_leave_trans')->row();
     }
 
-
-    function leave_delete($leaveId)
-    {
+    function leave_delete($leaveId){
         $this->db->where('id',$leaveId);
         $this->db->delete('pr_leave_trans');
     }

@@ -4,14 +4,22 @@ class Grid_con extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-
+ if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['user_data'] = $this->session->userdata('data');
+        if (!check_acl_list($this->data['user_data']->id, 4)) {
+            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+            redirect("payroll_con");
+            exit;
+        }
 		/* Standard Libraries */
 		$this->load->model('grid_model');
 		$this->load->model('acl_model');
 		$this->load->model('common_model');
 		$access_level = 5;
 		$acl = $this->acl_model->acl_check($access_level);
-
+        $this->data['user_data'] = $this->session->userdata('data');
 	}
 
 	function auto_temp_table()
@@ -419,76 +427,79 @@ class Grid_con extends CI_Controller {
 		}
 
 	}
-	function grid_window()
-	{
-		// $this->db->select('pr_emp_com_info.emp_id');
-		// $this->db->from('pr_emp_com_info');
-		// $this->db->order_by('emp_id', 'asec');
-		// $query = $this->db->get()->result();
-		// echo "<pre>"; print_r($query); exit;
+	function grid_window(){
+		 if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name)) {
+	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
 
-		if($this->session->userdata('level')== 0 || $this->session->userdata('level')== 1)
-		{
-			$this->load->view('grid');
+
+		if($this->session->userdata('level')== 0 || $this->session->userdata('level')== 1){
+			// $this->load->view('grid');
+			$this->data['username'] = $this->data['user_data']->id_number;
+			// $this->data['title'] = 'kicu ekta';
+			$this->data['subview'] = 'grid';
+			$this->load->view('layout/template', $this->data);
 		}
-		elseif($this->session->userdata('level')==2)
-		{
-			$this->load->view('grid_for_user');
+		else if($this->session->userdata('level')==2){
+			$this->data['username'] = $this->data['user_data']->id_number;
+			$this->data['subview'] = 'grid_for_user';
+			$this->load->view('layout/template', $this->data);
+			// $this->load->view('grid_for_user');
 		}
 	}
 
-	function grid_window_auto_notify()
-	{
-		if($this->session->userdata('level')== 0 || $this->session->userdata('level')== 1)
-		{
+	function grid_window_auto_notify(){
+		if($this->session->userdata('level')== 0 || $this->session->userdata('level')== 1){
 			$this->load->view('grid_auto_notify');
 		}
-		elseif($this->session->userdata('level')==2)
-		{
+		else if($this->session->userdata('level')==2){
 			$this->load->view('grid_for_user');
 		}
 	}
 
-	function grid_salary_report()
-	{
+	function grid_salary_report(){
 		$this->load->view('grid_salary_report');
 	}
 
-	function grid_get_all_data()
-	{
+	function grid_get_all_data(){
 
-				//$get_session_user_unit = $this->common_model->get_session_unit_id_name();
-				$unit 	= $this->uri->segment(3);
+			//$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+			$unit 	= $this->uri->segment(3);
 
-				$emp_cat_id = array ('0' => 1, '1' => 2, '2' => 5);
+			$emp_cat_id = array ('0' => 1, '1' => 2, '2' => 5);
 
-				$this->db->select('pr_emp_per_info.*');
-				$this->db->from('pr_emp_per_info');
-				$this->db->from('pr_emp_com_info');
-				$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-				$this->db->where('pr_emp_com_info.unit_id',$unit);
-			/*	if($get_session_user_unit != 0)
-				{
-					$this->db->where("unit_id",$get_session_user_unit);
-				}*/
-				//$this->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat_id);
-				$this->db->order_by("pr_emp_com_info.emp_id");
-				$query = $this->db->get();
-				// echo count($query->result_array()); exit();
+			$this->db->select('pr_emp_per_info.*');
+			$this->db->from('pr_emp_per_info');
+			$this->db->from('pr_emp_com_info');
+			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+			$this->db->where('pr_emp_com_info.unit_id',$unit);
+		/*	if($get_session_user_unit != 0)
+			{
+				$this->db->where("unit_id",$get_session_user_unit);
+			}*/
+			//$this->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat_id);
+			$this->db->order_by("pr_emp_com_info.emp_id");
+			$query = $this->db->get();
+			// echo count($query->result_array()); exit();
 
-				$i = 0;
-				foreach($query->result_array() as $row)
-				{
-					$responce->rows[$i]['id']=$row['emp_id'];
-					$responce->rows[$i]['cell']=array($row['emp_id'],$row['emp_full_name'],$row['emp_dob']);
-					$i++;
-				}
-				echo json_encode($responce);
-		  exit;
+			$i = 0;
+			foreach($query->result_array() as $row)
+			{
+				$responce->rows[$i]['id']=$row['emp_id'];
+				$responce->rows[$i]['cell']=array($row['emp_id'],$row['emp_full_name'],$row['emp_dob']);
+				$i++;
+			}
+			echo json_encode($responce);
+		exit;
 	}
 
-	function grid_all_search()
-	{
+	function grid_all_search(){
 		$dept 	= $this->uri->segment(3);
 		$section= $this->uri->segment(4);
 		$line	= $this->uri->segment(5);

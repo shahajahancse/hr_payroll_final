@@ -2044,51 +2044,38 @@ class Processdb extends CI_Model{
 		}
 
 	}
-
 	//==============Advance loan insert=======================>>
-	function advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date)
-	{
+	function advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date){
 		$this->db->select("emp_id");
 		$this->db->where("emp_id", $emp_id);
 		$query1 = $this->db->get("pr_emp_com_info");
-
-		if( $query1->num_rows() == 0)
-		{
+		if( $query1->num_rows() == 0){
 			return "Sorry! Employee ID does not exist.";
 		}
-
 		$this->db->select("emp_id");
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("loan_date", $loan_date);
 		$this->db->where("loan_status", '1');
 		$query = $this->db->get("pr_advance_loan");
-
-		if( $query->num_rows() > 0)
-		{
+		if( $query->num_rows() > 0){
 			return "Advance loan for this employee is running";
 		}
-		else
-		{
+		else{
 			$data = array(
-							'emp_id'  		=> $emp_id,
-							'loan_amt' 		=> $loan_amt,
-							'pay_amt' 		=> $pay_amt,
-							'loan_date'		=> $loan_date,
-							'loan_status'	=> 1,
-						);
-			if($this->db->insert("pr_advance_loan", $data))
-			{
+				'emp_id'  		=> $emp_id,
+				'loan_amt' 		=> $loan_amt,
+				'pay_amt' 		=> $pay_amt,
+				'loan_date'		=> $loan_date,
+				'loan_status'	=> 1,
+			);
+			if($this->db->insert("pr_advance_loan", $data))	{
 				// ADVANCE LOAN LOG Generate
 				$this->log_model->log_advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date);
 				return "Advance loan inserted successfully";
-			}
-			else
-			{
+			}else{
 				return "Operation Failed";
 			}
 		}
-
-
 	}
 
 	//==============Due Amt. insert=======================>>

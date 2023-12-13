@@ -8,9 +8,9 @@
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
 <?php
-		$this->load->model('common_model');
-		$unit = $this->common_model->get_unit_id_name();
-	?>
+    $this->load->model('common_model');
+    $unit = $this->common_model->get_unit_id_name();
+?>
 <div class="content">
     <div class="row">
         <div class="col-md-8">
@@ -27,7 +27,7 @@
     <!-- <div class="container-fluid">	 -->
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
-        <a class="btn btn-primary" href="<?= base_url() ?>index.php/entry_system_con/weekend_delete"><< Back</a>
+        <a class="btn btn-primary" href="<?= base_url() ?>index.php/entry_system_con/weekend_delete">Back</a>
             <h3 style="font-weight: 600;"><?= $title ?></h3>
             <div class="col-md-6">
                 <div class="form-group">

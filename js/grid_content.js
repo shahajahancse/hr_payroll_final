@@ -1,5 +1,15 @@
-function grid_get_all_data_for_salary()
-{
+
+function get_checked_value(checkboxes) {
+var vals = Array.from(checkboxes)
+	.filter(checkbox => checkbox.checked)
+	.map(checkbox => checkbox.value)
+	.join("xxx");
+return vals;
+}
+
+
+
+function grid_get_all_data_for_salary() {
 	var ajaxRequest;  // The variable that makes Ajax possible!
 
 	try{
@@ -22,18 +32,18 @@ function grid_get_all_data_for_salary()
  var start = document.getElementById('grid_start').value;
  if(start == "Select" || start == ''){
 	 alert("Please select ALL");
-	 return;
+	 return false;
  }
 var report_month_sal = document.getElementById('report_month_sal').value;
 	if(report_month_sal ==''){
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal ==''){
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var year_month = report_year_sal+"-"+report_month_sal;
@@ -151,8 +161,7 @@ ajaxRequest.onreadystatechange = function(){
 	}
 }
 
-function grid_get_all_data()
-{
+function grid_get_all_data(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 
  try{
@@ -172,12 +181,11 @@ function grid_get_all_data()
       }
    }
  }
- var start = document.getElementById('grid_start').value;
- if(start == "Select" || start == '')
- {
-	 alert("Please select ALL");
-	 return;
- }
+	var start = document.getElementById('grid_start').value;
+	if (start == "Select" || start == ''){
+	 	alert("Please select ALL");
+		return false;
+ 	}
  //alert(start);
 
  var queryString="start="+start;
@@ -267,20 +275,17 @@ ajaxRequest.onreadystatechange = function(){
 		}
 		document.grid.grid_status.options[i]=new Option("ALL","ALL", true, true);
 
-	$('#list1').jqGrid('GridUnload');
+		$('#list1').jqGrid('GridUnload');
 
-	hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/grid_con/grid_get_all_data/"+start;
-	//var url = "http://localhost/payroll/index.php/grid_con/grid_get_all_data";
-	main_grid(url)
-
-
+		hostname = window.location.href;
+		hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
+		url =  hostname + "index.php/grid_con/grid_get_all_data/"+start;
+		//var url = "http://localhost/payroll/index.php/grid_con/grid_get_all_data";
+		main_grid(url)
 	}
 	}
 }
-function grid_get_all_data_for_entry()
-{
+function grid_get_all_data_for_entry(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
 	   // Opera 8.0+, Firefox, Safari
@@ -303,7 +308,7 @@ function grid_get_all_data_for_entry()
 	 if(start == "Select" || start == '')
 	 {
 		 alert("Please select ALL");
-		 return;
+		 return false;
 	 }
 	 //alert(start);
 
@@ -435,14 +440,14 @@ function grid_per_file(){
 		}
 	}
 	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select'){ alert("Please select Category options"); return; }
+	if(grid_start =='Select'){ alert("Please select Category options"); return false; }
 
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
 	var selected_id_list = new Array();
 	var spl = (id_array.join('xxx'));
 
-	if(spl ==''){ alert("Please select Employee ID"); return;}
+	if(spl ==''){ alert("Please select Employee ID"); return false;}
 
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -451,6 +456,10 @@ function grid_per_file(){
 	per_file = window.open(url,'per_file',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	per_file.moveTo(0,0);
 }
+
+
+
+
 function grid_all_search_for_salary(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
@@ -473,13 +482,13 @@ function grid_all_search_for_salary(){
 	var report_month_sal = document.getElementById('report_month_sal').value;
 	if(report_month_sal ==''){
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal ==''){
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var year_month = report_year_sal+"-"+report_month_sal;
@@ -495,7 +504,7 @@ function grid_all_search_for_salary(){
 	var position 	= document.getElementById('grid_position').value;
 	// alert(start+','+dept+','+section+','+line+','+designation+','+sex+','+status+','+w_type+','+position);
 	$('#list1').jqGrid('GridUnload');
-	// alert(sex);return;
+	// alert(sex);return false;
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	url =  hostname + "index.php/grid_con/grid_all_search_for_salary/"+dept+"/"+section+"/"+line+"/"+designation+"/"+sex+"/"+status+"/"+year_month+"/"+start+"/"+w_type+"/"+position;
@@ -534,7 +543,7 @@ function grid_all_search_out_miss(){
 	var out_miss 	= document.getElementById('grid_out_miss').value;
 	if(f_date ==''){
 		alert("Please select First Date...");
-		return;
+		return false;
 	}
 	// alert(f_date);
 	$('#list1').jqGrid('GridUnload');
@@ -564,35 +573,25 @@ function grid_daily_present_report(){
    }
  }
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
+	if(firstdate ==''){
 		alert("Please select First date");
-		return;
+		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
-	{
-		alert("Please select Category options");
-		return;
-	}
-	var unit_id = document.getElementById('grid_start').value;
-	if(unit_id =='Select')
-	{
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id ==''){
 		alert("Please select unit !");
-		return;
+		return false;
 	}
-	$grid  = $("#list1");
-	var id_array = $grid.getGridParam('selarrrow');
-	var selected_id_list = new Array();
-	var spl = (id_array.join('xxx'));
-	var status = "P";
-	if(spl =='')
-	{
-		alert("Please select Employee ID");
-		return;
-	}
-	// alert(unit_id);
-	// return;
+	var checkboxes = document.getElementsByName('emp_id[]');
+    var sql = get_checked_value(checkboxes);
+    if (sql =='') {
+	alert('Please select employee Id');
+    //   $("#loader").hide();
+      return false;
+    }
+	alert(sql);
+	return false;
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+spl+"&unit_id="+unit_id;
@@ -636,19 +635,19 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -659,7 +658,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
    hostname = window.location.href; hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+spl+"&unit_id="+unit_id;
@@ -703,13 +702,13 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Unit.");
-		return;
+		return false;
 	}
 
 		$grid  = $("#list1");
@@ -719,7 +718,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 		hostname = window.location.href;
 		hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
@@ -768,20 +767,20 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Unit.");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -790,7 +789,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 		hostname = window.location.href;
 		hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
@@ -823,28 +822,28 @@ function grid_leave_application_form()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('end_leave_date').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 	// var leave_type = document.getElementById('leave_type').value;
 	var leave_type = document.getElementById('leave_type').value;
 	if(leave_type =='Select')
 	{
 		alert("Please select Leave Type.");
-		return;
+		return false;
 	}
 
 	var emp_id = document.getElementById('empid_leave').value;
 	if(emp_id =='')
 	{
 		alert("Please Enter Empid.");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -892,20 +891,20 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -916,7 +915,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
@@ -960,14 +959,14 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -977,7 +976,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 	alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   hostname.indexOf("index.php"));
@@ -1022,13 +1021,13 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -1038,7 +1037,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -1085,13 +1084,13 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -1101,7 +1100,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
@@ -1146,13 +1145,13 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -1161,7 +1160,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -1206,13 +1205,13 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit!");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -1221,7 +1220,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 hostname = window.location.href; hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+spl+"&unit_id="+unit_id;
@@ -1265,14 +1264,14 @@ function grid_daily_holiday_weekend_present_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -1283,7 +1282,7 @@ function grid_daily_holiday_weekend_present_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -1328,14 +1327,14 @@ function grid_daily_holiday_weekend_absent_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -1346,7 +1345,7 @@ function grid_daily_holiday_weekend_absent_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href; hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 
@@ -1391,14 +1390,14 @@ function grid_daily_move_report()
 		if(firstdate =='')
 		{
 			alert("Please select First date");
-			return;
+			return false;
 		}
 
 		var unit_id = document.getElementById('grid_start').value;
 		if(unit_id =='Select')
 		{
 			alert("Please select Unit!");
-			return;
+			return false;
 		}
 
 		$grid  = $("#list1");
@@ -1409,7 +1408,7 @@ function grid_daily_move_report()
 		if(spl =='')
 		{
 			alert("Please select Employee ID");
-			return;
+			return false;
 		}
 
 		hostname = window.location.href; hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -1457,28 +1456,28 @@ function grid_daily_punch_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var f_time = document.getElementById('f_time').value;
 	if(f_time =='')
 	{
 		alert("Please select First time");
-		return;
+		return false;
 	}
 
 	var s_time = document.getElementById('s_time').value;
 	if(s_time =='')
 	{
 		alert("Please select Second time");
-		return;
+		return false;
 	}
 
 	var grid_unit = document.getElementById('grid_start').value;
 	if(grid_unit =='Select')
 	{
 		alert("Please select Unit!");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -1489,7 +1488,7 @@ function grid_daily_punch_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 hostname = window.location.href; hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -1536,13 +1535,13 @@ function grid_continuous_present_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 
@@ -1550,7 +1549,7 @@ function grid_continuous_present_report()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -1560,7 +1559,7 @@ function grid_continuous_present_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var status = "P";
@@ -1609,32 +1608,32 @@ function grid_continuous_absent_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 	/*
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var grid_section = document.getElementById('grid_section').value;
 	if(grid_section =='Select')
 	{
 		alert("Please select Section");
-		return;
+		return false;
 	}*/
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 
@@ -1646,7 +1645,7 @@ function grid_continuous_absent_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var status = "A";
@@ -1704,20 +1703,20 @@ function grid_continuous_report_limit(limit)
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 
@@ -1729,7 +1728,7 @@ function grid_continuous_report_limit(limit)
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var status = "A";
@@ -1779,19 +1778,19 @@ function grid_continuous_leave_report_old()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -1802,7 +1801,7 @@ function grid_continuous_leave_report_old()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var status = "L";
@@ -1851,19 +1850,19 @@ function grid_continuous_leave_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -1874,7 +1873,7 @@ function grid_continuous_leave_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var status = "L";
@@ -1907,20 +1906,20 @@ function grid_continuous_leave_report_new()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -1931,7 +1930,7 @@ function grid_continuous_leave_report_new()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var status = "L";
@@ -1982,13 +1981,13 @@ function grid_continuous_late_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 
@@ -1996,7 +1995,7 @@ function grid_continuous_late_report()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -2007,7 +2006,7 @@ function grid_continuous_late_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var status = "L";
@@ -2056,13 +2055,13 @@ function grid_continuous_ot_eot_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 
@@ -2070,7 +2069,7 @@ function grid_continuous_ot_eot_report()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -2081,7 +2080,7 @@ function grid_continuous_ot_eot_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var status = "L";
@@ -2131,20 +2130,20 @@ function grid_continuous_incre_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -2155,7 +2154,7 @@ function grid_continuous_incre_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&unit_id="+unit_id;
@@ -2203,20 +2202,20 @@ function grid_continuous_prom_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -2227,7 +2226,7 @@ function grid_continuous_prom_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&unit_id="+unit_id;
@@ -2274,20 +2273,20 @@ function grid_continuous_increment_promotion_proposal()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -2298,7 +2297,7 @@ function grid_continuous_increment_promotion_proposal()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+spl+"&unit_id="+unit_id;
@@ -2344,14 +2343,14 @@ function grid_app_letter()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}*/
 	//var firstdate = document.getElementById('firstdate').value;
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -2361,7 +2360,7 @@ function grid_app_letter()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 
@@ -2410,13 +2409,13 @@ function grid_emp_job_application()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}*/
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -2426,7 +2425,7 @@ function grid_emp_job_application()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 
@@ -2473,13 +2472,13 @@ function grid_letter1_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -2489,7 +2488,7 @@ function grid_letter1_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -2534,13 +2533,13 @@ function grid_letter2_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -2550,7 +2549,7 @@ function grid_letter2_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -2597,13 +2596,13 @@ function grid_letter3_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -2613,7 +2612,7 @@ function grid_letter3_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -2661,13 +2660,13 @@ function grid_ctpat()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}*/
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -2677,7 +2676,7 @@ function grid_ctpat()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 
@@ -2728,14 +2727,14 @@ function grid_pay_slip()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
@@ -2744,7 +2743,7 @@ function grid_pay_slip()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 
@@ -2756,14 +2755,14 @@ function grid_pay_slip()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -2814,14 +2813,14 @@ function grid_pay_slip_non_compliance()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
@@ -2830,7 +2829,7 @@ function grid_pay_slip_non_compliance()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 
@@ -2842,14 +2841,14 @@ function grid_pay_slip_non_compliance()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -2902,14 +2901,14 @@ function grid_pay_slip_actual()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
@@ -2918,7 +2917,7 @@ function grid_pay_slip_actual()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 
@@ -2930,14 +2929,14 @@ function grid_pay_slip_actual()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -2989,14 +2988,14 @@ function grid_pay_slip_com()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
@@ -3005,7 +3004,7 @@ function grid_pay_slip_com()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 
@@ -3017,14 +3016,14 @@ function grid_pay_slip_com()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -3075,14 +3074,14 @@ function grid_pay_slip_com_non_com_mix()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
@@ -3091,7 +3090,7 @@ function grid_pay_slip_com_non_com_mix()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 
@@ -3103,14 +3102,14 @@ function grid_pay_slip_com_non_com_mix()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -3162,14 +3161,14 @@ function grid_provident_fund()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
@@ -3178,7 +3177,7 @@ var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -3189,7 +3188,7 @@ var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -3229,18 +3228,18 @@ function grid_incre_prom_report()
 	   if(firstdate =='')
 	   {
 		   alert("Please select First date");
-		   return;
+		   return false;
 	   }
 	   if(seconddate =='')
 	   {
 		   alert("Please select Second date");
-		   return;
+		   return false;
 	   }
 	   var grid_start = document.getElementById('grid_start').value;
 	   if(grid_start =='Select')
 	   {
 		   alert("Please select Category options");
-		   return;
+		   return false;
 	   }
    
    
@@ -3252,7 +3251,7 @@ function grid_incre_prom_report()
 	   if(spl =='')
 	   {
 		   alert("Please select Employee ID");
-		   return;
+		   return false;
 	   }
 	   var queryString="firstdate="+firstdate+"&spl="+spl;
 	   hostname = window.location.href;
@@ -3304,18 +3303,18 @@ function grid_prom_report()
 	   if(firstdate =='')
 	   {
 		   alert("Please select First date");
-		   return;
+		   return false;
 	   }
 	   if(seconddate =='')
 	   {
 		   alert("Please select Second date");
-		   return;
+		   return false;
 	   }
 	   var grid_start = document.getElementById('grid_start').value;
 	   if(grid_start =='Select')
 	   {
 		   alert("Please select Category options");
-		   return;
+		   return false;
 	   }
    
    
@@ -3327,7 +3326,7 @@ function grid_prom_report()
 	   if(spl =='')
 	   {
 		   alert("Please select Employee ID");
-		   return;
+		   return false;
 	   }
 	   var queryString="firstdate="+firstdate+"&spl="+spl;
 	   hostname = window.location.href;
@@ -3390,7 +3389,7 @@ function grid_pension_report()
 	{
 		alert("Please select First date");
 
-		return;
+		return false;
 	}
 
 
@@ -3400,7 +3399,7 @@ function grid_pension_report()
 
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
@@ -3409,7 +3408,7 @@ function grid_pension_report()
 
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -3418,7 +3417,7 @@ function grid_pension_report()
 
 	{
 		alert("Please select category status to Resign");
-		return;
+		return false;
 	}
 
 
@@ -3436,7 +3435,7 @@ function grid_pension_report()
 	{
 		alert("Please select Employee ID");
 
-		return;
+		return false;
 
 	}
 
@@ -3485,13 +3484,13 @@ function grid_id_card()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -3502,7 +3501,7 @@ function grid_id_card()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -3537,7 +3536,7 @@ function grid_id_card_english()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -3548,7 +3547,7 @@ function grid_id_card_english()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	/*
 	hostname = window.location.href;
@@ -3604,7 +3603,7 @@ function grid_id_card_english()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -3615,7 +3614,7 @@ function grid_id_card_english()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -3649,20 +3648,20 @@ function grid_job_card()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -3672,7 +3671,7 @@ function grid_job_card()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	/*
 	hostname = window.location.href;
@@ -3874,7 +3873,7 @@ function grid_pf_statement()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -3885,7 +3884,7 @@ function grid_pf_statement()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -3921,21 +3920,21 @@ function grid_monthly_att_register_ot()
 	if(firstdate =='')
 	{
 		alert("Please select First date for month and year selection");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -3946,7 +3945,7 @@ function grid_monthly_att_register_ot()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	/*
 	hostname = window.location.href;
@@ -4001,7 +4000,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 	if(firstdate =='')
 	{
 		alert("Please select First date for month and year selection");
-		return;
+		return false;
 	}
 
 
@@ -4009,7 +4008,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -4020,7 +4019,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4068,7 +4067,7 @@ function grid_monthly_att_register(i)
 	if(firstdate =='')
 	{
 		alert("Please select First date for month and year selection");
-		return;
+		return false;
 	}
 
 
@@ -4076,7 +4075,7 @@ function grid_monthly_att_register(i)
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	var status = i;
 
@@ -4088,7 +4087,7 @@ function grid_monthly_att_register(i)
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4135,7 +4134,7 @@ function grid_yearly_leave_register()
 	if(firstdate =='')
 	{
 		alert("Please select First date for  year selection");
-		return;
+		return false;
 	}
 
 
@@ -4143,7 +4142,7 @@ function grid_yearly_leave_register()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -4154,7 +4153,7 @@ function grid_yearly_leave_register()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4202,13 +4201,13 @@ function grid_extra_ot()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 
@@ -4216,7 +4215,7 @@ function grid_extra_ot()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -4227,7 +4226,7 @@ function grid_extra_ot()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -4278,20 +4277,20 @@ function grid_extra_ot_9pm()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -4302,7 +4301,7 @@ function grid_extra_ot_9pm()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href; hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1)?hostname.length:hostname.indexOf("index.php"));
@@ -4350,13 +4349,13 @@ function grid_extra_ot_mix()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 
@@ -4364,7 +4363,7 @@ function grid_extra_ot_mix()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -4375,7 +4374,7 @@ function grid_extra_ot_mix()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -4424,7 +4423,7 @@ function grid_earn_leave()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	//alert('hello');
 	$grid  = $("#list1");
@@ -4435,7 +4434,7 @@ function grid_earn_leave()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4468,20 +4467,20 @@ function manual_attendance_entry(){
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate ==''){
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate ==''){
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 	/*alert(firstdate+seconddate);
-	return;*/
+	return false;*/
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select'){
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -4491,23 +4490,23 @@ function manual_attendance_entry(){
 
 	if(spl ==''){
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var m_s_time = document.getElementById('m_s_time').value;
 	if(m_s_time ==''){
 		alert("Please Enter 1st Time");
-		return;
+		return false;
 	}
 	/*var m_e_time = document.getElementById('m_e_time').value;
 	if(m_e_time ==''){
 		alert("Please Enter 2nd Time");
-		return;
+		return false;
 	}*/
 
 	var okyes;
 	okyes=confirm('Are you sure you want to insert attendance?');
-	if(okyes==false) return;
+	if(okyes==false) return false;
 
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4558,21 +4557,21 @@ function manual_entry_Delete()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -4583,12 +4582,12 @@ function manual_entry_Delete()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var okyes;
  okyes=confirm('Are you sure you want to delete?');
-if(okyes==false) return;
+if(okyes==false) return false;
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4636,20 +4635,20 @@ function manual_attendance_sheet()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var manual_emp_id = document.getElementById('manual_emp_id').value;
 	if(manual_emp_id =='')
 	{
 		alert("Please Enter Emp. ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4689,20 +4688,20 @@ function manual_eot_modification()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var manual_eot_emp_id = document.getElementById('manual_eot_emp_id').value;
 	if(manual_eot_emp_id =='')
 	{
 		alert("Please Enter Emp. ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -4736,26 +4735,26 @@ function manual_ot_eot_modification_for_multiple_employee()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var manual_eot_hour = document.getElementById('manual_eot_hour_for_multiple_employee').value;
 	if(manual_eot_hour =='')
 	{
 		alert("Please Enter EOT Hour!");
-		return;
+		return false;
 	}
 
 	if(manual_eot_hour =='0')
 	{
 		alert("O Is Not Allow For EOT Hour!");
-		return;
+		return false;
 	}
 
 	var grid_unit = document.getElementById('grid_start').value;
 	if(grid_unit =='Select')
 	{
 		alert("Please select Unit!");
-		return;
+		return false;
 	}
 
 
@@ -4767,12 +4766,12 @@ function manual_ot_eot_modification_for_multiple_employee()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var okyes;
  	okyes=confirm('Are you sure ?');
-	if(okyes==false) return;
+	if(okyes==false) return false;
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4813,19 +4812,19 @@ function save_work_off(){
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select'){
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate ==''){
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select'){
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var chek = document.getElementById('chek');
@@ -4842,12 +4841,12 @@ function save_work_off(){
 
 	if(spl ==''){
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var okyes;
 	okyes=confirm('Are you sure you want to insert weekend?');
-	if(okyes==false) return;
+	if(okyes==false) return false;
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4896,21 +4895,21 @@ function delete_work_off()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -4921,12 +4920,12 @@ function delete_work_off()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var okyes;
  okyes=confirm('Are you sure you want to Delete weekend?');
-if(okyes==false) return;
+if(okyes==false) return false;
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -4974,21 +4973,21 @@ function save_holiday()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var chek = document.getElementById('h_chek');
@@ -5006,19 +5005,19 @@ function save_holiday()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var holiday_description = document.getElementById('holiday_description').value;
 	if(holiday_description =='')
 	{
 		alert("Please insert holiday description");
-		return;
+		return false;
 	}
 
 	var okyes;
  okyes=confirm('Are you sure you want to insert holiday?');
-if(okyes==false) return;
+if(okyes==false) return false;
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -5066,21 +5065,21 @@ function delete_holiday()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -5091,12 +5090,12 @@ function delete_holiday()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var okyes;
  okyes=confirm('Are you sure you want to Delete holiday?');
-if(okyes==false) return;
+if(okyes==false) return false;
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -5127,13 +5126,13 @@ function save_date(){
 
 	if(firstdate ==''){
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 
 	var okyes;
 	okyes=confirm('Are you sure you want to insert Date?');
-	if(okyes==false) return;
+	if(okyes==false) return false;
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -5174,20 +5173,20 @@ function delete_shift_log_info(){
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var firstdate = document.getElementById('firstdate').value;
 
 	if(firstdate ==''){
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 
 	var okyes;
 	okyes=confirm('Are you sure you want to Delete Date?');
-	if(okyes==false) return;
+	if(okyes==false) return false;
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -5239,27 +5238,27 @@ function grid_monthly_salary_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var grid_section = document.getElementById('grid_section').value;
 	if(grid_section =='Select')
 	{
 		alert("Please select Section options");
-		return;
+		return false;
 	}
 	var grid_status = document.getElementById('grid_status').value;
 
@@ -5271,14 +5270,14 @@ function grid_monthly_salary_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -5327,21 +5326,21 @@ function grid_actual_monthly_salary_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var salary_draw = document.getElementById('grid_w_type').value;
@@ -5353,7 +5352,7 @@ function grid_actual_monthly_salary_sheet()
 		if(grid_section =='Select')
 		{
 			alert("Please select Section options");
-			return;
+			return false;
 		}
 	}
 
@@ -5367,14 +5366,14 @@ function grid_actual_monthly_salary_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -5424,21 +5423,21 @@ function grid_actual_monthly_salary_sheet_not_sec()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var salary_draw = document.getElementById('grid_w_type').value;
@@ -5451,7 +5450,7 @@ function grid_actual_monthly_salary_sheet_not_sec()
 		if(grid_section =='Select')
 		{
 			alert("Please select Section options");
-			return;
+			return false;
 		}
 	}*/
 
@@ -5465,14 +5464,14 @@ function grid_actual_monthly_salary_sheet_not_sec()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -5521,21 +5520,21 @@ function actual_monthly_salary_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var salary_draw = document.getElementById('grid_w_type').value;
@@ -5551,14 +5550,14 @@ function actual_monthly_salary_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -5606,21 +5605,21 @@ function monthly_salary_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var salary_draw = document.getElementById('grid_w_type').value;
@@ -5636,14 +5635,14 @@ function monthly_salary_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -5691,21 +5690,21 @@ function monthly_salary_sheet_nine_pm()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var salary_draw = document.getElementById('grid_w_type').value;
@@ -5721,14 +5720,14 @@ function monthly_salary_sheet_nine_pm()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -5778,27 +5777,27 @@ function grid_mix_salary_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var grid_section = document.getElementById('grid_section').value;
 	if(grid_section =='Select')
 	{
 		alert("Please select Section options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -5811,14 +5810,14 @@ function grid_mix_salary_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -5865,21 +5864,21 @@ function grid_actual_monthly_salary_sheet_with_eot()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -5892,14 +5891,14 @@ function grid_actual_monthly_salary_sheet_with_eot()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 
@@ -5950,21 +5949,21 @@ function grid_monthly_allowance_with_eot()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -5977,7 +5976,7 @@ function grid_monthly_allowance_with_eot()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
@@ -6013,28 +6012,28 @@ function grid_festival_bonus()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_section = document.getElementById('grid_section').value;
 	if(grid_section =='Select')
 	{
 		alert("Please select Section.");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6047,7 +6046,7 @@ function grid_festival_bonus()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	/*
@@ -6103,28 +6102,28 @@ function grid_advance_salary_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_section = document.getElementById('grid_section').value;
 	if(grid_section =='Select')
 	{
 		alert("Please select Section.");
-		return;
+		return false;
 	}
 
 
@@ -6138,7 +6137,7 @@ function grid_advance_salary_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	/*
@@ -6194,20 +6193,20 @@ function sal_summary_report()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6261,20 +6260,20 @@ function sec_sal_summary_report()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6310,20 +6309,20 @@ function salary_summary_test(){
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6359,20 +6358,20 @@ function salary_summary_compliance(){
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6409,7 +6408,7 @@ function first_letter_of_maternity_leave()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -6420,7 +6419,7 @@ function first_letter_of_maternity_leave()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -6457,20 +6456,20 @@ function grid_festival_bonus_summary()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6522,20 +6521,20 @@ function grid_festival_bonus_summary_sec_wise()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6587,14 +6586,14 @@ function grid_comprative_salary_statement()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 
@@ -6602,14 +6601,14 @@ function grid_comprative_salary_statement()
 	if(report_month_sal_second =='')
 	{
 		alert("Please select Second month");
-		return;
+		return false;
 	}
 
 	var report_year_sal_second = document.getElementById('report_year_sal_second').value;
 	if(report_year_sal_second =='')
 	{
 		alert("Please select Second year");
-		return;
+		return false;
 	}
 
 
@@ -6617,7 +6616,7 @@ function grid_comprative_salary_statement()
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6669,20 +6668,20 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6733,20 +6732,20 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -6798,13 +6797,13 @@ function grid_general_info()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}*/
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -6814,7 +6813,7 @@ function grid_general_info()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	/*
 	hostname = window.location.href;
@@ -6853,7 +6852,7 @@ function ot_hour_search()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -6864,14 +6863,14 @@ function ot_hour_search()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	var ot_hour = document.getElementById('ot_hour').value;
 	if(holiday_description =='')
 	{
 		alert("Please insert holiday description");
-		return;
+		return false;
 	}
 
 	var okyes;
@@ -6924,7 +6923,7 @@ function grid_employee_information()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -6934,7 +6933,7 @@ function grid_employee_information()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -6981,7 +6980,7 @@ function grid_service_book()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -6991,7 +6990,7 @@ function grid_service_book()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -7042,21 +7041,21 @@ function grid_service_book2()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 */
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7067,7 +7066,7 @@ function grid_service_book2()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7102,7 +7101,7 @@ function grid_service_benifit()
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -7112,7 +7111,7 @@ function grid_service_benifit()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -7161,7 +7160,7 @@ function join_letter(){
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -7171,7 +7170,7 @@ function join_letter(){
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -7219,13 +7218,13 @@ function grid_current_info()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}*/
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -7235,7 +7234,7 @@ function grid_current_info()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	/*
 	hostname = window.location.href;
@@ -7292,21 +7291,21 @@ function grid_age_estimation()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7317,7 +7316,7 @@ function grid_age_estimation()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7336,7 +7335,7 @@ function bando_certificate_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 
@@ -7344,7 +7343,7 @@ function bando_certificate_report()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7355,7 +7354,7 @@ function bando_certificate_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7374,7 +7373,7 @@ function grid_one_month_settel_paid_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 
@@ -7382,7 +7381,7 @@ function grid_one_month_settel_paid_report()
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7393,7 +7392,7 @@ function grid_one_month_settel_paid_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7411,21 +7410,21 @@ function grid_drugscreening_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7436,7 +7435,7 @@ function grid_drugscreening_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7454,21 +7453,21 @@ function grid_ackknowledgement_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7479,7 +7478,7 @@ function grid_ackknowledgement_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7497,21 +7496,21 @@ function grid_earnl_payment()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7522,7 +7521,7 @@ function grid_earnl_payment()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7559,21 +7558,21 @@ function grid_nominee()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 */
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7584,7 +7583,7 @@ function grid_nominee()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7620,21 +7619,21 @@ function grid_requitement_form()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 */
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7645,7 +7644,7 @@ function grid_requitement_form()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7681,21 +7680,21 @@ function grid_verification_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 */
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -7706,7 +7705,7 @@ function grid_verification_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7742,28 +7741,28 @@ function grid_job_description()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 */
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_desig = document.getElementById('grid_desig').value;
 	if(grid_desig =='Select')
 	{
 		alert("Please select Designation options");
-		return;
+		return false;
 	}
 	//alert(grid_desig);
 
@@ -7775,7 +7774,7 @@ function grid_job_description()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -7812,28 +7811,28 @@ function grid_new_join_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var unit_id = grid_start;
 	//var grid_status = document.getElementById('grid_status').value;
 	//if(grid_status != 1)
 	//{
 	//	alert("Please select category status to Regular");
-	//	return;
+	//	return false;
 	//}
 
 	$grid  = $("#list1");
@@ -7844,7 +7843,7 @@ function grid_new_join_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
@@ -7895,28 +7894,28 @@ function grid_bgm_new_join_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var unit_id = grid_start;
 	//var grid_status = document.getElementById('grid_status').value;
 	//if(grid_status != 1)
 	//{
 	//	alert("Please select category status to Regular");
-	//	return;
+	//	return false;
 	//}
 
 	$grid  = $("#list1");
@@ -7927,7 +7926,7 @@ function grid_bgm_new_join_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
@@ -7974,21 +7973,21 @@ function grid_bank_note_req()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -8001,7 +8000,7 @@ function grid_bank_note_req()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
@@ -8053,28 +8052,28 @@ function grid_resign_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
 	if(grid_status != 4)
 	{
 		alert("Please select category status to Resign");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8085,7 +8084,7 @@ function grid_resign_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 /*
 	hostname = window.location.href;
@@ -8143,28 +8142,28 @@ function grid_resign_report_with_sal()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
 	if(grid_status != 4)
 	{
 		alert("Please select category status to Resign");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8175,7 +8174,7 @@ function grid_resign_report_with_sal()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 /*
 	hostname = window.location.href;
@@ -8233,28 +8232,28 @@ function grid_left_report_with_sal()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
 	if(grid_status != 3)
 	{
 		alert("Please select category status to Left");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8265,7 +8264,7 @@ function grid_left_report_with_sal()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 /*
 	hostname = window.location.href;
@@ -8323,28 +8322,28 @@ function grid_bgm_resign_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
 	if(grid_status != 4)
 	{
 		alert("Please select category status to Resign");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8355,7 +8354,7 @@ function grid_bgm_resign_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 /*
 	hostname = window.location.href;
@@ -8413,21 +8412,21 @@ function grid_left_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var grid_status = document.getElementById('grid_status').value;
 
@@ -8435,7 +8434,7 @@ function grid_left_report()
 	if(grid_status != 3)
 	{
 		alert("Please select category status to Left");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8446,7 +8445,7 @@ function grid_left_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -8497,21 +8496,21 @@ function grid_bgm_left_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var grid_status = document.getElementById('grid_status').value;
 
@@ -8519,7 +8518,7 @@ function grid_bgm_left_report()
 	if(grid_status != 3)
 	{
 		alert("Please select category status to Left");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8530,7 +8529,7 @@ function grid_bgm_left_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
@@ -8580,21 +8579,21 @@ function grid_bgm_left_resign_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
 	if(seconddate =='')
 	{
 		alert("Please select Second date");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var grid_status = document.getElementById('grid_status').value;
 
@@ -8643,14 +8642,14 @@ function grid_daily_eot()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8661,7 +8660,7 @@ function grid_daily_eot()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -8708,13 +8707,13 @@ function grid_daily_ot()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8725,7 +8724,7 @@ function grid_daily_ot()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -8773,13 +8772,13 @@ function grid_daily_night_allowance_report()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -8790,7 +8789,7 @@ function grid_daily_night_allowance_report()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href;
@@ -8840,13 +8839,13 @@ function grid_daily_allowance_bills()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -8856,7 +8855,7 @@ function grid_daily_allowance_bills()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -8874,13 +8873,13 @@ function grid_daily_weekend_allowance_sheet()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -8890,7 +8889,7 @@ function grid_daily_weekend_allowance_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -8919,13 +8918,13 @@ function grid_daily_holiday_allowance_sheet()
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -8935,7 +8934,7 @@ function grid_daily_holiday_allowance_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -8984,14 +8983,14 @@ function grid_monthly_ot_register()
 	if(firstdate =='')
 	{
 		alert("Please select First date for month selection");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -9002,7 +9001,7 @@ function grid_monthly_ot_register()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -9051,14 +9050,14 @@ function grid_monthly_eot_register()
 	if(firstdate =='')
 	{
 		alert("Please select First date for month selection");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -9069,7 +9068,7 @@ function grid_monthly_eot_register()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 /*
 	hostname = window.location.href;
@@ -9122,7 +9121,7 @@ function grid_maternity_benefit(){
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
@@ -9130,14 +9129,14 @@ function grid_maternity_benefit(){
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -9148,7 +9147,7 @@ function grid_maternity_benefit(){
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 
 	hostname = window.location.href; hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
@@ -9184,13 +9183,13 @@ function grid_monthly_allowance_register()
 	if(firstdate =='')
 	{
 		alert("Please select First date for month selection");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -9200,7 +9199,7 @@ function grid_monthly_allowance_register()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -9236,21 +9235,21 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	$grid  = $("#list1");
@@ -9261,13 +9260,13 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
     //var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	url =  "http://"+hostname+"/erp_fiat_me/index.php/salary_report_con/grid_maternity_benefit/"+spl;
-	// alert(spl);return;
+	// alert(spl);return false;
 
 	maternity_sheet = window.open(url,'maternity_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	maternity_sheet.moveTo(0,0);
@@ -9297,28 +9296,28 @@ function grid_monthly_eot_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_section = document.getElementById('grid_section').value;
 	if(grid_section =='Select')
 	{
 		alert("Please select Section options.");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -9332,7 +9331,7 @@ function grid_monthly_eot_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
@@ -9380,21 +9379,21 @@ function grid_monthly_weekend_allowance_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -9407,7 +9406,7 @@ function grid_monthly_weekend_allowance_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	hostname = window.location.href;
@@ -9454,21 +9453,21 @@ function grid_monthly_allowance_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -9481,7 +9480,7 @@ function grid_monthly_allowance_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	hostname = window.location.href;
@@ -9528,28 +9527,28 @@ function grid_monthly_stop_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
-		return;
+		return false;
 	}
 
 	var grid_section = document.getElementById('grid_section').value;
 	if(grid_section =='Select')
 	{
 		alert("Please select Section options.");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -9563,7 +9562,7 @@ function grid_monthly_stop_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	/*
@@ -9618,21 +9617,21 @@ function grid_monthly_night_allowance_sheet()
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
-		return;
+		return false;
 	}
 
 	var report_year_sal = document.getElementById('report_year_sal').value;
 	if(report_year_sal =='')
 	{
 		alert("Please select year");
-		return;
+		return false;
 	}
 
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 
 	var grid_status = document.getElementById('grid_status').value;
@@ -9645,7 +9644,7 @@ function grid_monthly_night_allowance_sheet()
 	if(spl =='')
 	{
 		alert("Please select Employee ID");
-		return;
+		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
@@ -9680,19 +9679,19 @@ function shorts_emp_summery(){
 	if(firstdate =='')
 	{
 		alert("Please select First date");
-		return;
+		return false;
 	}
 	var grid_start = document.getElementById('grid_start').value;
 	if(grid_start =='Select')
 	{
 		alert("Please select Category options");
-		return;
+		return false;
 	}
 	var unit_id = document.getElementById('grid_start').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
-		return;
+		return false;
 	}
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -9702,10 +9701,10 @@ function shorts_emp_summery(){
 	// if(spl =='')
 	// {
 	// 	alert("Please select Employee ID");
-	// 	return;
+	// 	return false;
 	// }
 	// alert(unit_id);
-	// return;
+	// return false;
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+spl+"&unit_id="+unit_id;

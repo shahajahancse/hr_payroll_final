@@ -1,10 +1,9 @@
 <div class="content">
-
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/entry_system_con/emp_holiday_add') ?>">Add Holiday</a>
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/entry_system_con/leave_transation') ?>">Add Leave</a>
                     <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
                 </div>
             </div>
@@ -13,7 +12,7 @@
                     <div class="">
                         <form class="navbar-form pull-right" role="search">
                             <div class="input-group">
-                                <input id="deptSearch" type="text" class="form-control" placeholder="Search">
+                              <input type="text" id="search-input" onkeyup="loadData(1)" placeholder="Search...">
                             </div>
                         </form>
                     </div>
@@ -28,63 +27,36 @@
             <?php
                 $success = $this->session->flashdata('success');
                 if ($success != "") {
-                    ?>
+            ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
             <?php
                 }
                 $failuer = $this->session->flashdata('failuer');
                 if ($failuer) {
-                    ?>
+            ?>
             <div class="alert alert-failuer"><?php echo $failuer; ?></div>
             <?php
                 }
-                ?>
-
+            ?>
         </div>
     </div>
     <!-- <br> -->
     <div class="row tablebox">
-
         <div class="col-md-12">
-
-            <table class="table table-striped" id="mytable">
-                <thead>
-                    <tr>
-                        <th>SL</th>
-                        <th>Unit name</th>
-                        <th>User name </th>
-                        <th>Leave Date</th>
-                        <th>Leave Day</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-
-                </thead>
-
-                <tbody>
-
-                    <?php
-
-                  if (!empty($attn_holyday_off)) {foreach ($attn_holyday_off as $key => $pr_lines) {?>
-
-                    <tr>
-                        <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $pr_lines['unit_name'] ?></td>
-                        <td><?php echo $pr_lines['user_name'] ?></td>
-                        <td><?php echo $pr_lines['work_off_date'] ?></td>
-                        <td><?php echo date('l', strtotime($pr_lines['work_off_date']))?></td>
-                        <td>
-                            <a href="<?=base_url('index.php/entry_system_con/emp_holiday_del') . '/' . $pr_lines["id"]?>"
-                                class="btn btn-danger" role="button">Delete</a>
-                        </td>
-                    </tr>
-                    <?php }} else {?>
-
-                    <tr>
-                        <td colspan="12">Records not Found</td>
-                    </tr>
-                    <?php }?>
-
+           
+            <table class="table" id="mytable">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Unit name</th>
+                            <th>User name </th>
+                            <th>Leave Date</th>
+                            <th>Leave Day</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                <tbody id="tbody">
+                    <!-- Table rows will be dynamically added here -->
                 </tbody>
             </table>
         </div>
@@ -93,18 +65,51 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
-    $("#mytable").dataTable();
-    $('#mytable_filter').css({
-        "display": "none"
-    })
-    $('#mytable_length').css({
-        "display": "none"
-    })
-    $("#mytable").dataTable();
-    oTable = $('#mytable').DataTable();
-    $('#deptSearch').keyup(function() {
-        oTable.search($(this).val()).draw();
-    })
+
+var offset = 0;
+var limit = 10;
+function loadData(r=null) {
+    if (r != null) {
+      $('#tbody').empty();
+    }
+   var searchQuery = $('#search-input').val()
+
+    $.ajax({
+        url: '<?= base_url("entry_system_con/get_leave_data/") ?>' + offset + '/' + limit,
+        type: 'GET',
+        data: { search: searchQuery },
+        dataType: 'json',
+        success: function(data) {
+            var i = 1;
+            data.forEach(function(row) {
+                // console.log(row);return false;
+                // emp_id
+                var tr = $('<tr></tr>');
+                tr.append('<td>' + i + '</td>');
+                tr.append('<td>' + row.name_en + '</td>');
+                tr.append('<td>' + row.unit_name + '</td>');
+                tr.append('<td>' + row.leave_start + '</td>');
+                tr.append('<td>' + row.leave_end + '</td>');
+                tr.append('<td>' + row.leave_type + '</td>');
+                tr.append('<td>' + row.total_leave + '</td>');
+                tr.append('<td><button type="button" class="btn btn-danger" onclick="leave_delete(' + row.id + ')">Delete</button></td>');
+                $('#tbody').append(tr);
+                i++;
+            });
+            offset += limit;
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading data:', error);
+        }
+    });
+}
+// Initial load
+loadData();
+// Load more data when scrolling
+$(window).scroll(function() {
+    if ($(window).scrollTop() + $(window).height() >= $('#mytable').height()) {
+        loadData();
+    }
 });
+
 </script>

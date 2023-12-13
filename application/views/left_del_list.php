@@ -3,7 +3,7 @@
     <div class="container-fluid nav_head">
       <div class="navbar-header col-md-5" style="padding: 7px;">
           <div>
-          <!-- <a href="<?=base_url('index.php/crud_con/taxnother_add')?>" class="btn btn-info" role="button">Add Tax & Othe</a> -->
+          <a href="<?=base_url('index.php/crud_con/taxnother_add')?>" class="btn btn-info" role="button">Add Left</a>
           <a href="<?php echo base_url('index.php/payroll_con')?>" class="btn btn-primary">Home</a>
           </div>
       </div>

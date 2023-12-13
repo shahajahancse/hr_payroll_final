@@ -71,17 +71,26 @@ class Entry_system_con extends CI_Controller
 
     // Advance Loan entry to the Database
     //-------------------------------------------------------------------------------------------------------
-    public function advance_loan_insert()
-    {
-        $emp_id = $this->input->post('emp_id');
-        $loan_amt = $this->input->post('loan_amt');
-        $pay_amt = $this->input->post('pay_amt');
-        $loan_date = $this->input->post('loan_date');
+    public function advance_loan_insert(){
+        // dd($_POST);
+        if(isset($_POST['btn'])){
+            $emp_id = $this->input->post('emp_id');
+            $loan_amt = $this->input->post('loan_amt');
+            $pay_amt = $this->input->post('pay_amt');
+            $loan_date = $this->input->post('loan_date');
+            $loan_date = date("Y-m-d", strtotime($loan_date));
+            $data = $this->processdb->advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date);
+            if ($data) {
+                $message = 'Leave Added Successfully';
+                redirect('entry_system_con/advance_loan?status=success&message=' . urlencode($message), 'refresh');
+            } else {
+                $message = 'Leave Not Added';
+                redirect('entry_system_con/advance_loan?status=error&message=' . urlencode($message), 'refresh');
+            }
 
-        $loan_date = date("Y-m-d", strtotime($loan_date));
-
-        $data = $this->processdb->advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date);
-        echo $data;
+            // return $data;
+        }
+        // dd($data);
     }
 
     //-------------------------------------------------------------------------------------------------------
@@ -199,60 +208,29 @@ class Entry_system_con extends CI_Controller
         $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
         echo json_encode($data);   
     }
-    public function leave_delete()
-    {
+    public function leave_delete(){
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
         $this->data['title'] = 'Leave List'; 
-        $this->data[''] = $this->crud_model->leave_del_infos($limit,$start);
         $this->data['username'] = $this->data['user_data']->id_number;
+        // dd($this->data);
         $this->data['subview'] = 'entry_system/leave_del_list';
         $this->load->view('layout/template', $this->data);
     }
-    
-    // public function setup_leave_one(){
-    //    $data = $this->db->get('pr_leave_trans')->result();
 
-    //     $id_start=0;
-    //     $emp_id='';
-    //    foreach ($data as $d){
-       
-    //     if ($emp_id == $d->emp_id) {
-    //         $leave_end=$d->start_date;
-    //         $total_leave +=1;
-    //     }else{
-    //         if ($id_start == 1)  {
-    //             echo"insert ";
-    //             $formArray = array(
-    //                 'emp_id' => $emp_id,
-    //                 'unit_id' => $unit_id,
-    //                 'start_date' => $start_date,
-    //                 'leave_type' => $leave_type,
-    //                 'leave_start' => $leave_start,
-    //                 'leave_end' => $leave_end,
-    //                 'total_leave' => $total_leave,
-    //                 'leave_descrip' => '',
-    //             );
-    //             $this->db->insert('pr_leave_transs', $formArray);
-    //         }
-    //         $id_start=1;
-    //         $total_leave=0;
-    //         $emp_id = $d->emp_id;
-    //         $unit_id = $d->unit_id;
-    //         $leave_start = $d->start_date;
-    //         $start_date = $d->start_date;
-    //         $leave_end=$d->start_date;
-    //         $leave_type=$d->leave_type;
-    //         $total_leave +=1;
-    //     }	
-    //    }
-    // }
+    
+    public function get_leave_data($offset = 0, $limit = 10) {
+        $searchQuery = $this->input->get('search'); // Get the search query from the request
+        $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
+        echo json_encode($data);
+    }
+    
+
     //-------------------------------------------------------------------------------------------------------
     // Leave entry to the Database
     //-------------------------------------------------------------------------------------------------------
-    public function save_leave_co()
-    {
+    public function save_leave_co(){
         $result = $this->leave_model->save_leave_db();
         echo $result;
     }
@@ -888,8 +866,7 @@ class Entry_system_con extends CI_Controller
     // CRUD for weekend Delete
     //-------------------------------------------------------------------------------------------------------
 
-    public function holiday_delete()
-    {
+    public function holiday_delete(){
         $this->db->select('pr_attn_holiday.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
         $this->db->from('pr_attn_holiday');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_attn_holiday.unit_id');
@@ -897,7 +874,6 @@ class Entry_system_con extends CI_Controller
         $this->data['pr_attn_holiday'] = $this->db->get()->result_array();
         $this->data['title'] = 'Weekend Delete'; 
         $this->data['username'] = $this->data['user_data']->id_number;
-        // dd($this->data);
         $this->data['subview'] = 'entry_system/holiday_del_list';
         $this->load->view('layout/template', $this->data);
     }
@@ -955,23 +931,18 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Others Deduction and Tax
     //-------------------------------------------------------------------------------------------------------
-    public function tax_others_deduction()
-    {
-        
+    public function tax_others_deduction(){
         $this->load->model('crud_model');
         $pr_deduct = $this->crud_model->taxnother_infos();
-        // print_r($pr_deduct);exit('ali');
         $this->data = array();
         $this->data['user_data'] = $this->session->userdata('data');
         $this->data['username'] = $this->data['user_data']->id_number;
-        // dd($this->data['username']);
         $this->data['pr_deduct'] = $pr_deduct;
         $this->data['subview'] = 'taxnother_list';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function deduct_month_check($str)
-    {
+    public function deduct_month_check($str){
         $id = $this->uri->segment(4);
         $emp_id = $_POST['emp_id'];
         $year_month = date('Y-m', strtotime($str));
@@ -987,13 +958,10 @@ class Entry_system_con extends CI_Controller
             return true;
         }
     }
-    public function employee_id_check($str)
-    {
-
+    public function employee_id_check($str){
         $unit_id_select = $_POST['unit_id'];
         $emp_num_rows = $this->db->where("emp_id", $str)->get('pr_emp_com_info')->num_rows();
         if ($emp_num_rows > 0) {
-            //$get_session_user_unit = $this->common_model->get_session_unit_id_name();
             $unit_id = $this->db->where("emp_id", $str)->get('pr_emp_com_info')->row()->unit_id;
             if ($unit_id != $unit_id_select) {
                 $this->form_validation->set_message('employee_id_check', 'Access Denied !');
