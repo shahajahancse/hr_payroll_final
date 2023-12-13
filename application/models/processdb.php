@@ -1163,7 +1163,7 @@ class Processdb extends CI_Model{
 	function dept_search($unit_id)
 	{
 		$this->db->select('*');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->where("unit_id",$unit_id);
 		$this->db->order_by('dept_name','ASC');
 		$query = $this->db->get();
@@ -2044,51 +2044,38 @@ class Processdb extends CI_Model{
 		}
 
 	}
-
 	//==============Advance loan insert=======================>>
-	function advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date)
-	{
+	function advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date){
 		$this->db->select("emp_id");
 		$this->db->where("emp_id", $emp_id);
 		$query1 = $this->db->get("pr_emp_com_info");
-
-		if( $query1->num_rows() == 0)
-		{
+		if( $query1->num_rows() == 0){
 			return "Sorry! Employee ID does not exist.";
 		}
-
 		$this->db->select("emp_id");
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("loan_date", $loan_date);
 		$this->db->where("loan_status", '1');
 		$query = $this->db->get("pr_advance_loan");
-
-		if( $query->num_rows() > 0)
-		{
+		if( $query->num_rows() > 0){
 			return "Advance loan for this employee is running";
 		}
-		else
-		{
+		else{
 			$data = array(
-							'emp_id'  		=> $emp_id,
-							'loan_amt' 		=> $loan_amt,
-							'pay_amt' 		=> $pay_amt,
-							'loan_date'		=> $loan_date,
-							'loan_status'	=> 1,
-						);
-			if($this->db->insert("pr_advance_loan", $data))
-			{
+				'emp_id'  		=> $emp_id,
+				'loan_amt' 		=> $loan_amt,
+				'pay_amt' 		=> $pay_amt,
+				'loan_date'		=> $loan_date,
+				'loan_status'	=> 1,
+			);
+			if($this->db->insert("pr_advance_loan", $data))	{
 				// ADVANCE LOAN LOG Generate
 				$this->log_model->log_advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date);
 				return "Advance loan inserted successfully";
-			}
-			else
-			{
+			}else{
 				return "Operation Failed";
 			}
 		}
-
-
 	}
 
 	//==============Due Amt. insert=======================>>
@@ -2241,56 +2228,6 @@ class Processdb extends CI_Model{
 
 
 
-
-	// get employees info , search by id
-	// [id] => 1
-    // [emp_id] => 1
-    // [name_en] => Md.Kabir Hossain Mir
-    // [name_bn] => কবির হোসেন
-    // [father_name] => 
-    // [mother_name] => 
-    // [per_village] => 
-    // [per_post] => 0
-    // [per_thana] => 0
-    // [per_district] => 0
-    // [per_village_bn] => 
-    // [pre_home_owner] => 
-    // [holding_num] => 
-    // [home_own_mobile] => 
-    // [pre_village] => 
-    // [pre_post] => 0
-    // [pre_thana] => 0
-    // [pre_district] => 0
-    // [pre_village_bn] => 
-    // [spouse_name] => 
-    // [emp_dob] => 1973-04-10
-    // [gender] => Male
-    // [marital_status] => Married
-    // [religion] => Islam
-    // [blood] => None
-    // [m_child] => 0
-    // [f_child] => 0
-    // [nominee_name] => 
-    // [nominee_vill] => 
-    // [nomi_post] => 0
-    // [nomi_thana] => 0
-    // [nomi_district] => 0
-    // [nomi_age] => 2023-10-26
-    // [nomi_relation] => 0
-    // [nomi_mobile] => 
-    // [refer_name] => 
-    // [refer_address] => 
-    // [refer_mobile] => 
-    // [refer_relation] => 0
-    // [education] => 
-    // [nid_dob_id] => 0
-    // [nid_dob_check] => 0
-    // [exp_factory_name] => 
-    // [exp_duration] => 
-    // [exp_dasignation] => 0
-    // [personal_mobile] => 
-    // [bank_bkash_no] => 
-    // [img_source] => scan0044.jpg
 
 	function get_emp_info($emp_id){
 		// dd($emp_id);

@@ -1,7 +1,7 @@
-<div class="content" style="padding-top: 10px;">
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
+<div class="content">
+    <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
+            <div class="navbar-header col-md-3" style="padding: 7px;">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -9,16 +9,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/designation')?>">Back To
-                    List</a>
+                <div>
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/designation') ?>">
+                        < < Back</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con')?>">Home</a></li>
-                </ul>
+            <div class="col-md-6">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="">
+                        <form class="navbar-form pull-right" role="search">
+                            <div class="input-group">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
+            <!--/.nav-collapse -->
         </div>
+        <!--/.container-fluid -->
     </nav>
+
     <div class="row">
         <div class="col-md-12">
             <?php
@@ -32,14 +43,15 @@
             ?>
         </div>
     </div>
-    <h3>Create Designation</h3>
-    <hr>
+    <!-- <h3>Create Designation</h3> -->
+    <!-- <hr> -->
     <form action="<?= base_url('index.php/setup_con/designation_add')?>" enctype="multipart/form-data"
         method="post">
             <div class="tablebox">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
+                            <label for="unit">Unit</label>
                             <select name="unit_id" onchange="get_data();getDepertment(this.value)" id="unit_id" class="form-control input-lg select22">
                                 <option value="">Select Unit</option>
                                 <?php foreach ($pr_units as $key => $value) {?>
@@ -51,6 +63,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
+                            <label for="unit">Select Attendance Bonus</label>
                             <select name="attn_id"  id="attn_id" class="form-control input-lg  select22">
                                 <option value="">Select Attendance Bonus</option>
                             </select>
@@ -59,6 +72,7 @@
                     </div>
                     <div class="col-md-4">
                             <div class="form-group">
+                            <label for="unit">Select Holyday/Weekend</label>
                             <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg select22">
                                 <option value="">Select Holyday/Weekend</option>
                             </select>
@@ -69,6 +83,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
+                            <label for="unit">Select Iftar Allowance</label>
                             <select name="iftar_id"  id="iftar_id" class="form-control input-lg select22">
                                 <option value="">Select Iftar Allowance</option>
                             </select>
@@ -77,6 +92,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
+                            <label for="unit">Select Night Allowance</label>
                             <select name="night_al_id"  id="night_al_id" class="form-control input-lg select22">
                                 <option value="">Select Night Allowance</option>
                             </select>
@@ -84,7 +100,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                                        <div class="form-group">
+                        <div class="form-group">
+                            <label for="unit">Select Tiffin Allowance</label>
                             <select name="tiffin_id"  id="tiffin_id" class="">
                                 <option value="">Select Tiffin Allowance</option>
                             </select>

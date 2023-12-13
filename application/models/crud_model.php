@@ -81,7 +81,7 @@ class Crud_model extends CI_Model{
     function getdept($deptId)
     {
         $this->db->where('dept_id',$deptId);
-        return $this->db->get('pr_dept')->row();
+        return $this->db->get('emp_depertment')->row();
     }
 
     function dept_fetch()
@@ -103,7 +103,7 @@ class Crud_model extends CI_Model{
             );
             // print_r($comData);exit('obaydullah');
 
-              $this->db->insert('pr_dept',$comData);
+              $this->db->insert('emp_depertment',$comData);
 
         }
 
@@ -117,14 +117,14 @@ class Crud_model extends CI_Model{
              $formArray['unit_id'] = $this->input->post('dept');
 
              $this->db->where('dept_id',$deptId);
-             $this->db->update('pr_dept',$formArray);
+             $this->db->update('emp_depertment',$formArray);
 
         }
 
      function dept_delete($deptId)
         {
             $this->db->where('dept_id',$deptId);
-            $this->db->delete('pr_dept');
+            $this->db->delete('emp_depertment');
         }
 
 
@@ -630,7 +630,7 @@ class Crud_model extends CI_Model{
 
      function getsalgrd($salgrdId)
     {
-        $this->db->where('gr_id',$salgrdId);
+        $this->db->where('id',$salgrdId);
         return $this->db->get('pr_grade')->row();
     }
 
@@ -656,9 +656,7 @@ class Crud_model extends CI_Model{
         {
 
             $comData = array(
-                'gr_name' => $fromArray['name'],
-                'gr_name_bn' => $fromArray['bname'],
-
+                'gr_name' => $fromArray['gr_name'],
 
             );
             // print_r($comData);exit('obaydullah');
@@ -672,18 +670,16 @@ class Crud_model extends CI_Model{
         {
              $formArray = array();
 
-             $formArray['gr_name'] = $this->input->post('name');
-             $formArray['gr_name_bn'] = $this->input->post('bname');
+             $formArray['gr_name'] = $this->input->post('gr_name');
 
-
-             $this->db->where('gr_id',$salgrdId);
+             $this->db->where('id',$salgrdId);
              $this->db->update('pr_grade',$formArray);
 
         }
 
      function salgrd_delete($salgrdId)
         {
-            $this->db->where('gr_id',$salgrdId);
+            $this->db->where('id',$salgrdId);
             $this->db->delete('pr_grade');
         }
 
@@ -697,7 +693,7 @@ class Crud_model extends CI_Model{
     {
         $this->db->select('pr_emp_shift_schedule.*,pr_units.unit_name');
         $this->db->join('pr_units','pr_units.unit_id = pr_emp_shift_schedule.unit_id');
-        $this->db->where('shift_id',$shiftscheduleId);
+        $this->db->where('pr_emp_shift_schedule.id',$shiftscheduleId);
         return $this->db->get('pr_emp_shift_schedule')->row();
     }
 
@@ -759,14 +755,14 @@ class Crud_model extends CI_Model{
              $formArray['two_hour_ot_out_time'] = $this->input->post('twohrottime');
 
 
-             $this->db->where('shift_id',$shiftscheduleId);
+             $this->db->where('id',$shiftscheduleId);
              $this->db->update('pr_emp_shift_schedule',$formArray);
 
         }
 
      function shiftschedule_delete($shiftscheduleId)
         {
-            $this->db->where('shift_id',$shiftscheduleId);
+            $this->db->where('id',$shiftscheduleId);
             $this->db->delete('pr_emp_shift_schedule');
         }
 
@@ -781,7 +777,7 @@ class Crud_model extends CI_Model{
      function getshiftmanagement($shiftmanagementId)
     {
         $this->db->select('pr_emp_shift.*');
-        // $this->db->join('pr_emp_shift_schedule','pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_id');
+        // $this->db->join('pr_emp_shift_schedule','pr_emp_shift_schedule.id = pr_emp_shift.id');
         $this->db->where('id',$shiftmanagementId);
         return $this->db->get('pr_emp_shift')->row();
     }
@@ -790,7 +786,7 @@ class Crud_model extends CI_Model{
     {
         $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_shift.*,pr_emp_shift_schedule.sh_type,unit_name', false);
         $this->db->from('pr_emp_shift');
-        $this->db->join('pr_emp_shift_schedule','pr_emp_shift_schedule.shift_id = pr_emp_shift.shift_duty');
+        $this->db->join('pr_emp_shift_schedule','pr_emp_shift_schedule.id = pr_emp_shift.shift_duty');
 
         return $this->db->get()->result_array();
         
@@ -1121,28 +1117,28 @@ function weekend_infos(){
     //==========================Leave Delete=================================//
 
 
-    function leave_del_infos($limit,$start){
-        $this->db->select('SQL_CALC_FOUND_ROWS pr_leave_trans.*,pr_units.unit_name', false);
+    function leave_del_infos($limit,$start,$searchQuery){
+        $this->db->select('SQL_CALC_FOUND_ROWS pr_leave_trans.*,pr_units.unit_name,pr_emp_per_info.name_en', false);
         $this->db->from('pr_leave_trans');
-        $this->db->join('pr_units','pr_units.unit_id = pr_leave_trans.unit_id');
-        // $this->db->limit(10);
-        // $this->db->limit($limit,$start);
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_leave_trans.unit_id');
+        $this->db->join('pr_emp_com_info', 'pr_emp_com_info.emp_id = pr_leave_trans.emp_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_com_info.id = pr_emp_per_info.emp_id');
+        $this->db->limit($limit, $start);
+
+        if ($searchQuery != '') {
+            $this->db->like('pr_emp_per_info.name_en', $searchQuery);
+        }
         $query = $this->db->get()->result_array();
-
+        
         return $query;
-
     }
 
-
-    function getleavedel($leaveId)
-    {
+    function getleavedel($leaveId){
         $this->db->where('id',$leaveId);
         return $this->db->get('pr_leave_trans')->row();
     }
 
-
-    function leave_delete($leaveId)
-    {
+    function leave_delete($leaveId){
         $this->db->where('id',$leaveId);
         $this->db->delete('pr_leave_trans');
     }
@@ -1152,7 +1148,7 @@ function weekend_infos(){
 
 
     function left_del_infos($limit,$start){
-      $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_left_history.*,per.emp_full_name,com.emp_join_date,pr_units.unit_name', false);
+      $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_left_history.*,per.name_en,com.emp_join_date,pr_units.unit_name', false);
       $this->db->from('pr_emp_left_history');
       $this->db->join('pr_units','pr_units.unit_id = pr_emp_left_history.unit_id');
       $this->db->join('pr_emp_per_info as per','per.emp_id = pr_emp_left_history.emp_id');

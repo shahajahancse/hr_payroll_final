@@ -1,8 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Company Info</title>
+
 <link href="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -24,51 +20,10 @@ function enableemstate() {
 document.getElementById('empstat').disabled=false;
 }
 </script>
-<style type="text/css">
-.cominfo td{
-font-weight:bold;
 
-}
-form input:focus,form textarea:focus,form select:focus {
-  border:1px solid #666;
-  background:#e3f1f1;
-  }
-  select, input, textarea, button {outline:solid 1px gray; resize:none; padding:1px;}
-
-p.flip
-{
-margin:2px;
-text-align:center;
-background: #555555;
-border:solid 1px #c3c3c3;
-border-radius:4px;
-width:670px;
-float: left;
-height:22px;
-position:relative;
-left:25px;
-
-color: #66CC66;
-
-}
-div.panel
-{
-position: relative;
-right: 75px;
-width: 669px;
-height:35px;
-background:#AAAAAA;
-display:none;
-border-radius:4px;
-}
-/*.form-control {
-  height: 25px !important;
-}*/
-</style>
-</head>
 
 <body bgcolor="#ECE9D8">
-<div align="center" style=" width:900px; overflow:hidden;" >
+<div class="content" >
 <div id="error_id" style="display:none; color:red;">
 <?php echo $validation_errors =  validation_errors(); ?>
 </div>
@@ -247,5 +202,4 @@ if($validation_errors != '')
 <!--  </div>
 --></div>
 <?php if($this->input->post('pi_edit')) {echo "<SCRIPT LANGUAGE=\"JavaScript\">document.cominfo.pi_edit.disabled = false; document.cominfo.pi_save.disabled = true;</SCRIPT>";} ?>
-</body>
-</html>
+

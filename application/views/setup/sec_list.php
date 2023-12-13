@@ -1,17 +1,40 @@
+
+<style>
+    #mytable {
+        border-collapse: collapse;
+    }
+
+    #mytable, th, td {
+        border: 1px solid #b0c0df;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+    .table td {
+        padding: 0px 3px !important;
+        font-size: 13px;
+      
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        border-bottom: none;
+    }
+    table.dataTable tbody th, table.dataTable tbody td {
+      padding: 4px !important;
+      
+    }
+    .center-text {
+        vertical-align: center;
+        padding: 5px 10px;
+        /* line-height: 40px; Should be equal to the button's height */
+    }
+</style>
+
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5" style="padding: 7px;">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/sec_add') ?>">Add Section</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -44,21 +67,21 @@
             <?php
                 }
                 ?>
-
         </div>
     <!-- <br> -->
-    <div class="row tablebox">
-        <h1>Section List</h1>
-        <div class="col-md-12">
-
-            <table class="table table-striped" id="mytable">
+    <div div id="target-div" class="row tablebox">
+        <div class="col-md-6" style="margin-left:-16px">
+          <h4 style="font-weight:bold">Section List</h4>
+        </div>
+        <!-- <div class="col-md-12"> -->
+            <table class="table" id="mytable">
                 <thead>
                     <tr>
-                        <th>SL</th>
-                        <th>Section Name Bangla </th>
-                        <th>Section Name English </th>
-                        <th>Department</th>
-                        <th>Company Unit</th>
+                        <th style="white-space: nowrap;">Sl. No.</th>
+                        <th style="white-space: nowrap;">Section Name Bangla </th>
+                        <th style="white-space: nowrap;">Section Name English </th>
+                        <th style="white-space: nowrap;">Department</th>
+                        <th style="white-space: nowrap;">Company Unit</th>
                         <th width="80">Edit</th>
                         <th>Delete</th>
 
@@ -66,21 +89,20 @@
                 </thead>
                 <tbody>
                     <?php
-                              if (!empty($pr_sec)) {foreach ($pr_sec as $key=>$pr_secs) {?>
+                        if (!empty($pr_sec)) {foreach ($pr_sec as $key=>$pr_secs) {?>
                     <tr>
                         <td><?php echo $key+1  ?></td>
-                        <td><?php echo $pr_secs['sec_name_bn'] ?></td>
-                        <td><?php echo $pr_secs['sec_name_en'] ?></td>
-                        <td><?php echo $pr_secs['dept_name'] ?></td>
-                        <td><?php echo $pr_secs['unit_name'] ?></td>
+                        <td style="white-space: nowrap;"><?php echo $pr_secs['sec_name_bn'] ?></td>
+                        <td style="white-space: nowrap;"><?php echo $pr_secs['sec_name_en'] ?></td>
+                        <td style="white-space: nowrap;"><?php echo $pr_secs['dept_name'] ?></td>
+                        <td style="white-space: nowrap;"><?php echo $pr_secs['unit_name'] ?></td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/sec_edit') . '/' . $pr_secs["id"]?>"
-                                class="btn btn-primary" role="button">Edit</a>
+                                class="btn btn-primary center-text" role="button">Edit</a>
                         </td>
-
                         <td>
                             <a href="<?=base_url('index.php/setup_con/sec_delete') . '/' . $pr_secs["id"]?>"
-                                class="btn btn-danger" role="button">Delete</a>
+                                class="btn btn-danger center-text" role="button">Delete</a>
 
                         </td>
                     </tr>
@@ -93,7 +115,7 @@
 
                 </tbody>
             </table>
-        </div>
+        <!-- </div> -->
     </div>
     <br><br>
 </div>

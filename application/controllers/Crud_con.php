@@ -11,6 +11,7 @@ class Crud_con extends CI_Controller
 
         $this->load->model('common_model');
         $this->load->model('crud_model');
+          $this->data['user_data'] = $this->session->userdata('data');
 
     }
 
@@ -350,24 +351,19 @@ class Crud_con extends CI_Controller
     {
 
         $this->load->library('form_validation');
-        // $data['salgrd'] = $this->crud_model->salgrd_fetch();
 
-        $this->form_validation->set_rules('name', 'salgrd Rule Name', 'trim|required');
-        $this->form_validation->set_rules('bname', 'salgrd Name Bangla', 'trim|required');
-
+        $this->form_validation->set_rules('gr_name', 'salgrd Rule Name', 'trim|required');
         if ($this->form_validation->run() == false) {
-
-            $this->load->view('salgrd_add');
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'salgrd_add';
+            $this->load->view('layout/template', $this->data);
         } else {
-            // print_r($_FILES['logoAAAAA']);
-            // print_r($_POST);exit();
+
             $formArray = array();
-            $formArray['name'] = $this->input->post('name');
-            $formArray['bname'] = $this->input->post('bname');
+            $formArray['gr_name'] = $this->input->post('gr_name');
 
             $this->crud_model->salgrd_add($formArray);
-            $this->session->set_flashdata('success', 'Record adder successfully!');
-            //alert('Record adder successfully!');
+            $this->session->set_flashdata('success', 'Record added successfully!');
             redirect(base_url() . 'index.php/setup_con/salary_grade');
 
         }
@@ -380,28 +376,19 @@ class Crud_con extends CI_Controller
         $this->load->model('crud_model');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('name', 'salgrd Name', 'trim|required');
-        $this->form_validation->set_rules('bname', 'salgrd Name Bangla', 'trim|required');
-
-        // $data['salgrd'] = $this->crud_model->salgrd_fetch();
-
+        $this->form_validation->set_rules('gr_name', 'salgrd Name', 'trim|required');
         if ($this->form_validation->run() == false) {
-
-            $data['pr_grade'] = $this->crud_model->getsalgrd($salgrdId);
-            // print_r($data);
-
-            $this->load->view('salgrd_edit', $data);
-
+            $this->data['title'] = 'Edit Salary Grade';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['pr_grade'] = $this->crud_model->getsalgrd($salgrdId);
+            $this->data['subview'] = 'salgrd_edit';
+            $this->load->view('layout/template', $this->data);
         } else {
             $this->crud_model->salgrd_edit($salgrdId);
             $this->session->set_flashdata('success', 'Record Updated successfully!');
-
             redirect('/setup_con/salary_grade');
-
         }
-
     }
-
     public function salgrd_delete($salgrdId)
     {
         $this->load->model('crud_model');
@@ -550,22 +537,25 @@ class Crud_con extends CI_Controller
 
 //==============================================Tax & Others===================================================//
 
-    public function taxnother_add()
-    {
-
+    public function taxnother_add(){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
-        $data['taxnother'] = $this->crud_model->units();
-
+        $this->data['taxnother'] = $this->crud_model->units();
+        // = $taxnother;
+        // dd($this->data);
+        
         $this->form_validation->set_rules('unit', 'taxnother Unit', 'trim|required');
         $this->form_validation->set_rules('empid', 'taxnother EMP ID', 'trim|required');
         $this->form_validation->set_rules('tax', 'taxnother Tax Amount', 'trim|required');
         $this->form_validation->set_rules('other', 'taxnother Other', 'trim|required');
         $this->form_validation->set_rules('date_out', 'taxnother Month', 'trim|required');
-
+        
         if ($this->form_validation->run() == false) {
-
-            $this->load->view('taxnother_add', $data);
+            // $this->load->view('taxnother_add', $data);
+            $this->data['user_data'] = $this->session->userdata('data');
+            $this->data['username'] = $this->data['user_data']->id_number;  
+            $this->data['subview'] = 'taxnother_add';
+            $this->load->view('layout/template', $this->data);
         } else {
             // print_r($_FILES['logoAAAAA']);
             // print_r($_POST);exit();

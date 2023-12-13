@@ -447,14 +447,14 @@ class Earn_leave_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from("$table_name");
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
 		
 		$this->db->where_in("$table_name.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -521,14 +521,14 @@ class Earn_leave_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from("$table_name");
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
 		
 		$this->db->where_in("$table_name.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');

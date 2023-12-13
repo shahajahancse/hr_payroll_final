@@ -66,9 +66,9 @@
 		{
 			$data = array();
 			$this->db->select('*');
-	        $this->db->from('pr_dept');
-	        $pr_dept = $this->db->get()->num_rows();
-	        $data['department'] = $pr_dept;
+	        $this->db->from('emp_depertment');
+	        $emp_depertment = $this->db->get()->num_rows();
+	        $data['department'] = $emp_depertment;
 
 	        $this->db->select('*');
             $this->db->from('pr_section');
@@ -92,10 +92,10 @@
 		{
 			$data = array();
 			$this->db->select('*');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->order_by('dept_id', 'asc');
-			$pr_dept = $this->db->get()->result();
-			$data['department'] = $pr_dept;
+			$emp_depertment = $this->db->get()->result();
+			$data['department'] = $emp_depertment;
 
 			$this->db->select('*');
 			$this->db->from('pr_section');

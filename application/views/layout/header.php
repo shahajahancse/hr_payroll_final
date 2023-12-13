@@ -371,7 +371,7 @@ table.dataTable.no-footer {
 }
 
 select {
-    height: 37px !important;
+    height: 29px !important;
     padding: 2px !important;
     border: 1px solid #0aa699 !important;
 }

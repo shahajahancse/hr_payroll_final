@@ -27,12 +27,13 @@ class Acl_model extends CI_Model{
 	}
 
 
-	function get_acl_list($user_id)
-	 {
+	function get_acl_list($user_id){
+		// dd($user_id);
 	 	$data = array();
 		$this->db->select("acl_id");
 		$this->db->where('username_id',$user_id);
 		$query = $this->db->get('member_acl_level');
+		// dd($query->result());
 		foreach($query->result() as $rows)
 		{
 			$data[] = $rows->acl_id;
@@ -40,16 +41,20 @@ class Acl_model extends CI_Model{
 		return $data;
 	}
 
-
-
 	 //  old code
-	function get_user_id($username)
-	{
+	function get_user_id($username){
 		$this->db->select("id");
-		$this->db->where('id_number ',$username);
+		$this->db->where('id_number', $username);
 		$query = $this->db->get('members');
-		$row = $query->row();
-		return $user_id = $row->id;
+
+		if ($query->num_rows() > 0) {
+			$row = $query->row();
+			$user_id = $row->id;
+			return $user_id;
+		} else {
+			return null; 
+		}
+
 	}
 }
 ?>

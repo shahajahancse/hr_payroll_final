@@ -460,7 +460,7 @@ function get_checked_value(checkboxes) {
 
 <script>
 function add_weekend() {
-    $("#loader").show();
+    
     var checkboxes = document.getElementsByName('select_emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql == '') {
@@ -502,7 +502,7 @@ function add_weekend() {
 </script>
 <script>
 function get_leave_balance() {
-    $("#loader").show();
+    
     var checkboxes = document.getElementsByName('select_emp_id[]');
     var sql = get_checked_value(checkboxes);
     let numbersArray = sql.split(",");
@@ -527,7 +527,7 @@ function get_leave_balance() {
     }
     $.ajax({
         type: "POST",
-        url: hostname + "entry_system_con/leave_balance_ajax",
+        url: hostname + "entry_system_con/leave_balance_ajax", 
         data: {
             emp_id: numbersArray[0],
             year: bal_get_year
@@ -574,7 +574,7 @@ $("#leave_entry, #leave_balance_check").hide();
 <script>
 function leave_add(e) {
     e.preventDefault();
-    $("#loader").show();
+    
     var checkboxes = document.getElementsByName('select_emp_id[]');
     var sql = get_checked_value(checkboxes);
     let numbersArray = sql.split(",");

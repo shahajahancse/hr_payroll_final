@@ -1,14 +1,35 @@
+
+<style>
+    #mytable {
+        border-collapse: collapse;
+    }
+
+    #mytable, th, td {
+        border: 1px solid #b0c0df;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+    .table td {
+        padding: 0px 3px !important;
+        font-size: 13px;
+        width: 100%;
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        border-bottom: none;
+    }
+    thead th{
+        white-space: nowrap;
+    }
+    .center-text {
+        vertical-align: center;
+        padding: 5px 10px;
+        /* line-height: 40px; Should be equal to the button's height */
+    }
+</style>
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-6">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/company_add') ?>">Add Company
                         Info</a>
@@ -51,8 +72,11 @@
     </div>
     <!-- <br> -->
     <div class="row tablebox">
-        <div class="col-md-12">
-            <table class="table table-striped" id="mytable">
+            <div class="col-md-6" style="margin-left:-16px">
+                <h4 style="font-weight:bold">Company Info List</h4>
+            </div>
+        <!-- <div class="col-md-12"> -->
+            <table class="table" id="mytable">
                 <thead>
                     <tr>
                         <th>Company Name </th>
@@ -66,8 +90,7 @@
                 </thead>
                 <tbody>
                     <?php
-                            if (!empty($company_infos)) {foreach ($company_infos as $cominfos) {?>
-
+                        if (!empty($company_infos)) {foreach ($company_infos as $cominfos) {?>
                     <tr>
                         <td><?php echo $cominfos['company_name_bangla'] ?></td>
                         <td><?php echo $cominfos['company_add_bangla'] ?></td>
@@ -75,14 +98,12 @@
                         <td><img width="55" height="55" src="<?=base_url()?>images/<?=$cominfos['company_logo']?>" />
                         </td>
                         <td><img width="55" height="55"
-                                src="<?=base_url()?>images/<?=$cominfos['company_signature']?>" /></td>
+                            src="<?=base_url()?>images/<?=$cominfos['company_signature']?>" /></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/company_edit') . '/' . $cominfos["id"]?>"
-                                class="btn btn-primary" role="button">Edit</a>
+                            <a href="<?=base_url('index.php/setup_con/company_edit') . '/' . $cominfos["id"]?>" class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/company_delete') . '/' . $cominfos["id"]?>"
-                                class="btn btn-danger" role="button">Delete</a>
+                            <a href="<?=base_url('index.php/setup_con/company_delete') . '/' . $cominfos["id"]?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php }} else {?>
@@ -92,7 +113,7 @@
                     <?php }?>
                 </tbody>
             </table>
-        </div>
+        <!-- </div> -->
     </div>
 </div>
 <script type="text/javascript">

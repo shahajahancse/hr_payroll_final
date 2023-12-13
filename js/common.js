@@ -1,6 +1,3 @@
-// ===========================================
-// Salary Structure
-// ===========================================
 function salary_structure_cal(){
    var ajaxRequest;  // The variable that makes Ajax possible!
    try{
@@ -20,8 +17,8 @@ function salary_structure_cal(){
          }
       }
    }
-
    var gsal = document.getElementById('gross_sal').value;
+   var com_gsal = document.getElementById('com_gross_sal').value;
    //==================================BGMEA Salary Rule=================================
    today = new Date().toISOString().slice(0, 10);
    if (today > '2023-12-01') {
@@ -33,26 +30,32 @@ function salary_structure_cal(){
       var trans_allow = 350;
       var lunch_allow = 900;
    }
-
    document.getElementById('medical').value = mallow;
    document.getElementById('trans_allow').value = trans_allow;
    document.getElementById('food').value = lunch_allow;
 
-   var bsal = Math.round((gsal - (mallow + trans_allow + lunch_allow)) / 1.5);
-   document.getElementById('basic_sal').value = bsal;
+   document.getElementById('medicall').value = mallow;
+   document.getElementById('trans_alloww').value = trans_allow;
+   document.getElementById('foodd').value = lunch_allow;
 
-   // var hrent = Math.round(bsal * 0.5);
-   var hrent = Math.round(gsal - (mallow + trans_allow + lunch_allow + bsal));
-   document.getElementById('house_rent').value = hrent;
+
+   if (gsal) { 
+      var bsal = Math.round((gsal - (mallow + trans_allow + lunch_allow)) / 1.5);
+      document.getElementById('basic_sal').value = bsal;
+      var hrent = Math.round(gsal - (mallow + trans_allow + lunch_allow + bsal));
+      document.getElementById('house_rent').value = hrent;
+   }
+   if(com_gsal) { 
+      var com_bsal = Math.round((com_gsal - (mallow + trans_allow + lunch_allow)) / 1.5);
+      document.getElementById('basic_sall').value = com_bsal;
+      var com_hrent = Math.round(com_gsal - (mallow + trans_allow + lunch_allow + com_bsal));
+      document.getElementById('house_rentt').value = com_hrent;
+   }
+
    //==================================LOCAL Salary Rule==================================
 }
 
-// ===========================================
-// Attendance Process
-// ===========================================
-function attendance_process()
-{
-
+function attendance_process(){
    var ajaxRequest = new XMLHttpRequest();
    unit_id = document.getElementById('unit_id').value;
    if(unit_id == '')
@@ -120,4 +123,3 @@ function loading_open() {
 function loading_close() {
     $('#loader').css('display', 'none');
 }
-

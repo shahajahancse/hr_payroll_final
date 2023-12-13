@@ -6,6 +6,7 @@ class Left_resign_con extends CI_Controller {
 		parent::__construct();
 		$this->load->model('left_resign_model');
 		$this->load->model('common_model');
+		$this->data['user_data'] = $this->session->userdata('data');
 		
 	}
 	//------------------------------------------------
@@ -13,7 +14,10 @@ class Left_resign_con extends CI_Controller {
 	//------------------------------------------------
 	function left_resign_entry()
 	{
-		$this->load->view('form/left_resign_view');
+		$this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'form/left_resign_view';
+		$this->load->view('layout/template', $this->data);
+		// $this->load->view('form/left_resign_view');
 
 	}
 	function search_empid_for_resign_left()

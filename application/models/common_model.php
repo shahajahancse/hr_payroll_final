@@ -558,7 +558,7 @@ class Common_model extends CI_Model{
 	{
 		$this->db->select('dept_name');
 		$this->db->where('dept_id',$dept_id);
-		$query = $this->db->get('pr_dept');
+		$query = $this->db->get('emp_depertment');
 		$row = $query->row();
 		return $row->dept_name;
 	}

@@ -28,7 +28,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -36,7 +36,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -51,11 +51,11 @@ class Grid_model extends CI_Model{
 
 	function grid_nominee($grid_emp_id)
 	{
-		$this->db->select('pr_emp_skill.*,pr_emp_edu.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name,pr_dept.dept_bangla, pr_section.sec_name, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname_bn, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add_ban');
+		$this->db->select('pr_emp_skill.*,pr_emp_edu.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.sec_name, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname_bn, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add_ban');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -66,7 +66,7 @@ class Grid_model extends CI_Model{
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -83,11 +83,11 @@ class Grid_model extends CI_Model{
 
 	function grid_requitement_form($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name,pr_dept.dept_bangla, pr_section.sec_name,pr_section.sec_bangla, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.*');
+		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.sec_name,pr_section.sec_bangla, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
@@ -95,7 +95,7 @@ class Grid_model extends CI_Model{
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -109,11 +109,11 @@ class Grid_model extends CI_Model{
 
 	function grid_verification_report($grid_emp_id)
 	{
-		$this->db->select('pr_emp_edu.*,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name,pr_dept.dept_bangla, pr_section.*, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.*');
+		$this->db->select('pr_emp_edu.*,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.*, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
@@ -124,7 +124,7 @@ class Grid_model extends CI_Model{
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -142,11 +142,11 @@ class Grid_model extends CI_Model{
 	function first_letter_of_maternity_leave($grid_firstdate,$grid_emp_id)
 	{
 		//print_r($grid_emp_id);
-		$this->db->select('pr_emp_blood_groups.blood_name,pr_emp_position.posi_name,pr_emp_skill.*,pr_emp_edu.*,pr_emp_per_info.no_child,pr_emp_sex.sex_nam_bng,pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name,pr_dept.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add,pr_emp_add.emp_pre_add_ban, pr_emp_add.emp_par_add,pr_emp_add.emp_par_add_ban,pr_emp_per_info.emp_dob,pr_emp_per_info.emp_religion,pr_religions.religion_name');
+		$this->db->select('pr_emp_blood_groups.blood_name,pr_emp_position.posi_name,pr_emp_skill.*,pr_emp_edu.*,pr_emp_per_info.no_child,pr_emp_sex.sex_nam_bng,pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add,pr_emp_add.emp_pre_add_ban, pr_emp_add.emp_par_add,pr_emp_add.emp_par_add_ban,pr_emp_per_info.emp_dob,pr_emp_per_info.emp_religion,pr_religions.religion_name');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -161,7 +161,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_per_info.emp_religion = pr_religions.religion_id');
 		$this->db->where('pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
@@ -523,11 +523,11 @@ class Grid_model extends CI_Model{
 
 	function grid_job_description($grid_emp_id)
 	{
-		$this->db->select('pr_emp_job_desc.description,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name,pr_dept.dept_bangla, pr_section.*, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add');
+		$this->db->select('pr_emp_job_desc.description,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.*, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
@@ -538,7 +538,7 @@ class Grid_model extends CI_Model{
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -554,12 +554,12 @@ class Grid_model extends CI_Model{
 
 	function grid_age_estimation($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*');
 
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -568,7 +568,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
@@ -577,12 +577,12 @@ class Grid_model extends CI_Model{
 
 	function bando_certificate_report($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*');
 
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -591,7 +591,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
@@ -601,11 +601,11 @@ class Grid_model extends CI_Model{
 
 	function one_month_settel_paid_report($grid_emp_id,$year_month)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_dept.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_line_num.line_name ,pr_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet_com.* ,pr_emp_per_info.bangla_nam');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_line_num.line_name ,pr_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet_com.* ,pr_emp_per_info.bangla_nam');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
@@ -619,7 +619,7 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
@@ -643,12 +643,12 @@ class Grid_model extends CI_Model{
 
 	function grid_drugscreening_report($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*,pr_emp_operation.ope_name,pr_emp_position.posi_name');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*,pr_emp_operation.ope_name,pr_emp_position.posi_name');
 
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -659,7 +659,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_operation_id = pr_emp_operation.ope_id');
 		$this->db->where('pr_emp_com_info.emp_position_id = pr_emp_position.posi_id');
@@ -672,12 +672,12 @@ class Grid_model extends CI_Model{
 
 	function ackknowledgement_report($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*');
 
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -686,7 +686,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		return $query = $this->db->get();
@@ -695,12 +695,12 @@ class Grid_model extends CI_Model{
 
 	function earnl_payment($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.*');
 
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -709,7 +709,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
@@ -727,7 +727,7 @@ class Grid_model extends CI_Model{
 		echo $check_date = date('Y-m-d',$check_date);
 
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add');
 
 		$this->db->from('pr_emp_com_info');
 
@@ -736,7 +736,7 @@ class Grid_model extends CI_Model{
 		$this->db->join('pr_emp_add','pr_emp_add.emp_id = pr_emp_com_info.emp_id');
 		$this->db->join('pr_emp_resign_history','pr_emp_resign_history.emp_id = pr_emp_com_info.emp_id');
 		$this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id');
-		$this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id');
+		$this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id');
 		$this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id');
 		$this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id');
 		$this->db->join('pr_id_proxi','pr_id_proxi.emp_id = pr_emp_com_info.emp_id');
@@ -859,12 +859,12 @@ class Grid_model extends CI_Model{
 		{
 			$emp_id = $rows->emp_id;
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
 
 		    $this->db->from('pr_emp_com_info');
 		    $this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id',LEFT);
 		    $this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id',LEFT);
-		    $this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id',LEFT);
+		    $this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id',LEFT);
 		    $this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id',LEFT);
 		    $this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id',LEFT);
 		    $this->db->join('pr_id_proxi','pr_id_proxi.emp_id = pr_emp_com_info.emp_id',LEFT);
@@ -1000,13 +1000,13 @@ class Grid_model extends CI_Model{
 		{
 			$emp_id = $rows->emp_id;
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, adds.mobile, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, adds.mobile, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
 
 			$this->db->from('pr_emp_com_info');
 
 			 $this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id',LEFT);
 		    $this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id',LEFT);
-		    $this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id',LEFT);
+		    $this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id',LEFT);
 		    $this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id',LEFT);
 		    $this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id',LEFT);
 		    $this->db->join('pr_id_proxi','pr_id_proxi.emp_id = pr_emp_com_info.emp_id',LEFT);
@@ -1110,14 +1110,14 @@ class Grid_model extends CI_Model{
 	}
 
 	function grid_per_file($grid_emp_id){
-		$this->db->select('pr_emp_blood_groups.*,pr_line_num.*,pr_emp_add.*,pr_emp_com_info.*,pr_emp_per_info.*, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_bangla,pr_emp_skill.*');
+		$this->db->select('pr_emp_blood_groups.*,pr_line_num.*,pr_emp_add.*,pr_emp_com_info.*,pr_emp_per_info.*, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_bangla,pr_emp_skill.*');
 
 		$this->db->from('pr_emp_com_info');
 		$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->join('pr_emp_per_info','pr_emp_com_info.emp_id = pr_emp_per_info.emp_id','LEFT');
 		$this->db->join('pr_emp_blood_groups','pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id','LEFT');
 		$this->db->join('pr_designation','pr_emp_com_info.emp_desi_id = pr_designation.desig_id','LEFT');
-		$this->db->join('pr_dept','pr_emp_com_info.emp_dept_id = pr_dept.dept_id','LEFT');
+		$this->db->join('emp_depertment','pr_emp_com_info.emp_dept_id = emp_depertment.dept_id','LEFT');
 		$this->db->join('pr_section','pr_emp_com_info.emp_sec_id = pr_section.sec_id','LEFT');
 		$this->db->join('pr_line_num','pr_emp_com_info.emp_line_id = pr_line_num.line_id','LEFT');
 		$this->db->join('pr_emp_add','pr_emp_com_info.emp_id = pr_emp_add.emp_id','LEFT');
@@ -1167,18 +1167,18 @@ class Grid_model extends CI_Model{
 		{
 			$emp_id = $rows->emp_id;
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
 			$this->db->from('pr_emp_shift');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -1274,11 +1274,11 @@ class Grid_model extends CI_Model{
 	function grid_daily_holiday_weekend_present_report($year,$month,$date,$status,$grid_emp_id)
 	{
 		$day = $year."-".$month."-".$date;
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id,pr_emp_shift_log.in_time,pr_emp_shift_log.out_time');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id,pr_emp_shift_log.in_time,pr_emp_shift_log.out_time');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -1287,7 +1287,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -1337,11 +1337,11 @@ class Grid_model extends CI_Model{
 	function grid_daily_holiday_weekend_absent_report($year,$month,$date,$status,$grid_emp_id)
 	{
 		$day = $year."-".$month."-".$date;
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id,pr_emp_shift_log.in_time,pr_emp_shift_log.out_time');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id,pr_emp_shift_log.in_time,pr_emp_shift_log.out_time');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -1350,7 +1350,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -2103,7 +2103,7 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("pr_line_num.line_name");
 		$this->db->order_by("pr_attn_monthly.emp_id");*/
 
-		/*$this->db->order_by("pr_dept.dept_name");
+		/*$this->db->order_by("emp_depertment.dept_name");
 		$this->db->order_by("pr_section.sec_name");
 		$this->db->order_by("pr_line_num.line_name");
 		$this->db->order_by("pr_designation.desig_name");
@@ -2125,11 +2125,11 @@ class Grid_model extends CI_Model{
 
 			$status = $rows->$date_field2;
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
@@ -2137,14 +2137,14 @@ class Grid_model extends CI_Model{
 			//$this->db->from("pr_emp_status");
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_shift.shift_id = pr_emp_com_info.emp_shift');
 			$this->db->where("pr_emp_per_info.emp_id = '$emp_id'");
 
-			//$this->db->order_by("pr_dept.dept_name","ASC");
+			//$this->db->order_by("emp_depertment.dept_name","ASC");
 			//$this->db->order_by("pr_section.sec_name","ASC");
 			//$this->db->order_by("pr_line_num.line_name","ASC");
 			//$this->db->order_by("pr_emp_com_info.emp_id","ASC");
@@ -2282,11 +2282,11 @@ class Grid_model extends CI_Model{
 
 			$status = $rows->$date_field2;
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			// $this->db->from('pr_floor');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
@@ -2295,7 +2295,7 @@ class Grid_model extends CI_Model{
 			//$this->db->from("pr_emp_status");
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			// $this->db->where('pr_emp_com_info.emp_floor_id = pr_floor.floor_id');
@@ -2443,11 +2443,11 @@ class Grid_model extends CI_Model{
 
 			$status = $rows->$date_field2;
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
@@ -2455,14 +2455,14 @@ class Grid_model extends CI_Model{
 			//$this->db->from("pr_emp_status");
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_shift.shift_id = pr_emp_com_info.emp_shift');
 			$this->db->where("pr_emp_per_info.emp_id = '$emp_id'");
 
-			//$this->db->order_by("pr_dept.dept_name","ASC");
+			//$this->db->order_by("emp_depertment.dept_name","ASC");
 			//$this->db->order_by("pr_section.sec_name","ASC");
 			//$this->db->order_by("pr_line_num.line_name","ASC");
 			//$this->db->order_by("pr_emp_com_info.emp_id","ASC");
@@ -2811,13 +2811,13 @@ class Grid_model extends CI_Model{
 	{
 		$data =array();
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name ,pr_emp_com_info.emp_cat_id,pr_emp_shift_log.in_time');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name ,pr_emp_com_info.emp_cat_id,pr_emp_shift_log.in_time');
 
 		$this->db->from('pr_emp_com_info');
 		$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
 		$this->db->join('pr_emp_shift_log','pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id','LEFT');
 		$this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id','LEFT');
-		$this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
+		$this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
 		$this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id','LEFT');
 		$this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id','LEFT');
 		$this->db->join('pr_id_proxi','pr_id_proxi.emp_id = pr_emp_com_info.emp_id','LEFT');
@@ -3074,17 +3074,17 @@ class Grid_model extends CI_Model{
 		//echo "$emp_id<br>";
 
 		$this->db->distinct();
-		$this->db->select('pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_id,pr_designation.desig_name,pr_dept.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id,pr_emp_com_info.emp_shift');
+		$this->db->select('pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_id,pr_designation.desig_name,emp_depertment.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id,pr_emp_com_info.emp_shift');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_attn_monthly');
 		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -3302,16 +3302,16 @@ class Grid_model extends CI_Model{
 		$count = 0;
 		$date_array = $this->GetDays($grid_firstdate, $grid_seconddate);
 		//print_r($date);
-		$this->db->select('pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, pr_designation.desig_name, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_emp_com_info.emp_join_date ');
+		$this->db->select('pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, pr_designation.desig_name, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->from('pr_id_proxi');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			//$this->db->where('pr_emp_com_info.emp_sec_id',$grid_section);
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
@@ -3381,16 +3381,16 @@ class Grid_model extends CI_Model{
 		$count = 0;
 		$date_array = $this->GetDays($grid_firstdate, $grid_seconddate);
 		//print_r($date);
-		$this->db->select('pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, pr_designation.desig_name, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_emp_com_info.emp_join_date ');
+		$this->db->select('pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, pr_designation.desig_name, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->from('pr_id_proxi');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_cat_id',1);
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
@@ -3458,16 +3458,16 @@ class Grid_model extends CI_Model{
 		$data = array();
 		$count = 0;
 		//print_r($date);
-		$this->db->select('pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, pr_designation.desig_name, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_emp_com_info.emp_join_date ');
+		$this->db->select('pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, pr_designation.desig_name, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->from('pr_id_proxi');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			//$this->db->where('pr_emp_com_info.emp_sec_id',$grid_section);
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
@@ -3701,11 +3701,11 @@ class Grid_model extends CI_Model{
 		//exit;
 		$regular_new = array(1,2);
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_emp_com_info.emp_cat_id');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_emp_com_info.emp_cat_id');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -3719,7 +3719,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_add.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -3809,8 +3809,8 @@ class Grid_model extends CI_Model{
 				pr_designation.desig_bangla, 
 				pr_emp_com_info.emp_join_date, 
 				pr_emp_com_info.emp_sal_gra_id, 
-				pr_dept.dept_name, 
-				pr_dept.dept_bangla, 
+				emp_depertment.dept_name, 
+				emp_depertment.dept_bangla, 
 				pr_section.sec_name, 
 				pr_section.sec_bangla, 
 				pr_id_proxi.proxi_id, 
@@ -3819,7 +3819,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -3832,7 +3832,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
@@ -3859,11 +3859,11 @@ class Grid_model extends CI_Model{
 	function grid_letter1_report_old($grid_emp_id)
 	{
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, pr_dept.dept_name, pr_section.sec_name, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, pr_section.sec_name, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -3874,7 +3874,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		//$this->db->where('pr_emp_com_info.district_id = pr_district.district_id');
 		//$this->db->where('pr_emp_com_info.upazila_id = pr_upazila.upz_id');
@@ -3912,7 +3912,7 @@ class Grid_model extends CI_Model{
 				pr_emp_per_info.emp_mname,
 
 				pr_designation.desig_name, 
-				pr_dept.dept_name, 
+				emp_depertment.dept_name, 
 				pr_section.sec_name, 
 				pr_emp_add.emp_pre_add, 
 				pr_emp_add.emp_par_add,
@@ -3921,7 +3921,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_emp_add');
 		$this->db->from('pr_emp_left_history');
@@ -3930,7 +3930,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
 		$this->db->where('pr_emp_left_history.left_date <=', $newDate);
@@ -4000,11 +4000,11 @@ class Grid_model extends CI_Model{
 	function grid_letter2_report_old($grid_emp_id)
 	{
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name, pr_section.sec_name,pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, pr_section.sec_name,pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -4013,7 +4013,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 
 		$this->db->order_by("pr_emp_com_info.emp_id");
@@ -4038,11 +4038,11 @@ class Grid_model extends CI_Model{
 		//echo $firstdate;
 		$newDate = date("Y-m-d", strtotime('-20 days', strtotime($firstdate)));
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, pr_dept.dept_name, pr_section.sec_name, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add,pr_emp_left_history.left_date');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, pr_section.sec_name, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add,pr_emp_left_history.left_date');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -4054,7 +4054,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
 		$this->db->where('pr_emp_left_history.left_date', $newDate);
@@ -4078,11 +4078,11 @@ class Grid_model extends CI_Model{
 	function grid_letter3_report_old($grid_emp_id)
 	{
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name, pr_section.sec_name, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, pr_section.sec_name, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -4091,7 +4091,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 
 		$this->db->order_by("pr_emp_com_info.emp_id");
@@ -4116,11 +4116,11 @@ class Grid_model extends CI_Model{
 		//echo $firstdate;
 		$newDate = date("Y-m-d", strtotime('-27 days', strtotime($firstdate)));
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, pr_dept.dept_name, pr_section.sec_name, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add,pr_emp_left_history.left_date');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, pr_section.sec_name, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add,pr_emp_left_history.left_date');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -4130,7 +4130,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
 		$this->db->where('pr_emp_left_history.left_date', $newDate);
@@ -4162,8 +4162,8 @@ class Grid_model extends CI_Model{
 				pr_designation.desig_name, 
 				pr_designation.desig_bangla, 
 				pr_emp_com_info.emp_join_date, 
-				pr_dept.dept_name, 
-				pr_dept.dept_bangla, 
+				emp_depertment.dept_name, 
+				emp_depertment.dept_bangla, 
 				pr_section.sec_name, 
 				pr_section.sec_bangla, 
 				pr_line_num.line_name,
@@ -4183,7 +4183,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -4197,7 +4197,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
@@ -4219,11 +4219,11 @@ class Grid_model extends CI_Model{
 
 	function grid_pay_slip_non_compliance($year_month, $grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_dept.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_line_num.line_name ,pr_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_emp_com_info.ot_show_in, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet.* ,pr_emp_per_info.bangla_nam');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_line_num.line_name ,pr_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_emp_com_info.ot_show_in, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet.* ,pr_emp_per_info.bangla_nam');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
@@ -4237,7 +4237,7 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
@@ -4260,11 +4260,11 @@ class Grid_model extends CI_Model{
 
 	function grid_pay_slip_com_non_com_mix($year_month, $grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_dept.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_line_num.line_name ,pr_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet_com.* ,pr_emp_per_info.bangla_nam');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_line_num.line_name ,pr_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet_com.* ,pr_emp_per_info.bangla_nam');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
@@ -4278,7 +4278,7 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
@@ -4306,11 +4306,11 @@ class Grid_model extends CI_Model{
 		if($pf_status == "Yes")
 		{
 			$data = array();
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_pay_scale_sheet.basic_sal, pr_pay_scale_sheet.gross_sal, pr_pay_scale_sheet.provident_fund, pr_pay_scale_sheet.pf_bank_interest, pr_pay_scale_sheet.company_pf, pr_pay_scale_sheet.update_pf');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_pay_scale_sheet.basic_sal, pr_pay_scale_sheet.gross_sal, pr_pay_scale_sheet.provident_fund, pr_pay_scale_sheet.pf_bank_interest, pr_pay_scale_sheet.company_pf, pr_pay_scale_sheet.update_pf');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
@@ -4322,7 +4322,7 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_pay_scale_sheet.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where("pr_emp_com_info.ot_entitle","1");
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -4410,7 +4410,7 @@ class Grid_model extends CI_Model{
 			pr_designation.desig_bangla,
 			pr_designation.desig_name,
 			pr_emp_com_info.emp_join_date,
-			pr_dept.dept_name,
+			emp_depertment.dept_name,
 			pr_section.sec_bangla,pr_section.sec_name,
 			pr_emp_skill.*'
 		);
@@ -4421,7 +4421,7 @@ class Grid_model extends CI_Model{
 		$this->db->join('pr_emp_per_info','pr_emp_com_info.emp_id = pr_emp_per_info.emp_id','LEFT');
 		$this->db->join('pr_emp_blood_groups','pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id','LEFT');
 		$this->db->join('pr_designation','pr_emp_com_info.emp_desi_id = pr_designation.desig_id','LEFT');
-		$this->db->join('pr_dept','pr_emp_com_info.emp_dept_id = pr_dept.dept_id','LEFT');
+		$this->db->join('emp_depertment','pr_emp_com_info.emp_dept_id = emp_depertment.dept_id','LEFT');
 		$this->db->join('pr_section','pr_emp_com_info.emp_sec_id = pr_section.sec_id','LEFT');
 		$this->db->join('pr_line_num','pr_emp_com_info.emp_line_id = pr_line_num.line_id','LEFT');
 		$this->db->join('pr_emp_add','pr_emp_com_info.emp_id = pr_emp_add.emp_id','LEFT');
@@ -4447,11 +4447,11 @@ class Grid_model extends CI_Model{
 
 	function grid_id_card_english($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_emp_per_info.img_source,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name,pr_units.unit_signature');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_emp_per_info.img_source,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name,pr_units.unit_signature');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_emp_blood_groups');
 		$this->db->from('pr_line_num');
@@ -4462,7 +4462,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_blood =  pr_emp_blood_groups.blood_id');
 		$this->db->where('pr_emp_per_info.emp_sex =  pr_emp_sex.sex_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_units.unit_id = pr_emp_com_info.unit_id');
@@ -4514,12 +4514,12 @@ class Grid_model extends CI_Model{
 			//echo "$emp_id<br>";
 
 			$this->db->distinct();
-			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_dept.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id');
+			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,emp_depertment.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id');
 			$this->db->from('pr_emp_com_info');
 
 			$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
 			$this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id','LEFT');
-			$this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
+			$this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
 			$this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id','LEFT');
 			$this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id','LEFT');
 			$this->db->join('pr_id_proxi','pr_id_proxi.emp_id = pr_emp_com_info.emp_id','LEFT');
@@ -4910,14 +4910,14 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_attn_monthly');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->or_where_in("pr_emp_per_info.emp_id", $grid_emp_id);
 			$this->db->like("pr_attn_monthly.att_month",$year_month);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -4954,14 +4954,14 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_attn_monthly');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->or_where_in("pr_emp_per_info.emp_id", $grid_emp_id);
 			$this->db->like("pr_attn_monthly.att_month",$year_month);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -4997,14 +4997,14 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_attn_monthly');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->or_where_in("pr_emp_per_info.emp_id", $grid_emp_id);
 			$this->db->like("pr_attn_monthly.att_month",$year_month);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -5064,18 +5064,18 @@ class Grid_model extends CI_Model{
 			$data["emp_id"][] = $row->emp_id;
 					
 			$this->db->distinct();
-			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_dept.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id');
+			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,emp_depertment.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_attn_monthly');
 			$this->db->from('pr_id_proxi');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->where('pr_emp_per_info.emp_id', $emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -5337,17 +5337,17 @@ class Grid_model extends CI_Model{
 	{
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_id,pr_designation.desig_name,pr_dept.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_id, pr_emp_com_info.emp_join_date, pr_id_proxi.proxi_id, pr_emp_com_info.emp_desi_id');
+		$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_id,pr_designation.desig_name,emp_depertment.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_id, pr_emp_com_info.emp_join_date, pr_id_proxi.proxi_id, pr_emp_com_info.emp_desi_id');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -5381,18 +5381,18 @@ class Grid_model extends CI_Model{
 			$data["emp_id"][] = $row->emp_id;
 
 			$this->db->distinct();
-			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_dept.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id');
+			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,emp_depertment.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_attn_monthly');
 			$this->db->from('pr_id_proxi');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->where('pr_emp_per_info.emp_id', $emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -5935,11 +5935,11 @@ class Grid_model extends CI_Model{
 	function grid_ctpat($grid_emp_id)
 	{
 
-		$this->db->select('pr_emp_blood_groups.blood_name,pr_emp_position.posi_name,pr_emp_skill.*,pr_emp_edu.*,pr_emp_per_info.no_child,pr_emp_sex.sex_nam_bng,pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name,pr_dept.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add,pr_emp_add.emp_pre_add_ban, pr_emp_add.emp_par_add,pr_emp_add.emp_par_add_ban,pr_emp_per_info.emp_dob,pr_emp_per_info.emp_religion,pr_religions.religion_name');
+		$this->db->select('pr_emp_blood_groups.blood_name,pr_emp_position.posi_name,pr_emp_skill.*,pr_emp_edu.*,pr_emp_per_info.no_child,pr_emp_sex.sex_nam_bng,pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add,pr_emp_add.emp_pre_add_ban, pr_emp_add.emp_par_add,pr_emp_add.emp_par_add_ban,pr_emp_per_info.emp_dob,pr_emp_per_info.emp_religion,pr_religions.religion_name');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -5954,7 +5954,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_per_info.emp_religion = pr_religions.religion_id');
 		$this->db->where('pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
@@ -5996,14 +5996,14 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet_com');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6036,7 +6036,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -6044,7 +6044,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6073,14 +6073,14 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6110,14 +6110,14 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet_com');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6145,14 +6145,14 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6178,7 +6178,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -6187,7 +6187,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6222,7 +6222,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -6230,7 +6230,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6261,7 +6261,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -6269,7 +6269,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6297,7 +6297,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_festival_bonus_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -6305,7 +6305,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -6323,12 +6323,12 @@ class Grid_model extends CI_Model{
 
 	function grid_earn_leave($sal_year_month, $grid_status, $grid_emp_id)
 	{
-		/*$this->db->select("pr_dept.dept_name");
-		$this->db->from('pr_dept');
+		/*$this->db->select("emp_depertment.dept_name");
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_emp_com_info');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-		$this->db->group_by("pr_dept.dept_name");
-		$this->db->order_by("pr_dept.dept_name");
+		$this->db->group_by("emp_depertment.dept_name");
+		$this->db->order_by("emp_depertment.dept_name");
 		$query = $this->db->get();
 		echo $this->db->last_query();	*/
 		$year  = substr($sal_year_month,0,4);
@@ -6342,7 +6342,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
@@ -6354,7 +6354,7 @@ class Grid_model extends CI_Model{
 
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -8227,13 +8227,13 @@ class Grid_model extends CI_Model{
 	function grid_current_info($grid_emp_id)
 	{
 
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,pr_designation.desig_id,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_work_process.process');
+		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,pr_designation.desig_id,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_work_process.process');
 		$this->db->from('pr_emp_com_info');
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
 		$this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id','LEFT');
-		$this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
+		$this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
 		$this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id','LEFT');
 		$this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id','LEFT');
 		$this->db->join('pr_grade','pr_grade.gr_id = pr_emp_com_info.emp_sal_gra_id','LEFT');
@@ -8270,13 +8270,13 @@ class Grid_model extends CI_Model{
 
 	function grid_general_info($grid_emp_id)
 	{
-		$this->db->select('pr_emp_edu.emp_pass_yr,pr_emp_position.posi_name,pr_emp_add.*,pr_emp_com_info.emp_id, pr_emp_per_info.*, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal');
+		$this->db->select('pr_emp_edu.emp_pass_yr,pr_emp_position.posi_name,pr_emp_add.*,pr_emp_com_info.emp_id, pr_emp_per_info.*, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal');
 
 		$this->db->from('pr_emp_com_info');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
 		$this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id','LEFT');
-		$this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
+		$this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
 		$this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id','LEFT');
 		$this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id','LEFT');
 		$this->db->join('pr_emp_position','pr_emp_position.posi_id = pr_emp_com_info.emp_position_id','LEFT');
@@ -8391,17 +8391,17 @@ class Grid_model extends CI_Model{
 
 	function grid_general_info_another_format($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob');
+		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -8415,11 +8415,11 @@ class Grid_model extends CI_Model{
 
 	function grid_employee_information($grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type');
+		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
@@ -8434,7 +8434,7 @@ class Grid_model extends CI_Model{
 
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -8495,12 +8495,12 @@ class Grid_model extends CI_Model{
 	}
 	function grid_service_book2($grid_emp_id)
 	{
-		/*$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.identificatiion_marks, pr_emp_per_info.national_brn_id, pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child, pr_emp_per_info. 	emp_dob');*/
-		$this->db->select('pr_emp_edu.*,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name,pr_dept.dept_bangla, pr_section.*, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add');
+		/*$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.identificatiion_marks, pr_emp_per_info.national_brn_id, pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child, pr_emp_per_info. 	emp_dob');*/
+		$this->db->select('pr_emp_edu.*,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.*, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
@@ -8511,7 +8511,7 @@ class Grid_model extends CI_Model{
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -8528,11 +8528,11 @@ class Grid_model extends CI_Model{
 
 	function grid_service_benifit($grid_emp_id)
 	{
-		$this->db->select('pr_emp_edu.*,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_dept.dept_name,pr_dept.dept_bangla, pr_section.*, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add');
+		$this->db->select('pr_emp_edu.*,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.*, pr_line_num.line_name, pr_line_num.line_bangla,pr_designation.desig_name,pr_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -8543,7 +8543,7 @@ class Grid_model extends CI_Model{
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -8560,11 +8560,11 @@ class Grid_model extends CI_Model{
 	function grid_join_letter($grid_emp_id)
 	{
 		//print_r($grid_emp_id);
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name, pr_designation.desig_bangla,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type');
+		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name, pr_designation.desig_bangla,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
@@ -8579,7 +8579,7 @@ class Grid_model extends CI_Model{
 
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -8641,11 +8641,11 @@ class Grid_model extends CI_Model{
 
 	}*/
 	function grid_join_letter($grid_emp_id){
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -8654,7 +8654,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
@@ -8667,11 +8667,11 @@ class Grid_model extends CI_Model{
 
 	function grid_emp_job_application($grid_emp_id)
 	{
-		$this->db->select('pr_emp_blood_groups.blood_name,pr_emp_position.posi_name,pr_emp_skill.*,pr_emp_edu.*,pr_emp_per_info.no_child,pr_emp_sex.sex_name,pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam,pr_emp_per_info.img_source, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , pr_dept.dept_name,pr_dept.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add,pr_emp_add.emp_pre_add_ban, pr_emp_add.emp_par_add,pr_emp_add.emp_par_add_ban,pr_emp_add.mobile,pr_emp_per_info.emp_dob,pr_emp_per_info.emp_religion,pr_religions.religion_name');
+		$this->db->select('pr_emp_blood_groups.blood_name,pr_emp_position.posi_name,pr_emp_skill.*,pr_emp_edu.*,pr_emp_per_info.no_child,pr_emp_sex.sex_name,pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam,pr_emp_per_info.img_source, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, pr_designation.desig_name, pr_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name,emp_depertment.dept_bangla, pr_section.sec_name, pr_section.sec_bangla, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add,pr_emp_add.emp_pre_add_ban, pr_emp_add.emp_par_add,pr_emp_add.emp_par_add_ban,pr_emp_add.mobile,pr_emp_per_info.emp_dob,pr_emp_per_info.emp_religion,pr_religions.religion_name');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_add');
@@ -8686,7 +8686,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_per_info.emp_religion = pr_religions.religion_id');
 		$this->db->where('pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
@@ -8713,11 +8713,11 @@ class Grid_model extends CI_Model{
 
 	function grid_yearly_leave_register($years, $grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type,pr_emp_com_info.emp_cat_id');
+		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_designation.desig_name,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type,pr_emp_com_info.emp_cat_id');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
@@ -8732,7 +8732,7 @@ class Grid_model extends CI_Model{
 
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -8860,11 +8860,11 @@ class Grid_model extends CI_Model{
 	{
 		// print_r($grid_emp_id);exit;
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.ot_entitle,pr_emp_com_info.att_bonus,pr_emp_per_info.emp_full_name, pr_grade.gr_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.ot_entitle,pr_emp_com_info.att_bonus,pr_emp_per_info.emp_full_name, pr_grade.gr_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_grade');
@@ -8873,7 +8873,7 @@ class Grid_model extends CI_Model{
 		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -8917,11 +8917,11 @@ class Grid_model extends CI_Model{
 	function grid_bgm_new_join_report($grid_firstdate, $grid_seconddate, $grid_emp_id)
 	{
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -8929,14 +8929,14 @@ class Grid_model extends CI_Model{
 		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_shift.shift_id = pr_emp_com_info.emp_shift');
 		$this->db->where("pr_emp_com_info.emp_join_date BETWEEN '$grid_firstdate' and '$grid_seconddate'");
 
-		//$this->db->order_by("pr_dept.dept_name","ASC");
+		//$this->db->order_by("emp_depertment.dept_name","ASC");
 		//$this->db->order_by("pr_section.sec_name","ASC");
 		//$this->db->order_by("pr_line_num.line_name","ASC");
 		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
@@ -8975,11 +8975,11 @@ class Grid_model extends CI_Model{
 	function grid_resign_report($grid_firstdate, $grid_seconddate, $grid_emp_id)
 	{
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -8991,7 +8991,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_resign_history.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9034,11 +9034,11 @@ class Grid_model extends CI_Model{
 	function grid_bgm_resign_report($grid_firstdate, $grid_seconddate, $grid_emp_id)
 	{
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9050,7 +9050,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_resign_history.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9108,11 +9108,11 @@ class Grid_model extends CI_Model{
 			$month = substr($resign_date,5,2);
 			$resign_sal_month = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_pay_scale_sheet.*');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_pay_scale_sheet.*');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
@@ -9126,7 +9126,7 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9205,11 +9205,11 @@ class Grid_model extends CI_Model{
 			$month = substr($left_date,5,2);
 			$left_sal_month = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_left_history.left_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_pay_scale_sheet.*');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_left_history.left_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_pay_scale_sheet.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9223,7 +9223,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9284,11 +9284,11 @@ class Grid_model extends CI_Model{
 
 		//echo "$grid_firstdate, $grid_seconddate";
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_left_history.left_date  as left_date , pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_left_history.left_date  as left_date , pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9300,7 +9300,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_left_history.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9343,11 +9343,11 @@ class Grid_model extends CI_Model{
 
 		//echo "$grid_firstdate, $grid_seconddate";
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_left_history.left_date  as left_date , pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_left_history.left_date  as left_date , pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9359,7 +9359,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_left_history.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9426,11 +9426,11 @@ class Grid_model extends CI_Model{
 
 		asort($grid_left_resign);
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_emp_com_info.emp_cat_id');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_emp_com_info.emp_cat_id');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9440,7 +9440,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_add.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9513,11 +9513,11 @@ class Grid_model extends CI_Model{
 			foreach($query->result() as $rows)
 			{
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name,pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.deduction_hour');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name,pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.deduction_hour');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_designation');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_id_proxi');
@@ -9529,7 +9529,7 @@ class Grid_model extends CI_Model{
 			$this->db->where("pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id");
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9604,11 +9604,11 @@ class Grid_model extends CI_Model{
 			foreach($query->result() as $rows)
 			{
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9620,7 +9620,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9684,11 +9684,11 @@ class Grid_model extends CI_Model{
 		$query = $this->db->get("pr_emp_com_info");*/
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_designation.desig_id, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name,pr_section.sec_id, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.night_allo');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_designation.desig_id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name,pr_section.sec_id, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.night_allo');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9700,7 +9700,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9834,11 +9834,11 @@ class Grid_model extends CI_Model{
 		$query = $this->db->get("pr_emp_com_info");*/
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_designation.desig_id, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name,pr_section.sec_id, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_designation.desig_id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name,pr_section.sec_id, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9850,7 +9850,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -9940,11 +9940,11 @@ class Grid_model extends CI_Model{
 	{
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_designation.desig_id, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name,pr_section.sec_id, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_designation.desig_id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name,pr_section.sec_id, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -9956,7 +9956,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -10023,11 +10023,11 @@ class Grid_model extends CI_Model{
 	{
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_designation.desig_id, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name,pr_section.sec_id, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_designation.desig_id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name,pr_section.sec_id, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -10039,7 +10039,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -10145,11 +10145,11 @@ class Grid_model extends CI_Model{
 	{
 		$data = array();
 		$search_year_month = substr($grid_firstdate,0,7);
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -10157,7 +10157,7 @@ class Grid_model extends CI_Model{
 		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -10228,11 +10228,11 @@ class Grid_model extends CI_Model{
 	{
 		$data = array();
 		$search_year_month = substr($grid_firstdate,0,7);
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -10240,7 +10240,7 @@ class Grid_model extends CI_Model{
 		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -10307,11 +10307,11 @@ class Grid_model extends CI_Model{
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
 		$data = array();
 		$search_year_month = substr($grid_firstdate,0,7);
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -10319,7 +10319,7 @@ class Grid_model extends CI_Model{
 		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -10403,11 +10403,11 @@ class Grid_model extends CI_Model{
 		$first_tiffin_allo_amount = 0;
 		$second_tiffin_allo_amount = 0;
 		$night_allo_amount = 0;
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_emp_com_info.ot_entitle, pr_designation.desig_name, pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name, pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_shift_log.shift_log_date');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,  pr_emp_com_info.ot_entitle, pr_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name, pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_shift_log.shift_log_date');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -10416,7 +10416,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pr_emp_com_info.emp_id", $emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -10714,7 +10714,7 @@ class Grid_model extends CI_Model{
 	{
 		$this->db->select("dept_name");
 		$this->db->where("dept_id", $dept_id);
-		$query = $this->db->get('pr_dept');
+		$query = $this->db->get('emp_depertment');
 		foreach($query->result() as $rows)
 		{
 			$dept_name =  $rows->dept_name;
@@ -10765,7 +10765,7 @@ class Grid_model extends CI_Model{
 	{
 		$this->db->select("dept_bangla");
 		$this->db->where("dept_id", $dept_id);
-		$query = $this->db->get('pr_dept');
+		$query = $this->db->get('emp_depertment');
 		foreach($query->result() as $rows)
 		{
 			$dept_bangla =  $rows->dept_bangla;
@@ -10814,11 +10814,11 @@ class Grid_model extends CI_Model{
 	function grid_earn_leave_report($grid_emp_id)
 	{
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_leave_earn.old_earn_balance,pr_leave_earn.current_earn_balance,pr_leave_earn.last_update');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_leave_earn.old_earn_balance,pr_leave_earn.current_earn_balance,pr_leave_earn.last_update');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -10829,7 +10829,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_id = pr_leave_earn.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -10910,11 +10910,11 @@ class Grid_model extends CI_Model{
 	function grid_pf_statement($year, $month, $grid_emp_id)
 	{
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_emp_com_info.emp_join_date, pr_dept.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_emp_com_info.emp_join_date, emp_depertment.dept_name, pr_section.sec_name, pr_line_num.line_name, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_designation');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_id_proxi');
@@ -10922,7 +10922,7 @@ class Grid_model extends CI_Model{
 		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
@@ -11015,17 +11015,17 @@ class Grid_model extends CI_Model{
 			//echo "$emp_id<br>";
 
 			$this->db->distinct();
-			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_dept.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id');
+			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,emp_depertment.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('pr_attn_monthly');
 			$this->db->from('pr_id_proxi');
-			$this->db->from('pr_dept');
+			$this->db->from('emp_depertment');
 			$this->db->from('pr_section');
 			$this->db->from('pr_line_num');
 			$this->db->from('pr_designation');
 			$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -11233,12 +11233,12 @@ class Grid_model extends CI_Model{
 			//echo "$emp_id<br>";
 
 			$this->db->distinct();
-			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,pr_dept.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id');
+			$this->db->select('pr_emp_per_info.emp_full_name,pr_designation.desig_name,emp_depertment.dept_name,pr_section.sec_name,pr_line_num.line_name,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id');
 			$this->db->from('pr_emp_com_info');
 
 			$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
 			$this->db->join('pr_designation','pr_designation.desig_id = pr_emp_com_info.emp_desi_id','LEFT');
-			$this->db->join('pr_dept','pr_dept.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
+			$this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
 			$this->db->join('pr_section','pr_section.sec_id = pr_emp_com_info.emp_sec_id','LEFT');
 			$this->db->join('pr_line_num','pr_line_num.line_id = pr_emp_com_info.emp_line_id','LEFT');
 			$this->db->join('pr_id_proxi','pr_id_proxi.emp_id = pr_emp_com_info.emp_id','LEFT');
@@ -11525,7 +11525,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('pr_dept');
+		$this->db->from('emp_depertment');
 		$this->db->from('pr_section');
 		$this->db->from('pr_line_num');
 		$this->db->from('pr_designation');
@@ -11533,7 +11533,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = pr_dept.dept_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = pr_section.sec_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = pr_line_num.line_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');

@@ -9,6 +9,7 @@ class Emp_increment_con extends CI_Controller {
 		$this->load->model('processdb');
 		$this->load->model('inc_prom_pun_model');
 		$this->load->model('acl_model');
+		   $this->data['user_data'] = $this->session->userdata('data');
 		//$access_level = 1;
 		//$acl = $this->acl_model->acl_check($access_level);
 	}
@@ -225,7 +226,10 @@ class Emp_increment_con extends CI_Controller {
 		
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('form/prom_info');
+			// $this->load->view('form/prom_info');
+			$this->data['username'] = $this->data['user_data']->id_number;
+			$this->data['subview'] = 'form/prom_info';
+			$this->load->view('layout/template', $this->data);
 		}
 		else
 		{

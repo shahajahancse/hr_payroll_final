@@ -72,14 +72,14 @@
 
                     <?php
 
-                  if (!empty($attn_holyday_off)) {foreach ($attn_holyday_off as $key => $pr_lines) {?>
+                  if (!empty($pr_attn_holiday)) {foreach ($pr_attn_holiday as $key => $pr_lines) {?>
 
                     <tr>
                         <td><?php echo $key + 1  ?></td>
                         <td><?php echo $pr_lines['unit_name'] ?></td>
                         <td><?php echo $pr_lines['user_name'] ?></td>
-                        <td><?php echo $pr_lines['work_off_date'] ?></td>
-                        <td><?php echo date('l', strtotime($pr_lines['work_off_date']))?></td>
+                        <td><?php echo $pr_lines['holiday_date'] ?></td>
+                        <td><?php echo date('l', strtotime($pr_lines['holiday_date']))?></td>
                         <td>
                             <a href="<?=base_url('index.php/entry_system_con/emp_holiday_del') . '/' . $pr_lines["id"]?>"
                                 class="btn btn-danger" role="button">Delete</a>

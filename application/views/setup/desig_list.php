@@ -1,15 +1,36 @@
-<div class="content">
+<style>
+    #mytable {
+        border-collapse: collapse;
+    }
 
-      <nav class="navbar navbar-inverse bg_none">
+    #mytable, th, td {
+        border: 1px solid #b0c0df;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+    .table td {
+        padding: 0px 3px !important;
+        font-size: 13px;
+      
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        border-bottom: none;
+      white-space: nowrap;
+
+    }
+    table.dataTable tbody th, table.dataTable tbody td {
+      padding: 4px !important;
+      white-space: nowrap;
+    }
+    .center-text {
+        vertical-align: center;
+        padding: 5px 10px;
+    }
+</style>
+<div class="content">
+    <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/designation_add') ?>">Add Designation</a>
                     <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
@@ -26,32 +47,33 @@
                     </div>
                 </div>
             </div>
-            <!--/.nav-collapse -->
         </div>
-        <!--/.container-fluid -->
     </nav>
 
     <div class="row">
         <div class="col-md-12">
-        <?php
-            $success = $this->session->flashdata('success');
-            if ($success != "") {
-        ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-        <?php }
-            $failuer = $this->session->flashdata('failuer');
-            if ($failuer) {
-        ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-        <?php   }?>
+            <?php
+                $success = $this->session->flashdata('success');
+                if ($success != "") {
+            ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php }
+                $failuer = $this->session->flashdata('failuer');
+                if ($failuer) {
+            ?>
+                <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            <?php   }?>
         </div>
     </div>
-    <div class="row tablebox">
-        <div class="col-md-12">
-            <table class="table table-striped" id="mytable">
+    <div id="target-div" class="row tablebox table-responsive">
+        <div class="col-md-6" style="margin-left:-16px">
+             <h3 style="font-weight:bold">Designation List</h3>
+         </div>
+        <!-- <div class="col-md-12"> -->
+            <table class="table" id="mytable">
                 <thead>
                     <tr>
-                        <th>Sl</th>
+                        <th>Sl. No.</th>
                         <th>Designation Name </th>
                         <th>Unit Name </th>
                         <th>Attendance Bonus</th>
@@ -65,7 +87,7 @@
                 </thead>
                 <tbody>
                     <?php
-                            if(!empty($emp_designation)){ foreach($emp_designation as $key => $data){?>
+                        if(!empty($emp_designation)){ foreach($emp_designation as $key => $data){?>
 
                     <tr>
                         <td><?php echo $key+1?></td>
@@ -78,11 +100,11 @@
                         <td><?php echo $data['allowance_tiffin'] ?></td>
                         <td>
                             <a href="<?=base_url('setup_con/designation_edit') . '/' . $data["id"]?>"
-                                 class="btn btn-primary" role="button">Edit</a>
+                                 class="btn btn-primary center-text" role="button">Edit</a>
                         </td>
                         <td>
                             <a href="<?=base_url('setup_con/designation_delete') . '/' . $data["id"]?>"
-                                class="btn btn-danger" role="button">Delete</a>
+                                class="btn btn-danger center-text" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php } }else{?>
@@ -94,7 +116,7 @@
 
                 </tbody>
             </table>
-        </div>
+        <!-- </div> -->
     </div>
     <br><br>
 </div>

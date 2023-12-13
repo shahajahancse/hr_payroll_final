@@ -38,6 +38,10 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'];
+// header('Location: ' . $url);
+// exit();
+
 /**
  * Exceptions Class
  *
@@ -157,6 +161,7 @@ class CI_Exceptions {
 	 */
 	public function show_error($heading, $message, $template = 'error_general', $status_code = 500)
 	{
+
 		$templates_path = config_item('error_views_path');
 		if (empty($templates_path))
 		{

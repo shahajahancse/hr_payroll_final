@@ -478,5 +478,23 @@ class Import extends CI_Controller {
 		//echo $this->db->last_query();
 		return $ab_id = $row->ab_id;
 	}
+
+	function add_phone(){
+		date_default_timezone_set('Asia/Dhaka');
+		$file_name = "import/cn.txt";
+		if (file_exists($file_name)){
+			$lines = file($file_name);
+			foreach(array_values($lines)  as $line) {
+				list($id, $amt) = preg_split('/\s+/', trim($line));
+				$data = array(
+					'emp_id' 		=> $id,
+					'emp_com_name'	=> $amt,
+				);
+				$this->db->where('emp_id', $id);
+				$this->db->insert('pr_emp_skill', $data);
+			}
+			echo "Upload successfully done";
+		}
+	}
 }
 ?>
