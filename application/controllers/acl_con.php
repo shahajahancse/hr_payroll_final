@@ -9,9 +9,40 @@ class Acl_con extends CI_Controller {
 		$this->load->library('grocery_CRUD');
 		$this->load->model('acl_model');
 		$this->load->model('common_model');
-		$access_level = 11;
-		//$acl = $this->acl_model->acl_check($access_level);
+
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['user_data'] = $this->session->userdata('data');
+        if (!check_acl_list($this->data['user_data']->id, 3)) {
+            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+            redirect("payroll_con");
+            exit;
+        }
 	}
+
+
+	function user_mode()
+	{
+		exit('kaj kkoro');
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// old code
+
 	//-------------------------------------------------------------------------------------------------------
 	// CRUD output method
 	//-------------------------------------------------------------------------------------------------------
@@ -35,7 +66,7 @@ class Acl_con extends CI_Controller {
 			return "false";
 		}
 
-	}
+	}	
 
 	function acl($start=0)
 	{
