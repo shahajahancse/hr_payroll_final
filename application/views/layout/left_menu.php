@@ -68,7 +68,7 @@
       <?php } ?>
 
       <?php if(in_array(17,$acl)) { ?>
-      <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
+      <li class="start <?= activate_class('acl_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
         <span class="title">Maintenance </span> <span class="selected"></span> <span class="arrow <?= arrow_open('acl_con') ?>"></span> </a>
         <ul class="sub-menu ">
           

@@ -24,7 +24,7 @@ class Acl_con extends CI_Controller {
 
 	function user_mode()
 	{
-		exit('kaj kkoro');
+		exit('apon tumi kaj kkoro');
 
 	}
 
