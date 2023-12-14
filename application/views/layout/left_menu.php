@@ -79,6 +79,15 @@
       </li>
       <?php } ?>
 
+      <?php if(in_array(7,$acl)) { ?>
+      <li class="start <?= activate_class('salary_process_con') ?>"> <a href="javascript:;"> <i class="fa fa-money"></i>
+        <span class="title">Payroll </span> <span class="selected"></span> <span class="arrow <?= arrow_open('salary_process_con') ?>"></span> </a>
+        <ul class="sub-menu ">
+          <li class="start <?= activate_method('salary_process_form') ?>"> <a href="<?=base_url('salary_process_con/salary_process_form')?>" class="anchor_cls" id="acl">Salary Process</a> </li>
+        </ul>
+      </li>
+      <?php } ?>
+
           
       <li class="start"> <a href="javascript:;" > <i class="fa fa-users"></i> <span class="title">HRM</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu ">
@@ -107,6 +116,7 @@
           </li>
         </ul>
       </li>
+
       <li class="start ">
         <a href="javascript:;" > <i class="fa fa-money"></i> <span class="title">Payroll</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu">
@@ -130,6 +140,19 @@
       </li>
       <li class="start"><a href="<?=base_url()?>index.php/logout_FE"> <i class="fa fa-power-off"></i>  <span class="title">Log Out</span></a>
       </li>
+      <li class="start ">
+        <a href="javascript:;" > <i class=""></i> <span class="title">Payroll</span> <span class="selected"></span> <span class="arrow"></span> </a>
+        <ul class="sub-menu">
+          <li class="start"><a href="<?=base_url()?>index.php/earn_leave_con/earn_process_form" class="anchor_cls">Earn Leave Process</a></li>
+          <li class="start "> <a href="javascript:;"><span class="title">Reports</span> <span class="selected"></span> <span class="arrow"></span> </a>
+            <ul class="sub-menu">
+              <li class="start "> <a href="<?=base_url()?>index.php/salary_report_con/grid_salary_report" class="anchor_cls">Salary Report</a> </li>
+              <li class="start "> <a href="<?=base_url()?>index.php/earn_leave_con/grid_earn_report"class="anchor_cls" >Earn Leave Report</a> </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
     </ul>
     <div id="notification_div"></div>
     <div class="clearfix"></div>

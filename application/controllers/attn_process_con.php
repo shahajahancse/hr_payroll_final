@@ -40,7 +40,7 @@ class Attn_process_con extends CI_Controller {
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
         if (!empty($this->data['user_data']->unit_name)) {
-	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+	        $this->data['employees'] = $this->common_model->get_emp_by_unit($this->data['user_data']->unit_name);
         }
 
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -48,15 +48,6 @@ class Attn_process_con extends CI_Controller {
         $this->data['subview'] = 'attn_con/attn_process_form';
         $this->load->view('layout/template', $this->data);
 
-	}
-
-	function get_emp_by_unit($id){
-		$this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
-		$this->db->from('pr_emp_com_info as com');
-		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
-		$this->db->where('com.emp_cat_id', 1);
-		$this->db->group_by('com.id');
-		return $this->db->where('com.unit_id', $id)->get()->result();
 	}
 
 	function attendance_process(){
@@ -296,6 +287,9 @@ class Attn_process_con extends CI_Controller {
 		$this->db->where('unit_id', $unit_id)->where('upload_date', $date)->delete('attn_file_upload');
         return;
 	}
+
+
+
 
 
 

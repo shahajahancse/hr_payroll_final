@@ -123,3 +123,148 @@ function loading_open() {
 function loading_close() {
     $('#loader').css('display', 'none');
 }
+
+
+// salary process
+function salary_process(){
+   var ajaxRequest = new XMLHttpRequest();
+   unit_id = document.getElementById('unit_id').value;
+   if(unit_id == '')
+   {
+     alert('Please select Unit');
+     return ;
+   }   
+
+   process_month = document.getElementById('process_month').value;
+   if(process_month == '')
+   {
+     alert('Please select process date');
+     return ;
+   }
+
+   var checkboxes = document.getElementsByName('emp_id[]');
+   var sql = get_checked_value(checkboxes);
+   if(sql =='')
+   {
+     alert('Please select employee Id');
+     return ;
+   }
+
+   var okyes;
+   okyes=confirm('Are you sure you want to start process?');
+   if(okyes==false) return;
+
+   loading_open();
+   var data = "process_month="+process_month+"&unit_id="+unit_id+'&sql='+sql;
+   
+   // console.log(data); return;
+   url = hostname + "salary_process_con/salary_process";
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(data);
+
+   ajaxRequest.onreadystatechange = function(){
+     if(ajaxRequest.readyState == 4){
+       // console.log(ajaxRequest);
+       var resp = ajaxRequest.responseText;
+       loading_close();
+       alert(resp);
+     }
+   }
+}
+
+// salary process block
+function salary_process_block(){
+   var ajaxRequest = new XMLHttpRequest();
+   unit_id = document.getElementById('unit_id').value;
+   if(unit_id == '')
+   {
+     alert('Please select Unit');
+     return ;
+   }   
+
+   process_date = document.getElementById('process_date').value;
+   if(process_date == '')
+   {
+     alert('Please select process date');
+     return ;
+   }
+
+   var checkboxes = document.getElementsByName('emp_id[]');
+   var sql = get_checked_value(checkboxes);
+   if(sql =='')
+   {
+     alert('Please select employee Id');
+     return ;
+   }
+
+   var okyes;
+   okyes=confirm('Are you sure you want to start process?');
+   if(okyes==false) return;
+
+   loading_open();
+   var data = "process_date="+process_date+"&unit_id="+unit_id+'&sql='+sql;
+   
+   // console.log(data); return;
+   url = hostname + "salary_process_con/salary_process";
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(data);
+
+   ajaxRequest.onreadystatechange = function(){
+     if(ajaxRequest.readyState == 4){
+       // console.log(ajaxRequest);
+       var resp = ajaxRequest.responseText;
+       loading_close();
+       alert(resp);
+     }
+   }
+}
+
+// salary process block delete
+function salary_block_delete(){
+   var ajaxRequest = new XMLHttpRequest();
+   unit_id = document.getElementById('unit_id').value;
+   if(unit_id == '')
+   {
+     alert('Please select Unit');
+     return ;
+   }   
+
+   process_date = document.getElementById('process_date').value;
+   if(process_date == '')
+   {
+     alert('Please select process date');
+     return ;
+   }
+
+   var checkboxes = document.getElementsByName('emp_id[]');
+   var sql = get_checked_value(checkboxes);
+   if(sql =='')
+   {
+     alert('Please select employee Id');
+     return ;
+   }
+
+   var okyes;
+   okyes=confirm('Are you sure you want to start process?');
+   if(okyes==false) return;
+
+   loading_open();
+   var data = "process_date="+process_date+"&unit_id="+unit_id+'&sql='+sql;
+   
+   // console.log(data); return;
+   url = hostname + "salary_process_con/salary_process";
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(data);
+
+   ajaxRequest.onreadystatechange = function(){
+     if(ajaxRequest.readyState == 4){
+       // console.log(ajaxRequest);
+       var resp = ajaxRequest.responseText;
+       loading_close();
+       alert(resp);
+     }
+   }
+}

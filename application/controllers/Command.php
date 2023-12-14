@@ -24,10 +24,142 @@ class Command extends CI_Controller {
 	}
 
 
-	// 
-	public function index()
+	// pr_incre_prom_pun
+	public function stopyyy()
 	{
+		// dd("hello, ci");
+		echo "hello, ci";
+		$this->db->select('
+				pay_emp_stop_salary.id as st_id,	
+				pr_emp_com_info.id,
+				pr_emp_com_info.emp_id,
+			');
+		$this->db->from('pay_emp_stop_salary');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where('pay_emp_stop_salary.emp_id = pr_emp_com_info.emp_id');
+		$this->db->limit(20000);
+		$this->db->group_by('pay_emp_stop_salary.emp_id');
+		$results = $this->db->get()->result();
+		// dd(count($results));
 
+		foreach ($results as $key => $row) {
+			$data = array(
+				'emp_id' 	 => $row->id,	
+			);
+
+			$this->db->where('emp_id', $row->emp_id)->update('pay_emp_stop_salary', $data);
+
+			echo "<pre> $row->st_id =  month = $row->st_id";
+		}
+		dd('exit');
+		// $this->db->insert_batch('pay_salary_sheet_2023', $results);
+		// dd($this->db->last_query());
+	}
+
+	// pr_incre_prom_pun
+	public function incre_prom()
+	{
+		// dd("hello, ci");
+		echo "hello, ci";
+		$this->db->select('
+				pr_incre_prom_pun.prev_emp_id,
+				pr_emp_com_info.id,
+			');
+		$this->db->from('pr_incre_prom_pun');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where('pr_incre_prom_pun.prev_emp_id = pr_emp_com_info.emp_id');
+		$this->db->limit(20000);
+		$this->db->group_by('pr_incre_prom_pun.prev_emp_id');
+		$this->db->group_by('pr_emp_com_info.emp_id');
+		$results = $this->db->get()->result();
+		// dd(count($results));
+
+		foreach ($results as $key => $row) {
+			$data = array(
+				'prev_emp_id' 	 => $row->id,	
+			);
+
+			$this->db->where('prev_emp_id', $row->prev_emp_id)->update('pr_incre_prom_pun', $data);
+
+			echo "<pre> $row->id =  month = $row->prev_emp_id";
+		}
+		dd('exit');
+		// $this->db->insert_batch('pay_salary_sheet_2023', $results);
+		// dd($this->db->last_query());
+	}
+
+	// pr_emp_left_history
+	public function emp_left()
+	{
+		dd("hello, ci");
+		echo "hello, ci";
+		$this->db->select('
+				pr_emp_left_history.left_id,	
+				pr_emp_left_history.unit_id,	
+				pr_emp_left_history.emp_id,
+				pr_emp_com_info.id,
+			');
+		$this->db->from('pr_emp_left_history');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where('pr_emp_left_history.emp_id = pr_emp_com_info.emp_id');
+		$this->db->limit(100000);
+		$results = $this->db->get()->result();
+		// dd($results);
+
+		foreach ($results as $key => $row) {
+
+			$data = array(
+				'emp_id' 	 => $row->id,	
+			);
+
+
+			$this->db->where('left_id', $row->left_id)->update('pr_emp_left_history', $data);
+
+			echo "<pre> $row->id =  month = $row->emp_id";
+		}
+		dd('exit');
+		// $this->db->insert_batch('pay_salary_sheet_2023', $results);
+		// dd($this->db->last_query());
+	}
+
+	// pr_emp_resign_history
+	public function emp_resign()
+	{
+		// dd("hello, ci");
+		echo "hello, ci";
+		$this->db->select('
+				pr_emp_resign_history.resign_id,	
+				pr_emp_resign_history.unit_id,	
+				pr_emp_resign_history.emp_id,
+				pr_emp_com_info.id,
+			');
+		$this->db->from('pr_emp_resign_history');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where('pr_emp_resign_history.emp_id = pr_emp_com_info.emp_id');
+		$this->db->limit(100000);
+		$results = $this->db->get()->result();
+		// dd($results);
+
+		foreach ($results as $key => $row) {
+
+			$data = array(
+				'emp_id' 	 => $row->id,	
+			);
+
+
+			$this->db->where('resign_id', $row->resign_id)->update('pr_emp_resign_history', $data);
+
+			echo "<pre> $row->id =  month = $row->emp_id";
+		}
+		dd('exit');
+		// $this->db->insert_batch('pay_salary_sheet_2023', $results);
+		// dd($this->db->last_query());
+	}
+
+	// separate salary  pay_salary_sheet_2022
+	public function separate_salary()
+	{
+		dd("hello, ci");
 		echo "hello, ci";
 		$this->db->select('
 				id,	
@@ -64,12 +196,12 @@ class Command extends CI_Controller {
 				salary_month,
 
 			');
-		$this->db->from('pay_salary_sheet_2023');
+		$this->db->from('pay_salary_sheet_2022');
 		$this->db->limit(100000);
 		$results = $this->db->get()->result();
 
 		foreach ($results as $key => $row) {
-			$obj = (object) array(
+			$obj = array(
 				'basic_sal' => $row->basic_sal,	
 				'house_r' => $row->house_r,	
 				'medical_a' => $row->medical_a,	
@@ -77,7 +209,7 @@ class Command extends CI_Controller {
 				'trans_allow' => $row->trans_allow,
 			);
 
-			$obj1 = (object) array(
+			$obj1 = array(
 				'total_days' 	 => $row->total_days,	
 				'num_of_workday' => $row->num_of_workday,	
 				'att_days' 		 => $row->att_days,	
@@ -99,7 +231,6 @@ class Command extends CI_Controller {
 			// dd($data);
 			$sdate = date('Y-m-01', strtotime($row->salary_month)); 
 			$edate = date('Y-m-t', strtotime($row->salary_month)); 
-
 			$this->db->select('
 				    shift_log_date,
 		            in_time,
@@ -113,39 +244,36 @@ class Command extends CI_Controller {
 			$this->db->where("shift_log_date BETWEEN '$sdate' and '$edate'");
 			$this->db->limit(100);
 			$results = $this->db->get()->result();
-			foreach ($results as $key => $row) {
-				$obj2[$key] = (object) array(
-					'log_date' 		=> $row->shift_log_date,
-					'in_time' 		=> $row->in_time,
-					'out_time' 		=> $row->out_time,
-					'ot' 		 	=> $row->ot,
-					'eot' 		 	=> $row->eot,
+			foreach ($results as $key => $rows) {
+				$obj2[$key] = array(
+					'log_date' 		=> $rows->shift_log_date,
+					'in_time' 		=> $rows->in_time,
+					'out_time' 		=> $rows->out_time,
+					'ot' 		 	=> $rows->ot,
+					'eot' 		 	=> $rows->eot,
 				);
 			}
 
 			$data = array(
-				'salary_structure'	=> $obj,
-				'day_info'			=> $obj1,
-				'log_info'			=> (object)$obj2,
+				'salary_structure'	=> json_encode($obj),
+				'day_info'			=> json_encode($obj1),
+				'log_info'			=> json_encode($obj2),
 			);
-			dd($data);
-			dd($this->db->last_query());
+			
+			// dd($this->db->last_query());
 
 
-			$edate = $row->salary_month;
+			$this->db->where('id', $row->id)->where('salary_month', $row->salary_month)->update('pay_salary_sheet_2022', $data);
 
-			$this->db->where('emp_id',$row->emp_id)->where('shift_log_date',$row->shift_log_date)->update('pr_emp_shift_log', $data);
-
-			echo "<pre> $row->emp_id =  emp id set = ";
+			echo "<pre> $row->emp_id =  month = $row->salary_month";
 		}
 		dd('exit');
 		// $this->db->insert_batch('pay_salary_sheet_2023', $results);
 		// dd($this->db->last_query());
 	}
 
-
 	// pay_salary_sheet
-	public function indexddd()
+	public function create_salary_sheet()
 	{
 		dd('ddd');
 		$i = '2014';
