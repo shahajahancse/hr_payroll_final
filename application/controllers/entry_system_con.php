@@ -18,14 +18,12 @@ class Entry_system_con extends CI_Controller
         $this->load->model('acl_model');
         $this->load->helper('url');
         $this->load->model('crud_model');
-		
-        $access_level = 3;
-        $acl = $this->acl_model->acl_check($access_level);
+
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
         $this->data['user_data'] = $this->session->userdata('data');
-        if (!check_acl_list($this->data['user_data']->id, 2)) {
+        if (!check_acl_list($this->data['user_data']->id, 3)) {
             echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
             redirect("payroll_con");
             exit;
@@ -112,6 +110,16 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // Form Display for Leave Transaction
     //-------------------------------------------------------------------------------------------------------
+    function get_emp_by_unit($id){
+        $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
+        $this->db->from('pr_emp_com_info as com');
+        $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
+        $this->db->where('com.emp_cat_id', 1);
+        $this->db->group_by('com.id');
+        return $this->db->where('com.unit_id', $id)->get()->result();
+    }
+
+
     public function leave_transation()
     {
         if ($this->session->userdata('logged_in') == false) {

@@ -24,74 +24,232 @@ class Command extends CI_Controller {
 	}
 
 
+	// 
+	public function index()
+	{
+
+		echo "hello, ci";
+		$this->db->select('
+				id,	
+				unit_id,	
+				emp_id,		
+				gross_sal,	
+				salary_structure,
+
+				basic_sal,	
+				house_r,	
+				medical_a,	
+				food_allow,	
+				trans_allow,
 
 
-	//  per_info address add gender, religion, marital_status, blood group
-	public function indexddddddd()
+				total_days,	
+				num_of_workday,	
+				att_days,	
+				absent_days,	
+				before_after_absent,	
+				c_l,	
+				s_l,	
+				e_l,	
+				m_l,	
+				wp,	
+				total_leave,	
+				total_pay_leave,	
+				holiday,	
+				weekend,	
+				total_holiday,	
+				pay_days,	
+
+				day_info,	
+				salary_month,
+
+			');
+		$this->db->from('pay_salary_sheet_2023');
+		$this->db->limit(100000);
+		$results = $this->db->get()->result();
+
+		foreach ($results as $key => $row) {
+			$obj = (object) array(
+				'basic_sal' => $row->basic_sal,	
+				'house_r' => $row->house_r,	
+				'medical_a' => $row->medical_a,	
+				'food_allow' => $row->food_allow,	
+				'trans_allow' => $row->trans_allow,
+			);
+
+			$obj1 = (object) array(
+				'total_days' 	 => $row->total_days,	
+				'num_of_workday' => $row->num_of_workday,	
+				'att_days' 		 => $row->att_days,	
+				'absent_days' 	 => $row->absent_days,	
+				'bf_absent' 	 => $row->before_after_absent,
+				'c_l' 		 	 => $row->c_l,
+				's_l' 		 	 => $row->s_l,
+				'e_l' 		 	 => $row->e_l,
+				'm_l' 		 	 => $row->m_l,
+				'wp' 		 	 => $row->wp,
+				'total_leave' 	 => $row->total_leave,
+				'pay_leave' 	 => $row->total_pay_leave,
+				'holiday' 		 => $row->holiday,
+				'weekend' 		 => $row->weekend,
+				'total_holiday'  => $row->total_holiday,
+				'pay_days' 		 => $row->pay_days,
+			);
+
+			// dd($data);
+			$sdate = date('Y-m-01', strtotime($row->salary_month)); 
+			$edate = date('Y-m-t', strtotime($row->salary_month)); 
+
+			$this->db->select('
+				    shift_log_date,
+		            in_time,
+		            out_time,
+		            ot,
+		            eot
+				');
+
+			$this->db->from('pr_emp_shift_log');
+			$this->db->where("emp_id", $row->emp_id);
+			$this->db->where("shift_log_date BETWEEN '$sdate' and '$edate'");
+			$this->db->limit(100);
+			$results = $this->db->get()->result();
+			foreach ($results as $key => $row) {
+				$obj2[$key] = (object) array(
+					'log_date' 		=> $row->shift_log_date,
+					'in_time' 		=> $row->in_time,
+					'out_time' 		=> $row->out_time,
+					'ot' 		 	=> $row->ot,
+					'eot' 		 	=> $row->eot,
+				);
+			}
+
+			$data = array(
+				'salary_structure'	=> $obj,
+				'day_info'			=> $obj1,
+				'log_info'			=> (object)$obj2,
+			);
+			dd($data);
+			dd($this->db->last_query());
+
+
+			$edate = $row->salary_month;
+
+			$this->db->where('emp_id',$row->emp_id)->where('shift_log_date',$row->shift_log_date)->update('pr_emp_shift_log', $data);
+
+			echo "<pre> $row->emp_id =  emp id set = ";
+		}
+		dd('exit');
+		// $this->db->insert_batch('pay_salary_sheet_2023', $results);
+		// dd($this->db->last_query());
+	}
+
+
+	// pay_salary_sheet
+	public function indexddd()
+	{
+		dd('ddd');
+		$i = '2014';
+		while ($i <= '2024') {
+			$newTableName = "pay_salary_sheet_$i";
+			if (!$this->db->table_exists($newTableName))
+			{
+				$query = $this->db->query("SHOW CREATE TABLE pay_salary_sheet");
+				$row = $query->row_array();
+				$newTableName = str_replace('pay_salary_sheet', $newTableName, $row['Create Table']);
+				$this->db->query($newTableName);
+			}
+			$i = $i + 1;
+		}
+
+		echo "hello, ci";
+		$this->db->select('*');
+		$this->db->from('pay_salary_sheet');
+		$this->db->where("pay_salary_sheet.salary_month BETWEEN '2023-01-01' and '2023-12-01'");
+		$this->db->limit(100000);
+		$results = $this->db->get()->result_array();
+
+		$this->db->insert_batch('pay_salary_sheet_2023', $results);
+		// dd($this->db->last_query());
+		dd('ok');
+	}
+
+	//  salary
+	public function salary_emp_id()
 	{
 		echo "hello, ci";
-		$results = $this->db->where('unit_id !=', 1)->get('pr_emp_com_info')->result();
+		$this->db->select('pr_emp_com_info.id, pr_emp_com_info.emp_id, pr_emp_com_info.unit_id');
+		$this->db->from('pay_salary_sheet');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
+		$this->db->where('pr_emp_com_info.unit_id =', 4);
+		$this->db->where('pay_salary_sheet.unit_id =', 4);
+		$this->db->group_by('pr_emp_com_info.id');
+		$results = $this->db->get()->result();
+		// dd($results);
 
 		foreach ($results as $key => $row) {
 
-			$rs = $this->db->where('emp_id',$row->emp_id)->get('pr_emp_per_info_copy')->row();
+			$data = array(
+				'emp_id'			=> $row->id,
+			);
+			// dd($data);
 
+			$this->db->where('emp_id',$row->emp_id)->update('pay_salary_sheet', $data);
 
-			if ($rs->emp_religion == 1) {
-				$rel = 'Islam';
-			} elseif ($rs->emp_religion == 2) {
-				$rel = 'Hindu';
-			} elseif ($rs->emp_religion == 3) {
-				$rel = 'Christian';
-			} elseif ($rs->emp_religion == 4) {
-				$rel = 'Buddhish';
-			} else {
-				$rel = '';
-			}
+			echo "<pre> $row->emp_id =  emp id set = ";
+		}
+		dd('exit');
+	}
 
-			if ($rs->emp_marital_status == 1) {
-				$mar = 'Unmarried';
-			} else {
-				$mar = 'Married';
-			}
+	//  per_info address add gender, religion, marital_status, blood group
+	public function ot_eot()
+	{
+		dd('exit');
+		echo "hello, ci";
+		$this->db->select('emp_id, shift_log_date, ot, eot');
+		$this->db->from('pr_emp_shift_log');
+		$this->db->where('ot !=', 0);
+		$this->db->where('unit_id =', 1);
+		$results = $this->db->get()->result();
 
-			if ($rs->emp_sex == 1) {
-				$gen = 'Male';
-			} elseif ($rs->emp_sex == 2) {
-				$gen = 'Female';
-			} else {
-				$gen = 'Common';
-			}
-			
-			if ($rs->emp_blood == 1) {
-				$blo = 'A+';
-			} elseif ($rs->emp_blood == 2) {
-				$blo = 'A-';
-			} elseif ($rs->emp_blood == 3) {
-				$blo = 'B+';
-			} elseif ($rs->emp_blood == 4) {
-				$blo = 'B-';
-			} elseif ($rs->emp_blood == 5) {
-				$blo = 'AB+';
-			} elseif ($rs->emp_blood == 6) {
-				$blo = 'AB-';
-			} elseif ($rs->emp_blood == 7) {
-				$blo = 'O+';
-			} elseif ($rs->emp_blood == 8) {
-				$blo = 'O-';
-			} else {
-				$blo = 'None';
-			}
-			
+		foreach ($results as $key => $row) {
 
 			$data = array(
-				'religion'			=> $rel,
-				'marital_status'	=> $mar,
-				'gender'			=> $gen,
-				'blood'				=> $blo,
+				'ot'			=> ($row->ot * 60),
+				'eot'			=> ($row->eot * 60),
 			);
-			$this->db->where('emp_id',$row->id)->update('pr_emp_per_info', $data);
-			echo "<pre> $row->emp_id =  emp id set";
+			// dd($data);
+
+			$this->db->where('emp_id',$row->emp_id)->where('shift_log_date',$row->shift_log_date)->update('pr_emp_shift_log', $data);
+
+			echo "<pre> $row->emp_id =  emp id set = ";
+		}
+		dd('exit');
+	}
+
+	//  pr_emp_shift_log employee id conver
+	public function log_emp_id()
+	{
+		echo "hello, ci";
+		$this->db->select('pr_emp_com_info.id, pr_emp_com_info.emp_id, pr_emp_com_info.unit_id');
+		$this->db->from('pr_emp_shift_log');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where('pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id');
+		$this->db->where('pr_emp_com_info.unit_id =', 4);
+		$this->db->group_by('pr_emp_com_info.id');
+		$results = $this->db->get()->result();
+		// dd($results);
+
+		foreach ($results as $key => $row) {
+			$rs = $this->db->where('emp_id',$row->emp_id)->get('pr_emp_shift_log')->result();
+
+			$data = array(
+				'emp_id'			=> $row->id,
+				'unit_id'			=> $row->unit_id,
+			);
+			$this->db->where('emp_id',$row->emp_id)->update('pr_emp_shift_log', $data);
+
+			echo "<pre> $row->emp_id =  emp id set = ".count($rs);
 		}
 		dd('exit');
 	}
@@ -333,6 +491,42 @@ class Command extends CI_Controller {
 		}
 
 		exit("wait");
+	}
+
+	public function risk($value='')
+	{
+		dd('not allow');
+			$this->db->select('
+				pr_emp_com_info.emp_id, 
+				pr_emp_skill2.emp_com_name mobile,
+				pr_emp_skill2.emp_skill,
+				pr_emp_skill2.emp_yr_skill 	
+			');
+
+		$this->db->from('pr_emp_com_info');
+		$this->db->from('pr_emp_skill2');
+		$this->db->where('pr_emp_com_info.emp_id = pr_emp_skill2.emp_id');
+		$this->db->where('pr_emp_com_info.unit_id', 4);
+		$this->db->group_by("pr_emp_com_info.emp_id");
+		$query = $this->db->get();	
+
+		foreach ($query->result() as $key => $row) {
+			$this->db->where('emp_id', $row->emp_id)->delete('pr_emp_skill');
+
+			$data = array(
+					'emp_id' => $row->emp_id,
+					'emp_com_name' => $row->mobile,
+					'emp_skill'		=> $row->emp_skill,
+					'emp_yr_skill'	=> $row->emp_yr_skill
+				);
+
+			$dd = $this->db->where('emp_id', $row->emp_id)->get('pr_emp_skill')->row();
+			if (empty($dd)) {
+				$this->db->insert('pr_emp_skill', $data);
+			}
+			// dd($dd);
+		}
+		exit('ok');
 	}
 
 

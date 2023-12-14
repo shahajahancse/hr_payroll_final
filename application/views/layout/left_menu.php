@@ -39,7 +39,9 @@
       <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
         <span class="title">Setup Section </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setup_con') ?>"></span> </a>
         <ul class="sub-menu ">
+
           <li class="start <?= activate_method('company_info_setup') ?>"> <a href="<?=base_url('setup_con/company_info_setup')?>" class="anchor_cls">Company Information</a> </li>
+
           <li class="start <?= activate_method('department') ?>"> <a href="<?=base_url('setup_con/department')?>" class="anchor_cls">Department</a> </li>
           <li class="start <?= activate_method('section') ?>"> <a href="<?=base_url('setup_con/section')?>" class="anchor_cls">Section</a> </li>
           <li class="start <?= activate_method('line') ?>"> <a href="<?=base_url('setup_con/line')?>" class="anchor_cls">Line</a> </li>
@@ -61,6 +63,18 @@
           <!-- <li class="start <?= activate_method('holiday_allowance_setup') ?>"> <a href="<?=base_url('setup_con/holiday_allowance_setup')?>" >Holiday Allowance</a> </li> -->
 
           <li class="start <?= activate_method('post_office') ?>"> <a href="<?=base_url('setup_con/post_office')?>" class="anchor_cls">Post Office</a> </li>
+        </ul>
+      </li>
+      <?php } ?>
+
+      <?php if(in_array(17,$acl)) { ?>
+      <li class="start <?= activate_class('acl_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
+        <span class="title">Maintenance </span> <span class="selected"></span> <span class="arrow <?= arrow_open('acl_con') ?>"></span> </a>
+        <ul class="sub-menu ">
+          
+          <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('acl_con/acl')?>" class="anchor_cls" id="acl">User ACL</a> </li>
+          <li class="start <?= activate_method('user_mode') ?>"> <a href="<?=base_url('acl_con/user_mode')?>" class="anchor_cls" id="acl">User Mode</a> </li>
+
         </ul>
       </li>
       <?php } ?>
@@ -110,15 +124,7 @@
           </li>
         </ul>
       </li>
-      <li class="start "> <a href="javascript:;" > <i class="fa fa-tasks"></i> <span class="title">Maintenance</span> <span class="selected"></span> <span class="arrow"></span> </a>
-        <ul class="sub-menu">
-          <li class="start "> <a href="javascript:;"><span class="title">User</span> <span class="selected"></span> <span class="arrow"></span> </a>
-            <ul class="sub-menu">
-              <li class="start "> <a href="<?=base_url()?>index.php/acl_con/acl" class="anchor_cls">ACL</a> </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
+
       <li class="start">
          <a href="<?=base_url()?>index.php/payroll_con/first_body"> <i class="fa fa-phone"></i>  <span class="title">Support</span></a>
       </li>

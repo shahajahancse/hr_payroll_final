@@ -9,9 +9,118 @@ class Acl_con extends CI_Controller {
 		$this->load->library('grocery_CRUD');
 		$this->load->model('acl_model');
 		$this->load->model('common_model');
-		$access_level = 11;
-		//$acl = $this->acl_model->acl_check($access_level);
+
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['user_data'] = $this->session->userdata('data');
+        if (!check_acl_list($this->data['user_data']->id, 3)) {
+            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+            redirect("payroll_con");
+            exit;
+        }
 	}
+
+
+	function user_mode()
+	{
+		if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+		$this->db->select('pr_setup_com_report.*,pr_units.unit_name');
+		$this->db->from('pr_setup_com_report');
+		$this->db->join('pr_units', 'pr_units.unit_id = pr_setup_com_report.unit_id', 'left');
+		$this->db->order_by('id', 'desc');
+		$this->data['data'] = $this->db->get()->result();
+		$this->data['users'] = $this->db->get('members')->result();
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title'] = 'User Mode';
+        $this->data['subview'] = 'acl_con/user_mode';
+        $this->load->view('layout/template', $this->data);
+	}
+	// function get_unit_member_id($id){
+	// 	$this->db->where('id', $id);
+	// 	$unit_name=$this->db->get('members')->row()->unit_name;
+
+	// 	$this->db->where('unit_id', $unit_name);
+	// 	echo json_encode($unit=$this->db->get('pr_units')->row());
+	// }
+	function submit_user_mode(){
+		$select_user=0;
+		$unit_id=$this->input->post('unit_id');
+		$start_month=date('Y-m-01',strtotime($this->input->post('start_month')));
+		$end_month=date('Y-m-01',strtotime($this->input->post('end_month')));
+		$user_mode=$this->input->post('user_mode');
+		$eot=$this->input->post('eot');
+		$status=$this->input->post('status');
+		$type=$this->input->post('type');
+
+		$data = array(
+			'user_id' => 0,
+			'unit_id' => $unit_id,
+			'start_month' => $start_month,
+			'end_month' => $end_month,
+			'user_mode' => $user_mode,
+			'eot' => $eot,
+			'status' => $status
+		);
+		if ($type==1) {
+			if ($this->db->insert('pr_setup_com_report', $data)) {
+				$insert_id=$this->db->insert_id();
+			}else{
+				echo 'false';
+			}
+		}else{
+			$this->db->where('id', $this->input->post('id'));
+			if ($this->db->update('pr_setup_com_report', $data)) {
+				$insert_id=$this->input->post('id');
+			}else{
+				echo 'false';
+			}
+		}
+		$this->db->select('pr_setup_com_report.*,pr_units.unit_name');
+		$this->db->from('pr_setup_com_report');
+		$this->db->join('pr_units', 'pr_units.unit_id = pr_setup_com_report.unit_id', 'left');
+		$this->db->where('pr_setup_com_report.id', $insert_id);
+		$this->db->order_by('pr_setup_com_report.id', 'desc');
+		$data=$this->db->get()->row();
+		$data->start_month=date('Y-m',strtotime($data->start_month));
+		$data->end_month=date('Y-m',strtotime($data->end_month));
+		echo json_encode($data);
+	}
+		function delete_user_mode($id){
+			$this->db->where('id', $id);
+			if ($this->db->delete('pr_setup_com_report')) {
+				echo 'true';
+			}else{
+				echo 'false';
+			}
+
+		}
+		function edit_user_mode($id){
+			$this->db->where('id', $id);
+			$data=$this->db->get('pr_setup_com_report')->row();
+			$data->start_month=date('Y-m',strtotime($data->start_month));
+			$data->end_month=date('Y-m',strtotime($data->end_month));
+			echo json_encode($data);
+		}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// old code
+
 	//-------------------------------------------------------------------------------------------------------
 	// CRUD output method
 	//-------------------------------------------------------------------------------------------------------
@@ -23,45 +132,46 @@ class Acl_con extends CI_Controller {
 	//-------------------------------------------------------------------------------------------------------
 	function acl_check($get_user_id){
 		$access_level = 11;
-		$num_row = $this->db->where('username_id',$get_user_id)->where('acl_id',$access_level)->get('member_acl_level')->num_rows();
+		$num_row = $this->db->where('username_id',$get_user_id)->where('acl_id',$access_level)->get('members_acl_level')->num_rows();
 		if($num_row > 0){
 			return "true";
 		}
 		else{
 			return "false";
 		}
-	}
+	}	
+
 
 	function acl($start=0){
 		$this->data['username'] = $this->data['user_data']->id_number;
-		$this->db->select('SQL_CALC_FOUND_ROWS members.*, pr_units.unit_name', false);
-		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
-		$this->data['members'] = $this->db->get('members')->result_array();
-		$this->data['subview'] = 'members';
+		$this->db->select('SQL_CALC_FOUND_ROWS memberss.*, pr_pr_units.pr_units_name', false);
+		$this->db->join('pr_pr_units', 'pr_pr_units.pr_units_id = memberss.pr_units_name', 'left');
+		$this->data['memberss'] = $this->db->get('memberss')->result_array();
+		$this->data['subview'] = 'memberss';
         $this->load->view('layout/template', $this->data);
 		// $this->load->view('', $param);
 	}
 
-	function member_add(){
-		$this->db->select('pr_units.*', false);
-		$param['pr_units'] = $this->db->get('pr_units')->result();
-		$acls = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
+	function members_add(){
+		$this->db->select('pr_pr_units.*', false);
+		$param['pr_pr_units'] = $this->db->get('pr_pr_units')->result();
+		$acls = $this->db->select('cl.*')->get('members_acl_list as cl')->result();
 		$param['acls'] = $acls;
-		$this->load->view('member_add', $param);
+		$this->load->view('members_add', $param);
 	}
 
-	function member_insert(){
+	function members_insert(){
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('id_number', 'Member Name', 'trim|required');
+		$this->form_validation->set_rules('id_number', 'members Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
 		$data = array();
 		$data['id_number'] = $this->input->post('id_number');
 		$data['password'] = $this->input->post('password');
 		$data['level'] = $this->input->post('level');
-		$data['unit_name'] = $this->input->post('unit_name');
+		$data['pr_units_name'] = $this->input->post('pr_units_name');
 		$data['status'] = $this->input->post('status');
-		$this->db->insert('members',$data);
+		$this->db->insert('memberss',$data);
 		$id = $this->db->insert_id();
 
 		$acl_count = $this->input->post('acl_id');
@@ -71,7 +181,7 @@ class Acl_con extends CI_Controller {
 				$acl_data['username_id'] = $id;
 				$acl_data['acl_id'] = $this->input->post('acl_id')[$i];
 				$acl_data['priority'] = $i;
-				$this->db->insert('member_acl_level', $acl_data);
+				$this->db->insert('members_acl_level', $acl_data);
 			}
 		}
 
@@ -79,50 +189,50 @@ class Acl_con extends CI_Controller {
 		redirect(base_url('index.php/acl_con/acl'));
 	}
 
-	function member_edit($id){
-		$this->db->select('members.*, members.unit_name as u_id, pr_units.unit_name', false);
-		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
-        $this->db->where('members.id', $id);
-		$this->data['member'] = $this->db->get('members')->row();
+	function members_edit($id){
+		$this->db->select('memberss.*, memberss.pr_units_name as u_id, pr_pr_units.pr_units_name', false);
+		$this->db->join('pr_pr_units', 'pr_pr_units.pr_units_id = memberss.pr_units_name', 'left');
+        $this->db->where('memberss.id', $id);
+		$this->data['members'] = $this->db->get('memberss')->row();
 
 		$acls = $this->db->select('cl.*, mcl.acl_id')
-							->join('member_acl_level mcl', 'cl.id = mcl.acl_id and mcl.username_id = "'.$id.'"', 'left')
-							->get('member_acl_list as cl')->result();
+							->join('members_acl_level mcl', 'cl.id = mcl.acl_id and mcl.username_id = "'.$id.'"', 'left')
+							->get('members_acl_list as cl')->result();
 
 		$this->data['acls'] = $acls;
         $this->data['username'] = $this->data['user_data']->id_number;
 
-		$this->data['subview'] = 'member_edit';
+		$this->data['subview'] = 'members_edit';
         $this->load->view('layout/template', $this->data);
 		// $this->load->view('', $param);
-		// $this->load->view('member_edit', $param);
+		// $this->load->view('members_edit', $param);
 	}
 
-	function update_member($id=0){
+	function update_members($id=0){
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('id_number', 'Member Name', 'trim|required');
+		$this->form_validation->set_rules('id_number', 'members Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
 		$data = array();
 		$data['id_number'] = $this->input->post('id_number');
 		$data['password'] = $this->input->post('password');
 		$data['level'] = $this->input->post('level');
-		$data['unit_name'] = $this->input->post('unit_name');
+		$data['pr_units_name'] = $this->input->post('pr_units_name');
 		$data['status'] = $this->input->post('status');
-		$this->db->where('members.id',$id);
-		$this->db->update('members',$data);
+		$this->db->where('memberss.id',$id);
+		$this->db->update('memberss',$data);
 
 		$acl_count = $this->input->post('acl_id');
 
 		if (count($acl_count)) {
-			$this->db->where('member_acl_level.username_id',$id);
-			$data=$this->db->delete('member_acl_level');
+			$this->db->where('members_acl_level.username_id',$id);
+			$data=$this->db->delete('members_acl_level');
 
 			for ($i=0; $i < count($acl_count); $i++) {
 				$acl_data['username_id'] = $id;
 				$acl_data['acl_id'] = $this->input->post('acl_id')[$i];
 				$acl_data['priority'] = $i;
-				$this->db->insert('member_acl_level', $acl_data);
+				$this->db->insert('members_acl_level', $acl_data);
 			}
 		}
 
@@ -130,9 +240,9 @@ class Acl_con extends CI_Controller {
 		redirect(base_url('index.php/acl_con/acl'));
 	}
 
-	function member_delete($id=0){
-		$this->db->where('members.id',$id);
-		$data=$this->db->delete('members');
+	function members_delete($id=0){
+		$this->db->where('memberss.id',$id);
+		$data=$this->db->delete('memberss');
 		$this->session->set_flashdata('success','Record Deleted successfully!');
 		redirect(base_url('index.php/acl_con/acl'));
 	}
@@ -145,25 +255,25 @@ class Acl_con extends CI_Controller {
 
 
 		$crud = new grocery_CRUD();
-	 	$get_session_user_unit = $this->common_model->get_session_unit_id_name();
-		 /*if($get_session_user_unit != 0)
+	 	$get_session_user_pr_units = $this->common_model->get_session_pr_units_id_name();
+		 /*if($get_session_user_pr_units != 0)
 		 {
-			 $crud->where('members.unit_name',$get_session_user_unit);
+			 $crud->where('memberss.pr_units_name',$get_session_user_pr_units);
 			 $crud->where('id_number',$username);
 
 			}*/
-			$data = $crud->set_table('members');
+			$data = $crud->set_table('memberss');
 			// echo "<pre>"; print_r($data); exit;
 		$crud->set_subject('User');
 
-		//$crud->set_relation_n_n('ACL', 'member_acl_level', 'member_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
-		if($get_session_user_unit != 0)
+		//$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
+		if($get_session_user_pr_units != 0)
 		{
-			$crud->set_relation( 'unit_name' , 'pr_units','unit_name',array('unit_id' => $get_session_user_unit) );
+			$crud->set_relation( 'pr_units_name' , 'pr_pr_units','pr_units_name',array('pr_units_id' => $get_session_user_pr_units) );
 		}
 		else
 		{
-			$crud->set_relation( 'unit_name' , 'pr_units','unit_name' );
+			$crud->set_relation( 'pr_units_name' , 'pr_pr_units','pr_units_name' );
 		}
 
 		//This code use for unset relation n-n
@@ -174,14 +284,14 @@ class Acl_con extends CI_Controller {
 			$crud->edit_fields('id_number','password');
 			$state = $crud->getState();
 			if ($state != 'insert' && $state != 'update') {
-			$crud->set_relation_n_n('ACL', 'member_acl_level', 'member_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
+			$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
 			  }
-			  $crud->where('members.unit_name',$get_session_user_unit);
+			  $crud->where('memberss.pr_units_name',$get_session_user_pr_units);
 			$crud->where('id_number',$username);
 		}
 		else
 		{
-			$crud->set_relation_n_n('ACL', 'member_acl_level', 'member_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
+			$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
 		}
 
 		$crud->set_rules('id_number','Username','required|callback_id_number_check');
@@ -197,10 +307,10 @@ class Acl_con extends CI_Controller {
 		$id = $this->uri->segment(4);
 		if(!empty($id) && is_numeric($id))
 		{
-			$mem_id_old = $this->db->where("id",$id)->get('members')->row()->id_number;
+			$mem_id_old = $this->db->where("id",$id)->get('memberss')->row()->id_number;
 			$this->db->where("id_number !=",$mem_id_old);
 		}
-		$num_row = $this->db->where('id_number',$str)->get('members')->num_rows();
+		$num_row = $this->db->where('id_number',$str)->get('memberss')->num_rows();
 		if ($num_row >= 1)
 		{
 			$this->form_validation->set_message('id_number_check', "This ID field '$str' already exists");
@@ -209,12 +319,12 @@ class Acl_con extends CI_Controller {
 		else
 		{
 			$level 		=  $_POST['level'];
-			$unit_name 	=  $_POST['unit_name'];
-			if($level == "Unit")
+			$pr_units_name 	=  $_POST['pr_units_name'];
+			if($level == "pr_units")
 			{
-				if($unit_name == "")
+				if($pr_units_name == "")
 				{
-					$this->form_validation->set_message('id_number_check', "Please Select Unit Name.");
+					$this->form_validation->set_message('id_number_check', "Please Select pr_units Name.");
 					return FALSE;
 				}
 
@@ -222,9 +332,9 @@ class Acl_con extends CI_Controller {
 			}
 			else
 			{
-				if($unit_name != "")
+				if($pr_units_name != "")
 				{
-					$this->form_validation->set_message('id_number_check', "Don't Select Unit Name.");
+					$this->form_validation->set_message('id_number_check', "Don't Select pr_units Name.");
 					return FALSE;
 				}
 
