@@ -27,12 +27,10 @@ class Acl_con extends CI_Controller {
 		if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-		$this->db->select('pr_setup_com_report.*, members.id_number,pr_units.unit_name');
+		$this->db->select('pr_setup_com_report.*,pr_units.unit_name');
 		$this->db->from('pr_setup_com_report');
-		$this->db->join('members', 'members.id = pr_setup_com_report.user_id', 'left');
 		$this->db->join('pr_units', 'pr_units.unit_id = pr_setup_com_report.unit_id', 'left');
 		$this->db->order_by('id', 'desc');
-
 		$this->data['data'] = $this->db->get()->result();
 		$this->data['users'] = $this->db->get('members')->result();
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -40,25 +38,25 @@ class Acl_con extends CI_Controller {
         $this->data['subview'] = 'acl_con/user_mode';
         $this->load->view('layout/template', $this->data);
 	}
-	function get_unit_member_id($id){
-		$this->db->where('id', $id);
-		$unit_name=$this->db->get('members')->row()->unit_name;
+	// function get_unit_member_id($id){
+	// 	$this->db->where('id', $id);
+	// 	$unit_name=$this->db->get('members')->row()->unit_name;
 
-		$this->db->where('unit_id', $unit_name);
-		echo json_encode($unit=$this->db->get('pr_units')->row());
-	}
+	// 	$this->db->where('unit_id', $unit_name);
+	// 	echo json_encode($unit=$this->db->get('pr_units')->row());
+	// }
 	function submit_user_mode(){
-		$select_user=$this->input->post('select_user');
+		$select_user=0;
 		$unit_id=$this->input->post('unit_id');
-		$start_month=$this->input->post('start_month');
-		$end_month=$this->input->post('end_month');
+		$start_month=date('Y-m-01',strtotime($this->input->post('start_month')));
+		$end_month=date('Y-m-01',strtotime($this->input->post('end_month')));
 		$user_mode=$this->input->post('user_mode');
 		$eot=$this->input->post('eot');
 		$status=$this->input->post('status');
 		$type=$this->input->post('type');
 
 		$data = array(
-			'user_id' => $select_user,
+			'user_id' => 0,
 			'unit_id' => $unit_id,
 			'start_month' => $start_month,
 			'end_month' => $end_month,
@@ -69,14 +67,6 @@ class Acl_con extends CI_Controller {
 		if ($type==1) {
 			if ($this->db->insert('pr_setup_com_report', $data)) {
 				$insert_id=$this->db->insert_id();
-				$this->db->select('pr_setup_com_report.*, members.id_number,pr_units.unit_name');
-				$this->db->from('pr_setup_com_report');
-				$this->db->join('members', 'members.id = pr_setup_com_report.user_id', 'left');
-				$this->db->join('pr_units', 'pr_units.unit_id = pr_setup_com_report.unit_id', 'left');
-				$this->db->where('pr_setup_com_report.id', $insert_id);
-				$this->db->order_by('pr_setup_com_report.id', 'desc');
-	
-				echo json_encode($this->db->get()->row());
 			}else{
 				echo 'false';
 			}
@@ -84,17 +74,19 @@ class Acl_con extends CI_Controller {
 			$this->db->where('id', $this->input->post('id'));
 			if ($this->db->update('pr_setup_com_report', $data)) {
 				$insert_id=$this->input->post('id');
-				$this->db->select('pr_setup_com_report.*, members.id_number,pr_units.unit_name');
-				$this->db->from('pr_setup_com_report');
-				$this->db->join('members', 'members.id = pr_setup_com_report.user_id', 'left');
-				$this->db->join('pr_units', 'pr_units.unit_id = pr_setup_com_report.unit_id', 'left');
-				$this->db->where('pr_setup_com_report.id', $insert_id);
-				$this->db->order_by('pr_setup_com_report.id', 'desc');
-				echo json_encode($this->db->get()->row());
 			}else{
 				echo 'false';
 			}
 		}
+		$this->db->select('pr_setup_com_report.*,pr_units.unit_name');
+		$this->db->from('pr_setup_com_report');
+		$this->db->join('pr_units', 'pr_units.unit_id = pr_setup_com_report.unit_id', 'left');
+		$this->db->where('pr_setup_com_report.id', $insert_id);
+		$this->db->order_by('pr_setup_com_report.id', 'desc');
+		$data=$this->db->get()->row();
+		$data->start_month=date('Y-m',strtotime($data->start_month));
+		$data->end_month=date('Y-m',strtotime($data->end_month));
+		echo json_encode($data);
 	}
 		function delete_user_mode($id){
 			$this->db->where('id', $id);
@@ -107,7 +99,10 @@ class Acl_con extends CI_Controller {
 		}
 		function edit_user_mode($id){
 			$this->db->where('id', $id);
-			echo json_encode($this->db->get('pr_setup_com_report')->row());
+			$data=$this->db->get('pr_setup_com_report')->row();
+			$data->start_month=date('Y-m',strtotime($data->start_month));
+			$data->end_month=date('Y-m',strtotime($data->end_month));
+			echo json_encode($data);
 		}
 	
 
