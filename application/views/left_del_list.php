@@ -23,7 +23,6 @@
     .center-text {
         vertical-align: center;
         padding: 5px 10px;
-        /* line-height: 40px; Should be equal to the button's height */
     }
     .btns{
       padding: 3px;
@@ -170,7 +169,7 @@ get_left_del_list();
           $(element).closest('tr').remove();
           showMessage('success','Record Deleted successfully!')
           
-        }
+        }  
         else{
           showMessage('danger','Something went wrong!')
         }
