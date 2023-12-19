@@ -89,7 +89,7 @@
       <?php } ?>
 
           
-      <li class="start"> <a href="javascript:;" > <i class="fa fa-users"></i> <span class="title">HRM</span> <span class="selected"></span> <span class="arrow"></span> </a>
+      <!-- <li class="start"> <a href="javascript:;" > <i class="fa fa-users"></i> <span class="title">HRM</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu ">
           <li class="start "> <a href="javascript:;"><span class="title">Entry System</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
@@ -115,9 +115,9 @@
             </ul>
           </li>
         </ul>
-      </li>
+      </li> -->
 
-      <li class="start ">
+      <!-- <li class="start ">
         <a href="javascript:;" > <i class="fa fa-money"></i> <span class="title">Payroll</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu">
           <li class="start "> <a href="javascript:;"><span class="title">Process</span> <span class="selected"></span> <span class="arrow"></span> </a>
@@ -133,14 +133,15 @@
             </ul>
           </li>
         </ul>
-      </li>
+      </li> -->
 
       <li class="start">
-         <a href="<?=base_url()?>index.php/payroll_con/first_body"> <i class="fa fa-phone"></i>  <span class="title">Support</span></a>
+         <a href="<?=base_url('payroll_con/first_body')?>"> <i class="fa fa-phone"></i>  <span class="title">Support</span></a>
       </li>
-      <li class="start"><a href="<?=base_url()?>index.php/logout_FE"> <i class="fa fa-power-off"></i>  <span class="title">Log Out</span></a>
+      <li class="start"><a href="<?=base_url('logout_FE')?>"> <i class="fa fa-power-off"></i>  <span class="title">Log Out</span></a>
       </li>
-      <li class="start ">
+
+      <!-- <li class="start ">
         <a href="javascript:;" > <i class=""></i> <span class="title">Payroll</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu">
           <li class="start"><a href="<?=base_url()?>index.php/earn_leave_con/earn_process_form" class="anchor_cls">Earn Leave Process</a></li>
@@ -151,7 +152,7 @@
             </ul>
           </li>
         </ul>
-      </li>
+      </li> -->
 
     </ul>
     <div id="notification_div"></div>
