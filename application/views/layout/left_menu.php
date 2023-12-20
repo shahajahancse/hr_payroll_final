@@ -35,6 +35,15 @@
       </li>
       <?php } ?>
 
+      <?php if(in_array(7,$acl)) { ?>
+      <li class="start <?= activate_class('salary_process_con') ?>"> <a href="javascript:;"> <i class="fa fa-money"></i>
+        <span class="title">Payroll </span> <span class="selected"></span> <span class="arrow <?= arrow_open('salary_process_con') ?>"></span> </a>
+        <ul class="sub-menu ">
+          <li class="start <?= activate_method('salary_process_form') ?>"> <a href="<?=base_url('salary_process_con/salary_process_form')?>" class="anchor_cls" id="acl">Salary Process</a> </li>
+        </ul>
+      </li>
+      <?php } ?>
+
       <?php if(in_array(2,$acl)) { ?>
       <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
         <span class="title">Setup Section </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setup_con') ?>"></span> </a>
@@ -75,15 +84,6 @@
           <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('acl_con/acl')?>" class="anchor_cls" id="acl">User ACL</a> </li>
           <li class="start <?= activate_method('user_mode') ?>"> <a href="<?=base_url('acl_con/user_mode')?>" class="anchor_cls" id="acl">User Mode</a> </li>
 
-        </ul>
-      </li>
-      <?php } ?>
-
-      <?php if(in_array(7,$acl)) { ?>
-      <li class="start <?= activate_class('salary_process_con') ?>"> <a href="javascript:;"> <i class="fa fa-money"></i>
-        <span class="title">Payroll </span> <span class="selected"></span> <span class="arrow <?= arrow_open('salary_process_con') ?>"></span> </a>
-        <ul class="sub-menu ">
-          <li class="start <?= activate_method('salary_process_form') ?>"> <a href="<?=base_url('salary_process_con/salary_process_form')?>" class="anchor_cls" id="acl">Salary Process</a> </li>
         </ul>
       </li>
       <?php } ?>

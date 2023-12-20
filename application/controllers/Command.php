@@ -23,6 +23,26 @@ class Command extends CI_Controller {
 		$this->load->dbforge();
 	}
 
+	// Delete pr_emp_shift_log table data 2013-10-30 to 2021-10-01 
+	public function shift_log()
+	{
+		echo "hello, ci";
+		$i = '2021-10-01';
+
+		while ($i >= '2013-10-30') {
+
+			$rs = $this->db->where('shift_log_date', $i)->get('pr_emp_shift_log')->row();;
+			if (!empty($rs))
+			{
+				$this->db->where('shift_log_date', $i)->delete('pr_emp_shift_log');
+				echo "<pre> $i Delete data";
+			}
+
+			$i = date('Y-m-d', strtotime('-1 days'. $i));
+
+		}
+		dd('exit');
+	}
 
 	// pr_incre_prom_pun
 	public function stopyyy()
@@ -214,7 +234,7 @@ class Command extends CI_Controller {
 				'num_of_workday' => $row->num_of_workday,	
 				'att_days' 		 => $row->att_days,	
 				'absent_days' 	 => $row->absent_days,	
-				'bf_absent' 	 => $row->before_after_absent,
+				'ba_absent' 	 => $row->before_after_absent,
 				'c_l' 		 	 => $row->c_l,
 				's_l' 		 	 => $row->s_l,
 				'e_l' 		 	 => $row->e_l,
@@ -273,6 +293,7 @@ class Command extends CI_Controller {
 	}
 
 	// pay_salary_sheet
+	// nor used
 	public function create_salary_sheet()
 	{
 		dd('ddd');
@@ -301,7 +322,7 @@ class Command extends CI_Controller {
 		dd('ok');
 	}
 
-	//  salary
+	//  salary     done
 	public function salary_emp_id()
 	{
 		echo "hello, ci";
@@ -309,8 +330,8 @@ class Command extends CI_Controller {
 		$this->db->from('pay_salary_sheet');
 		$this->db->from('pr_emp_com_info');
 		$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
-		$this->db->where('pr_emp_com_info.unit_id =', 4);
-		$this->db->where('pay_salary_sheet.unit_id =', 4);
+		$this->db->where('pr_emp_com_info.unit_id =', 3);
+		$this->db->where('pay_salary_sheet.unit_id =', 3);
 		$this->db->group_by('pr_emp_com_info.id');
 		$results = $this->db->get()->result();
 		// dd($results);
@@ -329,7 +350,8 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	//  per_info address add gender, religion, marital_status, blood group
+	//  per_info address add gender, religion, marital_status, blood group  
+	// nor used
 	public function ot_eot()
 	{
 		dd('exit');
@@ -355,7 +377,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	//  pr_emp_shift_log employee id conver
+	//  pr_emp_shift_log employee id conver   done
 	public function log_emp_id()
 	{
 		echo "hello, ci";
@@ -363,7 +385,7 @@ class Command extends CI_Controller {
 		$this->db->from('pr_emp_shift_log');
 		$this->db->from('pr_emp_com_info');
 		$this->db->where('pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id');
-		$this->db->where('pr_emp_com_info.unit_id =', 4);
+		$this->db->where('pr_emp_com_info.unit_id =', 3);
 		$this->db->group_by('pr_emp_com_info.id');
 		$results = $this->db->get()->result();
 		// dd($results);
@@ -382,15 +404,15 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	//  per_info address add gender, religion, marital_status, blood group
+	//  per_info address add gender, religion, marital_status, blood group   done
 	public function gen_mar_blo_per_info()
 	{
 		echo "hello, ci";
-		$results = $this->db->where('unit_id !=', 1)->get('pr_emp_com_info')->result();
+		$results = $this->db->where('unit_id =', 1)->get('pr_emp_com_info')->result();
 
 		foreach ($results as $key => $row) {
 
-			$rs = $this->db->where('emp_id',$row->emp_id)->get('pr_emp_per_info_copy')->row();
+			$rs = $this->db->where('emp_id',$row->emp_id)->get('pr_emp_per_info')->row();
 
 
 			if ($rs->emp_religion == 1) {
@@ -452,11 +474,11 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	//  per_info address add
+	//  per_info address add   done
 	public function per_info_address()
 	{
 		echo "hello, ci";
-		$results = $this->db->where('unit_id !=', 4)->get('pr_emp_com_info')->result();
+		$results = $this->db/*->where('unit_id !=', 3)*/->get('pr_emp_com_info')->result();
 
 		foreach ($results as $key => $row) {
 
@@ -472,7 +494,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	//  pr_emp_com_info table update to proxi id add pr_id_proxi table drop
+	//  pr_emp_com_info table update to proxi id add pr_id_proxi table drop done
 	public function com_info()
 	{
 		echo "hello, ci";
@@ -490,7 +512,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	// Delete attn_holiday table data 2013-10-30 to 2021-10-01 
+	// Delete attn_holiday table data 2013-10-30 to 2021-10-01 done
 	public function holiday()
 	{
 		echo "hello, ci";
@@ -498,10 +520,10 @@ class Command extends CI_Controller {
 
 		while ($i >= '2013-10-30') {
 
-			$rs = $this->db->where('holiday_date', $i)->get('attn_holiday')->row();;
+			$rs = $this->db->where('holiday_date', $i)->get('pr_holiday')->row();;
 			if (!empty($rs))
 			{
-				$this->db->where('holiday_date', $i)->delete('attn_holiday');
+				$this->db->where('holiday_date', $i)->delete('pr_holiday');
 				echo "<pre> $i Delete data";
 			}
 
@@ -511,7 +533,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	// Delete attn_work_off table data 2013-10-30 to 2021-10-01 
+	// Delete attn_work_off table data 2013-10-30 to 2021-10-01  done
 	public function work_off()
 	{
 		echo "hello, ci";
@@ -519,10 +541,10 @@ class Command extends CI_Controller {
 
 		while ($i >= '2013-10-30') {
 
-			$rs = $this->db->where('work_off_date', $i)->get('attn_work_off')->row();;
+			$rs = $this->db->where('work_off_date', $i)->get('pr_work_off')->row();;
 			if (!empty($rs))
 			{
-				$this->db->where('work_off_date', $i)->delete('attn_work_off');
+				$this->db->where('work_off_date', $i)->delete('pr_work_off');
 				echo "<pre> $i Delete data";
 			}
 
@@ -532,28 +554,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	// Delete pr_emp_shift_log table data 2013-10-30 to 2021-10-01 
-	public function shift_log()
-	{
-		echo "hello, ci";
-		$i = '2021-10-01';
-
-		while ($i >= '2013-10-30') {
-
-			$rs = $this->db->where('shift_log_date', $i)->get('pr_emp_shift_log')->row();;
-			if (!empty($rs))
-			{
-				$this->db->where('shift_log_date', $i)->delete('pr_emp_shift_log');
-				echo "<pre> $i Delete data";
-			}
-
-			$i = date('Y-m-d', strtotime('-1 days'. $i));
-
-		}
-		dd('exit');
-	}
-
-	// Delete att_year_month (att_2020_07) table 
+	// Delete att_year_month (att_2020_07) table  done
 	public function att_year_month()
 	{
 		echo "hello, ci";
@@ -574,7 +575,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	// Delete all temp table 
+	// Delete all temp table  done
 	public function temp()
 	{
 		echo "hello, ci";
@@ -592,6 +593,11 @@ class Command extends CI_Controller {
 		}
 		dd('exit');
 	}
+
+
+
+
+
 
 	function file_read(){
 		// exit('this function create to manual data insert in to db');
