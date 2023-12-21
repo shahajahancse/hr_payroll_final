@@ -1,3 +1,4 @@
+
 <div class="content" style="padding-top: 10px;">
     <!-- Static navbar -->
     <nav class="navbar navbar-inverse">
@@ -14,7 +15,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
+                    <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
                 </ul>
 
             </div>
@@ -25,7 +26,7 @@
     <?php $failuer = $this->session->flashdata('failure');?>
     <h3>Update Designation</h3>
     <hr>
-    <form action="<?= base_url('index.php/setup_con/designation_edit').'/'.$emp_designation->id?> "
+    <form action="<?= base_url('setup_con/designation_edit').'/'.$emp_designation->id?>"
         enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-4">
@@ -90,14 +91,34 @@
                 </div>
             </div>
         </div>
+        <!-- < ?php 
+
+// dd($unit_id);
+?> -->
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
+                    <?php 
+                        $depts = $this->db->where('unit_id',$unit_id)->get('emp_depertment')->result(); 
+                        $sec = $this->db->where('unit_id',$unit_id)->get('emp_section')->result(); 
+                        $line = $this->db->where('unit_id',$unit_id)->get('emp_line_num')->result(); 
+
+                         $this->db->select('emp_depertment.dept_id, emp_section.id as sec_id, emp_line_num.id as line_id');
+                         $this->db->from('emp_dasignation_line_acl');
+                         $this->db->join('emp_depertment','emp_dasignation_line_acl.dept_id =emp_depertment.dept_id');
+                         $this->db->join('emp_section','emp_dasignation_line_acl.section_id = emp_section.id');
+                         $this->db->join('emp_line_num','emp_dasignation_line_acl.line_id = emp_line_num.id');
+                         $this->db->where('emp_dasignation_line_acl.designation_id',$emp_designation->id);
+                         $info = $this->db->get()->row();
+                         ?>
+                         <!-- < ?php dd($info->dept_id);?> -->
                     <label>Department <span style="color: red;">*</span> </label>
                     <?php echo form_error('emp_dept_id');?>
                     <select name="emp_dept_id" id= "emp_dept_id" onchange="get_section(this.value)" class="form-control input-lg select22" required>
-                        <option  >Select Department</option>
-                        
+	                	<option  >Select Department</option>
+	                	<?php foreach ($depts as $key => $row) { ?>
+                            <option value="<?= $row->dept_id ?>" <?= !empty($info->dept_id) && $info->dept_id == $row->dept_id ? 'selected':'' ?> ><?= $row->dept_name ?></option>
+	                	<?php } ?>
                     </select>
                 </div>
             </div>
@@ -105,18 +126,24 @@
             <div class="form-group">
                 <label>Section <span style="color: red;">*</span> </label>
                 <?php echo form_error('emp_sec_id');?>
-                <select name="emp_sec_id" id= "emp_sec_id" onchange="get_line(this.value) " class="emp_sec_id form-control input-lg select22" required>
-                    <option  >Select Section</option>
-                </select>
+                    <select name="emp_sec_id" id= "emp_dept_id" onchange="get_section(this.value)" class="form-control input-lg select22" required>
+	                	<option  >Select Section</option>
+	                	<?php foreach ($sec as $key => $row) { ?>
+		                  <option value="<?= $row->id ?>" <?= !empty($info->sec_id) && $info->sec_id == $row->id ? 'selected':'' ?> ><?=  $row->sec_name_en;  ?></option>
+	                	<?php } ?>
+                    </select>
             </div>
             </div>
             <div class="col-md-4" style="padding-left: 0px !important;">
             <div class="form-group">
                 <label>Line<span style="color: red;">*</span> </label>
                 <?php echo form_error('emp_line_id');?>
-                <select name="emp_line_id" id= "emp_line_id" class="emp_line_id form-control input-lg select22" required>
-                    <option  >Select Line</option>
-                </select>
+                    <select name="emp_line_id" id= "emp_dept_id" onchange="get_section(this.value)" class="form-control input-lg select22" required>
+	                	<option  >Select Line</option>
+	                	<?php foreach ($line as $key => $row) { ?>
+		                  <option value="<?= $row->id ?>"<?= !empty($info->line_id) && $info->line_id==$row->id ? 'selected':'' ?> ><?=$row->line_name_en?></option>
+	                	<?php } ?>
+                    </select>
             </div>
             </div>
         </div>

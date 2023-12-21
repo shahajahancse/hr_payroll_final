@@ -17,6 +17,7 @@ class Setup_con extends CI_Controller
             redirect("authentication");
         }
         $this->data['user_data'] = $this->session->userdata('data');
+        // dd($this->data['user_data']
         if (!check_acl_list($this->data['user_data']->id, 2)) {
             echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
             redirect("payroll_con");
@@ -861,8 +862,7 @@ class Setup_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-    public function iftar_bill_add()
-    {
+    public function iftar_bill_add(){
 
         $this->load->library('form_validation');
         $this->load->model('crud_model');
@@ -896,8 +896,7 @@ class Setup_con extends CI_Controller
 
     }
 
-    public function iftar_bill_edit($id)
-    {
+    public function iftar_bill_edit($id){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
@@ -935,8 +934,7 @@ class Setup_con extends CI_Controller
 
     }
 
-    public function iftar_bill_delete($id)
-    {
+    public function iftar_bill_delete($id){
         $this->db->where('id', $id);
         $this->db->delete('allowance_iftar_bill');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
@@ -962,8 +960,7 @@ class Setup_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-    public function night_allowance_add()
-    {
+    public function night_allowance_add(){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
@@ -998,8 +995,7 @@ class Setup_con extends CI_Controller
 
     }
 
-    public function night_allowance_edit($id)
-    {
+    public function night_allowance_edit($id){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
@@ -1038,8 +1034,7 @@ class Setup_con extends CI_Controller
         }
 
     }
-    public function night_allowance_delete($id)
-    {
+    public function night_allowance_delete($id){
         $this->db->where('id', $id);
         $this->db->delete('allowance_night_rules');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
@@ -1052,14 +1047,15 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     // CRUD for Night Allowance Start
     //----------------------------------------------------------------------------------
-    public function designation()
-    {
-        $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name,
-        IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
-        IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
-        IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
-        IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules,
-        IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin');
+    public function designation(){
+        $this->db->select(' emp_designation.*, 
+                            IFNULL(pr_units.unit_name, "none") as unit_name,
+                            IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
+                            IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
+                            IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
+                            IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules,
+                            IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin'
+                        );
         $this->db->from('emp_designation');
         $this->db->join('pr_units', 'pr_units.unit_id=emp_designation.unit_id', 'left');
         $this->db->join('allowance_attn_bonus', 'allowance_attn_bonus.id=emp_designation.attn_id', 'left');
@@ -1068,7 +1064,8 @@ class Setup_con extends CI_Controller
         $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
         $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
         $this->data['emp_designation'] = $this->db->get()->result_array();
-        // dd($this->data['emp_designation']);
+        $this->data['unit_id']= $this->data['user_data']->unit_name;
+        // dd($this->data);
         $this->data['title'] = 'Designation List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/desig_list';
@@ -1104,8 +1101,7 @@ class Setup_con extends CI_Controller
         echo json_encode($data);
     }
 
-    public function designation_add()
-    {
+    public function designation_add(){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $this->form_validation->set_rules('desig_name', 'Designation Name English', 'required');
@@ -1120,9 +1116,7 @@ class Setup_con extends CI_Controller
         if ($this->form_validation->run() == false) {
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
-
             }
             $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
@@ -1133,6 +1127,9 @@ class Setup_con extends CI_Controller
         } else {
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
+                // 'dept_id' => $this->input->post('emp_dept_id'),
+                // 'sec_id' => $this->input->post('emp_sec_id'),
+                // 'line_id' => $this->input->post('emp_line_id'),
                 'desig_name' => $this->input->post('desig_name'),
                 'desig_bangla' => $this->input->post('desig_bangla'),
                 'attn_id' => $this->input->post('attn_id'),
@@ -1177,14 +1174,16 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('pr_units.*');
+            $this->db->select('pr_units.unit_id,pr_units.unit_name');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
-            $this->db->select('emp_designation.*,emp_dasignation_line_acl.*, IFNULL(pr_units.unit_name, "none") as unit_name,
-            IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
-            IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
-            IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
-            IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules,
-            IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin');
+
+            $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name,
+                                IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
+                                IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
+                                IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
+                                IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules,
+                                IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin'
+                            );
             $this->db->from('emp_designation');
             $this->db->join('pr_units', 'pr_units.unit_id=emp_designation.unit_id', 'left');
             $this->db->join('allowance_attn_bonus', 'allowance_attn_bonus.id=emp_designation.attn_id', 'left');
@@ -1195,8 +1194,13 @@ class Setup_con extends CI_Controller
             $this->db->join('emp_dasignation_line_acl', 'emp_dasignation_line_acl.designation_id=emp_designation.id', 'left');
             $this->db->where('emp_designation.id', $id);
             $this->data['emp_designation'] = $this->db->get()->row();
+
+
             $this->data['title'] = 'Edit Designation';
             $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['unit_id']= $this->data['user_data']->unit_name;
+
+            // dd($this->data);
             $this->data['subview'] = 'setup/desig_edit';
             $this->load->view('layout/template', $this->data);
         } else {
@@ -1212,12 +1216,21 @@ class Setup_con extends CI_Controller
             );
             $this->db->where('id', $id);
             if ($this->db->update('emp_designation', $formArray)) {
-                $this->session->set_flashdata('success', 'Record Updated successfully!');
+                // $this->session->set_flashdata('success', 'Record Updated successfully!');
+            $data = array(
+                    'unit_id'    =>$formArray['unit_id'],
+                    'dept_id'    =>$this->input->post('emp_dept_id'),
+                    'section_id' =>$this->input->post('emp_sec_id'),
+                    'line_id'    =>$this->input->post('emp_line_id'),
+                    'designation_id' =>  $this->db->insert_id()
+                );
+                if ($this->db->where('designation_id',$data['designation_id'])->update('emp_dasignation_line_acl', $data)){
+                    $this->session->set_flashdata('success', 'Record Updated successfully!');
+                }
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
             redirect(base_url() . 'setup_con/designation');
-
         }
 
     }
