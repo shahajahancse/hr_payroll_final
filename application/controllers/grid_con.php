@@ -1226,25 +1226,17 @@ class Grid_con extends CI_Controller {
 
 	}
 
-	function grid_app_letter()
-	{
-		$grid_data = $this->input->post('spl');
-		//$grid_firstdate = $this->input->post('firstdate');
+	function grid_app_letter(){
+		$grid_data = $this->input->post('emp_ids');
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-
-		//$grid_firstdate  = date("d-m-Y", strtotime($grid_firstdate));
-
-		//$data['start_date']	= $grid_firstdate;
 		$data['values'] 	= $this->grid_model->grid_app_letter($grid_emp_id);
 		$data['unit_id']	= $unit_id;
 
-		if(is_string($data['values']))
-		{
+		if(is_string($data['values'])){
 			echo $data['values'];
 		}
-		else
-		{
+		else{
 			$this->load->view('appointment_letter',$data);
 		}
 	}

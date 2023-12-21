@@ -585,7 +585,6 @@ function daily_report(){
     var sql = get_checked_valuee(checkboxes);
     if (sql =='') {
 	alert('Please select employee Id');
-
       return false;
     }
 	hostname = window.location.href;
@@ -2314,68 +2313,53 @@ function grid_continuous_increment_promotion_proposal()
 		}
 	}
 }
-function grid_app_letter()
-{
+function grid_app_letter(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-	/*
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
-	{
-		alert("Please select Category options");
-		return false;
-	}*/
-	//var firstdate = document.getElementById('firstdate').value;
-	var unit_id = document.getElementById('grid_start').value;
-	if(unit_id =='Select')
-	{
+	try{
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+		}catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){
 		alert("Please select unit !");
 		return false;
 	}
-	$grid  = $("#list1");
-	var id_array = $grid.getGridParam('selarrrow');
-	var selected_id_list = new Array();
-	var spl = (id_array.join('xxx'));
-
-	if(spl =='')
-	{
-		alert("Please select Employee ID");
-		return false;
-	}
-
-
+	var checkboxes = document.getElementsByName('emp_id[]');
+    var sql = get_checked_valuee(checkboxes);
+    // if (sql =='') {
+	// alert('Please select employee Id');
+    //   return false;
+    // }
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	var queryString="spl="+spl+"&unit_id="+unit_id;
-   url =  hostname+"index.php/grid_con/grid_app_letter/";
-   $(".clearfix").dialog("open");
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-   ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			$(".clearfix").dialog("close");
-			app_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			app_letter.document.write(resp);
-			//app_letter.stop();
-		}
+	var queryString="emp_ids="+spl+"&unit_id="+unit_id;
+	url =  hostname+"index.php/grid_con/grid_app_letter/";
+	$(".clearfix").dialog("open");
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+			if(ajaxRequest.readyState == 4){
+				var resp = ajaxRequest.responseText;
+				$(".clearfix").dialog("close");
+				app_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+				app_letter.document.write(resp);
+				//app_letter.stop();
+			}
 	}
 
 }

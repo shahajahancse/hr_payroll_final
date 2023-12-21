@@ -202,7 +202,6 @@
 						<?php } ?>
 					</div>
 				<?php } ?>
-
 				<div class="tab-pane fade" id="continuous">
 					<button class="btn btn-primary input-sm" onclick="grid_continuous_present_report()">Present Report</button>
 					<button class="btn btn-primary input-sm" onclick="grid_continuous_absent_report()">Absent Report</button>
@@ -217,7 +216,7 @@
 					<button class="btn btn-primary input-sm" onclick="grid_continuous_report_limit(3)">Absent three</button>
 					<button class="btn btn-primary input-sm" onclick="grid_continuous_report_limit(10)">Absent ten</button>
 				</div>
-				<div class="tab-pane fade" id="other">
+				<div class="tab-pane fade" id="other" style="display: flex;flex-direction: row;flex-wrap: wrap;gap: 4px;">
 					<button class="btn btn-primary input-sm" onclick="grid_app_letter()">App. Letter</button>
 					<button class="btn btn-primary input-sm" onclick="id_card(1)">ID Card Bangla</button>
 					<button class="btn btn-primary input-sm" onclick="id_card(2)">ID Card English</button>

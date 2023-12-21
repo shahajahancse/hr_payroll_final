@@ -110,13 +110,24 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // Form Display for Leave Transaction
     //-------------------------------------------------------------------------------------------------------
-    function get_emp_by_unit($id){
-        $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
-        $this->db->from('pr_emp_com_info as com');
-        $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
-        $this->db->where('com.emp_cat_id', 1);
-        $this->db->group_by('com.id');
-        return $this->db->where('com.unit_id', $id)->get()->result();
+    // function get_emp_by_unit($id){
+    //     $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
+    //     $this->db->from('pr_emp_com_info as com');
+    //     $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
+    //     $this->db->where('com.emp_cat_id', 1);
+    //     $this->db->group_by('com.id');
+    //     return $this->db->where('com.unit_id', $id)->get()->result();
+    // }
+
+        public function get_emp_by_unit($unit) {
+        $this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.unit_id,pr_emp_per_info.*');
+        $this->db->from('pr_emp_com_info');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id');
+        $this->db->where('pr_units.unit_id', $unit);
+        $this->db->where('pr_emp_com_info.emp_cat_id', 1);
+        $query = $this->db->get();
+        // dd($query->result_array());
     }
 
 
@@ -902,16 +913,7 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/emp_holiday_add';
         $this->load->view('layout/template', $this->data);
     }
-    public function get_emp_by_unit($unit) {
-        $this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.unit_id,pr_emp_per_info.*');
-        $this->db->from('pr_emp_com_info');
-        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id');
-        $this->db->where('pr_units.unit_id', $unit);
-        $this->db->where('pr_emp_com_info.emp_cat_id', 1);
-        $query = $this->db->get();
-        // dd($query->result_array());
-    }
+
     public function holiday_add_ajax(){
         $date = $this->input->post('date');
         $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));

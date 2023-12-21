@@ -180,29 +180,38 @@ class Setup_con extends CI_Controller
     }
 
     // Post Office create
-    public function post_office_add()
-    {
-
+    public function post_office_add(){
         $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
         $this->form_validation->set_rules('district', 'District Name', 'trim|required');
         $this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
         $this->form_validation->set_rules('post_office', 'Post Office Bangla Name', 'trim|required');
         $this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
         if ($this->form_validation->run() == true) {
+            $post_bn = $this->input->post('post_office');
+            $post_en = $this->input->post('post_office_en');
             $formArray = array(
                 'div_id' => $this->input->post('division'),
                 'dis_id' => $this->input->post('district'),
                 'up_zil_id' => $this->input->post('upazila'),
                 'name_bn' => $this->input->post('post_office'),
-                'name_en' => $this->input->post('post_officuser_datae_en'),
+                'name_en' => $this->input->post('post_office_en'),
                 'status' => 1,
             );
 
-            if ($this->db->insert('emp_post_offices', $formArray)) {
-                $this->session->set_flashdata('success', 'Record add successfully!');
-            } else {
-                $this->session->set_flashdata('failuer', 'Sorry!, Something wrong.');
+            $this->db->where('name_bn', $post_bn);
+            $this->db->or_where('name_en', $post_en);
+            $query = $this->db->get('emp_post_offices');
+            if ($query->num_rows()  >0) {
+
+                $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            }else{
+                if ($this->db->insert('emp_post_offices', $formArray)) {
+                    $this->session->set_flashdata('success', 'Record add successfully!');
+                } else {
+                    $this->session->set_flashdata('failuer', 'Sorry!, Something wrong.');
+                }
             }
+            // return false;
             redirect(base_url('setup_con/post_office'));
         }
 
@@ -215,16 +224,15 @@ class Setup_con extends CI_Controller
     }
 
     // Post Office update
-    public function post_office_edit($id)
-    {
-
+     public function post_office_edit($id){
         $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
         $this->form_validation->set_rules('district', 'District Name', 'trim|required');
         $this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
         $this->form_validation->set_rules('post_office', 'Post Office Bangla Name', 'trim|required');
         $this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
-
         if ($this->form_validation->run() == true) {
+            $post_bn = $this->input->post('post_office');
+            $post_en = $this->input->post('post_office_en');
             $formArray = array(
                 'div_id' => $this->input->post('division'),
                 'dis_id' => $this->input->post('district'),
@@ -233,22 +241,25 @@ class Setup_con extends CI_Controller
                 'name_en' => $this->input->post('post_office_en'),
                 'status' => 1,
             );
-            $this->db->where('id', $id);
-            $this->db->update('emp_post_offices', $formArray);
-
-            $this->session->set_flashdata('success', 'Record Updated successfully!');
+            $this->db->where('name_bn', $post_bn);
+            $this->db->or_where('name_en', $post_en);
+            $query = $this->db->get('emp_post_offices');
+            if ($query->num_rows()  >0) {
+                $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            }else{
+                $this->db->where('id', $id);
+                $this->db->update('emp_post_offices', $formArray);
+                $this->session->set_flashdata('success', 'Record Updated successfully!');
+            }
             redirect('/setup_con/post_office');
         }
-
         $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();
         $this->data['post'] = $this->db->where('id', $id)->get('emp_post_offices')->row();
         $this->data['title'] = 'Update Post Office';
         $this->data['username'] = $this->data['user_data']->id_number;
-
         $this->data['subview'] = 'setup/post_office_edit';
         $this->load->view('layout/template', $this->data);
     }
-
     // Post Office delete
     public function post_office_delete($id)
     {
@@ -1151,8 +1162,7 @@ class Setup_con extends CI_Controller
 
     }
 
-    public function designation_edit($id)
-    {
+    public function designation_edit($id){
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $this->form_validation->set_rules('desig_name', 'Designation Name English', 'required');
@@ -1163,14 +1173,12 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
-
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
             $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
-
             $this->db->select('emp_designation.*,emp_dasignation_line_acl.*, IFNULL(pr_units.unit_name, "none") as unit_name,
             IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
             IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
@@ -1193,14 +1201,14 @@ class Setup_con extends CI_Controller
             $this->load->view('layout/template', $this->data);
         } else {
             $formArray = array(
-                'unit_id' => $this->input->post('unit_id'),
-                'desig_name' => $this->input->post('desig_name'),
-                'desig_bangla' => $this->input->post('desig_bangla'),
-                'attn_id' => $this->input->post('attn_id'),
+                'unit_id'            => $this->input->post('unit_id'),
+                'desig_name'         => $this->input->post('desig_name'),
+                'desig_bangla'       => $this->input->post('desig_bangla'),
+                'attn_id'            => $this->input->post('attn_id'),
                 'holiday_weekend_id' => $this->input->post('holiday_weekend_id'),
-                'iftar_id' => $this->input->post('iftar_id'),
-                'night_al_id' => $this->input->post('night_al_id'),
-                'tiffin_id' => $this->input->post('tiffin_id'),
+                'iftar_id'           => $this->input->post('iftar_id'),
+                'night_al_id'        => $this->input->post('night_al_id'),
+                'tiffin_id'          => $this->input->post('tiffin_id'),
             );
             $this->db->where('id', $id);
             if ($this->db->update('emp_designation', $formArray)) {

@@ -283,3 +283,9 @@ function get_line(id) {
 
 getDepertment(<?= $emp_designation->unit_id ?>)
 </script>
+
+
+
+
+
+
