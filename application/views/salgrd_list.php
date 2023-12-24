@@ -11,21 +11,20 @@
         vertical-align: middle !important;
     }
     .table td {
-        padding: 0px 3px !important;
-        font-size: 13px;
+      padding: 0px 3px !important;
+      font-size: 13px;
       
     }
     table.dataTable thead th, table.dataTable thead td {
-        border-bottom: none;
+      border-bottom: none;
     }
     table.dataTable tbody th, table.dataTable tbody td {
-      padding: 4px !important;
-      
+    padding: 4px !important;
     }
     .center-text {
-        vertical-align: center;
-        padding: 5px 10px;
-        /* line-height: 40px; Should be equal to the button's height */
+      vertical-align: center;
+      padding: 5px 10px;
+      /* line-height: 40px; Should be equal to the button's height */
     }
 </style>
 <div class="content" >
@@ -82,22 +81,21 @@
           </tr>
         </thead>
           <tbody>
-              <?php 
-              // dd($salary_grade);
+              <?php
               if(!empty($salary_grade)){$i=1; foreach($salary_grade as $pr_grades){?>
                   <tr>
-                      <td class="text-center"><?php echo $i++ ?></td>
-                      <td class="text-center"><?php echo $pr_grades['gr_name'] ?></td>
-                      <td class="text-center" >
-                          <a href="<?=base_url('index.php/crud_con/salgrd_edit').'/'.$pr_grades["gr_id"]?>"target='_blank' class="btn btn-primary input-sm center-text" role="button">Edit</a>
-                      </td>
-                      <td class="text-center">
-                          <a href="<?=base_url('index.php/crud_con/salgrd_delete').'/'.$pr_grades["gr_id"]?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
-                      </td>
+                    <td class="text-center"><?php echo $i++ ?></td>
+                    <td class="text-center"><?php echo $pr_grades['gr_name'] ?></td>
+                    <td class="text-center" >
+                      <a href="<?=base_url('index.php/crud_con/salgrd_edit').'/'.$pr_grades["id"]?>"target='_blank' class="btn btn-primary input-sm center-text" role="button">Edit</a>
+                    </td>
+                    <td class="text-center">
+                      <a href="<?=base_url('index.php/crud_con/salgrd_delete').'/'.$pr_grades["id"]?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
+                    </td>
                   </tr>
               <?php } }else{?>
                   <tr>
-                      <td colspan="12">Records not Found</td>
+                    <td colspan="12">Records not Found</td>
                   </tr>
               <?php }?>
         </tbody>

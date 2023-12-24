@@ -11,8 +11,8 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/designation') ?>">
-                        < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    Back</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -160,9 +160,6 @@
                     <a href="<?= base_url('index.php/setup_con/designation') ?>" class="btn-warning btn">Cancel</a>
                 </div>
             </div>    
-
-
-
     </form>
 </div>
 <script>
@@ -191,7 +188,7 @@
              if (attn_bonus.length > 0) {
                attnIdSelect.empty().append("<option value=''>Select Attendance Bonus</option>");
                attn_bonus.forEach(function(item) {
-                 attnIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                 attnIdSelect.append(`<option value='${item.id}'>${item.rul}+">>"+${item.rule_name}</option>`);
                });
              }
              attnIdSelect.append("<option value='0'>None</option>");
@@ -259,7 +256,6 @@ function getDepertment(unit_id) {
 }
 function get_section(depertment_id) {
     $.ajax({
-
         url: "<?php echo base_url('index.php/setup_con/get_section') ?>",
         method: "POST",
         data: {

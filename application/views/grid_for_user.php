@@ -65,7 +65,7 @@ First Date: <input type="text" name="firstdate" id="firstdate" style="width:100p
 <fieldset style='width:95%;'><legend><font size='+1'><b>Category Options</b></font></legend>
 <table>
 <tr>
-<td>Start</td><td>:</td><td><select name='grid_start' id='grid_start' style="width:250px;" onchange='grid_get_all_data()' /><option value='Select'>Select</option><option value='all'>ALL</option></select></td>
+<td>Start</td><td>:</td><td><select name='grid_start' id='grid_start' style="width:250px;" onchange='grid_get_all_data()' ><option value='Select'>Select</option><option value='all'>ALL</option></select></td>
 <td>Dept. </td><td>:</td><td><select id='grid_dept' name='grid_dept' style="width:250px;" onChange="grid_all_search()"><option value=''></option></select></td>
 </tr>
 <tr><td>Section </td><td>:</td><td><select id='grid_section' name='grid_section' style="width:250px;" onChange="grid_all_search()"><option value=''></option></select></td>
@@ -83,18 +83,19 @@ First Date: <input type="text" name="firstdate" id="firstdate" style="width:100p
 <br />
 <fieldset style='width:95%;'><legend><font size='+1'><b>Daily Reports</b></font></legend>
 <table width="100%"  style="font-size:11px; ">
-<tr >
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Present Report" onClick="grid_daily_present_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Absent Report" onClick="grid_daily_absent_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Leave Report" onClick="grid_daily_leave_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Late Report" onClick="grid_daily_late_report()"></td>
-</tr>
-<tr>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Out Punch Miss" onClick="grid_daily_out_punch_miss_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Out & IN Report" onClick=""></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily OT" onClick="grid_daily_ot()"></td>
-<!--<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily EOT" onClick="grid_daily_eot()"></td>
---></tr>
+	<tr >
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Present Report" onClick="grid_daily_present_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Absent Report" onClick="grid_daily_absent_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Leave Report" onClick="grid_daily_leave_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Late Report" onClick="grid_daily_late_report()"></td>
+	</tr>
+	<tr>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Out Punch Miss" onClick="grid_daily_out_punch_miss_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Out & IN Report" onClick=""></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily OT" onClick="grid_daily_ot()"></td>
+		<!--<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily EOT" onClick="grid_daily_eot()"></td>
+		-->
+	</tr>
 </table>
 
 </fieldset>
@@ -102,14 +103,14 @@ First Date: <input type="text" name="firstdate" id="firstdate" style="width:100p
 
 <fieldset style='width:95%;'><legend><font size='+1'><b>Monthly Reports</b></font></legend>
 <table align="left" width="75%"  style="font-size:11px; ">
-<tr >
-<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="Attendance Register" onClick="grid_monthly_att_register()"></td>
-<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="OT Register" onClick="grid_monthly_ot_register()"></td>
-<!--<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="EOT Register" onClick="grid_monthly_eot_register()"></td>
-<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="EOT Summary" onClick=""></td>
-<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="Leave Ledger" onClick=""></td>-->
+	<tr >
+		<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="Attendance Register" onClick="grid_monthly_att_register()"></td>
+		<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="OT Register" onClick="grid_monthly_ot_register()"></td>
+	<!--<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="EOT Register" onClick="grid_monthly_eot_register()"></td>
+	<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="EOT Summary" onClick=""></td>
+	<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="Leave Ledger" onClick=""></td>-->
 
-</tr>
+	</tr>
 </table>
 
 </fieldset>
@@ -117,12 +118,12 @@ First Date: <input type="text" name="firstdate" id="firstdate" style="width:100p
 
 <fieldset style='width:95%;'><legend><font size='+1'><b>Continuous Reports</b></font></legend>
 <table width="100%"  style="font-size:11px; ">
-<tr>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Present Report" onClick="grid_continuous_present_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Absent Report" onClick="grid_continuous_absent_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Leave Report" onClick="grid_continuous_leave_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Late Report" onClick="grid_continuous_late_report()"></td>
-</tr>
+	<tr>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Present Report" onClick="grid_continuous_present_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Absent Report" onClick="grid_continuous_absent_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Leave Report" onClick="grid_continuous_leave_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Late Report" onClick="grid_continuous_late_report()"></td>
+	</tr>
 </table>
 
 </fieldset>
@@ -130,18 +131,19 @@ First Date: <input type="text" name="firstdate" id="firstdate" style="width:100p
 <br />
 <fieldset style='width:95%;'><legend><font size='+1'><b>Other Reports</b></font></legend>
 <table  width="100%"  style="font-size:11px; ">
-<tr>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="App. Latter" onClick="grid_app_letter()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="ID Card" onClick="grid_id_card()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Job Card" onClick="grid_job_card()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Genaral Report" onClick="grid_general_info()"></td>
-</tr>
-<tr>
-<!--<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="EOT Job Card" onClick="grid_extra_ot()"></td>
---><td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="New Join Report" onClick="grid_new_join_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Resign Report" onClick="grid_resign_report()"></td>
-<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Separation Report" onClick="grid_left_report()"></td>
-</tr>
+	<tr>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="App. Latter" onClick="grid_app_letter()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="ID Card" onClick="grid_id_card()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Job Card" onClick="grid_job_card()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Genaral Report" onClick="grid_general_info()"></td>
+	</tr>
+	<tr>
+	<!--<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="EOT Job Card" onClick="grid_extra_ot()"></td>
+		-->
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="New Join Report" onClick="grid_new_join_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Resign Report" onClick="grid_resign_report()"></td>
+		<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Separation Report" onClick="grid_left_report()"></td>
+	</tr>
 </table>
 
 </fieldset>

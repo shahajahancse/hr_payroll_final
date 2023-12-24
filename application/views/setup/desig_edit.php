@@ -1,36 +1,38 @@
-<div class="content" style="padding-top: 10px;">
-    <!-- Static navbar -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Update Night Allowance</a>
+ <!-- < ?php dd($emp_designation)?> -->
+<div class="content">
+    <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
+            <div class="navbar-header col-md-3" style="padding: 7px;">
+                <div>
+                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/designation') ?>">
+                        Back</a>
+                        <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
-                </ul>
-
+            <div class="col-md-6">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="">
+                        <form class="navbar-form pull-right" role="search">
+                            <div class="input-group">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <!--/.nav-collapse -->
         </div>
         <!--/.container-fluid -->
     </nav>
     <?php $failuer = $this->session->flashdata('failure');?>
+    <div class="tablebox">
     <h3>Update Designation</h3>
     <hr>
-    <form action="<?= base_url('index.php/setup_con/designation_edit').'/'.$emp_designation->id?> "
+    <form action="<?= base_url('setup_con/designation_edit').'/'.$emp_designation->id?>"
         enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="unit_id">Unit Id</label>
+                    <label for="unit_id">Unit Id <span style="color: red;">*</span></label>
                     <select name="unit_id" onchange="get_data();getDepertment(this.value)" id="unit_id" class="select22 form-control input-lg">
                         <option value="">Select Unit</option>
                         <?php foreach ($pr_units as $key => $value) {?>
@@ -42,7 +44,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="atttn_id">Attendance Bonus</label>
+                    <label for="atttn_id">Attendance Bonus <span style="color: red;">*</span></label>
                     <select name="attn_id"  id="attn_id" class="form-control input-lg select22">
                         <option value="">Select Attendance Bonus</option>
                         <option value="<?php echo $emp_designation->attn_id; ?>" selected><?= $emp_designation->allowance_attn_bonus ?></option>
@@ -52,7 +54,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="holiday_weekend_id">Holiday/Weekend</label>
+                    <label for="holiday_weekend_id">Holiday/Weekend <span style="color: red;">*</span></label>
                     <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg select22">
                         <option value="">Select Holyday/Weekend</option>
                         <option value="<?php echo $emp_designation->holiday_weekend_id; ?>" selected><?= $emp_designation->allowance_holiday_weekend ?></option>
@@ -64,6 +66,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
+                    <label>Select  Iftar Allowance <span style="color: red;">*</span></label>
                     <select name="iftar_id"  id="iftar_id" class="form-control input-lg select22">
                         <option value="">Select Iftar Allowance</option>
                         <option value="<?php echo $emp_designation->iftar_id; ?>" selected><?= $emp_designation->allowance_iftar ?></option>
@@ -73,6 +76,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
+                    <label>Select  Night Allowance <span style="color: red;">*</span></label>
                     <select name="night_al_id"  id="night_al_id" class="form-control input-lg select22">
                         <option value="">Select Night Allowance</option>
                         <option value="<?php echo $emp_designation->night_al_id; ?>" selected><?= $emp_designation->allowance_night_rules ?></option>
@@ -82,6 +86,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
+                    <label>Select Tiffin Allowance  <span style="color: red;">*</span></label>
                     <select name="tiffin_id"  id="tiffin_id" class="form-control input-lg select22">
                         <option value="">Select Tiffin Allowance</option>
                         <option value="<?php echo $emp_designation->tiffin_id; ?>" selected><?= $emp_designation->allowance_tiffin ?></option>
@@ -90,14 +95,25 @@
                 </div>
             </div>
         </div>
+        <!-- < ?php 
+
+// dd($unit_id);
+?> -->
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>Department <span style="color: red;">*</span> </label>
+                    <?php 
+                        $depts = $this->db->where('unit_id',$unit_id)->get('emp_depertment')->result(); 
+                        // $sec = $this->db->where('unit_id',$unit_id)->get('emp_section')->result(); 
+                        // $line = $this->db->where('unit_id',$unit_id)->get('emp_line_num')->result(); 
+                        ?>
+                    <label>Select Department <span style="color: red;">*</span> </label>
                     <?php echo form_error('emp_dept_id');?>
-                    <select name="emp_dept_id" id= "emp_dept_id" onchange="get_section(this.value)" class="form-control input-lg select22" required>
-                        <option  >Select Department</option>
-                        
+                    <select name="emp_dept_id" id= "emp_dept_id" onchange="get_section(this.value)" class="form-control input-lg" required>
+	                	<option  >Select Department</option>
+	                	<?php foreach ($depts as $key => $row) { ?>
+                        <option value="<?php echo $row->dept_id ?>" <?php echo $emp_designation->dept_id == $row->dept_id ? 'selected':''?>  ><?= $row->dept_name ?></option>
+	                	<?php } ?>
                     </select>
                 </div>
             </div>
@@ -105,18 +121,21 @@
             <div class="form-group">
                 <label>Section <span style="color: red;">*</span> </label>
                 <?php echo form_error('emp_sec_id');?>
-                <select name="emp_sec_id" id= "emp_sec_id" onchange="get_line(this.value) " class="emp_sec_id form-control input-lg select22" required>
-                    <option  >Select Section</option>
-                </select>
+                    <select name="emp_sec_id" id= "emp_sec_id" onchange="get_line(this.value)" class="form-control input-lg " required>
+	                	<option  >Select Section</option>
+                        <option value="<?php echo $emp_designation->sec_id; ?>" selected><?= $emp_designation->sec_name ?></option>
+                    </select>
             </div>
             </div>
             <div class="col-md-4" style="padding-left: 0px !important;">
             <div class="form-group">
                 <label>Line<span style="color: red;">*</span> </label>
                 <?php echo form_error('emp_line_id');?>
-                <select name="emp_line_id" id= "emp_line_id" class="emp_line_id form-control input-lg select22" required>
-                    <option  >Select Line</option>
-                </select>
+                 <!-- <label>Select Line</label> -->
+                    <select name="emp_line_id" id= "emp_line_id" class="form-control input-lg" required>
+	                	<option  >Select Line</option>
+                        <option value="<?php echo $emp_designation->line_id; ?>" selected><?= $emp_designation->line_name ?></option>
+                    </select>
             </div>
             </div>
         </div>
@@ -143,8 +162,10 @@
         </div>
     </form>
 </div>
+</div>
 <script>
     function get_data(e = null) {
+        console.log('get_data');
         var unit_id = $('#unit_id').val();
         $.ajax({
             type: "POST",
@@ -166,12 +187,12 @@
              var nightAlIdSelect = $("#night_al_id");
              var tiffinIdSelect = $("#tiffin_id");
              if (e===null) {
+                console.log('ko');
               attnIdSelect.empty().append("<option value=''>Select Attendance Bonus</option>");
               holidayWeekendIdSelect.empty().append("<option value=''>Select Holiday/Weekend</option>")
               iftarIdSelect.empty().append("<option value=''>Select Iftar Allowance</option>")
               nightAlIdSelect.empty().append("<option value=''>Select Night Allowance</option>")
               tiffinIdSelect.empty().append("<option value=''>Select Tiffin Allowance</option>")
-
              }
              
              if (attn_bonus.length > 0) {
@@ -221,7 +242,9 @@
 </script>
 
 <script>
-function getDepertment(unit_id) {
+function getDepertment(unit_id,how=null) {
+            console.log('getDepertment');
+
     $.ajax({
         url: "<?php echo base_url('index.php/setup_con/get_department') ?>",
         method: "POST",
@@ -238,9 +261,13 @@ function getDepertment(unit_id) {
             $('#emp_dept_id').val(<?= $emp_designation->dept_id ?>);
         }
     })
-    get_section(<?= $emp_designation->dept_id ?>) 
+    if(how){
+        get_section(<?= $emp_designation->dept_id ?>, 'dept') 
+    }
 }
-function get_section(depertment_id) {
+function get_section(depertment_id,how=null) {
+                console.log('get_section');
+
     $.ajax({
 
         url: "<?php echo base_url('index.php/setup_con/get_section') ?>",
@@ -256,12 +283,16 @@ function get_section(depertment_id) {
                     `<option value="${parsedData[index].id}">${parsedData[index].sec_name_en}</option>`
             }
             $('#emp_sec_id').html(item);
-            $('#emp_sec_id').val(<?= $emp_designation->section_id ?>);
+            $('#emp_sec_id').val(<?= $emp_designation->sec_id ?>);
         }
     })
-    get_line(<?= $emp_designation->section_id ?>)
+        if(how){
+                get_line(<?= $emp_designation->sec_id ?>, how)
+        }
 }
 function get_line(id) {
+                console.log('get_line');
+
     $.ajax({
         url: "<?php echo base_url('index.php/setup_con/get_line') ?>",
         method: "POST",
@@ -281,5 +312,11 @@ function get_line(id) {
     })
 }
 
-getDepertment(<?= $emp_designation->unit_id ?>)
+getDepertment(<?= $emp_designation->unit_id ?>,'hello')
 </script>
+
+
+
+
+
+

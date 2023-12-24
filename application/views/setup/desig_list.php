@@ -65,6 +65,7 @@
             <?php   }?>
         </div>
     </div>
+    <!-- < ?php dd($unit_id);?> -->
     <div id="target-div" class="row tablebox table-responsive">
         <div class="col-md-6" style="margin-left:-16px">
              <h3 style="font-weight:bold">Designation List</h3>
@@ -76,6 +77,9 @@
                         <th>Sl. No.</th>
                         <th>Designation Name </th>
                         <th>Unit Name </th>
+                        <th>Department Name </th>
+                        <th>Section Name </th>
+                        <th>Line Name </th>
                         <th>Attendance Bonus</th>
                         <th>Holiday Weekend Allowance </th>
                         <th>Iftar Allowance </th>
@@ -87,12 +91,26 @@
                 </thead>
                 <tbody>
                     <?php
-                        if(!empty($emp_designation)){ foreach($emp_designation as $key => $data){?>
+                        if(!empty($emp_designation)){ foreach($emp_designation as $key => $data){
+                    
+                            // dd($data);
+                         $this->db->select('emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en');
+                         $this->db->from('emp_dasignation_line_acl');
+                         $this->db->join('emp_depertment','emp_dasignation_line_acl.dept_id =emp_depertment.dept_id');
+                         $this->db->join('emp_section','emp_dasignation_line_acl.section_id = emp_section.id');
+                         $this->db->join('emp_line_num','emp_dasignation_line_acl.line_id = emp_line_num.id');
+                         $this->db->where('emp_dasignation_line_acl.designation_id',$data['id']);
+                         $info = $this->db->get()->row();
+                        // dd($info);
+                    ?>
 
                     <tr>
                         <td><?php echo $key+1?></td>
                         <td><?php echo $data['desig_name'] ?></td>
                         <td><?php echo $data['unit_name'] ?></td>
+                        <td><?php echo !empty($info->dept_name)?$info->dept_name:''  ?></td>
+                        <td><?php echo !empty($info->sec_name_en)?$info->sec_name_en:'' ?></td>
+                        <td><?php echo !empty($info->line_name_en)?$info->line_name_en:'' ?></td>
                         <td><?php echo $data['allowance_attn_bonus'] ?></td>
                         <td><?php echo $data['allowance_holiday_weekend'] ?></td>
                         <td><?php echo $data['allowance_iftar'] ?></td>
@@ -100,7 +118,7 @@
                         <td><?php echo $data['allowance_tiffin'] ?></td>
                         <td>
                             <a href="<?=base_url('setup_con/designation_edit') . '/' . $data["id"]?>"
-                                 class="btn btn-primary center-text" role="button">Edit</a>
+                            class="btn btn-primary center-text" role="button">Edit</a>
                         </td>
                         <td>
                             <a href="<?=base_url('setup_con/designation_delete') . '/' . $data["id"]?>"
