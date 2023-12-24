@@ -913,7 +913,7 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/emp_holiday_add';
         $this->load->view('layout/template', $this->data);
     }
-
+   
     public function holiday_add_ajax(){
         $date = $this->input->post('date');
         $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
@@ -1080,30 +1080,65 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for left Modification
     //-------------------------------------------------------------------------------------------------------
-    public function left_delete($start = 0)
+    public function left_delete()
     {
-        // Load pagination library
-        // $this->load->library('pagination');
         $this->load->model('crud_model');
-        // $param = array();
-        // $limit = 1;
-        // $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
-        // $pr_left_trans = $this->crud_model->left_del_infos($limit, $page);
-        $this->data['total_rows'] = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-        // Pagination configuration
-        // $config['base_url'] = base_url('index.php/entry_system_con/left_delete');
-        // $config['total_rows'] = $total;
-        // $config['per_page'] = $limit;
-        // Initialize pagination library
-        // $this->pagination->initialize($config);
-        // $param['links'] = $this->pagination->create_links();
         $this->data['user_data'] = $this->session->userdata('data');
         $this->data['username'] =  $this->data['user_data']->id_number;
         $this->data['subview'] = 'left_del_list';
         $this->load->view('layout/template', $this->data);
-        // $param['pr_leave_trans'] = $pr_left_trans;
-        // $this->load->view('left_del_list', $param);
+    }
+
+    public function get_left_del_list(){
+        $limit=$this->input->get('limit');
+        $offset= $this->input->get('offset');
+        $searchQuery= $this->input->get('deptSearch');
+        $this->db->select('pr_emp_left_history.*,pr_emp_com_info.*,pr_units.unit_name,pr_emp_per_info.name_en');
+        $this->db->from('pr_emp_left_history');
+        $this->db->join('pr_emp_com_info', 'pr_emp_com_info.emp_id = pr_emp_left_history.emp_id', 'left');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id', 'left');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id' , 'left');
+        $this->db->limit($limit, $offset);
+        if ($searchQuery != '') {
+            $this->db->like('pr_emp_per_info.name_en', $searchQuery);
+        }
+        $this->db->order_by('pr_emp_left_history.left_date', 'DESC');
+        echo json_encode($this->db->get()->result());
+    }
+    public function delete_left($id){
+        $this->db->where('emp_id', $id);
+        $this->db->delete('pr_emp_left_history');
+        echo json_encode($this->db->affected_rows());
+    }
+    public function add_left(){
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name)) {
+	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
+        
+        $this->data['title'] = 'Left Add Add'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/left_add';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function left_add_ajax(){
+        $date=$this->input->post('date');
+        $sql=$this->input->post('sql');
+        $unit_id=$this->input->post('unit_id');
+
+        $emp_ids=explode(',', $sql);
+        foreach($emp_ids as $emp_id){
+            $this->db->where('emp_id', $emp_id);
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3,))) {
+                $this->db->insert('pr_emp_left_history', array('emp_id' => $emp_id, 'left_date' => $date, 'unit_id' => $unit_id));
+            }
+        } 
+        echo 'success';
     }
 
     public function stop_salary($start = 0)

@@ -8,6 +8,73 @@ class Common_model extends CI_Model{
 
 		/* Standard Libraries */
 	}
+
+	function salary_structure($gross_salary)
+	{
+		$data = array();
+		$date = date('Y-m-d');
+		if($date > '2018-11-30')
+		{
+			$data['medical_allow'] 	= 600;
+			$data['trans_allow'] 	= 350;
+			$data['food_allow'] 	= 900;
+			$total_salary_allow 	= $data['medical_allow'] + $data['trans_allow'] + $data['food_allow'];
+			$data['gross_salary'] 	= $gross_salary;
+			$basic_salary 			= (($gross_salary - $total_salary_allow) / 1.5);
+			$data['basic_sal'] 	   = round($basic_salary);
+			$data['house_rent']    = round($basic_salary * 50 / 100);
+			$data['ot_rate']       = round(($data['basic_sal'] * 2  / 208),2);
+			//$data['ot_rate']       = round(($gross_salary - $data['basic_sal']/1.5 * 208),2);
+			$data['stamp'] = 0;
+			
+		}else{
+			
+			$data['medical_allow'] 	= 250;
+			$data['trans_allow'] 	= 200;
+			$data['food_allow'] 	= 650;
+			$total_salary_allow 	= $data['medical_allow'] + $data['trans_allow'] + $data['food_allow'];
+			$data['gross_salary'] 	= $gross_salary;
+			$basic_salary 			= (($gross_salary - $total_salary_allow) / 1.4);
+			$data['basic_sal'] 	   = round($basic_salary);
+			$data['house_rent']    = round($basic_salary * 40 / 100);
+			$data['ot_rate']       = round(($data['basic_sal'] * 2  / 208),2);
+			$data['stamp'] = 0;
+			
+		}
+		
+		
+		if($gross_salary == 0)
+		{
+			$data['medical_allow'] 	= 0;
+			$data['trans_allow'] 	= 0;
+			$data['food_allow'] 	= 0;
+			$data['gross_salary'] 	= 0;
+			$data['basic_sal'] 	   	= 0;
+			$data['house_rent']    	= 0;
+			$data['ot_rate']       	= 0;
+			$data['stamp'] 			= 0;
+		}
+		
+		return $data;
+	}
+
+	function get_emp_by_unit($id){
+		$this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
+		$this->db->where('com.emp_cat_id', 1);
+		$this->db->group_by('com.id');
+		return $this->db->where('com.unit_id', $id)->get()->result();
+	}
+
+
+
+
+
+
+
+	///////////////////// ====================== ///////////////////////
+	// old code
 	function covert_english_date_to_bangla_date_with_day_name($currentDate){
 		//$currentDate = date("l, F j, Y");
 		//$currentDate = date("d F , Y");
@@ -18,32 +85,6 @@ class Common_model extends CI_Model{
 		$convertedDATE = str_replace($engDATE, $bangDATE, $currentDate);
 
 		return $convertedDATE;
-	}
-	function salary_structure($gross_salary){
-		$data = array();
-
-		$data['medical_allow'] 	= 600;
-		$data['trans_allow'] 	= 350;
-		$data['food_allow'] 	= 900;
-		$total_salary_allow 	= $data['medical_allow'] + $data['trans_allow'] + $data['food_allow'];
-		$data['gross_salary'] 	= $gross_salary;
-		$data['basic_sal'] 	    = round((($gross_salary - $total_salary_allow) / 1.5));
-		// $data['house_rent']     = round($basic_salary * 0.5);
-		$data['house_rent']     = $gross_salary - ($total_salary_allow + $data['basic_sal']);
-		$data['ot_rate']        = round(($data['basic_sal'] * 2  / 208),2);
-		$data['stamp'] 			= 10;
-
-		if($gross_salary == 0){
-			$data['medical_allow'] 	= 0;
-			$data['trans_allow'] 	= 0;
-			$data['food_allow'] 	= 0;
-			$data['gross_salary'] 	= 0;
-			$data['basic_sal'] 	   	= 0;
-			$data['house_rent']    	= 0;
-			$data['ot_rate']       	= 0;
-			$data['stamp'] 			= 0;
-		}
-		return $data;
 	}
 
 	function get_setup_attributes($setup_id)

@@ -14,7 +14,7 @@
           } else if (isset($unit_name)) {
             echo $unit_name;
           }else {
-            echo "MHL KORMOCHARI";
+            echo "ERP | AJ Group";
           }
           ?></span>
         </a>
