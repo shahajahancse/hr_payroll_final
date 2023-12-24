@@ -29,19 +29,19 @@
         </div><!--/.nav-collapse -->
       </div><!--/.container-fluid -->
     </nav>
-
+<!-- 
     <div class="row">
       <div class="col-md-8">
-        <?php $success = $this->session->flashdata('success');
+        < ?php $success = $this->session->flashdata('success');
         if ($success != "") { ?>
-         <div class="alert alert-success"><?php echo $success; ?></div>
-         <?php } 
+         <div class="alert alert-success">< ?php echo $success; ?></div>
+         < ?php } 
          $failuer = $this->session->flashdata('failuer');
          if ($failuer) { ?>
-         <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-         <?php } ?>
+         <div class="alert alert-failuer">< ?php echo $failuer; ?></div>
+         < ?php } ?>
       </div>
-    </div>
+    </div> -->
 
     <div id="target-div">
       <div class="container-fluid">
@@ -88,14 +88,14 @@
               <div class="form-group">
                 <label>পোস্ট অফিস</label>
                 <?php echo form_error('post_office'); ?>
-                <input type="text" name="post_office"value="" class="form-control" required>
+                <input type="text" name="post_office"value="" id="post_office" class="form-control" required>
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
                 <label>Post Office English</label>
-                <input type="text" name="post_office_en"value="" class="form-control" required>
+                <input type="text" name="post_office_en"value="" id="post_office_en" class="form-control" required>
                 <?php echo form_error('post_office_en');?>
               </div>
             </div>
@@ -115,7 +115,9 @@
   </div>
 
   <script type="text/javascript">
-    $(document).ready(function () {
+  $(document).ready(function () {
+
+
       //division dropdown
       $('#division').change(function(){
         $('.district_val').addClass('form-control input-sm');
@@ -163,4 +165,37 @@
       });
 
   });
+ $('form[name="creatdepartment"]').submit(function (event) {
+    event.preventDefault(); // Prevent the default form submission
+    function setSelectedValue(selectElement, value) {
+      $(selectElement).val(value);
+    }
+
+    // Function to get selected value for a dropdown
+    function getSelectedValue(selectElement) {
+      return $(selectElement).val();
+    } 
+    var selectedDivision = getSelectedValue('#division');
+    var selectedDistrict = getSelectedValue('#district');
+    var selectedUpazila = getSelectedValue('#upazila');
+
+    $.ajax({
+      type: 'POST',
+      url: $(this).attr('action'),
+      data: $(this).serialize(),
+      success: function (response) {
+        setSelectedValue('#division', selectedDivision);
+        setSelectedValue('#district', selectedDistrict);
+        setSelectedValue('#upazila', selectedUpazila);
+        $('#post_office').val('');
+        $('#post_office_en').val('');
+        alert('Post office added successfully');
+      },
+      error: function (error) {
+        alert('something wrong');
+        // Handle the error response as needed
+      },
+    });
+  });
+
 </script>

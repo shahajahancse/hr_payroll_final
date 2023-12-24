@@ -213,7 +213,7 @@ class Setup_con extends CI_Controller
                 }
             }
             // return false;
-            redirect(base_url('setup_con/post_office'));
+            // redirect(base_url('setup_con/post_office'));
         }
 
         $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();
@@ -1177,12 +1177,19 @@ class Setup_con extends CI_Controller
             $this->db->select('pr_units.unit_id,pr_units.unit_name');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
-            $this->db->select('emp_designation.*, IFNULL(pr_units.unit_name, "none") as unit_name,
+            $this->db->select('emp_designation.*, 
+                                IFNULL(pr_units.unit_name, "none") as unit_name,
                                 IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
                                 IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
                                 IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
                                 IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules,
-                                IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin'
+                                IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin,
+                                emp_depertment.dept_id,
+                                emp_depertment.dept_name,
+                                emp_section.id as sec_id, 
+                                emp_section.sec_name_en as sec_name, 
+                                emp_line_num.id as line_id ,
+                                emp_line_num.line_name_en as line_name',
                             );
             $this->db->from('emp_designation');
             $this->db->join('pr_units', 'pr_units.unit_id=emp_designation.unit_id', 'left');
@@ -1192,8 +1199,13 @@ class Setup_con extends CI_Controller
             $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
             $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
             $this->db->join('emp_dasignation_line_acl', 'emp_dasignation_line_acl.designation_id=emp_designation.id', 'left');
+            $this->db->join('emp_depertment', 'emp_dasignation_line_acl.dept_id=emp_depertment.dept_id', 'left');
+            $this->db->join('emp_section', 'emp_dasignation_line_acl.section_id=emp_section.id', 'left');
+            $this->db->join('emp_line_num', 'emp_dasignation_line_acl.line_id=emp_line_num.id', 'left');
             $this->db->where('emp_designation.id', $id);
             $this->data['emp_designation'] = $this->db->get()->row();
+
+            // dd($this->data);
 
 
             $this->data['title'] = 'Edit Designation';
@@ -1214,16 +1226,17 @@ class Setup_con extends CI_Controller
                 'night_al_id'        => $this->input->post('night_al_id'),
                 'tiffin_id'          => $this->input->post('tiffin_id'),
             );
+            // dd($formArray);
             $this->db->where('id', $id);
             if ($this->db->update('emp_designation', $formArray)) {
-                // $this->session->set_flashdata('success', 'Record Updated successfully!');
             $data = array(
                     'unit_id'    =>$formArray['unit_id'],
                     'dept_id'    =>$this->input->post('emp_dept_id'),
                     'section_id' =>$this->input->post('emp_sec_id'),
                     'line_id'    =>$this->input->post('emp_line_id'),
-                    'designation_id' =>  $this->db->insert_id()
+                    'designation_id' =>  $id
                 );
+            // dd($data);    
                 if ($this->db->where('designation_id',$data['designation_id'])->update('emp_dasignation_line_acl', $data)){
                     $this->session->set_flashdata('success', 'Record Updated successfully!');
                 }

@@ -256,7 +256,6 @@ function getDepertment(unit_id) {
 }
 function get_section(depertment_id) {
     $.ajax({
-
         url: "<?php echo base_url('index.php/setup_con/get_section') ?>",
         method: "POST",
         data: {

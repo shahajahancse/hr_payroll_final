@@ -347,9 +347,9 @@ class Grid_con extends CI_Controller {
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
-        }
+        // if (!empty($this->data['user_data']->unit_name)) {
+	    //     $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        // }
 
 
 		if($this->session->userdata('level')== 0 || $this->session->userdata('level')== 1){
