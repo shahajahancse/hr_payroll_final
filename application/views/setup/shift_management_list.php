@@ -98,11 +98,11 @@
                         <td><?php echo $pr_emp_shifts['unit_name'] ?></td>
                         <td><?php echo $pr_emp_shifts['sh_type'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/shiftmanagement_edit').'/'.$pr_emp_shifts["id"]?>"
+                            <a href="<?=base_url('index.php/setup_con/shiftmanagement_edit').'/'.$pr_emp_shifts["shift_id"]?>"
                                 class="btn btn-primary center-text input-sm" role="button">Edit</a>
                         </td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/shiftmanagement_delete').'/'.$pr_emp_shifts["id"]?>"
+                            <a href="<?=base_url('index.php/setup_con/shiftmanagement_delete').'/'.$pr_emp_shifts["shift_id"]?>"
                                 class="btn btn-danger center-text input-sm" role="button">Delete</a>
                         </td>
                     </tr>

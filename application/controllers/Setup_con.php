@@ -180,29 +180,40 @@ class Setup_con extends CI_Controller
     }
 
     // Post Office create
-    public function post_office_add()
-    {
-
+    public function post_office_add(){
         $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
         $this->form_validation->set_rules('district', 'District Name', 'trim|required');
         $this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
         $this->form_validation->set_rules('post_office', 'Post Office Bangla Name', 'trim|required');
         $this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
         if ($this->form_validation->run() == true) {
+            $post_bn = $this->input->post('post_office');
+            $post_en = $this->input->post('post_office_en');
+            $upazila = $this->input->post('upazila');
             $formArray = array(
                 'div_id' => $this->input->post('division'),
                 'dis_id' => $this->input->post('district'),
                 'up_zil_id' => $this->input->post('upazila'),
                 'name_bn' => $this->input->post('post_office'),
-                'name_en' => $this->input->post('post_officuser_datae_en'),
+                'name_en' => $this->input->post('post_office_en'),
                 'status' => 1,
             );
 
-            if ($this->db->insert('emp_post_offices', $formArray)) {
-                $this->session->set_flashdata('success', 'Record add successfully!');
-            } else {
-                $this->session->set_flashdata('failuer', 'Sorry!, Something wrong.');
+            $this->db->where('name_bn', $post_bn);
+            $this->db->where('name_en', $post_en);
+            $this->db->where('up_zil_id', $upazila);
+            $query = $this->db->get('emp_post_offices');
+            if ($query->num_rows()  >0) {
+
+                $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            }else{
+                if ($this->db->insert('emp_post_offices', $formArray)) {
+                    $this->session->set_flashdata('success', 'Record add successfully!');
+                } else {
+                    $this->session->set_flashdata('failuer', 'Sorry!, Something wrong.');
+                }
             }
+            // return false;
             redirect(base_url('setup_con/post_office'));
         }
 
@@ -225,6 +236,8 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
 
         if ($this->form_validation->run() == true) {
+            // $post_bn = $this->input->post('post_office');
+            // $post_en = $this->input->post('post_office_en');
             $formArray = array(
                 'div_id' => $this->input->post('division'),
                 'dis_id' => $this->input->post('district'),
@@ -233,10 +246,17 @@ class Setup_con extends CI_Controller
                 'name_en' => $this->input->post('post_office_en'),
                 'status' => 1,
             );
-            $this->db->where('id', $id);
-            $this->db->update('emp_post_offices', $formArray);
+            // $this->db->where('name_bn', $post_bn);
+            // $this->db->or_where('name_en', $post_en);
+            // $query = $this->db->get('emp_post_offices');
+            // if ($query->num_rows()>0) {
+            //     $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            // }else{
+                $this->db->where('id', $id);
+                $this->db->update('emp_post_offices', $formArray);
+                $this->session->set_flashdata('success', 'Record Updated successfully!');
+            // }
 
-            $this->session->set_flashdata('success', 'Record Updated successfully!');
             redirect('/setup_con/post_office');
         }
 
