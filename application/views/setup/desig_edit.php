@@ -262,7 +262,7 @@ function getDepertment(unit_id,how=null) {
         }
     })
     if(how){
-        get_section(<?= $emp_designation->dept_id ?>, 'dept') 
+        get_section(<?= $emp_designation->dept_id == '' ? 0:$emp_designation->dept_id ?>, 'dept') 
     }
 }
 function get_section(depertment_id,how=null) {
@@ -287,7 +287,7 @@ function get_section(depertment_id,how=null) {
         }
     })
         if(how){
-                get_line(<?= $emp_designation->sec_id ?>, how)
+                get_line(<?= $emp_designation->sec_id =='' ? 0:$emp_designation->sec_id?>, how)
         }
 }
 function get_line(id) {
