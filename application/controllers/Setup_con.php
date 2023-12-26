@@ -1113,8 +1113,8 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
 
-
         if ($this->form_validation->run() == TRUE) {
+
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
                 // 'dept_id' => $this->input->post('emp_dept_id'),

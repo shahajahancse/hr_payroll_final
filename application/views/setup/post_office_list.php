@@ -68,8 +68,8 @@
       <table class="table" id="mytable">
         <thead>
           <tr>
-            <th>Post Office Name </th>
             <th>Post Office Bangla </th>
+            <th>Post Office English</th>
             <th>Upa Zila</th>
             <th>District</th>
             <th>Division</th>
