@@ -27,6 +27,7 @@ elseif($daily_status == "L")
 <body style="margin: 0px;">
 
 <?php
+// dd($values);
 $per_page_id = 63;
 $row_count = count($values["emp_id"]);
 $max = $row_count;

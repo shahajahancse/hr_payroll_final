@@ -86,21 +86,21 @@
 					</div>
 					<div class="col-md-3">
 					<div class="form-group">
-						<label>Father's Name <span style="color: red;">*</span> </label>
+						<label>Father's Name (Bangla) <span style="color: red;">*</span> </label>
 						<input type="text" name="father_name" id="father_name"  class="form-control input-sm" value="<?= isset($emp_info->father_name)?>" required>
 						<?php echo form_error('father_name');?>
 					</div>
 					</div>
 					<div class="col-md-3">
 					<div class="form-group">
-						<label>Mother's Name <span style="color: red;">*</span> </label>
+						<label>Mother's Name (Bangla) <span style="color: red;">*</span> </label>
 						<input type="text" name="mother_name" id="mother_name"  class="form-control input-sm" value="<?= isset($emp_info->mother_name)?>" required>
 						<?php echo form_error('mother_name');?>
 					</div>
 					</div>
 					<div class="col-md-3">
 					<div class="form-group">
-						<label>Spouse Name</label>
+						<label>Spouse Name (Bangla) </label>
 						<input type="text" name="spouse_name" id="spouse_name"  class="form-control input-sm" value="<?= isset($emp_info->spouse_name)?>" >
 						<?php echo form_error('spouse_name');?>
 					</div>
@@ -741,14 +741,14 @@
 	          	<div class="col-md-9">
 		            <div class="col-md-6">
 		              <div class="form-group">
-		                <label>Exp. Factory Name <span style="color: red;">*</span> </label>
+		                <label>Exp. Factory Name </label>
 		                <?php echo form_error('exp_factory_name');?>
 		                <input type="text" name="exp_factory_name" id="exp_factory_name" class="form-control input-sm" required>
 		              </div>
 		            </div>
 		            <div class="col-md-6">
 		              <div class="form-group">
-		                <label>Exp, Duration <span style="color: red;">*</span> </label>
+		                <label>Exp, Duration  </label>
 		                <?php echo form_error('exp_duration');?>
 		                <input type="text" name="exp_duration" id="exp_duration" class="form-control input-sm" required>
 		              </div>
@@ -757,7 +757,7 @@
 		            <?php $desig = $this->db->get('emp_designation')->result(); ?>
 		            <div class="col-md-6">
 		              <div class="form-group">
-		                <label>Designation<span style="color: red;">*</span> </label>
+		                <label>Designation </label>
 		                <?php echo form_error('exp_designation');?>	                
 		                <select name="exp_designation" id= "exp_designation" class="form-control input-sm" required>
 		                	<option  >-- Select --</option>
@@ -769,7 +769,7 @@
 		            </div>
 		            <div class="col-md-6">
 		              <div class="form-group">
-		                <label>Image<span style="color: red;">*</span> </label>
+		                <label>Image </label>
 		                <?php echo form_error('img_source');?>	                
 		                <input type="file" name="img_source" id="img_source" class="form-control input-sm" style="height: 35px !important; line-height: 20px !important;">
 		              </div>

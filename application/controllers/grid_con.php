@@ -1,29 +1,27 @@
 <?php
 class Grid_con extends CI_Controller {
 
-	function __construct()
-	{
+	function __construct(){
 		parent::__construct();
- if ($this->session->userdata('logged_in') == false) {
-            redirect("authentication");
-        }
-        $this->data['user_data'] = $this->session->userdata('data');
-        if (!check_acl_list($this->data['user_data']->id, 4)) {
-            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
-            redirect("payroll_con");
-            exit;
-        }
-		/* Standard Libraries */
-		$this->load->model('grid_model');
-		$this->load->model('acl_model');
-		$this->load->model('common_model');
-		$access_level = 5;
-		$acl = $this->acl_model->acl_check($access_level);
-        $this->data['user_data'] = $this->session->userdata('data');
+		if ($this->session->userdata('logged_in') == false) {
+			redirect("authentication");
+		}
+		$this->data['user_data'] = $this->session->userdata('data');
+		if (!check_acl_list($this->data['user_data']->id, 4)) {
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+			redirect("payroll_con");
+			exit;
+		}
+			/* Standard Libraries */
+			$this->load->model('grid_model');
+			$this->load->model('acl_model');
+			$this->load->model('common_model');
+			$access_level = 5;
+			$acl = $this->acl_model->acl_check($access_level);
+			$this->data['user_data'] = $this->session->userdata('data');
 	}
 
-	function auto_temp_table()
-	{
+	function auto_temp_table(){
 		exit('This file is Very Dengerous');
 		$this->db->select('emp_id');
 		$query = $this->db->get('pr_emp_per_info')->result();
@@ -46,142 +44,91 @@ class Grid_con extends CI_Controller {
 		echo "success";
 	}
 
-	function grid_age_estimation()
-	{
+	function grid_age_estimation(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-
-		//$grid_firstdate = $this->input->post('firstdate');
-
 		$data["value"] = $this->grid_model->grid_age_estimation($grid_emp_id);
-		// echo "<pre>"; print_r($data["value"]); die;
-
 		$this->load->view('age_estimation_bn',$data);
 	}
 
-	function bando_certificate_report()
-	{
+	function bando_certificate_report(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-		//$grid_firstdate = $this->input->post('firstdate');
-
 		$data["value"] = $this->grid_model->bando_certificate_report($grid_emp_id);
 		$this->load->view('certificate',$data);
 	}
 
-	function one_month_settel_paid_report()
-	{
+	function one_month_settel_paid_report(){
 		$grid_data = $this->uri->segment(3);
 		$grid_firstdate = $this->uri->segment(4);
 		$year_month = date('Y-m',strtotime($grid_firstdate));
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-
 		$data["values"] = $this->grid_model->one_month_settel_paid_report($grid_emp_id,$year_month);
-		if(is_string($data['values']))
-		{
+		if(is_string($data['values'])){
 			echo $data['values'];
 		}
-		else
-		{
+		else{
 			$this->load->view('1month_settelment',$data);
 		}
 	}
 
-	function grid_drugscreening_report()
-	{
+	function grid_drugscreening_report(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-
-		//$grid_firstdate = $this->input->post('firstdate');
-
 		$data["value"] = $this->grid_model->grid_drugscreening_report($grid_emp_id);
 		$this->load->view('drugscreeningform',$data);
 	}
 
-	function ackknowledgement_report()
-	{
+	function ackknowledgement_report(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-
-		//$grid_firstdate = $this->input->post('firstdate');
-
 		$data["value"] = $this->grid_model->ackknowledgement_report($grid_emp_id);
 		$this->load->view('ackknowledgement_letter',$data);
 	}
 
-	function earnl_payment()
-	{
+	function earnl_payment(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-
-		//$grid_firstdate = $this->input->post('firstdate');
-
 		$data["value"] = $this->grid_model->earnl_payment($grid_emp_id);
 		$this->load->view('earnl_payment',$data);
 	}
 
-	function grid_pension_report()
-
-	{
+	function grid_pension_report(){
 
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
-
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
-
 		$data['values'] = $this->grid_model->grid_pension_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
-		//print_r($data['values']);exit;
-
-
 		$data['start_date']= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
 
-
-		if(is_string($data['values']))
-
-		{
+		if(is_string($data['values'])){
 			echo $data['values'];
 		}
-		else
-		{
+		else{
 			$this->load->view('pension_2',$data);
 		}
 	}
 
-	function grid_nominee()
-	{
+	function grid_nominee(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-
 		$data["value"] = $this->grid_model->grid_nominee($grid_emp_id);
-
 		$this->load->view('nominee_form',$data);
 	}
-	function grid_requitement_form()
-	{
+	function grid_requitement_form(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-
 		$data["value"] = $this->grid_model->grid_requitement_form($grid_emp_id);
-
 		$this->load->view('requitement_form',$data);
 	}
 	function grid_per_file(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		$query['values'] = $this->grid_model->grid_per_file($grid_emp_id);
-		// print_r($query['values']->result() );exit;
 		if(is_string($query['values'])){
 			echo $query['values'];
 		}else{
@@ -189,106 +136,73 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_ctpat()
-	{
-		//$grid_data = $this->uri->segment(3);
-		//$grid_emp_id = explode('xxx', trim($grid_data));
-
+	function grid_ctpat(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-
-		//print_r($grid_emp_id);
 		$query['unit_id'] = $this->input->post('unit_id');
 		$query['values'] = $this->grid_model->grid_ctpat($grid_emp_id);
-		if(is_string($query['values']))
-		{
+		if(is_string($query['values'])){
 			echo $query['values'];
 		}
-		else
-		{
+		else{
 			$this->load->view('ctpat',$query);
 		}
 	}
 
-	function incre_prom_report()
-		{
-			// echo "hey";exit;
-			$grid_firstdate = $this->input->post('firstdate');
-			// $grid_seconddate = $this->input->post('seconddate');
-			$grid_data = $this->input->post('spl');
-			$grid_emp_id = explode('xxx', trim($grid_data));
-			$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
-			//print_r($grid_emp_id);
-			$data["values"] = $this->grid_model->incre_prom_report_bn($grid_firstdate,$grid_emp_id);
-			if(is_string($data["values"]))
-			{
-				echo $data["values"];
-			}
-			else
-			{
-				$this->load->view('monthly_incre_prom_report',$data);
-			}
+	function incre_prom_report(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
+		$data["values"] = $this->grid_model->incre_prom_report_bn($grid_firstdate,$grid_emp_id);
+		if(is_string($data["values"])){
+			echo $data["values"];
+		}
+		else{
+			$this->load->view('monthly_incre_prom_report',$data);
+		}
 	  }
 
-	 function prom_report()
-		{
-			//echo "hey";exit;
-			$grid_firstdate = $this->input->post('firstdate');
-			// $grid_seconddate = $this->input->post('seconddate');
-			$grid_data = $this->input->post('spl');
-			$grid_emp_id = explode('xxx', trim($grid_data));
-			$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
-			// $grid_seconddate  = date("Y-m", strtotime($grid_seconddate));
-			// print_r($grid_emp_id);exit;
-			$data["values"] = $this->grid_model->prom_report_db($grid_firstdate,$grid_emp_id);
-			if(is_string($data["values"]))
-			{
-				echo $data["values"];
-			}
-			else
-			{
-				$this->load->view('prom_report',$data);
-			}
+	 function prom_report(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
+		$data["values"] = $this->grid_model->prom_report_db($grid_firstdate,$grid_emp_id);
+		if(is_string($data["values"])){
+			echo $data["values"];
+		}
+		else{
+			$this->load->view('prom_report',$data);
+		}
 	  }
 
-	function incre_prom_report_db($grid_firstdate,$grid_emp_id)
-	{
-		//echo $search_year_month = substr($grid_firstdate,0,7);
+	function incre_prom_report_db($grid_firstdate,$grid_emp_id){
 		$data = array();
-		foreach($grid_emp_id as $emp_id)
-		{
-			//echo $emp_id;
+		foreach($grid_emp_id as $emp_id){
 			$this->db->select('*');
 			$this->db->where("ref_id",$emp_id);
 			$this->db->like("effective_month",$grid_firstdate);
 			$this->db->order_by("effective_month","desc");
-
 			$query = $this->db->get('pr_incre_prom_pun');
-			//echo $query->num_rows();
-			if($query->num_rows() != 0)
-			{
-				foreach ($query->result() as $rows)
-				{
+			if($query->num_rows() != 0){
+				foreach ($query->result() as $rows){
 					$data["prev_emp_id"][] 				= $rows->prev_emp_id;
 					$data["new_emp_id"][] 				= $rows->new_emp_id;
-					//$data["emp_name"][] 				= $rows->emp_full_name;
 					$prev_dept_name = $this->get_dept_name($rows->prev_dept);
 					$prev_section_name = $this->get_section_name($rows->prev_section);
 					$prev_line_name = $this->get_line_name($rows->prev_line);
 					$prev_desig_name = $this->get_desig_name($rows->prev_desig);
-
 					$data["prev_dept"][] 				= $prev_dept_name;
 					$data["prev_section"][] 			= $prev_section_name;
 					$data["prev_line"][] 				= $prev_line_name;
 					$data["prev_desig"][]				= $prev_desig_name;
 					$data["prev_salary"][] 				= $rows->prev_salary;;
-
 					$new_dept_name = $this->get_dept_name($rows->new_dept);
 					$new_section_name = $this->get_section_name($rows->new_section);
 					$new_line_name = $this->get_line_name($rows->new_line);
 					$new_desig_name = $this->get_desig_name($rows->new_desig);
-
 					$data["new_dept"][] 				= $new_dept_name;
 					$data["new_section"][] 				= $new_section_name;
 					$data["new_line"][] 				= $new_line_name;
@@ -301,7 +215,6 @@ class Grid_con extends CI_Controller {
 			}
 		}
 
-		//print_r($data);
 		if($data)
 		{
 
@@ -434,15 +347,15 @@ class Grid_con extends CI_Controller {
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
-        }
+        // if (!empty($this->data['user_data']->unit_name)) {
+	    //     $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        // }
 
 
 		if($this->session->userdata('level')== 0 || $this->session->userdata('level')== 1){
 			// $this->load->view('grid');
 			$this->data['username'] = $this->data['user_data']->id_number;
-			// $this->data['title'] = 'kicu ekta';
+			$this->data['title'] = 'kicu ekta';
 			$this->data['subview'] = 'grid';
 			$this->load->view('layout/template', $this->data);
 		}
@@ -684,35 +597,23 @@ class Grid_con extends CI_Controller {
 
 
 	}
-	function grid_daily_report()
-	{
-		// exit('Here');
-		$grid_date = $this->input->post('firstdate');
+	function daily_report(){
+		$date = $this->input->post('firstdate');
 		$unit_id = $this->input->post('unit_id');
-		list($date, $month, $year) = explode('-', trim($grid_date));
-		$status = $this->input->post('status');
-		$grid_data = $this->input->post('spl');
+		$grid_data = $this->input->post('emp_id');
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		$data["values"] = $this->grid_model->grid_daily_report($year, $month, $date, $status, $grid_emp_id);
-		// print_r($data["values"]);
-		// exit('H');
-
-		$data["year"]			= $year;
-		$data["month"]			= $month;
-		$data["date"]			= $date;
-		$data["daily_status"]	= $status;
+		// dd($_POST);
+		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id);
 		$data["col_desig"] 		= "";
 		$data["col_line"] 		= "";
 		$data["col_section"] 	= "";
 		$data["col_dept"] 		= "";
 		$data["col_all"] 		= "";
 		$data["unit_id"] 		= $unit_id;
-		if(is_string($data["values"]))
-		{
+		if(is_string($data["values"])){
 			echo $data["values"];
 		}
-		else
-		{
+		else{
 			$this->load->view('daily_report',$data);
 		}
 	}
@@ -1325,25 +1226,17 @@ class Grid_con extends CI_Controller {
 
 	}
 
-	function grid_app_letter()
-	{
-		$grid_data = $this->input->post('spl');
-		//$grid_firstdate = $this->input->post('firstdate');
+	function grid_app_letter(){
+		$grid_data = $this->input->post('emp_ids');
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-
-		//$grid_firstdate  = date("d-m-Y", strtotime($grid_firstdate));
-
-		//$data['start_date']	= $grid_firstdate;
 		$data['values'] 	= $this->grid_model->grid_app_letter($grid_emp_id);
 		$data['unit_id']	= $unit_id;
 
-		if(is_string($data['values']))
-		{
+		if(is_string($data['values'])){
 			echo $data['values'];
 		}
-		else
-		{
+		else{
 			$this->load->view('appointment_letter',$data);
 		}
 	}
@@ -1492,46 +1385,26 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_id_card()
-	{
-		$grid_data = $this->uri->segment(3);
-		$grid_unit = $this->uri->segment(4);
-		$firstdate = $this->uri->segment(5);
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		$query['unit_id'] = 	$grid_unit;
-		$query['firstdate'] = 	$firstdate;
+	function id_card(){
+		$emp_ids = $this->input->post('emp_id');
+		$unit_id = $this->input->post('unit_id');
+		$status    = $this->input->post('status');
+		$firstdate = 	"2023-12-14";
+		// dd($status);
+		$emp_id = explode('xxx', trim($emp_ids));
+		$query['unit_id'] = 	$unit_id;
+		$query['firstdate'] = 	"2023-12-14";
 		$validity = date("Y-m-d",strtotime("+3 year",strtotime($firstdate)));
 		$query['validity']= date("d-m-Y",strtotime($validity));
-		$query['values'] = $this->grid_model->grid_id_card($grid_emp_id);
-		if(is_string($query['values']))
-		{
+		$query['values'] = $this->grid_model->id_card($emp_id,$status);
+		if(is_string($query['values'])){
 			echo $query['values'];
 		}
-		else
-		{
-			//$this->load->view('id_card(new_2018-11-08)',$query);
+		else{
 			$this->load->view('id_card',$query);
 		}
 	}
-	/*
-	function grid_id_card_english()
-	{
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
 
-		$query['values'] = $this->grid_model->grid_id_card_english($grid_emp_id);
-		$query['unit_id'] = $unit_id;
-
-		if(is_string($query['values']))
-		{
-			echo $query['values'];
-		}
-		else
-		{
-			$this->load->view('id_card_english',$query);
-		}
-	}*/
 	function grid_id_card_english()
 	{
 		$grid_data = $this->uri->segment(3);

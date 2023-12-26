@@ -98,9 +98,10 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_rules('refer_address', 'Referance Address', 'trim');
 		$this->form_validation->set_rules('refer_mobile', 'Referance Mobile', 'trim');
 		$this->form_validation->set_rules('refer_relation', 'Referance Relation', 'trim');
-		$this->form_validation->set_rules('exp_factory_name', 'Exp. Factory Name', 'trim');
-		$this->form_validation->set_rules('exp_duration', 'Exp. Duration', 'trim');
-		$this->form_validation->set_rules('exp_designation', 'Exp. Designation', 'trim');
+		
+		// $this->form_validation->set_rules('exp_factory_name', 'Exp. Factory Name', 'trim');
+		// $this->form_validation->set_rules('exp_duration', 'Exp. Duration', 'trim');
+		// $this->form_validation->set_rules('exp_designation', 'Exp. Designation', 'trim');
 
 		$this->form_validation->set_error_delimiters("","");
 		if ($this->form_validation->run() == TRUE) {

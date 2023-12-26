@@ -10,9 +10,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/designation') ?>">
-                        < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/designation') ?>">
+                    Back</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -45,7 +45,7 @@
     </div>
     <!-- <h3>Create Designation</h3> -->
     <!-- <hr> -->
-    <form action="<?= base_url('index.php/setup_con/designation_add')?>" enctype="multipart/form-data"
+    <form action="<?= base_url('setup_con/designation_add')?>" enctype="multipart/form-data"
         method="post">
             <div class="tablebox">
                 <div class="row">
@@ -131,9 +131,6 @@
                     <a href="<?= base_url('index.php/setup_con/designation') ?>" class="btn-warning btn">Cancel</a>
                 </div>
             </div>    
-
-
-
     </form>
 </div>
 <script>
@@ -162,7 +159,7 @@
              if (attn_bonus.length > 0) {
                attnIdSelect.empty().append("<option value=''>Select Attendance Bonus</option>");
                attn_bonus.forEach(function(item) {
-                 attnIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                 attnIdSelect.append(`<option value='${item.id}'>${item.rul}+">>"+${item.rule_name}</option>`);
                });
              }
              attnIdSelect.append("<option value='0'>None</option>");

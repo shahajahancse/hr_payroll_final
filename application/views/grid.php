@@ -163,14 +163,14 @@
 					$acl = $this->acl_model->get_acl_list($user_id);
 					?>
 					<?php if (!in_array($user_id, $usr_arr)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_daily_present_report()">Daily Present Report</button>
-						<?php } ?>
-						<button class="btn btn-primary input-sm" onclick="grid_daily_absent_report()">Daily Absent Report</button>
-					<button class="btn btn-primary input-sm" onclick="grid_daily_leave_report()">Daily Leave Report</button>
-					<button class="btn btn-primary input-sm" onclick="grid_daily_late_report()">Daily Late Report</button>
-					<button class="btn btn-primary input-sm" onclick="grid_daily_ot()">Daily OT</button>
+						<button class="btn btn-primary input-sm" onclick="daily_report(1)">Present Report</button>
+					<?php } ?>
+					<button class="btn btn-primary input-sm" onclick="daily_report(2)">Absent Report</button>
+					<button class="btn btn-primary input-sm" onclick="daily_report(3)">Daily Leave Report</button>
+					<button class="btn btn-primary input-sm" onclick="daily_report(4)">Late Report</button>
+					<button class="btn btn-primary input-sm" onclick="daily_report(5)">OT Report</button>
 					<?php if (!in_array($user_id, $usr_arr_2) && !in_array($user_id, $usr_arr_3)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_daily_out_in_report()">Out & IN Report</button>
+						<button class="btn btn-primary input-sm" onclick="daily_report(6)">Out & IN Report</button>
 						<?php } ?>
 						<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
 							<button class="btn btn-primary input-sm" onclick="grid_daily_out_punch_miss_report()">Daily Out Punch Miss</button>
@@ -202,7 +202,6 @@
 						<?php } ?>
 					</div>
 				<?php } ?>
-
 				<div class="tab-pane fade" id="continuous">
 					<button class="btn btn-primary input-sm" onclick="grid_continuous_present_report()">Present Report</button>
 					<button class="btn btn-primary input-sm" onclick="grid_continuous_absent_report()">Absent Report</button>
@@ -217,10 +216,10 @@
 					<button class="btn btn-primary input-sm" onclick="grid_continuous_report_limit(3)">Absent three</button>
 					<button class="btn btn-primary input-sm" onclick="grid_continuous_report_limit(10)">Absent ten</button>
 				</div>
-				<div class="tab-pane fade" id="other">
+				<div class="tab-pane fade" id="other" style="display: flex;flex-direction: row;flex-wrap: wrap;gap: 4px;">
 					<button class="btn btn-primary input-sm" onclick="grid_app_letter()">App. Letter</button>
-					<button class="btn btn-primary input-sm" onclick="grid_id_card()">ID Card Bangla</button>
-					<button class="btn btn-primary input-sm" onclick="grid_id_card_english()">ID Card English</button>
+					<button class="btn btn-primary input-sm" onclick="id_card(1)">ID Card Bangla</button>
+					<button class="btn btn-primary input-sm" onclick="id_card(2)">ID Card English</button>
 
 					<?php if (!in_array($user_id, $usr_arr_3)) { ?>
 						<?php if (!in_array($user_id, $usr_arr)) { ?>
@@ -290,7 +289,7 @@
 	                    items += '<tr id="removeTr">';
 	                    items +=
 	                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-	                        value.emp_id + '" ></td>';
+	                        value.id + '" ></td>';
 	                    items += '<td class="success">' + value.emp_id + '</td>';
 	                    items += '<td class="warning ">' + value.name_en + '</td>';
 	                    items += '</tr>';

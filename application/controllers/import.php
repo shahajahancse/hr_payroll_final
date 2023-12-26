@@ -315,7 +315,7 @@ class Import extends CI_Controller {
 
 			// $linemysql = implode("','",$linearray);
 			// echo $linemysql = implode("','",$linearray);
-// print_r($linemysql);
+			// print_r($linemysql);
 			// echo $emp_name  	= $linearray[0];
 			/*echo $emp_b_name	= $linearray[1];
 			echo $emp_id 	= $linearray[2];
@@ -492,6 +492,112 @@ class Import extends CI_Controller {
 				);
 				$this->db->where('emp_id', $id);
 				$this->db->insert('pr_emp_skill', $data);
+			}
+			echo "Upload successfully done";
+		}
+	}
+
+	function inc_pro(){
+		date_default_timezone_set('Asia/Dhaka');
+		$file_name = "import/promotion.txt";
+		if (file_exists($file_name)){
+			$lines = file($file_name);
+			// dd($lines);
+			foreach(array_values($lines)  as $line) {
+
+				list($id, $desig_id,$salary,$grade,$effect_date) = preg_split('/\s+/', trim($line));
+				$emp_pre_info = $this->db->select('emp_id,emp_dept_id,emp_sec_id,emp_line_id,emp_desi_id,emp_sal_gra_id,gross_sal,com_gross_sal')->from('pr_emp_com_info')->where('emp_id',$id)->get()->row();
+				if (empty($emp_pre_info)) {
+					// echo $id."<br>";
+					continue;
+				}
+				// echo "<pre>";print_r($emp_pre_info);				
+				$data = array(
+					'prev_emp_id'     => $emp_pre_info->emp_id,
+					'prev_dept'       => $emp_pre_info->emp_dept_id,
+					'prev_section'    => $emp_pre_info->emp_sec_id,
+					'prev_line'       => $emp_pre_info->emp_line_id,
+					'prev_desig'      => $emp_pre_info->emp_desi_id,
+					'prev_grade'      => $emp_pre_info->emp_sal_gra_id,
+					'prev_salary'     => $emp_pre_info->gross_sal,
+					'prev_com_salary' => $emp_pre_info->com_gross_sal,
+					'new_emp_id'      => $emp_pre_info->emp_id,
+					'new_dept'        => $emp_pre_info->emp_dept_id,
+					'new_section'     => $emp_pre_info->emp_sec_id,
+					'new_line'        => $emp_pre_info->emp_line_id,
+					'new_desig'       => $desig_id,
+					'new_grade'       => $grade,
+					'new_salary'      => $salary,
+					'new_com_salary'  => $salary,
+					'effective_month' => date('Y-m-d',strtotime($effect_date)),
+					'ref_id' 		  =>  $emp_pre_info->emp_id,
+					'status' 		  =>2
+				);
+				// echo "<pre>";print_r($data);
+				// dd($data);
+				$insert = $this->db->where('prev_emp_id', $id)->insert('pr_incre_prom_pun', $data);
+				if($insert){
+					$data = array(
+							// 'emp_id'		 =>$id,
+							'emp_desi_id'	 =>$desig_id,	
+							'emp_sal_gra_id' =>$grade,		
+							'gross_sal'		 =>$salary,
+							'com_gross_sal'  =>$salary 		
+					);
+					// $this->db->where('prev_emp_id', $id);
+					$this->db->where('emp_id', $id)->update('pr_emp_com_info', $data);
+				}
+			}
+			echo "Upload successfully done";
+		}
+	}
+
+	function inc(){
+		date_default_timezone_set('Asia/Dhaka');
+		$file_name = "import/incre.txt";
+		if (file_exists($file_name)){
+			$lines = file($file_name);
+			foreach(array_values($lines)  as $line) {
+				list($id,$salary,$grade,$effect_date) = preg_split('/\s+/', trim($line));
+				$emp_pre_info = $this->db->select('emp_id,emp_dept_id,emp_sec_id,emp_line_id,emp_desi_id,emp_sal_gra_id,gross_sal,com_gross_sal')->from('pr_emp_com_info')->where('emp_id',$id)->get()->row();
+				if (empty($emp_pre_info)) {
+					echo @$i++;
+					continue;
+				}			
+				$data = array(
+					'prev_emp_id'     => $emp_pre_info->emp_id,
+					'prev_dept'       => $emp_pre_info->emp_dept_id,
+					'prev_section'    => $emp_pre_info->emp_sec_id,
+					'prev_line'       => $emp_pre_info->emp_line_id,
+					'prev_desig'      => $emp_pre_info->emp_desi_id,
+					'prev_grade'      => $emp_pre_info->emp_sal_gra_id,
+					'prev_salary'     => $emp_pre_info->gross_sal,
+					'prev_com_salary' => $emp_pre_info->com_gross_sal,
+					'new_emp_id'      => $emp_pre_info->emp_id,
+					'new_dept'        => $emp_pre_info->emp_dept_id,
+					'new_section'     => $emp_pre_info->emp_sec_id,
+					'new_line'        => $emp_pre_info->emp_line_id,
+					'new_desig'       => $emp_pre_info->emp_desi_id,
+					'new_grade'       => $grade,
+					'new_salary'      => $salary,
+					'new_com_salary'  => $salary,
+					'effective_month' => date('Y-m-d',strtotime($effect_date)),
+					'ref_id' 		  => $emp_pre_info->emp_id,
+					'status' 		  => 1
+				);
+				// echo "<pre>";print_r($data);
+				// dd($data);
+				$insert = $this->db->where('prev_emp_id', $id)->insert('pr_incre_prom_pun', $data);
+				if($insert){
+					dd($emp_pre_info->id);
+					$data = array(
+							'emp_sal_gra_id' =>$grade,		
+							'gross_sal'		 =>$salary,
+							'com_gross_sal'  =>$salary 		
+					);
+					// $this->db->where('prev_emp_id', $id);
+					$this->db->where('emp_id', $id)->update('pr_emp_com_info', $data);
+				}
 			}
 			echo "Upload successfully done";
 		}
