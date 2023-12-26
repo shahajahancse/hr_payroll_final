@@ -362,7 +362,7 @@ $(document).ready(function () {
         if ($('#main-menu').attr('data-inner-menu') == '1') {
             //Do nothing
             console.log("Menu is already condensed");
-        } else {
+        } else {            
             if ($('#main-menu').hasClass('mini')) {
                 $('#company_info_menu').html('Company Information');
 

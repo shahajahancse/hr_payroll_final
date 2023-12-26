@@ -1193,6 +1193,7 @@ class Setup_con extends CI_Controller
             $this->db->where('id', $id);
             if ($this->db->update('emp_designation', $formArray)) {
                 $this->session->set_flashdata('success', 'Record Updated successfully!');
+                redirect(base_url() . 'setup_con/designation');
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
