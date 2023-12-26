@@ -109,6 +109,24 @@ class Common extends CI_Controller {
         exit;
     }
 
+    function ajax_designation_by_unit($id){
+
+        $data = array();
+        $this->db->select('ed.*');
+        $this->db->from('emp_designation ed');
+        $this->db->where('unit_id', $id);
+        $this->db->order_by('desig_name', 'ASC');
+        $query = $this->db->get()->result();
+
+        foreach ($query as $row) {
+            $data[$row->id] = $row->desig_name;
+        }
+
+        header('Content-Type: application/x-json; charset=utf-8');
+        echo json_encode($data);
+        exit;
+    }
+
     function ajax_district_by_div($id){
 
         $data = array();

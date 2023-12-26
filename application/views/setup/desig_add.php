@@ -109,36 +109,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Department <span style="color: red;">*</span> </label>
-                            <?php echo form_error('emp_dept_id');?>
-                            <select name="emp_dept_id" id= "emp_dept_id" onchange="get_section(this.value)" class="form-control input-lg select22" required>
-                                <option  >Select Department</option>
-                             
-                            </select>
-                        </div>
-	                </div>
-                    <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Section <span style="color: red;">*</span> </label>
-                        <?php echo form_error('emp_sec_id');?>
-                        <select name="emp_sec_id" id= "emp_sec_id" onchange="get_line(this.value) " class="emp_sec_id form-control input-lg select22" required>
-                            <option  >Select Section</option>
-                        </select>
-                    </div>
-                    </div>
-                    <div class="col-md-4" style="padding-left: 0px !important;">
-                    <div class="form-group">
-                        <label>Line<span style="color: red;">*</span> </label>
-                        <?php echo form_error('emp_line_id');?>
-                        <select name="emp_line_id" id= "emp_line_id" class="emp_line_id form-control input-lg select22" required>
-                            <option  >Select Line</option>
-                        </select>
-                    </div>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -170,7 +141,7 @@
         var unit_id = $('#unit_id').val();
         $.ajax({
             type: "POST",
-            url: "<?= base_url('index.php/setup_con/get_data_degi') ?>",
+            url: "<?= base_url('setup_con/get_data_degi') ?>",
             data: {
                 unit_id: unit_id
             },
@@ -237,61 +208,4 @@
         })
 
     }
-</script>
-<script>
-function getDepertment(unit_id) {
-    $.ajax({
-
-        url: "<?php echo base_url('index.php/setup_con/get_department') ?>",
-        method: "POST",
-        data: {
-          unit_id: unit_id
-        },
-        success: function(data) {
-            var parsedData = JSON.parse(data);
-            var item = '<option value="">Select Depertment</option>';
-            for (let index = 0; index < parsedData.length; index++) {
-             item+=`<option value="${parsedData[index].dept_id}">${parsedData[index].dept_name}</option>`
-            }
-            $('#emp_dept_id').html(item);
-        }
-    })
-}
-function get_section(depertment_id) {
-    $.ajax({
-
-        url: "<?php echo base_url('index.php/setup_con/get_section') ?>",
-        method: "POST",
-        data: {
-            depertment_id: depertment_id
-        },
-        success: function(data) {
-            var parsedData = JSON.parse(data);
-            var item = '<option value="">Select Section</option>';
-            for (let index = 0; index < parsedData.length; index++) {
-                item +=
-                    `<option value="${parsedData[index].id}">${parsedData[index].sec_name_en}</option>`
-            }
-            $('#emp_sec_id').html(item);
-        }
-    })
-}
-function get_line(id) {
-    $.ajax({
-        url: "<?php echo base_url('index.php/setup_con/get_line') ?>",
-        method: "POST",
-        data: {
-            id: id
-        },
-        success: function(data) {
-            var parsedData = JSON.parse(data);
-            var item = '<option value="">Select Line</option>';
-            for (let index = 0; index < parsedData.length; index++) {
-                item +=
-                    `<option value="${parsedData[index].id}">${parsedData[index].line_name_en}</option>`
-            }
-            $('#emp_line_id').html(item);
-        }
-    })
-}
 </script>
