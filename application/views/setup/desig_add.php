@@ -10,9 +10,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/designation') ?>">
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/designation') ?>">
                     Back</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -45,7 +45,7 @@
     </div>
     <!-- <h3>Create Designation</h3> -->
     <!-- <hr> -->
-    <form action="<?= base_url('index.php/setup_con/designation_add')?>" enctype="multipart/form-data"
+    <form action="<?= base_url('setup_con/designation_add')?>" enctype="multipart/form-data"
         method="post">
             <div class="tablebox">
                 <div class="row">
@@ -207,6 +207,7 @@
     }
 </script>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <script>
 function getDepertment(unit_id) {
     $.ajax({
@@ -265,3 +266,5 @@ function get_line(id) {
 </script>
 =======
 >>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
+=======
+>>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c

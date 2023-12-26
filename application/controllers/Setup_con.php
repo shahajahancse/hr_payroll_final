@@ -1114,6 +1114,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         if ($this->form_validation->run() == false) {
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -1129,6 +1130,10 @@ class Setup_con extends CI_Controller
 =======
         if ($this->form_validation->run() == TRUE) {
 >>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
+=======
+
+        if ($this->form_validation->run() == TRUE) {
+>>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
                 // 'dept_id' => $this->input->post('emp_dept_id'),
@@ -1170,6 +1175,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
+<<<<<<< HEAD
 <<<<<<< HEAD
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -1218,6 +1224,8 @@ class Setup_con extends CI_Controller
             $this->load->view('layout/template', $this->data);
         } else {
 =======
+=======
+>>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
 
         $this->db->select('pr_units.*');
         $this->data['pr_units'] = $this->db->get('pr_units')->result();
@@ -1241,7 +1249,10 @@ class Setup_con extends CI_Controller
         $this->data['emp_designation'] = $this->db->get()->row();
 
         if ($this->form_validation->run() == TRUE) {
+<<<<<<< HEAD
 >>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
+=======
+>>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
             $formArray = array(
                 'unit_id'            => $this->input->post('unit_id'),
                 'desig_name'         => $this->input->post('desig_name'),
@@ -1253,32 +1264,31 @@ class Setup_con extends CI_Controller
                 'tiffin_id'          => $this->input->post('tiffin_id'),
             );
 <<<<<<< HEAD
+<<<<<<< HEAD
             // dd($formArray);
 =======
 
 >>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
+=======
+
+>>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
             $this->db->where('id', $id);
             if ($this->db->update('emp_designation', $formArray)) {
-            $data = array(
-                    'unit_id'    =>$formArray['unit_id'],
-                    'dept_id'    =>$this->input->post('emp_dept_id'),
-                    'section_id' =>$this->input->post('emp_sec_id'),
-                    'line_id'    =>$this->input->post('emp_line_id'),
-                    'designation_id' =>  $id
-                );
-            // dd($data);    
-                if ($this->db->where('designation_id',$data['designation_id'])->update('emp_dasignation_line_acl', $data)){
-                    $this->session->set_flashdata('success', 'Record Updated successfully!');
-                }
+                $this->session->set_flashdata('success', 'Record Updated successfully!');
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
+<<<<<<< HEAD
 <<<<<<< HEAD
             redirect(base_url() . 'setup_con/designation');
 =======
             redirect(base_url('setup_con/designation'));
 
 >>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
+=======
+
+            redirect(base_url('setup_con/designation'));
+>>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
         }
 
         $this->data['title'] = 'Edit Designation';

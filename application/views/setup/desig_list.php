@@ -77,9 +77,6 @@
                         <th>Sl. No.</th>
                         <th>Designation Name </th>
                         <th>Unit Name </th>
-                        <th>Department Name </th>
-                        <th>Section Name </th>
-                        <th>Line Name </th>
                         <th>Attendance Bonus</th>
                         <th>Holiday Weekend Allowance </th>
                         <th>Iftar Allowance </th>
@@ -108,9 +105,6 @@
                         <td><?php echo $key+1?></td>
                         <td><?php echo $data['desig_name'] ?></td>
                         <td><?php echo $data['unit_name'] ?></td>
-                        <td><?php echo !empty($info->dept_name)?$info->dept_name:''  ?></td>
-                        <td><?php echo !empty($info->sec_name_en)?$info->sec_name_en:'' ?></td>
-                        <td><?php echo !empty($info->line_name_en)?$info->line_name_en:'' ?></td>
                         <td><?php echo $data['allowance_attn_bonus'] ?></td>
                         <td><?php echo $data['allowance_holiday_weekend'] ?></td>
                         <td><?php echo $data['allowance_iftar'] ?></td>
