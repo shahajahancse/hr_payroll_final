@@ -208,6 +208,7 @@
 </script>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <script>
 function getDepertment(unit_id) {
     $.ajax({
@@ -268,3 +269,5 @@ function get_line(id) {
 >>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
 =======
 >>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
+=======
+>>>>>>> 1e8f6710b13f768c70d824ae43cc681c84fb6116

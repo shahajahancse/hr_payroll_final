@@ -1115,6 +1115,7 @@ class Setup_con extends CI_Controller
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         if ($this->form_validation->run() == false) {
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -1134,6 +1135,10 @@ class Setup_con extends CI_Controller
 
         if ($this->form_validation->run() == TRUE) {
 >>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
+=======
+        if ($this->form_validation->run() == TRUE) {
+
+>>>>>>> 1e8f6710b13f768c70d824ae43cc681c84fb6116
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
                 // 'dept_id' => $this->input->post('emp_dept_id'),
@@ -1175,6 +1180,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         if ($this->form_validation->run() == false) {
@@ -1226,6 +1232,8 @@ class Setup_con extends CI_Controller
 =======
 =======
 >>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
+=======
+>>>>>>> 1e8f6710b13f768c70d824ae43cc681c84fb6116
 
         $this->db->select('pr_units.*');
         $this->data['pr_units'] = $this->db->get('pr_units')->result();
@@ -1250,9 +1258,12 @@ class Setup_con extends CI_Controller
 
         if ($this->form_validation->run() == TRUE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
 =======
 >>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
+=======
+>>>>>>> 1e8f6710b13f768c70d824ae43cc681c84fb6116
             $formArray = array(
                 'unit_id'            => $this->input->post('unit_id'),
                 'desig_name'         => $this->input->post('desig_name'),
@@ -1265,6 +1276,7 @@ class Setup_con extends CI_Controller
             );
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             // dd($formArray);
 =======
 
@@ -1272,12 +1284,16 @@ class Setup_con extends CI_Controller
 =======
 
 >>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
+=======
+
+>>>>>>> 1e8f6710b13f768c70d824ae43cc681c84fb6116
             $this->db->where('id', $id);
             if ($this->db->update('emp_designation', $formArray)) {
                 $this->session->set_flashdata('success', 'Record Updated successfully!');
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
             redirect(base_url() . 'setup_con/designation');
@@ -1289,6 +1305,10 @@ class Setup_con extends CI_Controller
 
             redirect(base_url('setup_con/designation'));
 >>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
+=======
+
+            redirect(base_url('setup_con/designation'));
+>>>>>>> 1e8f6710b13f768c70d824ae43cc681c84fb6116
         }
 
         $this->data['title'] = 'Edit Designation';
