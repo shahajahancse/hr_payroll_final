@@ -144,6 +144,7 @@
             },
            success: function(d) {
              var data = JSON.parse(d);
+             
              var attn_bonus = data.attn_bonus;
              var holiday_weekend = data.holiday_weekend;
              var iftar = data.iftar;
@@ -159,7 +160,7 @@
              if (attn_bonus.length > 0) {
                attnIdSelect.empty().append("<option value=''>Select Attendance Bonus</option>");
                attn_bonus.forEach(function(item) {
-                 attnIdSelect.append(`<option value='${item.id}'>${item.rul}+">>"+${item.rule_name}</option>`);
+                 attnIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.rule}</option>`);
                });
              }
              attnIdSelect.append("<option value='0'>None</option>");
@@ -167,7 +168,7 @@
              if (holiday_weekend.length > 0) {
                holidayWeekendIdSelect.empty().append("<option value=''>Select Holiday/Weekend</option>");
                holiday_weekend.forEach(function(item) {
-                 holidayWeekendIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                 holidayWeekendIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
              }
              holidayWeekendIdSelect.append("<option value='0'>None</option>");
@@ -176,7 +177,7 @@
              if (iftar.length > 0) {
                iftarIdSelect.empty().append("<option value=''>Select Iftar</option>");
                iftar.forEach(function(item) {
-                 iftarIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                 iftarIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
              }
              iftarIdSelect.append("<option value='0'>None</option>");
@@ -185,7 +186,7 @@
              if (night.length > 0) {
                nightAlIdSelect.empty().append("<option value=''>Select Night Allowance</option>");
                night.forEach(function(item) {
-                 nightAlIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                 nightAlIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.night_allowance}</option>`);
                });
              }
              nightAlIdSelect.append("<option value='0'>None</option>");
@@ -194,7 +195,7 @@
              if (tiffin.length > 0) {
                tiffinIdSelect.empty().append("<option value=''>Select Tiffin</option>");
                tiffin.forEach(function(item) {
-                 tiffinIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                 tiffinIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
              }
              tiffinIdSelect.append("<option value='0'>None</option>");

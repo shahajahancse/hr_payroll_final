@@ -33,7 +33,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="unit_id">Unit Id <span style="color: red;">*</span></label>
-                    <select name="unit_id" onchange="get_data();getDepertment(this.value)" id="unit_id" class="select22 form-control input-lg">
+                    <select name="unit_id" onchange="get_data(this.value);" id="unit_id" class=" form-control input-lg">
                         <option value="">Select Unit</option>
                         <?php foreach ($pr_units as $key => $value) {?>
                         <option value="<?php echo $value->unit_id; ?>" <?php echo $value->unit_id == $emp_designation->unit_id ? 'selected' : ''; ?>><?php echo $value->unit_name; ?></option>
@@ -45,7 +45,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="atttn_id">Attendance Bonus <span style="color: red;">*</span></label>
-                    <select name="attn_id"  id="attn_id" class="form-control input-lg select22">
+                    <select name="attn_id"  id="attn_id" class="form-control input-lg ">
                         <option value="">Select Attendance Bonus</option>
                         <option value="<?php echo $emp_designation->attn_id; ?>" selected><?= $emp_designation->allowance_attn_bonus ?></option>
                     </select>
@@ -55,7 +55,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="holiday_weekend_id">Holiday/Weekend <span style="color: red;">*</span></label>
-                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg select22">
+                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg ">
                         <option value="">Select Holyday/Weekend</option>
                         <option value="<?php echo $emp_designation->holiday_weekend_id; ?>" selected><?= $emp_designation->allowance_holiday_weekend ?></option>
                     </select>
@@ -67,7 +67,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select  Iftar Allowance <span style="color: red;">*</span></label>
-                    <select name="iftar_id"  id="iftar_id" class="form-control input-lg select22">
+                    <select name="iftar_id"  id="iftar_id" class="form-control input-lg ">
                         <option value="">Select Iftar Allowance</option>
                         <option value="<?php echo $emp_designation->iftar_id; ?>" selected><?= $emp_designation->allowance_iftar ?></option>
                     </select>
@@ -77,7 +77,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select  Night Allowance <span style="color: red;">*</span></label>
-                    <select name="night_al_id"  id="night_al_id" class="form-control input-lg select22">
+                    <select name="night_al_id"  id="night_al_id" class="form-control input-lg ">
                         <option value="">Select Night Allowance</option>
                         <option value="<?php echo $emp_designation->night_al_id; ?>" selected><?= $emp_designation->allowance_night_rules ?></option>
                     </select>
@@ -87,7 +87,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select Tiffin Allowance  <span style="color: red;">*</span></label>
-                    <select name="tiffin_id"  id="tiffin_id" class="form-control input-lg select22">
+                    <select name="tiffin_id"  id="tiffin_id" class="form-control input-lg ">
                         <option value="">Select Tiffin Allowance</option>
                         <option value="<?php echo $emp_designation->tiffin_id; ?>" selected><?= $emp_designation->allowance_tiffin ?></option>
                     </select>
@@ -121,9 +121,9 @@
 </div>
 </div>
 <script>
-    function get_data(e = null) {
-        console.log('get_data');
-        var unit_id = $('#unit_id').val();
+    function get_data(e,if_lg=null) {
+        var unit_id =e;
+        console.log(unit_id);
         $.ajax({
             type: "POST",
             url: "<?= base_url('index.php/setup_con/get_data_degi') ?>",
@@ -143,58 +143,82 @@
              var iftarIdSelect = $("#iftar_id");
              var nightAlIdSelect = $("#night_al_id");
              var tiffinIdSelect = $("#tiffin_id");
-             if (e===null) {
-                console.log('ko');
-              attnIdSelect.empty().append("<option value=''>Select Attendance Bonus</option>");
-              holidayWeekendIdSelect.empty().append("<option value=''>Select Holiday/Weekend</option>")
-              iftarIdSelect.empty().append("<option value=''>Select Iftar Allowance</option>")
-              nightAlIdSelect.empty().append("<option value=''>Select Night Allowance</option>")
-              tiffinIdSelect.empty().append("<option value=''>Select Tiffin Allowance</option>")
-             }
-             
-             if (attn_bonus.length > 0) {
+            if (if_lg !=null) {
+                attnIdSelect.empty()
+                holidayWeekendIdSelect.empty()
+                iftarIdSelect.empty()
+                nightAlIdSelect.empty()
+                tiffinIdSelect.empty()
+            }
+               attnIdSelect.empty().append("<option value='0'>Select Attendance Bonus</option>");
                attn_bonus.forEach(function(item) {
-                 attnIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                if (item.id == <?= $emp_designation->attn_id?>) {
+                    var data ='selected';
+                }else{
+                    var data =''
+                }
+                 attnIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.rule}</option>`);
                });
-             }
+             
              attnIdSelect.append("<option value='0'>None</option>");
              
-             if (holiday_weekend.length > 0) {
+               holidayWeekendIdSelect.empty().append("<option value='0'>Select Holiday/Weekend</option>");
                holiday_weekend.forEach(function(item) {
-                 holidayWeekendIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                if (item.id == <?= $emp_designation->holiday_weekend_id?>) {
+                    var data ='selected';
+                }else{
+                    var data =''
+                }
+                 holidayWeekendIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
-             }
+             
              holidayWeekendIdSelect.append("<option value='0'>None</option>");
 
              
-             if (iftar.length > 0) {
+               iftarIdSelect.empty().append("<option value='0'>Select Iftar</option>");
                iftar.forEach(function(item) {
-                 iftarIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                if (item.id == <?= $emp_designation->iftar_id?>) {
+                    var data ='selected';
+                }else{
+                    var data =''
+                }
+                 iftarIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
-             }
+             
              iftarIdSelect.append("<option value='0'>None</option>");
 
              
-             if (night.length > 0) {
+               nightAlIdSelect.empty().append("<option value='0'>Select Night Allowance</option>");
                night.forEach(function(item) {
-                 nightAlIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                if (item.id == <?= $emp_designation->night_al_id?>) {
+                    var data ='selected';
+                }else{
+                    var data =''
+                }
+                 nightAlIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.night_allowance}</option>`);
                });
-             }
+             
              nightAlIdSelect.append("<option value='0'>None</option>");
 
              
-             if (tiffin.length > 0) {
+               tiffinIdSelect.empty().append("<option value='0'>Select Tiffin</option>");
                tiffin.forEach(function(item) {
-                 tiffinIdSelect.append(`<option value='${item.id}'>${item.rule_name}</option>`);
+                if (item.id == <?= $emp_designation->tiffin_id?>) {
+                    var data ='selected';
+                }else{
+                    var data =''
+                }
+                 tiffinIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
-             }
+             
              tiffinIdSelect.append("<option value='0'>None</option>");
            },
             error: function(data) {
-              
             }
         })
     }
-    get_data(1);
-
+    get_data('<?= $emp_designation->unit_id ?>','e');
 </script>
+<?php
+// dd($emp_designation);
+?>
