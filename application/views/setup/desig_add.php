@@ -206,3 +206,68 @@
 
     }
 </script>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<script>
+function getDepertment(unit_id) {
+    $.ajax({
+
+        url: "<?php echo base_url('index.php/setup_con/get_department') ?>",
+        method: "POST",
+        data: {
+          unit_id: unit_id
+        },
+        success: function(data) {
+            var parsedData = JSON.parse(data);
+            var item = '<option value="">Select Depertment</option>';
+            for (let index = 0; index < parsedData.length; index++) {
+             item+=`<option value="${parsedData[index].dept_id}">${parsedData[index].dept_name}</option>`
+            }
+            $('#emp_dept_id').html(item);
+        }
+    })
+}
+function get_section(depertment_id) {
+    $.ajax({
+        url: "<?php echo base_url('index.php/setup_con/get_section') ?>",
+        method: "POST",
+        data: {
+            depertment_id: depertment_id
+        },
+        success: function(data) {
+            var parsedData = JSON.parse(data);
+            var item = '<option value="">Select Section</option>';
+            for (let index = 0; index < parsedData.length; index++) {
+                item +=
+                    `<option value="${parsedData[index].id}">${parsedData[index].sec_name_en}</option>`
+            }
+            $('#emp_sec_id').html(item);
+        }
+    })
+}
+function get_line(id) {
+    $.ajax({
+        url: "<?php echo base_url('index.php/setup_con/get_line') ?>",
+        method: "POST",
+        data: {
+            id: id
+        },
+        success: function(data) {
+            var parsedData = JSON.parse(data);
+            var item = '<option value="">Select Line</option>';
+            for (let index = 0; index < parsedData.length; index++) {
+                item +=
+                    `<option value="${parsedData[index].id}">${parsedData[index].line_name_en}</option>`
+            }
+            $('#emp_line_id').html(item);
+        }
+    })
+}
+</script>
+=======
+>>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
+=======
+>>>>>>> 3f168185a6413c603f98bb9c31284b83f4d6ec3c
+=======
+>>>>>>> 1e8f6710b13f768c70d824ae43cc681c84fb6116
