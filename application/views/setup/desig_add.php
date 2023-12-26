@@ -109,36 +109,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Department <span style="color: red;">*</span> </label>
-                            <?php echo form_error('emp_dept_id');?>
-                            <select name="emp_dept_id" id= "emp_dept_id" onchange="get_section(this.value)" class="form-control input-lg select22" required>
-                                <option  >Select Department</option>
-                             
-                            </select>
-                        </div>
-	                </div>
-                    <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Section <span style="color: red;">*</span> </label>
-                        <?php echo form_error('emp_sec_id');?>
-                        <select name="emp_sec_id" id= "emp_sec_id" onchange="get_line(this.value) " class="emp_sec_id form-control input-lg select22" required>
-                            <option  >Select Section</option>
-                        </select>
-                    </div>
-                    </div>
-                    <div class="col-md-4" style="padding-left: 0px !important;">
-                    <div class="form-group">
-                        <label>Line<span style="color: red;">*</span> </label>
-                        <?php echo form_error('emp_line_id');?>
-                        <select name="emp_line_id" id= "emp_line_id" class="emp_line_id form-control input-lg select22" required>
-                            <option  >Select Line</option>
-                        </select>
-                    </div>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -167,7 +138,7 @@
         var unit_id = $('#unit_id').val();
         $.ajax({
             type: "POST",
-            url: "<?= base_url('index.php/setup_con/get_data_degi') ?>",
+            url: "<?= base_url('setup_con/get_data_degi') ?>",
             data: {
                 unit_id: unit_id
             },
@@ -235,6 +206,7 @@
 
     }
 </script>
+<<<<<<< HEAD
 <script>
 function getDepertment(unit_id) {
     $.ajax({
@@ -291,3 +263,5 @@ function get_line(id) {
     })
 }
 </script>
+=======
+>>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a

@@ -407,7 +407,7 @@
 	          </div>
 		        
 	          <div class="row">
-				<?php $categorys = $this->db->get('emp_category_status')->result(); ?>
+							<?php $categorys = $this->db->get('emp_category_status')->result(); ?>
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Emp Status <span style="color: red;">*</span> </label>
@@ -421,7 +421,7 @@
 	              </div>
 	            </div>
 
-				<?php $shifts = $this->db->where('unit_id',$user_data->unit_name)->get('pr_emp_shift')->result(); ?>
+							<?php $shifts = $this->db->where('unit_id',$user_data->unit_name)->get('pr_emp_shift')->result(); ?>
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Emp Shift <span style="color: red;">*</span> </label>

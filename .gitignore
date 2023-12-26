@@ -32,3 +32,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/results/
 
 application/views/layout/left_menu.php
+application/config/database.php
+!application/config/database.php
+/application/config/database.php
+

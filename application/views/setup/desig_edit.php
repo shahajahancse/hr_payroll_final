@@ -95,6 +95,7 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <!-- < ?php 
 
 // dd($unit_id);
@@ -139,6 +140,9 @@
             </div>
             </div>
         </div>
+=======
+
+>>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -240,6 +244,7 @@
     }
     get_data(1);
 </script>
+<<<<<<< HEAD
 
 <script>
 function getDepertment(unit_id,how=null) {
@@ -320,3 +325,5 @@ getDepertment(<?= $emp_designation->unit_id ?>,'hello')
 
 
 
+=======
+>>>>>>> dc98bfe9f9923e62a1412139fee6b0a171031a1a
