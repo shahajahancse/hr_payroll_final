@@ -224,7 +224,7 @@
 							</div>
 							<div class="col-md-3">
 							<div class="form-group">
-								<label>Banck account.<span style="color: red;">*</span> </label>
+								<label>Bank account.<span style="color: red;">*</span> </label>
 								<input type="" name="bank_bkash_no" id="bank_bkash_no" class="form-control input-sm" required>
 								<?php echo form_error('bank_bkash_no');?>
 							</div>
