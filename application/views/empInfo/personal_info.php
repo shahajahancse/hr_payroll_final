@@ -710,14 +710,14 @@
 	                <input type="text" name="refer_name" id="refer_name" class="form-control input-sm" required>
 	              </div>
 	            </div>
-	            <div class="col-md-4">
+	            <div class="col-md-2">
 	              <div class="form-group">
 	                <label>Mobile Number<span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_mobile');?>
 	                <input type="text" name="refer_mobile" id="refer_mobile" class="form-control input-sm" required>
 	              </div>
 	            </div>
-	            <div class="col-md-4">
+	            <div class="col-md-2">
 	              <div class="form-group">
 	                <label>Rrelation<span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_relation');?>	                
@@ -727,6 +727,13 @@
 		                  <option value="<?= $row->id ?>"><?= $row->nomini_relation; ?></option>
 	                	<?php } ?>
 		              </select>
+	              </div>
+	            </div>
+	            <div class="col-md-4">
+	              <div class="form-group">
+	                <label>Village <span style="color: red;">*</span> </label>
+	                <?php echo form_error('refer_village');?>
+	                <input type="text" name="refer_village" id="refer_village" class="form-control input-sm" required>
 	              </div>
 	            </div>
 	          </div>	
