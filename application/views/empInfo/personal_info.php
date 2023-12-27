@@ -720,7 +720,7 @@
 	            </div>
 	            <div class="col-md-2">
 	              <div class="form-group">
-	                <label>Number<span style="color: red;">*</span> </label>
+	                <label>Mobile Number<span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_mobile');?>
 	                <input type="text" name="refer_mobile" id="refer_mobile" class="form-control input-sm" required>
 	              </div>
