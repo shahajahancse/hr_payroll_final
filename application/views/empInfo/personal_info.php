@@ -703,14 +703,14 @@
 	        <hr style="margin-bottom: 0px !important;">
 	        <div style="background-color: white; padding: 15px !important;">
 	          <div class="row">
-	            <div class="col-md-4">
+	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_name');?>
 	                <input type="text" name="refer_name" id="refer_name" class="form-control input-sm" required>
 	              </div>
 	            </div>
-	            <div class="col-md-2">
+	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Mobile Number<span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_mobile');?>
@@ -740,7 +740,7 @@
 	          <div class="row">
 	            <div class="col-md-4">
 	              <div class="form-group">
-	                <label>Address <span style="color: red;">*</span> </label>
+	                <label>District <span style="color: red;">*</span> </label>
 	                <?php echo form_error('ref_district');?>
 	                <select name="ref_district" id= "ref_district" class="form-control input-sm" required>
 	                	<option  >-- Select --</option>
@@ -752,7 +752,7 @@
 	            </div>
 	            <div class="col-md-4">
 	              <div class="form-group">
-	                <label>Mobile Number<span style="color: red;">*</span> </label>
+	                <label>Thana/Upazila<span style="color: red;">*</span> </label>
 	                <?php echo form_error('ref_thana');?>	                
 	                <select name="ref_thana" id= "ref_thana" class="ref_thana form-control input-sm" required>
 	                	<option  >-- Select --</option>
@@ -761,7 +761,7 @@
 	            </div>
 	            <div class="col-md-4">
 	              <div class="form-group">
-	                <label>Rrelation<span style="color: red;">*</span> </label>
+	                <label>Post Office<span style="color: red;">*</span> </label>
 	                <?php echo form_error('ref_post');?>	                
 	                <select name="ref_post" id= "ref_post" class="ref_post form-control input-sm" required>
 	                	<option  >-- Select --</option>
