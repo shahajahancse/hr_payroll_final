@@ -703,29 +703,21 @@
 	        <hr style="margin-bottom: 0px !important;">
 	        <div style="background-color: white; padding: 15px !important;">
 	          <div class="row">
-	            <div class="col-md-3">
+	            <div class="col-md-4">
 	              <div class="form-group">
 	                <label>Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_name');?>
 	                <input type="text" name="refer_name" id="refer_name" class="form-control input-sm" required>
 	              </div>
 	            </div>
-
-	            <div class="col-md-5">
-	              <div class="form-group">
-	                <label>Address <span style="color: red;">*</span> </label>
-	                <?php echo form_error('refer_address');?>
-	                <input type="text" name="refer_address" id="refer_address" class="form-control input-sm" required>
-	              </div>
-	            </div>
-	            <div class="col-md-2">
+	            <div class="col-md-4">
 	              <div class="form-group">
 	                <label>Mobile Number<span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_mobile');?>
 	                <input type="text" name="refer_mobile" id="refer_mobile" class="form-control input-sm" required>
 	              </div>
 	            </div>
-	            <div class="col-md-2">
+	            <div class="col-md-4">
 	              <div class="form-group">
 	                <label>Rrelation<span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_relation');?>	                
@@ -734,6 +726,38 @@
 	                	<?php foreach ($nominees as $key => $row) { ?>
 		                  <option value="<?= $row->id ?>"><?= $row->nomini_relation; ?></option>
 	                	<?php } ?>
+		              </select>
+	              </div>
+	            </div>
+	          </div>	
+	          <div class="row">
+	            <div class="col-md-4">
+	              <div class="form-group">
+	                <label>Address <span style="color: red;">*</span> </label>
+	                <?php echo form_error('ref_district');?>
+	                <select name="ref_district" id= "ref_district" class="form-control input-sm" required>
+	                	<option  >-- Select --</option>
+	                	<?php foreach ($districts as $key => $row) { ?>
+		                  <option value="<?= $row->id ?>"><?= $row->name_en; ?></option>
+	                	<?php } ?>
+		              </select>
+	              </div>
+	            </div>
+	            <div class="col-md-4">
+	              <div class="form-group">
+	                <label>Mobile Number<span style="color: red;">*</span> </label>
+	                <?php echo form_error('ref_thana');?>	                
+	                <select name="ref_thana" id= "ref_thana" class="ref_thana form-control input-sm" required>
+	                	<option  >-- Select --</option>
+		              </select>
+	              </div>
+	            </div>
+	            <div class="col-md-4">
+	              <div class="form-group">
+	                <label>Rrelation<span style="color: red;">*</span> </label>
+	                <?php echo form_error('ref_post');?>	                
+	                <select name="ref_post" id= "ref_post" class="ref_post form-control input-sm" required>
+	                	<option  >-- Select --</option>
 		              </select>
 	              </div>
 	            </div>
@@ -1047,25 +1071,72 @@
 
 		//nominee post office dropdown
 		$('#nomi_thana').change(function(){
-		$('.nomi_post').addClass('form-control input-sm');
-		$(".nomi_post > option").remove();
-		var id = $('#nomi_thana').val();
-		$.ajax({
-			type: "POST",
-			url: hostname +"common/ajax_post_office_by_upa_id/" + id,
-			success: function(func_data)
-			{
-				$('.nomi_post').append("<option value=''>-- Select District --</option>");
+			$('.nomi_post').addClass('form-control input-sm');
+			$(".nomi_post > option").remove();
+			var id = $('#nomi_thana').val();
+			$.ajax({
+				type: "POST",
+				url: hostname +"common/ajax_post_office_by_upa_id/" + id,
+				success: function(func_data)
+				{
+					$('.nomi_post').append("<option value=''>-- Select District --</option>");
+					$.each(func_data,function(id,name)
+					{
+						var opt = $('<option />');
+						opt.val(id);
+						opt.text(name);
+						$('.nomi_post').append(opt);
+					});
+				}
+			});
+		});
+
+
+		//Refer Upazila dropdown
+		$('#ref_district').change(function(){
+			$('.ref_thana').addClass('form-control input-sm');
+			$(".ref_thana > option").remove();
+			$(".ref_post > option").remove();
+			var id = $('#ref_district').val();
+			$.ajax({
+				type: "POST",
+				url: hostname +"common/ajax_upazila_by_dis/" + id,
+				success: function(func_data)
+				{
+				$('.ref_thana').append("<option value=''>-- Select District --</option>");
 				$.each(func_data,function(id,name)
 				{
 					var opt = $('<option />');
 					opt.val(id);
 					opt.text(name);
-					$('.nomi_post').append(opt);
+					$('.ref_thana').append(opt);
 				});
-			}
+				}
+			});
 		});
+
+		//Refer post office dropdown
+		$('#ref_thana').change(function(){
+			$('.ref_post').addClass('form-control input-sm');
+			$(".ref_post > option").remove();
+			var id = $('#ref_thana').val();
+			$.ajax({
+				type: "POST",
+				url: hostname +"common/ajax_post_office_by_upa_id/" + id,
+				success: function(func_data)
+				{
+					$('.ref_post').append("<option value=''>-- Select District --</option>");
+					$.each(func_data,function(id,name)
+					{
+						var opt = $('<option />');
+						opt.val(id);
+						opt.text(name);
+						$('.ref_post').append(opt);
+					});
+				}
+			});
 		});
+
 
 		//Upazila dropdown
 		$('#pre_district').change(function(){
