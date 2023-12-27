@@ -463,6 +463,7 @@
 	          </div>
 		        
 	          <div class="row">
+	          	<?php //dd($shifts); ?>
 	          	<div class="col-md-3">
 	              <div class="form-group">
 	                <label>Salary Type <span style="color: red;">*</span> </label>

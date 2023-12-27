@@ -2231,9 +2231,9 @@ class Processdb extends CI_Model{
 
 	function get_emp_info($emp_id){
 		// dd($emp_id);
-		$d = $this->db->select('com.*, per.*, com.id, com.emp_id,')
-					   ->from('pr_emp_com_info com')
-					   ->join('pr_emp_per_info per','com.id = per.emp_id', 'left')
+		$d = $this->db->select('com.*, per.*')
+					   ->from('pr_emp_com_info as com')
+					   ->join('pr_emp_per_info as per','com.emp_id = per.emp_id', 'left')
 					   ->where('com.emp_id',$emp_id)
 					   ->get()->row();
 					   // dd($d);
