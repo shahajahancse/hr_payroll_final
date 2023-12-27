@@ -2231,19 +2231,18 @@ class Processdb extends CI_Model{
 
 	function get_emp_info($emp_id){
 		// dd($emp_id);
-		$d =  $this->db->select('pr_emp_per_info.*,pr_emp_com_info.*')
-					   ->from('pr_emp_per_info')
-					   ->join('pr_emp_com_info','pr_emp_com_info.id = pr_emp_per_info.emp_id')
-					   ->where('pr_emp_com_info.emp_id',$emp_id)
+		$d = $this->db->select('com.*, per.*, com.id, com.emp_id,')
+					   ->from('pr_emp_com_info com')
+					   ->join('pr_emp_per_info per','com.id = per.emp_id', 'left')
+					   ->where('com.emp_id',$emp_id)
 					   ->get()->row();
-		   
+					   // dd($d);
+
 		if ($d == null) {
 			return ['status'=>false,'data'=>'No data found'];
 		}else{
 			return ['status'=>true,'data'=>$d];
-			// return $d;
 		}
-	
 	}
 
 
