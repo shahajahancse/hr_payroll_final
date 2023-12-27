@@ -54,12 +54,15 @@ class Common extends CI_Controller {
         exit;
     }
     
-    function ajax_section_by_dept_id($id){
+    function ajax_section_by_dept_id($id, $unit_id = null){
 
         $data = array();
         $this->db->select('*');
         $this->db->from('emp_section');
         $this->db->where('depertment_id', $id);
+        if (!empty($unit_id)) {
+            $this->db->where('unit_id', $unit_id);
+        }
         $this->db->order_by('sec_name_bn', 'ASC');
         $query = $this->db->get()->result();
 

@@ -293,7 +293,7 @@ class Command extends CI_Controller {
 	}
 
 	// pay_salary_sheet
-	// nor used
+	// not used
 	public function create_salary_sheet()
 	{
 		dd('ddd');

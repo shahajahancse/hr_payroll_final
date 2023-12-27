@@ -45,8 +45,8 @@ class Attn_process_model extends CI_Model{
 			$this->delete_double_entry($emp_id,$process_date);
 
 			//PROCESS ELIGIBILITY CHECK AFTER JOINING AND BEFORE RESIGN OR LEFT
-			$resign_check 	= $this->check_resign($com_id, $process_date);
-			$left_check 	= $this->check_left($com_id, $process_date);
+			$resign_check 	= $this->check_resign($emp_id, $process_date);
+			$left_check 	= $this->check_left($emp_id, $process_date);
 
 			//IF ANY CONDITION IS FALSE THEN ID WILL NOT GO TO THE CORE PROCESS
 			if($joining_date > $process_date or $resign_check == false or $left_check == false){

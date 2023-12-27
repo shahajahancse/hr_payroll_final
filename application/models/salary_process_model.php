@@ -93,7 +93,7 @@ class Salary_process_model extends CI_Model{
 				$gross_sal_com 	= $rows->com_gross_sal;
 				$ot_check 		= $rows->ot_entitle;
 				
-				$sp_eligibility = $this->salary_process_eligibility($id, $start_date);
+				$sp_eligibility = $this->salary_process_eligibility($emp_id, $start_date, $gross_sal);
 				
 				if($sp_eligibility == true)
 				{
@@ -101,7 +101,7 @@ class Salary_process_model extends CI_Model{
 					//==========================================================
 					$where = "trim(substr(effective_month,1,7)) = '$start_date'";
 					$this->db->select("new_salary, new_com_salary");
-					$this->db->where("new_emp_id", $id);
+					$this->db->where("new_emp_id", $emp_id);
 					$this->db->where($where);
 					$inc_prom = $this->db->get("pr_incre_prom_pun");
 					if($inc_prom->num_rows() > 0 )
@@ -126,7 +126,7 @@ class Salary_process_model extends CI_Model{
 						'trans_allow' => $trans_allow,
 					);
 					
-					$data["emp_id"] 	= $id;
+					$data["emp_id"] 	= $emp_id;
 					$data["unit_id"] 	= $unit_id;
 					$data["dept_id"] 	= $emp_dept_id;
 					$data["sec_id"] 	= $emp_sec_id;
@@ -135,7 +135,7 @@ class Salary_process_model extends CI_Model{
 					$data["emp_status"] = $emp_cat_id;
 					$data["gross_sal"] 	= $gross_sal;
 					
-					$stop_salary		 = $this->stop_salary_check($id,$start_date);
+					$stop_salary		 = $this->stop_salary_check($emp_id,$start_date);
 					$data["stop_salary"] = $stop_salary;
 
 					//COMPLIENCE
@@ -154,7 +154,7 @@ class Salary_process_model extends CI_Model{
 					);
 
 					
-					$data_com["emp_id"] 		= $id;
+					$data_com["emp_id"] 		= $emp_id;
 					$data_com["unit_id"] 		= $unit_id;
 					$data_com["dept_id"] 		= $emp_dept_id;
 					$data_com["sec_id"] 		= $emp_sec_id;
@@ -175,8 +175,8 @@ class Salary_process_model extends CI_Model{
 		            } 
 
 		            $join_left_resign = 0;
-		            $resign_check   = $this->resign_check($id, $start_date, $end_date);
-		            $left_check     = $this->left_check($id, $start_date, $end_date);
+		            $resign_check   = $this->resign_check($emp_id, $start_date, $end_date);
+		            $left_check     = $this->left_check($emp_id, $start_date, $end_date);
 
 		            if($resign_check != false and $salary_month == $join_month)
 		            {
@@ -603,18 +603,18 @@ class Salary_process_model extends CI_Model{
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
 					$this->db->where("salary_month", $start_date);
-					$query = $this->db->get("pr_pay_scale_sheet");
+					$query = $this->db->get("pay_scale_sheet");
 					
 					if($query->num_rows() > 0 )
 					{
 						//echo "hello";
 						$this->db->where("emp_id", $rows->emp_id);
 						$this->db->where("salary_month", $start_date);
-						$this->db->update("pr_pay_scale_sheet",$data);
+						$this->db->update("pay_scale_sheet",$data);
 					}
 					else
 					{
-						$this->db->insert("pr_pay_scale_sheet",$data);
+						$this->db->insert("pay_scale_sheet",$data);
 
 					}
 				
@@ -623,7 +623,7 @@ class Salary_process_model extends CI_Model{
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
 					$this->db->where("salary_month", $start_date);
-					$query = $this->db->get("pr_pay_scale_sheet_com");
+					$query = $this->db->get("pay_scale_sheet_com");
 
 					// echo "<pre>";print_r($data_com);exit;
 					
@@ -632,11 +632,11 @@ class Salary_process_model extends CI_Model{
 						//echo "hello";
 						$this->db->where("emp_id", $rows->emp_id);
 						$this->db->where("salary_month", $start_date);
-						$this->db->update("pr_pay_scale_sheet_com",$data_com);
+						$this->db->update("pay_scale_sheet_com",$data_com);
 					}
 					else
 					{
-						$this->db->insert("pr_pay_scale_sheet_com",$data_com);
+						$this->db->insert("pay_scale_sheet_com",$data_com);
 					}
 				}
 			}
@@ -685,39 +685,21 @@ class Salary_process_model extends CI_Model{
 		return isset($query->pay_amount) ? $query->pay_amount : 0;
 	}
 
-	function salary_process_eligibility($emp_id, $salary_month)
+	function salary_process_eligibility($emp_id, $salary_month, $gross_sal = null)
 	{
 		$salary_year_month = date('Y-m', strtotime($salary_month));
 		
 		$join_check 		= $this->join_range_check($emp_id, $salary_year_month);
 		$resign_check 		= $this->resign_range_check($emp_id, $salary_year_month);
 		$left_check 		= $this->left_range_check($emp_id, $salary_year_month);
-		$zero_gross_check 	= $this->zero_gross_check($emp_id);
 		
-		if($join_check != false and $resign_check != false and $left_check != false and $zero_gross_check != false )
+		if($join_check != false and $resign_check != false and $left_check != false and !empty($gross_sal))
 		{
 				return true;
 		}
 		else
 		{
 			return false;
-		}
-	}
-
-	function zero_gross_check($emp_id)
-	{
-		$this->db->select('gross_sal');
-		$this->db->where('id', $emp_id);
-		$this->db->where("gross_sal !=","0");
-		$query = $this->db->get('pr_emp_com_info');
-		//echo $this->db->last_query();
-		if($query->num_rows() > 0)
-		{
-			return true;
-		}	
-		else
-		{
-			return false;	
 		}
 	}
 	
@@ -871,7 +853,7 @@ class Salary_process_model extends CI_Model{
                 SUM(deduction_hour) AS deduction_hour, 
             ");
 
-        $this->db->where('id',$emp_id);
+        $this->db->where('emp_id',$emp_id);
         $this->db->where("shift_log_date BETWEEN '$FS_on_date' AND '$FS_off_date'");
         $query = $this->db->get('pr_emp_shift_log');
         
