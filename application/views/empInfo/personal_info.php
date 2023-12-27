@@ -27,7 +27,7 @@
     <div id="target-div">
       <div class="container-fluid">
 		<button onclick="emp_id_search()" class="form-control btn input-sm  btn-success" style="width: 8%;line-height: 10px !important;float: right;border-radius: 0 !important; margin-top: 7px;">Search</button>
-		<input id="employee_id" type=""  class="form-control input-sm" placeholder="Search" style="margin-top: 8px;width:15%;float:right;border-radius: 0 !important;">
+		<input id="employee_id" type="text"  class="form-control input-sm" placeholder="Search" style="margin-top: 8px;width:15%;float:right;border-radius: 0 !important;">
 				
         <form id="form_id" enctype="multipart/form-data" method="post" name="creatdepartment" action="<?php echo base_url('emp_info_con/personal_info_add')?>">
 		  		<h3 style="font-weight: bold;"><?= $title ?></h3>
@@ -177,7 +177,7 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Male Child </label>
-									<input type="" name="m_child" id="m_child" class="form-control input-sm">
+									<input type="text" name="m_child" id="m_child" class="form-control input-sm">
 									<?php echo form_error('m_child');?>
 								</div>
 							</div>
@@ -185,7 +185,7 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Female Child </label>
-									<input type="" name="f_child"  id="f_child" class="form-control input-sm">
+									<input type="text" name="f_child"  id="f_child" class="form-control input-sm">
 									<?php echo form_error('f_child');?>
 								</div>
 							</div>
@@ -218,14 +218,14 @@
 							<div class="col-md-3">
 							<div class="form-group">
 								<label>Personal Mobile <span style="color: red;">*</span> </label>
-								<input type="" name="personal_mobile" id="personal_mobile" class="form-control input-sm" required>
+								<input type="text" name="personal_mobile" id="personal_mobile" class="form-control input-sm" required>
 								<?php echo form_error('personal_mobile');?>
 							</div>
 							</div>
 							<div class="col-md-3">
 							<div class="form-group">
 								<label>Bank account.<span style="color: red;">*</span> </label>
-								<input type="" name="bank_bkash_no" id="bank_bkash_no" class="form-control input-sm" required>
+								<input type="text" name="bank_bkash_no" id="bank_bkash_no" class="form-control input-sm" required>
 								<?php echo form_error('bank_bkash_no');?>
 							</div>
 							</div>
@@ -253,7 +253,7 @@
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Home Owner Mobile<span style="color: red;">*</span> </label>
-	                <input type="" name="home_own_mobile" id="home_own_mobile" class="form-control input-sm" required>
+	                <input type="text" name="home_own_mobile" id="home_own_mobile" class="form-control input-sm" required>
 	                <?php echo form_error('home_own_mobile');?>
 	              </div>
 	            </div>
@@ -681,7 +681,7 @@
 	              <div class="form-group">
 	                <label>Nominee Mobile <span style="color: red;">*</span> </label>
 	                <?php echo form_error('nomi_mobile');?>
-	                <input type="" name="nomi_mobile" id="nomi_mobile" class="form-control input-sm" required>
+	                <input type="text" name="nomi_mobile" id="nomi_mobile" class="form-control input-sm" required>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
@@ -722,7 +722,7 @@
 	              <div class="form-group">
 	                <label>Number<span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_mobile');?>
-	                <input type="" name="refer_mobile" id="refer_mobile" class="form-control input-sm" required>
+	                <input type="text" name="refer_mobile" id="refer_mobile" class="form-control input-sm" required>
 	              </div>
 	            </div>
 	            <div class="col-md-2">
