@@ -95,9 +95,13 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_rules('nomi_relation', 'Nominee Relation', 'trim|required');
 
 		$this->form_validation->set_rules('refer_name', 'Referance Name', 'trim');
-		$this->form_validation->set_rules('refer_address', 'Referance Address', 'trim');
 		$this->form_validation->set_rules('refer_mobile', 'Referance Mobile', 'trim');
 		$this->form_validation->set_rules('refer_relation', 'Referance Relation', 'trim');
+
+		$this->form_validation->set_rules('refer_village', 'Referance Village', 'trim');
+		$this->form_validation->set_rules('ref_district', 'Referance District', 'trim');
+		$this->form_validation->set_rules('ref_thana', 'Referance Thana/Upazila', 'trim');
+		$this->form_validation->set_rules('ref_post', 'Referance Post Office', 'trim');
 		
 		// $this->form_validation->set_rules('exp_factory_name', 'Exp. Factory Name', 'trim');
 		// $this->form_validation->set_rules('exp_duration', 'Exp. Duration', 'trim');
