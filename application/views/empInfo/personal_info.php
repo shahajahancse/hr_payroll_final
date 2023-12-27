@@ -1003,10 +1003,11 @@
 			$('.emp_sec_id').addClass('form-control input-sm');
 			$(".emp_sec_id > option").remove();
 			$(".emp_line_id > option").remove();
-			var id = $('#emp_dept_id').val();
+			var id 			= $('#emp_dept_id').val();
+			var unit_id = $('#unit_id').val();
 			$.ajax({
 				type: "POST",
-				url: hostname +"common/ajax_section_by_dept_id/" + id,
+				url: hostname +"common/ajax_section_by_dept_id/" + id +'/'+ unit_id,
 				success: function(func_data)
 				{
 					$('.emp_sec_id').append("<option value=''>-- Select District --</option>");
