@@ -159,95 +159,163 @@
 								<button class="btn input-sm sbtn" onclick="daily_report(6)">Out & IN Report</button>
 							<?php } ?>
 							<?php if(in_array(25,$acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_out_punch_miss_report()">Daily Out Punch Miss</button>
+								<button class="btn input-sm sbtn" onclick="grid_daily_out_punch_miss_report()">Daily Out Punch Miss</button>
 							<?php } ?>
 							<?php if(in_array(25,$acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="daily_costing_report()">Daily Costing</button>
+								<button class="btn input-sm sbtn" onclick="daily_costing_report()">Daily Costing</button>
 							<?php } ?>
 							<?php if(in_array(25,$acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_eot()">Daily EOT</button>
+								<button class="btn input-sm sbtn" onclick="grid_daily_eot()">Daily EOT</button>
 							<?php } ?>
 
 
 							<?php if(in_array(25,$acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_actual_present_report()">Actual Present Report</button>
+								<button class="btn input-sm sbtn" onclick="grid_actual_present_report()">Actual Present Report</button>
 							<?php } ?>
 							<?php if(in_array(25,$acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_actual_out_in_report()">Actual Out & IN Report</button>
+								<button class="btn input-sm sbtn" onclick="grid_daily_actual_out_in_report()">Actual Out & IN Report</button>
 							<?php } ?>
 							<?php if(in_array(25,$acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_holiday_weekend_absent_report()">Holiday / Weekend Absent</button>
+								<button class="btn input-sm sbtn" onclick="grid_daily_holiday_weekend_absent_report()">Holiday / Weekend Absent</button>
 							<?php } ?>
 							<?php if(in_array(25,$acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_holiday_weekend_present_report()">Holiday / Weekend Present</button>
+								<button class="btn input-sm sbtn" onclick="grid_daily_holiday_weekend_present_report()">Holiday / Weekend Present</button>
 							<?php } ?>
 						</div>
 
 
 						<div class="tab-pane fade" id="monthly">
-
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
-
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_ot_register()">OT Register</button>
-							
-							<?php if (!in_array(10, $acl) && !in_array(10, $acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_eot_register()">EOT Register</button>
-
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_att_register(<?php echo $register; ?>)">Attendance Register</button>
+							<?php if(in_array(25,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_monthly_ot_register()">OT Register</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_monthly_eot_register()">EOT Register</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register()">Attendance Register</button>
 							<?php } ?>
 						</div>
 
 
 						<div class="tab-pane fade" id="continuous">
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_present_report()">Present Report</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_absent_report()">Absent Report</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_leave_report_new()">Leave Report</button>
-							<button cl   ass="btn btn-primary input-sm sbtn" onclick="grid_continuous_late_report()">Late Report</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_incre_report()">Increment Report</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_prom_report()">Promotion Report</button>
-							<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_ot_eot_report()">OT / EOT Report</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_costing_report()">Continuous Costing Report</button>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_present_report()">Present Report</button>
 							<?php } ?>
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_report_limit(3)">Absent three</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_report_limit(10)">Absent ten</button>
-						</div>
-						<div class="tab-pane fade" id="other" style="display: flex;flex-direction: row;flex-wrap: wrap;gap: 4px;">
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_app_letter()">App. Letter</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="id_card(1)">ID Card Bangla</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="id_card(2)">ID Card English</button>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_absent_report()">Absent Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_leave_report_new()">Leave Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_late_report()">Late Report</button>
+							<?php } ?>
 
-							<?php if (!in_array($user_id, $usr_arr_3)) { ?>
-								<?php if (!in_array($user_id, $usr_arr)) { ?>
-									<button class="btn btn-primary input-sm sbtn" onclick="grid_job_card()">Job Card</button>
-								<?php } ?>
+
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_incre_report()">Increment Report</button>
 							<?php } ?>
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_new_join_report()">New Join Report</button>
-							<?php if (!in_array($user_id, $usr_arr)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_resign_report()">Resign Report</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_left_report()">Left Report</button>
-								<?php } ?>
-							<button class="btn btn-primary input-sm sbtn" onclick="grid_general_info()">General Report</button>
-							<?php if (!in_array($user_id, $usr_arr)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_earn_leave()">Earn Leave Report</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_yearly_leave_register()">Leave Register</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_emp_job_application()">Job Application</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="join_letter()">Joining Letter</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_letter1_report()">Letter 1</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_letter2_report()">Letter 2</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_letter3_report()">Letter 3</button>
-								<?php } ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_employee_information()">Employee Information</button>
-							<?php if (!in_array($user_id, $usr_arr)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_nominee()">Nominee From</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_incre_prom_report()">Increment Letter</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_prom_report()">Promotion Letter</button>
-								<?php } ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_service_book()">Service Book</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_age_estimation()">Age estimation</button>
-								<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_extra_ot()">EOT Job Card</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_extra_ot_9pm()">EOT Job Card 9pm</button>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_prom_report()">Promotion Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_ot_eot_report()">OT / EOT Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_continuous_costing_report()">Continuous Costing Report</button>
+							<?php } ?>
+
+
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_report_limit(3)">Absent three</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_report_limit(10)">Absent ten</button>
+							<?php } ?>
+						</div>
+
+						<div class="tab-pane fade" id="other">
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_app_letter()">App. Letter</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="id_card(1)">ID Card Bangla</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="id_card(2)">ID Card English</button>
+							<?php } ?>
+
+
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_job_card()">Job Card</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_new_join_report()">New Join Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_resign_report()">Resign Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_left_report()">Left Report</button>
+							<?php } ?>
+
+
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_general_info()">General Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_earn_leave()">Earn Leave Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_yearly_leave_register()">Leave Register</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_emp_job_application()">Job Application</button>
+							<?php } ?>
+
+
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="join_letter()">Joining Letter</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_letter1_report()">Letter 1</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_letter2_report()">Letter 2</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_letter3_report()">Letter 3</button>
+							<?php } ?>
+
+
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_employee_information()">Employee Information</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_nominee()">Nominee From</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_incre_prom_report()">Increment Letter</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_prom_report()">Promotion Letter</button>
+							<?php } ?>
+
+
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_service_book()">Service Book</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_age_estimation()">Age estimation</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_extra_ot()">EOT Job Card</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_extra_ot_9pm()">EOT Job Card 9pm</button>
 							<?php } ?>
 						</div>
 					</div>
