@@ -44,20 +44,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label">First Time : </label>
-							<input class= "form-control input-sm" name="f_time" id="f_time" type="text">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label">Second Time : </label>
-							<input class= "form-control input-sm" name="s_time" id="s_time" type="text">
-						</div>
-					</div>
-				</div> -->
 			</div>
 			<div class="row tablebox" style="display: block; margin-bottom: 10px;">
 				<h3 class="h3" style="font-weight: 600;">Select Category</h3>
@@ -149,54 +135,69 @@
 					<div class="tab-content">
 						<div class="tab-pane fade in active" id="daily">
 							<?php
-							$usr_arr = array(3, 7, 8);
-							$usr_arr_2 = array(6);
-							$usr_arr_3 = array(11);
-							$usr_arr_4 = array(6, 11);
-
-							$user_id = $this->acl_model->get_user_id($this->session->userdata('data')->id_number);
-							$acl = $this->acl_model->get_acl_list($user_id);
-							?>
-							<?php if (!in_array($user_id, $usr_arr)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="daily_report(1)">Present Report</button>
+						        $user_id = $this->session->userdata('data')->id;
+						        $acl = check_acl_list($user_id);
+						    ?>
+							<?php if(in_array(21,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="daily_report(1)">Present Report</button>
 							<?php } ?>
-							<button class="btn btn-primary input-sm sbtn" onclick="daily_report(2)">Absent Report</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="daily_report(3)">Daily Leave Report</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="daily_report(4)">Late Report</button>
-							<button class="btn btn-primary input-sm sbtn" onclick="daily_report(5)">OT Report</button>
-							<?php if (!in_array($user_id, $usr_arr_2) && !in_array($user_id, $usr_arr_3)) { ?>
-								<button class="btn btn-primary input-sm sbtn" onclick="daily_report(6)">Out & IN Report</button>
-								<?php } ?>
-								<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
-									<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_out_punch_miss_report()">Daily Out Punch Miss</button>
+							<?php if(in_array(22,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="daily_report(2)">Absent Report</button>
+							<?php } ?>
+							<?php if(in_array(23,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="daily_report(3)">Daily Leave Report</button>
+							<?php } ?>
+							<?php if(in_array(24,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="daily_report(4)">Late Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="daily_report(5)">OT Report</button>
+							<?php } ?>
+
+
+							<?php if(in_array(25,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="daily_report(6)">Out & IN Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
+								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_out_punch_miss_report()">Daily Out Punch Miss</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
 								<button class="btn btn-primary input-sm sbtn" onclick="daily_costing_report()">Daily Costing</button>
-								<?php } ?>
-							<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
 								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_eot()">Daily EOT</button>
+							<?php } ?>
+
+
+							<?php if(in_array(25,$acl)) { ?>
 								<button class="btn btn-primary input-sm sbtn" onclick="grid_actual_present_report()">Actual Present Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
 								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_actual_out_in_report()">Actual Out & IN Report</button>
+							<?php } ?>
+							<?php if(in_array(25,$acl)) { ?>
 								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_holiday_weekend_absent_report()">Holiday / Weekend Absent</button>
 							<?php } ?>
-							<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
+							<?php if(in_array(25,$acl)) { ?>
 								<button class="btn btn-primary input-sm sbtn" onclick="grid_daily_holiday_weekend_present_report()">Holiday / Weekend Present</button>
-								<?php } ?>
+							<?php } ?>
 						</div>
 
-						<?php if (!in_array($user_id, $usr_arr)) { ?>
-							<div class="tab-pane fade" id="monthly">
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
-								<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_ot_register()">OT Register</button>
-								<?php if (!in_array(10, $acl) && !in_array(10, $acl)) { ?>
-									<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_eot_register()">EOT Register</button>
-									<?php
-									$register = 1;
-									$register_blank = 2;
-									$register_blank_without_name = 3;
-									?>
-									<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_att_register(<?php echo $register; ?>)">Attendance Register</button>
-								<?php } ?>
-							</div>
-						<?php } ?>
+
+						<div class="tab-pane fade" id="monthly">
+
+							<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
+
+							<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_ot_register()">OT Register</button>
+							
+							<?php if (!in_array(10, $acl) && !in_array(10, $acl)) { ?>
+								<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_eot_register()">EOT Register</button>
+
+								<button class="btn btn-primary input-sm sbtn" onclick="grid_monthly_att_register(<?php echo $register; ?>)">Attendance Register</button>
+							<?php } ?>
+						</div>
+
+
 						<div class="tab-pane fade" id="continuous">
 							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_present_report()">Present Report</button>
 							<button class="btn btn-primary input-sm sbtn" onclick="grid_continuous_absent_report()">Absent Report</button>

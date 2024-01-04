@@ -90,8 +90,9 @@
         <span class="title">Settings </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setting_con') ?>"></span> </a>
         <ul class="sub-menu ">
           
-          <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('setting_con/crud')?>" class="anchor_cls" id="acl">Access</a> </li>
-          <li class="start <?= activate_method('user_mode') ?>"> <a href="<?=base_url('setting_con/user_mode')?>" class="anchor_cls" id="acl">User Mode</a> </li>
+          <li class="start <?= activate_method('crud') ?>"> <a href="<?=base_url('setting_con/crud')?>" class="anchor_cls" id="acl">Access</a> </li>
+          <li class="start <?= activate_method('user_acl_hrm') ?>"> <a href="<?=base_url('setting_con/user_acl_hrm')?>" class="anchor_cls" id="acl">User Access HRM</a> </li>
+          <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
 
         </ul>
       </li>
