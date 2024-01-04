@@ -49,5 +49,46 @@ class Setting_con extends CI_Controller {
 		}
 		redirect('setting_con/crud');
 	}
+
+	public function user_acl_hrm()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+		$this->db->order_by('id', 'desc');
+		$this->data['users'] = $this->db->get('members')->result();
+        $this->data['title'] = 'User Access HRM'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'settings/user_acl_hrm';
+        $this->load->view('layout/template', $this->data);
+    }
+	public function checkbox_get_user_acl_hrm(){
+		$id = $this->input->post('id');
+		$this->db->order_by('id', 'desc');
+		$this->db->where('type', 1);
+		$this->data['access_list'] = $this->db->get('member_acl_list')->result();
+
+		$this->db->where('username_id', $id);
+		$level_list= $this->db->get('member_acl_level')->result();
+		$level_array=[];
+		foreach ($level_list as $key => $value) {
+			$level_array[] = $value->acl_id;
+		}
+		$this->data['level_array'] = $level_array;
+		$this->data['user_id'] = $id;
+		echo $this->load->view('settings/chackbox_user_acl_hrm', $this->data, true);
+	}
+	public function check_level(){
+		$id = $this->input->post('id');
+		$user_id = $this->input->post('user_id');
+		$this->db->where('username_id', $user_id);
+		$this->db->where('acl_id', $id);
+		$check = $this->db->get('member_acl_level')->num_rows();
+		if ($check > 0) {
+			$this->db->delete('member_acl_level', array('username_id' => $user_id, 'acl_id' => $id));
+		}else{
+			$this->db->insert('member_acl_level', array('username_id' => $user_id, 'acl_id' => $id));
+		}
+	}
 }
 
