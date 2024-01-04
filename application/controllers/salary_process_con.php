@@ -9,6 +9,7 @@ class Salary_process_con extends CI_Controller {
 		$this->load->model('salary_process_model');
 		$this->load->model('festival_bonus_model');
 		$this->load->model('log_model');
+		$this->load->model('acl_model');
 		$this->load->model('common_model');
 
 		set_time_limit(0);
@@ -136,10 +137,29 @@ class Salary_process_con extends CI_Controller {
 
 	}
 
+	////////////// salary report ///////////////
+	function grid_salary_report()
+	{
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title'] = 'Salary Report';
+        $this->data['subview'] = 'salary/grid_salary_report';
+        $this->load->view('layout/template', $this->data);
+	}
 
 
 
 
+
+
+
+	// =============================================================
 	// ////////////////======= old ===========//////////////
 	// old code
 	function salary_process_formssssss()

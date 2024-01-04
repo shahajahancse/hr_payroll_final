@@ -289,6 +289,34 @@ class Attn_process_con extends CI_Controller {
 	}
 
 
+	//-------------------------------------------------------------------------------------------------------
+	// Attendance report start here
+	//-------------------------------------------------------------------------------------------------------
+	function grid_window(){
+		 if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name)) {
+	        $this->data['employees'] = $this->common_model->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
+
+		if($this->session->userdata('level') == 0 || $this->session->userdata('level') == 1){
+			$this->data['username'] = $this->data['user_data']->id_number;
+			$this->data['title'] = 'kicu ekta';
+			$this->data['subview'] = 'grid';
+			$this->load->view('layout/template', $this->data);
+		} else if ($this->session->userdata('level') == 2){
+			$this->data['username'] = $this->data['user_data']->id_number;
+			$this->data['subview'] = 'grid_for_user';
+			$this->load->view('layout/template', $this->data);
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	// Attendance report end
+	//-------------------------------------------------------------------------------------------------------
 
 
 

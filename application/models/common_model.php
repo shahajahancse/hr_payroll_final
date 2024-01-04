@@ -61,7 +61,7 @@ class Common_model extends CI_Model{
 	function get_emp_by_unit($id){
 		$this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
 		$this->db->from('pr_emp_com_info as com');
-		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
+		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
 		$this->db->where('com.emp_cat_id', 1);
 		$this->db->group_by('com.id');
 		return $this->db->where('com.unit_id', $id)->get()->result();
