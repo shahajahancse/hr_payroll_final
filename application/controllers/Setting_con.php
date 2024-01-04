@@ -25,17 +25,29 @@ class Setting_con extends CI_Controller {
 		if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-
-		
-
-
-		
-		$this->data['data'] = $this->db->get()->result();
-		$this->data['users'] = $this->db->get('members')->result();
+		$this->db->order_by('id', 'desc');
+		$this->data['data'] = $this->db->get('member_acl_list')->result();
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['title'] = 'User Mode';
-        $this->data['subview'] = 'acl_con/user_mode';
+        $this->data['subview'] = 'settings/acl_access';
         $this->load->view('layout/template', $this->data);
+	}
+	function acl_access_add(){
+		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
+			$this->session->set_flashdata('success', 'ACL Added Successfully');
+			
+		}else{
+			$this->session->set_flashdata('failuer', 'ACL Added Failed');
+		}
+		redirect('setting_con/crud');
+	}
+	function acl_access_delete($id){
+		if ($this->db->delete('member_acl_list', array('id' => $id))) {
+			$this->session->set_flashdata('success', 'ACL Deleted Successfully');
+		}else{
+			$this->session->set_flashdata('failuer', 'ACL Deleted Failed');
+		}
+		redirect('setting_con/crud');
 	}
 }
 
