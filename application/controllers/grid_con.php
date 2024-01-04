@@ -1,26 +1,68 @@
 <?php
 class Grid_con extends CI_Controller {
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
-		if ($this->session->userdata('logged_in') == false) {
-			redirect("authentication");
-		}
-		$this->data['user_data'] = $this->session->userdata('data');
-		if (!check_acl_list($this->data['user_data']->id, 4)) {
-			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
-			redirect("payroll_con");
-			exit;
-		}
-			/* Standard Libraries */
-			$this->load->model('grid_model');
-			$this->load->model('acl_model');
-			$this->load->model('common_model');
-			$access_level = 5;
-			$acl = $this->acl_model->acl_check($access_level);
-			$this->data['user_data'] = $this->session->userdata('data');
+		ini_set('memory_limit', -1);
+		ini_set('max_execution_time', 0);
+	    set_time_limit(0);
+
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['user_data'] = $this->session->userdata('data');
+        if (!check_acl_list($this->data['user_data']->id, 4)) {
+            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+            redirect("payroll_con");
+            exit;
+        }
+
+		$this->load->model('grid_model');
+		$this->load->model('acl_model');
+		$this->load->model('common_model');
 	}
 
+
+	function daily_report(){
+		$date = $this->input->post('firstdate');
+		$unit_id = $this->input->post('unit_id');
+		$grid_data = $this->input->post('emp_id');
+		$grid_emp_id = explode('xxx', trim($grid_data));
+		dd($grid_emp_id);
+		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id);
+		$data["col_desig"] 		= "";
+		$data["col_line"] 		= "";
+		$data["col_section"] 	= "";
+		$data["col_dept"] 		= "";
+		$data["col_all"] 		= "";
+		$data["unit_id"] 		= $unit_id;
+		if(is_string($data["values"])){
+			echo $data["values"];
+		} else {
+			$this->load->view('grid_con/daily_report',$data);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// =========================================================
+	/*
+		old code
+	*/
+	// =========================================================
+	
 	function auto_temp_table(){
 		exit('This file is Very Dengerous');
 		$this->db->select('emp_id');
@@ -597,26 +639,7 @@ class Grid_con extends CI_Controller {
 
 
 	}
-	function daily_report(){
-		$date = $this->input->post('firstdate');
-		$unit_id = $this->input->post('unit_id');
-		$grid_data = $this->input->post('emp_id');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		// dd($_POST);
-		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id);
-		$data["col_desig"] 		= "";
-		$data["col_line"] 		= "";
-		$data["col_section"] 	= "";
-		$data["col_dept"] 		= "";
-		$data["col_all"] 		= "";
-		$data["unit_id"] 		= $unit_id;
-		if(is_string($data["values"])){
-			echo $data["values"];
-		}
-		else{
-			$this->load->view('daily_report',$data);
-		}
-	}
+
 
 	function grid_daily_absent_report()
 	{
