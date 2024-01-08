@@ -455,7 +455,7 @@
 	                <select name="emp_sal_gra_id" id= "emp_sal_gra_id" class="form-control input-sm" required>
 	                	<option  >-- Select Salary Grade --</option>
 	                	<?php foreach ($sl_grade as $key => $row) { ?>
-		                  <option value="<?= $row->id ?>"><?= $row->gr_name; ?></option>
+		                  <option value="<?= $row->gr_id ?>"><?= $row->gr_name; ?></option>
 	                	<?php } ?>
 	                </select>
 	              </div>
