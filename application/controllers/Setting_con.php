@@ -62,15 +62,17 @@ class Setting_con extends CI_Controller {
 		$this->data['subview'] = 'settings/user_acl_hrm';
         $this->load->view('layout/template', $this->data);
     }
+
 	public function checkbox_get_user_acl_hrm(){
 		$id = $this->input->post('id');
+		$type = $this->input->post('type');
 		$this->db->order_by('id', 'desc');
-		$this->db->where('type', 1);
+		$this->db->where('type', $type);
 		$this->data['access_list'] = $this->db->get('member_acl_list')->result();
 
 		$this->db->where('username_id', $id);
-		$level_list= $this->db->get('member_acl_level')->result();
-		$level_array=[];
+		$level_list = $this->db->get('member_acl_level')->result();
+		$level_array = [];
 		foreach ($level_list as $key => $value) {
 			$level_array[] = $value->acl_id;
 		}
@@ -78,6 +80,7 @@ class Setting_con extends CI_Controller {
 		$this->data['user_id'] = $id;
 		echo $this->load->view('settings/chackbox_user_acl_hrm', $this->data, true);
 	}
+
 	public function check_level(){
 		$id = $this->input->post('id');
 		$user_id = $this->input->post('user_id');

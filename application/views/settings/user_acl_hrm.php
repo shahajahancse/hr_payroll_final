@@ -74,7 +74,7 @@
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('setting_con/checkbox_get_user_acl_hrm') ?>",
-            data: {id: id},
+            data: {id: id, type: 1 },
             success: function(data){
                 $("#target-div").html(data);
             },
@@ -82,7 +82,6 @@
                 alert("error");
             }
         })
-
     }
 </script>
 <script>
@@ -95,7 +94,6 @@
                 console.log('success');
             }
         })
-        
     }
 </script>
 

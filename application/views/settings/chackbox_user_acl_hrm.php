@@ -1,10 +1,10 @@
 
 
 <div class="col-md-12" style="display: flex;flex-wrap: wrap;">
-    <div class=col-md-2 style="display: flex;flex-direction: column;">
-        <?php $limit = 10;$offset=$limit; $i=0; foreach($access_list as $key => $value) { 
+    <div class=col-md-3 style="display: flex;flex-direction: column;">
+        <?php $limit = 20;$offset=$limit; $i=0; foreach($access_list as $key => $value) { 
             if ($offset==$i) {
-                echo '</div><div class=col-md-2 style="display: flex;flex-direction: column;">';
+                echo '</div><div class=col-md-3 style="display: flex;flex-direction: column;">';
                 $offset+=$limit;
             }
             ?>
