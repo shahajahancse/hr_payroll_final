@@ -305,7 +305,7 @@ class Attn_process_con extends CI_Controller {
 		if($this->session->userdata('level') == 0 || $this->session->userdata('level') == 1){
 			$this->data['username'] = $this->data['user_data']->id_number;
 			$this->data['title'] = 'kicu ekta';
-			$this->data['subview'] = 'grid';
+			$this->data['subview'] = 'attn_report/grid';
 			$this->load->view('layout/template', $this->data);
 		} else if ($this->session->userdata('level') == 2){
 			$this->data['username'] = $this->data['user_data']->id_number;
@@ -329,6 +329,9 @@ class Attn_process_con extends CI_Controller {
 
 
 
+	//-------------------------------------------------------------------------------------------------------
+	// old code
+	//-------------------------------------------------------------------------------------------------------
 	// old code
 	function auto_shift_change($input_date)
 	{

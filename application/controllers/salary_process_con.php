@@ -149,7 +149,7 @@ class Salary_process_con extends CI_Controller {
 
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['title'] = 'Salary Report';
-        $this->data['subview'] = 'salary/grid_salary_report';
+        $this->data['subview'] = 'salary_report/grid_salary_report';
         $this->load->view('layout/template', $this->data);
 	}
 

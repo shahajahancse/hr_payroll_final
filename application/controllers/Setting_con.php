@@ -93,5 +93,19 @@ class Setting_con extends CI_Controller {
 			$this->db->insert('member_acl_level', array('username_id' => $user_id, 'acl_id' => $id));
 		}
 	}
+
+
+	public function user_acl_pr()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+		$this->db->order_by('id', 'desc');
+		$this->data['users'] = $this->db->get('members')->result();
+        $this->data['title'] = 'User Access HRM'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'settings/user_acl_pr';
+        $this->load->view('layout/template', $this->data);
+    }
 }
 
