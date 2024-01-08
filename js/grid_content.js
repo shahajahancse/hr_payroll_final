@@ -1,11 +1,76 @@
-
 function get_checked_valuee(checkboxes) {
-var vals = Array.from(checkboxes)
+	var vals = Array.from(checkboxes)
 	.filter(checkbox => checkbox.checked)
 	.map(checkbox => checkbox.value)
 	.join("xxx");
-return vals;
+	return vals;
 }
+
+function daily_report(){
+
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate ==''){
+		alert("Please select First date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id ==''){
+		alert("Please select unit !");
+		return false;
+	}
+
+	var checkboxes = document.getElementsByName('emp_id[]');
+   var sql = get_checked_valuee(checkboxes);
+   if (sql =='') {
+		alert('Please select employee Id');
+      return false;
+   }
+
+	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id;
+  	 url =  hostname + "grid_con/daily_report/";
+
+	ajaxRequest = new XMLHttpRequest();
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			daily_present_report.document.write(resp);
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// =======================================================
+	// old code
+// =======================================================
 
 function grid_get_all_data_for_salary() {
 	var ajaxRequest;  // The variable that makes Ajax possible!
@@ -551,61 +616,7 @@ function grid_all_search_out_miss(){
 	main_grid(url)
 }
 
-function daily_report(){
-	var ajaxRequest;  // The variable that makes Ajax possible!
-	try{
-	// Opera 8.0+, Firefox, Safari
-	ajaxRequest = new XMLHttpRequest();
-	}catch (e){
-	// Internet Explorer Browsers
-	try{
-		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-	}catch (e) {
-		try{
-			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-		}catch (e){
-			// Something went wrong
-			alert("Your browser broke!");
-			return false;
-		}
-	}
-	}
-	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate ==''){
-		alert("Please select First date");
-		return false;
-	}
 
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id ==''){
-		alert("Please select unit !");
-		return false;
-	}
-	var checkboxes = document.getElementsByName('emp_id[]');
-    var sql = get_checked_valuee(checkboxes);
-    if (sql =='') {
-	alert('Please select employee Id');
-      return false;
-    }
-	hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id;
-  	 url =  hostname + "index.php/grid_con/daily_report/";
-	// $(".clearfix").dialog("open");
-	ajaxRequest.open("POST", url, true);
-	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-	ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			// $(".clearfix").dialog("close");
-			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			daily_present_report.document.write(resp);
-			//daily_present_report.stop();
-		}
-	}
-}
 function grid_actual_present_report()
 {
 var ajaxRequest;  // The variable that makes Ajax possible!

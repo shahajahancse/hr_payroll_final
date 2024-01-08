@@ -231,6 +231,3 @@
     }
     get_data('<?= $emp_designation->unit_id ?>','e');
 </script>
-<?php
-// dd($emp_designation);
-?>

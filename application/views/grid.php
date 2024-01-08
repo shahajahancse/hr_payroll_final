@@ -1,403 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>HR Reports</title>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>themes/redmond/jquery-ui-1.8.2.custom.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>themes/ui.jqgrid.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>css/calendar.css" />
+		
+	<script src="<?php echo base_url(); ?>js/jquery.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>
+	<script src="<?php echo base_url(); ?>js/i18n/grid.locale-en.js" type="text/javascript"></script>
+	<script src="<?php echo base_url(); ?>js/jquery.jqGrid.min.js" type="text/javascript"></script>
+	<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
+	<script src="<?php echo base_url(); ?>js/calendar_eu.js" type="text/javascript"></script>
+	<script>
+    $(function() {
+            
+            
+            $( ".clearfix" ).dialog({
+                autoOpen: false,
+                height: 370,
+                width: 300,
+                resizable: false,
+                modal: true
+            });
+            
+            $(".ui-dialog-titlebar").hide();   
+            
+        });
+    </script>
 
-<?php
-	$this->load->model('common_model');
-	$unit = $this->common_model->get_unit_id_name();
-?>
-<div class="content">
-	<div class="col-md-8">
-		<div class="row tablebox">
-			<!-- <div class="col-md-6"> -->
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label">First Date : </label>
-							<input class= "form-control input-sm" name="firstdate" id="firstdate" type="date" autocomplete="off">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label">Second Date : </label>
-							<input class= "form-control input-sm" name="seconddate" id="seconddate" type="date" autocomplete="off">
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label">First Time : </label>
-							<input class= "form-control input-sm" name="f_time" id="f_time" type="text">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label">Second Time : </label>
-							<input class= "form-control input-sm" name="s_time" id="s_time" type="text">
-						</div>
-					</div>
-				</div>
-			<!-- </div> -->
-		</div>
-		<br>
-		<div class="row tablebox" style="display: block;">
-			<h3 style="font-weight: 600;">Select Category</h3>
-			<div class="col-md-6">
-				<div class="form-group">
-					<label>Unit <span style="color: red;">*</span> </label>
-					<select name="unit_id" id="unit_id" class="form-control input-sm">
-						<option value="">Select Unit</option>
-						<?php 
-							foreach ($dept as $row) {
-								if($row['unit_id'] == $user_data->unit_name){
-								$select_data="selected";
-								}else{
-								$select_data='';
-								}  
-								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
-								'</option>';
-							}
-						?>
-					</select>
-				</div>
-			</div>
-			<!-- department -->
-			<div class="col-md-6">
-				<div class="form-group">
-					<label>Department </label>
-					<select class="form-control input-sm dept" id='dept' name='dept'>
-						<?php if (!empty($user_data->unit_name)) { 
-							$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
-						<option value=''>Select Department</option>
-						<?php foreach ($dpts->result() as $key => $val) { ?>
-						<option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
-						<?php } } ?>
-						<option value=''>Select Department</option>
-					</select>
-				</div>
-			</div>
-			<!-- section -->
-			<div class="col-md-6">
-				<div class="form-group">
-					<label class="control-label">Section </label>
-					<select class="form-control input-sm section" id='section' name='section'>
-						<option value=''></option>
-					</select>
-				</div>
-			</div>
-			<!-- line -->
-			<div class="col-md-6">
-				<div class="form-group">
-					<label class="control-label">Line </label>
-					<select class="form-control input-sm line" id='line' name='line'>
-						<option value=''></option>
-					</select>
-				</div>
-			</div>
-			<!-- Designation -->
-			<div class="col-md-6">
-				<div class="form-group">
-					<label class="control-label">Designation</label>
-					<select class="form-control input-sm desig" id='desig' name='desig' onChange="grid_emp_list()">
-						<option value=''></option>
-					</select>
-				</div>
-			</div>
-			<!-- status -->
-			<div class="col-md-6">
-				<?php $categorys = $this->db->get('emp_category_status')->result(); ?>
-				<div class="form-group">
-					<label class="control-label">Status </label>
-					<select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
-						<option value="">All Employee</option>
-						<?php foreach ($categorys as $key => $row) { ?>
-						<option value="<?= $row->id ?>" <?= ($row->id==1)?'selected':'' ?>><?= $row->status_type; ?>
-						</option>
-						<?php } ?>
-					</select>
-				</div>
-			</div>
-		</div>
-		<!-- /.row -->
-	</div>
-	<div class="col-md-4 tablebox">
-		<div style="height: 80vh; overflow-y: scroll;">
-			<table class="table table-hover" id="fileDiv">
-				<tr style="position: sticky;top: 0;z-index:1">
-					<th class="active" style="width:10%"><input type="checkbox" id="select_all"
-					class="select-all checkbox" name="select-all"></th>
-					<th class="" style="background:#0177bcc2;color:white">Id</th>
-					<th class=" text-center" style="background:#0177bc;color:white">Name</th>
-				</tr>
-				<?php if (!empty($employees)) { 
-							foreach ($employees as $key => $emp) { ?>
-				<tr id="removeTr">
-					<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
-					</td>
-					<td class="success"><?= $emp->emp_id ?></td>
-					<td class="warning "><?= $emp->name_en ?></td>
-				</tr>
-				<?php } } ?>
-			</table>
-		</div>
-	</div>
-<!-- </div>
-	  
-<div class="content" style="padding-left: 35px;"> -->
-	<div class="col-md-12" style="margin-top: 15px;padding: 1px 0px 0px 13px;">							
-	<div class="tablebox">
-		<div class='multitab-section'>
-			<ul class="nav nav-tabs" id="myTabs">
-				<li class="active"><a href="#daily" data-toggle="tab">Daily Reports</a></li>
-				<li><a href="#monthly" data-toggle="tab">Monthly Reports</a></li>
-				<li><a href="#continuous" data-toggle="tab">Continuous Reports</a></li>
-				<li><a href="#other" data-toggle="tab">Other Reports</a></li>
-			</ul>
-			<div class="tab-content">
-				<div class="tab-pane fade in active" id="daily">
-					<?php
-					$usr_arr = array(3, 7, 8);
-					$usr_arr_2 = array(6);
-					$usr_arr_3 = array(11);
-					$usr_arr_4 = array(6, 11);
+</head>
+<body bgcolor="#ECE9D8">
+<div align="center" style=" margin:0 auto; width:1000px; min-height:555px; overflow:hidden;">
+<div style="float:left; overflow:hidden; width:65%; height:auto; padding:10px;">
+<form name="grid" target="_blank">
+<div>
 
-					$user_id = $this->acl_model->get_user_id($this->session->userdata('data')->id_number);
-					$acl = $this->acl_model->get_acl_list($user_id);
-					?>
-					<?php if (!in_array($user_id, $usr_arr)) { ?>
-						<button class="btn btn-primary input-sm" onclick="daily_report(1)">Present Report</button>
-					<?php } ?>
-					<button class="btn btn-primary input-sm" onclick="daily_report(2)">Absent Report</button>
-					<button class="btn btn-primary input-sm" onclick="daily_report(3)">Daily Leave Report</button>
-					<button class="btn btn-primary input-sm" onclick="daily_report(4)">Late Report</button>
-					<button class="btn btn-primary input-sm" onclick="daily_report(5)">OT Report</button>
-					<?php if (!in_array($user_id, $usr_arr_2) && !in_array($user_id, $usr_arr_3)) { ?>
-						<button class="btn btn-primary input-sm" onclick="daily_report(6)">Out & IN Report</button>
-						<?php } ?>
-						<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
-							<button class="btn btn-primary input-sm" onclick="grid_daily_out_punch_miss_report()">Daily Out Punch Miss</button>
-						<button class="btn btn-primary input-sm" onclick="daily_costing_report()">Daily Costing</button>
-						<?php } ?>
-					<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_daily_eot()">Daily EOT</button>
-						<button class="btn btn-primary input-sm" onclick="grid_actual_present_report()">Actual Present Report</button>
-						<button class="btn btn-primary input-sm" onclick="grid_daily_actual_out_in_report()">Actual Out & IN Report</button>
-						<button class="btn btn-primary input-sm" onclick="grid_daily_holiday_weekend_absent_report()">Holiday / Weekend Absent</button>
-					<?php } ?>
-					<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_daily_holiday_weekend_present_report()">Holiday / Weekend Present</button>
-						<?php } ?>
-				</div>
+<fieldset style='width:95%;'><legend><font size='+1'><b>Date</b></font></legend>
+<table>
+<tr>
+<td>First Date </td><td>:</td><td> <input type="text" name="firstdate" id="firstdate" style="width:100px;"/></td>
+<td>
+	<script language="JavaScript">
+	var o_cal = new tcal ({
+		// form name
+		'formname': 'grid',
+		// input name
+		'controlname': 'firstdate'
+	});
+	
+	// individual template parameters can be modified via the calendar variable
+	o_cal.a_tpl.yearscroll = false;
+	o_cal.a_tpl.weekstart = 6;
+	
+	</script>
+</td>
+<td>TO Second Date</td><td>:</td><td> <input type="text" name="seconddate" id="seconddate" style="width:100px;"/></td>
+<td>
+ <script language="JavaScript">
+	var o_cal = new tcal ({
+		// form name
+		'formname': 'grid',
+		// input name
+		'controlname': 'seconddate'
+	});
+	
+	// individual template parameters can be modified via the calendar variable
+	o_cal.a_tpl.yearscroll = false;
+	o_cal.a_tpl.weekstart = 6;
+	
+	</script>
+</td>
+</tr>
+<tr>
+<td>First Time</td><td>:</td><td> <input name="f_time" id="f_time" style="width:100px;" /> </td><td></td>
+<td>TO Second Time</td><td>:</td><td> <input name="s_time" id="s_time" style="width:100px;"/></td><td></td>
+</tr>
+</table>
 
-				<?php if (!in_array($user_id, $usr_arr)) { ?>
-					<div class="tab-pane fade" id="monthly">
-						<button class="btn btn-primary input-sm" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
-						<button class="btn btn-primary input-sm" onclick="grid_monthly_ot_register()">OT Register</button>
-						<?php if (!in_array(10, $acl) && !in_array(10, $acl)) { ?>
-							<button class="btn btn-primary input-sm" onclick="grid_monthly_eot_register()">EOT Register</button>
-							<?php
-							$register = 1;
-							$register_blank = 2;
-							$register_blank_without_name = 3;
-							?>
-							<button class="btn btn-primary input-sm" onclick="grid_monthly_att_register(<?php echo $register; ?>)">Attendance Register</button>
-						<?php } ?>
-					</div>
+</fieldset>
+ </div>
+<br />
+<?php 
+		$this->load->model('common_model'); 
+		$unit = $this->common_model->get_unit_id_name();
+		foreach ($unit->result() as $row) {
+		 	$unit_id = $row->unit_id;
+		 }
+	?>
+<div>
+<fieldset style='width:95%;'><legend><font size='+1'><b>Category Options</b></font></legend>
+<table>
+<tr>
+<td>Unit</td>
+<td>:</td>
+<td><select name='grid_start' id='grid_start' style="width:250px;" onchange='grid_get_all_data()' />
+            	<option value='Select'>	Select	</option>
+                <?php foreach($unit->result() as $rows) { ?>
+						<option value="<?php echo $rows->unit_id; ?>"><?php echo $rows->unit_name; ?></option>
 				<?php } ?>
-				<div class="tab-pane fade" id="continuous">
-					<button class="btn btn-primary input-sm" onclick="grid_continuous_present_report()">Present Report</button>
-					<button class="btn btn-primary input-sm" onclick="grid_continuous_absent_report()">Absent Report</button>
-					<button class="btn btn-primary input-sm" onclick="grid_continuous_leave_report_new()">Leave Report</button>
-					<button cl   ass="btn btn-primary input-sm" onclick="grid_continuous_late_report()">Late Report</button>
-					<button class="btn btn-primary input-sm" onclick="grid_continuous_incre_report()">Increment Report</button>
-					<button class="btn btn-primary input-sm" onclick="grid_continuous_prom_report()">Promotion Report</button>
-					<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_continuous_ot_eot_report()">OT / EOT Report</button>
-						<button class="btn btn-primary input-sm" onclick="grid_continuous_costing_report()">Continuous Costing Report</button>
-					<?php } ?>
-					<button class="btn btn-primary input-sm" onclick="grid_continuous_report_limit(3)">Absent three</button>
-					<button class="btn btn-primary input-sm" onclick="grid_continuous_report_limit(10)">Absent ten</button>
-				</div>
-				<div class="tab-pane fade" id="other" style="display: flex;flex-direction: row;flex-wrap: wrap;gap: 4px;">
-					<button class="btn btn-primary input-sm" onclick="grid_app_letter()">App. Letter</button>
-					<button class="btn btn-primary input-sm" onclick="id_card(1)">ID Card Bangla</button>
-					<button class="btn btn-primary input-sm" onclick="id_card(2)">ID Card English</button>
+            </select></td>
+<td>Dept. </td><td>:</td><td><select id='grid_dept' name='grid_dept' style="width:250px;" onChange="grid_all_search()"><option value=''></option></select></td>
+</tr>
+<tr><td>Section </td><td>:</td><td><select id='grid_section' name='grid_section' style="width:250px;" onChange="grid_all_search()"><option value=''></option></select></td>
+<td>Line </td><td>:</td><td><select id='grid_line' name='grid_line' style="width:250px;" onChange="grid_all_search()"><option value=''></option></select></td>
+</tr>
+<tr><td>Desig. </td><td>:</td><td><select id='grid_desig' name='grid_desig' style="width:250px;" onChange="grid_all_search()"><option value=''></option></select></td>
+<td>Sex </td><td>:</td><td><select id='grid_sex' name='grid_sex' style="width:250px;" onChange="grid_all_search()"><option value=''></option></select></select></td>
+</tr>
+<tr><td>Status</td><td>:</td><td><select id='grid_status' name='grid_status' style="width:250px;" onChange="grid_all_search()"><option value=''></option></select></td>
 
-					<?php if (!in_array($user_id, $usr_arr_3)) { ?>
-						<?php if (!in_array($user_id, $usr_arr)) { ?>
-							<button class="btn btn-primary input-sm" onclick="grid_job_card()">Job Card</button>
-						<?php } ?>
-					<?php } ?>
-					<button class="btn btn-primary input-sm" onclick="grid_new_join_report()">New Join Report</button>
-					<?php if (!in_array($user_id, $usr_arr)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_resign_report()">Resign Report</button>
-						<button class="btn btn-primary input-sm" onclick="grid_left_report()">Left Report</button>
-						<?php } ?>
-					<button class="btn btn-primary input-sm" onclick="grid_general_info()">General Report</button>
-					<?php if (!in_array($user_id, $usr_arr)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_earn_leave()">Earn Leave Report</button>
-						<button class="btn btn-primary input-sm" onclick="grid_yearly_leave_register()">Leave Register</button>
-						<button class="btn btn-primary input-sm" onclick="grid_emp_job_application()">Job Application</button>
-						<button class="btn btn-primary input-sm" onclick="join_letter()">Joining Letter</button>
-						<button class="btn btn-primary input-sm" onclick="grid_letter1_report()">Letter 1</button>
-						<button class="btn btn-primary input-sm" onclick="grid_letter2_report()">Letter 2</button>
-						<button class="btn btn-primary input-sm" onclick="grid_letter3_report()">Letter 3</button>
-						<?php } ?>
-						<button class="btn btn-primary input-sm" onclick="grid_employee_information()">Employee Information</button>
-					<?php if (!in_array($user_id, $usr_arr)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_nominee()">Nominee From</button>
-						<button class="btn btn-primary input-sm" onclick="grid_incre_prom_report()">Increment Letter</button>
-						<button class="btn btn-primary input-sm" onclick="grid_prom_report()">Promotion Letter</button>
-						<?php } ?>
-						<button class="btn btn-primary input-sm" onclick="grid_service_book()">Service Book</button>
-						<button class="btn btn-primary input-sm" onclick="grid_age_estimation()">Age estimation</button>
-						<?php if (!in_array(10, $acl) && !in_array(14, $acl)) { ?>
-						<button class="btn btn-primary input-sm" onclick="grid_extra_ot()">EOT Job Card</button>
-						<button class="btn btn-primary input-sm" onclick="grid_extra_ot_9pm()">EOT Job Card 9pm</button>
-					<?php } ?>
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>	
+<!--<td>Gen. Rpt</td><td>:</td><td><select id='general_report' name='general_report' style="width:250px;"><option value='1'>With Image</option><option value='2'>Without Image</option></select></td>-->
+</tr>
+</table>
+</fieldset>
+</div>
+<div>
+<br />
+<fieldset style='width:95%;'><legend><font size='+1'><b>Daily Reports</b></font></legend>
+<table width="100%"  style="font-size:11px; ">
+<tr >
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Present Report" onClick="grid_daily_present_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Absent Report" onClick="grid_daily_absent_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Leave Report" onClick="grid_daily_leave_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily Late Report" onClick="grid_daily_late_report()"></td>
+</tr>
+<tr>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Daily OT" onClick="grid_daily_ot()"></td>
+
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Out & IN Report" onClick="grid_daily_out_in_report()"></td>
+<?php
+$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
+$acl     = $this->acl_model->get_acl_list($user_id);
+$name = $this->session->userdata('username');
+//print_r($acl);
+if(!in_array(10,$acl)){ ?>
+<td style="width:20%; background-color: #666666;"><input type="button" style="width:100%; font-size:100%;" value="Daily Out Punch Miss" onClick="grid_daily_out_punch_miss_report()"></td>
+<td style="width:20%; background-color: #666666;"><input type="button" style="width:100%; font-size:100%;" value="Daily Movement Report" onClick="grid_daily_move_report()"></td>
+</tr>
+
+<tr>
+<td style="width:20%; background-color: #666666;"><input type="button" style="width:100%; font-size:100%;" value="Daily EOT" onClick="grid_daily_eot()"></td>
+<td style="width:20%; background-color: #666666;"><input type="button" style="width:100%; font-size:100%;" value="Actual Present Report" onClick="grid_actual_present_report()"></td>
+<td style="width:20%; background-color: #666666;"><input type="button" style="width:100%; font-size:100%;" value="Daily Allowance" onClick="grid_daily_allowance_bills()"></td>
+<td style="width:20%; background-color: #666666;"><input type="button" style="width:100%; font-size:100%;" value="Actual Out & IN Report" onClick="grid_daily_actual_out_in_report()"></td>
+</tr>
+
+<tr>
+<td style="width:20%; background-color: #666666;"><input type="button" style="width:100%; font-size:100%;" value="Daily Night Allowance" onClick="grid_daily_night_allowance_report()"></td>
+<?php if(!in_array(14,$acl)){ ?>
+<td style="width:20%; background-color: #6CC;"><input type="button" style="width:100%; font-size:100%;" value="Daily Costing" onClick="daily_costing_report()"></td>
+
+<td style="width:20%; background-color: #6CC;"><input type="button" style="width:100%; font-size:100%;" value="Holiday / Weekend Present" onClick="grid_daily_holiday_weekend_present_report()"></td>
+
+<td style="width:20%; background-color: #6CC;"><input type="button" style="width:100%; font-size:100%;" value="Holiday / Weekend Absent" onClick="grid_daily_holiday_weekend_absent_report()"></td>
+<?php } ?>
+</tr>
+<?php } ?>
+</table>
+
+</fieldset>
+<br />
+
+<fieldset style='width:95%;'><legend><font size='+1'><b>Monthly Reports</b></font></legend>
+<table width="75%"  style="font-size:11px; float: left;">
+<tr >
+
+<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="Attendance Register" onClick="grid_monthly_att_register_ot()"></td>
+<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;" value="OT Register" onClick="grid_monthly_ot_register()"></td>
+
+<?php if(!in_array(10,$acl)){ ?>
+
+<td style="width:20%; background-color: #666666;">
+<input type="button" style=" width:100%; font-size:100%; " value="EOT Register" onClick="grid_monthly_eot_register()">
+</td>
+<!--<td style="width:20%; background-color: #666666;">
+ <input type="button" style=" width:100%; font-size:100%; " value="EOT Register New" onClick="grid_monthly_eot_register_new()">
+ </td>-->
+<td style="width:20%; background-color: #666666;">
+<input type="button" style=" width:100%; font-size:100%;" value="Attendance Register" onClick="grid_monthly_att_register()"></td>
+</td>
+<?php } ?>
+
+</tr>
+
+<tr>
+<?php if(!in_array(10,$acl) AND in_array(15,$acl)){ ?>
+	<td style="width:20%; background-color:#666666;">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Register New" onClick="grid_monthly_eot_register_new()">
+	  </td>
+<?php } ?>
+
+    <!-- <?php if($unit_id=='1') { ?>
+	<?php if($name == 'AJ4-HR'){ ?>
+	   <td style="width:20%; background-color:#666666;">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Register New" onClick="grid_monthly_eot_register_new()">
+	  </td>
+	 <?php  } else { ?>
+	   <td style="width:20%; background-color:#666666;display: none">
+	      <input type="button" style="width:100%; font-size:100%;" value="Araf Card" onClick="grid_extra_ot_new()">
+	  </td>
+  <?php  } } ?>
+
+   <?php if($unit_id=='2') { ?>
+	<?php if($name == 'lssumon'){ ?>
+	 
+	   <td style="width:20%; background-color:#666666;">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Register New" onClick="grid_monthly_eot_register_new()">
+	  </td>
+	 <?php  } else { ?>
+	   <td style="width:20%; background-color:#666666;display: none">
+	      <input type="button" style="width:100%; font-size:100%;" value="Araf Card" onClick="grid_extra_ot_new()">
+	  </td>
+  <?php  } } ?>
+
+   <?php if($unit_id=='3') { ?>
+	<?php if($name =='NI4-HR'){ ?>
+	  <td style="width:20%; background-color:#666666;">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Register New" onClick="grid_monthly_eot_register_new()">
+	  </td>
+	 <?php  } else { ?>
+	   <td style="width:20%; background-color:#666666;display: none">
+	      <input type="button" style="width:100%; font-size:100%;" value="Araf Card" onClick="grid_extra_ot_new()">
+	  </td>
+  <?php  } } ?> -->
+
+</tr>
+</table>
+
+</fieldset>
+<br />
+
+<fieldset style='width:95%;'><legend><font size='+1'><b>Continuous Reports</b></font></legend>
+<table width="100%"  style="font-size:11px; ">
+<tr>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Present Report" onClick="grid_continuous_present_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Absent Report" onClick="grid_continuous_absent_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Leave Report" onClick="grid_continuous_leave_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Leave Report (OLD)" onClick="grid_continuous_leave_report_old()"></td>
+</tr>
+<tr>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Late Report" onClick="grid_continuous_late_report()"></td>
+<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;"  value="Increment Report" onClick="grid_continuous_incre_report()"></td>
+<td style="width:20%;"><input type="button" style=" width:100%; font-size:100%;"  value="Promotion Report" onClick="grid_continuous_prom_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Increment/Promotion Propsal" onClick="grid_continuous_increment_promotion_proposal()"></td>
+</tr>
+
+<?php if(!in_array(10,$acl)){ ?>
+<?php if(!in_array(14,$acl)){ ?>
+
+<tr>
+
+<td style="width:20%; background-color: #6CC;"><input type="button" style=" width:100%; font-size:100%;"  value="OT / EOT Report" onClick="grid_continuous_ot_eot_report()"></td>
+<td style="width:20%; background-color: #6CC;"><input type="button" style="width:100%; font-size:100%;" value="Continuous Costing Report" onClick="grid_continuous_costing_report()"></td>
+<td style="width:20%;"></td>
+<td style="width:20%;"></td>
+
+</tr>
+<?php } ?>
+<?php } ?>
+
+</table>
+
+</fieldset>
+
+<br />
+<fieldset style='width:95%;'><legend><font size='+1'><b>Other Reports</b></font></legend>
+<table  width="100%"  style="font-size:11px; ">
+<tr>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="App. Latter" onClick="grid_app_letter()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="ID Card Bangla" onClick="grid_id_card()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="ID Card English" onClick="grid_id_card_english()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Job Card" onClick="grid_job_card()"></td>
+</tr>
+<tr>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="New Join Report" onClick="grid_new_join_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Resign Report" onClick="grid_resign_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Left Report" onClick="grid_left_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="BGM Current Report" onClick="grid_current_info()"></td>
+</tr>
+
+<tr>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="BGM New Join Report" onClick="grid_bgm_new_join_report()"></td>
+
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Leave Application" onClick="grid_leave_application_form()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Earn Leave Report" onClick="grid_earn_leave()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="General Report" onClick="grid_general_info()"></td>
+
+</tr>
+<tr>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="BGM Resign Report" onClick="grid_bgm_resign_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="BGM Left Report" onClick="grid_bgm_left_report()"></td>
+
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="BGM Left Resign Report" onClick="grid_bgm_left_resign_report()"></td>
+
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Letter 1" onClick="grid_letter1_report()"></td>
+
+</tr>
+<tr>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Letter 2" onClick="grid_letter2_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Letter 3" onClick="grid_letter3_report()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Employee Information" onClick="grid_employee_information()"></td>
+<td style="width:20%;"><input type="button" style="width:100%; font-size:100%;" value="Leave Register" onClick="grid_yearly_leave_register()"></td>
+</tr>
+
+<tr>
+<td style="width:20%;">
+<input type="button" style="width:100%; font-size:100%;" value="Service Book" onClick="grid_service_book()"></td>
+<?php if(!in_array(10,$acl)){ ?>
+<td style="width:20%; background-color:#666666;">
+<input type="button" style="width:100%; font-size:100%;" value="EOT Job Card" onClick="grid_extra_ot()">
+</td>
+<?php } ?>
+<?php //if(!in_array(10,$acl) AND in_array(15,$acl)){ ?>
+<?php if(in_array(15,$acl)){ ?>
+	<td style="width:20%; background-color:#666666;">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card New" onClick="grid_extra_ot_4pm()">
+	</td>
+<?php } ?>
+<?php if(in_array(16,$acl)){ ?>
+	<td style="width:20%; background-color:#666666;">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
+	</td>
+<?php } ?>
+<!-- <?php if($unit_id=='1') { ?>
+	<?php if($name =='AJ4-HR'){ ?>
+	  <td style="width:20%; background-color:#666666;">
+	    <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card New" onClick="grid_extra_ot_4pm()">
+	  </td>
+	  <td style="width:20%; background-color:#666666;display: none">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
+  	  </td>
+	 <?php  } else { ?>
+       <td style="width:20%; background-color:#666666;display: none">
+	       <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card New" onClick="grid_extra_ot_4pm()">
+	  </td>
+	  <td style="width:20%; background-color:#666666;display: none">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
+  	  </td>
+  <?php  } } ?>
+
+  <?php if($unit_id=='2') { ?>
+	<?php if($name =='lssumon'){ ?>
+	   <td style="width:20%; background-color:#666666;">
+	    <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card New" onClick="grid_extra_ot_4pm()">
+	  </td>
+	  <td style="width:20%; background-color:#666666;display: none">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
+  	  </td>
+	 <?php  } else { ?>
+     
+	  <td style="width:20%; background-color:#666666;display: none">
+	       <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card New" onClick="grid_extra_ot_4pm()">
+	  </td>
+	  <td style="width:20%; background-color:#666666;display: none">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
+  	  </td>
+	 
+  <?php  } } ?>
+
+  <?php if($unit_id=='3') { ?>
+	<?php if($name =='NI4-HR'){ ?>
+	  <td style="width:20%; background-color:#666666;">
+	    <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card New" onClick="grid_extra_ot_4pm()">
+	  </td>
+	  <td style="width:20%; background-color:#666666;display: none">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
+  	  </td>
+	 <?php  } else { ?>
+	   <td style="width:20%; background-color:#666666;display: none">
+	       <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card New" onClick="grid_extra_ot_4pm()">
+	  </td>
+	  <td style="width:20%; background-color:#666666;display: none">
+	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
+  	  </td>
+  <?php  } } ?>
+
+	<td style="width:20%; background-color:#666666;">
+		<input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
+	</td>
+ -->
+<td style="width:20%;"></td>
+<td style="width:20%;"></td>
+
+</tr>
+
+<tr>
+<td style="width:20%;"></td>
+<td style="width:20%;"></td>
+<td style="width:20%;"></td>
+</tr>
+
+
+
+
+</table>
+
+</fieldset>
+
 </div>
 
-<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
-<script type="text/javascript">
-	// on load employee
-	function grid_emp_list() {
-	    var unit = document.getElementById('unit_id').value;
-	    var dept = document.getElementById('dept').value;
-	    var section = document.getElementById('section').value;
-	    var line = document.getElementById('line').value;
-	    var desig = document.getElementById('desig').value;
-	    var status = document.getElementById('status').value;
+</form>
 
-	    url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
-	    $.ajax({
-	        url: url,
-	        type: 'GET',
-	        data: {
-	            "status": status
-	        },
-	        contentType: "application/json",
-	        dataType: "json",
-	        success: function(response) {
-	            $('#fileDiv #removeTr').remove();
-	            if (response.length != 0) {
-	                var items = '';
-	                $.each(response, function(index, value) {
-	                    items += '<tr id="removeTr">';
-	                    items +=
-	                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-	                        value.id + '" ></td>';
-	                    items += '<td class="success">' + value.emp_id + '</td>';
-	                    items += '<td class="warning ">' + value.name_en + '</td>';
-	                    items += '</tr>';
-	                });
-	                // console.log(items);
-	                $('#fileDiv tr:last').after(items);
-	            } else {
-	                $('#fileDiv #removeTr').remove();
-	            }
-	        }
-	    });
-	}
+</div>
+<div style="float:right;">
+<table id="list1" style="font-family: 'Times New Roman', Times, serif; font-size:15px;"><tr><td></td></tr></table>
+</div>
+<!--<div id="pager1"></div>-->
 
-	$(document).ready(function() {
-	    // select all item or deselect all item
-	    $("#select_all").click(function() {
-	        $('input:checkbox').not(this).prop('checked', this.checked);
-	    });
-	    //Designation dropdown
-	    $('#line').change(function() {
-	        $('.desig').addClass('form-control input-sm');
-	        $(".desig > option").remove();
-	        var id = $('#line').val();
-	        $.ajax({
-	            type: "POST",
-	            url: hostname + "common/ajax_designation_by_line_id/" + id,
-	            success: function(func_data) {
-	                $('.desig').append("<option value=''>-- Select District --</option>");
-	                $.each(func_data, function(id, name) {
-	                    var opt = $('<option />');
-	                    opt.val(id);
-	                    opt.text(name);
-	                    $('.desig').append(opt);
-	                });
-	            }
-	        });
-	        // load employee
-	        grid_emp_list();
-	    });
+<div id="viewid"></div>
 
-	    //Line dropdown
-	    $('#section').change(function() {
-	        $('.line').addClass('form-control input-sm');
-	        $(".line > option").remove();
-	        $(".desig > option").remove();
-	        var id = $('#section').val();
-	        $.ajax({
-	            type: "POST",
-	            url: hostname + "common/ajax_line_by_sec_id/" + id,
-	            success: function(func_data) {
-	                $('.line').append("<option value=''>-- Select District --</option>");
-	                $.each(func_data, function(id, name) {
-	                    var opt = $('<option />');
-	                    opt.val(id);
-	                    opt.text(name);
-	                    $('.line').append(opt);
-	                });
-	            }
-	        });
-	        // load employee
-	        grid_emp_list();
-	    });
-	    //section dropdown
-	    $('#dept').change(function() {
-	        $('.section').addClass('form-control input-sm');
-	        $(".section > option").remove();
-	        $(".line > option").remove();
-	        $(".desig > option").remove();
-	        var id = $('#dept').val();
-	        $.ajax({
-	            type: "POST",
-	            url: hostname + "common/ajax_section_by_dept_id/" + id,
-	            success: function(func_data) {
-	                $('.section').append("<option value=''>-- Select District --</option>");
-	                $.each(func_data, function(id, name) {
-	                    var opt = $('<option />');
-	                    opt.val(id);
-	                    opt.text(name);
-	                    $('.section').append(opt);
-	                });
-	            }
-	        });
-	        // load employee
-	        grid_emp_list();
-	    });
-	    //Department dropdown
-	    $('#unit_id').change(function() {
-	        $('.dept').addClass('form-control input-sm');
-	        $(".dept > option").remove();
-	        $(".section > option").remove();
-	        $(".line > option").remove();
-	        $(".desig > option").remove();
-	        var id = $('#unit_id').val();
-	        $.ajax({
-	            type: "POST",
-	            url: hostname + "common/ajax_department_by_unit_id/" + id,
-	            success: function(func_data) {
-	                $('.dept').append("<option value=''>-- Select Department --</option>");
-	                $.each(func_data, function(id, name) {
-	                    var opt = $('<option />');
-	                    opt.val(id);
-	                    opt.text(name);
-	                    $('.dept').append(opt);
-	                });
-	            }
-	        });
-	        // load employee
-	        grid_emp_list();
-	    });
-	});
-</script>
+<div class="clearfix" style="display:none;">
+    <div class="loading"><img src="<?php echo base_url() ?>img/load.gif"  alt="Load"/></div>
+    <div style="margin-top:50px;"> Processing Please Wait..... </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

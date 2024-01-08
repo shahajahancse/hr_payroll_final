@@ -31,6 +31,9 @@
         <ul class="sub-menu ">
           <li class="start <?= activate_method('file_upload') ?>"> <a href="<?=base_url('attn_process_con/file_upload')?>" >File Upload</a></li>
           <li class="start <?= activate_method('attn_process_form') ?>"> <a href="<?=base_url('attn_process_con/attn_process_form')?>" class="anchor_cls">Attendance Process</a> </li>
+          <?php if(in_array(5,$acl)) { ?>
+            <li class="start <?= activate_method('grid_window') ?>"> <a href="<?=base_url('attn_process_con/grid_window')?>" class="anchor_cls">Reports</a> </li>
+          <?php } ?>
         </ul>
       </li>
       <?php } ?>
@@ -40,6 +43,9 @@
         <span class="title">Payroll </span> <span class="selected"></span> <span class="arrow <?= arrow_open('salary_process_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <li class="start <?= activate_method('salary_process_form') ?>"> <a href="<?=base_url('salary_process_con/salary_process_form')?>" class="anchor_cls" id="acl">Salary Process</a> </li>
+          <?php if(in_array(8,$acl)) { ?>
+            <li class="start <?= activate_method('grid_salary_report') ?>"> <a href="<?=base_url('salary_process_con/grid_salary_report')?>" class="anchor_cls">Reports</a> </li>
+          <?php } ?>
         </ul>
       </li>
       <?php } ?>
@@ -80,6 +86,19 @@
       <?php } ?>
 
       <?php if(in_array(17,$acl)) { ?>
+      <li class="start <?= activate_class('setting_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
+        <span class="title">Settings </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setting_con') ?>"></span> </a>
+        <ul class="sub-menu ">
+          
+          <!-- <li class="start <?= activate_method('crud') ?>"> <a href="<?=base_url('setting_con/crud')?>" class="anchor_cls" id="acl">Access</a> </li> -->
+          <li class="start <?= activate_method('user_acl_hrm') ?>"> <a href="<?=base_url('setting_con/user_acl_hrm')?>" class="anchor_cls" id="acl">User Access HRM</a> </li>
+          <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
+
+        </ul>
+      </li>
+      <?php } ?>
+
+      <?php if(in_array(17,$acl)) { ?>
       <li class="start <?= activate_class('acl_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
         <span class="title">Maintenance </span> <span class="selected"></span> <span class="arrow <?= arrow_open('acl_con') ?>"></span> </a>
         <ul class="sub-menu ">
@@ -113,14 +132,13 @@
           </li>
           <li class="start "> <a href="javascript:;"><span class="title">Reports</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
-              <li class="start "> <a href="<?=base_url()?>index.php/grid_con/grid_window" class="anchor_cls">All Report</a> </li>
               <li class="start "> <a href="<?=base_url()?>index.php/mars_con/others_report_front_end" class="anchor_cls">Others Report</a> </li>
             </ul>
           </li>
         </ul>
-      </li> -->
+      </li>
 
-      <!-- <li class="start ">
+      <li class="start ">
         <a href="javascript:;" > <i class="fa fa-money"></i> <span class="title">Payroll</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu">
           <li class="start "> <a href="javascript:;"><span class="title">Process</span> <span class="selected"></span> <span class="arrow"></span> </a>
