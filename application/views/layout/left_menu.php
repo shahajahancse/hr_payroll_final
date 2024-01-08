@@ -90,7 +90,7 @@
         <span class="title">Settings </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setting_con') ?>"></span> </a>
         <ul class="sub-menu ">
           
-          <li class="start <?= activate_method('crud') ?>"> <a href="<?=base_url('setting_con/crud')?>" class="anchor_cls" id="acl">Access</a> </li>
+          <!-- <li class="start <?= activate_method('crud') ?>"> <a href="<?=base_url('setting_con/crud')?>" class="anchor_cls" id="acl">Access</a> </li> -->
           <li class="start <?= activate_method('user_acl_hrm') ?>"> <a href="<?=base_url('setting_con/user_acl_hrm')?>" class="anchor_cls" id="acl">User Access HRM</a> </li>
           <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
 
@@ -111,7 +111,7 @@
       <?php } ?>
 
           
-      <li class="start"> <a href="javascript:;" > <i class="fa fa-users"></i> <span class="title">HRM</span> <span class="selected"></span> <span class="arrow"></span> </a>
+      <!-- <li class="start"> <a href="javascript:;" > <i class="fa fa-users"></i> <span class="title">HRM</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu ">
           <li class="start "> <a href="javascript:;"><span class="title">Entry System</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
@@ -154,7 +154,7 @@
             </ul>
           </li>
         </ul>
-      </li>
+      </li> -->
 
       <li class="start">
          <a href="<?=base_url('payroll_con/first_body')?>"> <i class="fa fa-phone"></i>  <span class="title">Support</span></a>
@@ -162,7 +162,7 @@
       <li class="start"><a href="<?=base_url('logout_FE')?>"> <i class="fa fa-power-off"></i>  <span class="title">Log Out</span></a>
       </li>
 
-      <li class="start ">
+      <!-- <li class="start ">
         <a href="javascript:;" > <i class=""></i> <span class="title">Payroll</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu">
           <li class="start"><a href="<?=base_url()?>index.php/earn_leave_con/earn_process_form" class="anchor_cls">Earn Leave Process</a></li>
@@ -173,7 +173,7 @@
             </ul>
           </li>
         </ul>
-      </li>
+      </li> -->
 
     </ul>
     <div id="notification_div"></div>
