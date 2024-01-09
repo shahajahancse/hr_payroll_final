@@ -26,10 +26,10 @@
 
   <h3>Update Salary Grade</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url().'index.php/crud_con/salgrd_edit/'.$pr_grade->id;?>">
+  <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url().'index.php/crud_con/salgrd_edit/'.$pr_grade->gr_id;?>">
   <div class="row">
     <div class="col-md-6">
-      <input type="hidden" name="id"value="<?=$pr_grade->id;?>" class="form-control"> 
+      <input type="hidden" name="id"value="<?=$pr_grade->gr_id;?>" class="form-control"> 
       <div class="form-group">
     
         <label>Rule Name</label>

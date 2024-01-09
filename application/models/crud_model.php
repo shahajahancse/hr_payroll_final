@@ -630,7 +630,7 @@ class Crud_model extends CI_Model{
 
      function getsalgrd($salgrdId)
     {
-        $this->db->where('id',$salgrdId);
+        $this->db->where('gr_id',$salgrdId);
         return $this->db->get('pr_grade')->row();
     }
 
@@ -672,14 +672,14 @@ class Crud_model extends CI_Model{
 
              $formArray['gr_name'] = $this->input->post('gr_name');
 
-             $this->db->where('id',$salgrdId);
+             $this->db->where('gr_id',$salgrdId);
              $this->db->update('pr_grade',$formArray);
 
         }
 
      function salgrd_delete($salgrdId)
         {
-            $this->db->where('id',$salgrdId);
+            $this->db->where('gr_id',$salgrdId);
             $this->db->delete('pr_grade');
         }
 
