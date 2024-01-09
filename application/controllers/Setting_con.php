@@ -50,17 +50,53 @@ class Setting_con extends CI_Controller {
 		redirect('setting_con/crud');
 	}
 
+	public function left_menu_acl()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+		
+		$this->data['users'] = $this->get_member();
+		// dd($this->data['users']);
+        $this->data['title'] = 'User Access HRM'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'settings/left_menu_acl';
+        $this->load->view('layout/template', $this->data);
+    }
+
 	public function user_acl_hrm()
     {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-		$this->db->order_by('id', 'desc');
-		$this->data['users'] = $this->db->get('members')->result();
+
+		$this->data['users'] = $this->get_member();
         $this->data['title'] = 'User Access HRM'; 
         $this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['subview'] = 'settings/user_acl_hrm';
         $this->load->view('layout/template', $this->data);
+    }
+
+	public function user_acl_pr()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+
+		$this->data['users'] = $this->get_member();
+        $this->data['title'] = 'User Access HRM'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'settings/user_acl_pr';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    function get_member()
+    {
+    	$this->db->select('members.id, members.id_number, pr_units.unit_name');
+    	$this->db->join('pr_units', 'members.unit_name = pr_units.unit_id', 'left');
+    	$this->db->where('members.unit_name !=', '0');
+    	$this->db->order_by('members.id', 'desc');
+		return $this->db->get('members')->result();
     }
 
 	public function checkbox_get_user_acl_hrm(){
@@ -93,19 +129,5 @@ class Setting_con extends CI_Controller {
 			$this->db->insert('member_acl_level', array('username_id' => $user_id, 'acl_id' => $id));
 		}
 	}
-
-
-	public function user_acl_pr()
-    {
-        if ($this->session->userdata('logged_in') == false) {
-            redirect("authentication");
-        }
-		$this->db->order_by('id', 'desc');
-		$this->data['users'] = $this->db->get('members')->result();
-        $this->data['title'] = 'User Access HRM'; 
-        $this->data['username'] = $this->data['user_data']->id_number;
-		$this->data['subview'] = 'settings/user_acl_pr';
-        $this->load->view('layout/template', $this->data);
-    }
 }
 

@@ -43,12 +43,12 @@
   </div>
   <div id="add_form" class="row tablebox">
     <label for="user_id">Select User</label>
-    <select name="user_id" id="user_id" onchange="get_user_level(this.value, 3)">
+    <select name="user_id" id="user_id" onchange="get_user_level(this.value, 3)" style="width: 300px!important;">
         <option>Select User</option>
         <?php 
-        foreach($users as $key => $value) {
-            echo '<option value="'.$value->id.'">'.$value->id_number.'</option>';
-        }?>
+        foreach($users as $key => $value) { ?>
+            <option value="<= $value->id >"><?php echo $value->id_number.' >> '.$value->unit_name?></option>
+        <?php } ?>
     </select>
   </div>
 

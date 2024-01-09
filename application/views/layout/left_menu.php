@@ -85,12 +85,14 @@
       </li>
       <?php } ?>
 
-      <?php if(in_array(17,$acl)) { ?>
+      <?php if($this->session->userdata('data')->level == "All") { ?>
       <li class="start <?= activate_class('setting_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
         <span class="title">Settings </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setting_con') ?>"></span> </a>
         <ul class="sub-menu ">
-          
-          <!-- <li class="start <?= activate_method('crud') ?>"> <a href="<?=base_url('setting_con/crud')?>" class="anchor_cls" id="acl">Access</a> </li> -->
+          <?php if(in_array(17,$acl)) { ?>
+          <li class="start <?= activate_method('crud') ?>"> <a href="<?=base_url('setting_con/crud')?>" class="anchor_cls" id="acl">Access</a> </li>
+          <?php } ?>
+          <li class="start <?= activate_method('left_menu_acl') ?>"> <a href="<?=base_url('setting_con/left_menu_acl')?>" class="anchor_cls" id="acl">Left Menu Access</a> </li>
           <li class="start <?= activate_method('user_acl_hrm') ?>"> <a href="<?=base_url('setting_con/user_acl_hrm')?>" class="anchor_cls" id="acl">User Access HRM</a> </li>
           <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
 
