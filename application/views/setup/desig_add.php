@@ -2,13 +2,6 @@
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-3" style="padding: 7px;">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/designation') ?>">
                     Back</a>
@@ -102,7 +95,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="unit">Select Tiffin Allowance</label>
-                            <select name="tiffin_id"  id="tiffin_id" class="">
+                            <select name="tiffin_id"  id="tiffin_id" class="form-control input-lg select22">
                                 <option value="">Select Tiffin Allowance</option>
                             </select>
                             <?= (isset($failuer['tiffin_id'])) ? '<div class="alert alert-failuer">' . $failuer['tiffin_id'] . '</div>' : ''; ?>
@@ -111,18 +104,30 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label>Designation Name English</label>
                             <input type="text" name="desig_name" value="" placeholder="Designation Name" class="form-control">
                             <?=(isset($failuer['desig_name'])) ? '<div class="alert alert-failuer">' . $failuer['desig_name'] . '</div>' : ''; ?>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                             <div class="form-group">
                             <label>Designation Name Bangla</label>
                             <input type="text" name="desig_bangla" value="" placeholder="Designation Name Bangla" class="form-control">
                             <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                        <label>Set Grade</label>
+                        <select class="form-control" name="grade">
+                            <?php $grades=$this->db->get('pr_grade')->result()?>
+                            <option value="">Select</option>
+                            <?php foreach($grades as $grade){?>
+                            <option><?php echo $grade->gr_name?></option>
+                        <?php }?>
+                        </select>
                         </div>
                     </div>
                 </div>
