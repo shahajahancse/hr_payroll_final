@@ -47,7 +47,7 @@
         <option>Select User</option>
         <?php 
         foreach($users as $key => $value) { ?>
-            <option value="<= $value->id >"><?php echo $value->id_number.' >> '.$value->unit_name?></option>
+            <option value="<?= $value->id ?>"><?php echo $value->id_number.' >> '.$value->unit_name?></option>
         <?php } ?>
     </select>
   </div>

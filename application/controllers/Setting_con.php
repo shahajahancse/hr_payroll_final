@@ -84,6 +84,7 @@ class Setting_con extends CI_Controller {
         }
 
 		$this->data['users'] = $this->get_member();
+		// dd($this->data['users']);
         $this->data['title'] = 'User Access HRM'; 
         $this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['subview'] = 'settings/user_acl_pr';
@@ -102,6 +103,7 @@ class Setting_con extends CI_Controller {
 	public function checkbox_get_user_acl_hrm(){
 		$id = $this->input->post('id');
 		$type = $this->input->post('type');
+
 		$this->db->order_by('id', 'desc');
 		$this->db->where('type', $type);
 		$this->data['access_list'] = $this->db->get('member_acl_list')->result();

@@ -135,8 +135,8 @@
                 <div class='multitab-section'>
                     <ul class="nav nav-tabs" id="myTabs">
                         <li class="active"><a href="#daily" data-toggle="tab">Salary Reports</a></li>
-                        <li><a href="#monthly" data-toggle="tab">Others Benefit Reports</a></li>
-                        <li><a href="#continuous" data-toggle="tab"> Earn Leave Reports</a></li>
+                        <li><a href="#other_benifits" data-toggle="tab">Others Benefit Reports</a></li>
+                        <li><a href="#earn_leave" data-toggle="tab"> Earn Leave Reports</a></li>
                     </ul>
                     <div class="tab-content">
                         <!-- salary report  -->
@@ -179,7 +179,7 @@
                         <!-- salary report end  -->
 
                         <!-- Others Benefit Report -->
-                        <div class="tab-pane fade" id="continuous">
+                        <div class="tab-pane fade" id="other_benifits">
                             <?php if(in_array(87,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_festival_bonus()">Festival Bonus</button>
                             <?php } ?>
@@ -202,7 +202,7 @@
                         <!-- Others Benefit Report end -->
 
 
-                        <div class="tab-pane fade" id="other">
+                        <div class="tab-pane fade" id="earn_leave">
                             <?php if(in_array(93,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_earn_leave_payment_buyer()">Earn Leave Payment Sheet</button>
                             <?php } ?>
