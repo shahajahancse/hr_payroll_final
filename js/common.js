@@ -183,30 +183,22 @@ function salary_process_block(){
      return ;
    }   
 
-   process_date = document.getElementById('process_date').value;
-   if(process_date == '')
+   salary_month = document.getElementById('process_month').value;
+   if(salary_month == '')
    {
-     alert('Please select process date');
-     return ;
-   }
-
-   var checkboxes = document.getElementsByName('emp_id[]');
-   var sql = get_checked_value(checkboxes);
-   if(sql =='')
-   {
-     alert('Please select employee Id');
+     alert('Please select salary month');
      return ;
    }
 
    var okyes;
-   okyes=confirm('Are you sure you want to start process?');
+   okyes=confirm('Are you sure you want to block this month?');
    if(okyes==false) return;
 
    loading_open();
-   var data = "process_date="+process_date+"&unit_id="+unit_id+'&sql='+sql;
+   var data = "salary_month="+salary_month+"&unit_id="+unit_id;
    
    // console.log(data); return;
-   url = hostname + "salary_process_con/salary_process";
+   url = hostname + "salary_process_con/salary_process_block";
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(data);
@@ -231,30 +223,22 @@ function salary_block_delete(){
      return ;
    }   
 
-   process_date = document.getElementById('process_date').value;
-   if(process_date == '')
+   salary_month = document.getElementById('process_month').value;
+   if(salary_month == '')
    {
-     alert('Please select process date');
-     return ;
-   }
-
-   var checkboxes = document.getElementsByName('emp_id[]');
-   var sql = get_checked_value(checkboxes);
-   if(sql =='')
-   {
-     alert('Please select employee Id');
+     alert('Please select salary month');
      return ;
    }
 
    var okyes;
-   okyes=confirm('Are you sure you want to start process?');
+   okyes=confirm('Are you sure you want to delete this block?');
    if(okyes==false) return;
 
    loading_open();
-   var data = "process_date="+process_date+"&unit_id="+unit_id+'&sql='+sql;
+   var data = "salary_month="+salary_month+"&unit_id="+unit_id;
    
    // console.log(data); return;
-   url = hostname + "salary_process_con/salary_process";
+   url = hostname + "salary_process_con/salary_block_delete";
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(data);

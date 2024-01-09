@@ -113,7 +113,7 @@ class Log_model extends CI_Model{
 	
 	function log_salary_process($year_month)
 	{
-		$log_username = $this->session->userdata('username');
+		$log_username = $this->data['user_data']->id_number;
 		$log_message = "SALARY PROCESS --> [USERNAME : $log_username, PROCESS_MONTH : $year_month]";
 		log_message('error', $log_message);	
 	}

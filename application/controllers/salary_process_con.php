@@ -77,32 +77,26 @@ class Salary_process_con extends CI_Controller {
 	////////////// salary process block ///////////////
 	function salary_process_block()
 	{
-		dd($_POST);
+		$unit_id 	    = $this->input->post('unit_id');
+		$salary_month   = $this->input->post('salary_month');
 
+		$d['block_month'] 	= "$salary_month-01";
+		$d['unit_id'] 		= $unit_id;
+		$d['status'] 		= 'Block';
+		$d['username'] 		= $this->data['user_data']->id_number;
+		$d['date_time'] 	= date("Y-m-d H:i:s");
 
-		$unit_id 		= $this->input->post('unit_id');
-		$process_month  = $this->input->post('process_month');
-		$grid_emp_id 	= $this->input->post('sql');
-
-		if($process_check == "2")
-		{
-		  $block_year_month 		= "$year_month-01";
-		  $data_1['block_month'] 	= $block_year_month;
-		  $data_1['unit_id'] 		= $unit_id;
-		  $data_1['username'] 		= $this->session->userdata('username');
-		  $data_1['date_time'] 		= date("Y-m-d H:i:s");
-		  $this->db->insert('pay_salary_block', $data_1);
-		}
-
-		if($result == "Process completed successfully")
-		{
-			// SALARY PROCESS LOG Generate
-			$this->log_model->log_salary_process($year, $month);
-			echo $result;
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$d['block_month'])->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! block already exixt";
+		} else if ($check->num_rows() == 0) {
+			$this->db->insert('pay_salary_block', $d);
+			$this->log_model->log_salary_process($d['block_month']);
+			echo "Process completed successfully";
 		}
 		else
 		{
-			echo $result;		
+			echo "Sorry! something wrong";	
 		}
 
 	}
@@ -110,29 +104,17 @@ class Salary_process_con extends CI_Controller {
 	////////////// salary process block ///////////////
 	function salary_block_delete()
 	{
-		dd($_POST);
+		$unit_id 	    = $this->input->post('unit_id');
+		$salary_month   = $this->input->post('salary_month');
 
-
-		$year = $this->input->post('unit_id');
-		$month = $this->input->post('process_date');
-		$grid_emp_id = $this->input->post('sql');
-
-		$process_check = $this->input->post('process_check');
-		$grid_emp_id = explode('xxx', $grid_emp_id);
-		
-		// print_r($grid_emp_id);exit;
-		$this->load->model('common_model');
-
-		$result = $this->salary_process_model->pay_sheet($year, $month,$process_check,$grid_emp_id);
-		if($result == "Process completed successfully")
+		$this->db->where('unit_id', $unit_id)->where('block_month',"$salary_month-01");
+		if($this->db->delete('pay_salary_block'))
 		{
-			// SALARY PROCESS LOG Generate
-			$this->log_model->log_salary_process($year, $month);
-			echo $result;
+			echo "Successfully Deleted Done";
 		}
 		else
 		{
-			echo $result;		
+			echo "Sorry! something wrong";		
 		}
 
 	}
@@ -152,6 +134,10 @@ class Salary_process_con extends CI_Controller {
         $this->data['subview'] = 'salary_report/grid_salary_report';
         $this->load->view('layout/template', $this->data);
 	}
+
+
+
+
 
 
 

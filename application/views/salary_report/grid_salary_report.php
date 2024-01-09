@@ -35,21 +35,20 @@
         <div class="col-md-8">
             <!-- selection area -->
             <div class="row tablebox" style="margin-bottom: 10px;">
-                <div class="row">
-                    <div class="col-md-6">
+                <div class="row" style="justify-content: center!important; display: flex; flex-wrap: wrap;">
+                    <div class="col-md-5">
                         <div class="form-group">
-                            <label class="control-label">First Date : </label>
-                            <input class= "form-control input-sm" name="firstdate" id="firstdate" type="date" autocomplete="off">
+                            <h4 class="control-label" style="font-weight: bold;">Select Salary Month </h4>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
-                            <label class="control-label">Second Date : </label>
-                            <input class= "form-control input-sm" name="seconddate" id="seconddate" type="date" autocomplete="off">
+                            <input type="month" class="form-control" id="process_month" value="<?= date('Y-m') ?>">
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row tablebox" style="display: block; margin-bottom: 10px;">
                 <h3 class="h3" style="font-weight: 600;">Select Category</h3>
                 <div class="col-md-6">
@@ -114,7 +113,7 @@
                     </div>
                 </div>
                 <!-- status -->
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
                     <div class="form-group">
                         <label class="control-label">Status </label>
@@ -124,6 +123,15 @@
                             <option value="<?= $row->id ?>" <?= ($row->id==1)?'selected':'' ?>><?= $row->status_type; ?>
                             </option>
                             <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Salary </label>
+                        <select name="stop" id="stop" class="form-control input-sm" onChange="grid_emp_list()">
+                            <option value="1">Running</option>
+                            <option value="2">Stop</option>
                         </select>
                     </div>
                 </div>
