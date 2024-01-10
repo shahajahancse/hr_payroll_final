@@ -36,6 +36,43 @@ class Common extends CI_Controller {
         return;
     }
 
+    function salary_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
+        $data = array();
+        $this->db->select('ss.emp_id, per.name_en, per.name_bn');
+        $this->db->from('pay_salary_sheet as ss');
+        $this->db->join('pr_emp_com_info as com', 'ss.emp_id = com.emp_id', 'left');
+        $this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
+        $this->db->where('ss.unit_id', $unit);
+        $this->db->where('ss.salary_month', date('Y-m-01', strtotime($_GET['salary_month'])));
+
+        if (!empty($dept)) {
+            $this->db->where('com.emp_dept_id', $dept);
+        }
+        if (!empty($section)) {
+            $this->db->where('com.emp_sec_id', $section);
+        }
+        if (!empty($line)) {
+            $this->db->where('com.emp_line_id', $line);
+        }
+        if (!empty($desig)) {
+            $this->db->where('com.emp_desi_id', $desig);
+        }
+        if (!empty($_GET['status'])) {
+            $this->db->where('com.emp_cat_id', $_GET['status']);
+        }
+        if (!empty($_GET['stop_salary'])) {
+            $this->db->where('ss.stop_salary', $_GET['stop_salary']);
+        }
+
+        $this->db->group_by('ss.emp_id');
+        $this->db->order_by('ss.emp_id', 'asc');
+        $result = $this->db->get()->result();
+
+        header('Content-Type: application/x-json; charset=utf-8');
+        echo json_encode($result);
+        return;
+    }
+
     function ajax_department_by_unit_id($id){
 
         $data = array();

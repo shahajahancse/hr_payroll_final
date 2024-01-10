@@ -125,7 +125,19 @@ class Salary_process_con extends CI_Controller {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
+
         $this->data['employees'] = array();
+        if ($this->data['user_data']->level == 'Unit') {
+        	$this->db->select('ss.emp_id, per.name_en');
+        	$this->db->from('pay_salary_sheet as ss');
+        	$this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
+        	$this->db->where('ss.unit_id', $this->data['user_data']->unit_name);
+        	$this->db->where('ss.stop_salary', 1);
+        	$this->db->where('ss.salary_month', date('2023-07-01'));
+        	$this->db->group_by('ss.emp_id')->order_by('ss.emp_id', 'ASC');
+        	$this->data['employees'] = $this->db->get()->result();
+        }
+        
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
 

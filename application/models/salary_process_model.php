@@ -603,18 +603,18 @@ class Salary_process_model extends CI_Model{
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
 					$this->db->where("salary_month", $start_date);
-					$query = $this->db->get("pay_scale_sheet");
+					$query = $this->db->get("pay_salary_sheet");
 					
 					if($query->num_rows() > 0 )
 					{
 						//echo "hello";
 						$this->db->where("emp_id", $rows->emp_id);
 						$this->db->where("salary_month", $start_date);
-						$this->db->update("pay_scale_sheet",$data);
+						$this->db->update("pay_salary_sheet",$data);
 					}
 					else
 					{
-						$this->db->insert("pay_scale_sheet",$data);
+						$this->db->insert("pay_salary_sheet",$data);
 
 					}
 				
@@ -623,7 +623,7 @@ class Salary_process_model extends CI_Model{
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
 					$this->db->where("salary_month", $start_date);
-					$query = $this->db->get("pay_scale_sheet_com");
+					$query = $this->db->get("pay_salary_sheet_com");
 
 					// echo "<pre>";print_r($data_com);exit;
 					
@@ -632,11 +632,11 @@ class Salary_process_model extends CI_Model{
 						//echo "hello";
 						$this->db->where("emp_id", $rows->emp_id);
 						$this->db->where("salary_month", $start_date);
-						$this->db->update("pay_scale_sheet_com",$data_com);
+						$this->db->update("pay_salary_sheet_com",$data_com);
 					}
 					else
 					{
-						$this->db->insert("pay_scale_sheet_com",$data_com);
+						$this->db->insert("pay_salary_sheet_com",$data_com);
 					}
 				}
 			}
