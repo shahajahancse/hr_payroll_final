@@ -28,15 +28,14 @@ class Grid_con extends CI_Controller {
 		$date = $this->input->post('firstdate');
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		dd($grid_emp_id);
-		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id);
-		$data["col_desig"] 		= "";
-		$data["col_line"] 		= "";
-		$data["col_section"] 	= "";
-		$data["col_dept"] 		= "";
-		$data["col_all"] 		= "";
+		$type = $this->input->post('report_type');
+		// dd($grid_data);
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
 		$data["unit_id"] 		= $unit_id;
+		$data['daily_status']   = $type;
+		$data['date']   		= $date;
+		// $this->load->view('grid_con/daily_report',$data);
 		if(is_string($data["values"])){
 			echo $data["values"];
 		} else {
@@ -707,9 +706,9 @@ class Grid_con extends CI_Controller {
 	{
 		$grid_date = $this->input->post('firstdate');
 		//list($date, $month, $year) = explode('-', trim($grid_date));
-		$grid_unit = $this->input->post('grid_start');
+		$grid_unit = $this->input->post('unit_id');
 		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 
 		$data["values"] = $this->grid_model->grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id);
 		$data["grid_date"]	= date("d-M-Y",strtotime($grid_date));

@@ -807,7 +807,7 @@ class Grid_model extends CI_Model{
 	//-------------------------------------------------------------------------------------------------
 	// Daily Report for Present, Absent, Leave
 	//-------------------------------------------------------------------------------------------------
-function grid_daily_report($date, $grid_emp_id){
+function grid_daily_report($date, $grid_emp_id,$type){
 
     $this->db->select('
         pr_emp_com_info.emp_id,
@@ -815,33 +815,67 @@ function grid_daily_report($date, $grid_emp_id){
         emp_designation.desig_name,
         pr_emp_com_info.emp_join_date,
         emp_depertment.dept_name,
-        emp_section.sec_name_en_en,
+        emp_section.sec_name_en,
         emp_line_num.line_name_en,
         pr_emp_shift.shift_name,
         pr_emp_com_info.emp_cat_id,
         pr_emp_shift_log.in_time,
-        pr_emp_shift_log.out_time'
+        pr_emp_shift_log.out_time,
+        pr_emp_shift_log.present_status,
+        pr_emp_shift_log.late_status,
+        pr_emp_shift_log.ot,
+        pr_emp_shift_log.eot,
+		pr_leave_trans.leave_type
+		'
     );
 
     $this->db->from('pr_emp_com_info');
-    $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id', 'LEFT');
+    $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id', 'LEFT');
     $this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id', 'LEFT');
     $this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
     $this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id', 'LEFT');
+    $this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'LEFT');
     $this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
-    $this->db->where_in('pr_emp_shift_log.emp_id', $grid_emp_id);
+    $this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
     $this->db->where('pr_emp_shift_log.shift_log_date', $date);
-    $this->db->where('pr_emp_shift_log.present_status', "P");
+	if($type == 1){
+ 		$this->db->where('pr_emp_shift_log.present_status', "P");
+	} 
 
+	if($type == 2){
+		$this->db->where('pr_emp_shift_log.present_status', "A");
+	}
+
+	if($type == 3){
+    	$this->db->where('pr_leave_trans.start_date',$date);
+		$this->db->where('pr_emp_shift_log.present_status', "L");
+	}
+
+	if($type == 4){
+ 		$this->db->where('pr_emp_shift_log.late_status', 1);
+	}
+
+	if($type == 5){
+ 		$this->db->where('pr_emp_shift_log.ot > 0');
+	}
+
+	if($type == 6){
+ 		$this->db->where('pr_emp_shift_log.eot > 2');
+	}
+
+	if($type == 8){
+ 		$this->db->where("pr_emp_shift_log.in_time = '00:00:00'");
+ 		$this->db->or_where("pr_emp_shift_log.out_time = '00:00:00'");
+	}
+	$this->db->group_by('pr_emp_com_info.emp_id');
     $query = $this->db->get();
 
     if ($query->num_rows() == 0) {
         return "Requested list is empty";
     }
     $data = $query->result_array();
-	dd($data);
 
     return $data;
 }
@@ -1307,7 +1341,7 @@ function grid_daily_report($date, $grid_emp_id){
 		$select_column 	= "date_$day";
 		$status_absent = 'A';
 
-		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.emp_full_name, emp_designation.desig_name, emp_section.sec_name_en,emp_line_num.line_name,pr_attn_monthly.$select_column,pr_emp_shift_log.*");
+		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, emp_designation.desig_name, emp_section.sec_name_en,emp_line_num.line_name_en,pr_attn_monthly.$select_column,pr_emp_shift_log.*");
 
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -1319,7 +1353,7 @@ function grid_daily_report($date, $grid_emp_id){
 
 		//$this->db->where("pr_emp_per_info.emp_id",'AGLCS0001');
 
-		$this->db->where("pr_emp_com_info.unit_id",$grid_unit);
+$this->db->where("pr_emp_com_info.unit_id",$grid_unit);
 		//$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
 		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
 		$this->db->like("pr_attn_monthly.att_month",$year_month);
@@ -1331,10 +1365,10 @@ function grid_daily_report($date, $grid_emp_id){
 		$this->db->where("pr_emp_per_info.emp_id = pr_emp_com_info.emp_id");
 
 
-		$this->db->where("pr_emp_com_info.emp_desi_id = emp_designation.desig_id");
-		$this->db->where("pr_emp_com_info.emp_sec_id = emp_section.sec_id");
-		$this->db->where("pr_emp_com_info.emp_line_id = emp_line_num.line_id");
-		$this->db->order_by("emp_line_num.line_name");
+		$this->db->where("pr_emp_com_info.emp_desi_id = emp_designation.id");
+		$this->db->where("pr_emp_com_info.emp_sec_id = emp_section.id");
+		$this->db->where("pr_emp_com_info.emp_line_id = emp_line_num.id");
+		$this->db->order_by("emp_line_num.line_name_en");
 		$query = $this->db->get();
 
 		//echo $query->num_rows();
