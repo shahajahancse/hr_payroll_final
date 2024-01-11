@@ -131,5 +131,59 @@ class Setting_con extends CI_Controller {
 			$this->db->insert('member_acl_level', array('username_id' => $user_id, 'acl_id' => $id));
 		}
 	}
+	public function report_setting(){
+		
+		if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+		$this->db->select('pr_units.*');
+        $this->data['units'] = $this->db->get('pr_units')->result_array();
+		
+		$this->db->select('pr_report_setting.*, pr_units.unit_name');
+		$this->db->join('pr_units', 'pr_report_setting.unit_id = pr_units.unit_id', 'left');
+		$this->db->order_by('id', 'desc');
+		$this->data['data'] = $this->db->get('pr_report_setting')->result_array();
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title'] = 'Report setting';
+        $this->data['subview'] = 'settings/report_setting';
+        $this->load->view('layout/template', $this->data);
+
+	}
+	public function report_setting_save($status){
+		
+		$unit_id = $this->input->post('unit_id');
+		$date = date('Y-m-01', strtotime($this->input->post('date')));
+		$max_ot = $this->input->post('max_ot');
+		$active_status = $this->input->post('active_status');
+
+		$data = array(
+			'unit_id' => $unit_id,
+			'date' => $date,
+			'max_ot' => $max_ot,
+			'status' => $active_status,
+			'created_by' =>  $this->data['user_data']->id,
+		);
+		if ($status == '0') {
+			$this->db->insert('pr_report_setting', $data);
+		}else{
+			$this->db->where('id', $status);
+			$this->db->update('pr_report_setting', $data);
+		}
+		echo 'true';
+	}
+	public function get_report_setting(){
+		$id = $this->input->post('id');
+		$this->db->where('id', $id);
+		$data=$this->db->get('pr_report_setting')->row();
+		$data->date=date('Y-m',strtotime($data->date));
+
+		echo json_encode($data);
+	}
+	public function delete_report_setting(){
+		$id = $this->input->post('id');
+		$this->db->where('id', $id);
+		$this->db->delete('pr_report_setting');
+		echo 'true';
+	}
 }
 
