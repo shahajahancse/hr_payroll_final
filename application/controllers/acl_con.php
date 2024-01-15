@@ -88,22 +88,24 @@ class Acl_con extends CI_Controller {
 		$data->end_month=date('Y-m',strtotime($data->end_month));
 		echo json_encode($data);
 	}
-		function delete_user_mode($id){
-			$this->db->where('id', $id);
-			if ($this->db->delete('pr_setup_com_report')) {
-				echo 'true';
-			}else{
-				echo 'false';
-			}
 
+	function delete_user_mode($id){
+		$this->db->where('id', $id);
+		if ($this->db->delete('pr_setup_com_report')) {
+			echo 'true';
+		}else{
+			echo 'false';
 		}
-		function edit_user_mode($id){
-			$this->db->where('id', $id);
-			$data=$this->db->get('pr_setup_com_report')->row();
-			$data->start_month=date('Y-m',strtotime($data->start_month));
-			$data->end_month=date('Y-m',strtotime($data->end_month));
-			echo json_encode($data);
-		}
+
+	}
+	
+	function edit_user_mode($id){
+		$this->db->where('id', $id);
+		$data=$this->db->get('pr_setup_com_report')->row();
+		$data->start_month=date('Y-m',strtotime($data->start_month));
+		$data->end_month=date('Y-m',strtotime($data->end_month));
+		echo json_encode($data);
+	}
 	
 	function acl($start=0){
 		$this->data['username'] = $this->data['user_data']->id_number;
@@ -236,7 +238,7 @@ class Acl_con extends CI_Controller {
 	//-------------------------------------------------------------------------------------------------------
 	function acl_check($get_user_id){
 		$access_level = 11;
-		$num_row = $this->db->where('username_id',$get_user_id)->where('acl_id',$access_level)->get('members_acl_level')->num_rows();
+		$num_row = $this->db->where('username_id',$get_user_id)->where('acl_id',$access_level)->get('member_acl_level')->num_rows();
 		if($num_row > 0){
 			return "true";
 		}
@@ -244,61 +246,6 @@ class Acl_con extends CI_Controller {
 			return "false";
 		}
 	}	
-
-	function acl_copy_08_09_21(){
-		$username = $this->session->userdata('username');
-		$get_user_id = $this->acl_model->get_user_id($username);
-		$acl_check = $this->acl_check($get_user_id );
-
-
-		$crud = new grocery_CRUD();
-	 	$get_session_user_pr_units = $this->common_model->get_session_pr_units_id_name();
-		 /*if($get_session_user_pr_units != 0)
-		 {
-			 $crud->where('members.pr_units_name',$get_session_user_pr_units);
-			 $crud->where('id_number',$username);
-
-			}*/
-			$data = $crud->set_table('members');
-			// echo "<pre>"; print_r($data); exit;
-		$crud->set_subject('User');
-
-		//$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
-		if($get_session_user_pr_units != 0)
-		{
-			$crud->set_relation('unit_name' , 'pr_units','unit_name',array('pr_units_id' => $get_session_user_pr_units) );
-		}
-		else
-		{
-			$crud->set_relation( 'unit_name' , 'pr_units','unit_name' );
-		}
-
-		//This code use for unset relation n-n
-		if($acl_check == "false")
-		{
-			$crud->unset_add();
-			$crud->unset_delete();
-			$crud->edit_fields('id_number','password');
-			$state = $crud->getState();
-			if ($state != 'insert' && $state != 'update') {
-			$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
-			  }
-			  $crud->where('members.unit_name',$get_session_user_pr_units);
-			$crud->where('id_number',$username);
-		}
-		else
-		{
-			$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
-		}
-
-		$crud->set_rules('id_number','Username','required|callback_id_number_check');
-		$crud->display_as('id_number','Username');
-		$crud->required_fields('id_number','password','level');
-		$crud->change_field_type('password','password');
-		$crud->where('id_number !=','kamrul');
-		$output = $crud->render();
-		$this->crud_output($output);
-	}
 
 	function id_number_check($str){
 		$id = $this->uri->segment(4);
@@ -316,10 +263,10 @@ class Acl_con extends CI_Controller {
 		else
 		{
 			$level 		=  $_POST['level'];
-			$pr_units_name 	=  $_POST['pr_units_name'];
+			$unit_name 	=  $_POST['unit_name'];
 			if($level == "pr_units")
 			{
-				if($pr_units_name == "")
+				if($unit_name == "")
 				{
 					$this->form_validation->set_message('id_number_check', "Please Select pr_units Name.");
 					return FALSE;
@@ -329,7 +276,7 @@ class Acl_con extends CI_Controller {
 			}
 			else
 			{
-				if($pr_units_name != "")
+				if($unit_name != "")
 				{
 					$this->form_validation->set_message('id_number_check', "Don't Select pr_units Name.");
 					return FALSE;
