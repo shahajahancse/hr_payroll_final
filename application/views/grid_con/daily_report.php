@@ -75,10 +75,11 @@ elseif($daily_status == 6)
 	echo "EOT";
 }
 
-?> Report , Date <?php echo $date; ?></span><br><br>
-<table  border="1" cellpadding="0" cellspacing="0" style="font-size:11px; width:700px; margin-bottom:20px;">
+?> Report , Date <?php echo date("d/m/Y",strtotime($date)); ?></span><br><br>
+<table  border="1" cellpadding="0" cellspacing="0" style="font-size:11px; width:750px; margin-bottom:20px;">
 
 	<?php 
+	    // dd($values);
 		$groupedData = array();
 		foreach ($values as $employee) {
 			$sectionName = $employee['sec_name_en'];
@@ -90,16 +91,17 @@ elseif($daily_status == 6)
 		<th colspan="10" style="border:none;font-size:14px;background:gray"><?php echo $sectionName ?></th>
 	</tr>	
 	<tr>
-		<th>SL</th>
-		<th>Emp ID</th>
+		<th style="padding-left:10px;padding-right:10px;">SL</th>
+		<th style="padding-left:10px;padding-right:10px;white-space:nowrap">Emp ID</th>
 		<th>Employee Name</th>
 		<th>Designation</th>
 		<th>Line</th> 
 		<th>Shift</th>
 		<?php if($daily_status != 2 && $daily_status !=3){?>
 		<th>In Time</th>
-		<th>Out Time</th>
+		<th style="white-space: nowrap;">Out Time</th>
 		<?php }?>
+
 		<?php if($daily_status == 5){?>
 		<th>OT Hour</th>
 		<?php }?>
@@ -107,17 +109,24 @@ elseif($daily_status == 6)
 		<th>EOT Hour</th>
 		<?php }?>
 		<th>Status</th>	
+		<?php if($daily_status == 2){?>
+		<th>Mobile</th>
+		<th>Remark</th>	
+		<?php }?>
+		<?php if($daily_status == 2 || $daily_status == 4){?>
+		<th>Sign</th>	
+		<?php }?>
 	</tr>
 		
 	<?php	foreach ($employees as $key=>$employee) {
 	?>
 	<tr>
-		<td><?php echo $key+1?></td>
-		<td><?php echo $employee['emp_id']?></td>
-		<td><?php echo $employee['name_en']?></td>
-		<td><?php echo $employee['desig_name']?></td>
-		<td><?php echo $employee['line_name_en']?></td>
-		<td><?php echo $employee['shift_name']?></td>
+		<td  style="text-align:center"><?php echo $key+1?></td>
+		<td style="text-align:center"><?php echo $employee['emp_id']?></td>
+		<td style="white-space: nowrap;text-align:center"><?php echo $employee['name_en']?></td>
+		<td style="white-space: nowrap;text-align:center"><?php echo $employee['desig_name']?></td>
+		<td style="white-space: nowrap;text-align:center"><?php echo $employee['line_name_en']?></td>
+		<td style="white-space: nowrap;text-align:center"><?php echo $employee['shift_name']?></td>
 		<?php if($daily_status != 2 && $daily_status !=3){?>
 			<td><?php echo $employee['in_time']?></td>
 			<td><?php echo $employee['out_time']?></td>
@@ -139,6 +148,16 @@ elseif($daily_status == 6)
 			
 			?>
 		</td>
+		<?php if($daily_status == 2){?>
+		<td><?php echo $employee['personal_mobile']?></td>
+		<td style="padding-top:30px;padding-left:80px"></td>
+		<!-- <td></td> -->
+		<?php }?>
+		<?php if($daily_status == 2 || $daily_status == 4){?>
+		<td style="padding-top:30px;padding-left:80px">
+
+		</td>
+		<?php }?>
 	</tr>
 	<?php 		}
 		

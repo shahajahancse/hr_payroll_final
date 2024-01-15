@@ -6,6 +6,7 @@
   }
 
 function daily_report(s) {
+	// alert(s);
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate ==''){
 		alert("Please select First date");
@@ -19,11 +20,13 @@ function daily_report(s) {
 	}
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
-	// return;
-   if (sql =='') {
-		alert('Please select employee Id');
-      return false;
-	}
+
+		if (sql == '') {
+			alert('Please select employee Id');
+			return false;
+		}
+
+	
 	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id+"&report_type="+s;
   	url =  hostname + "grid_con/daily_report/";
 	ajaxRequest = new XMLHttpRequest();
@@ -2343,7 +2346,7 @@ function grid_app_letter(){
 		return false;
 	}
 	var checkboxes = document.getElementsByName('emp_id[]');
-    var sql = get_checked_valuee(checkboxes);
+    var sql = get_checked_value(checkboxes);
     // if (sql =='') {
 	// alert('Please select employee Id');
     //   return false;
@@ -3471,16 +3474,11 @@ function id_card(status){
 	}
 
 	var checkboxes = document.getElementsByName('emp_id[]');
-    var sql = get_checked_valuee(checkboxes);
+    var sql = get_checked_value(checkboxes);
     if (sql =='') {
 	alert('Please select employee Id');
       return false;
     }
-	if(sql =='')
-	{
-		alert("Please select Employee ID");
-		return false;
-	}
 
 	// hostname = window.location.href;
 	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -3490,10 +3488,11 @@ function id_card(status){
 	// id_card.moveTo(0, 0);
 	
 
-	hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
+	// hostname = window.location.href;
+	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="emp_id="+sql+"&unit_id="+unit_id+"&status="+status;
-  	 url =  hostname + "index.php/grid_con/id_card/";
+	// url = hostname + "index.php/grid_con/id_card/";
+	url =  hostname + "grid_con/id_card/";
 	// $(".clearfix").dialog("open");
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -7158,30 +7157,28 @@ function join_letter(){
 		alert("Please select unit !");
 		return false;
 	}
-	$grid  = $("#list1");
-	var id_array = $grid.getGridParam('selarrrow');
-	var selected_id_list = new Array();
-	var spl = (id_array.join('xxx'));
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
 
-	if(spl =='')
-	{
-		alert("Please select Employee ID");
-		return false;
-	}
+		if (sql == '') {
+			alert('Please select employee Id');
+			return false;
+		}
 
-	hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
 
-	var queryString="spl="+spl+"&unit_id="+unit_id;
+	// hostname = window.location.href;
+	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
+
+	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_join_letter/";
-	$(".clearfix").dialog("open");
+	// $(".clearfix").dialog("open");
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			$(".clearfix").dialog("close");
+			// $(".clearfix").dialog("close");
 			grid_join_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			grid_join_letter.document.write(resp);
 			//grid_join_letter.stop();

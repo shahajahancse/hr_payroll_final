@@ -189,13 +189,13 @@
 
 
 							<?php if(in_array(74,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_attendance_summary()">Attendance Summary</button>
+							<button class="btn input-sm sbtn" onclick="daily_report(10)">Attendance Summary</button>
 							<?php } ?>
 							<?php if(in_array(75,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_costing_summary()">Daily Costing Summary</button>
+							<button class="btn input-sm sbtn" onclick="daily_report(9)">Daily Costing Summary</button>
 							<?php } ?>
 							<?php if(in_array(76,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_logout_report()">Daily Logout Report</button>
+							<button class="btn input-sm sbtn" onclick="daily_report(11)">Daily Logout Report</button>
 							<?php } ?>
 						</div>
 						<!-- Daily Reports end -->
