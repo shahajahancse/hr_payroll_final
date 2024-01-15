@@ -12,19 +12,21 @@
 
 <div style=" margin:0 auto;  width:850px;">
 <?php 
-$emp_id = $values["emp_id"][1];
-$data1['unit_id'] = $unit_id;//$this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
-$this->load->view("head_english",$data1);
+// dd($values);
+// $emp_id = $values["emp_id"];
+// $data1['unit_id'] = $unit_id;/
+//$this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
+$this->load->view("head_english",$unit_id);
 ?>
 <!--Report title goes here-->
 <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;"><span style="font-size:12px; font-weight:bold;">
-Daily Costing Summary <?php echo "$grid_date"; ?></span>
+	Daily Costing Summary <?php echo $date; ?></span>
 <br />
 <br />
 <?php
 
-$month 	= date("m",strtotime($grid_date));
-$year 	= date("Y",strtotime($grid_date));
+$month 	= date("m",strtotime($date));
+$year 	= date("Y",strtotime($date));
 $num_of_days=cal_days_in_month(CAL_GREGORIAN,$month,$year);
 
 
@@ -48,7 +50,14 @@ $num_of_days=cal_days_in_month(CAL_GREGORIAN,$month,$year);
 
 $j = 0;
 $line_name=" ";
-$count = count($values["emp_id"]);
+// dd($values);
+// if($values["emp_id"]){
+	
+// }else{
+
+	$count = count($values["emp_id"]);
+// }
+
 for($i=0; $i<$count; $i++ )
 {
 	//echo $line_name."==".$values['line_name'][$i];

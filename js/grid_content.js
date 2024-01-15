@@ -1,13 +1,12 @@
-function get_checked_valuee(checkboxes) {
-	var vals = Array.from(checkboxes)
-	.filter(checkbox => checkbox.checked)
-	.map(checkbox => checkbox.value)
-	.join("xxx");
-	return vals;
-}
+ function get_checked_value(checkboxes) {
+    var vals = Array.from(checkboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value)
+      .join(",");
+  }
 
-function daily_report(){
-
+function daily_report(s) {
+	// alert(s);
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate ==''){
 		alert("Please select First date");
@@ -19,17 +18,17 @@ function daily_report(){
 		alert("Please select unit !");
 		return false;
 	}
-
 	var checkboxes = document.getElementsByName('emp_id[]');
-   var sql = get_checked_valuee(checkboxes);
-   if (sql =='') {
-		alert('Please select employee Id');
-      return false;
-   }
+	var sql = get_checked_value(checkboxes);
 
-	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id;
-  	 url =  hostname + "grid_con/daily_report/";
+		if (sql == '') {
+			alert('Please select employee Id');
+			return false;
+		}
 
+	
+	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id+"&report_type="+s;
+  	url =  hostname + "grid_con/daily_report/";
 	ajaxRequest = new XMLHttpRequest();
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -92,7 +91,7 @@ function grid_get_all_data_for_salary() {
 	}
 	}
 	}
- var start = document.getElementById('grid_start').value;
+ var start = document.getElementById('unit_id').value;
  if(start == "Select" || start == ''){
 	 alert("Please select ALL");
 	 return false;
@@ -244,7 +243,7 @@ function grid_get_all_data(){
       }
    }
  }
-	var start = document.getElementById('grid_start').value;
+	var start = document.getElementById('unit_id').value;
 	if (start == "Select" || start == ''){
 	 	alert("Please select ALL");
 		return false;
@@ -367,7 +366,7 @@ function grid_get_all_data_for_entry(){
 	      }
 	   }
 	}
-	 var start = document.getElementById('grid_start').value;
+	 var start = document.getElementById('unit_id').value;
 	 if(start == "Select" || start == '')
 	 {
 		 alert("Please select ALL");
@@ -502,8 +501,8 @@ function grid_per_file(){
 			}
 		}
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select'){ alert("Please select Category options"); return false; }
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){ alert("Please select Category options"); return false; }
 
 	$grid  = $("#list1");
 	var id_array = $grid.getGridParam('selarrrow');
@@ -556,7 +555,7 @@ function grid_all_search_for_salary(){
 
 	var year_month = report_year_sal+"-"+report_month_sal;
 	//alert(year_month);
-	var start 		= document.getElementById('grid_start').value;
+	var start 		= document.getElementById('unit_id').value;
 	var dept 		= document.getElementById('grid_dept').value;
 	var section 	= document.getElementById('grid_section').value;
 	var line 		= document.getElementById('grid_line').value;
@@ -582,7 +581,7 @@ function grid_all_search(){
 	var designation = document.getElementById('grid_desig').value;
 	var sex 		= document.getElementById('grid_sex').value;
 	var status 		= document.getElementById('grid_status').value;
-	var start 		= document.getElementById('grid_start').value;
+	var start 		= document.getElementById('unit_id').value;
 	var position 	= document.getElementById('grid_position').value;
 
 	$('#list1').jqGrid('GridUnload');
@@ -601,7 +600,7 @@ function grid_all_search_out_miss(){
 	var designation = document.getElementById('grid_desig').value;
 	var sex 		= document.getElementById('grid_sex').value;
 	var status 		= document.getElementById('grid_status').value;
-	var start 		= document.getElementById('grid_start').value;
+	var start 		= document.getElementById('unit_id').value;
 	var position 	= document.getElementById('grid_position').value;
 	var out_miss 	= document.getElementById('grid_out_miss').value;
 	if(f_date ==''){
@@ -643,13 +642,13 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select First date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -684,8 +683,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		}
 	}
 }
-function daily_costing_report()
-{
+function daily_costing_report(){
 var ajaxRequest;  // The variable that makes Ajax possible!
  try{
    // Opera 8.0+, Firefox, Safari
@@ -710,31 +708,29 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select First date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Unit.");
 		return false;
 	}
 
-		$grid  = $("#list1");
-	var id_array = $grid.getGridParam('selarrrow');
-	var selected_id_list = new Array();
-	var spl = (id_array.join('xxx'));
-	if(spl =='')
-	{
-		alert("Please select Employee ID");
-		return false;
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	// return;
+   if (sql =='') {
+		alert('Please select employee Id');
+      return false;
 	}
-		hostname = window.location.href;
+		// hostname = window.location.href;
 		hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
-	//url =  hostname+"index.php/grid_con/grid_daily_costing_report/"+firstdate+"/"+grid_start;
+	//url =  hostname+"index.php/grid_con/grid_daily_costing_report/"+firstdate+"/"+unit_id;
 
 	//daily_costing_rpt = window.open(url,'daily_costing_rpt',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	//daily_costing_rpt.moveTo(0,0);
-	var queryString="firstdate="+firstdate+"&grid_start="+grid_start+"&spl="+spl;
+	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_costing_report/";
-   $(".clearfix").dialog("open");
+   //    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -742,7 +738,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			$(".clearfix").dialog("close");
+			// $(".clearfix").dialog("close");
 			daily_costing_rpt = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_costing_rpt.document.write(resp);
 			//daily_costing_rpt.stop();
@@ -782,8 +778,8 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select Second date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Unit.");
 		return false;
@@ -799,11 +795,11 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	}
 		hostname = window.location.href;
 		hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
-	//url =  hostname+"index.php/grid_con/grid_daily_costing_report/"+firstdate+"/"+grid_start;
+	//url =  hostname+"index.php/grid_con/grid_daily_costing_report/"+firstdate+"/"+unit_id;
 
 	//daily_costing_rpt = window.open(url,'daily_costing_rpt',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	//daily_costing_rpt.moveTo(0,0);
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&grid_start="+grid_start+"&spl="+spl;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+spl;
    url =  hostname+"index.php/grid_con/grid_continuous_costing_report/";
    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -900,13 +896,13 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -968,7 +964,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -1029,7 +1025,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select First date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -1092,7 +1088,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select First date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -1153,8 +1149,8 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select First date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -1213,7 +1209,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select First date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit!");
@@ -1273,8 +1269,8 @@ function grid_daily_holiday_weekend_present_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -1293,7 +1289,7 @@ function grid_daily_holiday_weekend_present_report()
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 
-	var queryString="firstdate="+firstdate+"&spl="+spl+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_holiday_weekend_present_report/";
  	$(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -1336,8 +1332,8 @@ function grid_daily_holiday_weekend_absent_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -1355,7 +1351,7 @@ function grid_daily_holiday_weekend_absent_report()
 	}
 	hostname = window.location.href; hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 
-	var queryString="firstdate="+firstdate+"&spl="+spl+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_holiday_weekend_absent_report/";
  	$(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -1399,7 +1395,7 @@ function grid_daily_move_report()
 			return false;
 		}
 
-		var unit_id = document.getElementById('grid_start').value;
+		var unit_id = document.getElementById('unit_id').value;
 		if(unit_id =='Select')
 		{
 			alert("Please select Unit!");
@@ -1479,7 +1475,7 @@ function grid_daily_punch_report()
 		return false;
 	}
 
-	var grid_unit = document.getElementById('grid_start').value;
+	var grid_unit = document.getElementById('unit_id').value;
 	if(grid_unit =='Select')
 	{
 		alert("Please select Unit!");
@@ -1551,7 +1547,7 @@ function grid_continuous_present_report()
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -1623,8 +1619,8 @@ function grid_continuous_absent_report()
 		return false;
 	}
 	/*
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -1635,7 +1631,7 @@ function grid_continuous_absent_report()
 		alert("Please select Section");
 		return false;
 	}*/
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -1718,7 +1714,7 @@ function grid_continuous_report_limit(limit)
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -1792,7 +1788,7 @@ function grid_continuous_leave_report_old()
 		alert("Please select Second date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -1864,7 +1860,7 @@ function grid_continuous_leave_report()
 		alert("Please select Second date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -1921,8 +1917,8 @@ function grid_continuous_leave_report_new()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -1997,7 +1993,7 @@ function grid_continuous_late_report()
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2071,7 +2067,7 @@ function grid_continuous_ot_eot_report()
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2145,7 +2141,7 @@ function grid_continuous_incre_report()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2217,7 +2213,7 @@ function grid_continuous_prom_report()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2281,14 +2277,14 @@ function grid_continuous_increment_promotion_proposal()
 		alert("Please select First date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2350,7 +2346,7 @@ function grid_app_letter(){
 		return false;
 	}
 	var checkboxes = document.getElementsByName('emp_id[]');
-    var sql = get_checked_valuee(checkboxes);
+    var sql = get_checked_value(checkboxes);
     // if (sql =='') {
 	// alert('Please select employee Id');
     //   return false;
@@ -2396,13 +2392,13 @@ function grid_emp_job_application()
    }
  }
 	/*
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}*/
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2465,7 +2461,7 @@ function grid_letter1_report()
 		alert("Please select First date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2526,7 +2522,7 @@ function grid_letter2_report()
 		alert("Please select First date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2589,7 +2585,7 @@ function grid_letter3_report()
 		alert("Please select First date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2647,13 +2643,13 @@ function grid_ctpat()
    }
  }
 	/*
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}*/
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2730,8 +2726,8 @@ function grid_pay_slip()
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -2749,7 +2745,7 @@ function grid_pay_slip()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2816,8 +2812,8 @@ function grid_pay_slip_non_compliance()
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -2835,7 +2831,7 @@ function grid_pay_slip_non_compliance()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2904,8 +2900,8 @@ function grid_pay_slip_actual()
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -2923,7 +2919,7 @@ function grid_pay_slip_actual()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -2991,8 +2987,8 @@ function grid_pay_slip_com()
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -3010,7 +3006,7 @@ function grid_pay_slip_com()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -3077,8 +3073,8 @@ function grid_pay_slip_com_non_com_mix()
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -3096,7 +3092,7 @@ function grid_pay_slip_com_non_com_mix()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -3164,8 +3160,8 @@ function grid_provident_fund()
 
 var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -3226,8 +3222,8 @@ function grid_incre_prom_report()
 		   alert("Please select Second date");
 		   return false;
 	   }
-	   var grid_start = document.getElementById('grid_start').value;
-	   if(grid_start =='Select')
+	   var unit_id = document.getElementById('unit_id').value;
+	   if(unit_id =='Select')
 	   {
 		   alert("Please select Category options");
 		   return false;
@@ -3301,8 +3297,8 @@ function grid_prom_report()
 		   alert("Please select Second date");
 		   return false;
 	   }
-	   var grid_start = document.getElementById('grid_start').value;
-	   if(grid_start =='Select')
+	   var unit_id = document.getElementById('unit_id').value;
+	   if(unit_id =='Select')
 	   {
 		   alert("Please select Category options");
 		   return false;
@@ -3393,9 +3389,9 @@ function grid_pension_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 
-	if(grid_start =='Select')
+	if(unit_id =='Select')
 
 	{
 		alert("Please select Category options");
@@ -3478,16 +3474,11 @@ function id_card(status){
 	}
 
 	var checkboxes = document.getElementsByName('emp_id[]');
-    var sql = get_checked_valuee(checkboxes);
+    var sql = get_checked_value(checkboxes);
     if (sql =='') {
 	alert('Please select employee Id');
       return false;
     }
-	if(sql =='')
-	{
-		alert("Please select Employee ID");
-		return false;
-	}
 
 	// hostname = window.location.href;
 	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
@@ -3497,10 +3488,11 @@ function id_card(status){
 	// id_card.moveTo(0, 0);
 	
 
-	hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
+	// hostname = window.location.href;
+	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="emp_id="+sql+"&unit_id="+unit_id+"&status="+status;
-  	 url =  hostname + "index.php/grid_con/id_card/";
+	// url = hostname + "index.php/grid_con/id_card/";
+	url =  hostname + "grid_con/id_card/";
 	// $(".clearfix").dialog("open");
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -3535,7 +3527,7 @@ function grid_id_card_english()
       }
    }
  }
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -3602,8 +3594,8 @@ function grid_id_card_english()
       }
    }
  }
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -3622,7 +3614,7 @@ function grid_id_card_english()
 
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/grid_con/grid_id_card_english/"+spl+"/"+grid_start;
+	url =  hostname + "index.php/grid_con/grid_id_card_english/"+spl+"/"+unit_id;
 
 	id_card_english = window.open(url,'id_card_english',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	id_card_english.moveTo(0,0);
@@ -3660,7 +3652,7 @@ function grid_job_card()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -3872,8 +3864,8 @@ function grid_pf_statement()
 	var year  = document.getElementById('report_year_sal').value;
 	var month = document.getElementById('report_month_sal').value;
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -3926,14 +3918,14 @@ function grid_monthly_att_register_ot()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -4007,7 +3999,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -4074,7 +4066,7 @@ function grid_monthly_att_register(i)
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -4141,7 +4133,7 @@ function grid_yearly_leave_register()
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -4214,7 +4206,7 @@ function grid_extra_ot()
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -4289,8 +4281,8 @@ function grid_extra_ot_9pm()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -4362,7 +4354,7 @@ function grid_extra_ot_mix()
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -4422,8 +4414,8 @@ function grid_earn_leave()
    }
  }
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -4480,8 +4472,8 @@ function manual_attendance_entry(){
 	/*alert(firstdate+seconddate);
 	return false;*/
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select'){
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){
 		alert("Please select Category options");
 		return false;
 	}
@@ -4570,8 +4562,8 @@ function manual_entry_Delete()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -4753,7 +4745,7 @@ function manual_ot_eot_modification_for_multiple_employee()
 		return false;
 	}
 
-	var grid_unit = document.getElementById('grid_start').value;
+	var grid_unit = document.getElementById('unit_id').value;
 	if(grid_unit =='Select')
 	{
 		alert("Please select Unit!");
@@ -4812,7 +4804,7 @@ function save_work_off(){
 		}
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select'){
 		alert("Please select unit !");
 		return false;
@@ -4824,8 +4816,8 @@ function save_work_off(){
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select'){
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){
 		alert("Please select Category options");
 		return false;
 	}
@@ -4894,7 +4886,7 @@ function delete_work_off()
       }
    }
  }
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -4908,8 +4900,8 @@ function delete_work_off()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -4972,7 +4964,7 @@ function save_holiday()
       }
    }
  }
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -4986,8 +4978,8 @@ function save_holiday()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5064,7 +5056,7 @@ function delete_holiday()
       }
    }
  }
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5078,8 +5070,8 @@ function delete_holiday()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5251,8 +5243,8 @@ function grid_monthly_salary_sheet()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5276,7 +5268,7 @@ function grid_monthly_salary_sheet()
 		return false;
 	}
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-var unit_id = document.getElementById('grid_start').value;
+var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5339,8 +5331,8 @@ function grid_actual_monthly_salary_sheet()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5372,7 +5364,7 @@ function grid_actual_monthly_salary_sheet()
 		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5436,8 +5428,8 @@ function grid_actual_monthly_salary_sheet_not_sec()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5470,7 +5462,7 @@ function grid_actual_monthly_salary_sheet_not_sec()
 		return false;
 	}
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5533,8 +5525,8 @@ function actual_monthly_salary_sheet()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5556,7 +5548,7 @@ function actual_monthly_salary_sheet()
 		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5618,8 +5610,8 @@ function monthly_salary_sheet()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5641,7 +5633,7 @@ function monthly_salary_sheet()
 		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5703,8 +5695,8 @@ function monthly_salary_sheet_nine_pm()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5726,7 +5718,7 @@ function monthly_salary_sheet_nine_pm()
 		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5790,8 +5782,8 @@ function grid_mix_salary_sheet()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5816,7 +5808,7 @@ function grid_mix_salary_sheet()
 		return false;
 	}
 		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-var unit_id = document.getElementById('grid_start').value;
+var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5877,8 +5869,8 @@ function grid_actual_monthly_salary_sheet_with_eot()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -5897,7 +5889,7 @@ function grid_actual_monthly_salary_sheet_with_eot()
 		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-var unit_id = document.getElementById('grid_start').value;
+var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -5962,8 +5954,8 @@ function grid_monthly_allowance_with_eot()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -6025,7 +6017,7 @@ function grid_festival_bonus()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
@@ -6115,7 +6107,7 @@ function grid_advance_salary_sheet()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
@@ -6205,7 +6197,7 @@ function sal_summary_report()
 		alert("Please select year");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6272,7 +6264,7 @@ function sec_sal_summary_report()
 		alert("Please select year");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6321,7 +6313,7 @@ function salary_summary_test(){
 		alert("Please select year");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6370,7 +6362,7 @@ function salary_summary_compliance(){
 		alert("Please select year");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6468,7 +6460,7 @@ function grid_festival_bonus_summary()
 		alert("Please select year");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6533,7 +6525,7 @@ function grid_festival_bonus_summary_sec_wise()
 		alert("Please select year");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6615,7 +6607,7 @@ function grid_comprative_salary_statement()
 	}
 
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6680,7 +6672,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select year");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6744,7 +6736,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert("Please select year");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -6796,13 +6788,13 @@ function grid_general_info()
    }
  }
 	/*
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}*/
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -6922,7 +6914,7 @@ function grid_employee_information()
       }
    }
  }
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -6979,7 +6971,7 @@ function grid_service_book()
       }
    }
  }
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -7054,8 +7046,8 @@ function grid_service_book2()
 		return false;
 	}
 */
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7100,7 +7092,7 @@ function grid_service_benifit()
       }
    }
  }
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -7159,36 +7151,34 @@ function join_letter(){
       }
    }
  }
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
 		return false;
 	}
-	$grid  = $("#list1");
-	var id_array = $grid.getGridParam('selarrrow');
-	var selected_id_list = new Array();
-	var spl = (id_array.join('xxx'));
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
 
-	if(spl =='')
-	{
-		alert("Please select Employee ID");
-		return false;
-	}
+		if (sql == '') {
+			alert('Please select employee Id');
+			return false;
+		}
 
-	hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
 
-	var queryString="spl="+spl+"&unit_id="+unit_id;
+	// hostname = window.location.href;
+	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
+
+	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_join_letter/";
-	$(".clearfix").dialog("open");
+	// $(".clearfix").dialog("open");
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			$(".clearfix").dialog("close");
+			// $(".clearfix").dialog("close");
 			grid_join_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			grid_join_letter.document.write(resp);
 			//grid_join_letter.stop();
@@ -7217,13 +7207,13 @@ function grid_current_info()
    }
  }
 	/*
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}*/
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -7304,8 +7294,8 @@ function grid_age_estimation()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7342,8 +7332,8 @@ function bando_certificate_report()
 	}
 
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7380,8 +7370,8 @@ function grid_one_month_settel_paid_report()
 	}
 
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7423,8 +7413,8 @@ function grid_drugscreening_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7466,8 +7456,8 @@ function grid_ackknowledgement_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7509,8 +7499,8 @@ function grid_earnl_payment()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7571,8 +7561,8 @@ function grid_nominee()
 		return false;
 	}
 */
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7632,8 +7622,8 @@ function grid_requitement_form()
 		return false;
 	}
 */
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7693,8 +7683,8 @@ function grid_verification_report()
 		return false;
 	}
 */
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7754,8 +7744,8 @@ function grid_job_description()
 		return false;
 	}
 */
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -7824,13 +7814,13 @@ function grid_new_join_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}
-	var unit_id = grid_start;
+	var unit_id = unit_id;
 	//var grid_status = document.getElementById('grid_status').value;
 	//if(grid_status != 1)
 	//{
@@ -7907,13 +7897,13 @@ function grid_bgm_new_join_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}
-	var unit_id = grid_start;
+	var unit_id = unit_id;
 	//var grid_status = document.getElementById('grid_status').value;
 	//if(grid_status != 1)
 	//{
@@ -7986,7 +7976,7 @@ function grid_bank_note_req()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
@@ -8065,8 +8055,8 @@ function grid_resign_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8099,7 +8089,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 */
 hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_resign_report/";
    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -8155,8 +8145,8 @@ function grid_resign_report_with_sal()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8189,7 +8179,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 */
 hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_resign_report_with_sal/";
    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -8245,8 +8235,8 @@ function grid_left_report_with_sal()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8279,7 +8269,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 */
 hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_left_report_with_sal/";
    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -8335,8 +8325,8 @@ function grid_bgm_resign_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8369,7 +8359,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 */
 hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_resign_report/";
    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -8425,8 +8415,8 @@ function grid_left_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8452,7 +8442,7 @@ function grid_left_report()
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_left_report/";
    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -8509,8 +8499,8 @@ function grid_bgm_left_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8536,7 +8526,7 @@ function grid_bgm_left_report()
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_left_report/";
    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -8592,8 +8582,8 @@ function grid_bgm_left_resign_report()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8602,7 +8592,7 @@ function grid_bgm_left_resign_report()
 
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&grid_start="+grid_start;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_left_resign_report/";
    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
@@ -8648,7 +8638,7 @@ function grid_daily_eot()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -8712,7 +8702,7 @@ function grid_daily_ot()
 		alert("Please select First date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -8777,7 +8767,7 @@ function grid_daily_night_allowance_report()
 		alert("Please select First date");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -8844,8 +8834,8 @@ function grid_daily_allowance_bills()
 		alert("Please select First date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8878,8 +8868,8 @@ function grid_daily_weekend_allowance_sheet()
 		alert("Please select First date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8923,8 +8913,8 @@ function grid_daily_holiday_allowance_sheet()
 		alert("Please select First date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -8989,7 +8979,7 @@ function grid_monthly_ot_register()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -9056,7 +9046,7 @@ function grid_monthly_eot_register()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
@@ -9135,8 +9125,8 @@ function grid_maternity_benefit(){
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -9188,8 +9178,8 @@ function grid_monthly_allowance_register()
 		alert("Please select First date for month selection");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -9248,8 +9238,8 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -9309,7 +9299,7 @@ function grid_monthly_eot_sheet()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -9392,7 +9382,7 @@ function grid_monthly_weekend_allowance_sheet()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
@@ -9466,7 +9456,7 @@ function grid_monthly_allowance_sheet()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
@@ -9540,7 +9530,7 @@ function grid_monthly_stop_sheet()
 		return false;
 	}
 
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select Unit");
@@ -9630,8 +9620,8 @@ function grid_monthly_night_allowance_sheet()
 		return false;
 	}
 
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
@@ -9684,13 +9674,13 @@ function shorts_emp_summery(){
 		alert("Please select First date");
 		return false;
 	}
-	var grid_start = document.getElementById('grid_start').value;
-	if(grid_start =='Select')
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}
-	var unit_id = document.getElementById('grid_start').value;
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
