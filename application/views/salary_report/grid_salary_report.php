@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <input type="month" class="form-control" id="process_month" value="<?= date('Y-m') ?>">
+                            <input type="month" class="form-control" id="salary_month" value="<?= date('Y-m') ?>">
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                         <select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
                             <option value="">All Employee</option>
                             <?php foreach ($categorys as $key => $row) { ?>
-                            <option value="<?= $row->id ?>" <?= ($row->id==1)?'selected':'' ?>><?= $row->status_type; ?>
+                            <option value="<?= $row->id ?>"><?= $row->status_type; ?>
                             </option>
                             <?php } ?>
                         </select>
@@ -129,7 +129,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Salary </label>
-                        <select name="stop" id="stop" class="form-control input-sm" onChange="grid_emp_list()">
+                        <select name="stop_salary" id="stop_salary" class="form-control input-sm" onChange="grid_emp_list()">
                             <option value="1">Running</option>
                             <option value="2">Stop</option>
                         </select>
@@ -241,7 +241,7 @@
                     <?php if (!empty($employees)) { 
                                 foreach ($employees as $key => $emp) { ?>
                     <tr id="removeTr">
-                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
+                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
                         </td>
                         <td class="success"><?= $emp->emp_id ?></td>
                         <td class="warning "><?= $emp->name_en ?></td>
@@ -263,13 +263,17 @@
             var line = document.getElementById('line').value;
             var desig = document.getElementById('desig').value;
             var status = document.getElementById('status').value;
+            var stop_salary = document.getElementById('stop_salary').value;
+            var salary_month = document.getElementById('salary_month').value;
 
-            url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+            url = hostname + "common/salary_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
             $.ajax({
                 url: url,
                 type: 'GET',
                 data: {
-                    "status": status
+                    "status"      : status,
+                    "stop_salary" : stop_salary,
+                    "salary_month": salary_month,
                 },
                 contentType: "application/json",
                 dataType: "json",
@@ -281,7 +285,7 @@
                             items += '<tr id="removeTr">';
                             items +=
                                 '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                                value.id + '" ></td>';
+                                value.emp_id + '" ></td>';
                             items += '<td class="success">' + value.emp_id + '</td>';
                             items += '<td class="warning ">' + value.name_en + '</td>';
                             items += '</tr>';

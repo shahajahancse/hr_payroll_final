@@ -200,7 +200,7 @@ class Mars_model extends CI_Model{
 				SUM(eot_amount) AS eot_amount,
 				SUM(att_bonus) AS att_bonus,
 			");
-		$this->db->from("pay_scale_sheet");
+		$this->db->from("pay_salary_sheet");
 		$this->db->like("salary_month", $last_salary_month);
 		return $this->db->get()->row();
 	}

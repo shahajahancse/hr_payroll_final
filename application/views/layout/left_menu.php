@@ -92,6 +92,7 @@
           <?php //if(in_array(17,$acl)) { ?>
           <li class="start <?= activate_method('crud') ?>"> <a href="<?=base_url('setting_con/crud')?>" class="anchor_cls" id="acl">Access</a> </li>
           <?php //} ?>
+          <li class="start <?= activate_method('report_setting') ?>"> <a href="<?=base_url('setting_con/report_setting')?>" class="anchor_cls" id="acl">Report Setting</a> </li>
           <li class="start <?= activate_method('left_menu_acl') ?>"> <a href="<?=base_url('setting_con/left_menu_acl')?>" class="anchor_cls" id="acl">Left Menu Access</a> </li>
           <li class="start <?= activate_method('user_acl_hrm') ?>"> <a href="<?=base_url('setting_con/user_acl_hrm')?>" class="anchor_cls" id="acl">User Access HRM</a> </li>
           <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
