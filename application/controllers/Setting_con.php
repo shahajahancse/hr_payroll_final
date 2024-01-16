@@ -131,6 +131,7 @@ class Setting_con extends CI_Controller {
 			$this->db->insert('member_acl_level', array('username_id' => $user_id, 'acl_id' => $id));
 		}
 	}
+	
 	public function report_setting(){
 		
 		if ($this->session->userdata('logged_in') == false) {

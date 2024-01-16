@@ -227,6 +227,6 @@ $("#report_setting_form").submit(function(e) {
             }
         })
     }
-    
+
   }
 </script>
