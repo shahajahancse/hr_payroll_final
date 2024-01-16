@@ -841,7 +841,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
     $this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'LEFT');
     $this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
-    $this->db->join('pay_scale_sheet', 'pay_scale_sheet.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+    // $this->db->join('pay_scale_sheet', 'pay_scale_sheet.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
     $this->db->where('pr_emp_shift_log.shift_log_date', $date);
 	if($type == 1){
@@ -8618,65 +8618,71 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function grid_emp_job_application($grid_emp_id){
 		$this->db->select('
-			pr_emp_blood_groups.blood_name,
-			pr_emp_skill.*,
-			pr_emp_edu.*,
-			pr_emp_sex.sex_name,
-			pr_emp_com_info.emp_id,
-			pr_emp_com_info.gross_sal,
-			pr_emp_per_info.name_bn, 
-			pr_emp_per_info.img_source, 
-			pr_emp_per_info.father_name,
-			pr_emp_per_info.mother_name, 
-			pr_emp_per_info.spouse_name, 
-			pr_emp_per_info.bank_bkash_no, 
-			emp_designation.desig_name, 
-			emp_designation.desig_bangla, 
-			pr_emp_com_info.emp_join_date, 
-			pr_emp_com_info.emp_sal_gra_id , 
-			emp_depertment.dept_name,
-			emp_depertment.dept_bangla, 
-			emp_section.sec_name_en, 
-			emp_section.sec_name_bn, 
-			pr_emp_per_info.emp_dob,
-			pr_emp_per_info.emp_religion,
-			pr_religions.religion_id,
-			emp_districts.name_bn as dis_name_bn,
-			emp_upazilas.name_bn as upa_name_bn,
-			emp_post_offices.name_bn as post_name_bn
-		');
+		pr_emp_blood_groups.blood_name,
+		pr_emp_skill.*,
+		pr_emp_edu.*,
+		pr_emp_sex.sex_name,
+		pr_emp_com_info.emp_id,
+		pr_emp_com_info.gross_sal,
+		pr_emp_per_info.name_bn, 
+		pr_emp_per_info.img_source, 
+		pr_emp_per_info.father_name,
+		pr_emp_per_info.mother_name, 
+		pr_emp_per_info.per_village_bn, 
+		pr_emp_per_info.pre_village_bn, 
+		pr_emp_per_info.spouse_name, 
+		pr_emp_per_info.bank_bkash_no, 
+		emp_designation.desig_name, 
+		emp_designation.desig_bangla, 
+		pr_emp_com_info.emp_join_date, 
+		pr_emp_com_info.emp_sal_gra_id , 
+		emp_depertment.dept_name,
+		emp_depertment.dept_bangla, 
+		emp_section.sec_name_en, 
+		emp_section.sec_name_bn, 
+		pr_emp_per_info.emp_dob,
+		pr_emp_per_info.emp_religion,
+		pr_religions.religion_id,
+		per_dis.name_bn as dis_name_bn,
+		per_upa.name_bn as upa_name_bn,
+		per_post.name_bn as post_name_bn,
 
-		$this->db->from('pr_emp_per_info');
-		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->join('pr_id_proxi', 'pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->join('pr_emp_add', 'pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->join('pr_religions', 'pr_emp_per_info.emp_religion = pr_religions.religion_id');
-		$this->db->join('pr_emp_sex', 'pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
-		$this->db->join('pr_emp_edu', 'pr_emp_com_info.emp_id = pr_emp_edu.emp_id');
-		$this->db->join('pr_emp_skill', 'pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
-		$this->db->join('pr_emp_blood_groups', 'pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id');
-		$this->db->join('emp_districts', 'pr_emp_per_info.per_district = emp_districts.id', 'LEFT');
-		$this->db->join('emp_upazilas', 'pr_emp_per_info.per_thana = emp_upazilas.id', 'LEFT');
-		$this->db->join('emp_post_offices', 'pr_emp_per_info.per_post = emp_post_offices.id', 'LEFT');
-		$this->db->or_where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-		$this->db->order_by('pr_emp_com_info.emp_id');
-		$query = $this->db->get();
+		pre_dis.name_bn as pre_dis_name_bn,
+		pre_upa.name_bn as pre_upa_name_bn,
+		pre_post.name_bn as pre_post_name_bn,
+	');
 
+	$this->db->from('pr_emp_per_info');
+	$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+	$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+	$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+	$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+	$this->db->join('pr_religions', 'pr_emp_per_info.emp_religion = pr_religions.religion_id');
+	$this->db->join('pr_emp_sex', 'pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
+	$this->db->join('pr_emp_edu', 'pr_emp_com_info.emp_id = pr_emp_edu.emp_id');
+	$this->db->join('pr_emp_skill', 'pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
+	$this->db->join('pr_emp_blood_groups', 'pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id');
+	$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
+	$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
+	$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
 
+	$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
+	$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
+	$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
+	$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+	$this->db->order_by('pr_emp_com_info.emp_id');
+	$query = $this->db->get();
 		//echo $this->db->last_query();
 		// echo "<pre>"; print_r($query->result()); exit();
 
-		if($query->num_rows() == 0)
-		{
-			return "Employee ID range does not exist!";
-		}
-		else
-		{
+		// if($query->num_rows() == 0)
+		// {
+		// 	return "Employee ID range does not exist!";
+		// }
+		// else
+		// {
 			return $query->result();
-		}
+		// }
 		//print_r($query->result_array());
 	}
 
