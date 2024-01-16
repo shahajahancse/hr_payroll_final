@@ -68,34 +68,34 @@
                     <p>8| RvZxqZv t <span style='font-size:11px'>বাংলাদেশী , </span> Kg©xi †gvevBj bst <?php echo "<span style='font-size:16px'>".$value->bank_bkash_no."</span>"?> </p>
                     <p>9| AwfÁZv t </p>
 
-                    <table class="table table-bordr">
+                    <table class="tabel table-bordered table-sm" style="width: 102%;" border='1'>
                         <tr>
-                            <th>µwgK bs</th>
-                            <th>AwfÁZvi c~b© weeib</th>
-                            <th>cÖwZôv‡bi bvg, wVKvbv, †dvb b¤^i</th>
-                            <th>PvKzixi mgqKvj</th>
+                            <th class="text-center">µwgK bs</th>
+                            <th class="text-center">AwfÁZvi c~b© weeib</th>
+                            <th class="text-center">cÖwZôv‡bi bvg, wVKvbv, †dvb b¤^i</th>
+                            <th class="text-center">PvKzixi mgqKvj</th>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td style="padding:15px"></td>
+                            <td style="padding:15px"></td>
+                            <td style="padding:15px"></td>
+                            <td style="padding:15px"></td>
                         </tr>
                     </table>
               
-                    <p>10| †idv‡iÝ t (1) bvg t ........................................</p>
+                    <p style="margin-top:5px">10| †idv‡iÝ t (1) bvg t ........................................</p>
                     <p style="margin-left: 106px;">wVKvbv t ........................................</p>
                     <p style="margin-left: 106px;"> †dvb t ..........................................</p>
 
-                        <div class="col-md-6">
+                        <div style="float:right;margin-top:10px">
                             <p>¯^vÿi t ................ √.......................</p>
-                            <p>bvg t পূর্ণমিা দাস</p>
-                            <p>c`ex t স্যাম্পল ম্যান</p>
+                            <p>bvg t <?php echo "<span style='font-size:11px'>".$value->name_bn."</span>"?></p>
+                            <p>c`ex t <?php echo "<span style='font-size:11px'>".$value->desig_bangla."</span>"?></p>
                         </div>
 
                    
-                    <p>AwdmKZ…©K c~iYxq t</p>
-                    <div class="row" style="border:1px solid black">
+                    <p style="margin-top:80px">AwdmKZ…©K c~iYxq t</p>
+                    <div class="row" style="border:1px solid black;margin-left: 0px;" >
                         <div class="col-md-6">
                             <p>gšÍe¨ t</p> 
                         </div>
