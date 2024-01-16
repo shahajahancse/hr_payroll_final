@@ -158,20 +158,20 @@
 							<?php if(in_array(25,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(5)">OT Report</button>
 							<?php } ?>
-
+							<?php if(in_array(29,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="daily_report(6)">Daily EOT</button>
+							<?php } ?>
 
 							<?php if(in_array(26,$acl)) { ?>
-								<button class="btn input-sm sbtn" onclick="daily_report(6)">Out & IN Report</button>
+								<button class="btn input-sm sbtn" onclick="daily_report(7)">Out & IN Report</button>
 							<?php } ?>
 							<?php if(in_array(27,$acl)) { ?>
-								<button class="btn input-sm sbtn" onclick="grid_daily_out_punch_miss_report()">Daily Out Punch Miss</button>
+								<button class="btn input-sm sbtn" onclick="daily_report(8)">Daily Out Punch Miss</button>
 							<?php } ?>
 							<?php if(in_array(28,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_costing_report()">Daily Costing</button>
 							<?php } ?>
-							<?php if(in_array(29,$acl)) { ?>
-								<button class="btn input-sm sbtn" onclick="grid_daily_eot()">Daily EOT</button>
-							<?php } ?>
+
 
 
 							<?php if(in_array(30,$acl)) { ?>
@@ -189,13 +189,13 @@
 
 
 							<?php if(in_array(74,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_attendance_summary()">Attendance Summary</button>
+							<button class="btn input-sm sbtn" onclick="daily_report(10)">Attendance Summary</button>
 							<?php } ?>
 							<?php if(in_array(75,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_costing_summary()">Daily Costing Summary</button>
+							<button class="btn input-sm sbtn" onclick="daily_report(9)">Daily Costing Summary</button>
 							<?php } ?>
 							<?php if(in_array(76,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_logout_report()">Daily Logout Report</button>
+							<button class="btn input-sm sbtn" onclick="daily_report(11)">Daily Logout Report</button>
 							<?php } ?>
 						</div>
 						<!-- Daily Reports end -->
@@ -365,7 +365,7 @@
 					<?php if (!empty($employees)) { 
 								foreach ($employees as $key => $emp) { ?>
 					<tr id="removeTr">
-						<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
+						<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
 						</td>
 						<td class="success"><?= $emp->emp_id ?></td>
 						<td class="warning "><?= $emp->name_en ?></td>
@@ -405,7 +405,7 @@
 		                    items += '<tr id="removeTr">';
 		                    items +=
 		                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-		                        value.id + '" ></td>';
+		                        value.emp_id + '" ></td>';
 		                    items += '<td class="success">' + value.emp_id + '</td>';
 		                    items += '<td class="warning ">' + value.name_en + '</td>';
 		                    items += '</tr>';

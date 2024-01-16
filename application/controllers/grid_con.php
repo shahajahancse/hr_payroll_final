@@ -28,15 +28,28 @@ class Grid_con extends CI_Controller {
 		$date = $this->input->post('firstdate');
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		dd($grid_emp_id);
-		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id);
-		$data["col_desig"] 		= "";
-		$data["col_line"] 		= "";
-		$data["col_section"] 	= "";
-		$data["col_dept"] 		= "";
-		$data["col_all"] 		= "";
+		$type = $this->input->post('report_type');
+		// dd($type);
+		$year=date("Y",strtotime($date)); 
+		$month=date("m",strtotime($date)); 
+		$day=date("d",strtotime($date));
+		$grid_emp_id = explode(',', trim($grid_data));
+		// if($type == 2){
+		// 	$data["values"] = $this->grid_model->grid_daily_absent_report($year, $month, $day, $grid_emp_id, $type);
+		// }else{
+			$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
+		// }
+		if($type == 9){
+			// dd("9");
+		    $data['values'] =	$this->grid_model->grid_daily_costing_report($date,$unit_id);
+			$data['unit_id']= $unit_id;
+			$data['date']= $date;
+			$this->load->view('others_report/daily_costing_summary',$data);
+		}
+
 		$data["unit_id"] 		= $unit_id;
+		$data['daily_status']   = $type;
+		$data['date']   		= $date;
 		if(is_string($data["values"])){
 			echo $data["values"];
 		} else {
@@ -707,9 +720,9 @@ class Grid_con extends CI_Controller {
 	{
 		$grid_date = $this->input->post('firstdate');
 		//list($date, $month, $year) = explode('-', trim($grid_date));
-		$grid_unit = $this->input->post('grid_start');
+		$grid_unit = $this->input->post('unit_id');
 		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 
 		$data["values"] = $this->grid_model->grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id);
 		$data["grid_date"]	= date("d-M-Y",strtotime($grid_date));
@@ -1287,25 +1300,7 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	/*function grid_join_letter()
-	{
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		//$grid_data = $this->uri->segment(3);
-		$unit_id = $this->input->post('unit_id');
 
-
-		$query['values'] = $this->grid_model->grid_join_letter($grid_emp_id);
-		$query['unit_id'] = $this->input->post('unit_id');
-		if(is_string($query['values']))
-		{
-			echo $query['values'];
-		}
-		else
-		{
-			$this->load->view('join_letter',$query);
-		}
-	}*/
 	function grid_join_letter(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
@@ -1315,7 +1310,7 @@ class Grid_con extends CI_Controller {
 		if(is_string($query['values'])){
 			echo $query['values'];
 		}else{
-			$this->load->view('join_letter',$query);
+			$this->load->view('joining_letter',$query);
 		}
 	}
 
@@ -1414,7 +1409,7 @@ class Grid_con extends CI_Controller {
 		$status    = $this->input->post('status');
 		$firstdate = 	"2023-12-14";
 		// dd($status);
-		$emp_id = explode('xxx', trim($emp_ids));
+		$emp_id = explode(',', trim($emp_ids));
 		$query['unit_id'] = 	$unit_id;
 		$query['firstdate'] = 	"2023-12-14";
 		$validity = date("Y-m-d",strtotime("+3 year",strtotime($firstdate)));
@@ -1424,7 +1419,12 @@ class Grid_con extends CI_Controller {
 			echo $query['values'];
 		}
 		else{
-			$this->load->view('id_card',$query);
+			// $this->load->view('id_card',$query);
+			if($status == 1){
+				$this->load->view('id_card_bangla',$query);
+			}else{
+				$this->load->view('id_card_eng',$query);
+			}
 		}
 	}
 
