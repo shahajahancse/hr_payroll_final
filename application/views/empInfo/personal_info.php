@@ -70,7 +70,7 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Name (English) <span style="color: red;">*</span> </label>
-									<input type="text" name="name_en" id="name_en" class="form-control input-sm" value="<?= isset($emp_info->name_en)?>" required>
+									<input type="text" name="name_en" id="name_en" class="form-control input-sm english_name" value="<?= isset($emp_info->name_en)?>" required>
 									<?php echo form_error('name_en');?>
 								</div>
 							</div>
@@ -80,28 +80,28 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Name (Bangla) <span style="color: red;">*</span> </label>
-									<input type="text" name="name_bn"  id="name_bn" class="form-control input-sm" value="<?= isset($emp_info->name_bn)?>" required>
+									<input type="text" name="name_bn"  id="name_bn" class="form-control input-sm bangla_name" value="<?= isset($emp_info->name_bn)?>" required>
 									<?php echo form_error('name_bn');?>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Father's Name (Bangla) <span style="color: red;">*</span> </label>
-									<input type="text" name="father_name" id="father_name"  class="form-control input-sm" value="<?= isset($emp_info->father_name)?>" required>
+									<input type="text" name="father_name" id="father_name"  class="form-control input-sm bangla_name" value="<?= isset($emp_info->father_name)?>" required>
 									<?php echo form_error('father_name');?>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Mother's Name (Bangla) <span style="color: red;">*</span> </label>
-									<input type="text" name="mother_name" id="mother_name"  class="form-control input-sm" value="<?= isset($emp_info->mother_name)?>" required>
+									<input type="text" name="mother_name" id="mother_name"  class="form-control input-sm bangla_name" value="<?= isset($emp_info->mother_name)?>" required>
 									<?php echo form_error('mother_name');?>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Spouse Name (Bangla) </label>
-									<input type="text" name="spouse_name" id="spouse_name"  class="form-control input-sm" value="<?= isset($emp_info->spouse_name)?>" >
+									<input type="text" name="spouse_name" id="spouse_name"  class="form-control input-sm bangla_name" value="<?= isset($emp_info->spouse_name)?>" >
 									<?php echo form_error('spouse_name');?>
 								</div>
 							</div>
@@ -239,13 +239,13 @@
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Home Owner Name <span style="color: red;">*</span> </label>
-	                <input type="text" name="pre_home_owner" id="pre_home_owner" class="form-control input-sm" required>
+	                <input type="text" name="pre_home_owner" id="pre_home_owner" class="form-control input-sm english_name" required>
 	                <?php echo form_error('pre_home_owner');?>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
 	              <div class="form-group">
-	                <label>Holding Nume<span style="color: red;">*</span> </label>
+	                <label>Holding Name<span style="color: red;">*</span> </label>
 	                <input type="text" name="holding_num" id="holding_num" class="form-control input-sm" required>
 	                <?php echo form_error('holding_num');?>
 	              </div>
@@ -260,7 +260,7 @@
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Village Name (English)<span style="color: red;">*</span> </label>
-	                <input type="text" name="pre_village" id="pre_village" class="form-control input-sm" required>
+	                <input type="text" name="pre_village" id="pre_village" class="form-control input-sm english_village" required>
 	                <?php echo form_error('pre_village');?>
 	              </div>
 	            </div>
@@ -271,7 +271,7 @@
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Village Name (Bangla) <span style="color: red;">*</span> </label>
-	                <input type="text" name="pre_village_bn" id="pre_village_bn" class="form-control input-sm" required>
+	                <input type="text" name="pre_village_bn" id="pre_village_bn" class="form-control input-sm bangla_village" required>
 	                <?php echo form_error('pre_village_bn');?>
 	              </div>
 	            </div>
@@ -316,14 +316,14 @@
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Village Name (English) <span style="color: red;">*</span> </label>
-	                <input type="text" name="per_village" id="per_village" class="form-control input-sm" required>
+	                <input type="text" name="per_village" id="per_village" class="form-control input-sm english_village" required>
 	                <?php echo form_error('per_village');?>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Village Name (Bangla) <span style="color: red;">*</span> </label>
-	                <input type="text" name="per_village_bn" id="per_village_bn" class="form-control input-sm" required>
+	                <input type="text" name="per_village_bn" id="per_village_bn" class="form-control input-sm bangla_village" required>
 	                <?php echo form_error('per_village_bn');?>
 	              </div>
 	            </div>
@@ -627,14 +627,14 @@
 	              <div class="form-group">
 	                <label>Nominee Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('nominee_name');?>
-	                <input type="text" name="nominee_name" id="nominee_name" class="form-control input-sm" required>
+	                <input type="text" name="nominee_name" id="nominee_name" class="form-control input-sm english_name" required>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Village Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('nominee_vill');?>
-	                <input type="text" name="nominee_vill" id="nominee_vill" class="form-control input-sm" required>
+	                <input type="text" name="nominee_vill" id="nominee_vill" class="form-control input-sm english_village" required>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
@@ -707,7 +707,7 @@
 	              <div class="form-group">
 	                <label>Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_name');?>
-	                <input type="text" name="refer_name" id="refer_name" class="form-control input-sm" required>
+	                <input type="text" name="refer_name" id="refer_name" class="form-control input-sm english_name" required>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
@@ -733,7 +733,7 @@
 	              <div class="form-group">
 	                <label>Village <span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_village');?>
-	                <input type="text" name="refer_village" id="refer_village" class="form-control input-sm" required>
+	                <input type="text" name="refer_village" id="refer_village" class="form-control input-sm english_village" required>
 	              </div>
 	            </div>
 	          </div>	
@@ -897,8 +897,10 @@
   </script>
 
   <script>
-		function emp_id_search(){
-			var id	= $('#employee_id').val();
+		function emp_id_search(id=null){
+			if (id == null) {
+				var id	= $('#employee_id').val();
+			}
 			if(id == ''){
 				alert('Field can not be empty');
 			}
@@ -910,7 +912,6 @@
 				},
 				success: function(e) {
 					var data = e.data;
-					console.log(data);
 					if(e.status == false){
 						alert(e.data);
 						$("#form_id").trigger("reset");
@@ -1234,3 +1235,121 @@
 			});
 		});
 	</script>
+
+
+
+
+<!-- auto complete data -->
+<script>
+	$(function() {
+		$("#employee_id").autocomplete({
+			source: function(request, response) {				
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url('autocomplete/employee_id/'); ?>",
+					dataType: "json",
+					data: {
+						id: request.term
+					},
+					success: function(data) {						
+						response(data);
+					}
+				});
+			},
+			minLength: 2,
+			select: function(event, ui) {
+				emp_id_search(ui.item.value)
+			}
+		});
+	});
+
+
+	$(function() {
+		$(".english_name").autocomplete({
+			source: function(request, response) {				
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url('autocomplete/english_name/'); ?>",
+					dataType: "json",
+					data: {
+						english_name: request.term
+					},
+					success: function(data) {						
+						response(data);
+					}
+				});
+			},
+			minLength: 2
+		});
+	});
+	$(function() {
+		$(".bangla_name").autocomplete({
+			source: function(request, response) {				
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url('autocomplete/bangla_name/'); ?>",
+					dataType: "json",
+					data: {
+						bangla_name: request.term
+					},
+					success: function(data) {						
+						response(data);
+					}
+				});
+			},
+			minLength: 2
+		});
+	});
+
+	$(function() {
+		$(".english_village").autocomplete({
+			source: function(request, response) {				
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url('autocomplete/english_village/'); ?>",
+					dataType: "json",
+					data: {
+						english_village: request.term
+					},
+					success: function(data) {						
+						response(data);
+					}
+				});
+			},
+			minLength: 2
+		});
+	});
+	$(function() {
+		$(".bangla_village").autocomplete({
+			source: function(request, response) {				
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url('autocomplete/bangla_village/'); ?>",
+					dataType: "json",
+					data: {
+						bangla_village: request.term
+					},
+					success: function(data) {						
+						response(data);
+					}
+				});
+			},
+			minLength: 2
+		});
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
