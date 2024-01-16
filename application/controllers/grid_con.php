@@ -1277,17 +1277,12 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_emp_job_application()
-	{
-		//echo "hey";exit;
-		//$grid_data = $this->uri->segment(3);
-		//$grid_emp_id = explode('xxx', trim($grid_data));
+	function grid_emp_job_application(){
 
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 
-		//print_r($grid_emp_id);
 		$query['unit_id'] = $this->input->post('unit_id');
 		$query['values'] = $this->grid_model->grid_emp_job_application($grid_emp_id);
 		if(is_string($query['values']))
@@ -1296,7 +1291,7 @@ class Grid_con extends CI_Controller {
 		}
 		else
 		{
-			$this->load->view('job_application',$query);
+			$this->load->view('job_app',$query);
 		}
 	}
 
