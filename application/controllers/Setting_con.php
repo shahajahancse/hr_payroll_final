@@ -95,7 +95,7 @@ class Setting_con extends CI_Controller {
     {
     	$this->db->select('members.id, members.id_number, pr_units.unit_name');
     	$this->db->join('pr_units', 'members.unit_name = pr_units.unit_id', 'left');
-    	$this->db->where('members.unit_name !=', '0');
+    	// $this->db->where('members.unit_name !=', '0');
     	$this->db->order_by('members.id', 'desc');
 		return $this->db->get('members')->result();
     }
