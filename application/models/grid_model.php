@@ -841,7 +841,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
     $this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'LEFT');
     $this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
-    // $this->db->join('pay_scale_sheet', 'pay_scale_sheet.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
     $this->db->where('pr_emp_shift_log.shift_log_date', $date);
 	if($type == 1){
