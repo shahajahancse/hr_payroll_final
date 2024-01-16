@@ -88,22 +88,24 @@ class Acl_con extends CI_Controller {
 		$data->end_month=date('Y-m',strtotime($data->end_month));
 		echo json_encode($data);
 	}
-		function delete_user_mode($id){
-			$this->db->where('id', $id);
-			if ($this->db->delete('pr_setup_com_report')) {
-				echo 'true';
-			}else{
-				echo 'false';
-			}
 
+	function delete_user_mode($id){
+		$this->db->where('id', $id);
+		if ($this->db->delete('pr_setup_com_report')) {
+			echo 'true';
+		}else{
+			echo 'false';
 		}
-		function edit_user_mode($id){
-			$this->db->where('id', $id);
-			$data=$this->db->get('pr_setup_com_report')->row();
-			$data->start_month=date('Y-m',strtotime($data->start_month));
-			$data->end_month=date('Y-m',strtotime($data->end_month));
-			echo json_encode($data);
-		}
+
+	}
+	
+	function edit_user_mode($id){
+		$this->db->where('id', $id);
+		$data=$this->db->get('pr_setup_com_report')->row();
+		$data->start_month=date('Y-m',strtotime($data->start_month));
+		$data->end_month=date('Y-m',strtotime($data->end_month));
+		echo json_encode($data);
+	}
 	
 	function acl($start=0){
 		$this->data['username'] = $this->data['user_data']->id_number;
