@@ -163,7 +163,7 @@ class Salary_process_model extends CI_Model{
 						'food_allow'  => $food_allow_com,	
 						'trans_allow' => $trans_allow_com,
 					);
-					$data_com["salary_structure"] 		= $salary_structure_com;
+					$data_com["salary_structure"] = $salary_structure_com;
 
 					//=========== END GENERAL INFORMATION ==================
 				
@@ -263,11 +263,12 @@ class Salary_process_model extends CI_Model{
 						'total_holiday'  => $total_holiday,
 						'pay_days' 		 => $pay_days,
 					);
-					$data["day_info"] => $attend_data;
-					$data_com["day_info"] => $attend_data;
+
+					$data["day_info"] = $attend_data;
+					$data_com["day_info"] = $attend_data;
 					$log = $this->get_attendance_log($rows->emp_id, $start_date, $end_date);
-					$data["log_info"] => $log;
-					$data_com["log_info"] => $log;
+					$data["log_info"] = $log;
+					$data_com["log_info"] = $log;
 					//==========END PRESENT sTATUS=================
 
 
