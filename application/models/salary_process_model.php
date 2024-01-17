@@ -44,6 +44,7 @@ class Salary_process_model extends CI_Model{
 			return "Please Finally Processed Previous Month..";
 		}
 		
+		dd($grid_emp_id);
 		$arr = array('10','104','8','47','34','32');
 		$this->db->select("
 				id,
