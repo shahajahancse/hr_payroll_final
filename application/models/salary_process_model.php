@@ -793,11 +793,11 @@ class Salary_process_model extends CI_Model{
 		return $stop_salary;
 	}
 
-    function resign_check($emp_id, $FS_on_date, $FS_off_date)
+    function resign_check($emp_id, $start_date, $end_date)
     {
         $this->db->select('resign_date');
         $this->db->where('emp_id', $emp_id);
-        $this->db->where("resign_date BETWEEN '$FS_on_date' AND '$FS_off_date'");
+        $this->db->where("resign_date BETWEEN '$start_date' AND '$end_date'");
         $query = $this->db->get('pr_emp_resign_history');
         if($query->num_rows() == 0)
         {
@@ -812,11 +812,11 @@ class Salary_process_model extends CI_Model{
         }
     }
 
-    function left_check($emp_id, $FS_on_date, $FS_off_date)
+    function left_check($emp_id, $start_date, $end_date)
     {
         $this->db->select('left_date');
         $this->db->where('emp_id', $emp_id);
-        $this->db->where("left_date BETWEEN '$FS_on_date' AND '$FS_off_date'");
+        $this->db->where("left_date BETWEEN '$start_date' AND '$end_date'");
         $query = $this->db->get('pr_emp_left_history');
         if($query->num_rows() == 0)
         {
@@ -840,7 +840,7 @@ class Salary_process_model extends CI_Model{
         return $total_days + 1;
     }
 
-    function attendance_check($emp_id,$FS_on_date,$FS_off_date)
+    function attendance_check($emp_id,$start_date,$end_date)
     {
         $this->db->select("
                 SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS attend,
@@ -862,7 +862,7 @@ class Salary_process_model extends CI_Model{
             ");
 
         $this->db->where('emp_id',$emp_id);
-        $this->db->where("shift_log_date BETWEEN '$FS_on_date' AND '$FS_off_date'");
+        $this->db->where("shift_log_date BETWEEN '$start_date' AND '$end_date'");
         $query = $this->db->get('pr_emp_shift_log');
         
         return $query->row();
@@ -892,7 +892,7 @@ class Salary_process_model extends CI_Model{
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("present_status !=", 'W');
 		$this->db->where("present_status !=", 'H');
-		$this->db->where("shift_log_date BETWEEN '$FS_on_date' AND '$FS_off_date'");
+		$this->db->where("shift_log_date BETWEEN '$start_date' AND '$end_date'");
 		$query = $this->db->get("pr_emp_shift_log");
 		$row = $query->row();
 		return $row->eot;
