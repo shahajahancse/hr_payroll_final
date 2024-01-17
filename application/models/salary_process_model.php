@@ -112,7 +112,7 @@ class Salary_process_model extends CI_Model{
 						$gross_sal_com 	= $inc_p->new_com_salary;
 					}
 					//============= END INCREMENT AND PROMOTION ===============
-
+					$stop_salary	= $this->stop_salary_check($emp_id,$start_date);
 					$ss 			= $this->common_model->salary_structure($gross_sal);
 					$basic_sal 		= $ss['basic_sal'];
 					$house_rent 	= $ss['house_rent'];
@@ -127,19 +127,29 @@ class Salary_process_model extends CI_Model{
 						'trans_allow' => $trans_allow,
 					);
 					
-					$data["emp_id"] 	= $emp_id;
-					$data["unit_id"] 	= $unit_id;
-					$data["dept_id"] 	= $emp_dept_id;
-					$data["sec_id"] 	= $emp_sec_id;
-					$data["line_id"] 	= $emp_line_id;
-					$data["desig_id"] 	= $desi_id;
-					$data["emp_status"] = $emp_cat_id;
-					$data["gross_sal"] 	= $gross_sal;
+					$data["emp_id"] 			= $emp_id;
+					$data["unit_id"] 			= $unit_id;
+					$data["dept_id"] 			= $emp_dept_id;
+					$data["sec_id"] 			= $emp_sec_id;
+					$data["line_id"] 			= $emp_line_id;
+					$data["desig_id"] 			= $desi_id;
+					$data["stop_salary"] 		= $stop_salary;
+					$data["emp_status"] 		= $emp_cat_id;
+					$data["gross_sal"] 			= $gross_sal;
+					$data["salary_structure"] 	= $salary_structure;
 					
-					$stop_salary		 = $this->stop_salary_check($emp_id,$start_date);
-					$data["stop_salary"] = $stop_salary;
 
 					//COMPLIENCE
+					$data_com["emp_id"] 		= $emp_id;
+					$data_com["unit_id"] 		= $unit_id;
+					$data_com["dept_id"] 		= $emp_dept_id;
+					$data_com["sec_id"] 		= $emp_sec_id;
+					$data_com["line_id"] 		= $emp_line_id;
+					$data_com["desig_id"] 		= $desi_id;
+					$data_com["emp_status"] 	= $emp_cat_id;
+					$data_com["gross_sal"] 		= $gross_sal_com;
+					$data_com["stop_salary"]	= 1;		
+
 					$ssc 		= $this->common_model->salary_structure($gross_sal_com);
 					$basic_sal_com 				= $ssc['basic_sal'];
 					$house_rent_com 			= $ssc['house_rent'];
@@ -153,17 +163,8 @@ class Salary_process_model extends CI_Model{
 						'food_allow'  => $food_allow_com,	
 						'trans_allow' => $trans_allow_com,
 					);
+					$data_com["salary_structure"] 		= $salary_structure_com;
 
-					
-					$data_com["emp_id"] 		= $emp_id;
-					$data_com["unit_id"] 		= $unit_id;
-					$data_com["dept_id"] 		= $emp_dept_id;
-					$data_com["sec_id"] 		= $emp_sec_id;
-					$data_com["line_id"] 		= $emp_line_id;
-					$data_com["desig_id"] 		= $desi_id;
-					$data_com["emp_status"] 	= $emp_cat_id;
-					$data_com["gross_sal"] 		= $gross_sal_com;
-					$data_com["stop_salary"]	= 1;				
 					//=========== END GENERAL INFORMATION ==================
 				
 				
@@ -262,6 +263,11 @@ class Salary_process_model extends CI_Model{
 						'total_holiday'  => $total_holiday,
 						'pay_days' 		 => $pay_days,
 					);
+					$data["day_info"] => $attend_data;
+					$data_com["day_info"] => $attend_data;
+					$log = $this->get_attendance_log($rows->emp_id, $start_date, $end_date);
+					$data["log_info"] => $log;
+					$data_com["log_info"] => $log;
 					//==========END PRESENT sTATUS=================
 
 
@@ -436,7 +442,7 @@ class Salary_process_model extends CI_Model{
 					//============================ ALLOWANCES ========================================
 					//===============================================================================
 					$allowances = $this->get_emp_allowances($desi_id);
-					
+
 					//ATTN. BONUS
 					$att_bouns_present_day = $attend + $weekend;	
 					$eligible_att_bonus_days = $num_of_days - $holiday;
@@ -889,6 +895,34 @@ class Salary_process_model extends CI_Model{
 		$query = $this->db->get("pr_emp_shift_log");
 		$row = $query->row();
 		return $row->eot;
+	}
+
+	function get_attendance_log($emp_id, $start_date, $end_date)
+	{ 
+		$this->db->select('
+			    shift_log_date,
+	            in_time,
+	            out_time,
+	            ot,
+	            eot
+			');
+
+		$this->db->from('pr_emp_shift_log');
+		$this->db->where("emp_id", $emp_id);
+		$this->db->where("shift_log_date BETWEEN '$start_date' and '$end_date'");
+		$this->db->limit(100);
+		$results = $this->db->get()->result();
+		$obj = array();
+		foreach ($results as $key => $rows) {
+			$obj[$key] = array(
+				'log_date' 		=> $rows->shift_log_date,
+				'in_time' 		=> $rows->in_time,
+				'out_time' 		=> $rows->out_time,
+				'ot' 		 	=> $rows->ot,
+				'eot' 		 	=> $rows->eot,
+			);
+		}
+		return $obj;
 	}
 
 
