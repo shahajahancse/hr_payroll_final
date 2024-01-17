@@ -136,7 +136,7 @@ class Salary_process_model extends CI_Model{
 					$data["stop_salary"] 		= $stop_salary;
 					$data["emp_status"] 		= $emp_cat_id;
 					$data["gross_sal"] 			= $gross_sal;
-					$data["salary_structure"] 	= $salary_structure;
+					$data["salary_structure"] 	= json_encode($salary_structure);
 					
 
 					//COMPLIENCE
@@ -163,7 +163,7 @@ class Salary_process_model extends CI_Model{
 						'food_allow'  => $food_allow_com,	
 						'trans_allow' => $trans_allow_com,
 					);
-					$data_com["salary_structure"] = $salary_structure_com;
+					$data_com["salary_structure"] = json_encode($salary_structure_com);
 
 					//=========== END GENERAL INFORMATION ==================
 				
@@ -264,11 +264,11 @@ class Salary_process_model extends CI_Model{
 						'pay_days' 		 => $pay_days,
 					);
 
-					$data["day_info"] = $attend_data;
-					$data_com["day_info"] = $attend_data;
+					$data["day_info"] = json_encode($attend_data);
+					$data_com["day_info"] = $data["day_info"];
 					$log = $this->get_attendance_log($id, $start_date, $end_date);
-					$data["log_info"] = $log;
-					$data_com["log_info"] = $log;
+					$data["log_info"] = json_encode($log);
+					$data_com["log_info"] = $data["log_info"];
 					//==========END PRESENT sTATUS=================
 
 
