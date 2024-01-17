@@ -224,7 +224,7 @@ class Salary_process_model extends CI_Model{
 		            }
 	
 					// $absent = "A"; $absent = $this->attendance_check($rows->emp_id,$absent,$total_days, $search_date);
-					$attendances = $this->attendance_check($rows->emp_id, $start_date, $end_date);
+					$attendances = $this->attendance_check($id, $start_date, $end_date);
 					$attend  =  $attendances->attend;
 					$absent  =  $attendances->absent;
 					$weekend =  $attendances->weekend;
@@ -266,7 +266,7 @@ class Salary_process_model extends CI_Model{
 
 					$data["day_info"] = $attend_data;
 					$data_com["day_info"] = $attend_data;
-					$log = $this->get_attendance_log($rows->emp_id, $start_date, $end_date);
+					$log = $this->get_attendance_log($id, $start_date, $end_date);
 					$data["log_info"] = $log;
 					$data_com["log_info"] = $log;
 					//==========END PRESENT sTATUS=================
@@ -540,7 +540,7 @@ class Salary_process_model extends CI_Model{
 						$ot_eot_12am_hour = $attendances->ot_eot_12am;
 						$ot_eot_4pm_hour  = $attendances->ot_eot_4pm;
 						$modify_eot_hour  = $attendances->modify_eot;
-						$eot_hour_for_sa  = $this->eot_without_holi_weekend($emp_id, $start_date, $end_date);
+						$eot_hour_for_sa  = $this->eot_without_holi_weekend($id, $start_date, $end_date);
 						$eot_hour 		  = $collect_eot_hour + $modify_eot_hour - $deduct_hour;
 
 						$eot_amount 		= round($eot_hour * $ot_rate);;
