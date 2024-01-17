@@ -44,7 +44,7 @@ class Salary_process_model extends CI_Model{
 			return "Please Finally Processed Previous Month..";
 		}
 		
-		dd($grid_emp_id);
+		// dd($grid_emp_id);
 		$arr = array('10','104','8','47','34','32');
 		$this->db->select("
 				id,
@@ -95,7 +95,7 @@ class Salary_process_model extends CI_Model{
 				$ot_check 		= $rows->ot_entitle;
 				
 				$sp_eligibility = $this->salary_process_eligibility($emp_id, $start_date, $gross_sal);
-				
+
 				if($sp_eligibility == true)
 				{
 					//========== FOR INCREMENT AND PROMOTION ================
@@ -486,15 +486,15 @@ class Salary_process_model extends CI_Model{
 					$total_allaw = $weekend_allowance + $holiday_allowance + $night_allowance;
 
 					$data["att_bonus"] 				= $att_bouns;
-					$data["holiday_alo_count"] 		= $allowances;
-					$data["holiday_allowance"] 		= $allowances;
-					$data["holiday_allowance_rate"] = $allowances;
-					$data["weekend_alo_count"] 		= $allowances;
-					$data["weekend_allowance"] 		= $allowances;
-					$data["weekend_allowance_rate"] = $allowances;
-					$data["night_alo_count"] 		= $allowances;
-					$data["night_allowance"] 		= $allowances;
-					$data["night_allowance_rate"] 	= $allowances;
+					$data["holiday_alo_count"] 		= $holiday_alo_count;
+					$data["holiday_allowance"] 		= $holiday_allowance;
+					$data["holiday_allowance_rate"] = $holiday_allowance_rate;
+					$data["weekend_alo_count"] 		= $weekend_alo_count;
+					$data["weekend_allowance"] 		= $weekend_allowance;
+					$data["weekend_allowance_rate"] = $weekend_allowance_rate;
+					$data["night_alo_count"] 		= $night_alo_count;
+					$data["night_allowance"] 		= $night_allowance;
+					$data["night_allowance_rate"] 	= $night_allowance_rate;
 					$data["total_allaw"] 			= $total_allaw;
 					
 					//COMPLIENCE
@@ -707,7 +707,7 @@ class Salary_process_model extends CI_Model{
 	function join_range_check($emp_id, $salary_year_month)
 	{
 		$this->db->select('emp_join_date');
-		$this->db->where('id', $emp_id);
+		$this->db->where('emp_id', $emp_id);
 		$this->db->where("trim(substr(emp_join_date,1,7)) <= '$salary_year_month'");
 		$query = $this->db->get('pr_emp_com_info');
 		if($query->num_rows() > 0)
