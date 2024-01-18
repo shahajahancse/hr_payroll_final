@@ -258,6 +258,7 @@
         // on load employee
         function grid_emp_list() {
             var unit = document.getElementById('unit_id').value;
+            alert(unit);
             var dept = document.getElementById('dept').value;
             var section = document.getElementById('section').value;
             var line = document.getElementById('line').value;
@@ -265,6 +266,7 @@
             var status = document.getElementById('status').value;
             var stop_salary = document.getElementById('stop_salary').value;
             var salary_month = document.getElementById('salary_month').value;
+            if (unit == '' || unit == 'unde') {}
 
             url = hostname + "common/salary_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
             $.ajax({
