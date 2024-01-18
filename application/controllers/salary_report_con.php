@@ -38,6 +38,39 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('salary_report/actual_monthly_salary_sheet', $data);
 	}
 
+	function monthly_salary_sheet($type = null)
+	{
+		$sal_year_month = $this->input->post('sal_year_month');
+		$custom_salarydate = $this->input->post('custom_salarydate');
+		$grid_status 	= $this->input->post('grid_status');
+		$grid_data 		= $this->input->post('spl');
+		$salary_draw 	= $this->input->post('salary_draw');
+		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_unit		= $this->input->post('unit_id');
+		$this->load->model('common_model');
+
+		$data["value"] = $this->grid_model->monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id);
+		$data["salary_month"] = $sal_year_month;
+		$data["grid_emp_id"] = $grid_emp_id;
+		$data["grid_status"]  = $grid_status;
+		$data["unit_id"]  = $grid_unit;
+
+		$this->load->view('salary_report/monthly_salary_sheet', $data);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	function grid_actual_monthly_salary_sheet_excel()
 	{
@@ -55,26 +88,6 @@ class Salary_report_con extends CI_Controller {
 		$data["unit_id"]  = $grid_unit;
 
 		$this->load->view('grid_actual_monthly_salary_sheet_excel', $data);
-	}
-
-	function monthly_salary_sheet()
-	{
-		$sal_year_month = $this->input->post('sal_year_month');
-		$custom_salarydate = $this->input->post('custom_salarydate');
-		$grid_status 	= $this->input->post('grid_status');
-		$grid_data 		= $this->input->post('spl');
-		$salary_draw 	= $this->input->post('salary_draw');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		$grid_unit		= $this->input->post('unit_id');
-		$this->load->model('common_model');
-
-		$data["value"] = $this->grid_model->grid_actual_monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id);
-		$data["salary_month"] = $sal_year_month;
-		$data["grid_emp_id"] = $grid_emp_id;
-		$data["grid_status"]  = $grid_status;
-		$data["unit_id"]  = $grid_unit;
-
-		$this->load->view('monthly_salary_sheet', $data);
 	}
 
 	function monthly_salary_sheet_nine_pm()

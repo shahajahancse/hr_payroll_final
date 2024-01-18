@@ -64,7 +64,7 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
-	// new salary report generate
+	// compliance salary report generate
 	function monthly_salary_sheet($salary_month, $status, $emp_id)
 	{
 
@@ -89,9 +89,9 @@ class Grid_model extends CI_Model{
 				emp_line_num.line_name_bn, 
 
 				pr_grade.gr_name,
-				pay_salary_sheet.*,
+				pay_salary_sheet_com.*,
 			');
-		$this->db->from('pay_salary_sheet');
+		$this->db->from('pay_salary_sheet_com');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('emp_depertment');
@@ -100,19 +100,20 @@ class Grid_model extends CI_Model{
 		$this->db->from('emp_line_num');
 		$this->db->from('pr_grade');
 
-		$this->db->where_in('pay_salary_sheet.emp_id', $emp_id);
-		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_per_info.emp_id');
-		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id    = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id    = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_sec_id     = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_line_id    = emp_line_num.id');
-		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where("pay_salary_sheet.salary_month  = '$salary_month'");
-		$this->db->order_by("pay_salary_sheet.emp_id","ASC");
+		$this->db->where_in('pay_salary_sheet_com.emp_id', $emp_id);
+		$this->db->where('pay_salary_sheet_com.emp_id 		 = pr_emp_per_info.emp_id');
+		$this->db->where('pay_salary_sheet_com.emp_id 		 = pr_emp_com_info.emp_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id    	 = emp_depertment.dept_id');
+		$this->db->where('pr_emp_com_info.emp_desi_id    	 = emp_designation.id');
+		$this->db->where('pr_emp_com_info.emp_sec_id     	 = emp_section.id');
+		$this->db->where('pr_emp_com_info.emp_line_id    	 = emp_line_num.id');
+		$this->db->where('pr_emp_com_info.emp_sal_gra_id 	 = pr_grade.gr_id');
+		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
+		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
 		$query = $this->db->get();
 		return $query->result();
 	}
+
 
 
 
