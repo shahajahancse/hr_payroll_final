@@ -606,7 +606,7 @@ class Salary_process_model extends CI_Model{
 					$data_com["net_pay"] = $gross_sal_com + $att_bouns + $ot_amount - $total_deduction_com ;//Zuel 140420
 
 					
-					dd($data);
+					// dd($data);
 
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
