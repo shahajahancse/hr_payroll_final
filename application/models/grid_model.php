@@ -164,7 +164,7 @@ class Grid_model extends CI_Model{
 		$this->db->where("pay_salary_sheet.eot_hour     > ",0);
 		$this->db->order_by("pay_salary_sheet.emp_id","ASC");
 		$this->db->order_by("pr_emp_com_info.emp_id");
-		$this->db->order_by("pr_designation.desig_name");
+		$this->db->order_by("emp_designation.desig_name");
 		$query = $this->db->get();	
 		return $query->result();
 		
