@@ -70,7 +70,7 @@ function actual_monthly_salary_sheet()
 	}
 
 	
-	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&spl="+sql+"&stop_salary="+stop_salary+"&status="+status;
+	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/actual_monthly_salary_sheet/";
 
    // $(".clearfix").dialog("open");

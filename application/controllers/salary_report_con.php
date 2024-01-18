@@ -26,7 +26,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_unit	  = $this->input->post('grid_unit');
 		$stop_salary  = $this->input->post('stop_salary');
 		$status 	  = $this->input->post('status');
-		$spl 		  = $this->input->post('spl');
+		$sql 		  = $this->input->post('sql');
 		$grid_emp_id  = explode(',', trim($sql));
 
 		$data["value"] = $this->grid_model->actual_monthly_salary_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id);
