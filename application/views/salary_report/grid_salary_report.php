@@ -170,10 +170,10 @@
                             <button class="btn input-sm sbtn" onclick="grid_pay_slip_actual()">Actual Pay Slip </button>
                             <?php } ?>
                             <?php if(in_array(83,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_mix_salary_sheet()">Salary Sheet BFL</button>
+                            <!-- <button class="btn input-sm sbtn" onclick="grid_mix_salary_sheet()">Salary Sheet BFL</button> -->
                             <?php } ?>
                             <?php if(in_array(84,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_actual_monthly_salary_sheet_with_eot()">Act. Monthly Sal. Sheet EOT</button>
+                            <!-- <button class="btn input-sm sbtn" onclick="grid_actual_monthly_salary_sheet_with_eot()">Act. Monthly Sal. Sheet EOT</button> -->
                             <?php } ?>
 
 
