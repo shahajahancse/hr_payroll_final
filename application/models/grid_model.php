@@ -8618,15 +8618,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	function grid_emp_job_application($grid_emp_id){
 		// dd($grid_emp_id);
 		$this->db->select('
-		pr_emp_per_info.name_bn,
-		pr_emp_per_info.father_name,
-		pr_emp_per_info.mother_name,
-		pr_emp_per_info.per_village_bn, 
-		pr_emp_per_info.pre_village_bn, 
-		pr_emp_per_info.spouse_name, 
-		pr_emp_per_info.emp_dob,
-		pr_emp_per_info.emp_religion,
-		pr_emp_per_info.bank_bkash_no, 
+		pr_emp_per_info.* ,
 		pr_emp_sex.sex_name,
 		pr_emp_com_info.emp_join_date, 
 		pr_emp_blood_groups.blood_name,

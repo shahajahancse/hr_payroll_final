@@ -49,13 +49,13 @@
                 </div>
             </div>
             <div class="d-flex mt-2">
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL :</span></p>
                 </div>
-                <div class="col-md-6 ">
-                    <h3 class="text-center"><b style="border: 2px solid black;">wb‡qvM cÎ</b></h3>
+                <div class="col-md-4 ">
+                    <h3 class="text-center"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">wb‡qvM cÎ</b></h3>
                 </div>
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <p class="text-center">kªwgK Kwc</p>
                 </div>
             </div>
@@ -71,12 +71,12 @@
                         <tr>
                             <th>eZ©gvb wVKvbv </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"><?php echo $value->per_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
+                            <td><span style="font-size:12px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
                         </tr>
                         <tr>
                             <th>¯’vqx wVKvbv </th>
                             <td> t </td>
-                            <td> </td>
+                            <td><span style="font-size:12px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> </td>
                         </tr>
                     </table>
                 </div>
@@ -102,33 +102,38 @@
                         <tr>
                             <th>g~j gRyix</th>
                             <td>t</td>
-                            <td> <span style='font-size:12px'><?php echo $value->salary?> UvKv</td>
+                            <td> <?php 
+                            
+                             $basic = round(($value->salary -(1250+450+750)) / 1.5);
+                             echo $basic;
+                            
+                            ?> UvKv</td>
                         </tr>
                         <tr>
                             <th>evox fvov (g~j gRyixi 50%)</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> <?php echo round($basic/2)?> UvKv</td>
                         </tr>
                         <tr>
                             <th>wPwKrmv fvZv</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> 750 UvKv</td>
                         </tr>
                         <tr>
                             <th>hvZvqvZ fvZv</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> 450 UvKv</td>
                         </tr>
                         <tr style="border-bottom:1px solid black">
                             <th>Lv`¨ fvZv</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> 1250 UvKv</td>
                         </tr>
                         <tr>
                             <th>gvwmK me©‡gvU</th>
                             <th>t</td>
-                            <th> <span style='font-size:12px'><?php echo $value->salary?></span> UvKv</th>
-                            <th>K_vq : (†lvj nvRvi cvuPkZ UvKv|)</th>
+                            <th> <span><?php echo $value->salary?></span> UvKv</th>
+                            <!-- <th>K_vq : (†lvj nvRvi cvuPkZ UvKv|)</th> -->
                         </tr>
                     </table>
                     </p>
@@ -187,8 +192,8 @@
                 </div>
                 <div class="col-md-6 align-self-end justify-content-end">
                     <p>¯^vÿi t ................ √.......................</p>
-                    <p>bvg t পূর্ণমিা দাস</p>
-                    <p>c`ex t স্যাম্পল ম্যান</p>
+                    <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
+                    <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
                 </div>
             </div>
         
@@ -214,7 +219,7 @@
                     <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL :</span></p>
                 </div>
                 <div class="col-md-6 ">
-                    <h3 class="text-center"><b style="border: 2px solid black;">wb‡qvM cÎ</b></h3>
+                    <h3 class="text-center"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">wb‡qvM cÎ</b></h3>
                 </div>
                 <div class="col-md-3 ">
                     <p class="text-center">Awdm Kwc</p>
@@ -233,12 +238,12 @@
                         <tr>
                             <th>eZ©gvb wVKvbv </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"><?php echo $value->per_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
+                            <td><span style="font-size:12px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
                         </tr>
                         <tr>
                             <th>¯’vqx wVKvbv </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"><?php echo $value->pre_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span></td>
+                            <td><span style="font-size:12px"><?php echo $value->per_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span></td>
                         </tr>
                     </table>
                 </div>
@@ -266,33 +271,38 @@
                         <tr>
                             <th>g~j gRyix</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> <?php 
+                            
+                             $basic = round(($value->salary -(1250+450+750)) / 1.5);
+                             echo $basic;
+                            
+                            ?> UvKv</td>
                         </tr>
                         <tr>
                             <th>evox fvov (g~j gRyixi 50%)</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> <?php echo round($basic/2)?> UvKv</td>
                         </tr>
                         <tr>
                             <th>wPwKrmv fvZv</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> 750 UvKv</td>
                         </tr>
                         <tr>
                             <th>hvZvqvZ fvZv</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> 450 UvKv</td>
                         </tr>
                         <tr style="border-bottom:1px solid black">
                             <th>Lv`¨ fvZv</th>
                             <td>t</td>
-                            <td> 9767 UvKv</td>
+                            <td> 1250 UvKv</td>
                         </tr>
                         <tr>
                             <th>gvwmK me©‡gvU</th>
                             <th>t</td>
-                            <th> 39767 UvKv</th>
-                            <th>K_vq : (†lvj nvRvi cvuPkZ UvKv|)</th>
+                            <th> <span><?php echo $value->salary?></span> UvKv</th>
+                            <!-- <th>K_vq : (†lvj nvRvi cvuPkZ UvKv|)</th> -->
                         </tr>
                     </table>
                     </p>
@@ -358,8 +368,8 @@
                 </div><br>
                 <div class="col-md-6 align-self-end justify-content-end">
                     <p>¯^vÿi t ................ √.......................</p>
-                    <p>bvg t পূর্ণমিা দাস</p>
-                    <p>c`ex t স্যাম্পল ম্যান</p>
+                    <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
+                    <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
                 </div>
             </div>
         </div>
@@ -383,7 +393,7 @@
                 </div>
             </div>
             <!-- <div class="row"> -->
-            <h3 class="text-center mt-2"><b style="border: 2px solid black;">Kv‡R †hvM`vb cÎ</b></h3>
+            <h3 class="text-center mt-2"><b style="border: 2px solid black;padding-left:6px;padding-right:6px;">Kv‡R †hvM`vb cÎ</b></h3>
             <!-- </div> -->
             <div class="row mt-4">
                 <div class="col-md-6 mt-4">
@@ -517,7 +527,7 @@
                 </div>
             </div>
             <!-- <div class="row"> -->
-            <h3 class="text-center mt-2"><b style="border: 2px solid black;">Av‡e`b cÎ</b></h3>
+            <h3 class="text-center mt-2"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">Av‡e`b cÎ</b></h3>
             <!-- </div> -->
             <div class="row">
                 <div class="col-md-6 mt-4">
@@ -581,8 +591,8 @@
         
                     <div style="float: right;">
                         <p>¯^vÿi t ................ √.......................</p>
-                        <p>bvg t পূর্ণমিা দাস</p>
-                        <p>c`ex t স্যাম্পল ম্যান</p>
+                        <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
+                        <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
                     </div>
         
                     <div style="float: left;border: 1px solid black;display: block; width: 100%; margin-top: 5px;">
@@ -621,7 +631,7 @@
                 </div>
             </div>
             <div class="d-flex flex-column align-items-center">
-                <p class="mt-2" style="border: 2px solid black;">dig bs-41</p>
+                <p class="mt-2" style="border: 2px solid black;padding-left:4px;padding-right:4px;">dig bs-41</p>
                 <p>[ aviv 19, 131 (1) (K), 155 (2), 234, 264, 265 I 273 Ges wewa 118 (1) 136, 232 (2), 262 (1), 289 (1) I 321
                     (1) `ªóe¨ ]</p>
                 <p>Rgv I wewfbœ Lv‡Z cÖvc¨ A_© cwi‡kv‡ai †Nvlbv I g‡bvq‡bi dig|</p>
@@ -803,3 +813,4 @@
     </body>
 
 </html>
+
