@@ -183,11 +183,11 @@
                             <?php if(in_array(86,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_pay_slip_com()">Pay Slip</button>
                             <?php } ?>
-
-
                             <?php if(in_array(86,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_bank_note_req()">Montly Bank Req.</button>
                             <?php } ?>
+
+
                             <?php if(in_array(86,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_monthly_eot_sheet()">Monthly EOT Sheets</button>
                             <?php } ?>

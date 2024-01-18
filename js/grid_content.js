@@ -114,7 +114,6 @@ function monthly_salary_sheet()
 		return false;
 	}
 
-	
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/monthly_salary_sheet/";
 
@@ -133,88 +132,92 @@ function monthly_salary_sheet()
 	}
 }
 
-
-function monthly_salary_sheet_nine_pm()
+function grid_monthly_eot_sheet()
 {
-	var ajaxRequest;  // The variable that makes Ajax possible!
-
-	try{
-	   // Opera 8.0+, Firefox, Safari
-	   ajaxRequest = new XMLHttpRequest();
-	}catch (e){
-	   // Internet Explorer Browsers
-	   try{
-	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-	   }catch (e) {
-	      try{
-	         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-	      }catch (e){
-	         // Something went wrong
-	         alert("Your browser broke!");
-	         return false;
-	      }
-	   }
-	}
-
-	var report_month_sal = document.getElementById('report_month_sal').value;
-	if(report_month_sal =='')
+	var salary_month = document.getElementById('salary_month').value;
+	if(salary_month =='')
 	{
-		alert("Please select month");
-		return false;
-	}
-
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
+		alert("Please select month ");
 		return false;
 	}
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
-		alert("Please select Category options");
+		alert("Please select Unit options");
 		return false;
 	}
 
-	var salary_draw = document.getElementById('grid_w_type').value;
-	var grid_section = document.getElementById('grid_section').value;
-
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
+	var stop_salary = document.getElementById('stop_salary').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
-
 	if (sql == '') {
 		alert('Please select employee Id');
 		return false;
 	}
-		var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select unit !");
-		return false;
-	}
+	
+	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
+   url =  hostname+"salary_report_con/grid_monthly_eot_sheet/";
 
-	
-	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw;
-   url =  hostname+"index.php/salary_report_con/monthly_salary_sheet_nine_pm/";
-   $(".clearfix").dialog("open");
+	ajaxRequest = new XMLHttpRequest();
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
+
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			sal_sheet_actual.document.write(resp);
-			//sal_sheet_actual.stop();
 		}
 	}
 }
+
+function eot_summary_report()
+{
+	var salary_month = document.getElementById('salary_month').value;
+	if(salary_month =='')
+	{
+		alert("Please select month ");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Unit options");
+		return false;
+	}
+
+	var status = document.getElementById('status').value;
+	var stop_salary = document.getElementById('stop_salary').value;
+
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	
+	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
+   url =  hostname+"salary_report_con/eot_summary_report/";
+
+	ajaxRequest = new XMLHttpRequest();
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+   ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			sal_sheet_actual.document.write(resp);
+		}
+	}
+}
+
 
 
 
@@ -6155,70 +6158,7 @@ function grid_comprative_salary_statement()
 		}
 	}
 }
-function eot_summary_report()
-{
-var ajaxRequest;  // The variable that makes Ajax possible!
 
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-	var report_month_sal = document.getElementById('report_month_sal').value;
-	if(report_month_sal =='')
-	{
-		alert("Please select month");
-		return false;
-	}
-
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select Unit");
-		return false;
-	}
-
-	var grid_status = document.getElementById('grid_status').value;
-	//alert(grid_status);
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	// var stop_salary = document.getElementById('grid_stop_salary').value;
-	
-	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id/*+"&stop_salary="+stop_salary*/;
-   url =  hostname+"index.php/salary_report_con/eot_summary_report/";
-   $(".clearfix").dialog("open");
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			
-			eot_summary = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			eot_summary.document.write(resp);
-			//eot_summary.stop();
-		}
-	}
-}
 function eot_summary_report_sec()
 {
 var ajaxRequest;  // The variable that makes Ajax possible!
@@ -8601,85 +8541,7 @@ function grid_monthly_allowance_register()
 	monthly_allowance.moveTo(0,0);
 }
 
-function grid_monthly_eot_sheet()
-{
-	var ajaxRequest;  // The variable that makes Ajax possible!
 
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-	var report_month_sal = document.getElementById('report_month_sal').value;
-	if(report_month_sal =='')
-	{
-		alert("Please select month");
-		return false;
-	}
-
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
-
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select Unit");
-		return false;
-	}
-
-	var grid_section = document.getElementById('grid_section').value;
-	if(grid_section =='Select')
-	{
-		alert("Please select Section options.");
-		return false;
-	}
-
-	var grid_status = document.getElementById('grid_status').value;
-
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
-var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-
-	// 
-	// 
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
-   url =  hostname+"index.php/salary_report_con/grid_monthly_eot_sheet/";
-   $(".clearfix").dialog("open");
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			
-			monthly_eot_sheet = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			monthly_eot_sheet.document.write(resp);
-			//monthly_eot_sheet.stop();
-		}
-	}
-}
 function grid_monthly_weekend_allowance_sheet()
 {
 	var ajaxRequest;  // The variable that makes Ajax possible!
