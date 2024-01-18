@@ -64,6 +64,25 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// =======================================================
+		// old code
+	// =======================================================
+
 	function grid_nominee($grid_emp_id)
 	{
 		$this->db->select('pr_emp_skill.*,pr_emp_edu.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, emp_depertment.dept_name,emp_depertment.dept_bangla, emp_section.sec_name_en, emp_line_num.line_name, emp_line_num.line_bangla,emp_designation.desig_name,emp_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname_bn, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add_ban');
