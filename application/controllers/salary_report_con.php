@@ -89,7 +89,7 @@ class Salary_report_con extends CI_Controller {
 		$sql 		  = $this->input->post('sql');
 		$grid_emp_id  = explode(',', trim($sql));
 
-		$data["value"] = $this->grid_model->eot_summary_report($salary_month, $stop_salary, $grid_emp_id, $unit_id);
+		$data["value"] = $this->grid_model->summary_report($salary_month, $stop_salary, $grid_emp_id, $unit_id);
 		dd($data["value"]);
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
@@ -99,6 +99,27 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('salary_report/eot_summary_report',$data);
 		// $this->load->view('eot_summary',$data);
 	}
+
+	function salary_summary()
+	{
+		$salary_month = date('Y-m-01', strtotime($this->input->post('salary_month')));
+		$unit_id 	  = $this->input->post('unit_id');
+		$grid_unit	  = $this->input->post('grid_unit');
+		$stop_salary  = $this->input->post('stop_salary');
+		$status 	  = $this->input->post('status');
+		$sql 		  = $this->input->post('sql');
+		$grid_emp_id  = explode(',', trim($sql));
+
+		$data["value"] = $this->grid_model->summary_report($salary_month, $stop_salary, $grid_emp_id, $unit_id);
+		dd($data["value"]);
+		$data["salary_month"] = $salary_month;
+		$data["grid_emp_id"]  = $grid_emp_id;
+		$data["grid_status"]  = $status;
+		$data["unit_id"]      = $unit_id;
+		
+		$this->load->view('salary_report/salary_summary',$data);
+	}
+
 
 
 
@@ -366,24 +387,6 @@ class Salary_report_con extends CI_Controller {
 		$rows_deduct = $query_ded->row();
 		$deduct_status = $rows_deduct ->deduct_status;
 		return $deduct_status;
-	}
-
-	function salary_summary()
-	{
-		//$salary_month = $this->uri->segment(3);
-		//$grid_status = $this->uri->segment(4);
-		//$grid_unit = $this->uri->segment(5);
-		$salary_month 	= $this->input->post('sal_year_month');
-		$grid_status 	= $this->input->post('grid_status');
-		$grid_unit 	= $this->input->post('unit_id');
-		$stop_salary 	= $this->input->post('stop_salary');
-
-		$data["values"] = $this->grid_model->salary_summary($salary_month,$grid_status,$grid_unit,$stop_salary);
-		$data["salary_month"] 	= $salary_month;
-		$data["unit_id"] 		= $grid_unit;
-		$data["grid_status"] 	= $grid_status;
-		//print_r($data);
-		$this->load->view('salary_summary',$data);
 	}
 
 	function sec_salary_summary()
