@@ -156,7 +156,7 @@
                             <button class="btn input-sm sbtn" onclick="grid_pay_slip()">Pay Slip</button>
                             <?php } ?>
                             <?php if(in_array(79,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="sal_summary_report()">Actual Salary Summary</button>
+                            <button class="btn input-sm sbtn" onclick="salary_summary()">Actual Salary Summary</button>
                             <?php } ?>
                             <?php if(in_array(80,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="sec_sal_summary_report()">Sec Wise Salary Summary</button>

@@ -1,9 +1,9 @@
- function get_checked_value(checkboxes) {
-    var vals = Array.from(checkboxes)
+function get_checked_value(checkboxes) {
+   var vals = Array.from(checkboxes)
       .filter(checkbox => checkbox.checked)
       .map(checkbox => checkbox.value)
       .join(",");
-  }
+}
 
 function daily_report(s) {
 	// alert(s);
@@ -218,6 +218,48 @@ function eot_summary_report()
 	}
 }
 
+function salary_summary()
+{
+	var salary_month = document.getElementById('salary_month').value;
+	if(salary_month =='')
+	{
+		alert("Please select month ");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Unit options");
+		return false;
+	}
+
+	var status = document.getElementById('status').value;
+	var stop_salary = document.getElementById('stop_salary').value;
+
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	
+	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
+   url =  hostname+"salary_report_con/salary_summary/";
+
+	ajaxRequest = new XMLHttpRequest();
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+   ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			sal_sheet_actual.document.write(resp);
+		}
+	}
+}
 
 
 
@@ -5685,73 +5727,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	}
 
 }
-function sal_summary_report()
-{
 
-	 var ajaxRequest;  // The variable that makes Ajax possible!
-
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-	var report_month_sal = document.getElementById('report_month_sal').value;
-	if(report_month_sal =='')
-	{
-		alert("Please select month");
-		return false;
-	}
-
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select Unit");
-		return false;
-	}
-
-	var grid_status = document.getElementById('grid_status').value;
-	//var stop_salary = document.getElementById('grid_stop_salary').value;
-	var stop_salary = 1;
-
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-
-	
-	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
-   url =  hostname+"index.php/salary_report_con/salary_summary/";
-   $(".clearfix").dialog("open");
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			
-			summary_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			summary_report.document.write(resp);
-			//summary_report.stop();
-		}
-	}
-}
 function sec_sal_summary_report()
 {
 
