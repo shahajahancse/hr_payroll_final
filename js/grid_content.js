@@ -72,11 +72,13 @@ function actual_monthly_salary_sheet()
 	
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&spl="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/actual_monthly_salary_sheet/";
-   $(".clearfix").dialog("open");
+
+   // $(".clearfix").dialog("open");
 	ajaxRequest = new XMLHttpRequest();
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
+
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
