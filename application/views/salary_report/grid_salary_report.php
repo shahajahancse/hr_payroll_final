@@ -266,7 +266,10 @@
             var status = document.getElementById('status').value;
             var stop_salary = document.getElementById('stop_salary').value;
             var salary_month = document.getElementById('salary_month').value;
-            if (unit == '' || unit == 'unde') {}
+
+            if (typeof unit === "undefined" || unit = '') {
+                return 'Please Select Unit First';
+            }
 
             url = hostname + "common/salary_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
             $.ajax({
