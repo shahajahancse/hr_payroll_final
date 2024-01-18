@@ -33,7 +33,7 @@ class Salary_report_con extends CI_Controller {
 		dd($data["value"]);
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
-		$data["grid_status"]  = $status;
+		$data["grid_status"]  = $status;  //grid_monthly_eot_sheet  eot_summary_report()  
 		$data["unit_id"]      = $unit_id;
 		$this->load->view('salary_report/actual_monthly_salary_sheet', $data);
 	}

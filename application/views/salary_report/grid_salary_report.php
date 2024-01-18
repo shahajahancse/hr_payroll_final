@@ -183,6 +183,20 @@
                             <?php if(in_array(86,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_pay_slip_com()">Pay Slip</button>
                             <?php } ?>
+
+
+                            <?php if(in_array(86,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_bank_note_req()">Montly Bank Req.</button>
+                            <?php } ?>
+                            <?php if(in_array(86,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_monthly_eot_sheet()">Monthly EOT Sheets</button>
+                            <?php } ?>
+                            <?php if(in_array(86,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="eot_summary_report()">EOT Summary Report</button>
+                            <?php } ?>
+                            <?php if(in_array(86,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_monthly_stop_sheet()">Stop Salary Sheet</button>
+                            <?php } ?>
                         </div>
                         <!-- salary report end  -->
 
@@ -205,6 +219,9 @@
                             <?php } ?>
                             <?php if(in_array(92,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_maternity_benefit()">Maternity Benefit Report</button>
+                            <?php } ?>
+                            <?php if(in_array(92,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="act_advance_salary_sheet()">Act. Adv. Sal. Sheet</button>
                             <?php } ?>
                         </div>
                         <!-- Others Benefit Report end -->
