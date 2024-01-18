@@ -182,17 +182,17 @@ class Grid_model extends CI_Model{
                 SUM( CASE WHEN com.salary_draw = 1 THEN ss.gross_sal ELSE 0 END ) AS cash_sum,
                 SUM( CASE WHEN com.salary_draw = 2 THEN ss.gross_sal ELSE 0 END ) AS bank_sum,
 
-                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_hour' ELSE 0 END ) AS eot_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.eot_hour' ELSE 0 END ) AS eot_bank_sum,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_hour ELSE 0 END ) AS eot_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_hour ELSE 0 END ) AS eot_bank_sum,
 
-                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_hr_for_sa' ELSE 0 END ) AS eot_hr_for_sa_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.eot_hr_for_sa' ELSE 0 END ) AS eot_hr_for_sa_bank_sum,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_hr_for_sa ELSE 0 END ) AS eot_hr_for_sa_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_hr_for_sa ELSE 0 END ) AS eot_hr_for_sa_bank_sum,
 
-                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_amount' ELSE 0 END ) AS eot_amount_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.eot_amount' ELSE 0 END ) AS eot_amount_bank_sum,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_amount ELSE 0 END ) AS eot_amount_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_amount ELSE 0 END ) AS eot_amount_bank_sum,
 
-                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_amt_for_sa' ELSE 0 END ) AS eot_amt_for_sa_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.eot_amt_for_sa' ELSE 0 END ) AS eot_amt_for_sa_bank_sum,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_amt_for_sa ELSE 0 END ) AS eot_amt_for_sa_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_amt_for_sa ELSE 0 END ) AS eot_amt_for_sa_bank_sum,
             ");
 		$this->db->from('pay_salary_sheet as ss');
 		$this->db->from('pr_emp_com_info as com');
