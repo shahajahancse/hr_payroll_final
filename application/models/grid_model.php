@@ -21,8 +21,8 @@ class Grid_model extends CI_Model{
 		$lastday = date("t", strtotime($salary_month));
 
 		$this->db->select('
-				pr_emp_per_info.emp_full_name,
-				pr_emp_per_info.bangla_nam,
+				pr_emp_per_info.name_en,
+				pr_emp_per_info.name_bn,
 				pr_emp_per_info.bank_bkash_no,
 				pr_emp_per_info.personal_mobile,
 
