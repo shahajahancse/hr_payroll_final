@@ -49,7 +49,8 @@ class Salary_report_con extends CI_Controller {
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('common_model');
 
-		$data["value"] = $this->grid_model->monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id);
+		$data["value"] = $this->grid_model->monthly_salary_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id);
+		dd($data["value"]);
 		$data["salary_month"] = $sal_year_month;
 		$data["grid_emp_id"] = $grid_emp_id;
 		$data["grid_status"]  = $grid_status;
