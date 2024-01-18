@@ -175,7 +175,7 @@ class Grid_model extends CI_Model{
 	{
 
 		$this->db->select("
-				id as line_id, line_name_en, line_name_bn,
+				num.id as line_id, num.line_name_en, num.line_name_bn,
                 SUM( CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END ) AS emp_cash,
                 SUM( CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END ) AS emp_bank,
 
