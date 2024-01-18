@@ -19,26 +19,25 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('grid_salary_report');
 	}
 
-	function grid_actual_monthly_salary_sheet()
+	function actual_monthly_salary_sheet($type = null)
 	{
-		$sal_year_month = $this->input->post('sal_year_month');
-		$grid_status 	= $this->input->post('grid_status');
-		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		$grid_unit		= $this->input->post('unit_id');
-		$this->load->model('common_model');
+		$salary_month = date('Y-m-01', strtotime($this->input->post('salary_month')));
+		$unit_id 	  = $this->input->post('unit_id');
+		$grid_unit	  = $this->input->post('grid_unit');
+		$stop_salary  = $this->input->post('stop_salary');
+		$status 	  = $this->input->post('status');
+		$spl 		  = $this->input->post('spl');
+		$grid_emp_id  = explode(',', trim($sql));
 
-		$data["value"] = $this->grid_model->grid_actual_monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id);
-		$data["salary_month"] = $sal_year_month;
-		$data["grid_emp_id"] = $grid_emp_id;
-		$data["grid_status"]  = $grid_status;
-		$data["unit_id"]  = $grid_unit;
-		// echo "<pre>"; print_r($data["value"]); die;
-
-		$this->load->view('grid_actual_monthly_salary_sheet', $data);
-		// $this->load->view('salary_sheet_actual',$data);
-		//$this->load->view('salary_sheet_actual_with_eot_new',$data);
+		$data["value"] = $this->grid_model->actual_monthly_salary_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id);
+		dd($data["value"]);
+		$data["salary_month"] = $salary_month;
+		$data["grid_emp_id"]  = $grid_emp_id;
+		$data["grid_status"]  = $status;
+		$data["unit_id"]      = $unit_id;
+		$this->load->view('salary_report/actual_monthly_salary_sheet', $data);
 	}
+
 
 	function grid_actual_monthly_salary_sheet_excel()
 	{
@@ -54,12 +53,8 @@ class Salary_report_con extends CI_Controller {
 		$data["grid_emp_id"] = $grid_emp_id;
 		$data["grid_status"]  = $grid_status;
 		$data["unit_id"]  = $grid_unit;
-		// echo "<pre>"; print_r($data["value"]); die;
-		// echo "<pre>"; print_r($data["value"]); die;
 
 		$this->load->view('grid_actual_monthly_salary_sheet_excel', $data);
-		// $this->load->view('salary_sheet_actual',$data);
-		//$this->load->view('salary_sheet_actual_with_eot_new',$data);
 	}
 
 	function monthly_salary_sheet()
@@ -78,11 +73,8 @@ class Salary_report_con extends CI_Controller {
 		$data["grid_emp_id"] = $grid_emp_id;
 		$data["grid_status"]  = $grid_status;
 		$data["unit_id"]  = $grid_unit;
-		// echo "<pre>"; print_r($data["value"]); die;
 
 		$this->load->view('monthly_salary_sheet', $data);
-		// $this->load->view('salary_sheet_actual',$data);
-		//$this->load->view('salary_sheet_actual_with_eot_new',$data);
 	}
 
 	function monthly_salary_sheet_nine_pm()

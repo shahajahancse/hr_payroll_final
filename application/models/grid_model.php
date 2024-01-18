@@ -15,36 +15,51 @@ class Grid_model extends CI_Model{
 	}
 
 	// new salary report generate
-	function grid_actual_monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id)
+	function actual_monthly_salary_sheet($salary_month, $status, $emp_id)
 	{
-		$year  = substr($sal_year_month,0,4);
-		$month = substr($sal_year_month,5,2);
-		$lastday = date("t", mktime(0, 0, 0, $month, 1, $year));
 
-		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
+		$lastday = date("t", strtotime($salary_month));
 
-		$this->db->select('emp_line_num.*,pr_emp_per_info.emp_full_name,pr_emp_per_info.bangla_nam,pr_emp_per_info.bank_ac_no,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,pr_grade.gr_name,pr_grade.gr_name_bn,pr_pay_scale_sheet.*,emp_line_num.line_name, pr_emp_add.mobile');
-		$this->db->from('pr_emp_per_info');
+		$this->db->select('
+				pr_emp_per_info.emp_full_name,
+				pr_emp_per_info.bangla_nam,
+				pr_emp_per_info.bank_bkash_no,
+				pr_emp_per_info.personal_mobile,
+
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.ot_entitle,
+
+				emp_depertment.dept_name,
+				emp_depertment.dept_bangla,
+				emp_designation.desig_name,
+				emp_designation.desig_bangla, 
+				emp_section.sec_name_bn, 
+				emp_section.sec_name_en, 
+				emp_line_num.line_name_en, 
+				emp_line_num.line_name_bn, 
+
+				pr_grade.gr_name,
+				pay_salary_sheet.*,
+			');
+		$this->db->from('pay_salary_sheet');
 		$this->db->from('pr_emp_com_info');
-		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pr_emp_per_info');
 		$this->db->from('emp_depertment');
+		$this->db->from('emp_designation');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
-		$this->db->from('emp_designation');
-		$this->db->from('pr_emp_add');
+		$this->db->from('pr_grade');
 
-		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.sec_id');
-		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.line_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+		$this->db->where_in('pay_salary_sheet.emp_id', $emp_id);
+		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_per_info.emp_id');
+		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_com_info.emp_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id    = emp_depertment.dept_id');
+		$this->db->where('pr_emp_com_info.emp_desi_id    = emp_designation.id');
+		$this->db->where('pr_emp_com_info.emp_sec_id     = emp_section.id');
+		$this->db->where('pr_emp_com_info.emp_line_id    = emp_line_num.id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
-		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
+		$this->db->where("pay_salary_sheet.salary_month  = '$salary_month'");
+		$this->db->order_by("pay_salary_sheet.emp_id","ASC");
 		$query = $this->db->get();
 		return $query->result();
 	}
