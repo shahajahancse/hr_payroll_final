@@ -8616,41 +8616,42 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	}
 
 	function grid_emp_job_application($grid_emp_id){
+		// dd($grid_emp_id);
 		$this->db->select('
-		pr_emp_blood_groups.blood_name,
-		pr_emp_skill.*,
-		pr_emp_edu.*,
-		pr_emp_sex.sex_name,
-		pr_emp_com_info.emp_id,
-		pr_emp_com_info.gross_sal,
-		pr_emp_per_info.name_bn, 
-		pr_emp_per_info.img_source, 
+		pr_emp_per_info.name_bn,
 		pr_emp_per_info.father_name,
-		pr_emp_per_info.mother_name, 
+		pr_emp_per_info.mother_name,
 		pr_emp_per_info.per_village_bn, 
 		pr_emp_per_info.pre_village_bn, 
 		pr_emp_per_info.spouse_name, 
+		pr_emp_per_info.emp_dob,
+		pr_emp_per_info.emp_religion,
 		pr_emp_per_info.bank_bkash_no, 
-		emp_designation.desig_name, 
-		emp_designation.desig_bangla, 
+		pr_emp_sex.sex_name,
 		pr_emp_com_info.emp_join_date, 
-		pr_emp_com_info.emp_sal_gra_id , 
+		pr_emp_blood_groups.blood_name,
+
+		emp_designation.desig_name, 
+		emp_designation.desig_bangla,
 		emp_depertment.dept_name,
 		emp_depertment.dept_bangla, 
 		emp_section.sec_name_en, 
 		emp_section.sec_name_bn, 
-		pr_emp_per_info.emp_dob,
-		pr_emp_per_info.emp_religion,
 		pr_religions.religion_id,
 		per_dis.name_bn as dis_name_bn,
 		per_upa.name_bn as upa_name_bn,
 		per_post.name_bn as post_name_bn,
-
 		pre_dis.name_bn as pre_dis_name_bn,
 		pre_upa.name_bn as pre_upa_name_bn,
 		pre_post.name_bn as pre_post_name_bn,
-	');
+		pr_emp_edu.*,
+		pr_emp_skill.*,
+		pr_emp_com_info.emp_sal_gra_id as grade,
+		pr_emp_com_info.com_gross_sal as salary,
 
+	');
+		
+	
 	$this->db->from('pr_emp_per_info');
 	$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 	$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
@@ -8664,25 +8665,22 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
 	$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
 	$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
-
 	$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
 	$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
 	$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
 	$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-	$this->db->order_by('pr_emp_com_info.emp_id');
+	// $this->db->order_by('pr_emp_com_info.emp_id');
 	$query = $this->db->get();
 		//echo $this->db->last_query();
 		// echo "<pre>"; print_r($query->result()); exit();
 
-		// if($query->num_rows() == 0)
-		// {
-		// 	return "Employee ID range does not exist!";
-		// }
-		// else
-		// {
+		if($query->num_rows() == 0){
+			return "Employee ID range does not exist!";
+		}
+		else{
 			return $query->result();
-		// }
-		//print_r($query->result_array());
+		}
+		// dd($query->result());
 	}
 
 	function grid_yearly_leave_register($years, $grid_emp_id)
