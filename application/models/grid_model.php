@@ -174,12 +174,14 @@ class Grid_model extends CI_Model{
 	function eot_summary_report($salary_month = null, $status = null, $grid_emp_id = null, $unit_id = null)
 	{
 
-		$all_data = array();
-		$this->db->select("line_id,line_name");
-		$this->db->where("unit_id", $unit_id);
-		// $this->db->where("line_id !=",2);
-		$this->db->order_by("line_name");
-		$query = $this->db->get("emp_line_num");
+		$this->db->select("
+				id as line_id, line_name_en, line_name_bn,
+				COUNT(emp_id) as emp_id,
+                SUM() AS attend,
+                SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+
+
+            ");
 
 		foreach($query->result() as $rows)
 		{
@@ -187,10 +189,7 @@ class Grid_model extends CI_Model{
 			$data = array();
 			$data1 = array();
 
-			//echo "<td>";
-			//echo $rows->dept_name;
-			//echo "</td>";
-			$all_data["dept"][] = $rows->line_name;
+			$all_data["dept"][] = $rows->line_name_en;
 			$dept_id = $rows->line_id;
 
 			// For Cash Man Power
