@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <input type="month" class="form-control" id="salary_month" value="<?= date('Y-m') ?>">
+                            <input type="month" onChange="grid_emp_list()" class="form-control" id="salary_month" value="<?= date('Y-m') ?>">
                         </div>
                     </div>
                 </div>
