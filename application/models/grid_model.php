@@ -179,7 +179,7 @@ class Grid_model extends CI_Model{
                 SUM( CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END ) AS emp_cash,
                 SUM( CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END ) AS emp_bank,
 
-                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.gross_sal' ELSE 0 END ) AS cash_sum,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ".`ss.gross_sal`." ELSE 0 END ) AS cash_sum,
                 SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.gross_sal' ELSE 0 END ) AS bank_sum,
 
                 SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_hour' ELSE 0 END ) AS eot_cash_sum,
