@@ -176,118 +176,36 @@ class Grid_model extends CI_Model{
 
 		$this->db->select("
 				id as line_id, line_name_en, line_name_bn,
-				COUNT(emp_id) as emp_id,
-                SUM() AS attend,
-                SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+                SUM( CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END ) AS emp_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END ) AS emp_bank,
 
+                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.gross_sal' ELSE 0 END ) AS cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.gross_sal' ELSE 0 END ) AS bank_sum,
 
+                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_hour' ELSE 0 END ) AS eot_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.eot_hour' ELSE 0 END ) AS eot_bank_sum,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_hr_for_sa' ELSE 0 END ) AS eot_hr_for_sa_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.eot_hr_for_sa' ELSE 0 END ) AS eot_hr_for_sa_bank_sum,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_amount' ELSE 0 END ) AS eot_amount_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.eot_amount' ELSE 0 END ) AS eot_amount_bank_sum,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN 'ss.eot_amt_for_sa' ELSE 0 END ) AS eot_amt_for_sa_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN 'ss.eot_amt_for_sa' ELSE 0 END ) AS eot_amt_for_sa_bank_sum,
             ");
+		$this->db->from('pay_salary_sheet as ss');
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('emp_line_num as num');
 
-		foreach($query->result() as $rows)
-		{
-
-			$data = array();
-			$data1 = array();
-
-			$all_data["dept"][] = $rows->line_name_en;
-			$dept_id = $rows->line_id;
-
-			// For Cash Man Power
-			$salary_draw_cash = 1;
-			$emp_cash = $this->count_empid_for_salary($dept_id,$emp_stat,$salary_month,$salary_draw_cash,$stop_salary,"count");
-			$all_data["emp_cash"][] = $emp_cash;
-
-			// For Bank Man Power
-			$salary_draw_bank = 2;
-			$emp_bank = $this->count_empid_for_salary($dept_id,$emp_stat,$salary_month,$salary_draw_bank,$stop_salary,"count");
-			$all_data["emp_bank"][] = $emp_bank;
-
-			$all_data["emp_cash_bank"][] =$emp_cash + $emp_bank;
-
-			// For Cash Emp ID
-			$cash_emp_id = $this->count_empid_for_salary($dept_id,$emp_stat,$salary_month,$salary_draw_cash,$stop_salary,"emp_id");
-			foreach($cash_emp_id as $rows)
-			{
-				$data[] = $rows->emp_id;
-			}
-			$data = implode("xxx",$data);
-			$emp_id_cash = explode('xxx', trim($data));
-
-			// For Bank Emp ID
-			$bank_emp_id = $this->count_empid_for_salary($dept_id,$emp_stat,$salary_month,$salary_draw_bank,$stop_salary,"emp_id");
-			foreach($bank_emp_id as $rows)
-			{
-				$data1[] = $rows->emp_id;
-			}
-			$data1 = implode("xxx",$data1);
-			$emp_id_bank = explode('xxx', trim($data1));
-
-
-			//For Cash gross_sal
-			$column_name = "gross_sal" ;
-			$gross_sal_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$all_data["cash_sum"][] = $gross_sal_cash;
-
-			//For Bank gross_sal
-			//print_r($emp_id_bank);
-			$gross_sal_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$all_data["bank_sum"][] = $gross_sal_bank;
-
-			$all_data["gross_cash_bank"][] = $gross_sal_cash + $gross_sal_bank;;
-
-			//For Cash EOT HOUR
-			$column_name = "eot_hour" ;
-			$cash_eot_hour = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//$cash_total = $eot_hour;
-			$all_data["eot_cash_sum"][] = $cash_eot_hour;
-
-			//For Bank EOT HOUR
-			$bank_eot_hour = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//$bank_total = $eot_hour;
-			$all_data["eot_bank_sum"][] = $bank_eot_hour;
-
-			$all_data["eot_cash_bank_hour"][] = $cash_eot_hour + $bank_eot_hour;
-
-			//For Cash EOT_SA HOUR
-			$column_name = "eot_hr_for_sa" ;
-			$cash_eot_hr_for_sa = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//$cash_total = $eot_hour;
-			$all_data["eot_hr_for_sa_cash_sum"][] = $cash_eot_hr_for_sa;
-
-			//For Bank EOT_SA HOUR
-			$bank_eot_hr_for_sa = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//$bank_total = $eot_hour;
-			$all_data["eot_hr_for_sa_bank_sum"][] = $bank_eot_hr_for_sa;
-
-			$all_data["eot_hr_for_sa_cash_bank"][] = $cash_eot_hr_for_sa + $bank_eot_hr_for_sa;
-
-			//For Cash EOT AMOUNT
-			$column_name = "eot_amount" ;
-			$cash_eot_amount = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//$cash_total = $eot_hour;
-			$all_data["eot_amount_cash_sum"][] = $cash_eot_amount;
-
-			//For Bank EOT AMOUNT
-			$bank_eot_amount = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//$bank_total = $eot_hour;
-			$all_data["eot_amount_bank_sum"][] = $bank_eot_amount;
-
-			$all_data["eot_cash_bank_amount"][] = $cash_eot_amount + $bank_eot_amount;
-
-			//For Cash EOT_SA AMOUNT
-			$column_name = "eot_amt_for_sa" ;
-			$cash_eot_amt_for_sa = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//$cash_total = $eot_hour;
-			$all_data["eot_amt_for_sa_cash_sum"][] = $cash_eot_amt_for_sa;
-
-			//For Bank EOT_SA AMOUNT
-			$bank_eot_amt_for_sa = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//$bank_total = $eot_hour;
-			$all_data["eot_amt_for_sa_bank_sum"][] = $bank_eot_amt_for_sa;
-
-			$all_data["eot_amt_for_sa_cash_bank"][] = $cash_eot_amt_for_sa + $bank_eot_amt_for_sa;
-		}
-		return $all_data;
+		$this->db->where("ss.emp_id = com.emp_id");
+		$this->db->where("num.id = com.emp_line_id");
+		$this->db->where("ss.salary_month", $salary_month);
+		$this->db->where("ss.unit_id", $unit_id);
+		// $this->db->where("line_id !=",2);
+		$this->db->group_by("num.id");
+		$this->db->order_by("num.line_name_en");
+		return $this->db->get()->result();
 
 	}
 
