@@ -421,7 +421,7 @@
 	                <select name="emp_cat_id" id= "emp_cat_id" class="form-control input-sm" required>
 	                	<option  >-- Select Emp Status --</option>
 	                	<?php foreach ($categorys as $key => $row) { ?>
-		                  <option value="<?= $row->id ?>"><?= $row->status_type; ?></option>
+		                  <option value="<?= $row->id ?>" <?php echo $row->id == 1 ? 'Selected':'';?>><?= $row->status_type ?></option>
 	                	<?php } ?>
 	                </select>
 	              </div>
@@ -471,7 +471,7 @@
 	                <?php echo form_error('salary_type');?>
 	                <select name="salary_type" id="salary_type" class="form-control input-sm" required>
 	                	<option  > Salary Type </option>
-	                	<option value="1">Fixed</option>
+	                	<option value="1" selected>Fixed</option>
 	                	<option value="2">Production</option>
 	                </select>
 	              </div>
