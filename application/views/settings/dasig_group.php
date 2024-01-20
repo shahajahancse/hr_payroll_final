@@ -51,6 +51,7 @@
                     <?= (isset($failuer['name_en'])) ? '<div class="alert alert-failuer">' . $failuer['name_en'] . '</div>' : ''; ?>
                 </div>
             </div>
+
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="acl_name">Group Name (বাংলা)</label>
@@ -58,6 +59,7 @@
                     <?= (isset($failuer['name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['name_bn'] . '</div>' : ''; ?>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="unit_id">Unit</label>
@@ -66,6 +68,7 @@
                     </select>
                 </div>
             </div>
+
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="unit_id">status</label>
@@ -75,11 +78,13 @@
                     </select>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-2">
-            <div class="form-group">
-                <label for="acl_name" style="visibility: hidden">.</label>
-                <input type="submit" value="Submit" class="btn btn-success">
-            </div>
+                <div class="form-group">
+                    <label for="acl_name" style="visibility: hidden">.</label>
+                    <input type="submit" value="Submit" class="btn btn-success">
+                </div>
             </div>
         </div>
    </form>
