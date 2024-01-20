@@ -238,7 +238,7 @@ class Setting_con extends CI_Controller {
 		$this->db->select('desig_id as id, unit_id')->where('group_dasi_id', $id);
 		$rows = $this->db->get('emp_manage_gd')->result();
 
-		$data = empty();
+		$data = array();
 		foreach ($rows as $key => $r) {
 			$data[$key] = $r->id;
 		}
