@@ -686,7 +686,6 @@ class Processdb extends CI_Model{
 	function updatedb1()
 	{
 		$id = $this->input->post('emp_id');
-		dd($id);
 		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
 		$data = array(
 			'unit_id'			=> $this->input->post('unit_id'),
@@ -771,7 +770,6 @@ class Processdb extends CI_Model{
 
 		if($this->db->where('emp_id',$id)->update('pr_emp_com_info', $data))
 		{   
-			dd("test");
 			$ids = $this->db->where('emp_id',$id)->get('pr_emp_com_info')->row()->id;
 
 			$per_data['emp_id'] =$ids;
