@@ -213,7 +213,7 @@ class Setting_con extends CI_Controller {
 			$this->data['subview'] = 'settings/dasig_group';
 	        $this->data['title'] = 'Dasignation Group'; 
 		}
-
+		dd($this->data['results']);
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->load->view('layout/template', $this->data);
     }
