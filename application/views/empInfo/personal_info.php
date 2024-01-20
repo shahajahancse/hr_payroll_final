@@ -421,7 +421,7 @@
 	                <select name="emp_cat_id" id= "emp_cat_id" class="form-control input-sm" required>
 	                	<option  >-- Select Emp Status --</option>
 	                	<?php foreach ($categorys as $key => $row) { ?>
-		                  <option value="<?= $row->id ?>"><?= $row->status_type; ?></option>
+		                  <option value="<?= $row->id ?>" <?php echo $row->id == 1 ? 'Selected':'';?>><?= $row->status_type ?></option>
 	                	<?php } ?>
 	                </select>
 	              </div>
@@ -471,7 +471,7 @@
 	                <?php echo form_error('salary_type');?>
 	                <select name="salary_type" id="salary_type" class="form-control input-sm" required>
 	                	<option  > Salary Type </option>
-	                	<option value="1">Fixed</option>
+	                	<option value="1" selected>Fixed</option>
 	                	<option value="2">Production</option>
 	                </select>
 	              </div>
@@ -950,7 +950,7 @@
 							"refer_name","refer_address","refer_mobile","refer_relation",
 							"education","nid_dob_id","nid_dob_check","exp_factory_name",
 							"exp_duration","exp_designation","personal_mobile",
-							"bank_bkash_no","unit_id","emp_dept_id",
+							"bank_bkash_no","unit_id","emp_dept_id","refer_village",
 							"emp_sec_id","emp_line_id","emp_desi_id","emp_sal_gra_id",
 							"emp_cat_id","proxi_id","emp_shift","gross_sal",
 							"com_gross_sal","ot_entitle","transport","img_source",

@@ -71,8 +71,26 @@ class Grid_con extends CI_Controller {
 
 		$this->load->view('attn_con/daily_costing_summary',$data);
 		// $this->load->view('others_report/daily_costing_summary',$data);
-		
 	}
+
+	function daily_attendance_summary()
+	{
+		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
+		$unit_id = $this->input->post('unit_id');
+		$status  = $this->input->post('status');
+
+		$data['values'] = $this->mars_model->line_attendance_summary($date, $unit_id);
+
+		$data['title'] 		 = 'Daily Attendance Summary';
+		$data['report_date'] = $date;
+		$data['category']    = 'Line';
+		$data['unit_id']    = $unit_id;
+
+		$this->load->view('attn_con/attendance_summary', $data);
+		// $this->load->view('others_report/attendance_summary', $data);
+	}
+
+
 
 
 

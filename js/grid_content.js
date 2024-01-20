@@ -379,7 +379,7 @@ function grid_get_all_data_for_salary() {
 	 alert("Please select ALL");
 	 return false;
  }
-var report_month_sal = document.getElementById('report_month_sal').value;
+var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal ==''){
 		alert("Please select month");
 		return false;
@@ -825,7 +825,7 @@ function grid_all_search_for_salary(){
 	  }
 	}
 	}
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal ==''){
 		alert("Please select month");
 		return false;
@@ -2911,21 +2911,21 @@ function grid_pay_slip()
 	   }
 	}
 
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
-		alert("Please select month");
+		alert("Please select month year");
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
-	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var year_month = report_month_sal+"-"+"01";
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -2949,13 +2949,7 @@ function grid_pay_slip()
 		return false;
 	}
 
-	
-	
-	//url =  hostname + "index.php/salary_report_con/grid_pay_slip"+"/"+year_month+"/"+sql+"/"+unit_id;
-
-	//pay_slip = window.open(url,'pay_slip',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	//pay_slip.moveTo(0,0);
-	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="salary_month="+year_month+"&sql="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip/";
     
    ajaxRequest.open("POST", url, true);
@@ -2993,7 +2987,7 @@ function grid_pay_slip_non_compliance()
 	      }
 	   }
 	}
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -3078,7 +3072,7 @@ function grid_pay_slip_actual()
 	   }
 	}
 
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -3162,7 +3156,7 @@ function grid_pay_slip_com()
 	   }
 	}
 
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -3245,7 +3239,7 @@ function grid_pay_slip_com_non_com_mix()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -3329,7 +3323,7 @@ function grid_provident_fund()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -3923,7 +3917,7 @@ function grid_pf_statement()
    }
  }
 	var year  = document.getElementById('report_year_sal').value;
-	var month = document.getElementById('report_month_sal').value;
+	var month = document.getElementById('salary_month').value;
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5139,7 +5133,7 @@ function grid_monthly_salary_sheet()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5200,8 +5194,7 @@ var unit_id = document.getElementById('unit_id').value;
 	}
 
 }
-function grid_actual_monthly_salary_sheet()
-{
+function grid_actual_monthly_salary_sheet(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 
 	try{
@@ -5221,21 +5214,21 @@ function grid_actual_monthly_salary_sheet()
 	      }
 	   }
 	}
-    var custom_salarydate = document.getElementById('salarydate').value;
+    // var custom_salarydate = document.getElementById('salarydate').value;
 
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
-		alert("Please select month");
+		alert("Please select month year");
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5266,7 +5259,7 @@ function grid_actual_monthly_salary_sheet()
 		alert('Please select employee Id');
 		return false;
 	}
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var sal_year_month = report_month_sal+"-"+"01";
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -5317,7 +5310,7 @@ function grid_actual_monthly_salary_sheet_not_sec()
 	}
     var custom_salarydate = document.getElementById('salarydate').value;
 
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5415,7 +5408,7 @@ function grid_mix_salary_sheet()
  }
     var custom_salarydate = document.getElementById('salarydate').value;
 
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5499,7 +5492,7 @@ function grid_actual_monthly_salary_sheet_with_eot()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5581,7 +5574,7 @@ function grid_monthly_allowance_with_eot()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5641,7 +5634,7 @@ function grid_festival_bonus()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5728,7 +5721,7 @@ function grid_advance_salary_sheet()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5817,7 +5810,7 @@ function sec_sal_summary_report()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5866,7 +5859,7 @@ function sec_sal_summary_report()
 function salary_summary_test(){
 
 	var ajaxRequest = new XMLHttpRequest();
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -5915,7 +5908,7 @@ function salary_summary_test(){
 function salary_summary_compliance(){
 
 	var ajaxRequest = new XMLHttpRequest();
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -6010,7 +6003,7 @@ function grid_festival_bonus_summary()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -6075,7 +6068,7 @@ function grid_festival_bonus_summary_sec_wise()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -6140,7 +6133,7 @@ function grid_comprative_salary_statement()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -6223,7 +6216,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -7404,7 +7397,7 @@ function grid_bank_note_req()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -8498,7 +8491,7 @@ function grid_maternity_benefit(){
    }
  }
 
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -8606,7 +8599,7 @@ function grid_monthly_weekend_allowance_sheet()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -8677,7 +8670,7 @@ function grid_monthly_allowance_sheet()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -8748,7 +8741,7 @@ function grid_monthly_stop_sheet()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");
@@ -8826,7 +8819,7 @@ function grid_monthly_night_allowance_sheet()
       }
    }
  }
-	var report_month_sal = document.getElementById('report_month_sal').value;
+	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
 		alert("Please select month");

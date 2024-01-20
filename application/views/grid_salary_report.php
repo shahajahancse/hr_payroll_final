@@ -131,7 +131,7 @@
 
      <!-- <div>
             <fieldset><legend><font size='+1'><b>Month & Year</b></font></legend>
-            <?php  $this->load->view('month_year_salary_report'); ?>
+            < ?php  $this->load->view('month_year_salary_report'); ?>
             <br /><br />
             <td>Custom Salary Date </td><td>:</td><td> <input class="form-control" type="text" name="salarydate" id="salarydate" style="width:100px;"/></td>
             <td>
@@ -157,7 +157,7 @@
 		$unit = $this->common_model->get_unit_id_name();
 	?>
     <div class="row category-options">
-        <fieldset ><legend><font size='+1'><b>Category Options</b></font></legend>
+        <fieldset ><legend><font size='+1'><b>Category Optionssss</b></font></legend>
             <table>
             <tr>
             <!--<td>Start</td><td>:</td><td><select class="form-control" name='grid_start' id='grid_start' style="width:250px;" onchange='grid_get_all_data_for_salary()' /><option value='Select'>Select</option><option value='all'>ALL</option></select></td>-->

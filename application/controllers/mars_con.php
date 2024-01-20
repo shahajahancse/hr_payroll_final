@@ -43,37 +43,7 @@ class Mars_con extends CI_Controller {
 		$this->load->view('others_report/others_report_front_end');
 	}
 	
-	function daily_attendance_summary()
-	{
-		$grid_date = $this->uri->segment(3);
-		// list($date, $month, $year) = explode('-', trim($grid_date));
-		// $report_date = date("Y-m-d", mktime(0, 0, 0, $month, $date, $year));
-		$report_date = date("Y-m-d", strtotime($grid_date));
-		
-		$category = $this->uri->segment(4);
-		$unit_id = $this->uri->segment(5);
-		// echo $grid_date.$category.$unit_id;
-		// exit;
-		if($category =='Department'){
-			$data['values'] = $this->mars_model->department_attendance_summary_other($report_date, $unit_id);
-			// $data['values'] = $this->mars_model->department_attendance_summary($report_date, $unit_id);
-		}
-		elseif($category =='Section'){
-			$data['values'] = $this->mars_model->section_attendance_summary($report_date, $unit_id);
-		}
-		elseif($category =='Line'){
-			$data['values'] = $this->mars_model->line_attendance_summary($report_date, $unit_id);
-		}
-		
-		$data['title'] 		 = 'Daily Attendance Summary';
-		$data['report_date'] = $report_date;
-		$data['category']    = $category;
-		$data['unit_id']    = $unit_id;
-		// print_r($data);
-		// exit;
-		$this->load->view('others_report/attendance_summary', $data);
-	}
-/*
+	/*
 	function daily_attendance_summary_test(){
 		$report_date = $this->uri->segment(3);
 		$report_date = date("Y-m-d", strtotime($report_date));
