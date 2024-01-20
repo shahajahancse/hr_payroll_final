@@ -261,7 +261,7 @@ class Setting_con extends CI_Controller {
 		$this->db->where('unit_id', $unit_id);
 		$check = $this->db->get('emp_manage_gd')->num_rows();
 		if ($check > 0) {
-			$this->db->delete('emp_manage_gd', array('desig_id' => $id));
+			$this->db->delete('emp_manage_gd', array('desig_id'=>$id, 'group_dasi_id'=>$gd_id, 'unit_id'=>$unit_id));
 		}else{
 			$this->db->insert('emp_manage_gd', array('desig_id'=>$id, 'group_dasi_id'=>$gd_id, 'unit_id'=>$unit_id));
 		}
