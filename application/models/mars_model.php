@@ -530,14 +530,7 @@ class Mars_model extends CI_Model{
 			{
 				$data['daily_att_sum'][] = '';
 			}
-			/*
-			$emp_desig = array(
-								0 => array(21),
-								1 => array(115),
-								2 => array(1,3,4,187),
-								3 => array(76),
-								4 => array(39,150,188)
-             					); */
+
 			$emp_desig =	$this->get_department_section_line_unit_wise($unit_id);
 			//echo $emp_desig[0]."---";
 			for($i=0; $i<12; $i++)

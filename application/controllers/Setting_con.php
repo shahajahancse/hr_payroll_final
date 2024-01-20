@@ -186,5 +186,19 @@ class Setting_con extends CI_Controller {
 		$this->db->delete('pr_report_setting');
 		echo 'true';
 	}
+
+	public function dasig_group()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+
+		$this->data['users'] = $this->get_member();
+		// dd($this->data['users']);
+        $this->data['title'] = 'Dasignation Group'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'settings/dasig_group';
+        $this->load->view('layout/template', $this->data);
+    }
 }
 
