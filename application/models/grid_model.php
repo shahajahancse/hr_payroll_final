@@ -319,7 +319,7 @@ class Grid_model extends CI_Model{
 
 				SUM( log.ot ) AS ot,
 				SUM( log.eot ) AS eot,
-			")	
+			");	
 
 		$this->db->from('pr_emp_com_info as com');
 		$this->db->from('emp_line_num as num');
