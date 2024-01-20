@@ -6,7 +6,7 @@ class Common extends CI_Controller {
     function grid_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
 
     	$data = array();
-        $this->db->select('com.emp_id, per.name_en, per.name_bn');
+        $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
         $this->db->from('pr_emp_com_info as com');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
         $this->db->where('com.unit_id', $unit);

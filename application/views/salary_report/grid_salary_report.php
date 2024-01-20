@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <input type="month" class="form-control" id="salary_month" value="<?= date('Y-m') ?>">
+                            <input type="month" onChange="grid_emp_list()" class="form-control" id="salary_month" value="<?= date('Y-m') ?>">
                         </div>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                             <button class="btn input-sm sbtn" onclick="grid_pay_slip()">Pay Slip</button>
                             <?php } ?>
                             <?php if(in_array(79,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="sal_summary_report()">Actual Salary Summary</button>
+                            <button class="btn input-sm sbtn" onclick="salary_summary()">Actual Salary Summary</button>
                             <?php } ?>
                             <?php if(in_array(80,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="sec_sal_summary_report()">Sec Wise Salary Summary</button>
@@ -170,10 +170,10 @@
                             <button class="btn input-sm sbtn" onclick="grid_pay_slip_actual()">Actual Pay Slip </button>
                             <?php } ?>
                             <?php if(in_array(83,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_mix_salary_sheet()">Salary Sheet BFL</button>
+                            <!-- <button class="btn input-sm sbtn" onclick="grid_mix_salary_sheet()">Salary Sheet BFL</button> -->
                             <?php } ?>
                             <?php if(in_array(84,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_actual_monthly_salary_sheet_with_eot()">Act. Monthly Sal. Sheet EOT</button>
+                            <!-- <button class="btn input-sm sbtn" onclick="grid_actual_monthly_salary_sheet_with_eot()">Act. Monthly Sal. Sheet EOT</button> -->
                             <?php } ?>
 
 
@@ -182,6 +182,20 @@
                             <?php } ?>
                             <?php if(in_array(86,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_pay_slip_com()">Pay Slip</button>
+                            <?php } ?>
+                            <?php if(in_array(86,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_bank_note_req()">Montly Bank Req.</button>
+                            <?php } ?>
+
+
+                            <?php if(in_array(86,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_monthly_eot_sheet()">Monthly EOT Sheets</button>
+                            <?php } ?>
+                            <?php if(in_array(86,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="eot_summary_report()">EOT Summary Report</button>
+                            <?php } ?>
+                            <?php if(in_array(86,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_monthly_stop_sheet()">Stop Salary Sheet</button>
                             <?php } ?>
                         </div>
                         <!-- salary report end  -->
@@ -205,6 +219,9 @@
                             <?php } ?>
                             <?php if(in_array(92,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_maternity_benefit()">Maternity Benefit Report</button>
+                            <?php } ?>
+                            <?php if(in_array(92,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="act_advance_salary_sheet()">Act. Adv. Sal. Sheet</button>
                             <?php } ?>
                         </div>
                         <!-- Others Benefit Report end -->
@@ -265,6 +282,10 @@
             var status = document.getElementById('status').value;
             var stop_salary = document.getElementById('stop_salary').value;
             var salary_month = document.getElementById('salary_month').value;
+
+            if (typeof unit === "undefined" || unit === '') {
+                 alert('Please Select Unit First'); return;
+            }
 
             url = hostname + "common/salary_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
             $.ajax({
