@@ -427,7 +427,7 @@
 	              </div>
 	            </div>
 
-							<?php $shifts = $this->db->where('unit_id',$user_data->unit_name)->get('pr_emp_shift')->result(); ?>
+					<?php $shifts = $this->db->where('unit_id',4)->get('pr_emp_shift')->result(); ?>
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Emp Shift <span style="color: red;">*</span> </label>
@@ -435,7 +435,7 @@
 	                <select name="emp_shift" id= "emp_shift" class="form-control input-sm"><!-- emp shift -->
 	                	<option  >-- Select Emp Shift --</option>
 	                	<?php foreach ($shifts as $key => $row) { ?>
-		                  <option value="<?= $row->id ?>"><?= $row->shift_name; ?></option>
+		                  <option value="<?= $row->id?>" <?= $row->id ==13 ? 'selected' : '' ?>	><?= $row->shift_name; ?></option>
 	                	<?php } ?>
 	                </select>
 	              </div>

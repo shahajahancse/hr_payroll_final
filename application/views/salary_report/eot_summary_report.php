@@ -144,10 +144,10 @@ $this->load->view("head_english",$data);
 			
 			
 			echo "<td align='center'>";
-			echo $values["gross_cash_bank"][$i];
+			echo $tt = $value->cash_sum + $value->bank_sum;
 			echo "</td>";
 			
-			$total_gross_cash_bank = $total_gross_cash_bank + $values["gross_cash_bank"][$i];
+			$total_gross_cash_bank = $total_gross_cash_bank + $tt;
 			
 			$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
 			$acl     = $this->acl_model->get_acl_list($user_id);
