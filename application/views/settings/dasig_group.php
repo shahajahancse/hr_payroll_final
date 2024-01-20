@@ -111,6 +111,7 @@
         <tbody>
             <?php foreach($groups as $key => $row) { ?>
                 <tr>
+                    <td><?= $key + 1 ?></td>
                     <td><?= $row->name_en ?></td>
                     <td><?= $row->name_bn ?></td>
                     <td><?= ($row->status == 1)? 'Enable':'Disable' ?></td>
