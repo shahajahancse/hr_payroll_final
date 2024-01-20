@@ -931,7 +931,7 @@
 							"refer_name","refer_address","refer_mobile","refer_relation",
 							"education","nid_dob_id","nid_dob_check","exp_factory_name",
 							"exp_duration","exp_designation","personal_mobile",
-							"bank_bkash_no","unit_id","emp_dept_id","refer_village"
+							"bank_bkash_no","unit_id","emp_dept_id","refer_village",
 							"emp_sec_id","emp_line_id","emp_desi_id","emp_sal_gra_id",
 							"emp_cat_id","proxi_id","emp_shift","gross_sal",
 							"com_gross_sal","ot_entitle","transport","img_source",

@@ -69,9 +69,9 @@ class Salary_report_con extends CI_Controller {
 		$status 	  = $this->input->post('status');
 		$sql 		  = $this->input->post('sql');
 		$grid_emp_id  = explode(',', trim($sql));
-
+		$data["deduct_status"]= $this->common_model->get_setup_attributes(1);
 		$data["value"] = $this->grid_model->grid_monthly_eot_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id);
-		dd($data["value"]);
+		// dd($data["value"]);
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
 		$data["grid_status"]  = $status;
@@ -80,8 +80,7 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('salary_report/grid_monthly_eot_sheet', $data);
 	}
 
-	function eot_summary_report($type = null)
-	{
+	function eot_summary_report($type = null){
 
 		$salary_month = date('Y-m-01', strtotime($this->input->post('salary_month')));
 		$unit_id 	  = $this->input->post('unit_id');
@@ -92,8 +91,8 @@ class Salary_report_con extends CI_Controller {
 		$grid_emp_id  = explode(',', trim($sql));
 		
 
-		$data["value"] = $this->grid_model->summary_report($salary_month, $stop_salary, $grid_emp_id, $unit_id);
-		dd($data["value"]);
+		$data["values"] = $this->grid_model->summary_report($salary_month, $stop_salary, $grid_emp_id, $unit_id);
+		// dd($data["values"]);
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
 		$data["grid_status"]  = $status;
