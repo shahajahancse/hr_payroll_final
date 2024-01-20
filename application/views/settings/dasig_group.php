@@ -93,7 +93,34 @@
    </form>
   </div>
 
-
+  <div id="target-div" class="row tablebox">
+      <div class="col-md-6" style="margin-left:-16px">
+        <h3 style="font-weight:bold">Access List</h3>
+      </div>
+      <table class="table" id="mytable">
+        <thead>
+          <tr>
+            <th>Sl. No.</th>
+            <th>Name</th>
+            <th>Name Bangla</th>
+            <th>Status</th>
+            <th>unit</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <?php foreach($groups as $key => $row) { ?>
+                <tr>
+                    <td><?= $row->name_en ?></td>
+                    <td><?= $row->name_bn ?></td>
+                    <td><?= ($row->status == 1)? 'Enable':'Disable' ?></td>
+                    <td><?= $row->unit_id ?></td>
+                    <td><?= $row->unit_id ?></td>
+                </tr>
+            <?php } ?>
+        </tbody>
+      </table>
+  </div>
 
   
 </div>

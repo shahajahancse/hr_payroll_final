@@ -196,8 +196,8 @@ class Setting_con extends CI_Controller {
             redirect("authentication");
         }
 
-		$this->db->select('pr_units.*');
         $this->data['units'] = $this->db->get('pr_units')->result();
+        $this->data['groups'] = $this->db->get('emp_group_dasignation')->result();
 		
         $this->data['title'] = 'Dasignation Group'; 
         $this->data['username'] = $this->data['user_data']->id_number;
