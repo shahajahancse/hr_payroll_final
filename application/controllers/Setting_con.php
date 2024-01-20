@@ -206,6 +206,7 @@ class Setting_con extends CI_Controller {
     }
 
 	function dasig_group_add(){
+		dd($this->data['user_data']);
 		$data = array(
 			'name_en' => $this->input->post('name_en'),
 			'name_bn' => $this->input->post('name_bn'),
