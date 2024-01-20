@@ -118,6 +118,7 @@
                     <td><?= $row->unit_id ?></td>
                     <td>
                         <a class="btn btn-primary"> Edit </a>
+                        <a class="btn btn-info"> Edit </a>
                     </td>
                 </tr>
             <?php } ?>
