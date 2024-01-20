@@ -57,7 +57,7 @@
                     }
                 ?>
                 <div>
-                    <input type="checkbox" onchange="check_level(<?=$value->id?>)" <?= in_array($value->id, $dasig_id)? 'checked' : ''?>> <span><?php echo $value->desig_name; ?></span>
+                    <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)" <?= in_array($value->id, $dasig_id)? 'checked' : ''?>> <span><?php echo $value->desig_name; ?></span>
                 </div>
                 <?php $i++; } ?>
             </div>
