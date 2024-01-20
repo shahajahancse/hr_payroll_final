@@ -54,7 +54,7 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="acl_name">Group Name (বাংলা)</label>
+                    <label for="acl_name">Group Name (Bangla)</label>
                     <input style="height: 5px !important;" type="text" name="name_bn" class="form-control input-lg" id="name_bn" placeholder="Enter Name">
                     <?= (isset($failuer['name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['name_bn'] . '</div>' : ''; ?>
                 </div>
@@ -65,6 +65,9 @@
                     <label for="unit_id">Unit</label>
                     <select name="unit_id" class="form-control" >
                         <option value="">Select Unit</option>
+                        <?php foreach ($units as $row) { ?>
+                            <option value="<?= $row->unit_id ?>">$row->unit_name </option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>

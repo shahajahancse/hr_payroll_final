@@ -20,6 +20,7 @@ class Setting_con extends CI_Controller {
             exit;
         }*/
 	}
+
 	function crud()
 	{
 		if ($this->session->userdata('logged_in') == false) {
@@ -32,6 +33,7 @@ class Setting_con extends CI_Controller {
         $this->data['subview'] = 'settings/acl_access';
         $this->load->view('layout/template', $this->data);
 	}
+
 	function acl_access_add(){
 		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
 			$this->session->set_flashdata('success', 'ACL Added Successfully');
@@ -41,6 +43,7 @@ class Setting_con extends CI_Controller {
 		}
 		redirect('setting_con/crud');
 	}
+
 	function acl_access_delete($id){
 		if ($this->db->delete('member_acl_list', array('id' => $id))) {
 			$this->session->set_flashdata('success', 'ACL Deleted Successfully');
@@ -193,8 +196,9 @@ class Setting_con extends CI_Controller {
             redirect("authentication");
         }
 
-		$this->data['users'] = $this->get_member();
-		// dd($this->data['users']);
+		$this->db->select('pr_units.*');
+        $this->data['units'] = $this->db->get('pr_units')->result();
+		
         $this->data['title'] = 'Dasignation Group'; 
         $this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['subview'] = 'settings/dasig_group';
