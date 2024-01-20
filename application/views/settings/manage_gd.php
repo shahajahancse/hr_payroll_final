@@ -47,9 +47,24 @@
 
 
 
-  <div id="target-div" class="row tablebox">
-  </div>
+    <div id="target-div" class="row tablebox">
+        <div class="col-md-12" style="display: flex;flex-wrap: wrap;">
+            <div class=col-md-4 style="display: flex;flex-direction: column;">
+                <?php $limit = 25; $offset=$limit; $i=0; foreach($access_list as $key => $value) { 
+                    if ($offset==$i) {
+                        echo '</div><div class=col-md-4 style="display: flex;flex-direction: column;">';
+                        $offset+=$limit;
+                    }
+                ?>
+                <div>
+                    <input type="checkbox" onchange="check_level(<?=$value->id?>)" <?= in_array($value->id, $dasig_id)? 'checked' : ''?>> <span><?php echo $value->desig_name; ?></span>
+                </div>
+                <?php $i++; } ?>
+            </div>
+        </div>
+    </div>
 </div>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $("#mytable").dataTable();
