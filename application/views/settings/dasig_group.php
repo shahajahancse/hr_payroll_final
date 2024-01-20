@@ -42,19 +42,65 @@
     </div>
   </div>
   <div id="add_form" class="row tablebox">
-    <label for="user_id">Select User</label>
-    <select name="user_id" id="user_id" onchange="get_user_level(this.value, 2)" style="width: 300px!important;">
-        <option>Select User</option>
-        <?php 
-        foreach($users as $key => $value) { ?>
-            <option value="<?= $value->id ?>"><?php echo $value->id_number.' >> '.$value->unit_name?></option>
-        <?php } ?>
-    </select>
+    <form action="<?= base_url('setting_con/acl_access_add')?>" enctype="multipart/form-data" method="post">
+        <div class="col-md-12">
+            <div class="form-group col-md-5">
+                <label for="acl_name">ACL Name</label>
+                <input style="height: 5px !important;" type="text" name="acl_name" class="form-control input-lg" id="acl_name" placeholder="Enter ACL Name">
+                <?= (isset($failuer['acl_name'])) ? '<div class="alert alert-failuer">' . $failuer['acl_name'] . '</div>' : ''; ?>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="acl_name">ACL Type</label>
+                <select name="type" id="">
+                    <option value="1">Left Menu</option>
+                    <option value="2">Attendance Button</option>
+                    <option value="3">Report Button</option>
+                    <option value="4">Other Button</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="acl_name" style="visibility: hidden">.</label>
+                <input type="submit" value="Submit" class="btn btn-success">
+            </div>
+        </div>
+   </form>
   </div>
 
 
 
   <div id="target-div" class="row tablebox">
+      <div class="col-md-6" style="margin-left:-16px">
+        <h3 style="font-weight:bold">Access List</h3>
+      </div>
+      <table class="table" id="mytable">
+        <thead>
+          <tr>
+            <th>Sl. No.</th>
+            <th>acl Name</th>
+            <th>Type</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          foreach($data as $key => $value) {
+            echo '<tr>';
+            echo '<td>'.($key+1).'</td>';
+            echo '<td>'.$value->acl_name.'</td>';
+            if ($value->type == 1) {
+                echo '<td>Left Menu</td>';
+            } elseif ($value->type == 2) {
+                echo '<td>Attendance Button</td>';
+            } elseif ($value->type == 3) {
+                echo '<td>Payroll Button</td>';
+            } else {
+                echo '<td>Other Button</td>';
+            }          
+            echo '<td><a href="'.base_url('setting_con/acl_access_delete/'.$value->id).'" class="btn btn-danger">Delete</a></td>';
+            echo '</tr>';
+          }?>
+        </tbody>
+      </table>
   </div>
 </div>
 <script type="text/javascript">
@@ -69,31 +115,3 @@
     })
   });
 </script>
-<script>
-    function get_user_level(id, type = null){
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('setting_con/checkbox_get_user_acl_hrm') ?>",
-            data: {id: id, type: type },
-            success: function(data){
-                $("#target-div").html(data);
-            },
-            error: function(){
-                alert("error");
-            }
-        })
-    }
-</script>
-<script>
-    function check_level(id, user_id){
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('setting_con/check_level') ?>",
-            data: {id: id, user_id: user_id},
-            success: function(data){
-                console.log('success');
-            }
-        })
-    }
-</script>
-
