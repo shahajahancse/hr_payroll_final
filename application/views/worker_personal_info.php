@@ -215,7 +215,7 @@
                 </div>
             </div>
             <div class="d-flex mt-2">
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?></span></p>
                 </div>
                 <div class="col-md-6 ">
