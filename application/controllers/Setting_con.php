@@ -190,16 +190,16 @@ class Setting_con extends CI_Controller {
 		echo 'true';
 	}
 
-	public function dasig_group($id = null, $type = null)
+	public function dasig_group($id = null, $unit = null)
     {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
 
-		if (!empty($id) && !empty($type)) {
+		if (!empty($id) && !empty($unit)) {
 			$this->data['row'] = $this->db->get('emp_group_dasignation')->row(); 
 			$this->data['dasig_id'] = $this->get_manage_gd_id($id);
-			$this->data['results'] = $this->get_dasignations($this->data['row']->unit_id);
+			$this->data['results'] = $this->get_dasignations($unit);
 
 			$this->data['title'] = 'Manage Dasignation'; 
 			$this->data['subview'] = 'settings/manage_gd';
