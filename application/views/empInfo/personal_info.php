@@ -822,14 +822,19 @@
 	          </div>
 	        </div>
 	        <br>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group pull-right">
-                <a href=""class="btn-warning btn">Cancel</a>
-                <input class="btn btn-success" type="submit" name="pi_edit" id="pi_edit" value="EDIT">
-                <input class="btn btn-primary" type="submit" name="pi_save" value="SAVE">
-              </div>
-            </div>
+        <div class="row">
+			<div class="col-md-12">
+				<div class="form-group pull-right">
+					<a href="" class="btn-warning btn">Cancel</a>
+
+					<input type="hidden" name="submit_type" id="submit_type">
+		
+					<button onclick="checkAndBlockSubmit('edit',event)" class="btn btn-success">EDIT</button>
+					<button onclick="checkAndBlockSubmit('save',event)" class="btn btn-primary">SAVE</button>
+		
+				</div>
+			</div>
+		</div>
           </div>
         </form>
       </div>
@@ -844,6 +849,10 @@
 			var nomi_district = localStorage.getItem('nomi_district');
 			var nomi_thana = localStorage.getItem('nomi_thana');
 			var nomi_post = localStorage.getItem('nomi_post');
+
+			var ref_district = localStorage.getItem('ref_district');
+			var ref_thana = localStorage.getItem('ref_thana');
+			var ref_post = localStorage.getItem('ref_post');
 			
 
 		    $('#nomi_district').val(nomi_district).trigger('change');
@@ -874,6 +883,16 @@
 				    $('#per_thana').val(per_thana).trigger('change');
 					setTimeout(function () {
 						$('#per_post').val(per_post).trigger('change');
+					},500)
+			},500)
+
+	
+
+			$('#ref_district').val(per_district).trigger('change');
+			setTimeout(function () {
+				    $('#ref_thana').val(per_thana).trigger('change');
+					setTimeout(function () {
+						$('#ref_post').val(per_post).trigger('change');
 					},500)
 			},500)
 
@@ -935,14 +954,15 @@
 							"emp_sec_id","emp_line_id","emp_desi_id","emp_sal_gra_id",
 							"emp_cat_id","proxi_id","emp_shift","gross_sal",
 							"com_gross_sal","ot_entitle","transport","img_source",
-							"lunch","att_bonus","salary_draw","salary_type","emp_join_date"
+							"lunch","att_bonus","salary_draw","salary_type","emp_join_date",
+							"ref_district","refer_village","ref_thana","ref_post"
 						];
 						// Filter the data based on keysToFilter
 						var filteredData = {};
 						keysToFilter.forEach(function (key) {
 							// console.log(key);
 							if (data[key] !== undefined && data[key] !== null) {
-								if (key == 'emp_dept_id' || key == 'emp_sec_id' || key == 'emp_line_id' || key == 'emp_desi_id' || key == 'nomi_district' || key == 'nomi_thana' || key == 'pre_district' || key == 'pre_thana' || key == 'per_district' || key == 'per_thana' || key == 'per_post' || key == 'pre_post' || key == 'nomi_post'
+								if (key == 'emp_dept_id' || key == 'emp_sec_id' || key == 'emp_line_id' || key == 'emp_desi_id' || key == 'nomi_district' || key == 'nomi_thana' || key == 'pre_district' || key == 'pre_thana' || key == 'per_district' || key == 'per_thana' || key == 'per_post' || key == 'pre_post' || key == 'nomi_post'|| key == 'ref_thana' || key == 'ref_post' || key == 'ref_district'
 								  ){
 	  							localStorage.setItem(key, data[key]);
 	              } else if (key=='img_source') {
@@ -1335,4 +1355,32 @@
 			minLength: 2
 		});
 	});
+</script>
+<script>
+function checkAndBlockSubmit(type,e) {
+	e.preventDefault();
+	$('#submit_type').val(type);
+	if(type == 'edit') {
+		$('#form_id').submit();
+	}else {
+		$.ajax({
+			type: "POST",
+			url: "<?php echo base_url('emp_info_con/checkAndBlockSubmit'); ?>",
+			data: {
+				id: $('#emp_id').val()
+			},
+			success: function(data) {
+				if (data == 'true') {
+					$('#form_id').submit();
+				} else {
+					alert('Employee ID Already Exist');
+					return false;
+				}
+			}
+		})
+	
+	}
+
+ 
+}
 </script>

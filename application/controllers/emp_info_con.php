@@ -38,13 +38,14 @@ class Emp_info_con extends CI_Controller {
 		// dd("BSA");
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('unit_id', 'Unit', 'trim|required');
-		$this->form_validation->set_rules('emp_id', 'Employee ID', 'trim|required|is_unique[pr_emp_com_info.emp_id]');
+		if($this->input->post('pi_save')) {
+			$this->form_validation->set_rules('emp_id', 'Employee ID', 'trim|required|is_unique[pr_emp_com_info.emp_id]');
+		} 
 		$this->form_validation->set_rules('proxi_id', 'Punch ID', 'trim');  //|is_unique[pr_emp_com_info.proxi_id]
 		$this->form_validation->set_rules('name_en', 'Employee Name', 'trim|required');
 		$this->form_validation->set_rules('name_bn', 'Employee Bangla Name', 'trim|required');
 		$this->form_validation->set_rules('mother_name', 'Employee Mother\'s Name', 'trim|required');
 		$this->form_validation->set_rules('father_name', 'Employee Father\'s Name', 'trim|required');
-
 		$this->form_validation->set_rules('emp_dob', 'Date of Birth', 'trim|required');
 		$this->form_validation->set_rules('gender', 'Employee Gender', 'trim|required');
 		$this->form_validation->set_rules('marital_status', 'Marital Status', 'trim|required');
@@ -76,7 +77,7 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_rules('emp_line_id', 'Line Name', 'trim|required');
 		$this->form_validation->set_rules('emp_desi_id', 'Designation Name', 'trim|required');
 		$this->form_validation->set_rules('emp_cat_id', 'Employee Status', 'trim|required');
-		$this->form_validation->set_rules('emp_shift', 'Employee Shift', 'trim|required');
+		// $this->form_validation->set_rules('emp_shift', 'Employee Shift', 'trim|required');
 		$this->form_validation->set_rules('emp_join_date', 'Date of Joining', 'trim|required');
 		$this->form_validation->set_rules('emp_sal_gra_id', 'Salary Grade ', 'trim|required');
 		$this->form_validation->set_rules('salary_type', 'Salary Type', 'trim|required');
@@ -103,24 +104,28 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_rules('ref_district', 'Referance District', 'trim');
 		$this->form_validation->set_rules('ref_thana', 'Referance Thana/Upazila', 'trim');
 		$this->form_validation->set_rules('ref_post', 'Referance Post Office', 'trim');
-		
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$this->form_validation->run()) {
+			$this->load->view('empInfo/personal_info');
+		}
 		// $this->form_validation->set_rules('exp_factory_name', 'Exp. Factory Name', 'trim');
 		// $this->form_validation->set_rules('exp_duration', 'Exp. Duration', 'trim');
 		// $this->form_validation->set_rules('exp_designation', 'Exp. Designation', 'trim');
 
 		$this->form_validation->set_error_delimiters("","");
 		if ($this->form_validation->run() == TRUE) {
-			if($this->input->post('pi_save') != '') {
+			if($this->input->post('submit_type') == 'save') {
 				$this->processdb->insert_emp_info();
-			} elseif($this->input->post('pi_edit') != ''){
+			} elseif($this->input->post('submit_type') == 'edit'){
+				// dd($this->input->post());
 				if($this->processdb->updatedb1()) {
-					dd('bal');
 					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info';</SCRIPT>";
 				}
 			} else {
 				echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Error Occurred'); window.location='personal_info';</SCRIPT>";
 			}
 		} else {
+			// dd($this->form_validation->error_array());
+
 			redirect(base_url('emp_info_con/personal_info'));
 		}
 	}
@@ -478,6 +483,17 @@ class Emp_info_con extends CI_Controller {
 	{
 		$result = $this->processdb->com_all_info();
 		echo $result;
+	}
+
+	function checkAndBlockSubmit(){
+		$id=$this->input->post('id');
+		$this->db->where('emp_id',$id);
+		$query = $this->db->get('pr_emp_com_info');
+		if($query->num_rows()>0){
+			echo 1;
+		}else{
+			echo 'true';
+		}
 	}
 
 
