@@ -8505,6 +8505,7 @@ function grid_emp_job_application($grid_emp_id){
 		emp_depertment.dept_bangla, 
 		emp_section.sec_name_en, 
 		emp_section.sec_name_bn, 
+		emp_line_num.line_name_bn, 
 		pr_religions.religion_id,
 		per_dis.name_bn as dis_name_bn,
 		per_upa.name_bn as upa_name_bn,
@@ -8525,6 +8526,7 @@ function grid_emp_job_application($grid_emp_id){
 	$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
 	$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 	$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+	$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
 	$this->db->join('pr_religions', 'pr_emp_per_info.emp_religion = pr_religions.religion_id');
 	$this->db->join('pr_emp_sex', 'pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
 	$this->db->join('pr_emp_edu', 'pr_emp_com_info.emp_id = pr_emp_edu.emp_id');
