@@ -50,7 +50,7 @@
             </div>
             <div class="d-flex mt-2">
                 <div class="col-md-4 ">
-                    <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL : <?php date('d-m-Y',strtotime($value->emp_join_date))?></span></p>
+                    <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?></span></p>
                 </div>
                 <div class="col-md-4 ">
                     <h3 class="text-center"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">wb‡qvM cÎ</b></h3>
