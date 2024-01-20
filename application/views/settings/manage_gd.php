@@ -50,7 +50,7 @@
     <div id="target-div" class="row tablebox">
         <div class="col-md-12" style="display: flex;flex-wrap: wrap;">
             <div class=col-md-4 style="display: flex;flex-direction: column;">
-                <?php $limit = 25; $offset=$limit; $i=0; foreach($access_list as $key => $value) { 
+                <?php $limit = 25; $offset=$limit; $i=0; foreach($results as $key => $value) { 
                     if ($offset==$i) {
                         echo '</div><div class=col-md-4 style="display: flex;flex-direction: column;">';
                         $offset+=$limit;
