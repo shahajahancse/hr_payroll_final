@@ -57,6 +57,23 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
+	function daily_costing_summary()
+	{
+		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
+		$unit_id = $this->input->post('unit_id');
+		$status  = $this->input->post('status');
+
+		$data["values"] 	= $this->grid_model->daily_costing_summary($date,$unit_id);	
+		dd($data["values"]);
+		
+		$data["grid_date"]	= $date;
+		$data["unit_id"]	= $unit_id;
+
+		$this->load->view('attn_con/daily_costing_summary',$data);
+		// $this->load->view('others_report/daily_costing_summary',$data);
+		
+	}
+
 
 
 

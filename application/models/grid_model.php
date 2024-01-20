@@ -307,10 +307,8 @@ class Grid_model extends CI_Model{
 	//-------------------------------------------------------------------------------------------------
 	// Daily Cost Sheet
 	//-------------------------------------------------------------------------------------------------
-	function grid_daily_costing_report($grid_date, $unit_id)
+	function daily_costing_summary($date, $unit_id)
 	{
-
-		$date 	= date("Y-m-d",strtotime($grid_date));
 
 		$this->db->select(" 
 				num.id as line_id, num.line_name_en, num.line_name_bn, log.shift_log_date,
@@ -1630,6 +1628,86 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	}
 
+
+	//-------------------------------------------------------------------------------------------------
+	// Daily Cost Sheet
+	//-------------------------------------------------------------------------------------------------
+	function grid_daily_costing_report($grid_date,$grid_unit)
+	{
+		$date 	= date("Y-m-d",strtotime($grid_date));
+		$year_month 	= date("Y-m",strtotime($date));
+		$day 			= date("d",strtotime($date));
+		$select_column 	= "date_$day";
+		$status_absent = 'A';
+		
+		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.emp_full_name, pr_designation.desig_name, pr_section.sec_name,pr_line_num.line_name,pr_attn_monthly.$select_column,pr_emp_shift_log.ot_hour,pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.modify_eot,pr_emp_shift_log.deduction_hour");
+	
+		$this->db->from('pr_emp_per_info');
+		$this->db->from('pr_emp_com_info');
+		$this->db->from('pr_designation');
+		$this->db->from('pr_section');
+		$this->db->from('pr_line_num');
+		$this->db->from('pr_attn_monthly');
+		$this->db->from('pr_emp_shift_log');
+		
+		//$this->db->where("pr_emp_per_info.emp_id",'AGLCS0001');
+		
+		$this->db->where("pr_emp_com_info.unit_id",$grid_unit);
+		//$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
+		$this->db->like("pr_attn_monthly.att_month",$year_month);
+		$where = "pr_attn_monthly.$select_column  != 'A' ";
+		
+		$this->db->where($where);
+		$this->db->where("pr_emp_com_info.emp_id = pr_attn_monthly.emp_id");
+		$this->db->where("pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id");
+		$this->db->where("pr_emp_per_info.emp_id = pr_emp_com_info.emp_id");
+		
+
+		$this->db->where("pr_emp_com_info.emp_desi_id = pr_designation.desig_id");
+		$this->db->where("pr_emp_com_info.emp_sec_id = pr_section.sec_id");
+		$this->db->where("pr_emp_com_info.emp_line_id = pr_line_num.line_id");
+		$this->db->order_by("pr_line_num.line_name");
+		$query = $this->db->get();
+		
+		//echo $query->num_rows();
+		
+		foreach($query->result() as $rows)
+		{
+			$emp_id 		= $rows->emp_id;	
+			/*$present_status 	= $this->get_present_status($emp_id,$date);
+			if($present_status == "A")
+			{
+				continue;
+			}*/
+			$data['emp_id'] []			= $emp_id ;
+			$data['emp_full_name'] []	= $rows->emp_full_name ;
+			$data['sec_name'] []		= $rows->sec_name ;
+			$data['line_name'] []		= $rows->line_name ;
+			$data['desig_name'][] 		= $rows->desig_name ;
+			$data['gross_sal'] []		= $rows->gross_sal ;
+			$data['present_status'] []	= $rows->$select_column;
+						
+			$salary_structure 			= $this->common_model->salary_structure($rows->gross_sal);
+			$ot_rate = $salary_structure['ot_rate'];
+			$data['ot_hour'] []			= $rows->ot_hour ;//$shift_log_data['ot_hour'];
+			$extra_eot = $rows->extra_ot_hour + $rows->modify_eot - $rows->deduction_hour;
+			$data['extra_ot_hour'][] 	= $extra_eot ;//$shift_log_data['extra_ot_hour'];
+			$data['ot_rate'][] 			= $ot_rate;
+		}
+		
+		
+		if(isset($data))
+		{
+			
+			return $data;
+		}
+		else
+		{
+			return "Requested list is empty";
+		}
+	}
+	
 	function grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id)
 	{
 		$firstdate 		= date("Y-m-d",strtotime($firstdate));
