@@ -43,7 +43,7 @@
   </div>
   <div id="add_form" class="row tablebox">
     <form action="<?= base_url('setting_con/dasig_group_add')?>" enctype="multipart/form-data" method="post">
-        <div class="col-md-12">
+        <div class="row">
             <div class="form-group col-md-3">
                 <label for="acl_name">Group Name</label>
                 <input style="height: 5px !important;" type="text" name="name_en" class="form-control input-lg" id="name_en" placeholder="Enter Name">
@@ -67,6 +67,7 @@
                     <option value="2">Disable</option>
                 </select>
             </div>
+
             <div class="form-group col-md-2">
                 <label for="acl_name" style="visibility: hidden">.</label>
                 <input type="submit" value="Submit" class="btn btn-success">
