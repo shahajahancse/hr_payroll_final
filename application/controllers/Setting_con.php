@@ -190,20 +190,30 @@ class Setting_con extends CI_Controller {
 		echo 'true';
 	}
 
-	public function dasig_group()
+	public function dasig_group($id = null, $type = null)
     {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
 
         $this->data['units'] = $this->db->get('pr_units')->result();
-
         $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->order_by('u.unit_id', 'ASC');
         $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
 		
-        $this->data['title'] = 'Dasignation Group'; 
+		if (!empty($id) && !empty($type)) {
+			$this->data['title'] = 'Manage Dasignation'; 
+			$this->data['dasig_id'] = $this->get_manage_gd_id($id);
+			$this->data['results'] = $this->db->select('id, desig_name')->get('emp_designation')->result();
+			$this->data['subview'] = 'settings/manage_gd';
+		} else if(!empty($id)) {
+	        $this->data['title'] = 'Edit Dasignation Group'; 
+			$this->data['subview'] = 'settings/dasig_group_edit';
+		} else {
+			$this->data['subview'] = 'settings/dasig_group';
+	        $this->data['title'] = 'Dasignation Group'; 
+		}
+
         $this->data['username'] = $this->data['user_data']->id_number;
-		$this->data['subview'] = 'settings/dasig_group';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -222,6 +232,17 @@ class Setting_con extends CI_Controller {
 			$this->session->set_flashdata('failuer', 'Added Failed');
 		}
 		redirect('setting_con/dasig_group');
+	}
+
+	function get_manage_gd_id($id){
+		$this->db->select('desig_id as id, unit_id')->where('group_dasi_id', $id);
+		$rows = $this->db->get('emp_manage_gd')->result();
+
+		$data = empty();
+		foreach ($rows as $key => $r) {
+			$data[$key] = $r->id;
+		}
+		return $data;
 	}
 }
 
