@@ -197,7 +197,9 @@ class Setting_con extends CI_Controller {
         }
 
         $this->data['units'] = $this->db->get('pr_units')->result();
-        $this->data['groups'] = $this->db->get('emp_group_dasignation')->result();
+
+        $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->order_by('u.unit_id', 'ASC');
+        $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
 		
         $this->data['title'] = 'Dasignation Group'; 
         $this->data['username'] = $this->data['user_data']->id_number;
