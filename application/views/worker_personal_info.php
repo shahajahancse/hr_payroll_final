@@ -84,7 +84,7 @@
                     <p>
                         <span><?php echo $value->sex_name == 'Female' ? 'Rbvev': 'Rbve'?>,</span><br>
                         Avcbvi <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs Zvwi†Li Av‡e`b cÎ Ges cieZx©Kv‡j M„nxZ mv¶vrKvi / cix¶vi cwi‡cÖw¶‡Z Avcbv‡K
-                        <?php echo "<span style='font-size:12px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:12px'>".$value->sec_name_bn."</span>"?> ,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
+                        <?php echo "<span style='font-size:12px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:12px'>".$value->sec_name_bn."</span>"?> ,<span style='font-size:12px'>লাইন </span><?php echo $value->line_name_bn?> ,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
                     </p>
                     <p style="font-size:20px !important"><b>kZv©ejx :</b></p>
                     <p>1. Avcbvi PvKzixi cÖ_g wZb gvm cÖ‡ekb wnmv‡e Mb¨ nB‡e hvnv D³ cÖ‡ekb †gqv`v‡šÍ Avcbvi Kg© g~j¨vqb ‡k‡l
