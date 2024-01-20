@@ -219,7 +219,7 @@ class Setting_con extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('failuer', 'Added Failed');
 		}
-		redirect('setting_con/crud');
+		redirect('setting_con/dasig_group');
 	}
 }
 
