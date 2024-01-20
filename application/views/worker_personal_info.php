@@ -560,7 +560,7 @@
                     <p>3| eZ©gvb wVKvbv t <span style="font-size:12px"><?php echo $value->pre_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span>| </p>
                     <p>4| ¯’vqx wVKvbv t <span style="font-size:12px"><?php echo $value->per_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span>| </p>
                     <p>5| wkÿvMZ †hvM¨Zv <span style="font-size:12px"><?php echo $value->education?></span> </p>
-                    <p>6| R¤œ ZvwiLt <?php echo $value->emp_dob?> </p>
+                    <p>6| R¤œ ZvwiLt <?php echo $value->emp_dob?> Bs </p>
                     <p>7| ag© t <span style="font-size:12px"><?php echo $value->religion?></span> </p>
                     <p>8| RvZxqZv t  Kg©xi †gvevBj bs <span><?php echo $value->bank_bkash_no?></span></p>
                     <p>9| AwfÁZv t </p>
