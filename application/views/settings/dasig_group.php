@@ -44,12 +44,6 @@
   <div id="add_form" class="row tablebox">
     <form action="<?= base_url('setting_con/dasig_group_add')?>" enctype="multipart/form-data" method="post">
         <div class="col-md-12">
-            <div class="form-group col-md-4">
-                <label for="unit_id">Unit</label>
-                <select name="unit_id">
-                    <option value="">Select Unit</option>
-                </select>
-            </div>
             <div class="form-group col-md-3">
                 <label for="acl_name">Group Name</label>
                 <input style="height: 5px !important;" type="text" name="name_en" class="form-control input-lg" id="name_en" placeholder="Enter Name">
@@ -59,6 +53,12 @@
                 <label for="acl_name">Group Name (বাংলা)</label>
                 <input style="height: 5px !important;" type="text" name="name_bn" class="form-control input-lg" id="name_bn" placeholder="Enter Name">
                 <?= (isset($failuer['name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['name_bn'] . '</div>' : ''; ?>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="unit_id">Unit</label>
+                <select name="unit_id">
+                    <option value="">Select Unit</option>
+                </select>
             </div>
             <div class="form-group col-md-2">
                 <label for="unit_id">status</label>
@@ -77,40 +77,7 @@
 
 
 
-  <div id="target-div" class="row tablebox">
-      <div class="col-md-6" style="margin-left:-16px">
-        <h3 style="font-weight:bold">Access List</h3>
-      </div>
-      <table class="table" id="mytable">
-        <thead>
-          <tr>
-            <th>Sl. No.</th>
-            <th>acl Name</th>
-            <th>Type</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          foreach($data as $key => $value) {
-            echo '<tr>';
-            echo '<td>'.($key+1).'</td>';
-            echo '<td>'.$value->acl_name.'</td>';
-            if ($value->type == 1) {
-                echo '<td>Left Menu</td>';
-            } elseif ($value->type == 2) {
-                echo '<td>Attendance Button</td>';
-            } elseif ($value->type == 3) {
-                echo '<td>Payroll Button</td>';
-            } else {
-                echo '<td>Other Button</td>';
-            }          
-            echo '<td><a href="'.base_url('setting_con/acl_access_delete/'.$value->id).'" class="btn btn-danger">Delete</a></td>';
-            echo '</tr>';
-          }?>
-        </tbody>
-      </table>
-  </div>
+  
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
