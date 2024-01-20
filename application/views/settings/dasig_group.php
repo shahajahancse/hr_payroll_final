@@ -42,20 +42,29 @@
     </div>
   </div>
   <div id="add_form" class="row tablebox">
-    <form action="<?= base_url('setting_con/acl_access_add')?>" enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('setting_con/dasig_group_add')?>" enctype="multipart/form-data" method="post">
         <div class="col-md-12">
-            <div class="form-group col-md-5">
-                <label for="acl_name">ACL Name</label>
-                <input style="height: 5px !important;" type="text" name="acl_name" class="form-control input-lg" id="acl_name" placeholder="Enter ACL Name">
-                <?= (isset($failuer['acl_name'])) ? '<div class="alert alert-failuer">' . $failuer['acl_name'] . '</div>' : ''; ?>
+            <div class="form-group col-md-4">
+                <label for="unit_id">Unit</label>
+                <select name="unit_id">
+                    <option value="">Select Unit</option>
+                </select>
             </div>
             <div class="form-group col-md-3">
-                <label for="acl_name">ACL Type</label>
-                <select name="type" id="">
-                    <option value="1">Left Menu</option>
-                    <option value="2">Attendance Button</option>
-                    <option value="3">Report Button</option>
-                    <option value="4">Other Button</option>
+                <label for="acl_name">Group Name</label>
+                <input style="height: 5px !important;" type="text" name="name_en" class="form-control input-lg" id="name_en" placeholder="Enter Name">
+                <?= (isset($failuer['name_en'])) ? '<div class="alert alert-failuer">' . $failuer['name_en'] . '</div>' : ''; ?>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="acl_name">Group Name (বাংলা)</label>
+                <input style="height: 5px !important;" type="text" name="name_bn" class="form-control input-lg" id="name_bn" placeholder="Enter Name">
+                <?= (isset($failuer['name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['name_bn'] . '</div>' : ''; ?>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="unit_id">status</label>
+                <select name="status">
+                    <option value="1">Enable</option>
+                    <option value="2">Disable</option>
                 </select>
             </div>
             <div class="form-group col-md-2">

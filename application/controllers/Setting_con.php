@@ -200,5 +200,15 @@ class Setting_con extends CI_Controller {
 		$this->data['subview'] = 'settings/dasig_group';
         $this->load->view('layout/template', $this->data);
     }
+
+	function dasig_group_add(){
+		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
+			$this->session->set_flashdata('success', 'ACL Added Successfully');
+			
+		}else{
+			$this->session->set_flashdata('failuer', 'ACL Added Failed');
+		}
+		redirect('setting_con/crud');
+	}
 }
 
