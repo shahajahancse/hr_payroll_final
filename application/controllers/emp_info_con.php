@@ -35,6 +35,7 @@ class Emp_info_con extends CI_Controller {
 	}
 
 	function personal_info_add() {
+		// dd("BSA");
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('unit_id', 'Unit', 'trim|required');
 		$this->form_validation->set_rules('emp_id', 'Employee ID', 'trim|required');
@@ -113,6 +114,7 @@ class Emp_info_con extends CI_Controller {
 				$this->processdb->insert_emp_info();
 			} elseif($this->input->post('pi_edit') != ''){
 				if($this->processdb->updatedb1()) {
+					dd('bal');
 					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info';</SCRIPT>";
 				}
 			} else {
