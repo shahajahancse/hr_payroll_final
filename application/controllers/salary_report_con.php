@@ -30,7 +30,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_emp_id  = explode(',', trim($sql));
 
 		$data["value"] = $this->grid_model->actual_monthly_salary_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id);
-		dd($data["value"]);
+		// dd($data["value"]);
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
 		$data["grid_status"]  = $status;  //grid_monthly_eot_sheet  eot_summary_report()  
@@ -47,9 +47,11 @@ class Salary_report_con extends CI_Controller {
 		$status 	  = $this->input->post('status');
 		$sql 		  = $this->input->post('sql');
 		$grid_emp_id  = explode(',', trim($sql));
+		
+		$data["deduct_status"]= $this->common_model->get_setup_attributes(1);
 
 		$data["value"] = $this->grid_model->monthly_salary_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id);
-		dd($data["value"]);
+		// dd($data["value"]);
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
 		$data["grid_status"]  = $status;
@@ -88,6 +90,7 @@ class Salary_report_con extends CI_Controller {
 		$status 	  = $this->input->post('status');
 		$sql 		  = $this->input->post('sql');
 		$grid_emp_id  = explode(',', trim($sql));
+		
 
 		$data["value"] = $this->grid_model->summary_report($salary_month, $stop_salary, $grid_emp_id, $unit_id);
 		dd($data["value"]);
@@ -506,22 +509,32 @@ class Salary_report_con extends CI_Controller {
 	}
 	function grid_pay_slip()
 	{
-		$grid_firstdate = $this->input->post('year_month');
-		$grid_data = $this->input->post('spl');
-		$grid_unit = $this->input->post('unit_id');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+        $salary_month = date('Y-m-01', strtotime($this->input->post('salary_month')));
+		$unit_id 	  = $this->input->post('unit_id');
+		$grid_unit	  = $this->input->post('grid_unit');
+		$stop_salary  = $this->input->post('stop_salary');
+		$status 	  = $this->input->post('status');
+		$sql 		  = $this->input->post('sql');
+		$grid_emp_id  = explode(',', trim($sql));
+		
+		$data["deduct_status"]= $this->common_model->get_setup_attributes(1);
 
-		$year_month = date("Y-m", strtotime($grid_firstdate));
-		$query['unit_id'] = $grid_unit;
-		$query['values'] = $this->grid_model->grid_pay_slip($year_month, $grid_emp_id);
-		if(is_string($query['values']))
-		{
-			echo $query['values'];
-		}
-		else
-		{
-			$this->load->view('pay_slip',$query);
-		}
+		$data["values"] = $this->grid_model->monthly_salary_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id);
+		// dd($data["values"]);
+		$data["salary_month"] = $salary_month;
+		$data["grid_emp_id"]  = $grid_emp_id;
+		$data["grid_status"]  = $status;
+		$data["unit_id"]      = $unit_id;
+
+		
+		// if(is_string($data['values']))
+		// {
+		// 	echo $data['values'];
+		// }
+		// else
+		// {
+			$this->load->view('pay_slip',$data);
+		// }
 	}	
 
 	function grid_pay_slip_com()
