@@ -208,10 +208,10 @@
 
 				echo "<td>";
 				echo "<span  style='font-weight:bold;'>";
-				print_r($value[$k]->emp_full_name);
+				print_r($value[$k]->name_en);
 				echo "</span>";
 				echo '<br>';
-				print_r($value[$k]->desig_name);
+				print_r($value[$k]->name_bn);
 				echo '<br>';
 				echo date('d-M-y', strtotime($value[$k]->emp_join_date));
 				echo '</td>';
@@ -221,7 +221,7 @@
 				echo "</td>";
 
 				echo "<td>";
-				print_r($value[$k]->line_name);
+				print_r($value[$k]->line_name_en);
 				echo "</td>";
 
 				/*echo '<td>';
@@ -361,7 +361,7 @@
 				echo $net_pay + $att_bonus + $ot_amount;
 				echo "</td>";
 
-				$transport_deduct 		      = $value[$k]->transport_deduct;
+				$transport_deduct 		      = 0;
 				$total_transport_deduct       = $total_transport_deduct + $transport_deduct;
 				$grand_total_transport_deduct = $grand_total_transport_deduct + $transport_deduct;
 				echo "<td>";
@@ -369,7 +369,7 @@
 				echo "</td>";
 
 				$adv_deduct 			= $value[$k]->adv_deduct;
-				$due_pay_add 			= $value[$k]->due_pay_add;
+				$due_pay_add 			= 0;
 				$total_adv_deduct 		= $total_adv_deduct + $adv_deduct;
 				$grand_total_adv_deduct = $grand_total_adv_deduct + $adv_deduct;
 				echo "<td>";
@@ -395,7 +395,7 @@
 				echo "</td>";
 
 				echo "<td>";
-				echo $value[$k]->bank_ac_no;
+				echo $value[$k]->bank_bkash_no;
 				echo "</td>";
 
 				$total_deduction	   = $value[$k]->total_deduct;
