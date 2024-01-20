@@ -8540,7 +8540,7 @@ function grid_emp_job_application($grid_emp_id){
 	// $this->db->order_by('pr_emp_com_info.emp_id');
 	$query = $this->db->get();
 		//echo $this->db->last_query();
-		echo "<pre>"; print_r($query->result()); exit();
+		// echo "<pre>"; print_r($query->result()); exit();
 
 		if($query->num_rows() == 0){
 			return "Employee ID range does not exist!";
