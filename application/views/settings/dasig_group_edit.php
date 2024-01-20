@@ -118,7 +118,7 @@
                     <td><?= $row->unit_name ?></td>
                     <td>
                         <a class="btn btn-primary" href="<?= base_url('setting_con/dasig_group/'.$row->id)?>"> Edit </a>
-                        <a class="btn btn-info" href="<?= base_url('setting_con/dasig_group/'.$row->id.'/'.$row->unit_id)?>"> Manage </a>
+                        <a class="btn btn-info" href="<?= base_url('setting_con/dasig_group/'.$row->id.'/'.1)?>"> Manage </a>
                     </td>
                 </tr>
             <?php } ?>

@@ -190,20 +190,32 @@ class Setting_con extends CI_Controller {
 		echo 'true';
 	}
 
-	public function dasig_group()
+	public function dasig_group($id = null, $type = null)
     {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
 
-        $this->data['units'] = $this->db->get('pr_units')->result();
+		if (!empty($id) && !empty($type)) {
+			$this->data['row'] = $this->db->get('emp_group_dasignation')->row(); 
+			$this->data['dasig_id'] = $this->get_manage_gd_id($id);
+			$this->data['results'] = $this->get_dasignations($this->data['row']->unit_id);
 
-        $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->order_by('u.unit_id', 'ASC');
-        $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
-		
-        $this->data['title'] = 'Dasignation Group'; 
+			$this->data['title'] = 'Manage Dasignation'; 
+			$this->data['subview'] = 'settings/manage_gd';
+		} else if(!empty($id)) {
+	        $this->data['title'] = 'Edit Dasignation Group'; 
+			$this->data['subview'] = 'settings/dasig_group_edit';
+		} else {
+	        $this->data['units'] = $this->db->get('pr_units')->result();
+	        $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->order_by('u.unit_id', 'ASC');
+	        $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
+
+			$this->data['subview'] = 'settings/dasig_group';
+	        $this->data['title'] = 'Dasignation Group'; 
+		}
+
         $this->data['username'] = $this->data['user_data']->id_number;
-		$this->data['subview'] = 'settings/dasig_group';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -223,5 +235,37 @@ class Setting_con extends CI_Controller {
 		}
 		redirect('setting_con/dasig_group');
 	}
+
+	function get_manage_gd_id($id){
+		$this->db->select('desig_id as id')->where('group_dasi_id', $id);
+		$rows = $this->db->get('emp_manage_gd')->result();
+
+		$data = array();
+		foreach ($rows as $key => $r) {
+			$data[$key] = $r->id;
+		}
+		return $data;
+	}
+
+	function get_dasignations($id){
+		$this->db->select('id, desig_name, unit_id');
+		return $this->db->where('unit_id', $id)->get('emp_designation')->result();
+	}
+
+	public function check_level_dg(){
+		$id 	 = $this->input->post('id');
+		$gd_id   = $this->input->post('gd_id');
+		$unit_id = $this->input->post('unit_id');
+		$this->db->where('desig_id', $id);
+		$this->db->where('group_dasi_id', $gd_id);
+		$this->db->where('unit_id', $unit_id);
+		$check = $this->db->get('emp_manage_gd')->num_rows();
+		if ($check > 0) {
+			$this->db->delete('emp_manage_gd', array('desig_id'=>$id, 'group_dasi_id'=>$gd_id, 'unit_id'=>$unit_id));
+		}else{
+			$this->db->insert('emp_manage_gd', array('desig_id'=>$id, 'group_dasi_id'=>$gd_id, 'unit_id'=>$unit_id));
+		}
+	}
+
 }
 
