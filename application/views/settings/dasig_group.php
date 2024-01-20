@@ -66,7 +66,7 @@
                     <select name="unit_id" class="form-control" >
                         <option value="">Select Unit</option>
                         <?php foreach ($units as $row) { ?>
-                            <option value="<?= $row->unit_id ?>">$row->unit_name </option>
+                            <option value="<?= $row->unit_id ?>"><?= $row->unit_name?> </option>
                         <?php } ?>
                     </select>
                 </div>
