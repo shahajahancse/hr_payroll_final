@@ -206,11 +206,17 @@ class Setting_con extends CI_Controller {
     }
 
 	function dasig_group_add(){
-		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
-			$this->session->set_flashdata('success', 'ACL Added Successfully');
-			
+		$data = array(
+			'name_en' => $this->input->post('name_en'),
+			'name_bn' => $this->input->post('name_bn'),
+			'unit_id' => $this->input->post('unit_id'),
+			'status' => $this->input->post('status'),
+		);
+
+		if ($this->db->insert('emp_group_dasignation', $data)) {
+			$this->session->set_flashdata('success', 'Added Successfully');
 		}else{
-			$this->session->set_flashdata('failuer', 'ACL Added Failed');
+			$this->session->set_flashdata('failuer', 'Added Failed');
 		}
 		redirect('setting_con/crud');
 	}
