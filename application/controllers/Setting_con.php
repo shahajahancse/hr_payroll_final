@@ -200,6 +200,7 @@ class Setting_con extends CI_Controller {
 			$this->data['row'] = $this->db->get('emp_group_dasignation')->row(); 
 			$this->data['dasig_id'] = $this->get_manage_gd_id($id);
 			$this->data['results'] = $this->get_dasignations($this->data['row']->unit_id);
+			dd($this->data['dasig_id']);
 
 			$this->data['title'] = 'Manage Dasignation'; 
 			$this->data['subview'] = 'settings/manage_gd';
@@ -237,7 +238,7 @@ class Setting_con extends CI_Controller {
 	}
 
 	function get_manage_gd_id($id){
-		$this->db->select('desig_id as id, unit_id')->where('group_dasi_id', $id);
+		$this->db->select('desig_id as id')->where('group_dasi_id', $id);
 		$rows = $this->db->get('emp_manage_gd')->result();
 
 		$data = array();
