@@ -116,7 +116,9 @@
                     <td><?= $row->name_bn ?></td>
                     <td><?= ($row->status == 1)? 'Enable':'Disable' ?></td>
                     <td><?= $row->unit_id ?></td>
-                    <td><?= $row->unit_id ?></td>
+                    <td>
+                        <a class="btn btn-primary"> Edit </a>
+                    </td>
                 </tr>
             <?php } ?>
         </tbody>
