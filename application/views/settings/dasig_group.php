@@ -78,9 +78,9 @@
                     </select>
                 </div>
             </div>
-        <!-- </div>
-        <div class="row"> -->
-            <div class="col-md-2 pull-right">
+        </div>
+        <div class="row">
+            <div class="col-md-2 pull-right" style="top: -15px !important; right: -60px !important;">
                 <div class="form-group">
                     <label for="acl_name" style="visibility: hidden">.</label>
                     <input type="submit" value="Submit" class="btn btn-success">
