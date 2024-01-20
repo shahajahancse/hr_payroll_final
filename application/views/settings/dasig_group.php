@@ -63,7 +63,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="unit_id">Unit</label>
-                    <select name="unit_id">
+                    <select name="unit_id" class="form-control" >
                         <option value="">Select Unit</option>
                     </select>
                 </div>
@@ -72,7 +72,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="unit_id">status</label>
-                    <select name="status">
+                    <select name="status" class="form-control" >
                         <option value="1">Enable</option>
                         <option value="2">Disable</option>
                     </select>
