@@ -42,10 +42,7 @@
     </div>
   </div>
   <div id="add_form" class="row tablebox">
-    <label for="user_id">Select User</label>
-    <select name="user_id" id="user_id" style="width: 300px!important;">
-
-    </select>
+    <label for="user_id"><?= $title ?></label>
   </div>
 
 
