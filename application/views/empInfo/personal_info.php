@@ -9,6 +9,7 @@
       -moz-appearance: textfield;
     }
   </style> 
+  <!-- < ? php dd($emp_info);?> -->
   <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
   <div class="content">
     <div class="row">
@@ -707,14 +708,14 @@
 	              <div class="form-group">
 	                <label>Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_name');?>
-	                <input type="text" name="refer_name" id="refer_name" class="form-control input-sm bangla_name" required>
+	                <input type="text" name="refer_name" id="refer_name"  value="<?= isset($emp_info->refer_name)?>" class="form-control input-sm bangla_name" required>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Mobile Number<span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_mobile');?>
-	                <input type="text" name="refer_mobile" id="refer_mobile" class="form-control input-sm" required>
+	                <input type="text" name="refer_mobile" id="refer_mobile" value="<?= isset($emp_info->refer_mobile)?>" class="form-control input-sm" required>
 	              </div>
 	            </div>
 	            <div class="col-md-2">
@@ -733,7 +734,7 @@
 	              <div class="form-group">
 	                <label>Village <span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_village');?>
-	                <input type="text" name="refer_village" id="refer_village" class="form-control input-sm english_village" required>
+	                <input type="text" name="refer_village" id="refer_village" value="<?= isset($emp_info->refer_village)?>" class="form-control input-sm english_village" required>
 	              </div>
 	            </div>
 	          </div>	
@@ -787,7 +788,7 @@
 		              <div class="form-group">
 		                <label>Exp, Duration  </label>
 		                <?php echo form_error('exp_duration');?>
-		                <input type="text" name="exp_duration" id="exp_duration" class="form-control input-sm" required>
+		                <input type="text" name="exp_duration" value="<?= isset($emp_info->exp_duration)?>" id="exp_duration" class="form-control input-sm" required>
 		              </div>
 		            </div>
 
@@ -1335,18 +1336,3 @@
 		});
 	});
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
