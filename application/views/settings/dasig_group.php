@@ -44,33 +44,42 @@
   <div id="add_form" class="row tablebox">
     <form action="<?= base_url('setting_con/dasig_group_add')?>" enctype="multipart/form-data" method="post">
         <div class="row">
-            <div class="form-group col-md-3">
-                <label for="acl_name">Group Name</label>
-                <input style="height: 5px !important;" type="text" name="name_en" class="form-control input-lg" id="name_en" placeholder="Enter Name">
-                <?= (isset($failuer['name_en'])) ? '<div class="alert alert-failuer">' . $failuer['name_en'] . '</div>' : ''; ?>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="acl_name">Group Name</label>
+                    <input style="height: 5px !important;" type="text" name="name_en" class="form-control input-lg" id="name_en" placeholder="Enter Name">
+                    <?= (isset($failuer['name_en'])) ? '<div class="alert alert-failuer">' . $failuer['name_en'] . '</div>' : ''; ?>
+                </div>
             </div>
-            <div class="form-group col-md-3">
-                <label for="acl_name">Group Name (বাংলা)</label>
-                <input style="height: 5px !important;" type="text" name="name_bn" class="form-control input-lg" id="name_bn" placeholder="Enter Name">
-                <?= (isset($failuer['name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['name_bn'] . '</div>' : ''; ?>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="acl_name">Group Name (বাংলা)</label>
+                    <input style="height: 5px !important;" type="text" name="name_bn" class="form-control input-lg" id="name_bn" placeholder="Enter Name">
+                    <?= (isset($failuer['name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['name_bn'] . '</div>' : ''; ?>
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <label for="unit_id">Unit</label>
-                <select name="unit_id">
-                    <option value="">Select Unit</option>
-                </select>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="unit_id">Unit</label>
+                    <select name="unit_id">
+                        <option value="">Select Unit</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group col-md-2">
-                <label for="unit_id">status</label>
-                <select name="status">
-                    <option value="1">Enable</option>
-                    <option value="2">Disable</option>
-                </select>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="unit_id">status</label>
+                    <select name="status">
+                        <option value="1">Enable</option>
+                        <option value="2">Disable</option>
+                    </select>
+                </div>
             </div>
-
-            <div class="form-group col-md-2">
+            <div class="col-md-2">
+            <div class="form-group">
                 <label for="acl_name" style="visibility: hidden">.</label>
                 <input type="submit" value="Submit" class="btn btn-success">
+            </div>
             </div>
         </div>
    </form>
