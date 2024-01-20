@@ -124,7 +124,7 @@ function grid_earn_leave_general_info()
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&year="+year+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
 	url =  hostname+"index.php/earn_leave_con/grid_earn_leave_general_info/";
-	$(".clearfix").dialog("open");
+	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -202,7 +202,7 @@ function grid_earn_leave_payment_buyer()
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&year="+year+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
 	url =  hostname+"index.php/earn_leave_con/grid_earn_leave_payment_buyer/";
-	$(".clearfix").dialog("open");
+	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -263,7 +263,7 @@ function grid_earn_leave_summery()
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="year="+year+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
 	url =  hostname+"index.php/earn_leave_con/grid_earn_leave_summery/";
-	$(".clearfix").dialog("open");
+	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -336,7 +336,7 @@ function grid_earn_leave_payment()
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
 	url =  hostname+"index.php/earn_leave_con/grid_earn_leave_payment/";
-	$(".clearfix").dialog("open");
+	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -411,7 +411,7 @@ hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/earn_leave_con/grid_earn_leave_payment_at_atime/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -486,7 +486,7 @@ hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
    url =  hostname+"index.php/earn_leave_con/grid_earn_leave_payment_at_atime/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);

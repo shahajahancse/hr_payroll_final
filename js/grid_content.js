@@ -73,7 +73,7 @@ function actual_monthly_salary_sheet()
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/actual_monthly_salary_sheet/";
 
-   // $(".clearfix").dialog("open");
+   //  
 	ajaxRequest = new XMLHttpRequest();
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -117,7 +117,7 @@ function monthly_salary_sheet()
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/monthly_salary_sheet/";
 
-   // $(".clearfix").dialog("open");
+   //  
 	ajaxRequest = new XMLHttpRequest();
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -952,7 +952,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 //     
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_actual_present_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1014,7 +1014,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	//daily_costing_rpt.moveTo(0,0);
 	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_costing_report/";
-   //    $(".clearfix").dialog("open");
+   //     
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1083,7 +1083,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	//daily_costing_rpt.moveTo(0,0);
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_continuous_costing_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1135,7 +1135,7 @@ function grid_leave_application_form()
 
    var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&emp_id="+emp_id;
    url =  hostname+"index.php/grid_con/grid_leave_application_form/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1202,7 +1202,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	// 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_absent_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1260,7 +1260,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   hostname.indexOf("index.php"));
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1320,7 +1320,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	// 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_late_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1379,7 +1379,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	// 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_out_punch_miss_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1437,7 +1437,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	// 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_out_in_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1494,7 +1494,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 // hostname = window .lo cat ion .h re f; 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_actual_out_in_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1555,7 +1555,7 @@ function grid_daily_holiday_weekend_present_report()
 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_holiday_weekend_present_report/";
- 	$(".clearfix").dialog("open");
+ 	 
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
@@ -1614,7 +1614,7 @@ function grid_daily_holiday_weekend_absent_report()
 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_holiday_weekend_absent_report/";
- 	$(".clearfix").dialog("open");
+ 	 
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
@@ -1675,7 +1675,7 @@ function grid_daily_move_report()
 
 		var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
 	   url =  hostname+"index.php/grid_con/grid_daily_move_report/";
-	 	$(".clearfix").dialog("open");
+	 	 
 	   ajaxRequest.open("POST", url, true);
 	   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	    ajaxRequest.send(queryString);
@@ -1752,7 +1752,7 @@ function grid_daily_punch_report()
 
 	var queryString="firstdate="+firstdate+"&f_time="+f_time+"&s_time="+s_time+"&spl="+sql+"&grid_unit="+grid_unit;
    url =  hostname+"index.php/grid_con/grid_daily_punch_report/";
- 	$(".clearfix").dialog("open");
+ 	 
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
@@ -1821,8 +1821,8 @@ function grid_continuous_present_report()
 	// 
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"index.php/grid_con/grid_continuous_report/";
-   $(".clearfix").dialog("open");
+   url =  hostname+"grid_con/grid_continuous_report/";
+//     
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1911,7 +1911,7 @@ function grid_continuous_absent_report()
 	
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_continuous_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1984,7 +1984,7 @@ function grid_continuous_report_limit(limit)
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id+"&limit="+limit;
     url =  hostname+"index.php/grid_con/grid_continuous_report_limit/";
-    $(".clearfix").dialog("open");
+     
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
@@ -2052,7 +2052,7 @@ function grid_continuous_leave_report_old()
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_continuous_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2120,7 +2120,7 @@ function grid_continuous_leave_report()
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_continuous_leave_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2173,8 +2173,8 @@ function grid_continuous_leave_report_new()
 	// 
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql;
-    url =  hostname+"index.php/grid_con/grid_continuous_report_new/";
-   $(".clearfix").dialog("open");
+    url =  hostname+"grid_con/grid_continuous_report_new/";
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2247,7 +2247,7 @@ function grid_continuous_late_report()
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_continuous_late_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2318,7 +2318,7 @@ function grid_continuous_ot_eot_report()
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_continuous_ot_eot_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2387,7 +2387,7 @@ function grid_continuous_incre_report()
 	
 	
     url =  hostname+"index.php/grid_con/continuous_incre_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2456,7 +2456,7 @@ function grid_continuous_prom_report()
 	
 	
     url =  hostname+"index.php/grid_con/continuous_prom_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2524,7 +2524,7 @@ function grid_continuous_increment_promotion_proposal()
 	
 	
     url =  hostname+"index.php/grid_con/continuous_increment_promotion_proposal/";
-   	$(".clearfix").dialog("open");
+   	 
    	ajaxRequest.open("POST", url, true);
    	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    	ajaxRequest.send(queryString);
@@ -2573,7 +2573,7 @@ function grid_app_letter(){
 	// 
 	var queryString="emp_ids="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_app_letter/";
-	// $(".clearfix").dialog("open");
+	//  
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -2634,7 +2634,7 @@ function grid_emp_job_application(){
 	// 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
     url =  hostname+"index.php/grid_con/grid_emp_job_application/";
-//    $(".clearfix").dialog("open");
+//     
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2692,7 +2692,7 @@ function grid_letter1_report()
 	// 
 	var queryString="spl="+sql+"&unit_id="+unit_id+"&firstdate="+firstdate;
    url =  hostname+"index.php/grid_con/grid_letter1_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2750,7 +2750,7 @@ function grid_letter2_report()
 	
 	var queryString="spl="+sql+"&unit_id="+unit_id+"&firstdate="+firstdate;
    url =  hostname+"index.php/grid_con/grid_letter2_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2810,7 +2810,7 @@ function grid_letter3_report()
 	
 	var queryString="spl="+sql+"&unit_id="+unit_id+"&firstdate="+firstdate;
    url =  hostname+"index.php/grid_con/grid_letter3_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2872,7 +2872,7 @@ function grid_ctpat()
 	
 	var queryString="spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_ctpat/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2957,7 +2957,7 @@ function grid_pay_slip()
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -3040,7 +3040,7 @@ function grid_pay_slip_non_compliance()
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip_non_compliance/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -3125,7 +3125,7 @@ function grid_pay_slip_actual()
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip_actual/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -3209,7 +3209,7 @@ function grid_pay_slip_com()
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip_com/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -3292,7 +3292,7 @@ function grid_pay_slip_com_non_com_mix()
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip_com_non_com_mix/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -3423,7 +3423,7 @@ function grid_incre_prom_report()
 	   
 	   
 	   url =  hostname+"index.php/grid_con/incre_prom_report/";
-		  $(".clearfix").dialog("open");
+		   
 		  ajaxRequest.open("POST", url, true);
 		  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		  ajaxRequest.send(queryString);
@@ -3495,7 +3495,7 @@ function grid_prom_report()
 	//    
 	//    
 	   url =  hostname+"index.php/grid_con/prom_report/";
-		  $(".clearfix").dialog("open");
+		   
 		  ajaxRequest.open("POST", url, true);
 		  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		  ajaxRequest.send(queryString);
@@ -3594,7 +3594,7 @@ function grid_pension_report()
     
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_pension_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -3761,7 +3761,7 @@ function grid_job_card()
 	
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_job_card/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -3791,7 +3791,7 @@ var grid_emp_id = document.getElementById('grid_emp_id').value;
 	//alert(queryString);exit;
    url =  hostname+"index.php/grid_con/grid_auto_notify_FW/";
    //alert(url);exit;
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    //exit;
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -3822,7 +3822,7 @@ var grid_emp_id = document.getElementById('grid_emp_id_2').value;
 	//alert(queryString);exit;
    url =  hostname+"index.php/grid_con/grid_auto_notify_SW/";
    //alert(url);exit;
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    //exit;
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -3853,7 +3853,7 @@ var grid_emp_id = document.getElementById('grid_emp_id_3').value;
 	//alert(queryString);exit;
    url =  hostname+"index.php/grid_con/grid_auto_notify_TW/";
    //alert(url);exit;
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    //exit;
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -3884,7 +3884,7 @@ var grid_emp_id = document.getElementById('grid_emp_id_4').value;
 	//alert(queryString);exit;
    url =  hostname+"index.php/grid_con/grid_auto_notify_LW/";
    //alert(url);exit;
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    //exit;
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -4001,7 +4001,7 @@ function grid_monthly_att_register_ot()
 	
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_monthly_att_register_ot/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -4065,7 +4065,7 @@ function grid_monthly_att_register(i)
 	
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id+"&status="+status;
    url =  hostname+"index.php/grid_con/grid_monthly_att_register/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -4128,7 +4128,7 @@ function grid_yearly_leave_register()
 	
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_yearly_leave_register/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -4199,7 +4199,7 @@ function grid_extra_ot()
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_extra_ot/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -4270,7 +4270,7 @@ function grid_extra_ot_9pm()
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
     url =  hostname+"index.php/grid_con/grid_extra_ot_9pm/";
 
-    $(".clearfix").dialog("open");
+     
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
@@ -4338,7 +4338,7 @@ function grid_extra_ot_mix()
 	
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_extra_ot_mix/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5185,7 +5185,7 @@ var unit_id = document.getElementById('unit_id').value;
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_monthly_salary_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5278,7 +5278,7 @@ function grid_actual_monthly_salary_sheet()
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5373,7 +5373,7 @@ function grid_actual_monthly_salary_sheet_not_sec()
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet_not_sec/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5463,7 +5463,7 @@ function grid_mix_salary_sheet()
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_mix_salary_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5545,7 +5545,7 @@ function grid_actual_monthly_salary_sheet_with_eot()
 
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet_with_eot/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5691,7 +5691,7 @@ function grid_festival_bonus()
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5779,7 +5779,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql+"&grid_section="+grid_section;
    url =  hostname+"index.php/salary_report_con/grid_advance_salary_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5847,7 +5847,7 @@ function sec_sal_summary_report()
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/sec_salary_summary/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5896,7 +5896,7 @@ function salary_summary_test(){
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/salary_summary_test/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5945,7 +5945,7 @@ function salary_summary_compliance(){
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/salary_summary_compliance/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6038,7 +6038,7 @@ function grid_festival_bonus_summary()
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus_summary/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6103,7 +6103,7 @@ function grid_festival_bonus_summary_sec_wise()
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus_summary_sec_wise/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6186,7 +6186,7 @@ function grid_comprative_salary_statement()
 	
 	var queryString="sal_year_month="+sal_year_month+"&sal_year_month2="+sal_year_month2+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/grid_comprative_salary_statement/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6251,7 +6251,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id/*+"&stop_salary="+stop_salary*/;
    url =  hostname+"index.php/salary_report_con/eot_summary_report_sec/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6320,7 +6320,7 @@ function grid_general_info()
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 
    url =  hostname+"index.php/grid_con/grid_general_info/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6370,7 +6370,7 @@ function ot_hour_search()
 	var queryString="firstdate="+firstdate+"&ot_hour="+ot_hour+"&spl="+sql;
     url =  hostname + "index.php/grid_con/ot_hour_search/";
 
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6427,7 +6427,7 @@ function grid_employee_information()
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_employee_information/";
-	$(".clearfix").dialog("open");
+	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -6481,7 +6481,7 @@ function grid_service_book()
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_service_book/";
-	$(".clearfix").dialog("open");
+	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -6596,7 +6596,7 @@ function grid_service_benifit()
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_service_benifit/";
-	$(".clearfix").dialog("open");
+	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -6653,7 +6653,7 @@ function join_letter(){
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_join_letter/";
-	// $(".clearfix").dialog("open");
+	//  
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -6721,7 +6721,7 @@ function grid_current_info()
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 
    url =  hostname+"index.php/grid_con/grid_current_info/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7287,7 +7287,7 @@ function grid_new_join_report()
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_new_join_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7367,7 +7367,7 @@ function grid_bgm_new_join_report()
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_bgm_new_join_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7441,7 +7441,7 @@ function grid_bank_note_req()
 	// 
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_bank_note_requisition/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7527,7 +7527,7 @@ function grid_resign_report()
 	
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_resign_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7614,7 +7614,7 @@ function grid_resign_report_with_sal()
 	
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_resign_report_with_sal/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7701,7 +7701,7 @@ function grid_left_report_with_sal()
 	
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_left_report_with_sal/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7788,7 +7788,7 @@ function grid_bgm_resign_report()
 	
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_resign_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7868,7 +7868,7 @@ function grid_left_report()
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_left_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7949,7 +7949,7 @@ function grid_bgm_left_report()
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_left_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8015,7 +8015,7 @@ function grid_bgm_left_resign_report()
 	
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_left_resign_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8077,7 +8077,7 @@ function grid_daily_eot()
 	// 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_eot/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8139,7 +8139,7 @@ function grid_daily_ot()
 	// 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_ot/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8201,7 +8201,7 @@ function grid_daily_night_allowance_report()
 	// 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_night_allowance_report/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8294,7 +8294,7 @@ function grid_daily_weekend_allowance_sheet()
 	// 
 	var queryString="firstdate="+firstdate+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_weekend_allowance_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8336,7 +8336,7 @@ function grid_daily_holiday_allowance_sheet()
 	// 
 	var queryString="firstdate="+firstdate+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_holiday_allowance_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8400,7 +8400,7 @@ function grid_monthly_ot_register()
 	// 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_monthly_ot_register/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8463,7 +8463,7 @@ function grid_monthly_eot_register()
 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_monthly_eot_register/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8641,7 +8641,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	// 
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_monthly_weekend_allowance_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8712,7 +8712,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	// 
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_monthly_allowance_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8790,7 +8790,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql/*+"&stop_salary="+stop_salary*/;
    url =  hostname+"index.php/salary_report_con/grid_monthly_stop_sheet/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8914,7 +8914,7 @@ function shorts_emp_summery(){
 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/shorts_emp_summery/";
-   $(".clearfix").dialog("open");
+    
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
