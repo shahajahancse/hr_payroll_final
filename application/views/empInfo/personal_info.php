@@ -832,22 +832,19 @@
             </div>
           </div>
         </form>
-		
-
       </div>
     </div>
   </div>
-
   <script>
 		function set_desi_item() {
-		  var emp_dept_id = localStorage.getItem('emp_dept_id');
-		  var emp_sec_id = localStorage.getItem('emp_sec_id');
-		  var emp_line_id = localStorage.getItem('emp_line_id');
-		  var emp_desi_id = localStorage.getItem('emp_desi_id');
-
-		  var nomi_district = localStorage.getItem('nomi_district');
-		  var nomi_thana = localStorage.getItem('nomi_thana');
-		    var nomi_post = localStorage.getItem('nomi_post');
+			var emp_dept_id = localStorage.getItem('emp_dept_id');
+			var emp_sec_id = localStorage.getItem('emp_sec_id');
+			var emp_line_id = localStorage.getItem('emp_line_id');
+			var emp_desi_id = localStorage.getItem('emp_desi_id');
+			var nomi_district = localStorage.getItem('nomi_district');
+			var nomi_thana = localStorage.getItem('nomi_thana');
+			var nomi_post = localStorage.getItem('nomi_post');
+			
 
 		    $('#nomi_district').val(nomi_district).trigger('change');
 			setTimeout(function () {
