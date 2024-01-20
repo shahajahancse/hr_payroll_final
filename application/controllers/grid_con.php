@@ -57,6 +57,41 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
+	function daily_costing_summary()
+	{
+		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
+		$unit_id = $this->input->post('unit_id');
+		$status  = $this->input->post('status');
+
+		$data["values"] 	= $this->grid_model->daily_costing_summary($date,$unit_id);	
+		dd($data["values"]);
+		
+		$data["grid_date"]	= $date;
+		$data["unit_id"]	= $unit_id;
+
+		$this->load->view('attn_con/daily_costing_summary',$data);
+		// $this->load->view('others_report/daily_costing_summary',$data);
+	}
+
+	function daily_attendance_summary()
+	{
+		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
+		$unit_id = $this->input->post('unit_id');
+		$status  = $this->input->post('status');
+
+		$data['values'] = $this->mars_model->line_attendance_summary($date, $unit_id);
+
+		$data['title'] 		 = 'Daily Attendance Summary';
+		$data['report_date'] = $date;
+		$data['category']    = 'Line';
+		$data['unit_id']    = $unit_id;
+
+		$this->load->view('attn_con/attendance_summary', $data);
+		// $this->load->view('others_report/attendance_summary', $data);
+	}
+
+
+
 
 
 
@@ -988,12 +1023,15 @@ class Grid_con extends CI_Controller {
 
 	function grid_continuous_report()
 	{
+		dd('hfh');
+
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
 		$status = $this->input->post('status');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
+	
 		//$status="Present Report from date $start_date to date  $end_date";
 
 		//$data["values"] = $this->grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_section, $grid_emp_id);
@@ -1080,19 +1118,14 @@ class Grid_con extends CI_Controller {
 
 	function grid_continuous_report_new()
 	{
-		//echo "hey";exit;
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
 		$status = $this->input->post('status');
-		//echo "$date, $month, $year";
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-		//print_r($grid_emp_id);exit;
 
-		//$status="Present Report from date $start_date to date  $end_date";
-		//$data["values"] = $this->grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
+		
 		$data_2["values_2"] = $this->grid_model->continuous_leave_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
-
 			$status = "Leave";
 
 			$sStartDate = date("Y-m-d", strtotime($grid_firstdate));

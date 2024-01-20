@@ -38,7 +38,7 @@ class Emp_info_con extends CI_Controller {
 		// dd("BSA");
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('unit_id', 'Unit', 'trim|required');
-		$this->form_validation->set_rules('emp_id', 'Employee ID', 'trim|required');
+		$this->form_validation->set_rules('emp_id', 'Employee ID', 'trim|required|is_unique[pr_emp_com_info.emp_id]');
 		$this->form_validation->set_rules('proxi_id', 'Punch ID', 'trim');  //|is_unique[pr_emp_com_info.proxi_id]
 		$this->form_validation->set_rules('name_en', 'Employee Name', 'trim|required');
 		$this->form_validation->set_rules('name_bn', 'Employee Bangla Name', 'trim|required');

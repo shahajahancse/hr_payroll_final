@@ -43,9 +43,9 @@ $count = count($values["empid"]);
 for($i=0; $i<$count; $i++ )
 {
 	
-	if($section!=$values["sec_name"][$i]){
+	if($section!=$values["sec_name_en"][$i]){
 	echo "<tr bgcolor='#CCCCCC'>";
-	echo "<td colspan='7' style='font-size:16px'>Section :".$values["sec_name"][$i]."</td>";
+	echo "<td colspan='7' style='font-size:16px'>Section :".$values["sec_name_en"][$i]."</td>";
 	echo "</tr>";
 	
 	 ?>
@@ -111,7 +111,7 @@ for($i=0; $i<$count; $i++ )
 	echo "</td>";
 	
 	echo "<tr>";
-	$section=$values["sec_name"][$i];
+	$section=$values["sec_name_en"][$i];
 }
 ?>
 </table>

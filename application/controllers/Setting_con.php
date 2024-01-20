@@ -20,6 +20,7 @@ class Setting_con extends CI_Controller {
             exit;
         }*/
 	}
+
 	function crud()
 	{
 		if ($this->session->userdata('logged_in') == false) {
@@ -32,6 +33,7 @@ class Setting_con extends CI_Controller {
         $this->data['subview'] = 'settings/acl_access';
         $this->load->view('layout/template', $this->data);
 	}
+
 	function acl_access_add(){
 		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
 			$this->session->set_flashdata('success', 'ACL Added Successfully');
@@ -41,6 +43,7 @@ class Setting_con extends CI_Controller {
 		}
 		redirect('setting_con/crud');
 	}
+
 	function acl_access_delete($id){
 		if ($this->db->delete('member_acl_list', array('id' => $id))) {
 			$this->session->set_flashdata('success', 'ACL Deleted Successfully');
@@ -185,6 +188,40 @@ class Setting_con extends CI_Controller {
 		$this->db->where('id', $id);
 		$this->db->delete('pr_report_setting');
 		echo 'true';
+	}
+
+	public function dasig_group()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+
+        $this->data['units'] = $this->db->get('pr_units')->result();
+
+        $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->order_by('u.unit_id', 'ASC');
+        $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
+		
+        $this->data['title'] = 'Dasignation Group'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'settings/dasig_group';
+        $this->load->view('layout/template', $this->data);
+    }
+
+	function dasig_group_add(){
+		$data = array(
+			'name_en' 	  => $this->input->post('name_en'),
+			'name_bn' 	  => $this->input->post('name_bn'),
+			'unit_id' 	  => $this->input->post('unit_id'),
+			'status'  	  => $this->input->post('status'),
+			'updated_by'  => $this->data['user_data']->id,
+		);
+
+		if ($this->db->insert('emp_group_dasignation', $data)) {
+			$this->session->set_flashdata('success', 'Added Successfully');
+		}else{
+			$this->session->set_flashdata('failuer', 'Added Failed');
+		}
+		redirect('setting_con/dasig_group');
 	}
 }
 

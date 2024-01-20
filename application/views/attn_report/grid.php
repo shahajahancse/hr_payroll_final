@@ -192,7 +192,7 @@
 							<button class="btn input-sm sbtn" onclick="daily_report(10)">Attendance Summary</button>
 							<?php } ?>
 							<?php if(in_array(75,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_report(9)">Daily Costing Summary</button>
+							<button class="btn input-sm sbtn" onclick="daily_costing_summary()">Daily Costing Summary</button>
 							<?php } ?>
 							<?php if(in_array(76,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="daily_report(11)">Daily Logout Report</button>
