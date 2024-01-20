@@ -201,9 +201,10 @@ class Setting_con extends CI_Controller {
         $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
 		
 		if (!empty($id) && !empty($type)) {
-			$this->data['title'] = 'Manage Dasignation'; 
+			$t = $this->db->get('emp_group_dasignation')->row(); 
 			$this->data['dasig_id'] = $this->get_manage_gd_id($id);
-			$this->data['results'] = $this->db->select('id, desig_name')->where('unit_id', $this->data['user_data']->id)->get('emp_designation')->result();
+			$this->data['results'] = $this->db->select('id, desig_name')->where('unit_id', $t->unit_id)->get('emp_designation')->result();
+			$this->data['title'] = 'Manage Dasignation'; 
 			$this->data['subview'] = 'settings/manage_gd';
 		} else if(!empty($id)) {
 	        $this->data['title'] = 'Edit Dasignation Group'; 
