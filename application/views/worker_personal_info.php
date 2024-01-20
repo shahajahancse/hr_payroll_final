@@ -154,7 +154,7 @@
                     <p>‰bwgwËK QzwU - 10 (`k) w`b (c~b© †eZbmn)</p>
                     <p>cxov QzwU - 14 (†PŠÏ) w`b (c~b© †eZbmn)</p>
                     <p>Drme QzwU - 12 (evi) w`b (c~b© †eZbmn)</p>
-                    <p>evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b.Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
+                    <p>evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
                     <p>cÖmywZ Kj¨vb QzwU - 16 (‡lvj) mßvn, cÖm‡ei m¤¢ve¨ ZvwiL Gi c~‡e© AÎ cÖwZôv‡b Aby¨b 06 (Qq) gvm wbiwew”Qbœ
                         fv‡e Kg©iZ _vK‡j|</p>
             
@@ -565,7 +565,7 @@
                     <p>8| RvZxqZv t  Kg©xi †gvevBj bs <span><?php echo $value->bank_bkash_no?></span></p>
                     <p>9| AwfÁZv t </p>
         
-                    <table class="table" style="width: 80%;" border="1">
+                    <table class="table" style="" border="1">
                         <tr>
                             <th>µwgK bs</th>
                             <th>AwfÁZvi c~b© weeib</th>
@@ -800,7 +800,7 @@
                 <br>
                 <p>Rbve,</p>
             
-                <p>Avwgt <span style='font-size:12px'><?php echo $value->name_bn?></span>,c`ext <span style='font-size:12px'><?php echo $value->desig_bangla?></span>,KvW© bst <span><?php echo $value->emp_id?></span>, ‡mKkbt <span style='font-size:12px'><?php echo $value->sec_name_bn?></span></p>
+                <p>Avwg <span style='font-size:12px'><?php echo $value->name_bn?></span>,c`ext <span style='font-size:12px'><?php echo $value->desig_bangla?></span>,KvW© bst <span><?php echo $value->emp_id?></span>, ‡mKkbt <span style='font-size:12px'><?php echo $value->sec_name_bn?></span></p>
                 <p>Avwg Avgvi hveZxq ‡eZbvw` wb‡gœv³ weKvk bv¤^v‡i cÖ`v‡bi Rb¨ Aby‡iva KiwQ|</p>
                 <p>weKvk b¤^i t <span><?php echo $value->bank_bkash_no?></span></p>
                 <br><br>
