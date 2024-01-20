@@ -97,16 +97,22 @@ elseif($daily_status == 6)
 		<th>Designation</th>
 		<th>Line</th> 
 		<th>Shift</th>
-		<?php if($daily_status != 2 && $daily_status !=3){?>
+		<?php if($daily_status == 1){?>
 		<th>In Time</th>
 		<th style="white-space: nowrap;">Out Time</th>
 		<?php }?>
+		<?php if($daily_status == 4){?>
+		<th>In Time</th>
+		<?php }?>
 
+		<?php if($daily_status ==  5 || $daily_status == 6){?>
+			<th>In Time</th>
+			<th style="white-space: nowrap;">Out Time</th>
+		<?php }?>
 		<?php if($daily_status == 5){?>
 		<th>OT Hour</th>
-		<?php }?>
-		<?php if($daily_status == 6){?>
-		<th>EOT Hour</th>
+		<?php } if($daily_status == 6){?>
+				<th>EOT Hour</th>
 		<?php }?>
 		<th>Status</th>	
 		<?php if($daily_status == 2){?>
@@ -127,16 +133,23 @@ elseif($daily_status == 6)
 		<td style="white-space: nowrap;text-align:center"><?php echo $employee['desig_name']?></td>
 		<td style="white-space: nowrap;text-align:center"><?php echo $employee['line_name_en']?></td>
 		<td style="white-space: nowrap;text-align:center"><?php echo $employee['shift_name']?></td>
-		<?php if($daily_status != 2 && $daily_status !=3){?>
-			<td><?php echo $employee['in_time']?></td>
-			<td><?php echo $employee['out_time']?></td>
+		<?php if($daily_status == 1){?>
+			<td style="text-align:center"><?php echo $employee['in_time']?></td>
+			<td style="text-align:center"><?php echo $employee['out_time']?></td>
+		<?php }?>
+		<?php if($daily_status == 4){?>
+			<td style="text-align:center"><?php echo $employee['in_time']?></td>
 		<?php }?>
 		
-		<?php if($daily_status == 5){?>
-		<td><?php echo $employee['ot']?></td>
+		<?php if($daily_status == 5 || $daily_status == 6){?>
+			<td style="text-align:center"><?php echo $employee['in_time']?></td>
+			<td style="text-align:center"><?php echo $employee['out_time']?></td>
+		
 		<?php }?>
-		<?php if($daily_status == 6){?>
-		<td><?php echo $employee['eot']?></td>
+		<?php if($daily_status == 5){?>
+			<td style="text-align:center"><?php echo $employee['ot']?></td>
+		<?php }if($daily_status == 6){?>
+		<td style="text-align:center"><?php echo $employee['eot']?></td>
 		<?php }?>
 		<td style="text-align:center">
 			<?php

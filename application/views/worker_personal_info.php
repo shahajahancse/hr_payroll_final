@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Your New Title</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <style>
+            p{
+                margin-bottom: 4px;
+            }
+            @media print{
+            .break_page{
+                page-break-before: always;
+                } 
+            }
+            .title_box{
+                display: flex;
+                flex-direction: column;
+                border: 2px solid black;
+                width: 140px;
+                align-items: center;
+                margin: 0 auto;
+             }
+        </style>
+    </head>
+
+    <body style="width:80%;margin: 0px auto">
+        <!-- niog -->
+        <?php 
+            // dd($values);
+            foreach($values as $value){
+
+            
+        ?>
+        <div class="container break_page" style=" font-family: sutonnymj;">
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
+            </div>
+            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+                <div class="col-md-2 ">
+                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                </div>
+                <div class="col-md-7">
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                </div>
+            </div>
+            <div class="d-flex mt-2">
+                <div class="col-md-4 ">
+                    <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL :</span></p>
+                </div>
+                <div class="col-md-4 ">
+                    <h3 class="text-center"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">wb‡qvM cÎ</b></h3>
+                </div>
+                <div class="col-md-4 ">
+                    <p class="text-center">kªwgK Kwc</p>
+                </div>
+            </div>
+            <div style="margin-left: 2px">
+                <div class="col-md-6 mt-4">
+                    <p>cÖwZ,</p>
+                    <table>
+                        <tr>
+                            <th>bvg </th>
+                            <td> t </td>
+                            <td><span style="font-size:12px"> <?php echo $value->name_bn?> </span></td>
+                        </tr>
+                        <tr>
+                            <th>eZ©gvb wVKvbv </th>
+                            <td> t </td>
+                            <td><span style="font-size:12px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
+                        </tr>
+                        <tr>
+                            <th>¯’vqx wVKvbv </th>
+                            <td> t </td>
+                            <td><span style="font-size:12px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <p>
+                        <span>Rbve,</span><br>
+                        Avcbvi <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs Zvwi†Li Av‡e`b cÎ Ges cieZx©Kv‡j M„nxZ mv¶vrKvi / cix¶vi cwi‡cÖw¶‡Z Avcbv‡K
+                        <?php echo "<span style='font-size:12px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:12px'>".$value->sec_name_bn."</span>"?> ,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
+                    </p>
+                    <p style="font-size:20px !important"><b>kZv©ejx :</b></p>
+                    <p>1. Avcbvi PvKzixi cÖ_g wZb gvm cÖ‡ekb wnmv‡e Mb¨ nB‡e hvnv D³ cÖ‡ekb †gqv`v‡šÍ Avcbvi Kg© g~j¨vqb ‡k‡l
+                        m‡šÍvlRbK we‡ewPZ
+                        nB‡j Avcbvi
+                        wb‡qvM ¯’vqx Kiv nB‡e| cÖKvk _v‡K †h, KvR m‡šÍvlRbK we‡ewPZ bv nB‡j KZ„©cÿ ‡Kvb c~e© AeMwZ e¨vwZ‡i‡K Avcbvi
+                        PvKyixi
+                        Aemvb Kivi
+                        AwaKvi iv‡Lb| hw` ‡Kvb Ae¯’vq Avcbvi Kv‡Ri gvb m‡šÍvlRbK bv nq Z‡e KZ„©cÿ wkÿvbexkKvj mgq AviI wZb gvm ewa©Z
+                        Kwi‡Z
+                        cvwi‡eb|</p>
+                    <p>
+                        2. Avcbvi gRyix / †eZb KvVv‡gv wb¤œiæc t
+                    <table>
+                        <tr>
+                            <th>g~j gRyix</th>
+                            <td>t</td>
+                            <td> <?php 
+                            
+                             $basic = round(($value->salary -(1250+450+750)) / 1.5);
+                             echo $basic;
+                            
+                            ?> UvKv</td>
+                        </tr>
+                        <tr>
+                            <th>evox fvov (g~j gRyixi 50%)</th>
+                            <td>t</td>
+                            <td> <?php echo round($basic/2)?> UvKv</td>
+                        </tr>
+                        <tr>
+                            <th>wPwKrmv fvZv</th>
+                            <td>t</td>
+                            <td> 750 UvKv</td>
+                        </tr>
+                        <tr>
+                            <th>hvZvqvZ fvZv</th>
+                            <td>t</td>
+                            <td> 450 UvKv</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid black">
+                            <th>Lv`¨ fvZv</th>
+                            <td>t</td>
+                            <td> 1250 UvKv</td>
+                        </tr>
+                        <tr>
+                            <th>gvwmK me©‡gvU</th>
+                            <th>t</td>
+                            <th> <span><?php echo $value->salary?></span> UvKv</th>
+                            <!-- <th>K_vq : (†lvj nvRvi cvuPkZ UvKv|)</th> -->
+                        </tr>
+                    </table>
+                    </p>
+                    <p>
+                        3. gwmK gRyix cieZx© gv‡mi mvZ Kg© w`e‡m †h †Kvb w`e‡m cÖ`vb Kiv nB‡e|
+                    </p>
+                    <p>
+                        4. Avcbvi Kg©N›Uv n‡e mKvj 8.00 NwUKv nB‡Z weKvj 5.00 NwUKv ch©šÍ, Z‡e KZ„©cÿ cª‡qvR‡b AvBbvbyhvqx AwZwi³
+                        mgq KvR Kiv‡Z
+                        cvwi‡eb|
+                    </p>
+                    <p>
+                        5. mßv‡n GKw`b mvßvwnK QzwU _vK‡e hv ïµevi ev miKvwi wm×všÍ Abyhvqx GjvKv‡f‡` Ab¨ †Kvb w`b n‡Z cv‡i| GQvov
+                        cÖwZôv‡b
+                        cª‡hvR¨ wbqg Abyhvqx Ab¨vb¨ mKj myweav ‡fvM Kwi‡Z cvwi‡eb|
+                    </p>
+            
+                    <p>‰bwgwËK QzwU - 10 (`k) w`b (c~b© †eZbmn)</p>
+                    <p>cxov QzwU - 14 (†PŠÏ) w`b (c~b© †eZbmn)</p>
+                    <p>Drme QzwU - 12 (evi) w`b (c~b© †eZbmn)</p>
+                    <p>evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b.Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
+                    <p>cÖmywZ Kj¨vb QzwU - 16 (‡lvj) mßvn, cÖm‡ei m¤¢ve¨ ZvwiL Gi c~‡e© AÎ cÖwZôv‡b Aby¨b 06 (Qq) gvm wbiwew”Qbœ
+                        fv‡e Kg©iZ _vK‡j|</p>
+            
+                    <p> 6. PvKyix nB‡Z Ae¨nwZ : ¯’vqx kÖwgK PvKzix Qvovi †ÿ‡Î 60 (lvU) w`‡bi AwMÖg †bvwUk w`‡Z nB‡e, Ab¨_vq ‡bvwUk
+                        †gqv‡`i
+                        mgcwigvb A_©
+                        gvwjK‡K cª`vb Kwi‡Z nB‡e , gvwjK KZ…©K PvKzix Aemv‡bi †ÿ‡Î 120 w`‡bi †bvwUk A_ev mgcwigvb gRyix cÖ`vb Kwi‡Z
+                        n‡e|</p>
+                    <p>7. cÖwZ Kg©w`e‡m ga¨vý weiwZ wn‡m‡e 1(GK) N›Uv bvgvR / LvIqv / wekÖv‡gi Rb¨ cÖ`vb Kiv n‡e|</p>
+                    <p>8. Avcbv‡K GKwU Qwe m¤^wjZ AvBwW KvW© cÖ`vb Kiv nB‡e hvnv Avcbvi cwiPq cÎ wnmv‡e Mb¨ nB‡e Ges Kg©‡ÿ‡Î Bnv
+                        Mjvq Szwj‡q
+                        cÖ`k©b Kwi‡Z
+                        nB‡e|</p>
+                    <p>9. Avcbvi wb‡qvM ¯’vqx nB‡j Avcwb hw` KL‡bv †Kvb Am`vPi‡bi Aciv‡a †`vlx cªgvwbZ nb Z‡e KZ…©cÿ cªPwjZ
+                        AvBbvbyhvqx Avcbvi
+                        weiæ‡× eiLv¯Ímn AvBbvbyM †h †Kvb kvw¯ÍgyjK e¨e¯’v Mªnb Ki‡Z cvwi‡eb|</p>
+                    <p> 10. ‡Kv¤úvbxi cª‡qvR‡b G‡R MÖæ‡ci AvIZvaxb Ab¨ †h †Kvb KviLvbv / BDwbU / wefv‡M Avcbv‡K e`jx Kwi‡Z cvwi‡eb|
+                    </p>
+                    <p>11. PvKyix‡Z _vKv Kvjxb Avcwb AÎ cªwZôv‡b e¨e¯’vw`/bxwZgvjv msµvšÍ ‡Mvcbxq Z_¨vw` ‡Kvb e¨w³, e¨emv cÖwZôv‡bi
+                        A_ev Ab¨
+                        Kv‡iv wbKU
+                        cÖKvk Kwi‡Z cvwi‡eb bv|</p>
+                    <p> 12. KZ…©cÿ †h †Kvb mgq †Kvb c~e© †bvwUk QvovB Avcbvi PvKyixi kZv©ejx †`‡ki cªPwjZ kªg AvB‡bi weavb mv‡c‡ÿ
+                        cwieZ©b/cwiea©b Kivi
+                        ‰ea AwaKvi msiÿb K‡ib|</p>
+                    <p>13. evsjv‡`k kÖg AvB‡bi Av‡jv‡K Avcbvi evrmwiK †eZb e„w× Kiv nB‡e|</p>
+                    <p>14. Avcbvi PvKyixi Ab¨vb¨ kZv©ejx ‡`‡ki kªg AvBb I †Kv¤úvbxi wbqg Abyhvqx wbqwš¿Z nB‡e|</p>
+            
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col-md-6">
+                    <p>........................</p>
+                    <p>KZ©„c‡ÿi ¯^vÿi</p>
+                </div>
+                <div class="col-md-6 align-self-end justify-content-end">
+                    <p>¯^vÿi t ................ √.......................</p>
+                    <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
+                    <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                </div>
+            </div>
+        
+      
+      
+        <div class="container break_page" style=" font-family: sutonnymj;">
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
+            </div>
+            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+                <div class="col-md-2 ">
+                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                </div>
+                <div class="col-md-7">
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                </div>
+            </div>
+            <div class="d-flex mt-2">
+                <div class="col-md-3 ">
+                    <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL :</span></p>
+                </div>
+                <div class="col-md-6 ">
+                    <h3 class="text-center"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">wb‡qvM cÎ</b></h3>
+                </div>
+                <div class="col-md-3 ">
+                    <p class="text-center">Awdm Kwc</p>
+                </div>
+            </div>
+
+            <div style="margin-left: 2px">
+                <div class="col-md-6 mt-4">
+                    <p>cÖwZ,</p>
+                    <table>
+                        <tr>
+                            <th>bvg </th>
+                            <td> t </td>
+                            <td><span style="font-size:12px"> <?php echo $value->name_bn?> </span></td>
+                        </tr>
+                        <tr>
+                            <th>eZ©gvb wVKvbv </th>
+                            <td> t </td>
+                            <td><span style="font-size:12px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
+                        </tr>
+                        <tr>
+                            <th>¯’vqx wVKvbv </th>
+                            <td> t </td>
+                            <td><span style="font-size:12px"><?php echo $value->per_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <p>
+                        <span>Rbve,</span><br>
+                        Avcbvi <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs Zvwi†Li Av‡e`b cÎ Ges cieZx©Kv‡j M„nxZ mv¶vrKvi / cix¶vi cwi‡cÖw¶‡Z Avcbv‡K
+                        <?php echo "<span style='font-size:12px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:12px'>".$value->sec_name_bn."</span>"?> ,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
+                    </p>
+                    <p style="font-size:20px !important"><b>kZv©ejx :</b></p>
+                    <p>1. Avcbvi PvKzixi cÖ_g wZb gvm cÖ‡ekb wnmv‡e Mb¨ nB‡e hvnv D³ cÖ‡ekb †gqv`v‡šÍ Avcbvi Kg© g~j¨vqb ‡k‡l
+                        m‡šÍvlRbK we‡ewPZ
+                        nB‡j Avcbvi
+                        wb‡qvM ¯’vqx Kiv nB‡e| cÖKvk _v‡K †h, KvR m‡šÍvlRbK we‡ewPZ bv nB‡j KZ„©cÿ ‡Kvb c~e© AeMwZ e¨vwZ‡i‡K
+                        Avcbvi
+                        PvKyixi
+                        Aemvb Kivi
+                        AwaKvi iv‡Lb| hw` ‡Kvb Ae¯’vq Avcbvi Kv‡Ri gvb m‡šÍvlRbK bv nq Z‡e KZ„©cÿ wkÿvbexkKvj mgq AviI wZb gvm
+                        ewa©Z
+                        Kwi‡Z
+                        cvwi‡eb|</p>
+                    <p>
+                        2. Avcbvi gRyix / †eZb KvVv‡gv wb¤œiæc t
+                    <table>
+                        <tr>
+                            <th>g~j gRyix</th>
+                            <td>t</td>
+                            <td> <?php 
+                            
+                             $basic = round(($value->salary -(1250+450+750)) / 1.5);
+                             echo $basic;
+                            
+                            ?> UvKv</td>
+                        </tr>
+                        <tr>
+                            <th>evox fvov (g~j gRyixi 50%)</th>
+                            <td>t</td>
+                            <td> <?php echo round($basic/2)?> UvKv</td>
+                        </tr>
+                        <tr>
+                            <th>wPwKrmv fvZv</th>
+                            <td>t</td>
+                            <td> 750 UvKv</td>
+                        </tr>
+                        <tr>
+                            <th>hvZvqvZ fvZv</th>
+                            <td>t</td>
+                            <td> 450 UvKv</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid black">
+                            <th>Lv`¨ fvZv</th>
+                            <td>t</td>
+                            <td> 1250 UvKv</td>
+                        </tr>
+                        <tr>
+                            <th>gvwmK me©‡gvU</th>
+                            <th>t</td>
+                            <th> <span><?php echo $value->salary?></span> UvKv</th>
+                            <!-- <th>K_vq : (†lvj nvRvi cvuPkZ UvKv|)</th> -->
+                        </tr>
+                    </table>
+                    </p>
+                    <p>
+                        3. gwmK gRyix cieZx© gv‡mi mvZ Kg© w`e‡m †h †Kvb w`e‡m cÖ`vb Kiv nB‡e|
+                    </p>
+                    <p>
+                        4. Avcbvi Kg©N›Uv n‡e mKvj 8.00 NwUKv nB‡Z weKvj 5.00 NwUKv ch©šÍ, Z‡e KZ„©cÿ cª‡qvR‡b AvBbvbyhvqx
+                        AwZwi³
+                        mgq KvR Kiv‡Z
+                        cvwi‡eb|
+                    </p>
+                    <p>
+                        5. mßv‡n GKw`b mvßvwnK QzwU _vK‡e hv ïµevi ev miKvwi wm×všÍ Abyhvqx GjvKv‡f‡` Ab¨ †Kvb w`b n‡Z cv‡i|
+                        GQvov
+                        cÖwZôv‡b
+                        cª‡hvR¨ wbqg Abyhvqx Ab¨vb¨ mKj myweav ‡fvM Kwi‡Z cvwi‡eb|
+                    </p>
+        
+                    <p>‰bwgwËK QzwU - 10 (`k) w`b (c~b© †eZbmn)</p>
+                    <p>cxov QzwU - 14 (†PŠÏ) w`b (c~b© †eZbmn)</p>
+                    <p>Drme QzwU - 12 (evi) w`b (c~b© †eZbmn)</p>
+                    <p>evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b.Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
+                    <p>cÖmywZ Kj¨vb QzwU - 16 (‡lvj) mßvn, cÖm‡ei m¤¢ve¨ ZvwiL Gi c~‡e© AÎ cÖwZôv‡b Aby¨b 06 (Qq) gvm wbiwew”Qbœ
+                        fv‡e Kg©iZ _vK‡j|</p>
+        
+                    <p> 6. PvKyix nB‡Z Ae¨nwZ : ¯’vqx kÖwgK PvKzix Qvovi †ÿ‡Î 60 (lvU) w`‡bi AwMÖg †bvwUk w`‡Z nB‡e, Ab¨_vq
+                        ‡bvwUk
+                        †gqv‡`i
+                        mgcwigvb A_©
+                        gvwjK‡K cª`vb Kwi‡Z nB‡e , gvwjK KZ…©K PvKzix Aemv‡bi †ÿ‡Î 120 w`‡bi †bvwUk A_ev mgcwigvb gRyix cÖ`vb
+                        Kwi‡Z
+                        n‡e|</p>
+                    <p>7. cÖwZ Kg©w`e‡m ga¨vý weiwZ wn‡m‡e 1(GK) N›Uv bvgvR / LvIqv / wekÖv‡gi Rb¨ cÖ`vb Kiv n‡e|</p>
+                    <p>8. Avcbv‡K GKwU Qwe m¤^wjZ AvBwW KvW© cÖ`vb Kiv nB‡e hvnv Avcbvi cwiPq cÎ wnmv‡e Mb¨ nB‡e Ges Kg©‡ÿ‡Î Bnv
+                        Mjvq Szwj‡q
+                        cÖ`k©b Kwi‡Z
+                        nB‡e|</p>
+                    <p>9. Avcbvi wb‡qvM ¯’vqx nB‡j Avcwb hw` KL‡bv †Kvb Am`vPi‡bi Aciv‡a †`vlx cªgvwbZ nb Z‡e KZ…©cÿ cªPwjZ
+                        AvBbvbyhvqx Avcbvi
+                        weiæ‡× eiLv¯Ímn AvBbvbyM †h †Kvb kvw¯ÍgyjK e¨e¯’v Mªnb Ki‡Z cvwi‡eb|</p>
+                    <p> 10. ‡Kv¤úvbxi cª‡qvR‡b G‡R MÖæ‡ci AvIZvaxb Ab¨ †h †Kvb KviLvbv / BDwbU / wefv‡M Avcbv‡K e`jx Kwi‡Z
+                        cvwi‡eb|
+                    </p>
+                    <p>11. PvKyix‡Z _vKv Kvjxb Avcwb AÎ cªwZôv‡b e¨e¯’vw`/bxwZgvjv msµvšÍ ‡Mvcbxq Z_¨vw` ‡Kvb e¨w³, e¨emv
+                        cÖwZôv‡bi
+                        A_ev Ab¨
+                        Kv‡iv wbKU
+                        cÖKvk Kwi‡Z cvwi‡eb bv|</p>
+                    <p> 12. KZ…©cÿ †h †Kvb mgq †Kvb c~e© †bvwUk QvovB Avcbvi PvKyixi kZv©ejx †`‡ki cªPwjZ kªg AvB‡bi weavb
+                        mv‡c‡ÿ
+                        cwieZ©b/cwiea©b Kivi
+                        ‰ea AwaKvi msiÿb K‡ib|</p>
+                    <p>13. evsjv‡`k kÖg AvB‡bi Av‡jv‡K Avcbvi evrmwiK †eZb e„w× Kiv nB‡e|</p>
+                    <p>14. Avcbvi PvKyixi Ab¨vb¨ kZv©ejx ‡`‡ki kªg AvBb I †Kv¤úvbxi wbqg Abyhvqx wbqwš¿Z nB‡e|</p>
+        
+                </div>
+            </div><br>
+            <div class="d-flex">
+                <div class="col-md-6">
+                    <p>........................</p>
+                    <p>KZ©„c‡ÿi ¯^vÿi</p>
+                </div><br>
+                <div class="col-md-6 align-self-end justify-content-end">
+                    <p>¯^vÿi t ................ √.......................</p>
+                    <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
+                    <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                </div>
+            </div>
+        </div>
+            <br>
+            <br>
+            <br>
+        <!-- jogdan --> 
+        <div class="container break_page" style="font-family:sutonnymj;">
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/002</p>
+            </div>
+            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+                <div class="col-md-2 ">
+                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                </div>
+                <div class="col-md-7">
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                </div>
+            </div>
+            <!-- <div class="row"> -->
+            <h3 class="text-center mt-2"><b style="border: 2px solid black;padding-left:6px;padding-right:6px;">Kv‡R †hvM`vb cÎ</b></h3>
+            <!-- </div> -->
+            <div class="row mt-4">
+                <div class="col-md-6 mt-4">
+                    <table>
+                        <tr>
+                            <th>AvBwW bs </th>
+                            <td> t </td>
+                            <td><?php echo $value->emp_id ?></td>
+                        </tr>
+                        <tr>
+                            <th>ZvwiL </th>
+                            <td> t </td>
+                            <td><?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12 mt-3">
+        
+                    <p>eivei,</p>
+                    <p>cwiPvjK/wbev©nx cwiPvjK/gnve¨e¯’vcK/KviLvbv e¨e¯’vcK</p>
+                    <p>KviLvbvi bvg t nvwbI‡qj Mv‡g©›Um wjwg‡UW</p>
+                    <p>wVKvbv t 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
+                    <p class="mt-4">welq t Kv‡R †hvM`vb cÎ</p>
+        
+                    <p class="mt-4">Rbve/Rbvev,</p>
+                    <p> Avcbvi wbKU †_‡K cªvß wb‡qvM cÎ AvBwW bs <?php echo $value->emp_id?> BsZvwiL <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs Gi ‡cªwÿ‡Z Rvbv‡bv
+                        hv‡”Q †h Avwg A`¨ <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs ZvwiL n‡Z Avcbvi wkícÖwZôv‡b Dc‡i D‡jwLZwb‡qvM c‡Îi kZ©
+                        †gvZv‡eK <span style="font-size:12px"><?php echo $value->desig_bangla?></span> c‡` †hvM`vb Kijvg|</p>
+        
+                    <p class="mt-4"> AZGe Avcbvi wbKU Av‡e`b GB †h, Avgvi `vwLjK„Z Kv‡R †hvM`vb cÎwU MÖnY K‡i evwaZ Ki‡eb|</p>
+        
+        
+                    <p class="mt-4">ab¨ev`v‡šÍ</p>
+                    <p class="mt-4">Avcbvi wek¦¯Í</p>
+                </div>
+        
+                <div class="col-md-6">
+                    <p>¯^vÿi t ................ √.......................</p>
+                    <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
+                    <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                </div>
+            </div>
+        </div>
+            <br>
+            <br>
+            <br>
+        <!-- potovumi -->
+
+        <div class="container break_page" style=" font-family: sutonnymj;">
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/005</p>
+            </div>
+            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+                <div class="col-md-2 ">
+                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                </div>
+                <div class="col-md-7">
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                </div>
+            </div>
+            
+            <div class="title_box mt-2">
+                <span style="font-family:Arial;border-bottom:1px solid black">Background Check</span>
+                <span>cUf~wg wbixÿb</span>
+            </div>
+        
+            <div class="row">
+                <div class="col-md-6 mt-4">
+                    <table>
+                        <tr>
+                            <th>ZvwiL </th>
+                            <td> t </td>
+                            <td>21-10-2023 Bs</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12">
+        
+                    <p>1| bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
+                    <p>2| wcZvi bvg t <span style="font-size:12px"><?php echo $value->father_name?></span></p>
+                    <p>3| gvZvi bvg t <span style="font-size:12px"><?php echo $value->mother_name?></span></p>
+                    <p>4| ¯’vqx wVKvbv t |</p>
+                    <p>wbR †gvevBj bs AwfeveK †gvevBj bs - bwgwb †gvevBj - </p>
+                    <p>5| eZ©gvb wVKvbv t |</p>
+                    <p> 6| fvovwUqv n‡j - </p>
+                    <p> evwoi gvwj‡Ki bvg t .............. </p>
+                    <p>†dvb / †gvevBj bs (hw` _v‡K)/ t ......</p>
+        
+                    <p>7| ‡idv‡iÝKvixi / Awfeve‡Ki bvg t .............
+                        <!-- <p>‡ckv t ............«Referees_job»|</p> -->
+                    <p>wVKvbv t ...........|</p>
+                    <p>†gvevBj t......</p>
+        
+                    <p style="width:120px;border-bottom: 1px solid black;"><b>wbixÿbKvixi gšÍe¨ t</b></p>
+                    Avwg m‡iRwg‡b/†gvevBj †dv‡bi gva¨‡g †idv‡iÝKvix e¨w³i mv‡_ †hvMv‡hvM K‡i wb‡¤œv³ Z_¨w` mwVK †cjvg:
+                    <p> 1| Dc‡iv³ bvg wVKvbv mwVK|</p>
+                    <p>2| Av‡e`bKvix Av`vj‡Z `ÛcÖvß bq e‡j Rvbv hvq|</p>
+                    <p>3| †m gv`Kvm³ bq e‡j †idv‡iÝKvix Rvbvq|</p>
+        
+                    <p>wbixÿbKvixi ¯^vÿi t ............................................................</p>
+        
+                    <p>bvg t ..........................................................................</p>
+                    <p>c`ex t .........................................................................</p>
+                    <p> ZvwiL t........................................................................</p>
+        
+        
+                </div>
+            </div>
+        </div>
+            <br>
+            <br>
+            <br>
+        <!-- abedon -->
+
+        <div class="container break_page" style=" font-family: sutonnymj;">
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/003</p>
+            </div>
+            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+                <div class="col-md-2 ">
+                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                </div>
+                <div class="col-md-7">
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                </div>
+            </div>
+            <!-- <div class="row"> -->
+            <h3 class="text-center mt-2"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">Av‡e`b cÎ</b></h3>
+            <!-- </div> -->
+            <div class="row">
+                <div class="col-md-6 mt-4">
+                    <table>
+                        <tr>
+                            <th>ZvwiL </th>
+                            <td> t </td>
+                            <td>21-10-2023 Bs</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12">
+        
+                    <p>eivei,</p>
+                    <p>cwiPvjK/wbev©nx cwiPvjK/gnve¨e¯’vcK/KviLvbv e¨e¯’vcK</p>
+                    <p>KviLvbvi bvg t nvwbI‡qj Mv‡g©›Um wjwg‡UW</p>
+                    <p>wVKvbv t 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
+                    <p class="mt-3">welq t c‡` PvKzixi Rb¨ Av‡e`b |</p>
+        
+                    <p class="mt-3">Rbve,</p>
+                    <p> h_vwenxZ m¤§vb cÖ`k©b c~e©K weYxZ wb‡e`b GB †h, Avwg Avcbvi KviLvbvq <span style='font-size:12px'><?php echo $value->sec_name_bn?></span> c‡`
+                        †hvM`vb Ki‡Z
+                        B”QzK| D³ c‡`i GKRb cÖv_x© wnmv‡e Avgvi Rxeb e„ËvšÍ Avcbvi my-we‡ePbvi Rb¨ `vwLj Kijvg|</p>
+        
+                    <p class="mt-3">GZGe, wb¤œ cÖ`Ë Z_¨vejx hvPvB K‡i Avgv‡K D³ c‡` wb‡qvM `vb Ki‡j Avwg Avcbvi wbKU K…ZÁ _vKe|
+                    </p>
+        
+                    <p>1| bvg t <span style='font-size:12px'><?php echo $value->name_bn?></p>
+                    <p>2| wcZv t <span style='font-size:12px'><?php echo $value->father_name?></span>,gvZvi bvg t <span style='font-size:12px'><?php echo $value->mother_name?></span>,¯^vgx/¯¿xi bvg t <span style='font-size:12px'><?php echo $value->spouse_name?></span></p>
+                    <p>3| eZ©gvb wVKvbv t <span style="font-size:12px"><?php echo $value->pre_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span>| </p>
+                    <p>4| ¯’vqx wVKvbv t <span style="font-size:12px"><?php echo $value->per_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span>| </p>
+                    <p>5| wkÿvMZ †hvM¨Zv t«Education» </p>
+                    <p>6| R¤œ ZvwiLt </p>
+                    <p>7| ag© t </p>
+                    <p>8| RvZxqZv t  Kg©xi †gvevBj bs <span><?php echo $value->bank_bkash_no?></span></p>
+                    <p>9| AwfÁZv t </p>
+        
+                    <table class="table" style="width: 80%;" border="1">
+                        <tr>
+                            <th>µwgK bs</th>
+                            <th>AwfÁZvi c~b© weeib</th>
+                            <th>cÖwZôv‡bi bvg, wVKvbv, †dvb b¤^i</th>
+                            <th>PvKzixi mgqKvj</th>
+                        </tr>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                    </table>
+        
+        
+        
+        
+                    <p>10| †idv‡iÝ t (1) bvg t ........................................</p>
+                    <p>wVKvbv t ........................................</p>
+                    <p> †dvb t ..........................................</p>
+        
+        
+        
+                    <div style="float: right;">
+                        <p>¯^vÿi t ................ √.......................</p>
+                        <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
+                        <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                    </div>
+        
+                    <div style="float: left;border: 1px solid black;display: block; width: 100%; margin-top: 5px;">
+                        <p style="margin-top: -25px;">Awdm KZ…©K c~iYxq t</p>
+                        <p>gšÍe¨ t </p>
+                        <div style="float: right;">
+                            <p>Kg©KZ©vi ¯^vÿi t</p>
+                            <p> bvg t ........................................................................</p>
+                            <p>c`ext ..............................................</p>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        <!-- nominee -->
+        <div class="container break_page">
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/007</p>
+            </div>
+            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+                <div class="col-md-2 ">
+                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                </div>
+                <div class="col-md-7">
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+                <p class="mt-2" style="border: 2px solid black;padding-left:4px;padding-right:4px;">dig bs-41</p>
+                <p>[ aviv 19, 131 (1) (K), 155 (2), 234, 264, 265 I 273 Ges wewa 118 (1) 136, 232 (2), 262 (1), 289 (1) I 321
+                    (1) `ªóe¨ ]</p>
+                <p>Rgv I wewfbœ Lv‡Z cÖvc¨ A_© cwi‡kv‡ai †Nvlbv I g‡bvq‡bi dig|</p>
+            </div>
+            <div>
+                <p> 1| KviLvbv / cÖwZôv‡bi bvg &nbsp;t&nbsp; nvwbI‡qj Mv‡g©›Um wjwg‡UW|</p>
+                <p> 2| KviLvbv / cÖwZôv‡bi wVKvbv &nbsp;t&nbsp; 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                <div class="d-flex flex-row">
+                    <p> 3| kÖwg‡Ki bvg I wVKvbv t</p>
+                    <p> bvg t <span style='font-size:12px'> <?php echo $value->name_bn?> </p>
+                    <p>,&nbsp;MÖvg t <span style="font-size:12px"> <?php echo $value->per_village_bn?></span> </p>
+                    <p>,&nbsp; WvKNi t  <span style="font-size:12px"> <?php echo $value->pre_post_name_bn?></span> </p>
+                    <p>,&nbsp;_vbv t   <span style="font-size:12px"> <?php echo $value->pre_upa_name_bn?> </p>
+                    <p>,&nbsp; ‡Rjv t <span style="font-size:12px"> <?php echo $value->pre_dis_name_bn?></span> </p>
+                  
+                </div>
+                <p>4| wj½ t <span style="font-size:12px"><?php echo $value->sex_name == "Male"? "পুরুষ":"নারী"?></span></p>
+                <p>5| Rb¥ ZvwiL t <?php echo date("d-m-Y",strtotime($value->emp_dob))?></span></p>
+                <p>6| mbv³ KiY wPý (hw` _v‡K) t ------------------------------------ |</p>
+                <div class="d-flex">
+                    <p>7| ¯’vqx wVKvbv t &nbsp; MÖvg t <span style="font-size:12px"><?php echo $value->per_village_bn?></span></p>
+                    <p>,&nbsp;WvKNi t <span style="font-size:12px"><?php echo $value->pre_post_name_bn?></span></p>
+                    <p>,&nbsp;_vbv t <span style="font-size:12px"><?php echo $value->pre_upa_name_bn?></span></p>
+                    <p>,&nbsp;‡Rjv t <span style="font-size:12px"><?php echo $value->pre_dis_name_bn?></span></p>
+
+                    
+                </div>
+                <p>8| PvKwi‡Z wbhyw³i ZvwiL t <span><?php echo date("d-m-Y",strtotime($value->emp_join_date))?></span> </p>
+                <p>9| c‡`i bvg t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+            </div>
+            <div>
+                <p>Avwg GZ`Øviv †Nvlbv Kwi‡ZwQ †h, Avgvi g„Zy¨ nB‡j ev Avgvi AeZ©gv‡b, Avgvi AbyK~‡j Rgv I wewfbœLv‡Z cÖvc¨ UvKv
+                    MÖn‡bi Rb¨
+                    Avwg wb¤œewb©Z e¨w³‡K/e¨w³Mb‡K g‡bvbqb `vb Kwi‡ZwQ Ges wb‡`©k w`w”Q †h, D³ UvKv wb¤œewb©Z c×wZ‡Z g‡bvbxZ
+                    e¨w³‡`i g‡a¨
+                    e›Ub Kwi‡Z nB‡e|
+                </p> <br>
+                <table class="table" border="1">
+                    <tr>
+                        <th class="text-center" style="width: 20%;">g‡bvbxZ e¨w³ ev e¨w³‡`i bvg, wVKvbv I Qwe (bwgbxi Qwe I
+                            ¯^vÿi kÖwgK KZ…©K mZ¨vwqZ) Gb AvB wW bs </th>
+                        <th class="text-center" style="width: 6%;">m`m¨‡`i mwnZ g‡bvbxZ e¨w³‡`i m¤úK©</th>
+                        <th class="text-center" style="width: 6%;">eqm</th>
+                        <th class="text-center" style="width: 26%;" colspan="2">cÖ‡Z¨K g‡bvbxZ e¨w³‡K †`q Ask</th>
+                    </tr>
+                    <tr>
+                        <td class="text-center">(1)</td>
+                        <td class="text-center">(2)</td>
+                        <td class="text-center">(3)</td>
+                        <td class="text-center" colspan="2">(4)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center" style="width:10%">RgvLvZ</td>
+                        <tdstyle="width:10%">
+                            </tdstyle=>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center" style="width:10%">e‡KqvLvZ</td>
+                        <td style="width:10%"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center" style="width:10%">cÖwf‡W›U dvÛ</td>
+                        <tdstyle="width:10%">
+                            </tdstyle=>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">exgv</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center" style="width:10%">`~N©Ubvi ÿwZc~iY</td>
+                        <td style="width:10%"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">jf¨vsk</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center" style="width:10%">Ab¨vb¨</td>
+                        <td style="width:10%"></td>
+                    </tr>
+                </table>
+                <br><br>
+                <div>
+                    <p>cÖZ¨qb Kwi‡ZwQ †h, Avgvi Dcw¯’wZ‡Z Rbve -------------------------------------wjwce× weeiY mgyn cvV Kwievi
+                        ci D³ †Nvlbv ¯^vÿi Kwi‡Z‡Qb|</p>
+                </div>
+                <br>
+                <br>
+                <div>
+                    <p>g‡bvbqb cÖ`vbKvix kÖwg‡Ki ¯^vÿi, wUcmwn I ZvwiL t -----------------------√-----------------------------
+                    </p>
+                </div>
+                <br>
+                <br><br>
+                <div class="d-flex justify-content-between">
+                    <div class="flex-column align-items-start">
+                        <p>................................................. </p>
+        
+                        <p>ZvwiLmn g‡bvbxZ e¨w³M‡Yi </p>
+                        <p> ¯^vÿi A_ev wUcmwn </p>
+                        <p> (kÖwgK KZ…©K mZ¨vwqZ Qwe) </p>
+                    </div>
+        
+                    <div class="flex-column align-items-end">
+                        <p>................................................. </p>
+                        <p>gvwj‡Ki ev cÖwaKvicÖvß Kg©KZ©vi ¯^vÿi</p>
+                        <p>ZvwiL t ......................... </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <br>
+            <br>
+            <br>
+        <!-- account  -->
+
+        <div class="container break_page">
+            <div class="d-flex flex-row justify-content-between p_screen">
+                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Document Code :HGL/HRD/HR/03/028</p>
+            </div>
+            <div class="d-flex mt-3">
+                <div class="col-md-2 ">
+                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                </div>
+                <div class="col-md-9">
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h3>
+                </div><br>
+            </div>
+            <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+            </div>
+        
+            <div>
+                <br>
+                <p>ZvwiL : 21-10-2023 Bs</p><br>
+                <p>eivei,</p>
+                <br>
+                <p>e¨e¯’vcbv cwiPvjK</p>
+                <p>KviLvbvi bvg t nvwbI‡qj Mv‡g©›Um wjwg‡UW .</p>
+                <p>wVKvbv t 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                <p>welqt weKvk bv¤^v‡i ‡eZbvw` cÖ`v‡bi Rb¨ Av‡e`b cÎ</p>
+                <br>
+                <p>Rbve,</p>
+            
+                <p>Avwgt <span style='font-size:12px'><?php echo $value->name_bn?></span>,c`ext <span style='font-size:12px'><?php echo $value->desig_bangla?></span>,KvW© bst <span><?php echo $value->emp_id?></span>, ‡mKkbt <span style='font-size:12px'><?php echo $value->sec_name_bn?></span></p>
+                <p>Avwg Avgvi hveZxq ‡eZbvw` wb‡gœv³ weKvk bv¤^v‡i cÖ`v‡bi Rb¨ Aby‡iva KiwQ|</p>
+                <p>weKvk b¤^i t <span><?php echo $value->bank_bkash_no?></span></p>
+                <br><br>
+                <p>¯^vÿi Ges wUcmB t...................√.............</p>
+                <p>bvg t <span style='font-size:12px'><?php echo $value->name_bn?></p>
+                <p>c`ex t <span style='font-size:12px'><?php echo $value->sec_name_bn?></span></p>
+            </div>
+        </div>
+    <?php }?>
+    </body>
+
+</html>
+

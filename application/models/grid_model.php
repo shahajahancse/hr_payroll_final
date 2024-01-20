@@ -14,40 +14,311 @@ class Grid_model extends CI_Model{
 		$this->load->model('attn_process_model');
 	}
 
-	// new salary report generate
-	function grid_actual_monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id)
+	// actual salary report generate
+	function actual_monthly_salary_sheet($salary_month = null, $status = null, $emp_id = null, $unit_id = null)
 	{
-		$year  = substr($sal_year_month,0,4);
-		$month = substr($sal_year_month,5,2);
-		$lastday = date("t", mktime(0, 0, 0, $month, 1, $year));
 
-		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
+		$lastday = date("t", strtotime($salary_month));
 
-		$this->db->select('emp_line_num.*,pr_emp_per_info.emp_full_name,pr_emp_per_info.bangla_nam,pr_emp_per_info.bank_ac_no,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,pr_grade.gr_name,pr_grade.gr_name_bn,pr_pay_scale_sheet.*,emp_line_num.line_name, pr_emp_add.mobile');
-		$this->db->from('pr_emp_per_info');
+		$this->db->select('
+				pr_emp_per_info.name_en,
+				pr_emp_per_info.name_bn,
+				pr_emp_per_info.bank_bkash_no,
+				pr_emp_per_info.personal_mobile,
+
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.ot_entitle,
+
+				emp_depertment.dept_name,
+				emp_depertment.dept_bangla,
+				emp_designation.desig_name,
+				emp_designation.desig_bangla, 
+				emp_section.sec_name_bn, 
+				emp_section.sec_name_en, 
+				emp_line_num.line_name_en, 
+				emp_line_num.line_name_bn, 
+
+				pr_grade.gr_name,
+				pay_salary_sheet.*,
+			');
+		$this->db->from('pay_salary_sheet');
 		$this->db->from('pr_emp_com_info');
-		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pr_emp_per_info');
 		$this->db->from('emp_depertment');
+		$this->db->from('emp_designation');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
-		$this->db->from('emp_designation');
-		$this->db->from('pr_emp_add');
+		$this->db->from('pr_grade');
 
-		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.sec_id');
-		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.line_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+		$this->db->where_in('pay_salary_sheet.emp_id', $emp_id);
+		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_per_info.emp_id');
+		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_com_info.emp_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id    = emp_depertment.dept_id');
+		$this->db->where('pr_emp_com_info.emp_desi_id    = emp_designation.id');
+		$this->db->where('pr_emp_com_info.emp_sec_id     = emp_section.id');
+		$this->db->where('pr_emp_com_info.emp_line_id    = emp_line_num.id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
-		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
+		$this->db->where("pay_salary_sheet.salary_month  = '$salary_month'");
+		$this->db->order_by("pay_salary_sheet.emp_id","ASC");
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	// compliance salary report generate
+	function monthly_salary_sheet($salary_month = null, $status = null, $emp_id = null, $unit_id = null)
+	{
+
+		$lastday = date("t", strtotime($salary_month));
+
+		$this->db->select('
+				pr_emp_per_info.name_en,
+				pr_emp_per_info.name_bn,
+				pr_emp_per_info.bank_bkash_no,
+				pr_emp_per_info.personal_mobile,
+
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.ot_entitle,
+
+				emp_depertment.dept_name,
+				emp_depertment.dept_bangla,
+				emp_designation.desig_name,
+				emp_designation.desig_bangla, 
+				emp_section.sec_name_bn, 
+				emp_section.sec_name_en, 
+				emp_line_num.line_name_en, 
+				emp_line_num.line_name_bn, 
+
+				pr_grade.gr_name,
+				pay_salary_sheet_com.*,
+			');
+		$this->db->from('pay_salary_sheet_com');
+		$this->db->from('pr_emp_com_info');
+		$this->db->from('pr_emp_per_info');
+		$this->db->from('emp_depertment');
+		$this->db->from('emp_designation');
+		$this->db->from('emp_section');
+		$this->db->from('emp_line_num');
+		$this->db->from('pr_grade');
+
+		$this->db->where_in('pay_salary_sheet_com.emp_id', $emp_id);
+		$this->db->where('pay_salary_sheet_com.emp_id 		 = pr_emp_per_info.emp_id');
+		$this->db->where('pay_salary_sheet_com.emp_id 		 = pr_emp_com_info.emp_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id    	 = emp_depertment.dept_id');
+		$this->db->where('pr_emp_com_info.emp_desi_id    	 = emp_designation.id');
+		$this->db->where('pr_emp_com_info.emp_sec_id     	 = emp_section.id');
+		$this->db->where('pr_emp_com_info.emp_line_id    	 = emp_line_num.id');
+		$this->db->where('pr_emp_com_info.emp_sal_gra_id 	 = pr_grade.gr_id');
+		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
+		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	// actual eot report generate
+	function grid_monthly_eot_sheet($salary_month = null, $status = null, $emp_id = null, $unit_id = null)
+	{
+		
+		$lastday = date("t", strtotime($salary_month));		
+
+		$this->db->select('
+				pr_emp_per_info.name_en,
+				pr_emp_per_info.name_bn,
+				pr_emp_per_info.bank_bkash_no,
+				pr_emp_per_info.personal_mobile,
+
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.ot_entitle,
+
+				emp_depertment.dept_name,
+				emp_depertment.dept_bangla,
+				emp_designation.desig_name,
+				emp_designation.desig_bangla, 
+				emp_section.sec_name_bn, 
+				emp_section.sec_name_en, 
+				emp_line_num.line_name_en, 
+				emp_line_num.line_name_bn, 
+
+				pr_grade.gr_name,
+				pay_salary_sheet.*,
+			');
+
+		$this->db->from('pay_salary_sheet');
+		$this->db->from('pr_emp_com_info');
+		$this->db->from('pr_emp_per_info');
+		$this->db->from('emp_depertment');
+		$this->db->from('emp_designation');
+		$this->db->from('emp_section');
+		$this->db->from('emp_line_num');
+		$this->db->from('pr_grade');
+
+		$this->db->where_in('pay_salary_sheet.emp_id', $emp_id);
+		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_per_info.emp_id');
+		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_com_info.emp_id');
+		$this->db->where('pr_emp_com_info.emp_dept_id    = emp_depertment.dept_id');
+		$this->db->where('pr_emp_com_info.emp_desi_id    = emp_designation.id');
+		$this->db->where('pr_emp_com_info.emp_sec_id     = emp_section.id');
+		$this->db->where('pr_emp_com_info.emp_line_id    = emp_line_num.id');
+		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
+		$this->db->where("pay_salary_sheet.salary_month  = '$salary_month'");
+		$this->db->where("pay_salary_sheet.eot_amount   != ",0);
+		$this->db->where("pay_salary_sheet.eot_hour     > ",0);
+		$this->db->order_by("pay_salary_sheet.emp_id","ASC");
+		$this->db->order_by("pr_emp_com_info.emp_id");
+		$this->db->order_by("emp_designation.desig_name");
+		$query = $this->db->get();	
+		return $query->result();
+		
+	}
+
+	// actual eot summary report generate
+	function summary_report($salary_month = null, $status = null, $grid_emp_id = null, $unit_id = null)
+	{
+
+		$this->db->select("
+				num.id as line_id, num.line_name_en, num.line_name_bn,
+                SUM( CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END ) AS emp_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END ) AS emp_bank,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.gross_sal ELSE 0 END ) AS cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.gross_sal ELSE 0 END ) AS bank_sum,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.ot_hour ELSE 0 END ) AS cash_sum_ot_hour,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.ot_hour ELSE 0 END ) AS bank_sum_ot_hour,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_hour ELSE 0 END ) AS eot_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_hour ELSE 0 END ) AS eot_bank_sum,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.ot_amount ELSE 0 END ) AS cash_ot_amount,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.ot_amount ELSE 0 END ) AS bank_ot_amount,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_amount ELSE 0 END ) AS eot_amount_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_amount ELSE 0 END ) AS eot_amount_bank_sum,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_hr_for_sa ELSE 0 END ) AS eot_hr_for_sa_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_hr_for_sa ELSE 0 END ) AS eot_hr_for_sa_bank_sum,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_amt_for_sa ELSE 0 END ) AS eot_amt_for_sa_cash_sum,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_amt_for_sa ELSE 0 END ) AS eot_amt_for_sa_bank_sum,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.att_bonus ELSE 0 END ) AS cash_att_bonus,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.att_bonus ELSE 0 END ) AS bank_att_bonus,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.net_pay ELSE 0 END ) AS cash_sum_net_pay,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.net_pay ELSE 0 END ) AS bank_sum_net_pay,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.festival_bonus ELSE 0 END ) AS festival_bonus_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.festival_bonus ELSE 0 END ) AS festival_bonus_bank,
+
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.adv_deduct ELSE 0 END ) AS adv_deduct_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.adv_deduct ELSE 0 END ) AS adv_deduct_bank,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.abs_deduction ELSE 0 END ) AS abs_deduction_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.abs_deduction ELSE 0 END ) AS abs_deduction_bank,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.late_deduct ELSE 0 END ) AS late_deduct_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.late_deduct ELSE 0 END ) AS late_deduct_bank,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.others_deduct ELSE 0 END ) AS others_deduct_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.others_deduct ELSE 0 END ) AS others_deduct_bank,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.tax_deduct ELSE 0 END ) AS tax_deduct_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.tax_deduct ELSE 0 END ) AS tax_deduct_bank,
+                SUM( CASE WHEN com.salary_draw = 1 THEN ss.stamp ELSE 0 END ) AS stam_deduct_cash,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.stamp ELSE 0 END ) AS stam_deduct_bank,
+            ");
+		$this->db->from('pay_salary_sheet as ss');
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('emp_line_num as num');
+
+		$this->db->where("ss.emp_id = com.emp_id");
+		$this->db->where("num.id = com.emp_line_id");
+		$this->db->where("ss.salary_month", $salary_month);
+		$this->db->where("ss.unit_id", $unit_id);
+		// $this->db->where("line_id !=",2);
+		$this->db->group_by("num.id");
+		$this->db->order_by("num.line_name_en");
+		return $this->db->get()->result();
+
+	}
+
+			//For Cash gross_sal
+			/*$column_name = "gross_sal" ;
+			$gross_sal_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$cash_total = $gross_sal_cash;
+			$all_data["cash_sum"][] = $gross_sal_cash;
+			//For Cash att_bonus
+			$column_name = "att_bonus" ;
+			$att_bonus_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$cash_total = $cash_total + $att_bonus_cash;
+			$all_data["cash_att_bonus"][] = $att_bonus_cash;
+
+			
+			//For Bank att_bonus
+			$column_name = "att_bonus" ;
+			$att_bonus_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$bank_total = $bank_total + $att_bonus_bank;
+			$all_data["bank_att_bonus"][] = $att_bonus_bank;
+			//For Bank ot_amount
+			$ot_amount_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$bank_total = $bank_total + $ot_amount_bank;
+			$all_data["bank_ot_amount"][] = $ot_amount_bank;
+
+			//=================Total Cash Salary calculation===============
+			$all_data["cash_total"][] = $cash_total;
+			//=================Total Bank Salary calculation===============
+			$all_data["bank_total"][] = $bank_total;
+			//=================Total Cash & Bank Salary calculation=========
+			$total_cash_and_bank = $cash_total + $bank_total;
+			$all_data["total_cash_and_bank"][] = $total_cash_and_bank;
+			*/	
+			
+			/*$adv_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $adv_deduct_cash;
+			$adv_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $adv_deduct_bank;
+			$abs_deduction_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $total_cash_deduction + $abs_deduction_cash;
+			$abs_deduction_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $abs_deduction_bank;
+			$late_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $total_cash_deduction + $late_deduct_cash;
+			$late_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $late_deduct_bank;
+			$others_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $total_cash_deduction + $others_deduct_cash;
+			$others_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $others_deduct_bank;
+			$tax_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $total_cash_deduction + $tax_deduct_cash;
+			$tax_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $tax_deduct_bank;
+			$stam_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+			$total_cash_deduction = $total_cash_deduction + $stam_deduct_cash;
+			$stam_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $stam_deduct_bank;
+			$all_data["sub_total_cash_deduction"][]= $total_cash_deduction;
+			$all_data["sub_total_bank_deduction"][] = $total_bank_deduction;
+			$all_data["sub_total_cash_bank_deduction"][] = $total_cash_deduction + $total_bank_deduction;*/
+		
+		
+
+			/*$total_cash_after_deduct = $cash_total - $total_cash_deduction;
+			$all_data["total_cash_after_deduct"][] = $total_cash_after_deduct;
+			$total_bank_after_deduct = $bank_total - $total_bank_deduction;
+			$all_data["total_bank_after_deduct"][] = $total_bank_after_deduct;
+			$sub_total = $total_cash_after_deduct + $total_bank_after_deduct;
+			$all_data["sub_total"][] = $sub_total;*/
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+	// =======================================================
+		// old code
+	// =======================================================
 
 	function grid_nominee($grid_emp_id)
 	{
@@ -841,7 +1112,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
     $this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'LEFT');
     $this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
-    $this->db->join('pay_scale_sheet', 'pay_scale_sheet.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
     $this->db->where('pr_emp_shift_log.shift_log_date', $date);
 	if($type == 1){
@@ -6351,318 +6621,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	}
 
 
-	//========================Start Salary Summary=================
-	function salary_summary($salary_month,$emp_stat,$grid_unit,$stop_salary)
-	{
-		// echo "hi";exit;
-		$all_data = array();
-		$salary_month = $salary_month;
-
-
-		/*$this->db->select("line_id,line_name");
-		$this->db->where("unit_id",$grid_unit);
-		$this->db->where("line_id !=",2);
-		$this->db->order_by("line_name");
-		$query = $this->db->get("emp_line_num");*/
-
-		$this->db->select("sec_id,sec_name_en");
-		$this->db->where("unit_id",$grid_unit);
-		$this->db->order_by("sec_name_en");
-		$query = $this->db->get("emp_section");
-
-		foreach($query->result() as $rows)
-		{
-			$data = array();
-			$data1 = array();
-
-			// $line_id = $rows->line_id;
-			// $all_data["sec_name_en"][] = $rows->line_name;
-			$line_id = $rows->sec_id;
-			$all_data["sec_name_en"][] = $rows->sec_name_en;
-
-			// For Cash Man Power
-			$salary_draw_cash = 1;
-			$emp_cash = $this->count_empid_for_salary($line_id,$emp_stat,$salary_month,$salary_draw_cash,$stop_salary,"count");
-			$all_data["emp_cash"][] = $emp_cash;
-
-			// For Bank Man Power
-			$salary_draw_bank = 2;
-			$emp_bank = $this->count_empid_for_salary($line_id,$emp_stat,$salary_month,$salary_draw_bank,$stop_salary,"count");
-			$all_data["emp_bank"][] = $emp_bank;
-
-			$all_data["emp_cash_bank"][] =$emp_cash + $emp_bank;
-
-			// For Cash Emp ID
-			$cash_emp_id = $this->count_empid_for_salary($line_id,$emp_stat,$salary_month,$salary_draw_cash,$stop_salary,"emp_id");
-			foreach($cash_emp_id as $rows)
-			{
-				 $data[] = $rows->emp_id;
-			}
-			$data = implode("xxx",$data);
-			$emp_id_cash = explode('xxx', trim($data));
-
-			// For Bank Emp ID
-			$bank_emp_id = $this->count_empid_for_salary($line_id,$emp_stat,$salary_month,$salary_draw_bank,$stop_salary,"emp_id");
-			foreach($bank_emp_id as $rows)
-			{
-				$data1[] = $rows->emp_id;
-			}
-			$data1 = implode("xxx",$data1);
-			$emp_id_bank = explode('xxx', trim($data1));
-
-			//For Cash gross_sal
-			$column_name = "gross_sal" ;
-			$gross_sal_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$cash_total = $gross_sal_cash;
-			$all_data["cash_sum"][] = $gross_sal_cash;
-
-			//For Bank gross_sal
-			//print_r($emp_id_bank);
-			$gross_sal_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$bank_total = $gross_sal_bank;
-			$all_data["bank_sum"][] = $gross_sal_bank;
-
-			//For Cash basic_sal
-			$column_name = "basic_sal" ;
-			$basic_sal_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);			$all_data["cash_sum_basic"][] = $basic_sal_cash;
-
-			//For Bank basic_sal
-			$basic_sal_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);			$all_data["bank_sum_basic"][] = $basic_sal_bank;
-
-			//For Cash house_r
-			$column_name = "house_r" ;
-			$all_data["cash_sum_house_r"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-
-			//For Bank house_r
-			$all_data["bank_sum_house_r"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-
-			//For Cash medical_a
-			$column_name = "medical_a" ;
-			$all_data["cash_sum_medical_a"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-
-			//For Bank medical_a
-			$all_data["bank_sum_medical_a"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-
-			//For Cash food_allow
-			$column_name = "food_allow" ;
-			$all_data["cash_sum_food_allow"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-
-			//For Bank food_allow
-			$all_data["bank_sum_food_allow"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-
-			//For Cash trans_allow
-			$column_name = "trans_allow" ;
-			$all_data["cash_sum_trans_allow"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-
-			//For Bank trans_allow
-			$all_data["bank_sum_trans_allow"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-
-			//For Cash ot_hour
-			$column_name = "ot_hour" ;
-			$all_data["cash_sum_ot_hour"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-
-			$column_name = "eot_hour" ;
-			$all_data["cash_sum_eot_hour"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-
-			//For Bank ot_hour
-			$all_data["bank_sum_ot_hour"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$all_data["bank_sum_eot_hour"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-
-			//For Cash ot_amount
-			$column_name = "ot_amount" ;
-			$all_data["cash_sum_ot_amount"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-
-			$column_name = "eot_amount" ;
-			$all_data["cash_sum_eot_amount"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-
-			//For Bank ot_amount
-			$all_data["bank_sum_ot_amount"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-
-			$all_data["bank_sum_eot_amount"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-
-
-			//For Cash att_bonus
-			$column_name = "att_bonus" ;
-			$att_bonus_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$cash_total = $cash_total + $att_bonus_cash;
-			$all_data["cash_att_bonus"][] = $att_bonus_cash;
-
-			//For Bank att_bonus
-			$column_name = "att_bonus" ;
-			$att_bonus_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$bank_total = $bank_total + $att_bonus_bank;
-			$all_data["bank_att_bonus"][] = $att_bonus_bank;
-
-			//================================================
-			$this->db->select("COUNT(att_bonus) as att_bonus_man");
-			$this->db->from("pr_pay_scale_sheet");
-			$this->db->where_in('pr_pay_scale_sheet.emp_id', $emp_id_bank);
-			$this->db->where('pr_pay_scale_sheet.att_bonus !=', 0);
-			$this->db->like("salary_month", $salary_month);
-			$query = $this->db->get();
-			//echo $this->db->last_query();
-			$row = $query->row();
-			$att_bonus_man_bank = $row->att_bonus_man;
-			if($att_bonus_man_bank ==''){$att_bonus_man_bank = 0;}
-
-			$this->db->select("COUNT(att_bonus) as att_bonus_man");
-			$this->db->from("pr_pay_scale_sheet");
-			$this->db->where_in('pr_pay_scale_sheet.emp_id', $emp_id_cash);
-			$this->db->where('pr_pay_scale_sheet.att_bonus !=', 0);
-			$this->db->like("salary_month", $salary_month);
-			$query = $this->db->get();
-			//echo $this->db->last_query();
-			$row = $query->row();
-			$att_bonus_man_cash = $row->att_bonus_man;
-			if($att_bonus_man_cash ==''){$att_bonus_man_cash = 0;}
-
-			$all_data["att_bonus_man_total"][]= $att_bonus_man_bank+$att_bonus_man_cash;
-			//================================================
-
-			//For Cash net_pay
-			$column_name = "net_pay" ;
-			$all_data["cash_sum_net_pay"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//For Bank net_pay
-			$all_data["bank_sum_net_pay"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//For Cash ot_amount
-			$column_name = "ot_amount" ;
-			$ot_amount_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$cash_total = $cash_total + $ot_amount_cash;
-			$all_data["cash_ot_amount"][] = $ot_amount_cash;
-
-			//For Bank ot_amount
-			$ot_amount_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$bank_total = $bank_total + $ot_amount_bank;
-			$all_data["bank_ot_amount"][] = $ot_amount_bank;
-
-			//==============This is for Festival Bonus=====================
-
-			//For Cash ot_amount
-			$column_name = "festival_bonus" ;
-			$festival_bonus_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$all_data["festival_bonus_cash"][] = $festival_bonus_cash;
-
-			//For Bank ot_amount
-			$festival_bonus_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$all_data["festival_bonus_bank"][] = $festival_bonus_bank;
-
-			//For Cash eot_hour
-			$column_name = "eot_hour" ;
-			$eot_hour_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$all_data["cash_eot_hour"][] = $eot_hour_cash;
-
-			//For Bank eot_amount
-			$eot_hour_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$all_data["bank_eot_hour"][] = $eot_hour_bank;
-
-			$total_cash_bank_eot_hour = $eot_hour_cash + $eot_hour_bank;
-			$all_data["total_cash_bank_eot_hour"][] = $total_cash_bank_eot_hour;
-
-			//For Cash eot_amount
-			$column_name = "eot_amount" ;
-			$eot_amount_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$all_data["cash_eot_amount"][] = $eot_amount_cash;
-
-			//For Bank eot_amount
-			$eot_amount_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$all_data["bank_eot_amount"][] = $eot_amount_bank;
-
-			$total_cash_bank_eot_amount = $eot_amount_cash + $eot_amount_cash;
-			$all_data["total_cash_bank_eot_amount"][] = $total_cash_bank_eot_amount;
-
-			//=================Total Cash Salary calculation===============
-			$all_data["cash_total"][] = $cash_total;
-			//=================Total Bank Salary calculation===============
-			$all_data["bank_total"][] = $bank_total;
-			//=================Total Cash & Bank Salary calculation=========
-			$total_cash_and_bank = $cash_total + $bank_total;
-			$all_data["total_cash_and_bank"][] = $total_cash_and_bank;
-
-			//For Cash adv_deduct
-			$column_name = "adv_deduct" ;
-			$adv_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$total_cash_deduction = $adv_deduct_cash;
-			$all_data["adv_deduct_cash"][] = $adv_deduct_cash;
-
-			//For Bank adv_deduct
-			$adv_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$total_bank_deduction = $adv_deduct_bank;
-			$all_data["adv_deduct_bank"][] = $adv_deduct_bank;
-
-			//For Cash abs_deduction
-			$column_name = "abs_deduction" ;
-			$abs_deduction_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$total_cash_deduction = $total_cash_deduction + $abs_deduction_cash;
-			$all_data["abs_deduction_cash"][] = $abs_deduction_cash;
-
-			//For Bank abs_deduction
-			$abs_deduction_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$total_bank_deduction = $total_bank_deduction + $abs_deduction_bank;
-			$all_data["abs_deduction_bank"][] = $abs_deduction_bank;
-
-			//For Cash late_deduct
-			$column_name = "late_deduct" ;
-			$late_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$total_cash_deduction = $total_cash_deduction + $late_deduct_cash;
-			$all_data["late_deduct_cash"][] = $late_deduct_cash;
-
-			//For Bank abs_deduction
-			$late_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$total_bank_deduction = $total_bank_deduction + $late_deduct_bank;
-			$all_data["late_deduct_bank"][] = $late_deduct_bank;
-
-			//For Cash late_deduct
-			$column_name = "others_deduct" ;
-			$others_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$total_cash_deduction = $total_cash_deduction + $others_deduct_cash;
-			$all_data["others_deduct_cash"][] = $others_deduct_cash;
-
-			//For Bank late_deduct
-			$others_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$total_bank_deduction = $total_bank_deduction + $others_deduct_bank;
-			$all_data["others_deduct_bank"][] = $others_deduct_bank;
-
-
-			//For Cash late_deduct
-			$column_name = "tax_deduct" ;
-			$tax_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$total_cash_deduction = $total_cash_deduction + $tax_deduct_cash;
-			$all_data["tax_deduct_cash"][] = $tax_deduct_cash;
-
-			//For Bank late_deduct
-			$tax_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$total_bank_deduction = $total_bank_deduction + $tax_deduct_bank;
-			$all_data["tax_deduct_bank"][] = $tax_deduct_bank;
-
-			//For Cash stamp
-			$column_name = "stamp" ;
-			$stam_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$total_cash_deduction = $total_cash_deduction + $stam_deduct_cash;
-			$all_data["stam_deduct_cash"][] = $stam_deduct_cash;
-
-			//For Bank stamp
-			$stam_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$total_bank_deduction = $total_bank_deduction + $stam_deduct_bank;
-			$all_data["stam_deduct_bank"][] = $stam_deduct_bank;
-
-
-			$all_data["sub_total_cash_deduction"][]= $total_cash_deduction;
-			$all_data["sub_total_bank_deduction"][] = $total_bank_deduction;
-			$all_data["sub_total_cash_bank_deduction"][] = $total_cash_deduction + $total_bank_deduction;
-
-			//Total Cash after deduction calculation
-			$total_cash_after_deduct = $cash_total - $total_cash_deduction;
-			$all_data["total_cash_after_deduct"][] = $total_cash_after_deduct;
-			//Total Cash after deduction calculation
-			$total_bank_after_deduct = $bank_total - $total_bank_deduction;
-			$all_data["total_bank_after_deduct"][] = $total_bank_after_deduct;
-			//Total Cash+Bank calculation
-			$sub_total = $total_cash_after_deduct + $total_bank_after_deduct;
-			$all_data["sub_total"][] = $sub_total;
-		}
-		return $all_data;
-	}
-
 	function sec_salary_summary($salary_month,$emp_stat,$grid_unit,$stop_salary)
 	{
 		// echo "hi";exit;
@@ -7548,131 +7506,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	 }
 
-	function eot_summary_report($salary_month,$emp_stat,$grid_unit,$stop_salary)
-	{
-
-		$all_data = array();
-
-		$salary_month = $salary_month;
-
-		$salary_month = $salary_month;
-		$this->db->select("line_id,line_name");
-		$this->db->where("unit_id",$grid_unit);
-		$this->db->where("line_id !=",2);
-		$this->db->order_by("line_name");
-		$query = $this->db->get("emp_line_num");
-
-		foreach($query->result() as $rows)
-		{
-			//echo "<tr>";
-			//$emp_stat = array('2','3','4','6');
-			$data = array();
-			$data1 = array();
-
-			//echo "<td>";
-			//echo $rows->dept_name;
-			//echo "</td>";
-			$all_data["dept"][] = $rows->line_name;
-			$dept_id = $rows->line_id;
-
-			// For Cash Man Power
-			$salary_draw_cash = 1;
-			$emp_cash = $this->count_empid_for_salary($dept_id,$emp_stat,$salary_month,$salary_draw_cash,$stop_salary,"count");
-			$all_data["emp_cash"][] = $emp_cash;
-
-			// For Bank Man Power
-			$salary_draw_bank = 2;
-			$emp_bank = $this->count_empid_for_salary($dept_id,$emp_stat,$salary_month,$salary_draw_bank,$stop_salary,"count");
-			$all_data["emp_bank"][] = $emp_bank;
-
-			$all_data["emp_cash_bank"][] =$emp_cash + $emp_bank;
-
-			// For Cash Emp ID
-			$cash_emp_id = $this->count_empid_for_salary($dept_id,$emp_stat,$salary_month,$salary_draw_cash,$stop_salary,"emp_id");
-			foreach($cash_emp_id as $rows)
-			{
-				$data[] = $rows->emp_id;
-			}
-			$data = implode("xxx",$data);
-			$emp_id_cash = explode('xxx', trim($data));
-
-			// For Bank Emp ID
-			$bank_emp_id = $this->count_empid_for_salary($dept_id,$emp_stat,$salary_month,$salary_draw_bank,$stop_salary,"emp_id");
-			foreach($bank_emp_id as $rows)
-			{
-				$data1[] = $rows->emp_id;
-			}
-			$data1 = implode("xxx",$data1);
-			$emp_id_bank = explode('xxx', trim($data1));
-
-
-			//For Cash gross_sal
-			$column_name = "gross_sal" ;
-			$gross_sal_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			$all_data["cash_sum"][] = $gross_sal_cash;
-
-			//For Bank gross_sal
-			//print_r($emp_id_bank);
-			$gross_sal_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			$all_data["bank_sum"][] = $gross_sal_bank;
-
-			$all_data["gross_cash_bank"][] = $gross_sal_cash + $gross_sal_bank;;
-
-			//For Cash EOT HOUR
-			$column_name = "eot_hour" ;
-			$cash_eot_hour = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//$cash_total = $eot_hour;
-			$all_data["eot_cash_sum"][] = $cash_eot_hour;
-
-			//For Bank EOT HOUR
-			$bank_eot_hour = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//$bank_total = $eot_hour;
-			$all_data["eot_bank_sum"][] = $bank_eot_hour;
-
-			$all_data["eot_cash_bank_hour"][] = $cash_eot_hour + $bank_eot_hour;
-
-			//For Cash EOT_SA HOUR
-			$column_name = "eot_hr_for_sa" ;
-			$cash_eot_hr_for_sa = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//$cash_total = $eot_hour;
-			$all_data["eot_hr_for_sa_cash_sum"][] = $cash_eot_hr_for_sa;
-
-			//For Bank EOT_SA HOUR
-			$bank_eot_hr_for_sa = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//$bank_total = $eot_hour;
-			$all_data["eot_hr_for_sa_bank_sum"][] = $bank_eot_hr_for_sa;
-
-			$all_data["eot_hr_for_sa_cash_bank"][] = $cash_eot_hr_for_sa + $bank_eot_hr_for_sa;
-
-			//For Cash EOT AMOUNT
-			$column_name = "eot_amount" ;
-			$cash_eot_amount = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//$cash_total = $eot_hour;
-			$all_data["eot_amount_cash_sum"][] = $cash_eot_amount;
-
-			//For Bank EOT AMOUNT
-			$bank_eot_amount = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//$bank_total = $eot_hour;
-			$all_data["eot_amount_bank_sum"][] = $bank_eot_amount;
-
-			$all_data["eot_cash_bank_amount"][] = $cash_eot_amount + $bank_eot_amount;
-
-			//For Cash EOT_SA AMOUNT
-			$column_name = "eot_amt_for_sa" ;
-			$cash_eot_amt_for_sa = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
-			//$cash_total = $eot_hour;
-			$all_data["eot_amt_for_sa_cash_sum"][] = $cash_eot_amt_for_sa;
-
-			//For Bank EOT_SA AMOUNT
-			$bank_eot_amt_for_sa = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
-			//$bank_total = $eot_hour;
-			$all_data["eot_amt_for_sa_bank_sum"][] = $bank_eot_amt_for_sa;
-
-			$all_data["eot_amt_for_sa_cash_bank"][] = $cash_eot_amt_for_sa + $bank_eot_amt_for_sa;
-		}
-		return $all_data;
-
-	}
 	//========================End Salary Summary=================
 	function eot_summary_report_sec($salary_month,$emp_stat,$grid_unit,$stop_salary)
 	{
@@ -8616,50 +8449,64 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		}
 	}
 
-	function grid_emp_job_application($grid_emp_id)
-	{
-		$this->db->select('pr_emp_blood_groups.blood_name,pr_emp_position.posi_name,pr_emp_skill.*,pr_emp_edu.*,pr_emp_per_info.no_child,pr_emp_sex.sex_name,pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.emp_full_name, pr_emp_per_info.bangla_nam,pr_emp_per_info.img_source, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name,emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add,pr_emp_add.emp_pre_add_ban, pr_emp_add.emp_par_add,pr_emp_add.emp_par_add_ban,pr_emp_add.mobile,pr_emp_per_info.emp_dob,pr_emp_per_info.emp_religion,pr_religions.religion_name');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_emp_add');
-		$this->db->from('pr_religions');
-		$this->db->from('pr_emp_sex');
-		$this->db->from('pr_emp_edu');
-		$this->db->from('pr_emp_skill');
-		$this->db->from('pr_emp_position');
-		$this->db->from('pr_emp_blood_groups');
-		$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.desig_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.sec_id');
-		$this->db->where('pr_emp_per_info.emp_religion = pr_religions.religion_id');
-		$this->db->where('pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_edu.emp_id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
-		$this->db->where('pr_emp_com_info.emp_position_id = pr_emp_position.posi_id');
-		$this->db->where('pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id');
-		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
+	function grid_emp_job_application($grid_emp_id){
+		// dd($grid_emp_id);
+		$this->db->select('
+		pr_emp_per_info.* ,
+		pr_emp_sex.sex_name,
+		pr_emp_com_info.emp_join_date, 
+		pr_emp_blood_groups.blood_name,
 
+		emp_designation.desig_name, 
+		emp_designation.desig_bangla,
+		emp_depertment.dept_name,
+		emp_depertment.dept_bangla, 
+		emp_section.sec_name_en, 
+		emp_section.sec_name_bn, 
+		pr_religions.religion_id,
+		per_dis.name_bn as dis_name_bn,
+		per_upa.name_bn as upa_name_bn,
+		per_post.name_bn as post_name_bn,
+		pre_dis.name_bn as pre_dis_name_bn,
+		pre_upa.name_bn as pre_upa_name_bn,
+		pre_post.name_bn as pre_post_name_bn,
+		pr_emp_edu.*,
+		pr_emp_skill.*,
+		pr_emp_com_info.emp_sal_gra_id as grade,
+		pr_emp_com_info.com_gross_sal as salary,
+
+	');
+		
+	
+	$this->db->from('pr_emp_per_info');
+	$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+	$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+	$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+	$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+	$this->db->join('pr_religions', 'pr_emp_per_info.emp_religion = pr_religions.religion_id');
+	$this->db->join('pr_emp_sex', 'pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
+	$this->db->join('pr_emp_edu', 'pr_emp_com_info.emp_id = pr_emp_edu.emp_id');
+	$this->db->join('pr_emp_skill', 'pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
+	$this->db->join('pr_emp_blood_groups', 'pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id');
+	$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
+	$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
+	$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
+	$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
+	$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
+	$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
+	$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+	// $this->db->order_by('pr_emp_com_info.emp_id');
+	$query = $this->db->get();
 		//echo $this->db->last_query();
 		// echo "<pre>"; print_r($query->result()); exit();
 
-		if($query->num_rows() == 0)
-		{
+		if($query->num_rows() == 0){
 			return "Employee ID range does not exist!";
 		}
-		else
-		{
-			return $query;
+		else{
+			return $query->result();
 		}
-		//print_r($query->result_array());
+		// dd($query->result());
 	}
 
 	function grid_yearly_leave_register($years, $grid_emp_id)

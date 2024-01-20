@@ -239,7 +239,7 @@
 	            <div class="col-md-3">
 	              <div class="form-group">
 	                <label>Home Owner Name <span style="color: red;">*</span> </label>
-	                <input type="text" name="pre_home_owner" id="pre_home_owner" class="form-control input-sm english_name" required>
+	                <input type="text" name="pre_home_owner" id="pre_home_owner" class="form-control input-sm bangla_name" required>
 	                <?php echo form_error('pre_home_owner');?>
 	              </div>
 	            </div>
@@ -525,7 +525,7 @@
 
 	          <div class="row">
 
-				<div class="col-md-2">
+							<div class="col-md-2">
 	              <div class="form-group">
 	                <label>Gross Salary <span style="color: red;">*</span> </label>
 	                <?php echo form_error('gross_sal');?>
@@ -571,7 +571,7 @@
 	          </div>
 
 
-			<div class="row">
+						<div class="row">
 	            <div class="col-md-2">
 	              <div class="form-group">
 	                <label>Salary <span style="color: red;">*</span> </label>
@@ -616,7 +616,7 @@
 	              </div>
 	            </div>
 	          </div>
-		</div>
+					</div>
 
           <h3 style="font-weight: 600;">Nominee Information</h3>
 	        <hr style="margin-bottom: 0px !important;">
@@ -627,7 +627,7 @@
 	              <div class="form-group">
 	                <label>Nominee Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('nominee_name');?>
-	                <input type="text" name="nominee_name" id="nominee_name" class="form-control input-sm english_name" required>
+	                <input type="text" name="nominee_name" id="nominee_name" class="form-control input-sm bangla_name" required>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
@@ -707,7 +707,7 @@
 	              <div class="form-group">
 	                <label>Name <span style="color: red;">*</span> </label>
 	                <?php echo form_error('refer_name');?>
-	                <input type="text" name="refer_name" id="refer_name" class="form-control input-sm english_name" required>
+	                <input type="text" name="refer_name" id="refer_name" class="form-control input-sm bangla_name" required>
 	              </div>
 	            </div>
 	            <div class="col-md-3">
@@ -811,13 +811,13 @@
 		                <input type="file" name="img_source" id="img_source" class="form-control input-sm" style="height: 35px !important; line-height: 20px !important;">
 		              </div>
 		            </div>
-				</div>
+							</div>
 	          	<div class="col-md-3">
 		            <div class="col-12">
 	                <label>Employee Photo</label>
 	                <img id="image" style="max-width: 59%;" src="" alt="image">
 		            </div>
-				</div>
+							</div>
 	          </div>
 	        </div>
 	        <br>

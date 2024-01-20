@@ -247,6 +247,61 @@ class Acl_con extends CI_Controller {
 		}
 	}	
 
+	function acl_copy_08_09_21(){
+		$username = $this->session->userdata('username');
+		$get_user_id = $this->acl_model->get_user_id($username);
+		$acl_check = $this->acl_check($get_user_id );
+
+
+		$crud = new grocery_CRUD();
+	 	$get_session_user_pr_units = $this->common_model->get_session_unit_id_name();
+		 /*if($get_session_user_pr_units != 0)
+		 {
+			 $crud->where('members.pr_units_name',$get_session_user_pr_units);
+			 $crud->where('id_number',$username);
+
+			}*/
+			$data = $crud->set_table('members');
+			// echo "<pre>"; print_r($data); exit;
+		$crud->set_subject('User');
+
+		//$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
+		if($get_session_user_pr_units != 0)
+		{
+			$crud->set_relation('unit_name' , 'pr_units','unit_name',array('pr_units_id' => $get_session_user_pr_units) );
+		}
+		else
+		{
+			$crud->set_relation( 'unit_name' , 'pr_units','unit_name' );
+		}
+
+		//This code use for unset relation n-n
+		if($acl_check == "false")
+		{
+			$crud->unset_add();
+			$crud->unset_delete();
+			$crud->edit_fields('id_number','password');
+			$state = $crud->getState();
+			if ($state != 'insert' && $state != 'update') {
+			$crud->set_relation_n_n('ACL', 'member_acl_level', 'member_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
+			  }
+			  $crud->where('members.unit_name',$get_session_user_pr_units);
+			$crud->where('id_number',$username);
+		}
+		else
+		{
+			$crud->set_relation_n_n('ACL', 'member_acl_level', 'member_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
+		}
+
+		$crud->set_rules('id_number','Username','required|callback_id_number_check');
+		$crud->display_as('id_number','Username');
+		$crud->required_fields('id_number','password','level');
+		$crud->change_field_type('password','password');
+		$crud->where('id_number !=','kamrul');
+		$output = $crud->render();
+		$this->crud_output($output);
+	}
+
 	function id_number_check($str){
 		$id = $this->uri->segment(4);
 		if(!empty($id) && is_numeric($id))

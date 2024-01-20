@@ -43,6 +43,7 @@ class Processdb extends CI_Model{
 			'salary_type'		=> $this->input->post('salary_type'),
 			'emp_join_date'		=> $ejd,
 		);
+		// dd($data);
 
 		$dob = date("Y-m-d", strtotime($this->input->post('emp_dob')));
 		$per_data = array(
@@ -103,9 +104,11 @@ class Processdb extends CI_Model{
 			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
 		);
 
-		if($this->db->insert('pr_emp_com_info', $data))
-		{
-			$per_data['emp_id'] = $this->db->insert_id();
+		if($this->db->insert('pr_emp_com_info', $data)){
+			$emp_id = $this->db->insert_id();
+			$id= $this->db->select('emp_id')->where('id',$emp_id)->get('pr_emp_com_info')->row()->emp_id;
+			$per_data['emp_id'] = $id;
+			// dd($per_data);
 
 			$img ="";
 			if($_FILES["img_source"]["name"] != '')
@@ -115,7 +118,7 @@ class Processdb extends CI_Model{
 
 				$config['upload_path']    = './uploads/photo';
 	            $config['allowed_types']  = 'jpg|png|jpeg';
-				$config['file_name'] 	  =  $per_data['emp_id'] .'.'. $ext;
+				$config['file_name'] 	  =  $id .'.'. $ext;
 				$config['max_size']	 	  = '4000';
 				$config['max_width']  	  = '5000';
 				$config['max_height']     = '7000';
@@ -135,6 +138,8 @@ class Processdb extends CI_Model{
 			}
 
 			$per_data['img_source'] = $img;
+
+			// dd($per_data);
 			$this->db->insert('pr_emp_per_info', $per_data);
 
 			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Inserted Successfully.'); window.location='personal_info';</SCRIPT>";
@@ -898,18 +903,18 @@ class Processdb extends CI_Model{
 			'emp_blood'			=> $this->input->post('bgroup'),
 			'img_source'		=> $img,
 			'emp_n_id'			=> $this->input->post('n_id'),
-			'bank_ac_no'		=> $this->input->post('bank_ac_no')
+			'bank_ac_no'		=> $this->input->post('bank_ac_no'),
 			);
 
 		$this->db->insert('pr_emp_per_info', $data);
 
 		$adddata = array(
-			'emp_id'		=> $this->input->post('empid'),
-			'emp_pre_add'  	=> $this->input->post('padd'),
-			'emp_par_add'  	=> $this->input->post('fadd'),
-			'emp_pre_add_ban' => $this->input->post('preadd_bn'),
-			'emp_par_add_ban' => $this->input->post('peradd_bn'),
-			'mobile'		  => $this->input->post('mobile_no')
+			'emp_id'			=> $this->input->post('empid'),
+			'emp_pre_add'  		=> $this->input->post('padd'),
+			'emp_par_add'  		=> $this->input->post('fadd'),
+			'emp_pre_add_ban'	=> $this->input->post('preadd_bn'),
+			'emp_par_add_ban'	=> $this->input->post('peradd_bn'),
+			'mobile'		 	=> $this->input->post('mobile_no')
 			);
 		$this->db->insert('pr_emp_add', $adddata) ;
 
