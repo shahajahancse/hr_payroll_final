@@ -195,7 +195,6 @@ class Setting_con extends CI_Controller {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-		dd($this->data['user_data']);
 
 		$this->db->select('pr_units.*');
         $this->data['units'] = $this->db->get('pr_units')->result();
@@ -208,10 +207,11 @@ class Setting_con extends CI_Controller {
 
 	function dasig_group_add(){
 		$data = array(
-			'name_en' => $this->input->post('name_en'),
-			'name_bn' => $this->input->post('name_bn'),
-			'unit_id' => $this->input->post('unit_id'),
-			'status' => $this->input->post('status'),
+			'name_en' 	  => $this->input->post('name_en'),
+			'name_bn' 	  => $this->input->post('name_bn'),
+			'unit_id' 	  => $this->input->post('unit_id'),
+			'status'  	  => $this->input->post('status'),
+			'updated_by'  => $this->data['user_data']->id,
 		);
 
 		if ($this->db->insert('emp_group_dasignation', $data)) {
