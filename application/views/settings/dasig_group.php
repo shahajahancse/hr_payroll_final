@@ -42,7 +42,7 @@
     </div>
   </div>
   <div id="add_form" class="row tablebox">
-    <form action="<?= base_url('setting_con/dasig_group_add')?>" enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('setting_con/dasig_group_add')?>" method="post" style="margin-bottom: -20px;">
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
