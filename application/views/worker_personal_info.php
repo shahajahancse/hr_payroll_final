@@ -459,7 +459,7 @@
             </div>
             
             <div class="title_box mt-2">
-                <span style="font-family:Arial;border-bottom:1px solid black;padding-left:4px;padding-right:4px">Background Check</span>
+                <span style="font-family:Arial;border-bottom:1px solid black;padding-left:2px;padding-right:2px">Background Check</span>
                 <span>cUf~wg wbixÿb</span>
             </div>
         
