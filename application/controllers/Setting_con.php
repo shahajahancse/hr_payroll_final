@@ -245,5 +245,17 @@ class Setting_con extends CI_Controller {
 		}
 		return $data;
 	}
+
+	public function check_level_dg(){
+		$id = $this->input->post('id');
+		$this->db->where('desig_id', $id);
+		$check = $this->db->get('emp_manage_gd')->num_rows();
+		if ($check > 0) {
+			$this->db->delete('emp_manage_gd', array('desig_id' => $id));
+		}else{
+			$this->db->insert('emp_manage_gd', array('desig_id' => $id));
+		}
+	}
+
 }
 

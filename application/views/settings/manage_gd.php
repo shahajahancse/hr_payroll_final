@@ -65,18 +65,6 @@
     </div>
 </div>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#mytable").dataTable();
-    $('#mytable_filter').css({"display": "none"})
-    $('#mytable_length').css({"display": "none"})
-    $("#mytable").dataTable();
-    oTable = $('#mytable').DataTable();
-    $('#deptSearch').keyup(function(){
-      oTable.search($(this).val()).draw() ;
-    })
-  });
-</script>
 <script>
     function get_user_level(id, type = null){
         $.ajax({
@@ -96,8 +84,8 @@
     function check_level(id, user_id){
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url('setting_con/check_level') ?>",
-            data: {id: id, user_id: user_id},
+            url: "<?php echo base_url('setting_con/check_level_dg') ?>",
+            data: {id: id},
             success: function(data){
                 console.log('success');
             }
