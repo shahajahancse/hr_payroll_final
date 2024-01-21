@@ -380,6 +380,17 @@ class Grid_model extends CI_Model{
 	}
 
 
+	function get_group_dasig_id($id, $unit_id)	
+	{
+		$this->db->select('id')->where('group_id', $id)->where('unit_id', $unit_id);
+		$rows = $this->db->get('emp_designation')->result();
+		$data = array();
+		foreach ($rows as $key => $r) {
+			$data[$key] = $r->id;
+		}
+		return $data;
+	}
+
 
 		
 
