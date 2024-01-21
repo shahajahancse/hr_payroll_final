@@ -342,7 +342,7 @@ class Grid_model extends CI_Model{
 		$desig = array();
 		foreach ($results as $key => $r) {
 			$desig['name'][$key] = $r->name_en;
-			$desig[$r->name_en][$key] = $this->get_group_dasig_id($r->id, $unit_id);
+			$desig[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
 		}
 		dd($desig);
 
