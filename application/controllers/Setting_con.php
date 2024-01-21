@@ -272,18 +272,13 @@ class Setting_con extends CI_Controller {
 	}
 
 	public function check_level_dg(){
+
 		$id 	 = $this->input->post('id');
 		$gd_id   = $this->input->post('gd_id');
 		$unit_id = $this->input->post('unit_id');
-		$this->db->where('desig_id', $id);
-		$this->db->where('group_dasi_id', $gd_id);
-		$this->db->where('unit_id', $unit_id);
-		$check = $this->db->get('emp_manage_gd')->num_rows();
-		if ($check > 0) {
-			$this->db->delete('emp_manage_gd', array('desig_id'=>$id, 'group_dasi_id'=>$gd_id, 'unit_id'=>$unit_id));
-		}else{
-			$this->db->insert('emp_manage_gd', array('desig_id'=>$id, 'group_dasi_id'=>$gd_id, 'unit_id'=>$unit_id));
-		}
+
+		$this->db->where('id', $id);
+		$this->db->update('emp_designation', array('group_id' => $gd_id));
 	}
 
 }
