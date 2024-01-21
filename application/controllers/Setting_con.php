@@ -259,6 +259,7 @@ class Setting_con extends CI_Controller {
 			'match'     => $data1,
 			'not_match' => $data2,
 		);
+		dd($data);
 		return $data;
 	}
 
