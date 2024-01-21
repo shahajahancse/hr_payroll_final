@@ -47,16 +47,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="acl_name">Group Name</label>
-                    <input style="height: 5px !important;" type="text" name="name_en" class="form-control input-lg" id="name_en" placeholder="Enter Name">
-                    <?= (isset($failuer['name_en'])) ? '<div class="alert alert-failuer">' . $failuer['name_en'] . '</div>' : ''; ?>
+                    <input style="height: 5px !important;" value="<?= $row->name_en ?>" type="text" name="name_en" class="form-control input-lg" >
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="acl_name">Group Name (Bangla)</label>
-                    <input style="height: 5px !important;" type="text" name="name_bn" class="form-control input-lg" id="name_bn" placeholder="Enter Name">
-                    <?= (isset($failuer['name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['name_bn'] . '</div>' : ''; ?>
+                    <input style="height: 5px !important;" value="<?= $row->name_en ?>" type="text" name="name_bn" class="form-control input-lg">
                 </div>
             </div>
 
@@ -65,8 +63,8 @@
                     <label for="unit_id">Unit</label>
                     <select name="unit_id" class="form-control" >
                         <option value="">Select Unit</option>
-                        <?php foreach ($units as $row) { ?>
-                            <option value="<?= $row->unit_id ?>"><?= $row->unit_name?> </option>
+                        <?php foreach ($units as $r) { ?>
+                            <option <?php echo ($row->unit_id == $r->unit_id)? 'selected':'' ?> value="<?= $r->unit_id ?>"><?= $r->unit_name?> </option>
                         <?php } ?>
                     </select>
                 </div>
@@ -76,8 +74,8 @@
                 <div class="form-group">
                     <label for="unit_id">status</label>
                     <select name="status" class="form-control" >
-                        <option value="1">Enable</option>
-                        <option value="2">Disable</option>
+                        <option <?php echo ($row->status == 1)? 'selected':'' ?> value="1">Enable</option>
+                        <option <?php echo ($row->status == 2)? 'selected':'' ?> value="2">Disable</option>
                     </select>
                 </div>
             </div>
