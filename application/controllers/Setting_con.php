@@ -197,7 +197,7 @@ class Setting_con extends CI_Controller {
         }
 
 		if (!empty($id) && !empty($unit_id)) {
-			$dd = $this->get_manage_gd_id($id);
+			$dd = $this->get_manage_gd_id($id, $unit_id);
 			$this->data['match']     = $dd['match'];
 			$this->data['not_match'] = $dd['not_match'];
 			$this->data['row'] = $this->db->where('id', $id)->get('emp_group_dasignation')->row(); 
