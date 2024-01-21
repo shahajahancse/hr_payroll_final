@@ -125,7 +125,7 @@ for($counter = 1; $counter <= $page; $counter ++)
 	echo $emp_id = $values["prev_emp_id"][$k];
 	echo "</td>";
 	
-	$emp_name = $this->db->where('emp_id', $emp_id)->get('pr_emp_per_info')->row()->emp_full_name;
+	$emp_name = $this->db->where('emp_id', $emp_id)->get('pr_emp_per_info')->row()->name_en;
 	echo "<td style='padding:2px; width:150px;'> ";
 	echo $emp_name;
 	echo "</td>";

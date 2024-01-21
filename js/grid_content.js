@@ -2317,7 +2317,7 @@ function grid_continuous_ot_eot_report()
 	// 
 	// 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"index.php/grid_con/grid_continuous_ot_eot_report/";
+   url =  hostname+"grid_con/grid_continuous_ot_eot_report/";
     
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
