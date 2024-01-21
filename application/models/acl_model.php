@@ -41,6 +41,14 @@ class Acl_model extends CI_Model{
 		return $data;
 	}
 
+
+
+
+
+
+
+
+
 	 //  old code
 	function get_user_id($username){
 		$this->db->select("id");

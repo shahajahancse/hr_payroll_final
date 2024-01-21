@@ -1127,7 +1127,7 @@ class Setup_con extends CI_Controller
                 'iftar_id' => $this->input->post('iftar_id'),
                 'night_al_id' => $this->input->post('night_al_id'),
                 'tiffin_id' => $this->input->post('tiffin_id'),
-                'grade_id' => $this->input->post('grade'),
+                'group_id' => $this->input->post('group_id'),
             );
             // dd($formArray);
             if ($this->db->insert('emp_designation', $formArray)) {                
@@ -1178,7 +1178,7 @@ class Setup_con extends CI_Controller
         $this->db->join('allowance_tiffin_bill as atb', 'atb.id=ed.tiffin_id', 'left');
         $this->db->where('ed.id', $id);
         $this->data['emp_designation'] = $this->db->get()->row();
-// dd($this->data['emp_designation']);
+        // dd($this->data['emp_designation']);
         if ($this->form_validation->run() == TRUE) {
             $formArray = array(
                 'unit_id'            => $this->input->post('unit_id'),
@@ -1189,7 +1189,7 @@ class Setup_con extends CI_Controller
                 'iftar_id'           => $this->input->post('iftar_id'),
                 'night_al_id'        => $this->input->post('night_al_id'),
                 'tiffin_id'          => $this->input->post('tiffin_id'),
-                'grade_id'          => $this->input->post('grade'),
+                'group_id'           => $this->input->post('group_id'),
             );
 
             $this->db->where('id', $id);
