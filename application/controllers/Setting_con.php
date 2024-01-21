@@ -267,6 +267,7 @@ class Setting_con extends CI_Controller {
 		$this->db->from("emp_designation as dg");
 		$this->db->join("emp_group_dasignation gd", 'gd.id = dg.group_id', 'left');
 		$this->db->where("dg.unit_id", $unit_id);
+		$this->db->group_by("dg.id");
 		return $this->db->get()->result();
 	}
 
