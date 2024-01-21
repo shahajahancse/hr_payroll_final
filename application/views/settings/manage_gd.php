@@ -64,7 +64,7 @@
                         <span><?php echo $value->desig_name .' ('.$r->name_en .')'; ?></span>
                     <?php } else { ?>
                         <span><?php echo $value->desig_name; ?></span>
-                    <?php { ?>
+                    <?php } ?>
                 </div>
                 <?php $i++; } ?>
             </div>
