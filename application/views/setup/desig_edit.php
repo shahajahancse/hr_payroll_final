@@ -115,10 +115,10 @@
                         <div class="form-group">
                         <label>Group Name</label>
                         <select class="form-control" name="group_id">
-                            <?php $groups = $this->db->get('emp_group_dasignation')->result()?>
+                            <?php $groups = $this->common_model->get_group_name(); ?>
                             <option value="">Select</option>
                             <?php foreach($groups as $group){?>
-                            <option value="<?= $group->id ?>" <?php echo ($emp_designation->group_id == $group->id) ? 'selected':''?> ><?php echo $group->name_en?></option>
+                            <option value="<?= $group->id ?>" <?php echo ($emp_designation->group_id == $group->id) ? 'selected':''?> ><?php echo $group->name_en .' >> '. $group->unit_name ?></option>
                         <?php }?>
                         </select>
                         </div>
