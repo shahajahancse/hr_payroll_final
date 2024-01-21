@@ -248,7 +248,7 @@ class Setting_con extends CI_Controller {
 
 		$this->db->select('desig_id')->where('unit_id', $unit_id);
 		if (!empty($data1)) {
-			$this->db->where_in('desig_id', $data1);
+			$this->db->where_not_in('desig_id', $data1);
 		}
 		$rows = $this->db->get('emp_manage_gd')->result();
 		$data2 = array();
@@ -259,7 +259,6 @@ class Setting_con extends CI_Controller {
 			'match'     => $data1,
 			'not_match' => $data2,
 		);
-		dd($data);
 		return $data;
 	}
 
