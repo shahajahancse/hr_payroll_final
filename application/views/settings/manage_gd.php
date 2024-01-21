@@ -57,13 +57,14 @@
                     }
                 ?>
                 <div>
-                    <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)" 
-                    <?= in_array($value->id, $match)? 'checked' : ''?>> 
                     <?php if (!empty($not_match) && in_array($value->id, $not_match)) { 
                         $r = $this->acl_model->get_group_dasig_name($value->id, $row->unit_id);
                     ?>
+                        <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)"> 
                         <span><?php echo $value->desig_name; ?></span> <span style="color: #0d14f3;">( <?= $r->name_en ?> )</span>
                     <?php } else { ?>
+                        <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)" 
+                        <?= in_array($value->id, $match)? 'checked' : ''?>> 
                         <span><?php echo $value->desig_name; ?></span>
                     <?php } ?>
                 </div>
