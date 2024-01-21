@@ -344,7 +344,7 @@ class Grid_model extends CI_Model{
 			$data['group_name'][$key] = $r->name_en;
 			$data[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
 		}
-		dd($data['group_name'][0]['group_name'][0]);
+		dd($data['group_name'][0]['group_name']);
 
 		/*$this->db->from('emp_designation');
 		$this->db->where('unit_id', $unit_id)->order_by('id')->get('');
