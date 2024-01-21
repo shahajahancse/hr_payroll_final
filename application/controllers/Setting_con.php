@@ -239,21 +239,21 @@ class Setting_con extends CI_Controller {
 	}
 
 	function get_manage_gd_id($id, $unit_id){
-		$this->db->select('group_id')->where('group_id', $id);
+		$this->db->select('id')->where('group_id', $id);
 		$rows = $this->db->get('emp_designation')->result();
 		$data1 = array();
 		foreach ($rows as $key => $r) {
-			$data1[$key] = $r->group_id;
+			$data1[$key] = $r->id;
 		}
 
-		$this->db->select('group_id')->where('unit_id', $unit_id);
+		$this->db->select('id')->where('unit_id', $unit_id);
 		if (!empty($data1)) {
 			$this->db->where_not_in('group_id', $data1);
 		}
 		$rows = $this->db->get('emp_designation')->result();
 		$data2 = array();
 		foreach ($rows as $key => $r) {
-			$data2[$key] = $r->desig_id;
+			$data2[$key] = $r->id;
 		}
 		$data = array(
 			'match'     => $data1,
