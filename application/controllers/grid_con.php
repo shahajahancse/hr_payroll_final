@@ -1024,7 +1024,6 @@ class Grid_con extends CI_Controller {
 
 	function grid_continuous_report()
 	{
-		dd('hfh');
 
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
@@ -1224,7 +1223,6 @@ class Grid_con extends CI_Controller {
 		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
 		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
 		$data["values"] = $this->grid_model->continuous_incre_report($sStartDate,$sEndDate,$grid_emp_id);
-
 		$data["start_date"] = $sStartDate;
 		$data["end_date"] = $sEndDate;
 		$data["unit_id"] = $unit_id;

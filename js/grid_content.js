@@ -2418,7 +2418,7 @@ function grid_continuous_incre_report()
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
 	
 	
-    url =  hostname+"index.php/grid_con/continuous_incre_report/";
+    url =  hostname+"grid_con/continuous_incre_report/";
     
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");

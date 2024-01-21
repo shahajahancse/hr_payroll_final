@@ -121,7 +121,7 @@ $section=array();
 	echo $emp_id = $values["ref_id"][$k];
 	echo "</td>";
 	
-	$emp_name = $this->db->where('emp_id', $emp_id)->get('pr_emp_per_info')->row()->emp_full_name;
+	$emp_name = $this->db->where('emp_id', $emp_id)->get('pr_emp_per_info')->row()->name_en;
 	echo "<td style='padding:5px; width:170px;'> ";
 	echo $emp_name;
 	echo "</td>";
