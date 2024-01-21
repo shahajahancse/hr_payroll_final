@@ -62,7 +62,7 @@
                     <?php if (!empty($not_match) && in_array($value->id, $not_match)) { 
                         $r = $this->acl_model->get_group_dasig_name($value->id, $row->unit_id);
                     ?>
-                        <span><?php echo $value->desig_name; ?></span> <span style="color: #876;">( <?= $r->name_en ?> )</span>
+                        <span><?php echo $value->desig_name; ?></span> <span style="color: #0d14f3;">( <?= $r->name_en ?> )</span>
                     <?php } else { ?>
                         <span><?php echo $value->desig_name; ?></span>
                     <?php } ?>
