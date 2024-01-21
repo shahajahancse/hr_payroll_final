@@ -262,10 +262,11 @@ class Setting_con extends CI_Controller {
 		return $data;
 	}
 
-	function get_dasignations($id){
+	function get_dasignations($unit_id){
 		$this->db->select("dg.id, dg.desig_name, dg.unit_id, dg.group_id,  gd.name_en");
 		$this->db->from("emp_designation as dg");
 		$this->db->join("emp_group_dasignation gd", 'gd.id = dg.group_id', 'left');
+		$this->db->where("dg.unit_id", $unit_id);
 		return $this->db->get()->result();
 	}
 
