@@ -116,7 +116,6 @@ class Emp_info_con extends CI_Controller {
 			if($this->input->post('submit_type') == 'save') {
 				$this->processdb->insert_emp_info();
 			} elseif($this->input->post('submit_type') == 'edit'){
-				// dd($this->input->post());
 				if($this->processdb->updatedb1()) {
 					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info';</SCRIPT>";
 				}

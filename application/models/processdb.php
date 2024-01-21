@@ -770,8 +770,7 @@ class Processdb extends CI_Model{
 
 		if($this->db->where('emp_id',$id)->update('pr_emp_com_info', $data))
 		{   
-			$ids = $this->db->where('emp_id',$id)->get('pr_emp_com_info')->row()->id;
-
+			$ids = $this->db->where('emp_id',$id)->get('pr_emp_com_info')->row()->emp_id;
 			$per_data['emp_id'] =$ids;
 			$img ="";
 			if($_FILES["img_source"]["name"] != '')
