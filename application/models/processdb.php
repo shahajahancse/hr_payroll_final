@@ -2245,7 +2245,8 @@ class Processdb extends CI_Model{
 					   ->join('pr_emp_per_info as per','com.emp_id = per.emp_id', 'left')
 					   ->where('com.emp_id',$emp_id)
 					   ->get()->row();
-					   // dd($d);
+		// dd($d);
+					   
 
 		if ($d == null) {
 			return ['status'=>false,'data'=>'No data found'];

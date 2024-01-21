@@ -796,13 +796,8 @@
 		            <div class="col-md-6">
 		              <div class="form-group">
 		                <label>Designation </label>
-		                <?php echo form_error('exp_designation');?>	                
-		                <select name="exp_designation" id= "exp_designation" class="form-control input-sm" required>
-		                	<option  >-- Select --</option>
-		                	<?php foreach ($desig as $key => $row) { ?>
-			                  <option value="<?= $row->id ?>"><?= $row->desig_name; ?></option>
-		                	<?php } ?>
-			              </select>
+		                <?php echo form_error('exp_dasignation');?>	                
+		                <input name="exp_dasignation" type="text" id= "exp_dasignation" class="form-control input-sm" value="<?= isset($emp_info->exp_dasignation) ?>" required>
 		              </div>
 		            </div>
 		            <div class="col-md-6">
@@ -949,7 +944,7 @@
 							"nomi_district","nomi_age","nomi_relation","nomi_mobile",
 							"refer_name","refer_address","refer_mobile","refer_relation",
 							"education","nid_dob_id","nid_dob_check","exp_factory_name",
-							"exp_duration","exp_designation","personal_mobile",
+							"exp_duration","exp_designation","personal_mobile","exp_dasignation",
 							"bank_bkash_no","unit_id","emp_dept_id","refer_village",
 							"emp_sec_id","emp_line_id","emp_desi_id","emp_sal_gra_id",
 							"emp_cat_id","proxi_id","emp_shift","gross_sal",

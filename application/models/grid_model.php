@@ -8545,7 +8545,6 @@ function grid_emp_job_application($grid_emp_id){
 		// dd($query->result());
 	}
 
-
 	function grid_yearly_leave_register($years, $grid_emp_id)
 	{
 		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.emp_full_name, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name, emp_designation.desig_name,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type,pr_emp_com_info.emp_cat_id');
