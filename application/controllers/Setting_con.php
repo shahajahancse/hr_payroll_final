@@ -250,7 +250,7 @@ class Setting_con extends CI_Controller {
 		$rows = $this->db->get('emp_manage_gd')->result();
 		$data2 = array();
 		foreach ($rows as $key => $r) {
-			$data2[$key] = $r->id;
+			$data2[$key] = $r->desig_id;
 		}
 		$data = array(
 			'match'     => $data1,
