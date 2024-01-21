@@ -307,7 +307,7 @@ class Grid_model extends CI_Model{
 	//-------------------------------------------------------------------------------------------------
 	// Daily Cost Sheet
 	//-------------------------------------------------------------------------------------------------
-/*	function daily_costing_summary($date, $unit_id)
+	function daily_costing_summary($date, $unit_id)
 	{
 
 		$this->db->select(" 
@@ -338,7 +338,17 @@ class Grid_model extends CI_Model{
 	function daily_attendance_summary($date, $unit_id)
 	{
 
-		$query = $this->db->where('unit_id', $unit_id)->order_by('line_name')->get('pr_line_num');
+		$results = $this->db->where('unit_id', $unit_id)->order_by('id')->get('emp_group_dasignation')->result();
+		$desig = array();
+		foreach ($results as $key => $r) {
+			$desig['name'][$key] = $r->name;
+			$desig['id'][$key] = $this->get_group_dasig_id($r->id, $unit_id);
+		}
+		dd($desig);
+
+		/*$this->db->from('emp_designation');
+		$this->db->where('unit_id', $unit_id)->order_by('id')->get('');
+
 		$data = array();
 		foreach($query->result() as $rows)
 		{
@@ -348,7 +358,7 @@ class Grid_model extends CI_Model{
 			
 			if(!empty($all_emp_id))
 			{
-				$data['daily_att_sum'][] = $this->daily_attendance_summary($report_date, $all_emp_id);
+				$data['daily_att_sum'][] = $this->daily_attendance_summarys($report_date, $all_emp_id);
 			}
 			else
 			{
@@ -363,7 +373,7 @@ class Grid_model extends CI_Model{
 
 				if(!empty($all_desig_emp_id_by_line))
 				{
-					$data['remarks_daily_att_sum'][$i][] = $this->daily_attendance_summary($report_date, $all_desig_emp_id_by_line);
+					$data['remarks_daily_att_sum'][$i][] = $this->daily_attendance_summarys($report_date, $all_desig_emp_id_by_line);
 				}
 				else
 				{
@@ -372,7 +382,7 @@ class Grid_model extends CI_Model{
 
 			}
 		}
-		return $data;
+		return $data;*/
 		
 	}
 
@@ -388,7 +398,7 @@ class Grid_model extends CI_Model{
 		return $data;
 	}
 
-	function daily_attendance_summary($report_date, $all_emp_id){
+	function daily_attendance_summarys($report_date, $all_emp_id){
 		$data =array();
 
 		$this->db->select('pr_emp_shift_log.emp_id');
@@ -514,7 +524,18 @@ class Grid_model extends CI_Model{
 			//echo $rows->emp_id."---";
 		}
 		return $data;
-	}*/
+	}
+
+	function get_group_dasig_id($id, $unit_id)	
+	{
+		$this->db->select('id')->where('group_id', $id)->where('unit_id', $unit_id);
+		$rows = $this->db->get('emp_designation')->result();
+		$data = array();
+		foreach ($rows as $key => $r) {
+			$data[$key] = $r->id;
+		}
+		return $data;
+	}
 
 
 		
