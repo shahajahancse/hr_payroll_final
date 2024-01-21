@@ -41,17 +41,6 @@ class Acl_model extends CI_Model{
 		return $data;
 	}
 
-	function get_group_dasig_name($desig_id, $unit_id){
-
-		$this->db->select("emp_group_dasignation.*");
-		$this->db->from("emp_group_dasignation");
-		$this->db->from("emp_manage_gd");
-
-		$this->db->where('emp_manage_gd.group_dasi_id = emp_group_dasignation.id');
-		$this->db->where('emp_manage_gd.desig_id', $desig_id);
-		$this->db->where('emp_manage_gd.unit_id', $unit_id);
-		return $this->db->get()->row();
-	}
 
 
 
