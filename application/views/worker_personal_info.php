@@ -6,6 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <style>
+            .table td{
+                padding: 2px;
+            }
             p{
                 margin-bottom: 4px;
             }
@@ -518,15 +521,16 @@
                     <p>4| ¯’vqx wVKvbv t  <span style="font-size:14px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> |</p>
                     <p> &nbsp;&nbsp;&nbsp;&nbsp;    wbR †gvevBj bs <span><?php echo $value->personal_mobile?></span> &nbsp; &nbsp;&nbsp;&nbsp;AwfeveK †gvevBj bs <span><?php echo $value->refer_mobile?></span> &nbsp; &nbsp;&nbsp;&nbsp;bwgwb †gvevBjBs <span><?php echo $value->nomi_mobile?></span></p>
                     <p>5| wj½ t <span style="font-size:14px"><?php echo $value->sex_name == 'Male' ? 'পুরুষ':'নারী'?></span></p>
-                    <p>6| ‰eevwnK Ae¯’v <span><?php 
+                    <p>6| ‰eevwnK Ae¯’vt <span><?php 
                                                 if($value->marital_status == 'Unmarried'){
                                                     echo 'AweevwnZ' ;
                                                 }else{
-                                                   echo 'weevwnZ' ;
-                                                   echo '¯¿xi bvgt'.$value->spouse_name; 
-                                                   echo '‡Q‡jt'.$value->m_child; 
-                                                   echo '‡g‡qt'.$value->f_child; 
-                                                   echo '‡gvU '.$value->f_child; 
+                                                   echo 'weevwnZ ,' ;
+                                                   echo ' ¯¿xi bvgt '.$value->spouse_name;
+                                                   echo ', mšÍv‡bi weeiYt ';
+                                                   echo ' ‡Q‡jt '.$value->m_child; 
+                                                   echo ', ‡g‡qt '.$value->f_child; 
+                                                   echo ', ‡gvU mšÍvbt '.$value->f_child + $value->m_child; 
                                                 }  
                                               ?>
                                         </span>
@@ -623,16 +627,16 @@
         
                     <table class="table" style="" border="1">
                         <tr>
-                            <th>µwgK bs</th>
-                            <th>AwfÁZvi c~b© weeib</th>
-                            <th>cÖwZôv‡bi bvg</th>
-                            <th>PvKzixi mgqKvj</th>
+                            <th class="text-center">µwgK bs</th>
+                            <th class="text-center">AwfÁZvi c~b© weeib</th>
+                            <th class="text-center">cÖwZôv‡bi bvg</th>
+                            <th class="text-center">PvKzixi mgqKvj</th>
                         </tr>
                         <tr>
-                            <td>1.</td>
-                            <td><span style="font-size:18px"><?php echo $value->exp_dasignation?></span></td>
-                            <td><span style="font-size:18px"><?php echo $value->exp_factory_name?></span></td>
-                            <td><span style="font-size:18px"><?php echo $value->exp_duration?></span></td>
+                            <td class="text-center">1.</td>
+                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_dasignation?></span></td>
+                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_factory_name?></span></td>
+                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_duration?></span></td>
                         </tr>
                     </table>
         
@@ -734,8 +738,8 @@
                         <th class="text-center" style="width: 20%;">g‡bvbxZ e¨w³ ev e¨w³‡`i bvg, wVKvbv I Qwe (bwgbxi Qwe I
                             ¯^vÿi kÖwgK KZ…©K mZ¨vwqZ) Gb AvB wW bs </th>
                         <th class="text-center" style="width: 6%;">m`m¨‡`i mwnZ g‡bvbxZ e¨w³‡`i m¤úK©</th>
-                        <th class="text-center" style="width: 6%;">eqm</th>
-                        <th class="text-center" style="width: 26%;" colspan="2">cÖ‡Z¨K g‡bvbxZ e¨w³‡K †`q Ask</th>
+                        <th class="text-center" style="width: 6%;vertical-align: middle;">eqm</th>
+                        <th class="text-center" style="width: 26%;vertical-align: middle;" colspan="2">cÖ‡Z¨K g‡bvbxZ e¨w³‡K †`q Ask</th>
                     </tr>
                     <tr>
                         <td class="text-center">(1)</td>
@@ -824,7 +828,7 @@
                 </table>
                 <br><br>
                 <div>
-                    <p>cÖZ¨qb Kwi‡ZwQ †h, Avgvi Dcw¯’wZ‡Z <?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,  <span style="14px">  <?php echo $value->name_bn ?></span> wjwce× weeiY mgyn cvV Kwievi
+                    <p>cÖZ¨qb Kwi‡ZwQ †h, Avgvi Dcw¯’wZ‡Z <?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,  <span style="font-size:14px">  <?php echo $value->name_bn ?></span> wjwce× weeiY mgyn cvV Kwievi
                         ci D³ †Nvlbv ¯^vÿi Kwi‡Z‡Qb|</p>
                 </div>
                 <br>
