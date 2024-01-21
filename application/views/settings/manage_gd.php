@@ -42,7 +42,7 @@
     </div>
   </div>
   <div id="add_form" class="row tablebox">
-    <label for="user_id"><?= $title ?></label>
+    <label for="user_id"><?= $title ?><?= $row->name_en ?></label>
   </div>
 
 
@@ -57,7 +57,14 @@
                     }
                 ?>
                 <div>
-                    <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)" <?= in_array($value->id, $dasig_id)? 'checked' : ''?>> <span><?php echo $value->desig_name; ?></span>
+                    <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)" 
+                    <?= in_array($value->id, $match)? 'checked' : ''?>> 
+                    <?php if (in_array($value->id, $not_match)) { 
+                        $r = $this->db->where('unit_id', $row->unit_id)->where('id', $id)->get('emp_group_dasignation')->row();?>
+                        <span><?php echo $value->desig_name .' ('.$r->name_en .')'; ?></span>
+                    <?php } else { ?>
+                        <span><?php echo $value->desig_name; ?></span>
+                    <?php { ?>
                 </div>
                 <?php $i++; } ?>
             </div>
