@@ -307,7 +307,7 @@ class Grid_model extends CI_Model{
 	//-------------------------------------------------------------------------------------------------
 	// Daily Cost Sheet
 	//-------------------------------------------------------------------------------------------------
-	function daily_costing_summary($date, $unit_id)
+/*	function daily_costing_summary($date, $unit_id)
 	{
 
 		$this->db->select(" 
@@ -514,7 +514,7 @@ class Grid_model extends CI_Model{
 			//echo $rows->emp_id."---";
 		}
 		return $data;
-	}
+	}*/
 
 
 		
