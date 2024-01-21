@@ -35,8 +35,8 @@ class Grid_model extends CI_Model{
 				emp_designation.desig_bangla, 
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
-				emp_line_num.line_name_en_en, 
-				emp_line_num.line_name_en_bn, 
+				emp_line_num.line_name_en, 
+				emp_line_num.line_name_bn, 
 
 				pr_grade.gr_name,
 				pay_salary_sheet.*,
@@ -85,8 +85,8 @@ class Grid_model extends CI_Model{
 				emp_designation.desig_bangla, 
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
-				emp_line_num.line_name_en_en, 
-				emp_line_num.line_name_en_bn, 
+				emp_line_num.line_name_en, 
+				emp_line_num.line_name_bn, 
 
 				pr_grade.gr_name,
 				pay_salary_sheet_com.*,
@@ -135,8 +135,8 @@ class Grid_model extends CI_Model{
 				emp_designation.desig_bangla, 
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
-				emp_line_num.line_name_en_en, 
-				emp_line_num.line_name_en_bn, 
+				emp_line_num.line_name_en, 
+				emp_line_num.line_name_bn, 
 
 				pr_grade.gr_name,
 				pay_salary_sheet.*,
@@ -334,36 +334,187 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("num.line_name_en");
 		return $this->db->get()->result();
 	}
-	
+
 	function daily_attendance_summary($date, $unit_id)
 	{
 
-		$this->db->select(" 
-				num.id as line_id, num.line_name_en, num.line_name_bn, log.shift_log_date,
-				SUM( CASE WHEN log.present_status != 'A' THEN 1 ELSE 0 END ) AS present_emp,
-				SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS absent_emp,
-				SUM( CASE WHEN log.present_status != 'A' THEN com.gross_sal ELSE 0 END ) AS present_gross_salary,
-				SUM( CASE WHEN log.present_status = 'A' THEN com.gross_sal ELSE 0 END ) AS absent_gross_salary,
+		$query = $this->db->where('unit_id', $unit_id)->order_by('line_name')->get('pr_line_num');
+		$data = array();
+		foreach($query->result() as $rows)
+		{
+			$data['line_name'][] = $rows->line_name;
+			
+			$all_emp_id = $this->get_line_emp_by_id($rows->line_id, $unit_id);
+			
+			if(!empty($all_emp_id))
+			{
+				$data['daily_att_sum'][] = $this->daily_attendance_summary($report_date, $all_emp_id);
+			}
+			else
+			{
+				$data['daily_att_sum'][] = '';
+			}
 
-				SUM( log.ot ) AS ot,
-				SUM( log.eot ) AS eot,
-			");	
+			$emp_desig =	$this->get_department_section_line_unit_wise($unit_id);
 
-		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
-		$this->db->from('pr_emp_shift_log as log');
+			for($i=0; $i<6; $i++)
+			{
+				$all_desig_emp_id_by_line = $this->desig_emp_id_by_line($rows->line_id,$emp_desig[$i]);
 
-		$this->db->where("num.id = com.emp_line_id");
-		$this->db->where("log.emp_id = com.id");
-		$this->db->where("log.shift_log_date", $date);
-        $this->db->where("com.unit_id", $unit_id);
+				if(!empty($all_desig_emp_id_by_line))
+				{
+					$data['remarks_daily_att_sum'][$i][] = $this->daily_attendance_summary($report_date, $all_desig_emp_id_by_line);
+				}
+				else
+				{
+					$data['remarks_daily_att_sum'][$i][] = "null";
+				}
 
-		$this->db->group_by("num.id");
-		$this->db->order_by("num.line_name_en");
-		return $this->db->get()->result();
+			}
+		}
+		return $data;
+		
 	}
 
+	function get_line_emp_by_id($line_id, $unit_id)
+	{
+		//$emp_cat = array(1,2);
+		$query = $this->db->select('emp_id')->where('unit_id', $unit_id)->where('emp_line_id', $line_id)->get('pr_emp_com_info');
+		$data = array();
+		foreach($query->result() as $rows)
+		{
+			$data[] = $rows->emp_id;
+		}
+		return $data;
+	}
 
+	function daily_attendance_summary($report_date, $all_emp_id){
+		$data =array();
+
+		$this->db->select('pr_emp_shift_log.emp_id');
+		$this->db->from("pr_emp_shift_log");
+		$this->db->from("pr_emp_com_info");
+		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		$this->db->where("shift_log_date", $report_date);
+		$this->db->where("pr_emp_shift_log.present_status !=", "W");
+		$this->db->where("pr_emp_com_info.emp_cat_id !=", 4);
+		$this->db->where("pr_emp_com_info.emp_cat_id !=", 3);
+		$this->db->where("pr_emp_com_info.emp_cat_id !=", 2);
+		$this->db->where("pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id ");
+		$this->db->group_by('pr_emp_shift_log.emp_id');
+		$query = $this->db->get();
+
+		// echo $this->db->last_query();exit;
+
+		if($query->num_rows() == 0){
+			$data['all_emp'] 		= 0;
+			$data['all_present'] 	= 0;
+			$data['all_leave'] 		= 0;
+			$data['all_absent'] 	= 0;
+			$data['all_late'] 		= 0;
+			$data['all_male'] 		= 0;
+			$data['all_female'] 	= 0;
+		}else{
+			$data['all_emp'] = $query->num_rows();
+			$all_emp_id = $query->result_array();
+			$it =  new RecursiveIteratorIterator(new RecursiveArrayIterator($all_emp_id));
+			$all_emp_id = iterator_to_array($it, false);
+
+			$this->db->select("pr_emp_shift_log.emp_id");
+			$this->db->from("pr_emp_shift_log");
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+			$this->db->where("pr_emp_shift_log.shift_log_date", $report_date);
+			$this->db->where("pr_emp_shift_log.in_time !=", "00:00:00");
+			$this->db->group_by('pr_emp_shift_log.emp_id');
+			$data['all_present'] = $this->db->get()->num_rows();
+
+
+			$this->db->select("pr_emp_shift_log.emp_id");
+			$this->db->from("pr_emp_shift_log");
+			$this->db->from("pr_emp_com_info");
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+			$this->db->where("pr_emp_shift_log.shift_log_date", $report_date);
+			$this->db->where("pr_emp_shift_log.in_time", "00:00:00");
+			$this->db->where("pr_emp_com_info.emp_cat_id !=", 4);
+		    $this->db->where("pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id ");
+			$this->db->group_by('pr_emp_shift_log.emp_id');
+			$all_absent = $this->db->get()->num_rows();
+			$all_absent = $all_absent - $data['all_leave'];
+			$data['all_absent'] = $all_absent;
+
+
+			$this->db->select("pr_emp_shift_log.emp_id");
+			$this->db->from("pr_emp_shift_log");
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+			$this->db->where("pr_emp_shift_log.shift_log_date", $report_date);
+			$this->db->where("pr_emp_shift_log.late_status",1);
+			$this->db->group_by('pr_emp_shift_log.emp_id');
+			$data['all_late'] = $this->db->get()->num_rows();
+
+
+			$this->db->select("emp_id");
+			$this->db->from("pr_leave_trans");
+			$this->db->where_in("emp_id", $all_emp_id);
+			$this->db->where("start_date", $report_date);
+			$this->db->group_by('emp_id');
+			$data['all_leave'] = $this->db->get()->num_rows();
+
+
+			$this->db->select("pr_emp_per_info.emp_id");
+			$this->db->from('pr_emp_per_info');
+			$this->db->where_in("pr_emp_per_info.emp_id", $all_emp_id);
+			$this->db->where("pr_emp_per_info.emp_sex = 1");
+			$data['all_male'] = $this->db->get()->num_rows();
+
+			$this->db->select("pr_emp_per_info.emp_id");
+			$this->db->from('pr_emp_per_info');
+			$this->db->where_in("pr_emp_per_info.emp_id", $all_emp_id);
+			$this->db->where("pr_emp_per_info.emp_sex = 2");
+			$data['all_female'] = $this->db->get()->num_rows();
+		}
+		return $data;
+	}
+
+	function get_department_section_line_unit_wise($unit_id){
+		$data = array();
+		if($unit_id ==1){
+			$data = array(
+				0 => array(17,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39),//Office staff
+				1 => array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,60,61,62,63,64,65,66,67,68,69),//PD staff
+				2 => array(87,88,90,91,94,95,105),//operator
+				3 => array(89),//Asst.operator
+				4 => array(92),//Line Iron
+				5 => array(99),//Finishing Assistant
+				6 => array(''),//Jr. Iron Man
+				7 => array(98),//Iron Man
+				8 => array(102),//Poly Man
+				9 => array(101),//Spot Man
+				10 => array(100,103),//Folder,Jr. Folder
+				11 => array(97,104),//Jr. Packer
+				12 => array(106,107,108,109),//Quality Inspector
+				13 => array(73,71,72,74),//Admin 4th Class
+				14 => array(76,77,78,79,80,81,82,83,84,85,86),//Cutting
+				15 => array(110),//Fusing
+				16 => array(111,112),//Clener
+				17 => array(75,79,85,93),//input Man
+				18 => array(59)//Others
+			);
+			return $data;
+		}
+	}
+
+	function desig_emp_id_by_line($line_id,$emp_desig)
+	{
+		//$emp_cat = array(1,2);
+		$query = $this->db->select('emp_id')->where('emp_line_id',$line_id)->where_in('emp_desi_id',$emp_desig)->get('pr_emp_com_info');
+		$data = array();
+		foreach($query->result() as $rows)
+		{
+			$data[] = $rows->emp_id;
+			//echo $rows->emp_id."---";
+		}
+		return $data;
+	}
 
 
 		
@@ -1152,7 +1303,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
         pr_emp_com_info.emp_join_date,
         emp_depertment.dept_name,
         emp_section.sec_name_en,
-        emp_line_num.line_name_en_en,
+        emp_line_num.line_name_en,
         pr_emp_shift.shift_name,
         pr_emp_com_info.emp_cat_id,
         pr_emp_shift_log.in_time,
@@ -1227,7 +1378,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			pr_emp_com_info.emp_join_date, 
 			emp_depertment.dept_name,
 			emp_section.sec_name_en,
-			emp_line_num.line_name_en_en,
+			emp_line_num.line_name_en,
 			pr_id_proxi.proxi_id, 
 			pr_emp_com_info.emp_cat_id,
             pr_emp_per_info.personal_mobile,
@@ -1259,7 +1410,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->where('pr_emp_shift_log.present_status', "A");
 		$this->db->group_by("pr_emp_com_info.emp_id");
 		$this->db->order_by("emp_section.sec_name_en");
-		$this->db->order_by("emp_line_num.line_name_en_en");
+		$this->db->order_by("emp_line_num.line_name_en");
 		$this->db->order_by("pr_emp_shift_log.emp_id");
 	
 		$query = $this->db->get();
@@ -3565,7 +3716,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$data = array();
 		$date_array = $this->GetDays($grid_firstdate, $grid_seconddate);
 		//print_r($date);
-		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en_en, pr_emp_com_info.emp_join_date ');
+		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_depertment');
@@ -3722,7 +3873,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	{
 		$data = array();
 		$count = 0;
-		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en_en, pr_emp_com_info.emp_join_date ');
+		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_depertment');
@@ -4663,8 +4814,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		// dd($grid_emp_id);
 		$this->db->select('
 			pr_emp_blood_groups.*,
-			emp_line_num.line_name_en_bn,
-			emp_line_num.line_name_en_en,
+			emp_line_num.line_name_bn,
+			emp_line_num.line_name_en,
 			pr_emp_per_info.*,
 			emp_designation.desig_bangla,
 			emp_designation.desig_name,
