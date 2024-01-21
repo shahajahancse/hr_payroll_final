@@ -334,6 +334,34 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("num.line_name_en");
 		return $this->db->get()->result();
 	}
+	
+	function daily_attendance_summary($date, $unit_id)
+	{
+
+		$this->db->select(" 
+				num.id as line_id, num.line_name_en, num.line_name_bn, log.shift_log_date,
+				SUM( CASE WHEN log.present_status != 'A' THEN 1 ELSE 0 END ) AS present_emp,
+				SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS absent_emp,
+				SUM( CASE WHEN log.present_status != 'A' THEN com.gross_sal ELSE 0 END ) AS present_gross_salary,
+				SUM( CASE WHEN log.present_status = 'A' THEN com.gross_sal ELSE 0 END ) AS absent_gross_salary,
+
+				SUM( log.ot ) AS ot,
+				SUM( log.eot ) AS eot,
+			");	
+
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('emp_line_num as num');
+		$this->db->from('pr_emp_shift_log as log');
+
+		$this->db->where("num.id = com.emp_line_id");
+		$this->db->where("log.emp_id = com.id");
+		$this->db->where("log.shift_log_date", $date);
+        $this->db->where("com.unit_id", $unit_id);
+
+		$this->db->group_by("num.id");
+		$this->db->order_by("num.line_name_en");
+		return $this->db->get()->result();
+	}
 
 
 
