@@ -42,7 +42,7 @@
     </div>
   </div>
   <div id="add_form" class="row tablebox">
-    <form action="<?= base_url('setting_con/dasig_group_add')?>" method="post" style="margin-bottom: -20px;">
+    <form action="<?= base_url('setting_con/dasig_group_add/'.$row->id)?>" method="post" style="margin-bottom: -20px;">
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -90,50 +90,6 @@
         </div>
    </form>
   </div>
-
-  <div id="target-div" class="row tablebox">
-      <div class="col-md-6" style="margin-left:-16px">
-        <h3 style="font-weight:bold">Access List</h3>
-      </div>
-      <table class="table" id="mytable">
-        <thead>
-          <tr>
-            <th>Sl. No.</th>
-            <th>Name</th>
-            <th>Name Bangla</th>
-            <th>Status</th>
-            <th>unit</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-            <?php foreach($groups as $key => $row) { ?>
-                <tr>
-                    <td><?= $key + 1 ?></td>
-                    <td><?= $row->name_en ?></td>
-                    <td><?= $row->name_bn ?></td>
-                    <td><?= ($row->status == 1)? 'Enable':'Disable' ?></td>
-                    <td><?= $row->unit_name ?></td>
-                    <td>
-                        <a class="btn btn-primary" href="<?= base_url('setting_con/dasig_group/'.$row->id)?>"> Edit </a>
-                        <a class="btn btn-info" href="<?= base_url('setting_con/dasig_group/'.$row->id.'/'.1)?>"> Manage </a>
-                    </td>
-                </tr>
-            <?php } ?>
-        </tbody>
-      </table>
-  </div>
 </div>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#mytable").dataTable();
-    $('#mytable_filter').css({"display": "none"})
-    $('#mytable_length').css({"display": "none"})
-    $("#mytable").dataTable();
-    oTable = $('#mytable').DataTable();
-    $('#deptSearch').keyup(function(){
-      oTable.search($(this).val()).draw() ;
-    })
-  });
-</script>
+

@@ -222,7 +222,7 @@ class Setting_con extends CI_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
-	function dasig_group_add(){
+	function dasig_group_add($id = null){
 		$data = array(
 			'name_en' 	  => $this->input->post('name_en'),
 			'name_bn' 	  => $this->input->post('name_bn'),
@@ -231,7 +231,10 @@ class Setting_con extends CI_Controller {
 			'updated_by'  => $this->data['user_data']->id,
 		);
 
-		if ($this->db->insert('emp_group_dasignation', $data)) {
+		if (!empty($id)) {
+			$this->db->where('id', $id)->update('emp_group_dasignation',$data);
+			$this->session->set_flashdata('success', 'Updated Successfully');
+		} else if ($this->db->insert('emp_group_dasignation', $data)) {
 			$this->session->set_flashdata('success', 'Added Successfully');
 		}else{
 			$this->session->set_flashdata('failuer', 'Added Failed');
