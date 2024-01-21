@@ -1,4 +1,4 @@
-function daily_attendance_summary(){
+function daily_attendance_summary_old(){
 	var firstdate = document.getElementById('firstdate').value;	
 	if(firstdate ==''){
 		alert("Please select date");

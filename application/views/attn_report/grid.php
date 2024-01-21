@@ -189,7 +189,7 @@
 
 
 							<?php if(in_array(74,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_report(10)">Attendance Summary</button>
+							<button class="btn input-sm sbtn" onclick="daily_attendance_summary()()">Attendance Summary</button>
 							<?php } ?>
 							<?php if(in_array(75,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="daily_costing_summary()">Daily Costing Summary</button>

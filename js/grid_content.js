@@ -295,7 +295,39 @@ function daily_costing_summary()
 	}
 }
 
+function daily_attendance_summary()
+{
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate ==''){
+		alert("Please select First date");
+		return false;
+	}
 
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Unit options");
+		return false;
+	}
+
+	var status = document.getElementById('status').value;
+	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&status="+status;
+   url =  hostname+"grid_con/daily_attendance_summary/";
+
+
+	ajaxRequest = new XMLHttpRequest();
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+   ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			sal_sheet_actual.document.write(resp);
+		}
+	}
+}
 	
 //////////////////daily_logout_report////////////
 function daily_logout_report()
