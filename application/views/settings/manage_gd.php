@@ -60,7 +60,7 @@
                     <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)" 
                     <?= in_array($value->id, $match)? 'checked' : ''?>> 
                     <?php if (!empty($not_match) && in_array($value->id, $not_match)) { 
-                        $r = $this->db->where('unit_id', $row->unit_id)->where('id', $row->id)->get('emp_group_dasignation')->row();?>
+                        $r = $this->db->where('unit_id', $row->unit_id)->where('desig_id', $value->id)->get('emp_group_dasignation')->row();?>
                         <span><?php echo $value->desig_name .' ('.$r->name_en .')'; ?></span>
                     <?php } else { ?>
                         <span><?php echo $value->desig_name; ?></span>
