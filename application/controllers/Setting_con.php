@@ -246,7 +246,10 @@ class Setting_con extends CI_Controller {
 			$data1[$key] = $r->id;
 		}
 
-		$this->db->select('desig_id')->where('unit_id', $unit_id)->where_in('desig_id', $data1);
+		$this->db->select('desig_id')->where('unit_id', $unit_id);
+		if (!empty($data1)) {
+			$this->db->where_in('desig_id', $data1);
+		}
 		$rows = $this->db->get('emp_manage_gd')->result();
 		$data2 = array();
 		foreach ($rows as $key => $r) {
