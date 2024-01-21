@@ -50,7 +50,6 @@ class Acl_model extends CI_Model{
 		$this->db->where('emp_manage_gd.group_dasi_id = emp_group_dasignation.id');
 		$this->db->where('emp_manage_gd.desig_id', $desig_id);
 		$this->db->where('emp_manage_gd.unit_id', $unit_id);
-		$this->db->where('unit_id',$unit_id);
 		return $this->db->get()->row();
 	}
 
