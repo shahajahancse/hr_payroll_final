@@ -54,7 +54,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="acl_name">Group Name (Bangla)</label>
-                    <input style="height: 5px !important;" value="<?= $row->name_en ?>" type="text" name="name_bn" class="form-control input-lg">
+                    <input style="height: 5px !important;" value="<?= $row->name_bn ?>" type="text" name="name_bn" class="form-control input-lg">
                 </div>
             </div>
 
