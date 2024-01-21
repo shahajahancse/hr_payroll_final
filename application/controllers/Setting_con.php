@@ -196,6 +196,7 @@ class Setting_con extends CI_Controller {
             redirect("authentication");
         }
 
+        $this->data['units'] = $this->db->get('pr_units')->result();
 		if (!empty($id) && !empty($unit_id)) {
 			$dd = $this->get_manage_gd_id($id, $unit_id);
 			$this->data['match']     = $dd['match'];
@@ -210,7 +211,6 @@ class Setting_con extends CI_Controller {
 	        $this->data['title'] = 'Edit Dasignation Group'; 
 			$this->data['subview'] = 'settings/dasig_group_edit';
 		} else {
-	        $this->data['units'] = $this->db->get('pr_units')->result();
 	        $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->order_by('u.unit_id', 'ASC');
 	        $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
 
