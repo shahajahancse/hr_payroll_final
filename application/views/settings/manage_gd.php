@@ -42,7 +42,7 @@
     </div>
   </div>
   <div id="add_form" class="row tablebox">
-    <label for="user_id"><?php echo $title .' ( '. $row->name_en .' )'.; ?></label>
+    <label for="user_id"><?php echo $title .' ( '. $row->name_en .' )'; ?></label>
   </div>
 
 
