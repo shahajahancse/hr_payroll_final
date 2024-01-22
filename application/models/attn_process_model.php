@@ -264,8 +264,8 @@ class Attn_process_model extends CI_Model{
 				$data = array(
 					'in_time' 			=> $in_time,
 					'out_time' 			=> $out_time,
-					'ot_hour' 			=> $ot_hour,
-					'extra_ot_hour' 	=> $eot_hour,
+					'ot' 				=> $ot_hour,
+					'eot' 				=> $eot_hour,
 					'ot_eot_4pm' 		=> $ot_eot_4pm,
 					'ot_eot_12am' 		=> $ot_eot_12am,
 					'deduction_hour' 	=> $deduction_hour,
