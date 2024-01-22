@@ -34,7 +34,7 @@
 				
         <form id="form_id" enctype="multipart/form-data" method="post" name="creatdepartment" action="<?php echo base_url('emp_info_con/personal_info_add')?>">
 		  		<h3 style="font-weight: bold;"><?= $title ?></h3>
-				<div id='last_emp_id'></div>
+				<span id='last_emp_id'></span>
 	        <hr style="margin-bottom: 0px !important;">
 	        <div style="background-color: white; padding: 15px !important;">
 	        	<div class="row">
@@ -1394,7 +1394,8 @@ function checkAndBlockSubmit(type,e) {
 				unit_id: unit_id
 			},
 			success: function(data) {
-				$('#last_emp_id').html('<span style="color:red">'+data+'</span>');
+				$('#last_emp_id').empty();
+				$('#last_emp_id').text(data);
 			},
 			error: function(data) {
 			}
