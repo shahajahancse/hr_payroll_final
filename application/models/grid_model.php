@@ -331,7 +331,7 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("num.line_name_en");
 		return $this->db->get()->result();
 	}
-
+	// Daily attendance summary
 	function daily_attendance_summary($date, $unit_id)
 	{
 
@@ -380,7 +380,6 @@ class Grid_model extends CI_Model{
 		
 	}
 
-
 	function get_group_dasig_id($id, $unit_id)	
 	{
 		$this->db->select('id')->where('group_id', $id)->where('unit_id', $unit_id);
@@ -392,7 +391,45 @@ class Grid_model extends CI_Model{
 		return $data;
 	}
 
+	// daily logout report 
+	function daily_logout_report($report_date, $unit_id)
+	{
+		$this->db->select("
+					num.id as line_id, num.line_name_en, num.line_name_bn,
+	                SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:00:00' THEN 1 ELSE 0 END ) AS 4pm,
+	                SUM( CASE WHEN log.out_time > '16:00:00' AND log.out_time <= '17:00:00' THEN 1 ELSE 0 END ) AS 5pm,
+	                SUM( CASE WHEN log.out_time > '17:00:00' AND log.out_time <= '18:00:00' THEN 1 ELSE 0 END ) AS 6pm,
+	                SUM( CASE WHEN log.out_time > '18:00:00' AND log.out_time <= '19:00:00' THEN 1 ELSE 0 END ) AS 7pm,
+	                SUM( CASE WHEN log.out_time > '19:00:00' AND log.out_time <= '20:00:00' THEN 1 ELSE 0 END ) AS 8pm,
+	                SUM( CASE WHEN log.out_time > '20:00:00' AND log.out_time <= '21:00:00' THEN 1 ELSE 0 END ) AS 9pm,
+	                SUM( CASE WHEN log.out_time > '21:00:00' AND log.out_time <= '22:00:00' THEN 1 ELSE 0 END ) AS 10pm,
+	                SUM( CASE WHEN log.out_time > '22:00:00' AND log.out_time <= '23:00:00' THEN 1 ELSE 0 END ) AS 11pm,
+	                SUM( CASE WHEN log.out_time > '23:00:00' AND log.out_time <= '23:59:25' THEN 1 ELSE 0 END ) AS 12pm,
+	                SUM( CASE WHEN log.out_time > '00:00:01' AND log.out_time <= '01:00:00' THEN 1 ELSE 0 END ) AS 1am,
+	                SUM( CASE WHEN log.out_time > '01:00:00' AND log.out_time <= '02:00:00' THEN 1 ELSE 0 END ) AS 2am,
+	                SUM( CASE WHEN log.out_time > '02:00:00' AND log.out_time <= '03:00:00' THEN 1 ELSE 0 END ) AS 3am,
+	                SUM( CASE WHEN log.out_time > '03:00:00' AND log.out_time <= '04:00:00' THEN 1 ELSE 0 END ) AS 4am,
+	                SUM( CASE WHEN log.out_time > '04:00:00' AND log.out_time <= '05:00:00' THEN 1 ELSE 0 END ) AS 5am,
+	                SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '06:00:00' THEN 1 ELSE 0 END ) AS 6am,
+				");
 
+		$this->db->from("pr_emp_shift_log as log");
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('emp_line_num as num');
+
+		$this->db->where("log.emp_id = com.id");
+		$this->db->where("num.id = com.emp_line_id");
+
+		$this->db->where("com.unit_id", $unit_id);
+		$this->db->where("log.shift_log_date", $date);
+		$this->db->where("log.in_time !=", "00:00:00");
+		$this->db->where_not_in("com.emp_cat_id", array(2,3,4));
+
+		$this->db->group_by("num.id");
+		$this->db->order_by("num.line_name_en");
+		$data['results'] = $this->db->get()->result();
+		return $all_emp_id;
+	}
 		
 
 
