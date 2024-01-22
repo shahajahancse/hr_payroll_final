@@ -42,6 +42,14 @@
             .potovumi{
                 font-size: 20px;
             }
+            .vl {
+                border-left: 1px solid gray;
+                height: 175px;
+                position: absolute;
+                left: 77%;
+                margin-top: 175px;
+                transform: rotate(13deg);
+            }
         </style>
     </head>
 
@@ -733,6 +741,8 @@
                     e¨w³‡`i g‡a¨
                     e›Ub Kwi‡Z nB‡e|
                 </p> <br>
+
+                <div class="vl"></div>
                 <table class="table" border="1">
                     <tr>
                         <th class="text-center" style="width: 20%;">g‡bvbxZ e¨w³ ev e¨w³‡`i bvg, wVKvbv I Qwe (bwgbxi Qwe I
