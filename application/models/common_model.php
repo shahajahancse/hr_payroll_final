@@ -86,7 +86,7 @@ class Common_model extends CI_Model{
 		$this->db->from("pr_emp_shift_log as log");
 		$this->db->from('pr_emp_com_info as com');
 		// $this->db->from('emp_line_num as num');
-		
+
 		$this->db->where("log.emp_id = com.id");
 		// $this->db->where("num.id = com.emp_line_id");
 
@@ -96,7 +96,7 @@ class Common_model extends CI_Model{
 		$this->db->where_in("com.emp_desi_id", $array['Operator']);
 		$this->db->group_by("log.shift_log_date");
 		$d['Operator'] = $this->db->get()->row();
-		dd($d['Operator']);
+		dd($this->db->last_query());
 
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
