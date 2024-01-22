@@ -112,7 +112,7 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->where_in("com.emp_desi_id", $array['Helper']);
 		$this->db->group_by("log.shift_log_date");
 		$d['Helper'] = $this->db->get()->row();
 		
@@ -132,7 +132,7 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->where_in("com.emp_desi_id", $array['Iron Man']);
 		$this->db->group_by("log.shift_log_date");
 		$d['Iron Man'] = $this->db->get()->row();
 		
@@ -152,7 +152,7 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->where_in("com.emp_desi_id", $array['Line Chief']);
 		$this->db->group_by("log.shift_log_date");
 		$d['Line Chief'] = $this->db->get()->row();
 		
@@ -172,7 +172,7 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->where_in("com.emp_desi_id", $array['F.Q.I']);
 		$this->db->group_by("log.shift_log_date");
 		$d['F.Q.I'] = $this->db->get()->row();
 		
@@ -192,7 +192,7 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->where_in("com.emp_desi_id", $array['Supervisor']);
 		$this->db->group_by("log.shift_log_date");
 		$d['Supervisor'] = $this->db->get()->row();
 		return $d;
