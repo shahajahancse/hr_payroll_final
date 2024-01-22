@@ -366,26 +366,7 @@ function daily_logout_report()
 // attendance Report 
 function grid_continuous_present_report()
 {
-	var ajaxRequest;  // The variable that makes Ajax possible!
-
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-
+	alert ('ok'); return;
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate =='')
 	{
@@ -416,8 +397,7 @@ function grid_continuous_present_report()
 
 	var status = "P";
 
-	// 
-	// 
+	ajaxRequest = new XMLHttpRequest();
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"grid_con/grid_continuous_report/";
 	//     
