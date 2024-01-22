@@ -78,17 +78,13 @@ class Common_model extends CI_Model{
 	function get_group_wise_attendance($date, $unit_id, $array){
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS leave,
+	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
 				");
-
 		$this->db->from("pr_emp_shift_log as log");
 		$this->db->from('pr_emp_com_info as com');
-		// $this->db->from('emp_line_num as num');
-
 		$this->db->where("log.emp_id = com.id");
-		// $this->db->where("num.id = com.emp_line_id");
 
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
@@ -96,20 +92,16 @@ class Common_model extends CI_Model{
 		$this->db->where_in("com.emp_desi_id", $array['Operator']);
 		$this->db->group_by("log.shift_log_date");
 		$d['Operator'] = $this->db->get()->row();
-		dd($this->db->last_query());
 
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS leave,
+	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
 				");
-
 		$this->db->from("pr_emp_shift_log as log");
 		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
 		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
 
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
@@ -120,16 +112,13 @@ class Common_model extends CI_Model{
 		
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS leave,
+	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
 				");
-
 		$this->db->from("pr_emp_shift_log as log");
 		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
 		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
 
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
@@ -140,16 +129,13 @@ class Common_model extends CI_Model{
 		
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS leave,
+	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
 				");
-
 		$this->db->from("pr_emp_shift_log as log");
 		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
 		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
 
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
@@ -160,16 +146,13 @@ class Common_model extends CI_Model{
 		
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS leave,
+	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
 				");
-
 		$this->db->from("pr_emp_shift_log as log");
 		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
 		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
 
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
@@ -180,16 +163,13 @@ class Common_model extends CI_Model{
 		
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS leave,
+	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
 				");
-
 		$this->db->from("pr_emp_shift_log as log");
 		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
 		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
 
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
