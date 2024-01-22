@@ -371,9 +371,10 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("num.line_name_en");
 		$data['results'] = $this->db->get()->result();
 		
-		/*foreach ($data['results'] as $key => $row) {
-			
-		}*/
+		foreach ($data['results'] as $key => $row) {
+			$d = $this->common_model->get_group_wise_attendance($row->line_id, $date, $unit_id, $data);
+			$data['results'][$key]->group_data = $d;
+		}
 
 		dd($data);
 		
