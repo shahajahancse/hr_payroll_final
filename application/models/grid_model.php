@@ -373,6 +373,7 @@ class Grid_model extends CI_Model{
 		
 		foreach ($data['results'] as $key => $row) {
 			$d = $this->common_model->get_group_wise_attendance($date, $unit_id, $data);
+			dd($d);
 			$data['results'][$key]['group_data'] = $d;
 		}
 
