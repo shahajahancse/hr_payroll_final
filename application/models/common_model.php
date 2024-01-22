@@ -76,7 +76,6 @@ class Common_model extends CI_Model{
 	}
 
 	function get_group_wise_attendance($date, $unit_id, $array){
-		dd($array['Operator']);
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
 	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS present,
