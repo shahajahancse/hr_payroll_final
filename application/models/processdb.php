@@ -686,6 +686,7 @@ class Processdb extends CI_Model{
 	// }
 	function updatedb1()
 	{
+		dd($this->input->post('exp_dasignation'));
 		$id = $this->input->post('emp_id');
 		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
 		$data = array(
