@@ -3586,6 +3586,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
 	{
+		dd('hello');
 		$data = array();
 		$date_array = $this->GetDays($grid_firstdate, $grid_seconddate);
 		//print_r($date);
