@@ -331,7 +331,7 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("num.line_name_en");
 		return $this->db->get()->result();
 	}
-
+	// Daily attendance summary
 	function daily_attendance_summary($date, $unit_id)
 	{
 
@@ -371,14 +371,14 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("num.line_name_en");
 		$data['results'] = $this->db->get()->result();
 		
-		/*foreach ($data['results'] as $key => $row) {
-			
-		}*/
+		foreach ($data['results'] as $key => $row) {
+			$d = $this->common_model->get_group_wise_attendance($row->line_id, $date, $unit_id, $data);
+			$data['results'][$key]->group_data = $d;
+		}
 
 		dd($data);
 		
 	}
-
 
 	function get_group_dasig_id($id, $unit_id)	
 	{
@@ -391,7 +391,45 @@ class Grid_model extends CI_Model{
 		return $data;
 	}
 
+	// daily logout report 
+	function daily_logout_report($date, $unit_id)
+	{
+		$this->db->select("
+					num.id as line_id, num.line_name_en, num.line_name_bn,
+					SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
+	                SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:00:00' THEN 1 ELSE 0 END ) AS 4pm,
+	                SUM( CASE WHEN log.out_time > '16:00:00' AND log.out_time <= '17:00:00' THEN 1 ELSE 0 END ) AS 5pm,
+	                SUM( CASE WHEN log.out_time > '17:00:00' AND log.out_time <= '18:00:00' THEN 1 ELSE 0 END ) AS 6pm,
+	                SUM( CASE WHEN log.out_time > '18:00:00' AND log.out_time <= '19:00:00' THEN 1 ELSE 0 END ) AS 7pm,
+	                SUM( CASE WHEN log.out_time > '19:00:00' AND log.out_time <= '20:00:00' THEN 1 ELSE 0 END ) AS 8pm,
+	                SUM( CASE WHEN log.out_time > '20:00:00' AND log.out_time <= '21:00:00' THEN 1 ELSE 0 END ) AS 9pm,
+	                SUM( CASE WHEN log.out_time > '21:00:00' AND log.out_time <= '22:00:00' THEN 1 ELSE 0 END ) AS 10pm,
+	                SUM( CASE WHEN log.out_time > '22:00:00' AND log.out_time <= '23:00:00' THEN 1 ELSE 0 END ) AS 11pm,
+	                SUM( CASE WHEN log.out_time > '23:00:00' AND log.out_time <= '23:59:25' THEN 1 ELSE 0 END ) AS 12pm,
+	                SUM( CASE WHEN log.out_time > '00:00:01' AND log.out_time <= '01:00:00' THEN 1 ELSE 0 END ) AS 1am,
+	                SUM( CASE WHEN log.out_time > '01:00:00' AND log.out_time <= '02:00:00' THEN 1 ELSE 0 END ) AS 2am,
+	                SUM( CASE WHEN log.out_time > '02:00:00' AND log.out_time <= '03:00:00' THEN 1 ELSE 0 END ) AS 3am,
+	                SUM( CASE WHEN log.out_time > '03:00:00' AND log.out_time <= '04:00:00' THEN 1 ELSE 0 END ) AS 4am,
+	                SUM( CASE WHEN log.out_time > '04:00:00' AND log.out_time <= '05:00:00' THEN 1 ELSE 0 END ) AS 5am,
+	                SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '06:00:00' THEN 1 ELSE 0 END ) AS 6am,
+				");
 
+		$this->db->from("pr_emp_shift_log as log");
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('emp_line_num as num');
+
+		$this->db->where("log.emp_id = com.id");
+		$this->db->where("num.id = com.emp_line_id");
+
+		$this->db->where("com.unit_id", $unit_id);
+		$this->db->where("log.shift_log_date", $date);
+		$this->db->where("log.in_time !=", "00:00:00");
+		$this->db->where_not_in("com.emp_cat_id", array(2,3,4));
+
+		$this->db->group_by("num.id");
+		$this->db->order_by("num.line_name_en");
+		return $this->db->get()->result();
+	}
 		
 
 
@@ -1202,6 +1240,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
     $this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
     $this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
     $this->db->where('pr_emp_shift_log.shift_log_date', $date);
+
 	if($type == 1){
  		$this->db->where('pr_emp_shift_log.present_status', "P");
 	} 
@@ -1232,14 +1271,14 @@ function grid_daily_report($date, $grid_emp_id,$type){
  		$this->db->or_where("pr_emp_shift_log.out_time = '00:00:00'");
 	}
 	$this->db->group_by('pr_emp_com_info.emp_id');
-    $query = $this->db->get();
-	// dd($query->result());
-    if ($query->num_rows() == 0) {
-        return "Requested list is empty";
-    }
-    $data = $query->result_array();
-
-    return $data;
+    $query = $this->db->get()->result_array();
+	// dd($query);
+	if(empty($query)){
+		echo "Requested list is empty";
+		exit;
+	}else{
+		return $query;
+	}
 }
 
 
@@ -8494,9 +8533,11 @@ function grid_emp_job_application($grid_emp_id){
 		emp_section.sec_name_bn, 
 		emp_line_num.line_name_bn, 
 		pr_religions.religion_id,
+
 		per_dis.name_bn as dis_name_bn,
 		per_upa.name_bn as upa_name_bn,
 		per_post.name_bn as post_name_bn,
+
 		pre_dis.name_bn as pre_dis_name_bn,
 		pre_upa.name_bn as pre_upa_name_bn,
 		pre_post.name_bn as pre_post_name_bn,
@@ -8504,6 +8545,10 @@ function grid_emp_job_application($grid_emp_id){
 		ref_dis.name_bn as ref_dis_name_bn,
 		ref_upa.name_bn as ref_upa_name_bn,
 		ref_post.name_bn as ref_post_name_bn,
+
+		nomi_dis.name_bn as nomi_dis_name_bn,
+		nomi_upa.name_bn as nomi_upa_name_bn,
+		nomi_post.name_bn as nomi_post_name_bn,
 		
 		pr_emp_edu.*,
 		pr_emp_skill.*,
@@ -8535,6 +8580,10 @@ function grid_emp_job_application($grid_emp_id){
 	$this->db->join('emp_districts as ref_dis', 'pr_emp_per_info.pre_district = ref_dis.id', 'LEFT');
 	$this->db->join('emp_upazilas as ref_upa', 'pr_emp_per_info.pre_thana = ref_upa.id', 'LEFT');
 	$this->db->join('emp_post_offices as ref_post', 'pr_emp_per_info.pre_post = ref_post.id', 'LEFT');
+
+	$this->db->join('emp_districts as nomi_dis', 'pr_emp_per_info.pre_district = nomi_dis.id', 'LEFT');
+	$this->db->join('emp_upazilas as nomi_upa', 'pr_emp_per_info.pre_thana = nomi_upa.id', 'LEFT');
+	$this->db->join('emp_post_offices as nomi_post', 'pr_emp_per_info.pre_post = nomi_post.id', 'LEFT');
 
 	$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 	// $this->db->order_by('pr_emp_com_info.emp_id');

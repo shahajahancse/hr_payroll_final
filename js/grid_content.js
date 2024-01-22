@@ -329,37 +329,39 @@ function daily_attendance_summary()
 	}
 }
 	
-//////////////////daily_logout_report////////////
+
 function daily_logout_report()
 {
-	var firstdate = document.getElementById('firstdate').value;	
-	if(firstdate =='')
-	{
-		alert("Please select date");
-		return;
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate ==''){
+		alert("Please select First date");
+		return false;
 	}
-	
-	var unit_id = document.getElementById('grid_start').value;
+
+	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
-		alert("Please select Unit");
-		return;
+		alert("Please select Unit options");
+		return false;
 	}
-	
-	var category = document.getElementById('category').value;
-	if(category =='Select')
-	{
-		alert("Please select Category options");
-		return;
+
+	var status = document.getElementById('status').value;
+	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&status="+status;
+   url =  hostname+"grid_con/daily_logout_report/";
+
+
+	ajaxRequest = new XMLHttpRequest();
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+   ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			sal_sheet_actual.document.write(resp);
+		}
 	}
-	
-	
-	hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/mars_con/daily_logout_report/"+firstdate+"/"+category+"/"+unit_id;
-	
-	daily_logout = window.open(url,'daily_logout',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	daily_logout.moveTo(0,0);
 }
 
 

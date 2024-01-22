@@ -29,7 +29,6 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
 		$type = $this->input->post('report_type');
-		// dd($type);
 		$year=date("Y",strtotime($date)); 
 		$month=date("m",strtotime($date)); 
 		$day=date("d",strtotime($date));
@@ -39,6 +38,7 @@ class Grid_con extends CI_Controller {
 		// }else{
 			$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
 		// }
+		// dd($data);
 		if($type == 9){
 			// dd("9");
 		    $data['values'] =	$this->grid_model->grid_daily_costing_report($date,$unit_id);
@@ -50,11 +50,7 @@ class Grid_con extends CI_Controller {
 		$data["unit_id"] 		= $unit_id;
 		$data['daily_status']   = $type;
 		$data['date']   		= $date;
-		if(is_string($data["values"])){
-			echo $data["values"];
-		} else {
-			$this->load->view('grid_con/daily_report',$data);
-		}
+		$this->load->view('grid_con/daily_report',$data);
 	}
 
 	function daily_costing_summary()
@@ -69,7 +65,7 @@ class Grid_con extends CI_Controller {
 		$data["grid_date"]	= $date;
 		$data["unit_id"]	= $unit_id;
 
-		$this->load->view('attn_con/daily_costing_summary',$data);
+		$this->load->view('attn_report/daily_costing_summary',$data);
 		// $this->load->view('others_report/daily_costing_summary',$data);
 	}
 
@@ -87,10 +83,27 @@ class Grid_con extends CI_Controller {
 		$data['category']    = 'Line';
 		$data['unit_id']    = $unit_id;
 
-		$this->load->view('attn_con/daily_attendance_summary', $data);
+		$this->load->view('attn_report/daily_attendance_summary', $data);
 		// $this->load->view('others_report/attendance_summary', $data);
 	}
 
+	function daily_logout_report()
+	{
+		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
+		$unit_id = $this->input->post('unit_id');
+		$status  = $this->input->post('status');
+
+		$data['values'] = $this->grid_model->daily_logout_report($date, $unit_id);
+		dd($data['values']);
+
+		$data['title'] 		 = 'Daily Logout Summary';
+		$data['report_date'] = $date;
+		$data['category']    = 'Line';
+		$data['unit_id']    = $unit_id;
+		
+		$this->load->view('attn_report/daily_logout_report', $data);
+		// $this->load->view('others_report/daily_logout', $data);
+	}
 
 
 

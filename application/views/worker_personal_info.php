@@ -42,6 +42,14 @@
             .potovumi{
                 font-size: 20px;
             }
+            .vl {
+                border-left: 1px solid gray;
+                height: 175px;
+                position: absolute;
+                left: 77%;
+                margin-top: 175px;
+                transform: rotate(13deg);
+            }
         </style>
     </head>
 
@@ -733,6 +741,8 @@
                     e¨w³‡`i g‡a¨
                     e›Ub Kwi‡Z nB‡e|
                 </p> <br>
+
+                <div class="vl"></div>
                 <table class="table" border="1">
                     <tr>
                         <th class="text-center" style="width: 20%;">g‡bvbxZ e¨w³ ev e¨w³‡`i bvg, wVKvbv I Qwe (bwgbxi Qwe I
@@ -784,28 +794,28 @@
                         <td style="width:10%;text-align:center">100% Ask</td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td class="text-center">MÖvgt <?php echo $value->nominee_vill ?></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">e‡KqvLvZ</td>
                         <td style="width:10%"></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td class="text-center">‡cv÷t  <?php echo $value->nomi_post_name_bn ?></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">cÖwf‡W›U dvÛ</td>
                         <td style="width:10%"></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td class="text-center">_vbvt <?php echo $value->nomi_upa_name_bn ?></td>
                         <td></td>
                         <td></td>
                         <td class="text-center">exgv</td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td class="text-center">‡Rjvt <?php echo $value->nomi_dis_name_bn ?></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">`~N©Ubvi ÿwZc~iY</td>

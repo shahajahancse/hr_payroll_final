@@ -118,11 +118,13 @@ class Acl_con extends CI_Controller {
 	}
 
 	function members_add(){
-		$this->db->select('pr_units.*', false);
+		$this->data['username'] = $this->data['user_data']->id_number;
+
 		$param['pr_units'] = $this->db->get('pr_units')->result();
-		$acls = $this->db->select('cl.*')->get('members_acl_list as cl')->result();
-		$param['acls'] = $acls;
-		$this->load->view('members_add', $param);
+		$param['acls'] = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
+
+		$this->data['subview'] = 'members_add';
+        $this->load->view('layout/template', $this->data);
 	}
 
 	function members_insert(){
@@ -146,7 +148,7 @@ class Acl_con extends CI_Controller {
 				$acl_data['username_id'] = $id;
 				$acl_data['acl_id'] = $this->input->post('acl_id')[$i];
 				$acl_data['priority'] = $i;
-				$this->db->insert('members_acl_level', $acl_data);
+				$this->db->insert('member_acl_level', $acl_data);
 			}
 		}
 
@@ -156,13 +158,13 @@ class Acl_con extends CI_Controller {
 
 	function members_edit($id){
 		$this->db->select('members.*, members.unit_name as u_id, pr_units.unit_name', false);
-		$this->db->join('pr_units', 'pr_units.pr_units_id = members.unit_name', 'left');
+		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
         $this->db->where('members.id', $id);
 		$this->data['members'] = $this->db->get('members')->row();
 
 		$acls = $this->db->select('cl.*, mcl.acl_id')
-							->join('members_acl_level mcl', 'cl.id = mcl.acl_id and mcl.username_id = "'.$id.'"', 'left')
-							->get('members_acl_list as cl')->result();
+							->join('member_acl_level mcl', 'cl.id = mcl.acl_id and mcl.username_id = "'.$id.'"', 'left')
+							->get('member_acl_list as cl')->result();
 
 		$this->data['acls'] = $acls;
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -190,14 +192,14 @@ class Acl_con extends CI_Controller {
 		$acl_count = $this->input->post('acl_id');
 
 		if (count($acl_count)) {
-			$this->db->where('members_acl_level.username_id',$id);
-			$data=$this->db->delete('members_acl_level');
+			$this->db->where('member_acl_level.username_id',$id);
+			$data=$this->db->delete('member_acl_level');
 
 			for ($i=0; $i < count($acl_count); $i++) {
 				$acl_data['username_id'] = $id;
 				$acl_data['acl_id'] = $this->input->post('acl_id')[$i];
 				$acl_data['priority'] = $i;
-				$this->db->insert('members_acl_level', $acl_data);
+				$this->db->insert('member_acl_level', $acl_data);
 			}
 		}
 
@@ -265,10 +267,10 @@ class Acl_con extends CI_Controller {
 			// echo "<pre>"; print_r($data); exit;
 		$crud->set_subject('User');
 
-		//$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
+		//$crud->set_relation_n_n('ACL', 'member_acl_level', 'member_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
 		if($get_session_user_pr_units != 0)
 		{
-			$crud->set_relation('unit_name' , 'pr_units','unit_name',array('pr_units_id' => $get_session_user_pr_units) );
+			$crud->set_relation('unit_name' , 'pr_units','unit_name',array('unit_id' => $get_session_user_pr_units) );
 		}
 		else
 		{
