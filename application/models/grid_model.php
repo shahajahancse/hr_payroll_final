@@ -3047,28 +3047,19 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function attendance_check($date, $emp_id, $status)
 	{
-		dd($emp_id);
-		// $year  = trim(substr($date,0,4));
-		// $month = trim(substr($date,5,2));
-		// $day   = trim(substr($date,8,2));
-		// $date_field = "date_$day";
-		// $att_month = $year."-".$month."-00";
+		$year  = trim(substr($date,0,4));
+		$month = trim(substr($date,5,2));
+		$day   = trim(substr($date,8,2));
+		$date_field = "date_$day";
+		$att_month = $year."-".$month."-00";
 		// dd($att_month);
 
-		// $this->db->select($date_field);
-		// $this->db->where("emp_id", $emp_id);
-		// $this->db->where("att_month", $att_month);
-		// $this->db->where($date_field, $status);
-		// $query = $this->db->get("pr_attn_monthly");
-		// // dd($query->row());
-
-		$this->db->select('present_status');
+		$this->db->select($date_field);
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("att_month", $att_month);
 		$this->db->where($date_field, $status);
 		$query = $this->db->get("pr_attn_monthly");
-
-
+		// dd($query->row());
 		if($query->num_rows() > 0)
 		{
 			return true;
@@ -3634,54 +3625,9 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
 	{
-		$data = array();
-		$date_array = $this->GetDays($grid_firstdate, $grid_seconddate);
-		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_emp_com_info.emp_join_date ');
-			$this->db->from('pr_emp_per_info');
-			$this->db->from('pr_emp_com_info');
-			$this->db->from('emp_depertment');
-			$this->db->from('emp_section');
-			$this->db->from('emp_line_num');
-			$this->db->from('emp_designation');
-			$this->db->from('pr_id_proxi');
-			$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-			$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-			//$this->db->where('pr_emp_com_info.emp_sec_id',$grid_section);
-			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-			$this->db->where("pr_emp_com_info.emp_id = pr_id_proxi.emp_id");
-			$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
-			$this->db->order_by("emp_section.sec_name_en");
-			$query1 = $this->db->get();
-			
+		dd($grid_emp_id);
 
-			foreach($query1->result_array() as $rows)
-			{
-
-				$emp_id   = $rows["emp_id"];
-				$count=0;
-				foreach($date_array as $date)
-				{
-					// dd($date);
-
-					//echo "$emp_id=>$date<br>";
-
-					$present_check = $this->attendance_check($date, $emp_id, $status);
-					dd($present_check);
-
-					if($present_check == true)
-					{
-						 $count++;
-					}
-				}
-
-				if($count == 0)
-				{
-					continue;
-
-				}
-
+	
 				$emp_full_name=$rows["name_en"];
 				$proxi_id=$rows["proxi_id"];
 				$desig_name=$rows["desig_name"];
@@ -3699,19 +3645,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				$data['line_name'][]=$line_name ;
 				$data['desig'][]=$desig_name ;
 				$data['total'][]=$count ;
-			}
-
-
-
-		//print_r($data);
-		if($data)
-		{
-			return $data;
-		}
-		else
-		{
-			return "Requested list is empty";
-		}
 
 	}
 
