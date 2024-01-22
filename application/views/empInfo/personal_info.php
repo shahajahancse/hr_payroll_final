@@ -88,7 +88,7 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Father's Name (Bangla) <span style="color: red;">*</span> </label>
-									<input type="text" name="father_name" id="father_name"  class="form-control input-sm bangla_name" value="<?= isset($emp_info->father_name)?>" required>
+									<input style="font-family: SutonnyMJ;" type="text" name="father_name" id="father_name"  class="form-control input-sm bangla_name" value="<?= isset($emp_info->father_name)?>" required>
 									<?php echo form_error('father_name');?>
 								</div>
 							</div>
