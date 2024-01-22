@@ -274,7 +274,8 @@ class Attn_process_model extends CI_Model{
 					'tiffin_allo' 		=> 0,
 					'night_allo' 		=> $night_allo,
 					'holiday_allo'	    => $holiday_allo,
-					'weekly_allo'		=> $weekly_allo
+					'weekly_allo'		=> $weekly_allo,
+					'unit_id'			=> $unit,
 				);
 
 				$this->db->where('shift_log_date', $process_date);
