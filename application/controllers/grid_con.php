@@ -65,7 +65,7 @@ class Grid_con extends CI_Controller {
 		$data["grid_date"]	= $date;
 		$data["unit_id"]	= $unit_id;
 
-		$this->load->view('attn_con/daily_costing_summary',$data);
+		$this->load->view('attn_report/daily_costing_summary',$data);
 		// $this->load->view('others_report/daily_costing_summary',$data);
 	}
 
@@ -83,10 +83,27 @@ class Grid_con extends CI_Controller {
 		$data['category']    = 'Line';
 		$data['unit_id']    = $unit_id;
 
-		$this->load->view('attn_con/daily_attendance_summary', $data);
+		$this->load->view('attn_report/daily_attendance_summary', $data);
 		// $this->load->view('others_report/attendance_summary', $data);
 	}
 
+	function daily_logout_report()
+	{
+		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
+		$unit_id = $this->input->post('unit_id');
+		$status  = $this->input->post('status');
+
+		$data['values'] = $this->grid_model->daily_logout_report($date, $unit_id);
+		dd($data['values']);
+
+		$data['title'] 		 = 'Daily Logout Summary';
+		$data['report_date'] = $date;
+		$data['category']    = 'Line';
+		$data['unit_id']    = $unit_id;
+		
+		$this->load->view('attn_report/daily_logout_report', $data);
+		// $this->load->view('others_report/daily_logout', $data);
+	}
 
 
 
