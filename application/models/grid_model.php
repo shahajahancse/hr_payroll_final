@@ -3008,19 +3008,28 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function attendance_check($date, $emp_id, $status)
 	{
-		$year  = trim(substr($date,0,4));
-		$month = trim(substr($date,5,2));
-		$day   = trim(substr($date,8,2));
-		$date_field = "date_$day";
-		$att_month = $year."-".$month."-00";
-		dd($att_month);
+		dd($emp_id);
+		// $year  = trim(substr($date,0,4));
+		// $month = trim(substr($date,5,2));
+		// $day   = trim(substr($date,8,2));
+		// $date_field = "date_$day";
+		// $att_month = $year."-".$month."-00";
+		// dd($att_month);
 
-		$this->db->select($date_field);
+		// $this->db->select($date_field);
+		// $this->db->where("emp_id", $emp_id);
+		// $this->db->where("att_month", $att_month);
+		// $this->db->where($date_field, $status);
+		// $query = $this->db->get("pr_attn_monthly");
+		// // dd($query->row());
+
+		$this->db->select('present_status');
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("att_month", $att_month);
 		$this->db->where($date_field, $status);
 		$query = $this->db->get("pr_attn_monthly");
-		// dd($query->row());
+
+
 		if($query->num_rows() > 0)
 		{
 			return true;
