@@ -392,7 +392,7 @@ class Grid_model extends CI_Model{
 	}
 
 	// daily logout report 
-	function daily_logout_report($report_date, $unit_id)
+	function daily_logout_report($date, $unit_id)
 	{
 		$this->db->select("
 					num.id as line_id, num.line_name_en, num.line_name_bn,
