@@ -269,7 +269,71 @@ class Mars_model extends CI_Model{
 		return $data;
 	}
 
+	function monthly_join_emp($report_date)
+	{
+		$year = substr($report_date,0,4);
+		$month = substr($report_date,5,2);
+		$day = substr($report_date,8,2);
+		$days = date("t", mktime(0, 0, 0, $month, 1, $year));
+		$fromdate = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
+		$todate = date("Y-m-d", mktime(0, 0, 0, $month, $days, $year));
 
+		$emp_cat = array(1,2);
+
+		$this->db->select('pr_emp_com_info.emp_id');
+		$this->db->from('pr_emp_com_info');
+		//$this->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat);
+		$this->db->where("pr_emp_com_info.emp_join_date >=",$fromdate);
+		$this->db->where("pr_emp_com_info.emp_join_date <=",$todate);
+		//$query = $this->db->get();
+		/*echo "<pre>";
+		echo $this->db->last_query();exit;*/
+		$query = $this->db->get()->num_rows();
+
+		return $query;
+	}
+
+	function monthly_resign_emp($report_date)
+	{
+		$year = substr($report_date,0,4);
+		$month = substr($report_date,5,2);
+		$day = substr($report_date,8,2);
+		$days = date("t", mktime(0, 0, 0, $month, 1, $year));
+		$fromdate = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
+		$todate = date("Y-m-d", mktime(0, 0, 0, $month, $days, $year));
+
+		$this->db->select('pr_emp_resign_history.emp_id');
+		$this->db->from('pr_emp_resign_history');
+		$this->db->where("pr_emp_resign_history.resign_date >=",$fromdate);
+		$this->db->where("pr_emp_resign_history.resign_date <=",$todate);
+		//$query = $this->db->get();
+		$query = $this->db->get()->num_rows();
+
+		return $query;
+
+	}
+
+	function monthly_left_emp($report_date)
+	{
+		$year = substr($report_date,0,4);
+		$month = substr($report_date,5,2);
+		$day = substr($report_date,8,2);
+		$days = date("t", mktime(0, 0, 0, $month, 1, $year));
+		$fromdate = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
+		$todate = date("Y-m-d", mktime(0, 0, 0, $month, $days, $year));
+
+		$this->db->select('pr_emp_left_history.emp_id');
+		$this->db->from('pr_emp_left_history');
+		$this->db->where("pr_emp_left_history.left_date >=",$fromdate);
+		$this->db->where("pr_emp_left_history.left_date <=",$todate);
+		//$query = $this->db->get();
+		$query = $this->db->get()->num_rows();
+
+		return $query;
+
+	}
+
+	
 
 
 
