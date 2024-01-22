@@ -341,7 +341,6 @@ class Grid_model extends CI_Model{
 		$results = $this->db->where('unit_id', $unit_id)->order_by('id')->get('emp_group_dasignation')->result();
 		$data = array();
 		foreach ($results as $key => $r) {
-			$data['group_name'][$key] = $r->name_en;
 			$data[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
 		}
 
@@ -374,6 +373,10 @@ class Grid_model extends CI_Model{
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
 		$data['results'] = $this->db->get()->result();
+		
+		/*foreach ($data['results'] as $key => $row) {
+			
+		}*/
 
 		dd($data);
 		
