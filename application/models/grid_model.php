@@ -3606,7 +3606,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
 			$this->db->order_by("emp_section.sec_name_en");
 			$query1 = $this->db->get();
-			dd($query1->result_array());
+			
 
 			foreach($query1->result_array() as $rows)
 			{
@@ -3615,7 +3615,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				$count=0;
 				foreach($date_array as $date)
 				{
-					// dd($date);
+					dd($date);
 
 					//echo "$emp_id=>$date<br>";
 
