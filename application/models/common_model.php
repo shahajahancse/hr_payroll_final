@@ -75,7 +75,7 @@ class Common_model extends CI_Model{
 		return $this->db->get()->result();
 	}
 
-	function get_group_wise_attendance($date, $unit_id, $array){
+	function get_group_wise_attendance($line_id, $date, $unit_id, $array){
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
 	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
@@ -88,6 +88,7 @@ class Common_model extends CI_Model{
 		$this->db->where("log.emp_id = com.id");
 		$this->db->where("num.id = com.emp_line_id");
 
+		$this->db->where("com.emp_line_id", $line_id);
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
@@ -107,6 +108,7 @@ class Common_model extends CI_Model{
 		$this->db->where("log.emp_id = com.id");
 		$this->db->where("num.id = com.emp_line_id");
 
+		$this->db->where("com.emp_line_id", $line_id);
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
@@ -126,6 +128,7 @@ class Common_model extends CI_Model{
 		$this->db->where("log.emp_id = com.id");
 		$this->db->where("num.id = com.emp_line_id");
 
+		$this->db->where("com.emp_line_id", $line_id);
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
@@ -145,6 +148,7 @@ class Common_model extends CI_Model{
 		$this->db->where("log.emp_id = com.id");
 		$this->db->where("num.id = com.emp_line_id");
 
+		$this->db->where("com.emp_line_id", $line_id);
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
@@ -164,6 +168,7 @@ class Common_model extends CI_Model{
 		$this->db->where("log.emp_id = com.id");
 		$this->db->where("num.id = com.emp_line_id");
 
+		$this->db->where("com.emp_line_id", $line_id);
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
@@ -183,6 +188,7 @@ class Common_model extends CI_Model{
 		$this->db->where("log.emp_id = com.id");
 		$this->db->where("num.id = com.emp_line_id");
 
+		$this->db->where("com.emp_line_id", $line_id);
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
