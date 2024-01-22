@@ -396,6 +396,7 @@ class Grid_model extends CI_Model{
 	{
 		$this->db->select("
 					num.id as line_id, num.line_name_en, num.line_name_bn,
+					SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
 	                SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:00:00' THEN 1 ELSE 0 END ) AS 4pm,
 	                SUM( CASE WHEN log.out_time > '16:00:00' AND log.out_time <= '17:00:00' THEN 1 ELSE 0 END ) AS 5pm,
 	                SUM( CASE WHEN log.out_time > '17:00:00' AND log.out_time <= '18:00:00' THEN 1 ELSE 0 END ) AS 6pm,
