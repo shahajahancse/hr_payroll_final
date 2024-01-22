@@ -35,7 +35,7 @@ class Grid_model extends CI_Model{
 				emp_designation.desig_bangla, 
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
-				emp_line_num.line_name_en_en, 
+				emp_line_num.line_name_en, 
 				emp_line_num.line_name_en_bn, 
 
 				pr_grade.gr_name,
@@ -85,7 +85,7 @@ class Grid_model extends CI_Model{
 				emp_designation.desig_bangla, 
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
-				emp_line_num.line_name_en_en, 
+				emp_line_num.line_name_en, 
 				emp_line_num.line_name_en_bn, 
 
 				pr_grade.gr_name,
@@ -135,7 +135,7 @@ class Grid_model extends CI_Model{
 				emp_designation.desig_bangla, 
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
-				emp_line_num.line_name_en_en, 
+				emp_line_num.line_name_en, 
 				emp_line_num.line_name_en_bn, 
 
 				pr_grade.gr_name,
@@ -1124,7 +1124,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
         pr_emp_com_info.emp_join_date,
         emp_depertment.dept_name,
         emp_section.sec_name_en,
-        emp_line_num.line_name_en_en,
+        emp_line_num.line_name_en,
         pr_emp_shift.shift_name,
         pr_emp_com_info.emp_cat_id,
         pr_emp_shift_log.in_time,
@@ -1199,7 +1199,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			pr_emp_com_info.emp_join_date, 
 			emp_depertment.dept_name,
 			emp_section.sec_name_en,
-			emp_line_num.line_name_en_en,
+			emp_line_num.line_name_en,
 			pr_id_proxi.proxi_id, 
 			pr_emp_com_info.emp_cat_id,
             pr_emp_per_info.personal_mobile,
@@ -1231,7 +1231,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->where('pr_emp_shift_log.present_status', "A");
 		$this->db->group_by("pr_emp_com_info.emp_id");
 		$this->db->order_by("emp_section.sec_name_en");
-		$this->db->order_by("emp_line_num.line_name_en_en");
+		$this->db->order_by("emp_line_num.line_name_en");
 		$this->db->order_by("pr_emp_shift_log.emp_id");
 	
 		$query = $this->db->get();
@@ -1712,10 +1712,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	{
 		$firstdate 		= date("Y-m-d",strtotime($firstdate));
 		$seconddate 	= date("Y-m-d",strtotime($seconddate));
-
 		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, emp_designation.desig_name, emp_section.sec_name_en,emp_line_num.line_name_en,SUM(pr_emp_shift_log.ot_hour) as total_ot,SUM(pr_emp_shift_log.extra_ot_hour) as total_extra_ot_hour,COUNT(present_status) as total_day,SUM(pr_emp_shift_log.deduction_hour) as total_deduction_hour");
 		//,SUM(pr_emp_shift_log.ot_hour) as total_ot,SUM(pr_emp_shift_log.extra_ot_hour) as total_extra_ot_hour
-
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -3537,7 +3535,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$data = array();
 		$date_array = $this->GetDays($grid_firstdate, $grid_seconddate);
 		//print_r($date);
-		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en_en, pr_emp_com_info.emp_join_date ');
+		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_depertment');
@@ -3694,7 +3692,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	{
 		$data = array();
 		$count = 0;
-		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en_en, pr_emp_com_info.emp_join_date ');
+		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_depertment');
@@ -4636,7 +4634,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->select('
 			pr_emp_blood_groups.*,
 			emp_line_num.line_name_en_bn,
-			emp_line_num.line_name_en_en,
+			emp_line_num.line_name_en,
 			pr_emp_per_info.*,
 			emp_designation.desig_bangla,
 			emp_designation.desig_name,
