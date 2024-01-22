@@ -3615,11 +3615,13 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				$count=0;
 				foreach($date_array as $date)
 				{
-					dd($date);
+					// dd($date);
 
 					//echo "$emp_id=>$date<br>";
 
 					$present_check = $this->attendance_check($date, $emp_id, $status);
+					dd($present_check);
+
 					if($present_check == true)
 					{
 						 $count++;
