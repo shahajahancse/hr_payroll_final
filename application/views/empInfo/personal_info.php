@@ -26,7 +26,11 @@
     </div>
 
     <div id="target-div">
+		<div id='last_emp_id'>
+
+		</div>
       <div class="container-fluid">
+
 		<button onclick="emp_id_search()" class="form-control btn input-sm  btn-success" style="width: 8%;line-height: 10px !important;float: right;border-radius: 0 !important; margin-top: 7px;">Search</button>
 		<input id="employee_id" type="text"  class="form-control input-sm" placeholder="Search" style="margin-top: 8px;width:15%;float:right;border-radius: 0 !important;">
 				
