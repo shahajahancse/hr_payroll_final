@@ -118,11 +118,13 @@ class Acl_con extends CI_Controller {
 	}
 
 	function members_add(){
-		$this->db->select('pr_units.*', false);
+		$this->data['username'] = $this->data['user_data']->id_number;
+
 		$param['pr_units'] = $this->db->get('pr_units')->result();
-		$acls = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
-		$param['acls'] = $acls;
-		$this->load->view('members_add', $param);
+		$param['acls'] = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
+
+		$this->data['subview'] = 'members_add';
+        $this->load->view('layout/template', $this->data);
 	}
 
 	function members_insert(){
