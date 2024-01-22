@@ -26,9 +26,7 @@
     </div>
 
     <div id="target-div">
-		<div id='last_emp_id'>
 
-		</div>
       <div class="container-fluid">
 
 		<button onclick="emp_id_search()" class="form-control btn input-sm  btn-success" style="width: 8%;line-height: 10px !important;float: right;border-radius: 0 !important; margin-top: 7px;">Search</button>
@@ -36,6 +34,7 @@
 				
         <form id="form_id" enctype="multipart/form-data" method="post" name="creatdepartment" action="<?php echo base_url('emp_info_con/personal_info_add')?>">
 		  		<h3 style="font-weight: bold;"><?= $title ?></h3>
+				<div id='last_emp_id'></div>
 	        <hr style="margin-bottom: 0px !important;">
 	        <div style="background-color: white; padding: 15px !important;">
 	        	<div class="row">
