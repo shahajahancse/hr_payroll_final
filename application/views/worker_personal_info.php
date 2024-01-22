@@ -784,28 +784,28 @@
                         <td style="width:10%;text-align:center">100% Ask</td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td class="text-center">MÖvgt <?php echo $value->nominee_vill ?></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">e‡KqvLvZ</td>
                         <td style="width:10%"></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td class="text-center">‡cv÷t  <?php echo $value->nomi_post_name_bn ?></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">cÖwf‡W›U dvÛ</td>
                         <td style="width:10%"></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td class="text-center">_vbvt <?php echo $value->nomi_upa_name_bn ?></td>
                         <td></td>
                         <td></td>
                         <td class="text-center">exgv</td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td class="text-center">‡Rjvt <?php echo $value->nomi_dis_name_bn ?></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">`~N©Ubvi ÿwZc~iY</td>
