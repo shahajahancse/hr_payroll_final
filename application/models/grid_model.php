@@ -37,7 +37,6 @@ class Grid_model extends CI_Model{
 				emp_section.sec_name_en, 
 				emp_line_num.line_name_en, 
 				emp_line_num.line_name_bn, 
-
 				pr_grade.gr_name,
 				pay_salary_sheet.*,
 			');
@@ -87,7 +86,6 @@ class Grid_model extends CI_Model{
 				emp_section.sec_name_en, 
 				emp_line_num.line_name_en, 
 				emp_line_num.line_name_bn, 
-
 				pr_grade.gr_name,
 				pay_salary_sheet_com.*,
 			');
@@ -137,7 +135,6 @@ class Grid_model extends CI_Model{
 				emp_section.sec_name_en, 
 				emp_line_num.line_name_en, 
 				emp_line_num.line_name_bn, 
-
 				pr_grade.gr_name,
 				pay_salary_sheet.*,
 			');
@@ -1769,10 +1766,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	{
 		$firstdate 		= date("Y-m-d",strtotime($firstdate));
 		$seconddate 	= date("Y-m-d",strtotime($seconddate));
-
 		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, emp_designation.desig_name, emp_section.sec_name_en,emp_line_num.line_name_en,SUM(pr_emp_shift_log.ot_hour) as total_ot,SUM(pr_emp_shift_log.extra_ot_hour) as total_extra_ot_hour,COUNT(present_status) as total_day,SUM(pr_emp_shift_log.deduction_hour) as total_deduction_hour");
 		//,SUM(pr_emp_shift_log.ot_hour) as total_ot,SUM(pr_emp_shift_log.extra_ot_hour) as total_extra_ot_hour
-
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
