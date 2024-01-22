@@ -3586,10 +3586,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
 	{
-		dd('hello');
 		$data = array();
 		$date_array = $this->GetDays($grid_firstdate, $grid_seconddate);
-		//print_r($date);
 		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
@@ -3608,6 +3606,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
 			$this->db->order_by("emp_section.sec_name_en");
 			$query1 = $this->db->get();
+			dd($query1->result_array());
 
 			foreach($query1->result_array() as $rows)
 			{
