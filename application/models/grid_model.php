@@ -3013,7 +3013,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$day   = trim(substr($date,8,2));
 		$date_field = "date_$day";
 		$att_month = $year."-".$month."-00";
-		// dd($att_month);
+		dd($att_month);
 
 		$this->db->select($date_field);
 		$this->db->where("emp_id", $emp_id);
