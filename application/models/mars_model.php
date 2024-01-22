@@ -1,15 +1,287 @@
 <?php
 class Mars_model extends CI_Model{
-	
-	
+
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->model('common_model');
-		
+
 		/* Standard Libraries */
 	}
-	
+
+	// 29/10/23  shahajahan
+	function dashboard_summary($report_date, $unit_id)
+	{
+
+		$data = array();
+		if (empty($unit_id)) {
+			$unit_id = 1;
+		}
+		$all_id = get_all_emp_id(array(1,2), $unit_id);
+	 	$data = $this->weekly_attendance_summary($report_date,$all_id);
+
+	 	$data['monthly_join_id'] = $this->monthly_join_emp($report_date);
+		$data['monthly_resign_id'] = $this->monthly_resign_emp($report_date);
+		$data['monthly_left_id'] = $this->monthly_left_emp($report_date);
+
+		$lm_expense = $this->last_month_expenses($report_date);
+		$data['salary'] = $lm_expense->net_pay;
+		$data['ot'] 	= $lm_expense->ot_amount + $lm_expense->eot_amount;
+		$data['att_bonus'] = $lm_expense->att_bonus;
+
+		$attendance_summary = $this->attendance_summary($report_date, $all_id);
+
+		$data['all_emp'] = $attendance_summary['all_emp'];
+		$data['all_present'] = $attendance_summary['all_present'];
+		$data['all_absent'] = $attendance_summary['all_absent'];
+		$data['all_male'] = $attendance_summary['all_male'];
+		$data['all_female'] = $attendance_summary['all_female'];
+		$data['all_late'] = $attendance_summary['all_late'];
+		$data['all_leave'] = $attendance_summary['all_leave']; 
+
+		return $data;
+	}
+
+	function weekly_attendance_summary($report_date = null, $all_emp_id = null)
+	{
+		$data = array();
+		$date_1 = date('Y-m-d',strtotime($report_date));
+		$day_1 = date('D', strtotime($date_1));
+		$data['day_1'] = $day_1;
+
+		$date_2 = date('Y-m-d',strtotime('-1 day',strtotime($report_date)));
+		$day_2 = date('D', strtotime($date_2));
+		$data['day_2'] = $day_2;
+
+		$date_3 = date('Y-m-d',strtotime('-2 day',strtotime($report_date)));
+		$day_3 = date('D', strtotime($date_3));
+		$data['day_3'] = $day_3;
+
+		$date_4 = date('Y-m-d',strtotime('-3 day',strtotime($report_date)));
+		$day_4 = date('D', strtotime($date_4));
+		$data['day_4'] = $day_4;
+
+		$date_5 = date('Y-m-d',strtotime('-4 day',strtotime($report_date)));
+		$day_5 = date('D', strtotime($date_5));
+		$data['day_5'] = $day_5;
+
+		$date_6 = date('Y-m-d',strtotime('-5 day',strtotime($report_date)));
+		$day_6 = date('D', strtotime($date_6));
+		$data['day_6'] = $day_6;
+
+		$date_7 = date('Y-m-d',strtotime('-6 day',strtotime($report_date)));
+		$day_7 = date('D', strtotime($date_7));
+		$data['day_7'] = $day_7;
+
+
+		$this->db->distinct();
+		$this->db->select("
+				SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+				SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+				SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ) AS leaves,
+				SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS offday,
+				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+			");
+		$this->db->from("pr_emp_shift_log");
+		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date", $date_2);
+		$data_2 = $this->db->get()->row();
+		$data['all_present_2'] = $data_2->present;
+		$data['all_absent_2'] = $data_2->absent;
+		$data['all_leave_2'] = $data_2->leaves;
+		$data['all_offday_2'] = $data_2->offday;
+		$data['all_holiday_2'] = $data_2->holiday;
+
+
+		$this->db->distinct();
+		$this->db->select("
+				SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+				SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+				SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ) AS leaves,
+				SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS offday,
+				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+			");
+		$this->db->from("pr_emp_shift_log");
+		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date", $date_3);
+		$data_3 = $this->db->get()->row();
+		$data['all_present_3'] = $data_3->present;
+		$data['all_absent_3'] = $data_3->absent;
+		$data['all_leave_3'] = $data_3->leaves;
+		$data['all_offday_3'] = $data_3->offday;
+		$data['all_holiday_3'] = $data_3->holiday;
+
+
+		$this->db->distinct();
+		$this->db->select("
+				SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+				SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+				SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ) AS leaves,
+				SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS offday,
+				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+			");
+		$this->db->from("pr_emp_shift_log");
+		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date", $date_4);
+		$data_4 = $this->db->get()->row();
+		$data['all_present_4'] = $data_4->present;
+		$data['all_absent_4'] = $data_4->absent;
+		$data['all_leave_4'] = $data_4->leaves;
+		$data['all_offday_4'] = $data_4->offday;
+		$data['all_holiday_4'] = $data_4->holiday;
+
+
+		$this->db->distinct();
+		$this->db->select("
+				SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+				SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+				SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ) AS leaves,
+				SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS offday,
+				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+			");
+		$this->db->from("pr_emp_shift_log");
+		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date", $date_5);
+		$data_5 = $this->db->get()->row();
+		$data['all_present_5'] = $data_5->present;
+		$data['all_absent_5'] = $data_5->absent;
+		$data['all_leave_5'] = $data_5->leaves;
+		$data['all_offday_5'] = $data_5->offday;
+		$data['all_holiday_5'] = $data_5->holiday;
+
+
+		$this->db->distinct();
+		$this->db->select("
+				SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+				SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+				SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ) AS leaves,
+				SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS offday,
+				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+			");
+		$this->db->from("pr_emp_shift_log");
+		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date", $date_6);
+		$data_6 = $this->db->get()->row();
+		$data['all_present_6'] = $data_6->present;
+		$data['all_absent_6'] = $data_6->absent;
+		$data['all_leave_6'] = $data_6->leaves;
+		$data['all_offday_6'] = $data_6->offday;
+		$data['all_holiday_6'] = $data_6->holiday;
+
+
+		$this->db->distinct();
+		$this->db->select("
+				SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+				SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+				SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ) AS leaves,
+				SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS offday,
+				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+			");
+		$this->db->from("pr_emp_shift_log");
+		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date", $date_7);
+		$data_7 = $this->db->get()->row();
+		$data['all_present_7'] = $data_7->present;
+		$data['all_absent_7'] = $data_7->absent;
+		$data['all_leave_7'] = $data_7->leaves;
+		$data['all_offday_7'] = $data_7->offday;
+		$data['all_holiday_7'] = $data_7->holiday;
+
+	    return $data;
+	}
+
+	function last_month_expenses($salary_month)
+	{
+		$last_salary_month = date('Y-m-d',strtotime('-1 month',strtotime($salary_month)));
+		$this->db->select("
+				SUM(net_pay) AS net_pay,
+				SUM(ot_amount) AS ot_amount,
+				SUM(eot_amount) AS eot_amount,
+				SUM(att_bonus) AS att_bonus,
+			");
+		$this->db->from("pay_salary_sheet");
+		$this->db->like("salary_month", $last_salary_month);
+		return $this->db->get()->row();
+	}
+
+	function attendance_summary($report_date, $all_emp_id)
+	{
+
+		$data =array();
+
+		$this->db->select('pr_emp_com_info.emp_id');
+		$this->db->from("pr_emp_shift_log");
+		$this->db->from("pr_emp_com_info");
+
+		$this->db->where("pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id");
+		$this->db->where("pr_emp_shift_log.shift_log_date", $report_date);
+		$this->db->where_in("pr_emp_com_info.emp_id", $all_emp_id);
+		$this->db->where_not_in('pr_emp_shift_log.present_status', array('H','W'));
+		$this->db->group_by('pr_emp_com_info.emp_id');
+		$query = $this->db->get();
+
+
+		if($query->num_rows() == 0)
+		{
+			$data['all_emp'] 		= 0;
+			$data['all_present'] 	= 0;
+			$data['all_leave'] 		= 0;
+			$data['all_absent'] 	= 0;
+			$data['all_late'] 		= 0;
+			$data['all_male'] 		= 0;
+			$data['all_female'] 	= 0;
+		}
+		else
+		{
+			$data['all_emp'] = $query->num_rows();
+			$all_emp_id = $query->result_array();
+			$it =  new RecursiveIteratorIterator(new RecursiveArrayIterator($all_emp_id));
+			$all_emp_id = iterator_to_array($it, false);
+
+			$this->db->distinct();
+			$this->db->select("
+					SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+					SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+					SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ) AS leaves,
+					SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS offday,
+					SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+					SUM(CASE WHEN late_status    = '1' THEN 1 ELSE 0 END ) AS late_status,
+				");
+			$this->db->from("pr_emp_shift_log");
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+			$this->db->where("pr_emp_shift_log.shift_log_date", $report_date);
+			$atten_data = $this->db->get()->row();
+
+			$data['all_present'] 	= $atten_data->present;
+			$data['all_absent'] 	= $atten_data->absent;
+			$data['all_leave'] 		= $atten_data->leaves;
+			$data['all_late'] 		= $atten_data->late_status;
+
+
+			$this->db->select("pr_emp_per_info.emp_id");
+			$this->db->from('pr_emp_per_info');
+			$this->db->where_in("pr_emp_per_info.emp_id", $all_emp_id);
+			$this->db->where("pr_emp_per_info.gender", 'Male');
+			$data['all_male'] = $this->db->get()->num_rows();
+			$data['all_female'] = $data['all_emp'] - $data['all_male'];
+		}
+		return $data;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	// old code
+
+
 	function department_attendance_summary($report_date, $unit_id)
 	{
 		$query = $this->db->select()->where('unit_id', $unit_id)->order_by('dept_name')->get('pr_dept');
