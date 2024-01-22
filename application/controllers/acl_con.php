@@ -158,7 +158,7 @@ class Acl_con extends CI_Controller {
 
 	function members_edit($id){
 		$this->db->select('members.*, members.unit_name as u_id, pr_units.unit_name', false);
-		$this->db->join('pr_units', 'pr_units.pr_units_id = members.unit_name', 'left');
+		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
         $this->db->where('members.id', $id);
 		$this->data['members'] = $this->db->get('members')->row();
 
@@ -270,7 +270,7 @@ class Acl_con extends CI_Controller {
 		//$crud->set_relation_n_n('ACL', 'members_acl_level', 'member_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
 		if($get_session_user_pr_units != 0)
 		{
-			$crud->set_relation('unit_name' , 'pr_units','unit_name',array('pr_units_id' => $get_session_user_pr_units) );
+			$crud->set_relation('unit_name' , 'pr_units','unit_name',array('unit_id' => $get_session_user_pr_units) );
 		}
 		else
 		{
