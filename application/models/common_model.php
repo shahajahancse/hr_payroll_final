@@ -76,6 +76,7 @@ class Common_model extends CI_Model{
 	}
 
 	function get_group_wise_attendance($date, $unit_id, $array){
+		dd($array['Operator']);
 		$this->db->select("
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
 	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS present,
@@ -92,8 +93,8 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.id", $array['Operator']);
-		$this->db->group_by("num.id");
+		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->group_by("log.shift_log_date");
 		$d['Operator'] = $this->db->get()->row();
 
 		$this->db->select("
@@ -112,8 +113,8 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.id", $array['Helper']);
-		$this->db->group_by("num.id");
+		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->group_by("log.shift_log_date");
 		$d['Helper'] = $this->db->get()->row();
 		
 		$this->db->select("
@@ -132,8 +133,8 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.id", $array['Iron Man']);
-		$this->db->group_by("num.id");
+		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->group_by("log.shift_log_date");
 		$d['Iron Man'] = $this->db->get()->row();
 		
 		$this->db->select("
@@ -152,8 +153,8 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.id", $array['Line Chief']);
-		$this->db->group_by("num.id");
+		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->group_by("log.shift_log_date");
 		$d['Line Chief'] = $this->db->get()->row();
 		
 		$this->db->select("
@@ -172,8 +173,8 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.id", $array['F.Q.I']);
-		$this->db->group_by("num.id");
+		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->group_by("log.shift_log_date");
 		$d['F.Q.I'] = $this->db->get()->row();
 		
 		$this->db->select("
@@ -192,8 +193,8 @@ class Common_model extends CI_Model{
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.id", $array['Supervisor']);
-		$this->db->group_by("num.id");
+		$this->db->where_in("com.emp_desi_id", $array['Operator']);
+		$this->db->group_by("log.shift_log_date");
 		$d['Supervisor'] = $this->db->get()->row();
 		return $d;
 	}
