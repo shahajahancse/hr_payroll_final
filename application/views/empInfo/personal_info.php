@@ -35,7 +35,7 @@
 		<input id="employee_id" type="text"  class="form-control input-sm" placeholder="Search" style="margin-top: 8px;width:15%;float:right;border-radius: 0 !important;">
 		
         <form id="form_id" enctype="multipart/form-data" method="post" name="creatdepartment" action="<?php echo base_url('emp_info_con/personal_info_add')?>">
-		  		<h3 style="font-weight: bold; width:fit-content"><?= $title ?> </h3> 		<div id='last_emp_id'></div>
+		  		<h3 style="font-weight: bold; width:fit-content"><?= $title ?> <span class="text-center" id='last_emp_id'></span></h3> 		
 
 	        <hr style="margin-bottom: 0px !important;">
 	        <div style="background-color: white; padding: 15px !important;">
