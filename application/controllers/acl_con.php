@@ -120,7 +120,7 @@ class Acl_con extends CI_Controller {
 	function members_add(){
 		$this->db->select('pr_units.*', false);
 		$param['pr_units'] = $this->db->get('pr_units')->result();
-		$acls = $this->db->select('cl.*')->get('members_acl_list as cl')->result();
+		$acls = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
 		$param['acls'] = $acls;
 		$this->load->view('members_add', $param);
 	}
@@ -162,7 +162,7 @@ class Acl_con extends CI_Controller {
 
 		$acls = $this->db->select('cl.*, mcl.acl_id')
 							->join('members_acl_level mcl', 'cl.id = mcl.acl_id and mcl.username_id = "'.$id.'"', 'left')
-							->get('members_acl_list as cl')->result();
+							->get('member_acl_list as cl')->result();
 
 		$this->data['acls'] = $acls;
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -265,7 +265,7 @@ class Acl_con extends CI_Controller {
 			// echo "<pre>"; print_r($data); exit;
 		$crud->set_subject('User');
 
-		//$crud->set_relation_n_n('ACL', 'members_acl_level', 'members_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
+		//$crud->set_relation_n_n('ACL', 'members_acl_level', 'member_acl_list', 'username_id', 'acl_id', 'acl_name','priority');
 		if($get_session_user_pr_units != 0)
 		{
 			$crud->set_relation('unit_name' , 'pr_units','unit_name',array('pr_units_id' => $get_session_user_pr_units) );
