@@ -366,7 +366,6 @@ function daily_logout_report()
 // attendance Report 
 function grid_continuous_present_report()
 {
-	alert ('ok'); return;
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate =='')
 	{
