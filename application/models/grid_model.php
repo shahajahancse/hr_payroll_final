@@ -427,8 +427,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
-		$data['results'] = $this->db->get()->result();
-		return $all_emp_id;
+		return $this->db->get()->result();
 	}
 		
 
