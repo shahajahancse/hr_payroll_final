@@ -99,7 +99,7 @@ class Processdb extends CI_Model{
 			'exp_factory_name'	=> $this->input->post('exp_factory_name'),
 			'exp_duration'		=> $this->input->post('exp_duration'),
 
-			'exp_designation'	=> $this->input->post('exp_designation'),
+			'exp_dasignation'	=> $this->input->post('exp_dasignation'),
 			'personal_mobile'	=> $this->input->post('personal_mobile'),
 			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
 		);
@@ -763,7 +763,7 @@ class Processdb extends CI_Model{
 			'exp_factory_name'	=> $this->input->post('exp_factory_name'),
 			'exp_duration'		=> $this->input->post('exp_duration'),
 
-			'exp_designation'	=> $this->input->post('exp_designation'),
+			'exp_designation'	=> $this->input->post('exp_dasignation'),
 			'personal_mobile'	=> $this->input->post('personal_mobile'),
 			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
 		);
