@@ -36,8 +36,7 @@ class Grid_model extends CI_Model{
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
 				emp_line_num.line_name_en, 
-				emp_line_num.line_name_en_bn, 
-
+				emp_line_num.line_name_bn, 
 				pr_grade.gr_name,
 				pay_salary_sheet.*,
 			');
@@ -86,8 +85,7 @@ class Grid_model extends CI_Model{
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
 				emp_line_num.line_name_en, 
-				emp_line_num.line_name_en_bn, 
-
+				emp_line_num.line_name_bn, 
 				pr_grade.gr_name,
 				pay_salary_sheet_com.*,
 			');
@@ -136,8 +134,7 @@ class Grid_model extends CI_Model{
 				emp_section.sec_name_bn, 
 				emp_section.sec_name_en, 
 				emp_line_num.line_name_en, 
-				emp_line_num.line_name_en_bn, 
-
+				emp_line_num.line_name_bn, 
 				pr_grade.gr_name,
 				pay_salary_sheet.*,
 			');
@@ -335,7 +332,64 @@ class Grid_model extends CI_Model{
 		return $this->db->get()->result();
 	}
 
+	function daily_attendance_summary($date, $unit_id)
+	{
 
+		$results = $this->db->where('unit_id', $unit_id)->order_by('id')->get('emp_group_dasignation')->result();
+		$data = array();
+		foreach ($results as $key => $r) {
+			$data[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
+		}
+
+		$this->db->select("
+					num.id as line_id, num.line_name_en, num.line_name_bn,
+	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS all_emp,
+	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
+	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS all_absent,
+	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS all_leave,
+	                SUM( CASE WHEN log.late_status    = 1 THEN 1 ELSE 0 END ) AS all_late,
+	                SUM( CASE WHEN per.emp_sex 		  = 1 THEN 1 ELSE 0 END ) AS all_male,
+	                SUM( CASE WHEN per.emp_sex 		  = 2 THEN 1 ELSE 0 END ) AS all_female,
+				");
+
+		$this->db->from("pr_emp_shift_log as log");
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('emp_line_num as num');
+		$this->db->from('pr_emp_per_info as per');
+
+		$this->db->where("log.emp_id = com.id");
+		$this->db->where("per.emp_id = com.emp_id");
+		$this->db->where("num.id = com.emp_line_id");
+
+		$this->db->where("com.unit_id", $unit_id);
+		$this->db->where("log.shift_log_date", $date);
+		$this->db->where("log.in_time !=", "00:00:00");
+		$this->db->where("log.present_status !=", "W");
+		$this->db->where_not_in("com.emp_cat_id", array(2,3,4));
+
+		$this->db->group_by("num.id");
+		$this->db->order_by("num.line_name_en");
+		$data['results'] = $this->db->get()->result();
+		
+		/*foreach ($data['results'] as $key => $row) {
+			
+		}*/
+
+		dd($data);
+		
+	}
+
+
+	function get_group_dasig_id($id, $unit_id)	
+	{
+		$this->db->select('id')->where('group_id', $id)->where('unit_id', $unit_id);
+		$rows = $this->db->get('emp_designation')->result();
+		$data = array();
+		foreach ($rows as $key => $r) {
+			$data[$key] = $r->id;
+		}
+		return $data;
+	}
 
 
 		
@@ -4633,7 +4687,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		// dd($grid_emp_id);
 		$this->db->select('
 			pr_emp_blood_groups.*,
-			emp_line_num.line_name_en_bn,
+			emp_line_num.line_name_bn,
 			emp_line_num.line_name_en,
 			pr_emp_per_info.*,
 			emp_designation.desig_bangla,
@@ -8480,10 +8534,10 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		}
 	}
 
-	function grid_emp_job_application($grid_emp_id){
+function grid_emp_job_application($grid_emp_id){
 		// dd($grid_emp_id);
 		$this->db->select('
-		pr_emp_per_info.* ,
+		pr_emp_per_info.*,
 		pr_emp_sex.sex_name,
 		pr_emp_com_info.emp_join_date, 
 		pr_emp_blood_groups.blood_name,
@@ -8494,6 +8548,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		emp_depertment.dept_bangla, 
 		emp_section.sec_name_en, 
 		emp_section.sec_name_bn, 
+		emp_line_num.line_name_bn, 
 		pr_religions.religion_id,
 		per_dis.name_bn as dis_name_bn,
 		per_upa.name_bn as upa_name_bn,
@@ -8501,6 +8556,11 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		pre_dis.name_bn as pre_dis_name_bn,
 		pre_upa.name_bn as pre_upa_name_bn,
 		pre_post.name_bn as pre_post_name_bn,
+
+		ref_dis.name_bn as ref_dis_name_bn,
+		ref_upa.name_bn as ref_upa_name_bn,
+		ref_post.name_bn as ref_post_name_bn,
+		
 		pr_emp_edu.*,
 		pr_emp_skill.*,
 		pr_emp_com_info.emp_sal_gra_id as grade,
@@ -8514,6 +8574,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
 	$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 	$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+	$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
 	$this->db->join('pr_religions', 'pr_emp_per_info.emp_religion = pr_religions.religion_id');
 	$this->db->join('pr_emp_sex', 'pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
 	$this->db->join('pr_emp_edu', 'pr_emp_com_info.emp_id = pr_emp_edu.emp_id');
@@ -8522,9 +8583,15 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
 	$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
 	$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
+
 	$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
 	$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
 	$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
+
+	$this->db->join('emp_districts as ref_dis', 'pr_emp_per_info.pre_district = ref_dis.id', 'LEFT');
+	$this->db->join('emp_upazilas as ref_upa', 'pr_emp_per_info.pre_thana = ref_upa.id', 'LEFT');
+	$this->db->join('emp_post_offices as ref_post', 'pr_emp_per_info.pre_post = ref_post.id', 'LEFT');
+
 	$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 	// $this->db->order_by('pr_emp_com_info.emp_id');
 	$query = $this->db->get();

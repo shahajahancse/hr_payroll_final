@@ -264,8 +264,8 @@ class Attn_process_model extends CI_Model{
 				$data = array(
 					'in_time' 			=> $in_time,
 					'out_time' 			=> $out_time,
-					'ot_hour' 			=> $ot_hour,
-					'extra_ot_hour' 	=> $eot_hour,
+					'ot' 				=> $ot_hour,
+					'eot' 				=> $eot_hour,
 					'ot_eot_4pm' 		=> $ot_eot_4pm,
 					'ot_eot_12am' 		=> $ot_eot_12am,
 					'deduction_hour' 	=> $deduction_hour,
@@ -274,7 +274,8 @@ class Attn_process_model extends CI_Model{
 					'tiffin_allo' 		=> 0,
 					'night_allo' 		=> $night_allo,
 					'holiday_allo'	    => $holiday_allo,
-					'weekly_allo'		=> $weekly_allo
+					'weekly_allo'		=> $weekly_allo,
+					'unit_id'			=> $unit,
 				);
 
 				$this->db->where('shift_log_date', $process_date);
@@ -458,7 +459,7 @@ class Attn_process_model extends CI_Model{
 	function check_weekend($emp_id, $att_date)
 	{
 		$this->db->select("emp_id");
-		$this->db->from("pr_attn_work_off");
+		$this->db->from("attn_work_off");
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("work_off_date", $att_date);
 		$query = $this->db->get();
@@ -476,7 +477,7 @@ class Attn_process_model extends CI_Model{
 	function check_holiday($id, $att_date)
 	{
 		$this->db->select("emp_id");
-		$this->db->from("pr_attn_holiday");
+		$this->db->from("attn_holyday_off");
 		$this->db->where("emp_id", $id);
 		$this->db->where("holiday_date", $att_date);
 		$query = $this->db->get();

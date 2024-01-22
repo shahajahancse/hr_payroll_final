@@ -42,7 +42,7 @@
     </div>
   </div>
   <div id="add_form" class="row tablebox">
-    <label for="user_id"><?= $title ?></label>
+    <label for="user_id"><?php echo $title .' ( '. $row->name_en .' )'; ?></label>
   </div>
 
 
@@ -57,7 +57,14 @@
                     }
                 ?>
                 <div>
-                    <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)" <?= in_array($value->id, $dasig_id)? 'checked' : ''?>> <span><?php echo $value->desig_name; ?></span>
+                    <?php if (!empty($not_match) && in_array($value->id, $not_match)) { ?>
+                        <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)"> 
+                        <span><?php echo $value->desig_name; ?></span> <span style="color: #0d14f3;">( <?= $value->name_en ?> )</span>
+                    <?php } else { ?>
+                        <input type="checkbox" onchange="check_level(<?=$value->id?>,<?=$row->id?>,<?=$row->unit_id?>)" 
+                        <?= in_array($value->id, $match)? 'checked' : ''?>> 
+                        <span><?php echo $value->desig_name; ?></span>
+                    <?php } ?>
                 </div>
                 <?php $i++; } ?>
             </div>

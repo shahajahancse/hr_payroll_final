@@ -97,28 +97,28 @@
         </div>
 
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Designation Name English</label>
                     <input type="text" name="desig_name" value="<?= $emp_designation->desig_name ?>" placeholder="Designation Name" class="form-control">
                     <?=(isset($failuer['desig_name'])) ? '<div class="alert alert-failuer">' . $failuer['desig_name'] . '</div>' : ''; ?>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Designation Name Bangla</label>
                     <input type="text" name="desig_bangla" value="<?= $emp_designation->desig_bangla ?>" placeholder="Designation Name Bangla" class="form-control">
                     <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
                 </div>
             </div>
-              <div class="col-md-2">
+              <div class="col-md-4">
                         <div class="form-group">
-                        <label>Set Grade</label>
-                        <select class="form-control" name="grade">
-                            <?php $grades=$this->db->get('pr_grade')->result()?>
+                        <label>Group Name</label>
+                        <select class="form-control" name="group_id">
+                            <?php $groups = $this->common_model->get_group_name(); ?>
                             <option value="">Select</option>
-                            <?php foreach($grades as $grade){?>
-                            <option value="<?= $grade->gr_id ?>" <?php echo ($emp_designation->grade_id == $grade->gr_id) ? 'selected':''?> ><?php echo $grade->gr_name?></option>
+                            <?php foreach($groups as $group){?>
+                            <option value="<?= $group->id ?>" <?php echo ($emp_designation->group_id == $group->id) ? 'selected':''?> ><?php echo $group->name_en .' >> '. $group->unit_name ?></option>
                         <?php }?>
                         </select>
                         </div>

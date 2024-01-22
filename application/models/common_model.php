@@ -67,6 +67,17 @@ class Common_model extends CI_Model{
 		return $this->db->where('com.unit_id', $id)->get()->result();
 	}
 
+	function get_group_name(){
+		$this->db->select("emp_group_dasignation.*, pr_units.unit_name");
+		$this->db->from("emp_group_dasignation");
+		$this->db->from("pr_units");
+		$this->db->where('pr_units.unit_id = emp_group_dasignation.unit_id');
+		return $this->db->get()->result();
+	}
+
+
+
+
 
 
 

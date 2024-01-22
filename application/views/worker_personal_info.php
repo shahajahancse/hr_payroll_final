@@ -6,6 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <style>
+            .table td{
+                padding: 2px;
+            }
             p{
                 margin-bottom: 4px;
             }
@@ -13,15 +16,32 @@
             .break_page{
                 page-break-before: always;
                 } 
+            body{
+                text-align: justify;
+
+            }
+       
+            img{
+                width: 30%;
+            }    
             }
             .title_box{
                 display: flex;
                 flex-direction: column;
                 border: 2px solid black;
-                width: 140px;
+                width: 260px;
                 align-items: center;
                 margin: 0 auto;
              }
+                  p{
+                font-size:18px
+            }
+            table th,td {
+                font-size:18px;
+            }
+            .potovumi{
+                font-size: 20px;
+            }
         </style>
     </head>
 
@@ -29,6 +49,7 @@
         <!-- niog -->
         <?php 
             // dd($values);
+            $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;
             foreach($values as $value){
 
             
@@ -39,24 +60,29 @@
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
             </div>
-            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+            <div class="d-flex mt-3">
                 <div class="col-md-2 ">
-                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-7">
-                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
-                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h3>
                 </div>
-            </div>
+                    <div class="col-md-3"></div>
+                    <br>
+                </div>
+                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                </div>
+            <div>
             <div class="d-flex mt-2">
-                <div class="col-md-4 ">
-                    <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL :</span></p>
+                <div class="col-md-4">
+                    <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</span></p>
                 </div>
-                <div class="col-md-4 ">
-                    <h3 class="text-center"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">wb‡qvM cÎ</b></h3>
+                <div class="col-md-4">
+                    <h3 class="text-center"><b style="border: 2px solid black;padding-left:4px;padding-right:6px;">wb‡qvM cÎ</b></h3>
                 </div>
-                <div class="col-md-4 ">
-                    <p class="text-center">kªwgK Kwc</p>
+                <div class="col-md-4">
+                    <p class="text-right">kªwgK Kwc</p>
                 </div>
             </div>
             <div style="margin-left: 2px">
@@ -66,25 +92,25 @@
                         <tr>
                             <th>bvg </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"> <?php echo $value->name_bn?> </span></td>
+                            <td><span style="font-size:14px"> <?php echo $value->name_bn?> </span></td>
                         </tr>
                         <tr>
                             <th>eZ©gvb wVKvbv </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
+                            <td><span style="font-size:14px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
                         </tr>
                         <tr>
                             <th>¯’vqx wVKvbv </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> </td>
+                            <td><span style="font-size:14px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> </td>
                         </tr>
                     </table>
                 </div>
                 <div class="col-md-12">
                     <p>
-                        <span>Rbve,</span><br>
+                        <span><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</span><br>
                         Avcbvi <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs Zvwi†Li Av‡e`b cÎ Ges cieZx©Kv‡j M„nxZ mv¶vrKvi / cix¶vi cwi‡cÖw¶‡Z Avcbv‡K
-                        <?php echo "<span style='font-size:12px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:12px'>".$value->sec_name_bn."</span>"?> ,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
+                        <?php echo "<span style='font-size:14px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:14px'>".$value->sec_name_bn."</span>"?> ,<span style='font-size:14px'>লাইনt <?php echo $value->line_name_bn?> </span>,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
                     </p>
                     <p style="font-size:20px !important"><b>kZv©ejx :</b></p>
                     <p>1. Avcbvi PvKzixi cÖ_g wZb gvm cÖ‡ekb wnmv‡e Mb¨ nB‡e hvnv D³ cÖ‡ekb †gqv`v‡šÍ Avcbvi Kg© g~j¨vqb ‡k‡l
@@ -102,37 +128,38 @@
                         <tr>
                             <th>g~j gRyix</th>
                             <td>t</td>
-                            <td> <?php 
-                            
-                             $basic = round(($value->salary -(1250+450+750)) / 1.5);
-                             echo $basic;
-                            
-                            ?> UvKv</td>
+                            <td> <?php $basic = round(($value->salary -(1250+450+750)) / 1.5); echo $basic;?></td>
+                            <td>UvKv</td>
                         </tr>
                         <tr>
                             <th>evox fvov (g~j gRyixi 50%)</th>
                             <td>t</td>
-                            <td> <?php echo round($basic/2)?> UvKv</td>
+                            <td> <?php echo round($basic/2)?> </td>
+                            <td>UvKv</td>
                         </tr>
                         <tr>
                             <th>wPwKrmv fvZv</th>
                             <td>t</td>
-                            <td> 750 UvKv</td>
+                            <td> 750 </td>
+                            <td>UvKv</td>
                         </tr>
                         <tr>
                             <th>hvZvqvZ fvZv</th>
                             <td>t</td>
-                            <td> 450 UvKv</td>
+                            <td> 450</td>
+                            <td>UvKv</td>
                         </tr>
                         <tr style="border-bottom:1px solid black">
                             <th>Lv`¨ fvZv</th>
                             <td>t</td>
-                            <td> 1250 UvKv</td>
+                            <td> 1250</td>
+                            <td>UvKv</td>
                         </tr>
                         <tr>
                             <th>gvwmK me©‡gvU</th>
                             <th>t</td>
-                            <th> <span><?php echo $value->salary?></span> UvKv</th>
+                            <th> <span><?php echo $value->salary?></span></th>
+                            <th> UvKv</th>
                             <!-- <th>K_vq : (†lvj nvRvi cvuPkZ UvKv|)</th> -->
                         </tr>
                     </table>
@@ -154,7 +181,7 @@
                     <p>‰bwgwËK QzwU - 10 (`k) w`b (c~b© †eZbmn)</p>
                     <p>cxov QzwU - 14 (†PŠÏ) w`b (c~b© †eZbmn)</p>
                     <p>Drme QzwU - 12 (evi) w`b (c~b© †eZbmn)</p>
-                    <p>evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b.Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
+                    <p>evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
                     <p>cÖmywZ Kj¨vb QzwU - 16 (‡lvj) mßvn, cÖm‡ei m¤¢ve¨ ZvwiL Gi c~‡e© AÎ cÖwZôv‡b Aby¨b 06 (Qq) gvm wbiwew”Qbœ
                         fv‡e Kg©iZ _vK‡j|</p>
             
@@ -190,10 +217,10 @@
                     <p>........................</p>
                     <p>KZ©„c‡ÿi ¯^vÿi</p>
                 </div>
-                <div class="col-md-6 align-self-end justify-content-end">
+                <div class="col-md-6 text-right">
                     <p>¯^vÿi t ................ √.......................</p>
-                    <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
-                    <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                    <p>bvg t <span style="font-size:14px"><?php echo $value->name_bn?></span></p>
+                    <p>c`ex t <span style="font-size:14px"><?php echo $value->desig_bangla?></span></p>
                 </div>
             </div>
         
@@ -205,24 +232,29 @@
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
             </div>
-            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
-                <div class="col-md-2 ">
-                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+            <div class="d-flex mt-3">
+                <div class="col-md-2">
+                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-7">
-                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
-                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h3>
                 </div>
-            </div>
+                    <div class="col-md-3"></div>
+                    <br>
+                </div>
+                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                </div>
+            <div>
             <div class="d-flex mt-2">
-                <div class="col-md-3 ">
-                    <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL :</span></p>
+                <div class="col-md-4 ">
+                    <p>myÎ : GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</span></p>
                 </div>
-                <div class="col-md-6 ">
+                <div class="col-md-4">
                     <h3 class="text-center"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">wb‡qvM cÎ</b></h3>
                 </div>
-                <div class="col-md-3 ">
-                    <p class="text-center">Awdm Kwc</p>
+                <div class="col-md-4">
+                    <p class="text-right">Awdm Kwc</p>
                 </div>
             </div>
 
@@ -233,25 +265,25 @@
                         <tr>
                             <th>bvg </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"> <?php echo $value->name_bn?> </span></td>
+                            <td><span style="font-size:14px"> <?php echo $value->name_bn?> </span></td>
                         </tr>
                         <tr>
                             <th>eZ©gvb wVKvbv </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
+                            <td><span style="font-size:14px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
                         </tr>
                         <tr>
                             <th>¯’vqx wVKvbv </th>
                             <td> t </td>
-                            <td><span style="font-size:12px"><?php echo $value->per_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span></td>
+                            <td><span style="font-size:14px"><?php echo $value->per_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span></td>
                         </tr>
                     </table>
                 </div>
                 <div class="col-md-12">
                     <p>
-                        <span>Rbve,</span><br>
+                        <span><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</span><br>
                         Avcbvi <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs Zvwi†Li Av‡e`b cÎ Ges cieZx©Kv‡j M„nxZ mv¶vrKvi / cix¶vi cwi‡cÖw¶‡Z Avcbv‡K
-                        <?php echo "<span style='font-size:12px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:12px'>".$value->sec_name_bn."</span>"?> ,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
+                        <?php echo "<span style='font-size:14px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:14px'>".$value->sec_name_bn."</span>"?> ,<span style='font-size:14px'>লাইনt <?php echo $value->line_name_bn?> </span>,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
                     </p>
                     <p style="font-size:20px !important"><b>kZv©ejx :</b></p>
                     <p>1. Avcbvi PvKzixi cÖ_g wZb gvm cÖ‡ekb wnmv‡e Mb¨ nB‡e hvnv D³ cÖ‡ekb †gqv`v‡šÍ Avcbvi Kg© g~j¨vqb ‡k‡l
@@ -271,37 +303,38 @@
                         <tr>
                             <th>g~j gRyix</th>
                             <td>t</td>
-                            <td> <?php 
-                            
-                             $basic = round(($value->salary -(1250+450+750)) / 1.5);
-                             echo $basic;
-                            
-                            ?> UvKv</td>
+                            <td> <?php $basic = round(($value->salary -(1250+450+750)) / 1.5);echo $basic;?></td>
+                            <td>UvKv</td>
                         </tr>
                         <tr>
                             <th>evox fvov (g~j gRyixi 50%)</th>
                             <td>t</td>
-                            <td> <?php echo round($basic/2)?> UvKv</td>
+                            <td> <?php echo round($basic/2)?></td>
+                            <td>UvKv</td>
                         </tr>
                         <tr>
                             <th>wPwKrmv fvZv</th>
                             <td>t</td>
-                            <td> 750 UvKv</td>
+                            <td> 750</td>
+                            <td>UvKv</td>
                         </tr>
                         <tr>
                             <th>hvZvqvZ fvZv</th>
                             <td>t</td>
-                            <td> 450 UvKv</td>
+                            <td> 450</td>
+                            <td>UvKv</td>
                         </tr>
                         <tr style="border-bottom:1px solid black">
                             <th>Lv`¨ fvZv</th>
                             <td>t</td>
-                            <td> 1250 UvKv</td>
+                            <td> 1250</td>
+                            <td>UvKv</td>
                         </tr>
                         <tr>
                             <th>gvwmK me©‡gvU</th>
                             <th>t</td>
-                            <th> <span><?php echo $value->salary?></span> UvKv</th>
+                            <th> <span><?php echo $value->salary?></span></th>
+                            <th>UvKv</th>
                             <!-- <th>K_vq : (†lvj nvRvi cvuPkZ UvKv|)</th> -->
                         </tr>
                     </table>
@@ -366,16 +399,15 @@
                     <p>........................</p>
                     <p>KZ©„c‡ÿi ¯^vÿi</p>
                 </div><br>
-                <div class="col-md-6 align-self-end justify-content-end">
+                <div class="col-md-6 text-right">
                     <p>¯^vÿi t ................ √.......................</p>
-                    <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
-                    <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                    <p>bvg t <span style="font-size:14px"><?php echo $value->name_bn?></span></p>
+                    <p>c`ex t <span style="font-size:14px"><?php echo $value->desig_bangla?></span></p>
                 </div>
             </div>
         </div>
             <br>
-            <br>
-            <br>
+
         <!-- jogdan --> 
         <div class="container break_page" style="font-family:sutonnymj;">
             <div class="d-flex flex-row justify-content-between">
@@ -383,15 +415,20 @@
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/002</p>
             </div>
-            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+            <div class="d-flex mt-3">
                 <div class="col-md-2 ">
-                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-7">
-                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
-                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h3>
                 </div>
-            </div>
+                    <div class="col-md-3"></div>
+                    <br>
+                </div>
+                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                </div>
+            <div>
             <!-- <div class="row"> -->
             <h3 class="text-center mt-2"><b style="border: 2px solid black;padding-left:6px;padding-right:6px;">Kv‡R †hvM`vb cÎ</b></h3>
             <!-- </div> -->
@@ -418,10 +455,10 @@
                     <p>wVKvbv t 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
                     <p class="mt-4">welq t Kv‡R †hvM`vb cÎ</p>
         
-                    <p class="mt-4">Rbve/Rbvev,</p>
-                    <p> Avcbvi wbKU †_‡K cªvß wb‡qvM cÎ AvBwW bs <?php echo $value->emp_id?> BsZvwiL <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs Gi ‡cªwÿ‡Z Rvbv‡bv
+                    <p class="mt-4"><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
+                    <p> Avcbvi wbKU †_‡K cªvß wb‡qvM cÎ AvBwW bs <?php echo $value->emp_id?> Bs ZvwiL <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs Gi ‡cªwÿ‡Z Rvbv‡bv
                         hv‡”Q †h Avwg A`¨ <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs ZvwiL n‡Z Avcbvi wkícÖwZôv‡b Dc‡i D‡jwLZwb‡qvM c‡Îi kZ©
-                        †gvZv‡eK <span style="font-size:12px"><?php echo $value->desig_bangla?></span> c‡` †hvM`vb Kijvg|</p>
+                        †gvZv‡eK <span style="font-size:14px"><?php echo $value->desig_bangla?></span> c‡` †hvM`vb Kijvg|</p>
         
                     <p class="mt-4"> AZGe Avcbvi wbKU Av‡e`b GB †h, Avgvi `vwLjK„Z Kv‡R †hvM`vb cÎwU MÖnY K‡i evwaZ Ki‡eb|</p>
         
@@ -432,14 +469,13 @@
         
                 <div class="col-md-6">
                     <p>¯^vÿi t ................ √.......................</p>
-                    <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
-                    <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                    <p>bvg t <span style="font-size:14px"><?php echo $value->name_bn?></span></p>
+                    <p>c`ex t <span style="font-size:14px"><?php echo $value->desig_bangla?></span></p>
                 </div>
             </div>
         </div>
             <br>
-            <br>
-            <br>
+    
         <!-- potovumi -->
 
         <div class="container break_page" style=" font-family: sutonnymj;">
@@ -448,19 +484,23 @@
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/005</p>
             </div>
-            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+            <div class="d-flex mt-3">
                 <div class="col-md-2 ">
-                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-7">
-                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
-                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h3>
                 </div>
-            </div>
-            
+                    <div class="col-md-3"></div>
+                    <br>
+                </div>
+                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                </div>
+            <div>
             <div class="title_box mt-2">
-                <span style="font-family:Arial;border-bottom:1px solid black">Background Check</span>
-                <span>cUf~wg wbixÿb</span>
+                <h3 style="font-family:Arial;border-bottom:1px solid black;padding-left:2px;padding-right:2px">Background Check</h3>
+                <h4>cUf~wg wbixÿb</h4>
             </div>
         
             <div class="row">
@@ -475,24 +515,39 @@
                 </div>
                 <div class="col-md-12">
         
-                    <p>1| bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
-                    <p>2| wcZvi bvg t <span style="font-size:12px"><?php echo $value->father_name?></span></p>
-                    <p>3| gvZvi bvg t <span style="font-size:12px"><?php echo $value->mother_name?></span></p>
-                    <p>4| ¯’vqx wVKvbv t |</p>
-                    <p>wbR †gvevBj bs AwfeveK †gvevBj bs - bwgwb †gvevBj - </p>
-                    <p>5| eZ©gvb wVKvbv t |</p>
-                    <p> 6| fvovwUqv n‡j - </p>
-                    <p> evwoi gvwj‡Ki bvg t .............. </p>
-                    <p>†dvb / †gvevBj bs (hw` _v‡K)/ t ......</p>
+                    <p>1| bvg t <span style="font-size:14px"><?php echo $value->name_bn?></span></p>
+                    <p>2| wcZvi bvg t <span style="font-size:14px"><?php echo $value->father_name?></span></p>
+                    <p>3| gvZvi bvg t <span style="font-size:14px"><?php echo $value->mother_name?></span></p>
+                    <p>4| ¯’vqx wVKvbv t  <span style="font-size:14px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> |</p>
+                    <p> &nbsp;&nbsp;&nbsp;&nbsp;    wbR †gvevBj bs <span><?php echo $value->personal_mobile?></span> &nbsp; &nbsp;&nbsp;&nbsp;AwfeveK †gvevBj bs <span><?php echo $value->refer_mobile?></span> &nbsp; &nbsp;&nbsp;&nbsp;bwgwb †gvevBjBs <span><?php echo $value->nomi_mobile?></span></p>
+                    <p>5| wj½ t <span style="font-size:14px"><?php echo $value->sex_name == 'Male' ? 'পুরুষ':'নারী'?></span></p>
+                    <p>6| ‰eevwnK Ae¯’vt <span><?php 
+                                                if($value->marital_status == 'Unmarried'){
+                                                    echo 'AweevwnZ' ;
+                                                }else{
+                                                   echo 'weevwnZ ,' ;
+                                                   echo ' ¯¿xi bvgt '.$value->spouse_name;
+                                                   echo ', mšÍv‡bi weeiYt ';
+                                                   echo ' ‡Q‡jt '.$value->m_child; 
+                                                   echo ', ‡g‡qt '.$value->f_child; 
+                                                   echo ', ‡gvU mšÍvbt '.$value->f_child + $value->m_child; 
+                                                }  
+                                              ?>
+                                        </span>
+                    </p>
+                    <p>7| eZ©gvb wVKvbv t <span style="font-size:14px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span>|</p>
+                    <p>8| fvovwUqv n‡j - </p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; evwoi gvwj‡Ki bvg t  <span style="font-size:14px"><?php echo $value->pre_home_owner?></span></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; †dvb / †gvevBj bs (hw` _v‡K)/ t <span><?php echo $value->home_own_mobile?></span></p>
         
-                    <p>7| ‡idv‡iÝKvixi / Awfeve‡Ki bvg t .............
+                    <p>9| ‡idv‡iÝKvixi / Awfeve‡Ki bvg t<span style="font-size:14px"><?php echo $value->refer_name?></span>
                         <!-- <p>‡ckv t ............«Referees_job»|</p> -->
-                    <p>wVKvbv t ...........|</p>
-                    <p>†gvevBj t......</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; wVKvbv t <span style="font-size:14px"><?php echo $value->refer_village?>,<?php echo $value->ref_post_name_bn?>, <?php echo $value->ref_upa_name_bn?>, <?php echo $value->ref_dis_name_bn?></span>|</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; †gvevBj t <span><?php echo $value->refer_mobile?></span></p>
         
                     <p style="width:120px;border-bottom: 1px solid black;"><b>wbixÿbKvixi gšÍe¨ t</b></p>
-                    Avwg m‡iRwg‡b/†gvevBj †dv‡bi gva¨‡g †idv‡iÝKvix e¨w³i mv‡_ †hvMv‡hvM K‡i wb‡¤œv³ Z_¨w` mwVK †cjvg:
-                    <p> 1| Dc‡iv³ bvg wVKvbv mwVK|</p>
+                    <p>Avwg m‡iRwg‡b/†gvevBj †dv‡bi gva¨‡g †idv‡iÝKvix e¨w³i mv‡_ †hvMv‡hvM K‡i wb‡¤œv³ Z_¨w` mwVK †cjvg:</p>
+                    <p>1| Dc‡iv³ bvg wVKvbv mwVK|</p>
                     <p>2| Av‡e`bKvix Av`vj‡Z `ÛcÖvß bq e‡j Rvbv hvq|</p>
                     <p>3| †m gv`Kvm³ bq e‡j †idv‡iÝKvix Rvbvq|</p>
         
@@ -511,25 +566,30 @@
             <br>
         <!-- abedon -->
 
-        <div class="container break_page" style=" font-family: sutonnymj;">
+        <div class="container-fluid break_page" style=" font-family: sutonnymj;">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/003</p>
             </div>
-            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+            <div class="d-flex mt-3">
                 <div class="col-md-2 ">
-                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-7">
-                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
-                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700| </p>
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h3>
                 </div>
-            </div>
+                    <div class="col-md-3"></div>
+                    <br>
+                </div>
+                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                </div>
+            <div>
             <!-- <div class="row"> -->
-            <h3 class="text-center mt-2"><b style="border: 2px solid black;padding-left:2px;padding-right:2px;">Av‡e`b cÎ</b></h3>
+            <h3 class="text-center mt-2"><b style="border: 2px solid black;padding-left:4px;padding-right:4px;">Av‡e`b cÎ</b></h3>
             <!-- </div> -->
-            <div class="row">
+            <div class="row" style="margin-left:14px;">
                 <div class="col-md-6 mt-4">
                     <table>
                         <tr>
@@ -547,36 +607,36 @@
                     <p>wVKvbv t 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
                     <p class="mt-3">welq t c‡` PvKzixi Rb¨ Av‡e`b |</p>
         
-                    <p class="mt-3">Rbve,</p>
-                    <p> h_vwenxZ m¤§vb cÖ`k©b c~e©K weYxZ wb‡e`b GB †h, Avwg Avcbvi KviLvbvq <span style='font-size:12px'><?php echo $value->sec_name_bn?></span> c‡`
+                    <p class="mt-3"><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
+                    <p> h_vwenxZ m¤§vb cÖ`k©b c~e©K weYxZ wb‡e`b GB †h, Avwg Avcbvi KviLvbvq <span style='font-size:14px'><?php echo $value->sec_name_bn?></span> c‡`
                         †hvM`vb Ki‡Z
                         B”QzK| D³ c‡`i GKRb cÖv_x© wnmv‡e Avgvi Rxeb e„ËvšÍ Avcbvi my-we‡ePbvi Rb¨ `vwLj Kijvg|</p>
         
                     <p class="mt-3">GZGe, wb¤œ cÖ`Ë Z_¨vejx hvPvB K‡i Avgv‡K D³ c‡` wb‡qvM `vb Ki‡j Avwg Avcbvi wbKU K…ZÁ _vKe|
                     </p>
         
-                    <p>1| bvg t <span style='font-size:12px'><?php echo $value->name_bn?></p>
-                    <p>2| wcZv t <span style='font-size:12px'><?php echo $value->father_name?></span>,gvZvi bvg t <span style='font-size:12px'><?php echo $value->mother_name?></span>,¯^vgx/¯¿xi bvg t <span style='font-size:12px'><?php echo $value->spouse_name?></span></p>
-                    <p>3| eZ©gvb wVKvbv t <span style="font-size:12px"><?php echo $value->pre_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span>| </p>
-                    <p>4| ¯’vqx wVKvbv t <span style="font-size:12px"><?php echo $value->per_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span>| </p>
-                    <p>5| wkÿvMZ †hvM¨Zv t«Education» </p>
-                    <p>6| R¤œ ZvwiLt </p>
-                    <p>7| ag© t </p>
+                    <p>1| bvg t <span style='font-size:14px'><?php echo $value->name_bn?></p>
+                    <p>2| wcZv t <span style='font-size:14px'><?php echo $value->father_name?></span></p>
+                    <p>3| eZ©gvb wVKvbv t <span style="font-size:14px"><?php echo $value->pre_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span>| </p>
+                    <p>4| ¯’vqx wVKvbv t <span style="font-size:14px"><?php echo $value->per_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span>| </p>
+                    <p>5| wkÿvMZ †hvM¨Zv <span style="font-size:14px"><?php echo $value->education?></span> </p>
+                    <p>6| R¤œ ZvwiLt <?php echo $value->emp_dob?> Bs </p>
+                    <p>7| ag© t <span style="font-size:14px"><?php echo $value->religion?></span> </p>
                     <p>8| RvZxqZv t  Kg©xi †gvevBj bs <span><?php echo $value->bank_bkash_no?></span></p>
                     <p>9| AwfÁZv t </p>
         
-                    <table class="table" style="width: 80%;" border="1">
+                    <table class="table" style="" border="1">
                         <tr>
-                            <th>µwgK bs</th>
-                            <th>AwfÁZvi c~b© weeib</th>
-                            <th>cÖwZôv‡bi bvg, wVKvbv, †dvb b¤^i</th>
-                            <th>PvKzixi mgqKvj</th>
+                            <th class="text-center">µwgK bs</th>
+                            <th class="text-center">AwfÁZvi c~b© weeib</th>
+                            <th class="text-center">cÖwZôv‡bi bvg</th>
+                            <th class="text-center">PvKzixi mgqKvj</th>
                         </tr>
                         <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
+                            <td class="text-center">1.</td>
+                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_dasignation?></span></td>
+                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_factory_name?></span></td>
+                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_duration?></span></td>
                         </tr>
                     </table>
         
@@ -591,8 +651,8 @@
         
                     <div style="float: right;">
                         <p>¯^vÿi t ................ √.......................</p>
-                        <p>bvg t <span style="font-size:12px"><?php echo $value->name_bn?></span></p>
-                        <p>c`ex t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                        <p>bvg t <span style="font-size:14px"><?php echo $value->name_bn?></span></p>
+                        <p>c`ex t <span style="font-size:14px"><?php echo $value->desig_bangla?></span></p>
                     </div>
         
                     <div style="float: left;border: 1px solid black;display: block; width: 100%; margin-top: 5px;">
@@ -614,24 +674,28 @@
             <br>
             <br>
         <!-- nominee -->
-        <div class="container break_page">
+        <div class="container-fluid break_page">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/007</p>
             </div>
-            <div class="d-flex mt-3" style="border-bottom: 1px solid black!important;">
+            <div class="d-flex mt-3">
                 <div class="col-md-2 ">
-                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-7">
-                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h3>
-                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|
-                    </p>
+                    <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h3>
                 </div>
-            </div>
+                    <div class="col-md-3"></div>
+                    <br>
+                </div>
+                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                </div>
+            <div>
             <div class="d-flex flex-column align-items-center">
-                <p class="mt-2" style="border: 2px solid black;padding-left:4px;padding-right:4px;">dig bs-41</p>
+                <h4 class="mt-2" style="border: 2px solid black;padding-left:4px;padding-right:4px;">dig bs-41</h4>
                 <p>[ aviv 19, 131 (1) (K), 155 (2), 234, 264, 265 I 273 Ges wewa 118 (1) 136, 232 (2), 262 (1), 289 (1) I 321
                     (1) `ªóe¨ ]</p>
                 <p>Rgv I wewfbœ Lv‡Z cÖvc¨ A_© cwi‡kv‡ai †Nvlbv I g‡bvq‡bi dig|</p>
@@ -641,26 +705,26 @@
                 <p> 2| KviLvbv / cÖwZôv‡bi wVKvbv &nbsp;t&nbsp; 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <div class="d-flex flex-row">
                     <p> 3| kÖwg‡Ki bvg I wVKvbv t</p>
-                    <p> bvg t <span style='font-size:12px'> <?php echo $value->name_bn?> </p>
-                    <p>,&nbsp;MÖvg t <span style="font-size:12px"> <?php echo $value->per_village_bn?></span> </p>
-                    <p>,&nbsp; WvKNi t  <span style="font-size:12px"> <?php echo $value->pre_post_name_bn?></span> </p>
-                    <p>,&nbsp;_vbv t   <span style="font-size:12px"> <?php echo $value->pre_upa_name_bn?> </p>
-                    <p>,&nbsp; ‡Rjv t <span style="font-size:12px"> <?php echo $value->pre_dis_name_bn?></span> </p>
+                    <p> bvg t <span style='font-size:14px'> <?php echo $value->name_bn?> </p>
+                    <p>,&nbsp;MÖvg t <span style="font-size:14px"> <?php echo $value->per_village_bn?></span> </p>
+                    <p>,&nbsp; WvKNi t  <span style="font-size:14px"> <?php echo $value->pre_post_name_bn?></span> </p>
+                    <p>,&nbsp;_vbv t   <span style="font-size:14px"> <?php echo $value->pre_upa_name_bn?> </p>
+                    <p>,&nbsp; ‡Rjv t <span style="font-size:14px"> <?php echo $value->pre_dis_name_bn?></span> </p>
                   
                 </div>
-                <p>4| wj½ t <span style="font-size:12px"><?php echo $value->sex_name == "Male"? "পুরুষ":"নারী"?></span></p>
+                <p>4| wj½ t <span style="font-size:14px"><?php echo $value->sex_name == "Male"? "পুরুষ":"নারী"?></span></p>
                 <p>5| Rb¥ ZvwiL t <?php echo date("d-m-Y",strtotime($value->emp_dob))?></span></p>
                 <p>6| mbv³ KiY wPý (hw` _v‡K) t ------------------------------------ |</p>
                 <div class="d-flex">
-                    <p>7| ¯’vqx wVKvbv t &nbsp; MÖvg t <span style="font-size:12px"><?php echo $value->per_village_bn?></span></p>
-                    <p>,&nbsp;WvKNi t <span style="font-size:12px"><?php echo $value->pre_post_name_bn?></span></p>
-                    <p>,&nbsp;_vbv t <span style="font-size:12px"><?php echo $value->pre_upa_name_bn?></span></p>
-                    <p>,&nbsp;‡Rjv t <span style="font-size:12px"><?php echo $value->pre_dis_name_bn?></span></p>
+                    <p>7| ¯’vqx wVKvbv t &nbsp; MÖvg t <span style="font-size:14px"><?php echo $value->per_village_bn?></span></p>
+                    <p>,&nbsp;WvKNi t <span style="font-size:14px"><?php echo $value->pre_post_name_bn?></span></p>
+                    <p>,&nbsp;_vbv t <span style="font-size:14px"><?php echo $value->pre_upa_name_bn?></span></p>
+                    <p>,&nbsp;‡Rjv t <span style="font-size:14px"><?php echo $value->pre_dis_name_bn?></span></p>
 
                     
                 </div>
                 <p>8| PvKwi‡Z wbhyw³i ZvwiL t <span><?php echo date("d-m-Y",strtotime($value->emp_join_date))?></span> </p>
-                <p>9| c‡`i bvg t <span style="font-size:12px"><?php echo $value->desig_bangla?></span></p>
+                <p>9| c‡`i bvg t <span style="font-size:14px"><?php echo $value->desig_bangla?></span></p>
             </div>
             <div>
                 <p>Avwg GZ`Øviv †Nvlbv Kwi‡ZwQ †h, Avgvi g„Zy¨ nB‡j ev Avgvi AeZ©gv‡b, Avgvi AbyK~‡j Rgv I wewfbœLv‡Z cÖvc¨ UvKv
@@ -674,8 +738,8 @@
                         <th class="text-center" style="width: 20%;">g‡bvbxZ e¨w³ ev e¨w³‡`i bvg, wVKvbv I Qwe (bwgbxi Qwe I
                             ¯^vÿi kÖwgK KZ…©K mZ¨vwqZ) Gb AvB wW bs </th>
                         <th class="text-center" style="width: 6%;">m`m¨‡`i mwnZ g‡bvbxZ e¨w³‡`i m¤úK©</th>
-                        <th class="text-center" style="width: 6%;">eqm</th>
-                        <th class="text-center" style="width: 26%;" colspan="2">cÖ‡Z¨K g‡bvbxZ e¨w³‡K †`q Ask</th>
+                        <th class="text-center" style="width: 6%;vertical-align: middle;">eqm</th>
+                        <th class="text-center" style="width: 26%;vertical-align: middle;" colspan="2">cÖ‡Z¨K g‡bvbxZ e¨w³‡K †`q Ask</th>
                     </tr>
                     <tr>
                         <td class="text-center">(1)</td>
@@ -684,12 +748,40 @@
                         <td class="text-center" colspan="2">(4)</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-center"><?php echo $value->nominee_name?></td>
+                        <td class="text-center">
+                            <?php 
+                                if($value->nomi_relation == 1){
+                                    echo "‡Q‡j";
+                                }else if($value->nomi_relation ==2){
+                                    echo "‡g‡q";
+                                }else if($value->nomi_relation ==3){
+                                    echo "‡gv";
+                                }else if($value->nomi_relation ==4){
+                                    echo "evev";
+                                }else if($value->nomi_relation ==5){
+                                    echo "fvB";
+                                }else if($value->nomi_relation ==6){
+                                    echo "‡evb";
+                                }else if($value->nomi_relation ==7){
+                                    echo "¯¿x";
+                                }else if($value->nomi_relation ==8){
+                                    echo "¯^vgx";
+                                }else {
+                                    echo " bvB";
+                                }
+                            ?>
+                        </td>
+                        <td class="text-center">
+                            <?php 
+                                $nomi_age = $value->nomi_age;
+                                $timestamp_nomi_age = strtotime($nomi_age);
+                                $current_year = date('Y');
+                                echo $age = date('Y') - date('Y', $timestamp_nomi_age);
+                            ?>
+                        eQi</td>
                         <td class="text-center" style="width:10%">RgvLvZ</td>
-                        <tdstyle="width:10%">
-                            </tdstyle=>
+                        <td style="width:10%;text-align:center">100% Ask</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -703,8 +795,7 @@
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">cÖwf‡W›U dvÛ</td>
-                        <tdstyle="width:10%">
-                            </tdstyle=>
+                        <td style="width:10%"></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -737,7 +828,7 @@
                 </table>
                 <br><br>
                 <div>
-                    <p>cÖZ¨qb Kwi‡ZwQ †h, Avgvi Dcw¯’wZ‡Z Rbve -------------------------------------wjwce× weeiY mgyn cvV Kwievi
+                    <p>cÖZ¨qb Kwi‡ZwQ †h, Avgvi Dcw¯’wZ‡Z <?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,  <span style="font-size:14px">  <?php echo $value->name_bn ?></span> wjwce× weeiY mgyn cvV Kwievi
                         ci D³ †Nvlbv ¯^vÿi Kwi‡Z‡Qb|</p>
                 </div>
                 <br>
@@ -778,15 +869,18 @@
             </div>
             <div class="d-flex mt-3">
                 <div class="col-md-2 ">
-                    <img src="logo.png" alt="Logo" style="max-width: 100%;">
+                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <h3 class="text-center">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h3>
-                </div><br>
-            </div>
-            <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-            </div>
+                </div>
+                    <div class="col-md-3"></div>
+                    <br>
+                </div>
+                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h6">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                </div>
+            <div>
         
             <div>
                 <br>
@@ -798,19 +892,27 @@
                 <p>wVKvbv t 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <p>welqt weKvk bv¤^v‡i ‡eZbvw` cÖ`v‡bi Rb¨ Av‡e`b cÎ</p>
                 <br>
-                <p>Rbve,</p>
+                <p><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
             
-                <p>Avwgt <span style='font-size:12px'><?php echo $value->name_bn?></span>,c`ext <span style='font-size:12px'><?php echo $value->desig_bangla?></span>,KvW© bst <span><?php echo $value->emp_id?></span>, ‡mKkbt <span style='font-size:12px'><?php echo $value->sec_name_bn?></span></p>
+                <p>Avwg <span style='font-size:14px'><?php echo $value->name_bn?></span>,c`ext <span style='font-size:14px'><?php echo $value->desig_bangla?></span>,KvW© bst <span><?php echo $value->emp_id?></span>, ‡mKkbt <span style='font-size:14px'><?php echo $value->sec_name_bn?></span>,<span style='font-size:14px'>লাইনt <?php echo $value->line_name_bn?> </span></p>
                 <p>Avwg Avgvi hveZxq ‡eZbvw` wb‡gœv³ weKvk bv¤^v‡i cÖ`v‡bi Rb¨ Aby‡iva KiwQ|</p>
                 <p>weKvk b¤^i t <span><?php echo $value->bank_bkash_no?></span></p>
                 <br><br>
-                <p>¯^vÿi Ges wUcmB t...................√.............</p>
-                <p>bvg t <span style='font-size:12px'><?php echo $value->name_bn?></p>
-                <p>c`ex t <span style='font-size:12px'><?php echo $value->sec_name_bn?></span></p>
+                <div class="d-flex">
+                    <div class="col-md-6">
+                        <p>¯^vÿi Ges wUcmB t...................√.............</p>
+                        <p>bvg t <span style='font-size:14px'><?php echo $value->name_bn?></p>
+                        <p>c`ex t <span style='font-size:14px'><?php echo $value->sec_name_bn?></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>........................</p>
+                        <p>KZ©„c‡ÿi ¯^vÿi</p>
+                   </div>
+                </div>
+
             </div>
         </div>
     <?php }?>
     </body>
 
 </html>
-
