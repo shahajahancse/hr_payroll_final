@@ -66,15 +66,15 @@
                 <tbody>
                     <?php
                     // dd($attn_work_off);
-                  if (!empty($pr_attn_work_off)) { foreach ($pr_attn_work_off as $key => $pr_lines) {?>
+                  if (!empty($results)) { foreach ($results as $key => $r) {?>
                     <tr>
                         <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $pr_lines['unit_name'] ?></td>
-                        <td><?php echo $pr_lines['user_name'] ?></td>
-                        <td><?php echo $pr_lines['holiday_date'] ?></td>
-                        <td><?php echo date('l', strtotime($pr_lines['holiday_date']))?></td>
+                        <td><?php echo $r->unit_name ?></td>
+                        <td><?php echo $r->user_name ?></td>
+                        <td><?php echo $r->work_off_date ?></td>
+                        <td><?php echo date('l', strtotime($r->work_off_date))?></td>
                         <td>
-                            <a href="<?=base_url('index.php/entry_system_con/emp_weekend_del') . '/' . $pr_lines["id"]?>"
+                            <a href="<?=base_url('entry_system_con/emp_weekend_del/'.$r->id)?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
