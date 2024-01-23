@@ -1400,6 +1400,7 @@ function checkAndBlockSubmit(type,e) {
 				$('#last_emp_id').html('<span style="color:red">'+data+'</span>');
 			},
 			error: function(data) {
+				$('#last_emp_id').empty('');
 				$('#last_emp_id').html('<span style="color:red">error</span>');
 			}
 		})
