@@ -1401,7 +1401,7 @@ function checkAndBlockSubmit(type,e) {
 				$('#last_emp_id').html('<span style="color:red">Last Id : '+data+'</span>');
 			},
 			error: function(data) {
-				$('#last_emp_id').text('<span style="color:red">error</span>');
+				$('#last_emp_id').html('<span style="color:red">error</span>');
 			}
 		})
 	}
