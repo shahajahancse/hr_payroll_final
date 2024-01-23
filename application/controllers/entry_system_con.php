@@ -112,7 +112,6 @@ class Entry_system_con extends CI_Controller
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         $this->data['results'] = $this->db->get()->result();
-        dd($this->data['results']);
 
         $this->data['title'] = 'Holiday List'; 
         $this->data['username'] = $this->data['user_data']->id_number;
