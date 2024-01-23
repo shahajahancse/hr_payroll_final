@@ -38,8 +38,8 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>Unit <span style="color: red;">*</span> </label>
-									<select name="unit_id" id= "unit_id" id="unit_id" class="form-control input-sm" required>
-									<option  >Select Unit</option>
+									<select name="unit_id" id= "unit_id" onchange='get_last_id()' id="unit_id" class="form-control input-sm" required>
+									<option >Select Unit</option>
 									<?php 
 										foreach ($units as $row) {
 										if($row->unit_id == $user_data->unit_name){
@@ -978,6 +978,7 @@
 					}
 					salary_structure_cal()
 					set_desi_item();
+					get_last_id();
 				},
 				error: function(error) {
 					console.error('Error:', error);
@@ -1378,4 +1379,25 @@ function checkAndBlockSubmit(type,e) {
 
  
 }
+</script>
+
+<script>
+	function get_last_id() {
+		var unit_id = $('#unit_id').val();
+		$.ajax({
+			type: "POST",
+			url: "<?php echo base_url('emp_info_con/get_last_id'); ?>",
+			data: {
+				unit_id: unit_id
+			},
+			success: function(data) {
+				$('#last_emp_id').empty('');
+				$('#last_emp_id').text('<span style="color:red">'+data+'</span>');
+			},
+			error: function(data) {
+				$('#last_emp_id').text('<span style="color:red">error</span>');
+			}
+		})
+	}
+	get_last_id()
 </script>
