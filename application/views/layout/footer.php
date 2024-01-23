@@ -55,6 +55,7 @@
           toast: true,
           position: "top",
           showConfirmButton: false,
+          showCancelButton: true,
           timer: 7000,
           timerProgressBar: true,
           didOpen: (toast) => {
