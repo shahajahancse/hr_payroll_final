@@ -272,7 +272,7 @@ class Entry_system_con extends CI_Controller
         $this->db->join('pr_units', 'pr_units.unit_id = pr_leave_trans.unit_id', 'left');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_leave_trans.emp_id', 'left');
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
-        $this->db->order_by('pr_leave_trans.leave_start', 'ASC');
+        $this->db->order_by('pr_leave_trans.leave_start', 'DESC');
         $this->data['results'] = $this->db->get()->result();
 
         $this->data['title'] = 'Leave List'; 
