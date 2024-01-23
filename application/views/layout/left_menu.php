@@ -35,8 +35,8 @@
             <li class="start <?= activate_method('weekend_list')?> "><a href="<?= base_url('entry_system_con/weekend_list')?>" class="anchor_cls">Weeked</a> </li>
             <li class="start <?= activate_method('holiday_list')?> "><a href="<?= base_url('entry_system_con/holiday_list')?>" class="anchor_cls">Holiday</a> </li>
             <li class="start <?= activate_method('leave_transation')?> "><a href="<?= base_url('entry_system_con/leave_transation')?>" class="anchor_cls">Leave Transaction</a> </li>
-            <li class="start <?= activate_method('leave_delete')?> "><a href="<?= base_url('entry_system_con/leave_delete')?>" class="anchor_cls">Leave</a></li>
-            <li class="start <?= activate_method('leave_list')?> "><a href="<?= base_url('entry_system_con/leave_list');?>" class="anchor_cls" >Left</a></li>
+            <li class="start <?= activate_method('leave_list')?> "><a href="<?= base_url('entry_system_con/leave_list')?>" class="anchor_cls">Leave</a></li>
+            <li class="start <?= activate_method('left_delete')?> "><a href="<?= base_url('entry_system_con/left_delete');?>" class="anchor_cls" >Left</a></li>
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan</a> </li>
             <li class="start <?= activate_method('left_resign_entry')?> "><a href="<?= base_url('left_resign_con/left_resign_entry')?>" class="anchor_cls">Left/Resign Entry</a> </li>
             <li class="start <?= activate_method('new_to_regular')?> "><a href="<?= base_url('entry_system_con/new_to_regular')?>" class="anchor_cls">New To Regular</a> </li>
