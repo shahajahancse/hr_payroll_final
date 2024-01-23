@@ -1366,8 +1366,65 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		}
 	}
 
-	function attendance_check_for_absent($emp_id,$present_status,$num_of_days, $start_date)
-	{
+	// function attendance_check_for_absent($emp_id,$present_status,$num_of_days, $start_date)
+	// {
+	// 	//echo "$present_status=> $num_of_days, $start_date###";
+		
+	// 	$count = 0;
+	// 	$no_imp = 0;
+	// 	$i= 0;
+		
+	// 		for($i=1; $i<= $num_of_days ; $i++)
+	// 		{
+	// 			if($i==1)
+	// 			{
+	// 				$get_date = $start_date;
+	// 			}
+	// 			else
+	// 			{
+	// 				$get_date = date('Y-m-d',(strtotime ( '-1 day' , strtotime ( $get_date) ) ));
+	// 			}
+				
+	// 				$search_year_month =trim(substr($get_date,0,7));
+	// 				$this->db->select("");
+	// 				$this->db->where("emp_id",$emp_id);
+	// 				$this->db->like("att_month",$search_year_month);
+	// 				$query = $this->db->get("pr_attn_monthly");
+				
+	// 			//echo $get_date."===";
+	// 			$idate = date('d',(strtotime ($get_date)));
+	// 			$date="date_$idate";
+				
+	// 			//echo "$date</br>";
+	// 			foreach($query->result_array() as $rows => $value)
+	// 			{
+				
+	// 				if($value[$date] == "$present_status")
+	// 				{
+	// 					$count++;
+	// 				}
+	// 				else if ($value[$date] == "W")
+	// 				{
+	// 					$no_imp = 0;//return $count;
+	// 				}
+	// 				else if ($value[$date] == "H")
+	// 				{
+	// 					$no_imp = 0;//return $count;
+	// 				}
+	// 				else
+	// 				{
+	// 					return $count;
+	// 				}
+	// 			}
+	// 		}
+		
+	// 	return $count;
+	// }
+
+
+
+
+	function attendance_check_for_absent($emp_id,$present_status,$num_of_days, $start_date){
 		//echo "$present_status=> $num_of_days, $start_date###";
 		
 		$count = 0;
@@ -1388,8 +1445,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 					$search_year_month =trim(substr($get_date,0,7));
 					$this->db->select("");
 					$this->db->where("emp_id",$emp_id);
-					$this->db->like("att_month",$search_year_month);
-					$query = $this->db->get("pr_attn_monthly");
+					$this->db->like("shift_log_date",$search_year_month);
+					$query = $this->db->get("pr_emp_shift_log");
 				
 				//echo $get_date."===";
 				$idate = date('d',(strtotime ($get_date)));
@@ -1420,7 +1477,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		
 		return $count;
 	}
-
 
 
 

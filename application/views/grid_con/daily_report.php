@@ -89,8 +89,8 @@ elseif($daily_status == 6)
 			$groupedData[$sectionName][] = $employee;
 		} 
 		foreach ($groupedData as $sectionName => $employees) { 
-		$emp_num_rows = $this->grid_model->attendance_check_for_absent($employees->emp_id,$status,31,$date);
-		$data["cont_absent"][] 		= $emp_num_rows;
+			// dd($employees['emp_id']);
+
 		//  dd($employees)
 		?>
 
@@ -132,6 +132,9 @@ elseif($daily_status == 6)
 	</tr>
 		
 	<?php 	foreach ($employees as $key=>$employee) {
+		$emp_num_rows = $this->grid_model->attendance_check_for_absent($employee['emp_id'],$status,31,$date);
+		$data["cont_absent"] 		= $emp_num_rows;
+		dd($data);
 	?>
 	<tr>
 		<td  style="text-align:center"><?php echo $i++?></td>
