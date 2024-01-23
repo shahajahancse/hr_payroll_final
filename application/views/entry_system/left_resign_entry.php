@@ -27,6 +27,7 @@
     <!-- <div class="container-fluid">   -->
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
+        <a class="btn btn-primary" href="<?= base_url('entry_system_con/holiday_list') ?>">Back</a>
             <h3 style="font-weight: 600;"><?= $title ?></h3>
             <div class="col-md-6">
                 <div class="form-group">
@@ -114,15 +115,13 @@
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <input class="btn btn-primary" onclick='toggleSection("leave_entry")' type="button"
-                        value='Leave Entry' />
-                    <input class="btn btn-info" onclick='toggleSection("leave_balance_check")' type="button"
-                        value='Leave Balance Check' />
+                    <input type="date" class="form-control" id="date" placeholder="select date">
+                    <span class="input-group-btn">
+                        <input class="btn btn-primary" onclick='add_Holiday()' type="button" value='Add Holiday' />
+                    </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
-
-
     </div>
     <div class="col-md-4 tablebox">
         <input type="text" id="searchi" class="form-control" placeholder="Search">
