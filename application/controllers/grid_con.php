@@ -1343,12 +1343,13 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-		$query['values'] = $this->grid_model->grid_join_letter($grid_emp_id);
+		$query['unit_id'] = $this->input->post('unit_id');
+		$query['values'] = $this->grid_model->grid_emp_job_application($grid_emp_id);
 		$query['unit_id'] = $this->input->post('unit_id');
 		if(is_string($query['values'])){
 			echo $query['values'];
 		}else{
-			$this->load->view('joining_letter',$query);
+			$this->load->view('stuff',$query);
 		}
 	}
 
