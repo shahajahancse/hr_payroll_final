@@ -105,15 +105,17 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for holiday 
     //-------------------------------------------------------------------------------------------------------
-    public function holiday_delete(){
+    public function holiday_list(){
         $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
         $this->db->from('attn_holyday_off');
         $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
-        $this->data['attn_holyday_off'] = $this->db->get()->result_array();
-        $this->data['title'] = 'Weekend Delete'; 
+        $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        $this->data['results'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Holiday List'; 
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/holiday_del_list';
+        $this->data['subview'] = 'entry_system/holiday_list';
         $this->load->view('layout/template', $this->data);
     }
     public function emp_holiday_add()
@@ -135,12 +137,13 @@ class Entry_system_con extends CI_Controller
     }
     public function holiday_add_ajax(){
         $date = $this->input->post('date');
-        $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
-        $this->db->where('holiday_date <=', $deldate);
-        $this->db->delete('attn_holyday_off');
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
+
+        $this->db->where('holiday_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
+        $this->db->delete('attn_holyday_off');
+
         $data = [];
         foreach ($emp_ids as $value) {
             $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
@@ -155,7 +158,7 @@ class Entry_system_con extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('attn_holyday_off');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url('entry_system_con/holiday_delete'));
+        redirect(base_url('entry_system_con/holiday_list'));
     }
     //-------------------------------------------------------------------------------------------------------
     // GRID for holiday
