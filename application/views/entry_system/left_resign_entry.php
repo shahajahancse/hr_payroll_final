@@ -110,18 +110,23 @@
         </div>
         <div class="row nav_head">
             <div class="col-lg-4">
-                <span style="font-size: 20px;"><?= $title ?></span>
+                <span style="font-size: 20px;"><?= 'Left / Resign'; ?></span>
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
                     <input type="date" class="form-control" id="date" placeholder="select date">
+                    <select name="type" id="">
+                        <option value="1">Left</option>
+                        <option value="2">Resign</option>
+                    </select>
                     <span class="input-group-btn">
-                        <input class="btn btn-primary" onclick='add_Holiday()' type="button" value='Add Holiday' />
+                        <input class="btn btn-primary" onclick='add_Holiday()' type="button" value='Save' />
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
     </div>
+
     <div class="col-md-4 tablebox">
         <input type="text" id="searchi" class="form-control" placeholder="Search">
         <div style="height: 80vh; overflow-y: scroll;">
