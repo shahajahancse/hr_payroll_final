@@ -1284,6 +1284,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function grid_daily_absent_report($year, $month, $date, $status, $grid_emp_id){
 		$day = $year."-".$month."-".$date;
+		// dd($day);
 		$this->db->distinct();
 		$this->db->select('
 			pr_emp_com_info.emp_id,
@@ -1293,7 +1294,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			emp_depertment.dept_name,
 			emp_section.sec_name_en,
 			emp_line_num.line_name_en,
-			pr_id_proxi.proxi_id, 
 			pr_emp_com_info.emp_cat_id,
             pr_emp_per_info.personal_mobile,
 		');
@@ -1305,7 +1305,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
-		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_shift_schedule');	
 		$this->db->from('pr_emp_skill');
 
@@ -1328,6 +1327,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->order_by("pr_emp_shift_log.emp_id");
 	
 		$query = $this->db->get();
+		dd($query->result_array());
 		$data = array();
 		foreach($query->result() as $rows){
 			$emp_id = $rows->emp_id;
@@ -1354,6 +1354,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			
 		}
 
+		dd($data);
 		if(!empty($data))
 		{
 			

@@ -8,7 +8,6 @@ function get_checked_value(checkboxes) {
 function daily_report(s) {
 	// alert(s);
 	var firstdate = document.getElementById('firstdate').value;
-	document.getElementById('loaader').style.display = 'block';
 	if(firstdate ==''){
 		alert("Please select First date");
 		return false;
@@ -27,6 +26,7 @@ function daily_report(s) {
 		return false;
 	}
 
+	document.getElementById('loaader').style.display = 'block';
 	
 	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id+"&report_type="+s;
   	url =  hostname + "grid_con/daily_report/";
