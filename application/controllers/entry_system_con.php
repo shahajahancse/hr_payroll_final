@@ -295,7 +295,7 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for // Left/Resign 
     //-------------------------------------------------------------------------------------------------------
-    function ()
+    function dfgfgf()
     {
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'form/left_resign_view';
