@@ -3626,10 +3626,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
 	{
-		dd($grid_emp_id);
 		$data = array();
 		foreach($grid_emp_id as $emp_id){
-			
 			$this->db->select('emp_line_num.line_name_en,
 								pr_emp_com_info.id,
 								pr_emp_com_info.proxi_id,
@@ -3649,6 +3647,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			$this->db->join('pr_emp_shift_log','pr_emp_shift_log.emp_id = pr_emp_com_info.id','LEFT');
 			$this->db->where("pr_emp_com_info.emp_id = '$emp_id'");
 			$this->db->where('pr_emp_shift_log.shift_log_date BETWEEN "'.$grid_firstdate.'" AND "'.$grid_seconddate.'"');
+			$this->db->group_by('pr_emp_com_info.emp_id');
 			$query = $this->db->get()->result_array();
 			if (!empty($query)) {
 				$rows=$query[0];
@@ -3668,8 +3667,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				$data['line_name'][]=$line_name ;
 				$data['desig'][]=$desig_name ;
 				$data['total'][]=$rows["total"];
-			}else{
-				continue;
 			}
 		}
 		if (!empty($data)) {
