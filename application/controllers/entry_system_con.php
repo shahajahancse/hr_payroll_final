@@ -181,7 +181,7 @@ class Entry_system_con extends CI_Controller
         
         $this->data['title'] = 'Leave Transaction'; 
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/leave_view';
+        $this->data['subview'] = 'entry_system/leave_transation';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -266,18 +266,22 @@ class Entry_system_con extends CI_Controller
         echo json_encode($data);   
     }
 
-    public function leave_delete(){
-        if ($this->session->userdata('logged_in') == false) {
-            redirect("authentication");
-        }
+    public function leave_list(){
+        $this->db->select('pr_leave_trans.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
+        $this->db->from('pr_leave_trans');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_leave_trans.unit_id', 'left');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_leave_trans.emp_id', 'left');
+        $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        $this->data['results'] = $this->db->get()->result();
+        
         $this->data['title'] = 'Leave List'; 
         $this->data['username'] = $this->data['user_data']->id_number;
         // dd($this->data);
-        $this->data['subview'] = 'entry_system/leave_del_list';
+        $this->data['subview'] = 'entry_system/leave_list';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function get_leave_data($offset = 0, $limit = 10) {
+    /*public function get_leave_data($offset = 0, $limit = 10) {
         $searchQuery = $this->input->get('search'); // Get the search query from the request
         $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
         echo json_encode($data);
@@ -292,7 +296,7 @@ class Entry_system_con extends CI_Controller
     {
         $result = $this->leave_model->leave_transaction_db();
         echo $result;
-    }
+    }*/
     //-------------------------------------------------------------------------------------------------------
     // Leave end
     //-------------------------------------------------------------------------------------------------------
