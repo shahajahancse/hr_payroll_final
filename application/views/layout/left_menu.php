@@ -33,8 +33,8 @@
         <ul class="sub-menu ">
           <li class="start <?= activate_method('grid_entry_system')?> "><a href="<?= base_url('entry_system_con/grid_entry_system')?>" class="anchor_cls">All Entry</a> </li>
             <!-- <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li> -->
-            <li class="start <?= activate_method('weekend_delete')?> "><a href="<?= base_url('entry_system_con/weekend_delete')?>" class="anchor_cls">Weeked</a> </li>
-            <li class="start <?= activate_method('holiday_delete')?> "><a href="<?= base_url('entry_system_con/holiday_delete')?>" class="anchor_cls">Holiday</a> </li>
+            <li class="start <?= activate_method('weekend_list')?> "><a href="<?= base_url('entry_system_con/weekend_list')?>" class="anchor_cls">Weeked</a> </li>
+            <li class="start <?= activate_method('holiday_list')?> "><a href="<?= base_url('entry_system_con/holiday_list')?>" class="anchor_cls">Holiday</a> </li>
             <li class="start <?= activate_method('leave_transation')?> "><a href="<?= base_url('entry_system_con/leave_transation')?>" class="anchor_cls">Leave Transaction</a> </li>
             <li class="start <?= activate_method('leave_delete')?> "><a href="<?= base_url('entry_system_con/leave_delete')?>" class="anchor_cls">Leave</a></li>
             <li class="start <?= activate_method('left_delete')?> "><a href="<?= base_url('entry_system_con/left_delete');?>" class="anchor_cls" >Left</a></li>

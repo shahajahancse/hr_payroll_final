@@ -38,17 +38,20 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for weekend 
     //-------------------------------------------------------------------------------------------------------
-    public function weekend_delete()
+    public function weekend_list()
     {
+        dd($this->data['user_data']);
         $this->db->select('attn_work_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
         $this->db->from('attn_work_off');
-        $this->db->join('pr_units', 'pr_units.unit_id = attn_work_off.unit_id');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_work_off.emp_id');
-        $this->data['attn_work_off'] = $this->db->get()->result_array();
-        $this->data['title'] = 'Weekend Delete'; 
+        $this->db->join('pr_units', 'pr_units.unit_id = attn_work_off.unit_id', 'left');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_work_off.emp_id', 'left');
+        $this->db->where('pr_units.unit_id', $this->data['user_data']->id_number);
+        $this->data['results'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Weekend List'; 
         $this->data['username'] = $this->data['user_data']->id_number;
         // dd($this->data);
-        $this->data['subview'] = 'entry_system/emp_weekend_del_list';
+        $this->data['subview'] = 'entry_system/weekend_list';
         $this->load->view('layout/template', $this->data);
     }
     public function emp_weekend_add()
@@ -95,11 +98,9 @@ class Entry_system_con extends CI_Controller
         redirect(base_url() . 'index.php/entry_system_con/weekend_delete');
 
     }
-
     //-------------------------------------------------------------------------------------------------------
     // CRUD for weekend 
     //-------------------------------------------------------------------------------------------------------
-
 
     //-------------------------------------------------------------------------------------------------------
     // CRUD for holiday 
