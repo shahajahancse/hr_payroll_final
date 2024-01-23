@@ -26,12 +26,17 @@
     </div>
 
     <div id="target-div">
+
       <div class="container-fluid">
+
+
 		<button onclick="emp_id_search()" class="form-control btn input-sm  btn-success" style="width: 8%;line-height: 10px !important;float: right;border-radius: 0 !important; margin-top: 7px;">Search</button>
+		
 		<input id="employee_id" type="text"  class="form-control input-sm" placeholder="Search" style="margin-top: 8px;width:15%;float:right;border-radius: 0 !important;">
-				
+		
         <form id="form_id" enctype="multipart/form-data" method="post" name="creatdepartment" action="<?php echo base_url('emp_info_con/personal_info_add')?>">
-		  		<h3 style="font-weight: bold;"><?= $title ?></h3>
+		  		<h3 style="font-weight: bold; width:fit-content"><?= $title ?> <span class="text-center" id='last_emp_id'></span></h3> 		
+
 	        <hr style="margin-bottom: 0px !important;">
 	        <div style="background-color: white; padding: 15px !important;">
 	        	<div class="row">
@@ -1391,8 +1396,14 @@ function checkAndBlockSubmit(type,e) {
 				unit_id: unit_id
 			},
 			success: function(data) {
+<<<<<<< HEAD
 				$('#last_emp_id').empty('');
 				$('#last_emp_id').text('<span style="color:red">'+data+'</span>');
+=======
+
+				$('#last_emp_id').empty();
+				$('#last_emp_id').html('<span style="color:red">'+data+'</span>');
+>>>>>>> 71a8c085dd4c3e44f8b7030f26d8b215fa46a1ea
 			},
 			error: function(data) {
 				$('#last_emp_id').text('<span style="color:red">error</span>');
