@@ -126,9 +126,9 @@
 				</div>
 			</div>
 			<!-- selection area end -->
-<div id='loaader' style="display:none;">
-	<img  src="<?php echo base_url('loader.gif')?>" alt="loader">
-</div>
+			<div id='loaader' style="display: none;align-items: center;justify-content: center;z-index: 33333;background: #e9e9e966;position: absolute;" class="col-md-12">
+				<img  src="<?php echo base_url('loader.gif')?>" alt="loader">
+			</div>
 			<!-- button area for report section  -->
 			<div class="row tablebox" style="margin-bottom: 15px;">
 				<div class='multitab-section'>
