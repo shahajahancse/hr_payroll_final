@@ -74,15 +74,16 @@ class Entry_system_con extends CI_Controller
     public function weekend_add_ajax()
     {
         $date = $this->input->post('date');
-        $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
-        $this->db->where('holiday_date <=', $deldate);
-        $this->db->delete('attn_work_off');
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
         $data = [];
+
+        $this->db->where('work_off_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
+        $this->db->delete('attn_work_off');
+
         foreach ($emp_ids as $value) {
-            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+            $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
         if ( $this->db->insert_batch('attn_work_off', $data)) {      
             echo 'success';
@@ -94,7 +95,7 @@ class Entry_system_con extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('attn_work_off');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/entry_system_con/weekend_delete');
+        redirect(base_url() . 'entry_system_con/weekend_list');
 
     }
     //-------------------------------------------------------------------------------------------------------
