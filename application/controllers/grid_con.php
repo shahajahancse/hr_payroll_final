@@ -34,8 +34,10 @@ class Grid_con extends CI_Controller {
 		$day=date("d",strtotime($date));
 		$grid_emp_id = explode(',', trim($grid_data));
 		// if($type == 2){
+		// 	// dd("KO");
 		// 	$data["values"] = $this->grid_model->grid_daily_absent_report($year, $month, $day, $grid_emp_id, $type);
 		// }else{
+			// dd("OK");
 			$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
 		// }
 		// dd($data);
@@ -50,6 +52,7 @@ class Grid_con extends CI_Controller {
 		$data["unit_id"] 		= $unit_id;
 		$data['daily_status']   = $type;
 		$data['date']   		= $date;
+		$data['status']   		= $type;
 		$this->load->view('grid_con/daily_report',$data);
 	}
 

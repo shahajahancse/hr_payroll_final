@@ -79,16 +79,23 @@ elseif($daily_status == 6)
 <table  border="1" cellpadding="0" cellspacing="0" style="font-size:11px; width:750px; margin-bottom:20px;">
 
 	<?php 
-	    // dd($values);
+	    // dd($date);
+		$this->load->model('grid_model');
+
+		$i=1;
 		$groupedData = array();
 		foreach ($values as $employee) {
 			$sectionName = $employee['sec_name_en'];
 			$groupedData[$sectionName][] = $employee;
 		} 
-		foreach ($groupedData as $sectionName => $employees) { ?>
+		foreach ($groupedData as $sectionName => $employees) { 
+		$emp_num_rows = $this->grid_model->attendance_check_for_absent($employees->emp_id,$status,31,$date);
+		$data["cont_absent"][] 		= $emp_num_rows;
+		//  dd($employees)
+		?>
 
 	<tr>
-		<th colspan="10" style="border:none;font-size:14px;background:gray"><?php echo $sectionName ?></th>
+		<th colspan="10" style="border:none;font-size:14px;float:left"><b><?php echo $sectionName ?></b></th>
 	</tr>	
 	<tr>
 		<th style="padding-left:10px;padding-right:10px;">SL</th>
@@ -124,10 +131,10 @@ elseif($daily_status == 6)
 		<?php }?>
 	</tr>
 		
-	<?php	foreach ($employees as $key=>$employee) {
+	<?php 	foreach ($employees as $key=>$employee) {
 	?>
 	<tr>
-		<td  style="text-align:center"><?php echo $key+1?></td>
+		<td  style="text-align:center"><?php echo $i++?></td>
 		<td style="text-align:center"><?php echo $employee['emp_id']?></td>
 		<td style="white-space: nowrap;text-align:center"><?php echo $employee['name_en']?></td>
 		<td style="white-space: nowrap;text-align:center"><?php echo $employee['desig_name']?></td>
@@ -175,9 +182,9 @@ elseif($daily_status == 6)
 	<?php 		}
 		
 	} ?>
-	<tr>
-		<th colspan="10" style="background:gray;border:none;font-size:14px">
-			<?php echo "Total : " . count($values)?>
+	<tr  style="border:none;font-size:14px">
+		<th>
+			<?php echo "<style='float:left'>Total : " . count($values)?>
 		</th>
 	</tr>
 </table>

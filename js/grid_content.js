@@ -26,6 +26,7 @@ function daily_report(s) {
 		return false;
 	}
 
+	document.getElementById('loaader').style.display = 'block';
 	
 	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id+"&report_type="+s;
   	url =  hostname + "grid_con/daily_report/";
@@ -34,7 +35,9 @@ function daily_report(s) {
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 
-	ajaxRequest.onreadystatechange = function(){
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
+
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
