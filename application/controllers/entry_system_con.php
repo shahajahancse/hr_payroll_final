@@ -295,15 +295,6 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // CRUD for // Left/Resign 
     //-------------------------------------------------------------------------------------------------------
-    function dfgfgf()
-    {
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'form/left_resign_view';
-        $this->load->view('layout/template', $this->data);
-        // $this->load->view('form/left_resign_view');
-
-    }
-
     public function left_resign_entry()
     {
         if ($this->session->userdata('logged_in') == false) {
@@ -321,6 +312,57 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/left_resign_entry';
         $this->load->view('layout/template', $this->data);
     }
+
+    public function add_left_regign()
+    {
+        $sql = $_POST['sql'];
+        $date = $_POST['date'];
+        $type = $_POST['type'];
+        $unit_id = $_POST['unit_id'];  
+        $emp_ids = explode(',', $sql);
+
+        $emp_id = $this->db->where_in('id', $emp_ids)->get('pr_emp_com_info')->result();
+
+        $data = [];
+        foreach ($emp_ids as $value) {
+            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+        }
+        if ( $this->db->insert_batch('attn_holyday_off', $data)) {      
+            echo 'success';
+        }else{
+            echo 'error';
+        }
+
+
+
+
+        $leave_start = date("Y-m-d", strtotime($from_date));
+        $leave_end = date("Y-m-d", strtotime($to_date));
+        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
+        $formArray = array(
+            'emp_id' => $emp_id,
+            'unit_id' => $unit_id,
+            'start_date' => $leave_start,
+            'leave_type' => $leave_type,
+            'leave_start' => $leave_start,
+            'leave_end' => $leave_end,
+            'total_leave' => $total_leave+1,
+            'leave_descrip' => $reason,
+        );
+        if ($this->db->insert('pr_leave_trans', $formArray)) {
+            echo "success";
+        }else{
+            echo "error";
+        };
+
+
+
+        $this->load->model('crud_model');
+        $this->data['user_data'] = $this->session->userdata('data');
+        $this->data['username'] =  $this->data['user_data']->id_number;
+        $this->data['subview'] = 'left_del_list';
+        $this->load->view('layout/template', $this->data);
+    }    
 
     public function left_delete()
     {
