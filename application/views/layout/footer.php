@@ -58,7 +58,6 @@
           timer: 5000,
           timerProgressBar: true,
           didOpen: (toast) => {
-              toast.addEventListener("mouseclick", Swal.close);
               toast.addEventListener("mouseenter", Swal.stopTimer);
               toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
