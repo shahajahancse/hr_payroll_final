@@ -27,7 +27,7 @@
     <!-- <div class="container-fluid">	 -->
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
-        <a class="btn btn-primary" href="<?= base_url() ?>index.php/entry_system_con/Holiday_delete">Back</a>
+        <a class="btn btn-primary" href="<?= base_url('entry_system_con/holiday_list') ?>">Back</a>
             <h3 style="font-weight: 600;"><?= $title ?></h3>
             <div class="col-md-6">
                 <div class="form-group">
@@ -182,7 +182,7 @@ function grid_emp_list() {
                     items += '<tr id="removeTr">';
                     items +=
                         '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
-                        value.id + '" ></td>';
+                        value.emp_id + '" ></td>';
                     items += '<td class="success">' + value.emp_id + '</td>';
                     items += '<td class="warning ">' + value.name_en + '</td>';
                     items += '</tr>';
