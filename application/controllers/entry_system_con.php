@@ -282,7 +282,7 @@ class Entry_system_con extends CI_Controller
         $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
         echo json_encode($data);
     }
--
+
     public function save_leave_co(){
         $result = $this->leave_model->save_leave_db();
         echo $result;
