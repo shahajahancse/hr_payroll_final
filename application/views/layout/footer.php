@@ -53,7 +53,7 @@
     function showMessage(icon, message) {
       const Toast = Swal.mixin({
           toast: true,
-          position: "top-center",
+          position: "top",
           showConfirmButton: false,
           timer: 10000,
           timerProgressBar: true,
