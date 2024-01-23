@@ -113,9 +113,11 @@
                 <span style="font-size: 20px;"><?= 'Left / Resign'; ?></span>
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
+                <span style="font-size: 20px;"><?= 'Date'; ?></span>
                 <div class="input-group" style="display:flex; gap: 14px">
                     <input type="date" class="form-control" id="date" placeholder="select date">
                     <select name="type" id="">
+                        <option value="">Type</option>
                         <option value="1">Left</option>
                         <option value="2">Resign</option>
                     </select>
