@@ -282,22 +282,12 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-    /*public function get_leave_data($offset = 0, $limit = 10) {
-        $searchQuery = $this->input->get('search'); // Get the search query from the request
-        $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
-        echo json_encode($data);
+    public function emp_leave_del($id){
+        $this->db->where('id', $id);
+        $this->db->delete('pr_leave_trans');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url('entry_system_con/leave_list'));
     }
-
-    public function save_leave_co(){
-        $result = $this->leave_model->save_leave_db();
-        echo $result;
-    }
-
-    public function leave_transaction_co()
-    {
-        $result = $this->leave_model->leave_transaction_db();
-        echo $result;
-    }*/
     //-------------------------------------------------------------------------------------------------------
     // Leave end
     //-------------------------------------------------------------------------------------------------------
@@ -409,6 +399,24 @@ class Entry_system_con extends CI_Controller
         $this->db->where('pr_emp_com_info.emp_cat_id', 1);
         $query = $this->db->get();
         // dd($query->result_array());
+    }
+
+
+    public function get_leave_data($offset = 0, $limit = 10) {
+        $searchQuery = $this->input->get('search'); // Get the search query from the request
+        $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
+        echo json_encode($data);
+    }
+
+    public function save_leave_co(){
+        $result = $this->leave_model->save_leave_db();
+        echo $result;
+    }
+
+    public function leave_transaction_co()
+    {
+        $result = $this->leave_model->leave_transaction_db();
+        echo $result;
     }
 
 
