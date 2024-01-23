@@ -400,7 +400,7 @@ function grid_continuous_present_report()
 	}
 
 	var status = "P";
-
+	document.getElementById('loaader').style.display = 'flex';
 	ajaxRequest = new XMLHttpRequest();
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"grid_con/grid_continuous_report/";
@@ -410,6 +410,7 @@ function grid_continuous_present_report()
    ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			

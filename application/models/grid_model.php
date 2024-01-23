@@ -3627,8 +3627,31 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
 	{
 		dd($grid_emp_id);
-
-	
+		$data = array();
+		foreach($grid_emp_id as $emp_id){
+			
+			$this->db->select('emp_line_num.line_name_en,
+								pr_emp_com_info.id,
+								pr_emp_com_info.proxi_id,
+								pr_emp_com_info.emp_join_date,
+								pr_emp_per_info.name_en,
+								emp_designation.desig_name,
+								emp_depertment.dept_name,
+								emp_section.sec_name_en,
+								SUM( CASE WHEN pr_emp_shift_log.present_status = "'.$status.'" THEN 1 ELSE 0 END ) AS total
+								');
+			$this->db->from('pr_emp_com_info');
+			$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
+			$this->db->join('emp_designation','emp_designation.id = pr_emp_com_info.emp_desi_id','LEFT');
+			$this->db->join('emp_depertment','emp_depertment.dept_id = pr_emp_com_info.emp_dept_id','LEFT');
+			$this->db->join('emp_section','emp_section.id = pr_emp_com_info.emp_sec_id','LEFT');
+			$this->db->join('emp_line_num','emp_line_num.id = pr_emp_com_info.emp_line_id','LEFT');
+			$this->db->join('pr_emp_shift_log','pr_emp_shift_log.emp_id = pr_emp_com_info.id','LEFT');
+			$this->db->where("pr_emp_com_info.emp_id = '$emp_id'");
+			$this->db->where('pr_emp_shift_log.shift_log_date BETWEEN "'.$grid_firstdate.'" AND "'.$grid_seconddate.'"');
+			$query = $this->db->get()->result_array();
+			if (!empty($query)) {
+				$rows=$query[0];
 				$emp_full_name=$rows["name_en"];
 				$proxi_id=$rows["proxi_id"];
 				$desig_name=$rows["desig_name"];
@@ -3636,7 +3659,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				$sec_name_en=$rows["sec_name_en"];
 				$line_name=$rows["line_name_en"];
 				$emp_join_date=$rows["emp_join_date"];
-
 				$data['empid'][]=$emp_id ;
 				$data['proxid'][]=$proxi_id ;
 				$data['fullname'][]=$emp_full_name ;
@@ -3645,7 +3667,16 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				$data['sec_name_en'][]=$sec_name_en ;
 				$data['line_name'][]=$line_name ;
 				$data['desig'][]=$desig_name ;
-				$data['total'][]=$count ;
+				$data['total'][]=$rows["total"];
+			}else{
+				continue;
+			}
+		}
+		if (!empty($data)) {
+			return $data;
+		}else{
+			return 'No Data Found';
+		}	
 
 	}
 
