@@ -8,16 +8,16 @@ class Entry_system_con extends CI_Controller
 
         /* Standard Libraries */
         // $this->load->model('attn_process_model');
-        $this->load->model('processdb');
-        $this->load->model('grid_model');
+        // $this->load->model('processdb');
+        // $this->load->model('grid_model');
+        // $this->load->model('log_model');
+        // $this->load->library('grocery_CRUD');
+        // $this->load->model('acl_model');
+        // $this->load->model('crud_model');
+        // $this->load->library('pagination_bootstrap');
         $this->load->model('leave_model');
-        $this->load->model('log_model');
         $this->load->model('common_model');
-        $this->load->library('grocery_CRUD');
-        $this->load->library('pagination_bootstrap');
-        $this->load->model('acl_model');
         $this->load->helper('url');
-        $this->load->model('crud_model');
 
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -184,6 +184,7 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/leave_view';
         $this->load->view('layout/template', $this->data);
     }
+
     public function leave_entry(){
         // dd($_POST);
         $emp_id = $this->db->where('id', $_POST['emp_id'])->get('pr_emp_com_info')->row()->emp_id;
@@ -211,6 +212,7 @@ class Entry_system_con extends CI_Controller
             echo "error";
         };
     }
+
     public function leave_balance_ajax(){
         $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
         $this->db->where('emp_id', $_POST['emp_id']);
@@ -263,6 +265,7 @@ class Entry_system_con extends CI_Controller
         $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
         echo json_encode($data);   
     }
+
     public function leave_delete(){
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -274,7 +277,6 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-    
     public function get_leave_data($offset = 0, $limit = 10) {
         $searchQuery = $this->input->get('search'); // Get the search query from the request
         $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
