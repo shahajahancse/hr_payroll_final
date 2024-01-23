@@ -43,7 +43,7 @@
             <li class="start <?= activate_method('new_to_regular')?> "><a href="<?= base_url('entry_system_con/new_to_regular')?>" class="anchor_cls">New To Regular</a> </li>
             <li class="start <?= activate_method('increment_info')?> "><a href="<?= base_url('emp_increment_con/increment_info')?>" class="anchor_cls">Increment Entry</a> </li>
             <li class="start <?= activate_method('promotion_info')?> "><a href="<?= base_url('emp_increment_con/promotion_info')?>" class="anchor_cls">Promotion Entry</a> </li>
-            <li class="start <?= activate_method('proximity_card_edit')?> "><a href="<?= base_url('entry_system_con/proximity_card_edit')?>" class="anchor_cls">Proximity Card Edit</a> </li>
+            <!-- <li class="start <?= activate_method('proximity_card_edit')?> "><a href="<?= base_url('entry_system_con/proximity_card_edit')?>" class="anchor_cls">Proximity Card Edit</a> </li> -->
         </ul>
       </li>
       <?php } ?>
