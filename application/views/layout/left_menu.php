@@ -32,18 +32,20 @@
         <span class="title">Entry System</span> <span class="selected"></span> <span class="arrow <?= arrow_open('entry_system_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <li class="start <?= activate_method('grid_entry_system')?> "><a href="<?= base_url('entry_system_con/grid_entry_system')?>" class="anchor_cls">All Entry</a> </li>
-            <!-- <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li> -->
             <li class="start <?= activate_method('weekend_list')?> "><a href="<?= base_url('entry_system_con/weekend_list')?>" class="anchor_cls">Weeked</a> </li>
             <li class="start <?= activate_method('holiday_list')?> "><a href="<?= base_url('entry_system_con/holiday_list')?>" class="anchor_cls">Holiday</a> </li>
             <li class="start <?= activate_method('leave_transation')?> "><a href="<?= base_url('entry_system_con/leave_transation')?>" class="anchor_cls">Leave Transaction</a> </li>
-            <li class="start <?= activate_method('leave_delete')?> "><a href="<?= base_url('entry_system_con/leave_delete')?>" class="anchor_cls">Leave</a></li>
+            <li class="start <?= activate_method('leave_list')?> "><a href="<?= base_url('entry_system_con/leave_list')?>" class="anchor_cls">Leave List</a></li>
+
+            <li class="start <?= activate_method('left_resign_entry')?> "><a href="<?= base_url('entry_system_con/left_resign_entry')?>" class="anchor_cls">Left / Resign Entry</a> </li>
             <li class="start <?= activate_method('left_delete')?> "><a href="<?= base_url('entry_system_con/left_delete');?>" class="anchor_cls" >Left</a></li>
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan</a> </li>
-            <li class="start <?= activate_method('left_resign_entry')?> "><a href="<?= base_url('left_resign_con/left_resign_entry')?>" class="anchor_cls">Left/Resign Entry</a> </li>
+
             <li class="start <?= activate_method('new_to_regular')?> "><a href="<?= base_url('entry_system_con/new_to_regular')?>" class="anchor_cls">New To Regular</a> </li>
             <li class="start <?= activate_method('increment_info')?> "><a href="<?= base_url('emp_increment_con/increment_info')?>" class="anchor_cls">Increment Entry</a> </li>
             <li class="start <?= activate_method('promotion_info')?> "><a href="<?= base_url('emp_increment_con/promotion_info')?>" class="anchor_cls">Promotion Entry</a> </li>
             <!-- <li class="start <?= activate_method('proximity_card_edit')?> "><a href="<?= base_url('entry_system_con/proximity_card_edit')?>" class="anchor_cls">Proximity Card Edit</a> </li> -->
+            <!-- <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li> -->
         </ul>
       </li>
       <?php } ?>
