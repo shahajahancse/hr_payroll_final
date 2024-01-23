@@ -983,7 +983,7 @@
 					}
 					salary_structure_cal()
 					set_desi_item();
-					get_last_id()
+					get_last_id();
 				},
 				error: function(error) {
 					console.error('Error:', error);
@@ -1401,10 +1401,9 @@ function checkAndBlockSubmit(type,e) {
 				$('#last_emp_id').html('<span style="color:red">Last Id : '+data+'</span>');
 			},
 			error: function(data) {
+				$('#last_emp_id').text('<span style="color:red">error</span>');
 			}
-			
 		})
-		
 	}
 	get_last_id()
 </script>
