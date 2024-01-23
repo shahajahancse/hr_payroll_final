@@ -277,6 +277,9 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
+
+
+
     public function get_leave_data($offset = 0, $limit = 10) {
         $searchQuery = $this->input->get('search'); // Get the search query from the request
         $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
