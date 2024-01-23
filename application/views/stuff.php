@@ -11,6 +11,7 @@
         .break_page{
             page-break-before: always;
             }
+
         }
         p{
             margin-bottom: 5px !important;
@@ -36,7 +37,7 @@
 
         <div class="d-flex mt-3">
             <div class="col-md-2 ">
-                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 46%;position: absolute;">
+                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 40%">
             </div>
             <div class="col-md-7">
                 <h3 class="text-center">Honeywell Garments Ltd. </h3>
@@ -167,7 +168,7 @@
 
         <div class="d-flex mt-3">
             <div class="col-md-2 ">
-                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 46%;position: absolute;">
+                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 40%;">
             </div>
             <div class="col-md-7">
                 <h3 class="text-center">Honeywell Garments Ltd. </h3>
