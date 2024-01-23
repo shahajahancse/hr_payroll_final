@@ -114,7 +114,8 @@
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    Date <input type="date" class="form-control" id="date" placeholder="select date">
+                    <span style="font-size: 20px;"><?= 'Effective Date'; ?></span>
+                    <input type="date" class="form-control" id="date" placeholder="select date">
                     <select name="type" id="">
                         <option value="">Type</option>
                         <option value="1">Left</option>
