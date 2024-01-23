@@ -29,6 +29,146 @@ class Entry_system_con extends CI_Controller
             exit;
         }
     }
+
+
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for weekend 
+    //-------------------------------------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for weekend 
+    //-------------------------------------------------------------------------------------------------------
+    public function weekend_list()
+    {
+        $this->db->select('attn_work_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
+        $this->db->from('attn_work_off');
+        $this->db->join('pr_units', 'pr_units.unit_id = attn_work_off.unit_id', 'left');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_work_off.emp_id', 'left');
+        $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        $this->data['results'] = $this->db->get()->result();
+        dd($this->data['results']);
+
+        $this->data['title'] = 'Weekend List'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        // dd($this->data);
+        $this->data['subview'] = 'entry_system/weekend_list';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function emp_weekend_add()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        // dd($this->data['user_data']->unit_name);
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name)) {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);  
+        }
+        
+        $this->data['title'] = 'Weekend Add'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/emp_weekend_add';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function weekend_add_ajax()
+    {
+        $date = $this->input->post('date');
+        $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
+        $this->db->where('holiday_date <=', $deldate);
+        $this->db->delete('attn_work_off');
+        $sql = $this->input->post('sql');
+        $unit_id = $this->input->post('unit_id');
+        $emp_ids = explode(',', $sql);
+        $data = [];
+        foreach ($emp_ids as $value) {
+            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+        }
+        if ( $this->db->insert_batch('attn_work_off', $data)) {      
+            echo 'success';
+        }else{
+            echo 'error';
+        }
+    }
+    public function emp_weekend_del($id){
+        $this->db->where('id', $id);
+        $this->db->delete('attn_work_off');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url() . 'index.php/entry_system_con/weekend_delete');
+
+    }
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for weekend 
+    //-------------------------------------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for holiday 
+    //-------------------------------------------------------------------------------------------------------
+    public function holiday_delete(){
+        $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
+        $this->db->from('attn_holyday_off');
+        $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
+        $this->data['attn_holyday_off'] = $this->db->get()->result_array();
+        $this->data['title'] = 'Weekend Delete'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/holiday_del_list';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function emp_holiday_add()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name)) {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
+        
+        $this->data['title'] = 'Holiday Add'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/emp_holiday_add';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function holiday_add_ajax(){
+        $date = $this->input->post('date');
+        $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
+        $this->db->where('holiday_date <=', $deldate);
+        $this->db->delete('attn_holyday_off');
+        $sql = $this->input->post('sql');
+        $unit_id = $this->input->post('unit_id');
+        $emp_ids = explode(',', $sql);
+        $data = [];
+        foreach ($emp_ids as $value) {
+            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+        }
+        if ( $this->db->insert_batch('attn_holyday_off', $data)) {      
+            echo 'success';
+        }else{
+            echo 'error';
+        }
+    }
+    public function emp_holiday_del($id){
+        $this->db->where('id', $id);
+        $this->db->delete('attn_holyday_off');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url('entry_system_con/holiday_delete'));
+    }
+    //-------------------------------------------------------------------------------------------------------
+    // GRID for holiday
+    //-------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+    ///////////////////////////////////////////////////////////////////
+    // old code 
     //-------------------------------------------------------------------------------------------------------
     // GRID Display for Entry System
     //-------------------------------------------------------------------------------------------------------
@@ -790,7 +930,6 @@ class Entry_system_con extends CI_Controller
     {
         $this->load->view('form/new_to_rg');
     }
-
     public function new_to_regular_process()
     {
         $month = $this->input->post('report_month_sal');
@@ -818,125 +957,6 @@ class Entry_system_con extends CI_Controller
         $crud->required_fields('month', 'bank_interest_rate');
         $output = $crud->render();
         $this->crud_output($output);
-    }
-
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for weekend Delete
-    //-------------------------------------------------------------------------------------------------------
-    public function weekend_delete()
-    {
-        $this->db->select('pr_attn_work_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
-        $this->db->from('pr_attn_work_off');
-        $this->db->join('pr_units', 'pr_units.unit_id = pr_attn_work_off.unit_id');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_attn_work_off.emp_id');
-        $this->data['pr_attn_work_off'] = $this->db->get()->result_array();
-        $this->data['title'] = 'Weekend Delete'; 
-        $this->data['username'] = $this->data['user_data']->id_number;
-        // dd($this->data);
-        $this->data['subview'] = 'entry_system/emp_weekend_del_list';
-        $this->load->view('layout/template', $this->data);
-    }
-    public function emp_weekend_add()
-    {
-        if ($this->session->userdata('logged_in') == false) {
-            redirect("authentication");
-        }
-        // dd($this->data['user_data']->unit_name);
-        $this->data['employees'] = array();
-        $this->db->select('pr_units.*');
-        $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);  
-        }
-        
-        $this->data['title'] = 'Weekend Add'; 
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/emp_weekend_add';
-        $this->load->view('layout/template', $this->data);
-    }
-    public function weekend_add_ajax()
-    {
-        $date = $this->input->post('date');
-        $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
-        $this->db->where('holiday_date <=', $deldate);
-        $this->db->delete('pr_attn_work_off');
-        $sql = $this->input->post('sql');
-        $unit_id = $this->input->post('unit_id');
-        $emp_ids = explode(',', $sql);
-        $data = [];
-        foreach ($emp_ids as $value) {
-            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
-        }
-        if ( $this->db->insert_batch('pr_attn_work_off', $data)) {      
-            echo 'success';
-        }else{
-            echo 'error';
-        }
-    }
-    public function emp_weekend_del($id){
-        $this->db->where('id', $id);
-        $this->db->delete('pr_attn_work_off');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/entry_system_con/weekend_delete');
-
-    }
-
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for weekend Delete
-    //-------------------------------------------------------------------------------------------------------
-
-    public function holiday_delete(){
-        $this->db->select('pr_attn_holiday.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
-        $this->db->from('pr_attn_holiday');
-        $this->db->join('pr_units', 'pr_units.unit_id = pr_attn_holiday.unit_id');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_attn_holiday.emp_id');
-        $this->data['pr_attn_holiday'] = $this->db->get()->result_array();
-        $this->data['title'] = 'Weekend Delete'; 
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/holiday_del_list';
-        $this->load->view('layout/template', $this->data);
-    }
-    public function emp_holiday_add()
-    {
-        if ($this->session->userdata('logged_in') == false) {
-            redirect("authentication");
-        }
-        $this->data['employees'] = array();
-        $this->db->select('pr_units.*');
-        $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-	        $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
-        }
-        
-        $this->data['title'] = 'Holiday Add'; 
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/emp_holiday_add';
-        $this->load->view('layout/template', $this->data);
-    }
-   
-    public function holiday_add_ajax(){
-        $date = $this->input->post('date');
-        $deldate = date("Y-m-d", strtotime('-25 month', strtotime($date)));
-        $this->db->where('holiday_date <=', $deldate);
-        $this->db->delete('pr_attn_holiday');
-        $sql = $this->input->post('sql');
-        $unit_id = $this->input->post('unit_id');
-        $emp_ids = explode(',', $sql);
-        $data = [];
-        foreach ($emp_ids as $value) {
-            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
-        }
-        if ( $this->db->insert_batch('pr_attn_holiday', $data)) {      
-            echo 'success';
-        }else{
-            echo 'error';
-        }
-    }
-    public function emp_holiday_del($id){
-        $this->db->where('id', $id);
-        $this->db->delete('pr_attn_holiday');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'index.php/entry_system_con/holiday_delete');
     }
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Others Deduction and Tax
