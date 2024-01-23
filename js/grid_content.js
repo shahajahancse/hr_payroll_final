@@ -420,6 +420,108 @@ function grid_continuous_present_report()
 		}
 	}
 }
+function grid_continuous_absent_report()
+{
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate =='')
+	{
+		alert("Please select Second date");
+		return false;
+	}
+
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select unit !");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+
+	var status = "A";
+	document.getElementById('loaader').style.display = 'flex';
+	ajaxRequest = new XMLHttpRequest();
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
+   url =  hostname+"grid_con/grid_continuous_report/";
+	//     
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			
+			continuous_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			continuous_present_report.document.write(resp);
+			//continuous_present_report.stop();
+		}
+	}
+}
+function grid_continuous_late_report()
+{
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate =='')
+	{
+		alert("Please select Second date");
+		return false;
+	}
+
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select unit !");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+
+	var status = "LA";
+	document.getElementById('loaader').style.display = 'flex';
+	ajaxRequest = new XMLHttpRequest();
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
+   url =  hostname+"grid_con/grid_continuous_report/";
+	//     
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			
+			continuous_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			continuous_present_report.document.write(resp);
+			//continuous_present_report.stop();
+		}
+	}
+}
 
 
 
@@ -1856,95 +1958,7 @@ function grid_daily_punch_report()
 	}
 }
 
-function grid_continuous_absent_report()
-{
-	var ajaxRequest;  // The variable that makes Ajax possible!
-	try{
-	   // Opera 8.0+, Firefox, Safari
-	   ajaxRequest = new XMLHttpRequest();
-	}catch (e){
-	   // Internet Explorer Browsers
-	   try{
-	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-	   }catch (e) {
-	      try{
-	         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-	      }catch (e){
-	         // Something went wrong
-	         alert("Your browser broke!");
-	         return false;
-	      }
-	   }
-	}
-	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
-		alert("Please select First date");
-		return false;
-	}
-	var seconddate = document.getElementById('seconddate').value;
-	if(seconddate =='')
-	{
-		alert("Please select Second date");
-		return false;
-	}
-	/*
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select Category options");
-		return false;
-	}
-	var grid_section = document.getElementById('grid_section').value;
-	if(grid_section =='Select')
-	{
-		alert("Please select Section");
-		return false;
-	}*/
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select unit !");
-		return false;
-	}
 
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
-
-	var status = "A";
-	/*
-	
-	//url =  hostname + "index.php/grid_con/grid_continuous_report/"+firstdate+"/"+seconddate+"/"+status+"/"+grid_section+"/"+sql;
-	url =  hostname + "index.php/grid_con/grid_continuous_report/"+firstdate+"/"+seconddate+"/"+status+"/"+sql;
-
-	contin_absent = window.open(url,'contin_absent',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	contin_absent.moveTo(0,0);*/
-
-	
-	
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"index.php/grid_con/grid_continuous_report/";
-    
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			
-			continuous_absent_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			continuous_absent_report.document.write(resp);
-			//continuous_absent_report.stop();
-		}
-	}
-
-}
 
 function grid_continuous_report_limit(limit)
 {
@@ -2210,76 +2224,7 @@ function grid_continuous_leave_report_new()
    //$.noConflict();
 }
 
-function grid_continuous_late_report()
-{
-	var ajaxRequest;  // The variable that makes Ajax possible!
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
-		alert("Please select First date");
-		return false;
-	}
-	var seconddate = document.getElementById('seconddate').value;
-	if(seconddate =='')
-	{
-		alert("Please select Second date");
-		return false;
-	}
 
-
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select unit !");
-		return false;
-	}
-
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
-
-	var status = "L";
-
-	// 
-	// 
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"index.php/grid_con/grid_continuous_late_report/";
-    
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			
-			continuous_late_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			continuous_late_report.document.write(resp);
-			//continuous_late_report.stop();
-		}
-	}
-}
 
 function grid_continuous_ot_eot_report()
 {
@@ -2330,10 +2275,12 @@ function grid_continuous_ot_eot_report()
 		return false;
 	}
 
-	var status = "L";
+	var status = "P";
 
 	// 
 	// 
+	document.getElementById('loaader').style.display = 'flex';
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"grid_con/grid_continuous_ot_eot_report/";
     
@@ -2342,6 +2289,8 @@ function grid_continuous_ot_eot_report()
    ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			

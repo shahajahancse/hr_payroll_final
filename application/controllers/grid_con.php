@@ -1046,7 +1046,6 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-
 		
 		$data["values"] = $this->grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
 
@@ -1061,6 +1060,10 @@ class Grid_con extends CI_Controller {
 		elseif($status =="L")
 		{
 			$status = "Leave";
+		}
+		elseif($status =="LA")
+		{
+			$status = "Late";
 		}
 
 		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
@@ -1107,6 +1110,10 @@ class Grid_con extends CI_Controller {
 		elseif($status =="L")
 		{
 			$status = "Leave";
+		}
+		elseif($status =="LA")
+		{
+			$status = "Late";
 		}
 
 		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
