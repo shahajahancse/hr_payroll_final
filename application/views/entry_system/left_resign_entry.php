@@ -109,12 +109,12 @@
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
         <div class="row nav_head">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <span style="font-size: 20px;"><?= 'Left / Resign'; ?></span>
             </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <span style="font-size: 20px;"><?= 'Effective Date'; ?></span>
+                    <span style="font-size: 16px;"><?= 'Effect Date'; ?></span>
                     <input type="date" class="form-control" id="date" placeholder="select date">
                     <select name="type" id="">
                         <option value="">Type</option>
