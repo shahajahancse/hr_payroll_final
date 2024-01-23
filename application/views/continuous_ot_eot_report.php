@@ -9,7 +9,7 @@
 
 <body>
 
-<div style=" margin:0 auto;  width:750px;">
+<div style=" margin:0 auto;  width:fit-content;">
 <?php 
 $emp_id = $values["emp_id"][1];
 $data['unit_id'] = $this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;

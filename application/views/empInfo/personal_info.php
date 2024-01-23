@@ -1396,10 +1396,12 @@ function checkAndBlockSubmit(type,e) {
 				unit_id: unit_id
 			},
 			success: function(data) {
-				$('#last_emp_id').empty('');
-				$('#last_emp_id').html('<span style="color:red">'+data+'</span>');
+
+				$('#last_emp_id').empty();
+				$('#last_emp_id').html('<span style="color:red">Last Id : '+data+'</span>');
 			},
 			error: function(data) {
+				$('#last_emp_id').empty('');
 				$('#last_emp_id').html('<span style="color:red">error</span>');
 			}
 		})

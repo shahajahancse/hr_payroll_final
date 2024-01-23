@@ -1284,6 +1284,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function grid_daily_absent_report($year, $month, $date, $status, $grid_emp_id){
 		$day = $year."-".$month."-".$date;
+		// dd($day);
 		$this->db->distinct();
 		$this->db->select('
 			pr_emp_com_info.emp_id,
@@ -1293,7 +1294,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			emp_depertment.dept_name,
 			emp_section.sec_name_en,
 			emp_line_num.line_name_en,
-			pr_id_proxi.proxi_id, 
 			pr_emp_com_info.emp_cat_id,
             pr_emp_per_info.personal_mobile,
 		');
@@ -1305,7 +1305,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
-		$this->db->from('pr_id_proxi');
 		$this->db->from('pr_emp_shift_schedule');	
 		$this->db->from('pr_emp_skill');
 
@@ -1328,6 +1327,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->order_by("pr_emp_shift_log.emp_id");
 	
 		$query = $this->db->get();
+		dd($query->result_array());
 		$data = array();
 		foreach($query->result() as $rows){
 			$emp_id = $rows->emp_id;
@@ -1354,6 +1354,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			
 		}
 
+		dd($data);
 		if(!empty($data))
 		{
 			
@@ -1365,8 +1366,65 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		}
 	}
 
-	function attendance_check_for_absent($emp_id,$present_status,$num_of_days, $start_date)
-	{
+	// function attendance_check_for_absent($emp_id,$present_status,$num_of_days, $start_date)
+	// {
+	// 	//echo "$present_status=> $num_of_days, $start_date###";
+		
+	// 	$count = 0;
+	// 	$no_imp = 0;
+	// 	$i= 0;
+		
+	// 		for($i=1; $i<= $num_of_days ; $i++)
+	// 		{
+	// 			if($i==1)
+	// 			{
+	// 				$get_date = $start_date;
+	// 			}
+	// 			else
+	// 			{
+	// 				$get_date = date('Y-m-d',(strtotime ( '-1 day' , strtotime ( $get_date) ) ));
+	// 			}
+				
+	// 				$search_year_month =trim(substr($get_date,0,7));
+	// 				$this->db->select("");
+	// 				$this->db->where("emp_id",$emp_id);
+	// 				$this->db->like("att_month",$search_year_month);
+	// 				$query = $this->db->get("pr_attn_monthly");
+				
+	// 			//echo $get_date."===";
+	// 			$idate = date('d',(strtotime ($get_date)));
+	// 			$date="date_$idate";
+				
+	// 			//echo "$date</br>";
+	// 			foreach($query->result_array() as $rows => $value)
+	// 			{
+				
+	// 				if($value[$date] == "$present_status")
+	// 				{
+	// 					$count++;
+	// 				}
+	// 				else if ($value[$date] == "W")
+	// 				{
+	// 					$no_imp = 0;//return $count;
+	// 				}
+	// 				else if ($value[$date] == "H")
+	// 				{
+	// 					$no_imp = 0;//return $count;
+	// 				}
+	// 				else
+	// 				{
+	// 					return $count;
+	// 				}
+	// 			}
+	// 		}
+		
+	// 	return $count;
+	// }
+
+
+
+
+	function attendance_check_for_absent($emp_id,$present_status,$num_of_days, $start_date){
 		//echo "$present_status=> $num_of_days, $start_date###";
 		
 		$count = 0;
@@ -1387,8 +1445,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 					$search_year_month =trim(substr($get_date,0,7));
 					$this->db->select("");
 					$this->db->where("emp_id",$emp_id);
-					$this->db->like("att_month",$search_year_month);
-					$query = $this->db->get("pr_attn_monthly");
+					$this->db->like("shift_log_date",$search_year_month);
+					$query = $this->db->get("pr_emp_shift_log");
 				
 				//echo $get_date."===";
 				$idate = date('d',(strtotime ($get_date)));
@@ -1419,7 +1477,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		
 		return $count;
 	}
-
 
 
 
@@ -3625,28 +3682,66 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
 	{
-		dd($grid_emp_id);
-
+		$data = array();
+		if (!empty($grid_emp_id)) {
+			if($status=='LA'){
+				$this->db->select('emp_line_num.line_name_en,
+									pr_emp_com_info.id,
+									pr_emp_com_info.emp_id,
+									pr_emp_com_info.proxi_id,
+									pr_emp_com_info.emp_join_date,
+									pr_emp_per_info.name_en,
+									emp_designation.desig_name,
+									emp_depertment.dept_name,
+									emp_section.sec_name_en,
+								COALESCE(SUM(pr_emp_shift_log.late_status = 1), 0) AS total
+								');
+			}else{
+				$this->db->select('emp_line_num.line_name_en,
+									pr_emp_com_info.id,
+									pr_emp_com_info.emp_id,
+									pr_emp_com_info.proxi_id,
+									pr_emp_com_info.emp_join_date,
+									pr_emp_per_info.name_en,
+									emp_designation.desig_name,
+									emp_depertment.dept_name,
+									emp_section.sec_name_en,
+									COALESCE(SUM(pr_emp_shift_log.present_status = "'.$status.'"), 0) AS total
+									');
+			}
+			$this->db->from('pr_emp_com_info');
+			$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+			$this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id', 'LEFT');
+			$this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id', 'LEFT');
+			$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
+			$this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id', 'LEFT');
+			$this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
+			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+			$this->db->where('pr_emp_shift_log.shift_log_date >=', $grid_firstdate);
+			$this->db->where('pr_emp_shift_log.shift_log_date <=', $grid_seconddate);
+			$this->db->group_by('pr_emp_com_info.emp_id');
 	
-				$emp_full_name=$rows["name_en"];
-				$proxi_id=$rows["proxi_id"];
-				$desig_name=$rows["desig_name"];
-				$dept_name=$rows["dept_name"];
-				$sec_name_en=$rows["sec_name_en"];
-				$line_name=$rows["line_name_en"];
-				$emp_join_date=$rows["emp_join_date"];
-
-				$data['empid'][]=$emp_id ;
-				$data['proxid'][]=$proxi_id ;
-				$data['fullname'][]=$emp_full_name ;
-				$data['jdate'][]=$emp_join_date ;
-				$data['dept_name'][]=$dept_name ;
-				$data['sec_name_en'][]=$sec_name_en ;
-				$data['line_name'][]=$line_name ;
-				$data['desig'][]=$desig_name ;
-				$data['total'][]=$count ;
-
+			$query = $this->db->get()->result_array();
+	
+			foreach ($query as $rows) {
+				if ($rows["total"] == 0) {
+					continue;
+				}
+				$data['empid'][] = $rows["emp_id"];
+				$data['proxid'][] = $rows["proxi_id"];
+				$data['fullname'][] = $rows["name_en"];
+				$data['jdate'][] = $rows["emp_join_date"];
+				$data['dept_name'][] = $rows["dept_name"];
+				$data['sec_name_en'][] = $rows["sec_name_en"];
+				$data['line_name'][] = $rows["line_name_en"];
+				$data['desig'][] = $rows["desig_name"];
+				$data['total'][] = $rows["total"];
+			}
+		}
+	
+		return (!empty($data)) ? $data : 'No Data Found';
 	}
+	
 
 	function continuous_report_limit($grid_firstdate, $grid_seconddate, $status, $grid_emp_id, $limit)
 	{
@@ -10192,11 +10287,12 @@ function grid_emp_job_application($grid_emp_id){
 	}
 	function continuous_ot_eot_report($grid_firstdate, $grid_seconddate, $grid_emp_id)
 	{
+		$data=[];
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
 		$data = array();
 		$search_year_month = substr($grid_firstdate,0,7);
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.id as user_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -10219,6 +10315,7 @@ function grid_emp_job_application($grid_emp_id){
 		foreach($query->result() as $rows)
 		{
 			$emp_id = $rows->emp_id;
+			$user_id = $rows->user_id;
 			$gross_sal = $rows->gross_sal;
 
 			$basic_sal_payable = ($gross_sal * 60 / 100);
@@ -10226,16 +10323,8 @@ function grid_emp_job_application($grid_emp_id){
 			$ot_rate = $basic_sal * 2 / 208 ;
 			$ot_rate = round($ot_rate,2);
 
-			$query = $this->db->query("SELECT SUM(`ot`) AS ot_hour,SUM(`eot`) AS extra_ot_hour ,SUM(`deduction_hour`) AS deduction_hour FROM `pr_emp_shift_log` WHERE `emp_id` = '$emp_id' AND `shift_log_date` BETWEEN '$grid_firstdate' and '$grid_seconddate'");
+			$query = $this->db->query("SELECT SUM(`ot`) AS ot_hour,SUM(`eot`) AS extra_ot_hour ,SUM(`deduction_hour`) AS deduction_hour FROM `pr_emp_shift_log` WHERE `emp_id` = '$user_id' AND `shift_log_date` BETWEEN '$grid_firstdate' and '$grid_seconddate'");
 
-			//This is for extra OT hour add to the Monthly OT Register
-			/*$query2 = $this->db->query("SELECT SUM(`extra_ot_hour`) AS extra_ot_hour FROM `pr_emp_shift_log` WHERE `emp_id` = '$emp_id' AND `shift_log_date` LIKE '%$search_year_month%' having SUM(`extra_ot_hour`)>0");
-			if($query2->num_rows() > 0)
-			{
-				$row = $query2->row();
-				$total_extra_ot_hour = $row->extra_ot_hour;
-			}*/
-			//echo $this->db->last_query();
 			if($query->num_rows() > 0)
 			{
 				$row = $query->row();
@@ -10247,19 +10336,19 @@ function grid_emp_job_application($grid_emp_id){
 				$eot_hour = $extra_ot_hour  - 	$deduction_hour;
 				$total_ot_eot = $ot_hour + $eot_hour;
 				$total_ot_eot_amount = round($total_ot_eot * $ot_rate);
-				if($total_ot_eot == 0)
-				{
-					continue;
-				}
+				// if($total_ot_eot == 0)
+				// {
+				// 	continue;
+				// }
 
 				$data["emp_id"][] 				= $emp_id;
 				$data["proxi_id"][] 			= $rows->proxi_id;
-				$data["emp_name"][] 			= $rows->emp_full_name;
+				$data["emp_name"][] 			= $rows->name_en;
 				$data["doj"][] 					= $rows->emp_join_date;
 				$data["dept_name"][] 			= $rows->dept_name;
-				$data["sec_name_en"][] 			= $rows->sec_name_en;
+				$data["sec_name"][] 			= $rows->sec_name_en;
 				$data["desig_name"][] 			= $rows->desig_name;
-				$data["line_name"][]			= $rows->line_name;
+				$data["line_name"][]			= $rows->line_name_en;
 				$data["gross_sal"][] 			= $rows->gross_sal;
 				$data["ot_rate"][]				= $ot_rate;
 				$data["emp_shift"][] 			= $rows->shift_name;
@@ -10269,16 +10358,9 @@ function grid_emp_job_application($grid_emp_id){
 				$data["total_ot_eot_amount"][]	= $total_ot_eot_amount;
 			}
 		}
-
-		if($data)
-		{
-
 			return $data;
-		}
-		else
-		{
-			return "Requested list is empty";
-		}
+		
+		
 	}
 	function grid_monthly_allowance_register($grid_firstdate, $grid_emp_id)
 	{
