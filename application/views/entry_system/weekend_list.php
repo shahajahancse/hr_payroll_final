@@ -56,8 +56,9 @@
                 <thead>
                     <tr>
                         <th>SL</th>
-                        <th>Unit name</th>
                         <th>User name </th>
+                        <th>Emp Id</th>
+                        <th>Unit name</th>
                         <th>Weekend Date</th>
                         <th>Weekend Day</th>
                         <th>Delete</th>
@@ -69,8 +70,9 @@
                   if (!empty($results)) { foreach ($results as $key => $r) {?>
                     <tr>
                         <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $r->unit_name ?></td>
                         <td><?php echo $r->user_name ?></td>
+                        <td><?php echo $r->emp_id ?></td>
+                        <td><?php echo $r->unit_name ?></td>
                         <td><?php echo $r->work_off_date ?></td>
                         <td><?php echo date('l', strtotime($r->work_off_date))?></td>
                         <td>
