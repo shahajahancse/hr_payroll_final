@@ -721,7 +721,7 @@
                   
                 </div>
                 <p>4| wj½ t <span style="font-size:14px"><?php echo $value->sex_name == "Male"? "পুরুষ":"নারী"?></span></p>
-                <p>5| Rb¥ ZvwiL t <?php echo date("d-m-Y",strtotime($value->emp_dob))?></span></p>
+                <p>5| Rb¥ ZvwiL t <?php echo date("d-m-Y",strtotime($value->emp_dob))?> Bs</span></p>
                 <p>6| mbv³ KiY wPý (hw` _v‡K) t ------------------------------------ |</p>
                 <div class="d-flex">
                     <p>7| ¯’vqx wVKvbv t &nbsp; MÖvg t <span style="font-size:14px"><?php echo $value->per_village_bn?></span></p>
@@ -731,7 +731,7 @@
 
                     
                 </div>
-                <p>8| PvKwi‡Z wbhyw³i ZvwiL t <span><?php echo date("d-m-Y",strtotime($value->emp_join_date))?></span> </p>
+                <p>8| PvKwi‡Z wbhyw³i ZvwiL t <span><?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs</span> </p>
                 <p>9| c‡`i bvg t <span style="font-size:14px"><?php echo $value->desig_bangla?></span></p>
             </div>
             <div>

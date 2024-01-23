@@ -79,21 +79,14 @@ elseif($daily_status == 6)
 <table  border="1" cellpadding="0" cellspacing="0" style="font-size:11px; width:750px; margin-bottom:20px;">
 
 	<?php 
-	    // dd($date);
 		$this->load->model('grid_model');
-
 		$i=1;
 		$groupedData = array();
 		foreach ($values as $employee) {
 			$sectionName = $employee['sec_name_en'];
 			$groupedData[$sectionName][] = $employee;
 		} 
-		foreach ($groupedData as $sectionName => $employees) { 
-			// dd($employees['emp_id']);
-
-		//  dd($employees)
-		?>
-
+		foreach ($groupedData as $sectionName => $employees) { ?>
 	<tr>
 		<th colspan="10" style="border:none;font-size:14px;float:left"><b><?php echo $sectionName ?></b></th>
 	</tr>	
@@ -111,7 +104,6 @@ elseif($daily_status == 6)
 		<?php if($daily_status == 4){?>
 		<th>In Time</th>
 		<?php }?>
-
 		<?php if($daily_status ==  5 || $daily_status == 6){?>
 			<th>In Time</th>
 			<th style="white-space: nowrap;">Out Time</th>
@@ -132,9 +124,8 @@ elseif($daily_status == 6)
 	</tr>
 		
 	<?php 	foreach ($employees as $key=>$employee) {
-		$emp_num_rows = $this->grid_model->attendance_check_for_absent($employee['emp_id'],$status,31,$date);
-		$data["cont_absent"] 		= $emp_num_rows;
-		dd($data);
+		$emp_num_rows = $this->grid_model->attendance_check_for_absent($employee['emp_id'],$date);
+		// dd($emp_num_rows);
 	?>
 	<tr>
 		<td  style="text-align:center"><?php echo $i++?></td>
@@ -163,12 +154,13 @@ elseif($daily_status == 6)
 		<?php }?>
 		<td style="text-align:center">
 			<?php
-				  if($daily_status == 3){
-					 echo  $employee['leave_type'];
-				  }else{
+				if($daily_status == 3){
+					echo  $employee['leave_type'];
+				}else if($daily_status == 2){
+					echo  $emp_num_rows;
+				}else{
 					echo  $daily_status != 4 ? $employee['present_status'] : "P(Late)";
-				  }
-			
+				}
 			?>
 		</td>
 		<?php if($daily_status == 2){?>
