@@ -456,7 +456,7 @@ class Entry_system_con extends CI_Controller
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        $this->data['title'] = 'Leave Transaction'; 
+        $this->data['title'] = 'Increment / Promotion'; 
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/incre_prom_entry';
         $this->load->view('layout/template', $this->data);
