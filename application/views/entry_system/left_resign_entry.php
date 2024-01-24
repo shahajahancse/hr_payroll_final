@@ -362,7 +362,7 @@
     }
 
     var date = $('#date').val();
-    if (date == '' status != 3) {
+    if (date == '' && status != 3) {
       alert('Please select Effect Date');
       $("#loader").hide();
       return ;
