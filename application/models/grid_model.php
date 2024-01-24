@@ -1225,6 +1225,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
         pr_emp_shift_log.late_status,
         pr_emp_shift_log.ot,
         pr_emp_shift_log.eot,
+        pr_emp_shift_log.deduction_hour,
+        pr_emp_shift_log.modify_eot,
 		pr_leave_trans.leave_type,
 		'
     );
@@ -3643,34 +3645,35 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	return $data;
 	}
 
-	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
-	{
+	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id){
 		$data = array();
 		if (!empty($grid_emp_id)) {
 			if($status=='LA'){
-				$this->db->select('emp_line_num.line_name_en,
-									pr_emp_com_info.id,
-									pr_emp_com_info.emp_id,
-									pr_emp_com_info.proxi_id,
-									pr_emp_com_info.emp_join_date,
-									pr_emp_per_info.name_en,
-									emp_designation.desig_name,
-									emp_depertment.dept_name,
-									emp_section.sec_name_en,
-								COALESCE(SUM(pr_emp_shift_log.late_status = 1), 0) AS total
-								');
+				$this->db->select(
+					'emp_line_num.line_name_en,
+					pr_emp_com_info.id,
+					pr_emp_com_info.emp_id,
+					pr_emp_com_info.proxi_id,
+					pr_emp_com_info.emp_join_date,
+					pr_emp_per_info.name_en,
+					emp_designation.desig_name,
+					emp_depertment.dept_name,
+					emp_section.sec_name_en,
+					COALESCE(SUM(pr_emp_shift_log.late_status = 1), 0) AS total
+				');
 			}else{
-				$this->db->select('emp_line_num.line_name_en,
-									pr_emp_com_info.id,
-									pr_emp_com_info.emp_id,
-									pr_emp_com_info.proxi_id,
-									pr_emp_com_info.emp_join_date,
-									pr_emp_per_info.name_en,
-									emp_designation.desig_name,
-									emp_depertment.dept_name,
-									emp_section.sec_name_en,
-									COALESCE(SUM(pr_emp_shift_log.present_status = "'.$status.'"), 0) AS total
-									');
+				$this->db->select(
+					'emp_line_num.line_name_en,
+					pr_emp_com_info.id,
+					pr_emp_com_info.emp_id,
+					pr_emp_com_info.proxi_id,
+					pr_emp_com_info.emp_join_date,
+					pr_emp_per_info.name_en,
+					emp_designation.desig_name,
+					emp_depertment.dept_name,
+					emp_section.sec_name_en,
+					COALESCE(SUM(pr_emp_shift_log.present_status = "'.$status.'"), 0) AS total
+				');
 			}
 			$this->db->from('pr_emp_com_info');
 			$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');

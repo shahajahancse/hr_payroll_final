@@ -34,23 +34,23 @@ $this->load->view("head_english");
 <table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:13px;">
 
 <?php
-//print_r($values);
 
-//echo $values["result"][0]["empid"][0];
-$section=array();
-$i=0;
-$count = count($values["empid"]);
-for($i=0; $i<$count; $i++ )
-{
-	
+	$section=array();
+	$i=0;
+	$count = count($values["empid"]);
+	for($i=0; $i<$count; $i++ ){
 	if($section!=$values["sec_name_en"][$i]){
 	echo "<tr bgcolor='#CCCCCC'>";
 	echo "<td colspan='7' style='font-size:16px'>Section :".$values["sec_name_en"][$i]."</td>";
 	echo "</tr>";
-	
-	 ?>
+?>
 		
-	<th>SL</th><th>Emp ID</th><th>Proxi ID</th><th>Name</th><!--<th>DOJ</th><th>Dept.</th><th>Section</th>--><th> Line</th><th>Designation</th><th>Total <?php echo $status; ?></th> 
+	<th>SL</th>
+	<th>Emp ID</th>
+	<th>Name</th>
+	<th>Designation</th>
+	<th>Line</th>
+	<th>Total <?php echo $status; ?></th> 
 	<?php
 	
 	}
@@ -66,41 +66,12 @@ for($i=0; $i<$count; $i++ )
 	echo "</td>";
 	
 	echo "<td>";
-	if($values["proxid"][$i] =='')
-	{
-		echo "&nbsp;";
-	}
-	else
-	{
-		echo $values["proxid"][$i];
-	}
-	echo "</td>";
-	
-	echo "<td>";
 	echo $values["fullname"][$i];
 	echo "</td>";
-	
-	/*echo "<td>";
-	$date = $values["jdate"][$i];
-	$year=trim(substr($date,0,4));
-	$month=trim(substr($date,5,2));
-	$day=trim(substr($date,8,2));
-	$date_format = date("d-M-y", mktime(0, 0, 0, $month, $day, $year));
-	echo $date_format;
-	echo "</td>";
-	
-	echo "<td>";
-	echo $values["dept_name"][$i];
-	echo "</td>";
-	
-	echo "<td>";
-	echo $values["sec_name"][$i];
-	echo "</td>";*/
-	
+
 	echo "<td>";
 	echo $values["line_name"][$i];
 	echo "</td>";
-	
 	
 	echo "<td>";
 	echo $values["desig"][$i];

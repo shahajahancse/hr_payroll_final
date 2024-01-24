@@ -21,12 +21,7 @@
 
                 }
                 .vl {
-                    /* border-left: 1px solid gray;
-                    height: 175px;
-                    position: absolute; */
                     margin-left: 100px;
-                    /* margin-top: 175px;
-                    transform: rotate(13deg); */
                 }
         
                 img{
@@ -41,11 +36,11 @@
                 align-items: center;
                 margin: 0 auto;
              }
-                  p{
+            p{
                 font-size:18px
             }
             table th,td {
-                font-size:18px;
+                font-size:20px;
             }
             .potovumi{
                 font-size: 20px;
@@ -92,44 +87,44 @@
             <div>
             <div class="d-flex mt-2">
                 <div class="col-md-4">
-                    <p>myÎt GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiLt <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</span></p>
+                    <p style="font-size:20px !important;line-height:22px !important;">myÎt GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiLt <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</span></p>
                 </div>
                 <div class="col-md-4">
                     <h3 class="text-center"><b style="border: 2px solid black;padding-left:4px;padding-right:6px;">wb‡qvM cÎ</b></h3>
                 </div>
                 <div class="col-md-4">
-                    <p class="text-right">kªwgK Kwc</p>
+                    <p class="text-right; font-size:20px !important;line-height:22px !important;">kªwgK Kwc</p>
                 </div>
             </div>
-            <div style="margin-left: 2px">
+            <div style="margin-left: 2px;">
                 <div class="col-md-6 mt-4">
-                    <p>cÖwZ,</p>
+                    <p style="font-size:20px !important;line-height:22px !important;">cÖwZ,</p>
                     <table>
                         <tr>
-                            <th>bvgt </th>
-                            <td>  </td>
+                            <th >bvg </th>
+                            <td> t </td>
                             <td><span style="font-size:14px"> <?php echo $value->name_bn?> </span></td>
                         </tr>
                         <tr>
                             <th>eZ©gvb wVKvbvt </th>
-                            <td>  </td>
-                            <td><span style="font-size:14px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
+                            <td> t </td>
+                            <td> <span style="font-size:14px"> <?php echo $value->pre_village_bn?>, <?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
                         </tr>
                         <tr>
-                            <th>¯’vqx wVKvbvt </th>
-                            <td>  </td>
-                            <td><span style="font-size:14px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> </td>
+                            <th>¯’vqx wVKvbv </th>
+                            <td> t </td>
+                            <td> <span style="font-size:14px"> <?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> </td>
                         </tr>
                     </table>
                 </div>
                 <div class="col-md-12">
-                    <p>
+                    <p style="font-size:20px !important;line-height:22px !important;">
                         <span><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</span><br>
                         Avcbvi <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs Zvwi†Li Av‡e`b cÎ Ges cieZx©Kv‡j M„nxZ mv¶vrKvi / cix¶vi cwi‡cÖw¶‡Z Avcbv‡K
                         <?php echo "<span style='font-size:14px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:14px'>".$value->sec_name_bn."</span>"?> ,<span style='font-size:14px'>লাইনt <?php echo $value->line_name_bn?> </span>,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
                     </p>
                     <p style="font-size:20px !important"><b>kZv©ejxt</b></p>
-                    <p>1. Avcbvi PvKzixi cÖ_g wZb gvm cÖ‡ekb wnmv‡e Mb¨ nB‡e hvnv D³ cÖ‡ekb †gqv`v‡šÍ Avcbvi Kg© g~j¨vqb ‡k‡l
+                    <p style="font-size:20px !important;line-height:22px !important;">1. Avcbvi PvKzixi cÖ_g wZb gvm cÖ‡ekb wnmv‡e Mb¨ nB‡e hvnv D³ cÖ‡ekb †gqv`v‡šÍ Avcbvi Kg© g~j¨vqb ‡k‡l
                         m‡šÍvlRbK we‡ewPZ
                         nB‡j Avcbvi
                         wb‡qvM ¯’vqx Kiv nB‡e| cÖKvk _v‡K †h, KvR m‡šÍvlRbK we‡ewPZ bv nB‡j KZ„©cÿ ‡Kvb c~e© AeMwZ e¨vwZ‡i‡K Avcbvi
@@ -138,7 +133,7 @@
                         AwaKvi iv‡Lb| hw` ‡Kvb Ae¯’vq Avcbvi Kv‡Ri gvb m‡šÍvlRbK bv nq Z‡e KZ„©cÿ wkÿvbexkKvj mgq AviI wZb gvm ewa©Z
                         Kwi‡Z
                         cvwi‡eb|</p>
-                    <p>
+                    <p style="font-size:20px !important;line-height:22px !important;">
                         2. Avcbvi gRyix / †eZb KvVv‡gv wb¤œiæct
                     <table>
                         <tr>
@@ -180,51 +175,51 @@
                         </tr>
                     </table>
                     </p>
-                    <p>
+                    <p style="font-size:20px !important;line-height:22px !important;">
                         3. gwmK gRyix cieZx© gv‡mi mvZ Kg© w`e‡m †h †Kvb w`e‡m cÖ`vb Kiv nB‡e|
                     </p>
-                    <p>
+                    <p style="font-size:20px !important;line-height:22px !important;">
                         4. Avcbvi Kg©N›Uv n‡e mKvj 8.00 NwUKv nB‡Z weKvj 5.00 NwUKv ch©šÍ, Z‡e KZ„©cÿ cª‡qvR‡b AvBbvbyhvqx AwZwi³
                         mgq KvR Kiv‡Z
                         cvwi‡eb|
                     </p>
-                    <p>
+                    <p style="font-size:20px !important;line-height:22px !important;">
                         5. mßv‡n GKw`b mvßvwnK QzwU _vK‡e hv ïµevi ev miKvwi wm×všÍ Abyhvqx GjvKv‡f‡` Ab¨ †Kvb w`b n‡Z cv‡i| GQvov
                         cÖwZôv‡b
                         cª‡hvR¨ wbqg Abyhvqx Ab¨vb¨ mKj myweav ‡fvM Kwi‡Z cvwi‡eb|
                     </p>
             
-                    <p>‰bwgwËK QzwU - 10 (`k) w`b (c~b© †eZbmn)</p>
-                    <p>cxov QzwU - 14 (†PŠÏ) w`b (c~b© †eZbmn)</p>
-                    <p>Drme QzwU - 12 (evi) w`b (c~b© †eZbmn)</p>
-                    <p>evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
-                    <p>cÖmywZ Kj¨vb QzwU - 16 (‡lvj) mßvn, cÖm‡ei m¤¢ve¨ ZvwiL Gi c~‡e© AÎ cÖwZôv‡b Aby¨b 06 (Qq) gvm wbiwew”Qbœ
+                    <p style="font-size:20px !important;line-height:22px !important;">‰bwgwËK QzwU - 10 (`k) w`b (c~b© †eZbmn)</p>
+                    <p style="font-size:20px !important;line-height:22px !important;">cxov QzwU - 14 (†PŠÏ) w`b (c~b© †eZbmn)</p>
+                    <p style="font-size:20px !important;line-height:22px !important;">Drme QzwU - 12 (evi) w`b (c~b© †eZbmn)</p>
+                    <p style="font-size:20px !important;line-height:22px !important;">evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
+                    <p style="font-size:20px !important;line-height:22px !important;">cÖmywZ Kj¨vb QzwU - 16 (‡lvj) mßvn, cÖm‡ei m¤¢ve¨ ZvwiL Gi c~‡e© AÎ cÖwZôv‡b Aby¨b 06 (Qq) gvm wbiwew”Qbœ
                         fv‡e Kg©iZ _vK‡j|</p>
             
-                    <p> 6. PvKyix nB‡Z Ae¨nwZ : ¯’vqx kÖwgK PvKzix Qvovi †ÿ‡Î 60 (lvU) w`‡bi AwMÖg †bvwUk w`‡Z nB‡e, Ab¨_vq ‡bvwUk
+                    <p style="font-size:20px !important;line-height:22px !important;"> 6. PvKyix nB‡Z Ae¨nwZ : ¯’vqx kÖwgK PvKzix Qvovi †ÿ‡Î 60 (lvU) w`‡bi AwMÖg †bvwUk w`‡Z nB‡e, Ab¨_vq ‡bvwUk
                         †gqv‡`i
                         mgcwigvb A_©
                         gvwjK‡K cª`vb Kwi‡Z nB‡e , gvwjK KZ…©K PvKzix Aemv‡bi †ÿ‡Î 120 w`‡bi †bvwUk A_ev mgcwigvb gRyix cÖ`vb Kwi‡Z
                         n‡e|</p>
-                    <p>7. cÖwZ Kg©w`e‡m ga¨vý weiwZ wn‡m‡e 1(GK) N›Uv bvgvR / LvIqv / wekÖv‡gi Rb¨ cÖ`vb Kiv n‡e|</p>
-                    <p>8. Avcbv‡K GKwU Qwe m¤^wjZ AvBwW KvW© cÖ`vb Kiv nB‡e hvnv Avcbvi cwiPq cÎ wnmv‡e Mb¨ nB‡e Ges Kg©‡ÿ‡Î Bnv
+                    <p style="font-size:20px !important;line-height:22px !important;">7. cÖwZ Kg©w`e‡m ga¨vý weiwZ wn‡m‡e 1(GK) N›Uv bvgvR / LvIqv / wekÖv‡gi Rb¨ cÖ`vb Kiv n‡e|</p>
+                    <p style="font-size:20px !important;line-height:22px !important;">8. Avcbv‡K GKwU Qwe m¤^wjZ AvBwW KvW© cÖ`vb Kiv nB‡e hvnv Avcbvi cwiPq cÎ wnmv‡e Mb¨ nB‡e Ges Kg©‡ÿ‡Î Bnv
                         Mjvq Szwj‡q
                         cÖ`k©b Kwi‡Z
                         nB‡e|</p>
-                    <p>9. Avcbvi wb‡qvM ¯’vqx nB‡j Avcwb hw` KL‡bv †Kvb Am`vPi‡bi Aciv‡a †`vlx cªgvwbZ nb Z‡e KZ…©cÿ cªPwjZ
+                    <p style="font-size:20px !important;line-height:22px !important;">9. Avcbvi wb‡qvM ¯’vqx nB‡j Avcwb hw` KL‡bv †Kvb Am`vPi‡bi Aciv‡a †`vlx cªgvwbZ nb Z‡e KZ…©cÿ cªPwjZ
                         AvBbvbyhvqx Avcbvi
                         weiæ‡× eiLv¯Ímn AvBbvbyM †h †Kvb kvw¯ÍgyjK e¨e¯’v Mªnb Ki‡Z cvwi‡eb|</p>
-                    <p> 10. ‡Kv¤úvbxi cª‡qvR‡b G‡R MÖæ‡ci AvIZvaxb Ab¨ †h †Kvb KviLvbv / BDwbU / wefv‡M Avcbv‡K e`jx Kwi‡Z cvwi‡eb|
+                    <p style="font-size:20px !important;line-height:22px !important;"> 10. ‡Kv¤úvbxi cª‡qvR‡b G‡R MÖæ‡ci AvIZvaxb Ab¨ †h †Kvb KviLvbv / BDwbU / wefv‡M Avcbv‡K e`jx Kwi‡Z cvwi‡eb|
                     </p>
-                    <p>11. PvKyix‡Z _vKv Kvjxb Avcwb AÎ cªwZôv‡b e¨e¯’vw`/bxwZgvjv msµvšÍ ‡Mvcbxq Z_¨vw` ‡Kvb e¨w³, e¨emv cÖwZôv‡bi
+                    <p style="font-size:20px !important;line-height:22px !important;">11. PvKyix‡Z _vKv Kvjxb Avcwb AÎ cªwZôv‡b e¨e¯’vw`/bxwZgvjv msµvšÍ ‡Mvcbxq Z_¨vw` ‡Kvb e¨w³, e¨emv cÖwZôv‡bi
                         A_ev Ab¨
                         Kv‡iv wbKU
                         cÖKvk Kwi‡Z cvwi‡eb bv|</p>
-                    <p> 12. KZ…©cÿ †h †Kvb mgq †Kvb c~e© †bvwUk QvovB Avcbvi PvKyixi kZv©ejx †`‡ki cªPwjZ kªg AvB‡bi weavb mv‡c‡ÿ
+                    <p style="font-size:20px !important;line-height:22px !important;"> 12. KZ…©cÿ †h †Kvb mgq †Kvb c~e© †bvwUk QvovB Avcbvi PvKyixi kZv©ejx †`‡ki cªPwjZ kªg AvB‡bi weavb mv‡c‡ÿ
                         cwieZ©b/cwiea©b Kivi
                         ‰ea AwaKvi msiÿb K‡ib|</p>
-                    <p>13. evsjv‡`k kÖg AvB‡bi Av‡jv‡K Avcbvi evrmwiK †eZb e„w× Kiv nB‡e|</p>
-                    <p>14. Avcbvi PvKyixi Ab¨vb¨ kZv©ejx ‡`‡ki kªg AvBb I †Kv¤úvbxi wbqg Abyhvqx wbqwš¿Z nB‡e|</p>
+                    <p style="font-size:20px !important;line-height:22px !important;">13. evsjv‡`k kÖg AvB‡bi Av‡jv‡K Avcbvi evrmwiK †eZb e„w× Kiv nB‡e|</p>
+                    <p style="font-size:20px !important;line-height:22px !important;">14. Avcbvi PvKyixi Ab¨vb¨ kZv©ejx ‡`‡ki kªg AvBb I †Kv¤úvbxi wbqg Abyhvqx wbqwš¿Z nB‡e|</p>
             
                 </div>
             </div>
