@@ -426,8 +426,6 @@ class Entry_system_con extends CI_Controller
 
     public function left_delete($id){
         $this->db->where('emp_id', $id);
-        $this->db->delete('pr_emp_left_history');
-
         if ($this->db->delete('pr_emp_left_history')) {
             $this->db->where('emp_id', $id)->update('pr_emp_com_info', array('emp_cat_id' => 1));
         }
@@ -438,8 +436,6 @@ class Entry_system_con extends CI_Controller
 
     public function resign_delete($id){
         $this->db->where('emp_id', $id);
-        $this->db->delete('pr_emp_resign_history');
-        
         if ($this->db->delete('pr_emp_resign_history')) {
             $this->db->where('emp_id', $id)->update('pr_emp_com_info', array('emp_cat_id' => 1));
         }
