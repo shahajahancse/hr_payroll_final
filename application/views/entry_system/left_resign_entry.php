@@ -362,7 +362,7 @@
     }
 
     var date = document.getElementById('date').value;
-    if (date == '' && types != 3) {
+    if (date == '' && types != 1) {
       alert('Please select Effect Date ' +types);
       $("#loader").hide();
       return ;
