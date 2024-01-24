@@ -374,7 +374,7 @@
       data: {
         sql: sql,
         date: date,
-        types: types,
+        type: types,
         unit_id: unit_id
       },
       success: function(data) {
