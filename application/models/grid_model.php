@@ -1255,7 +1255,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	}
 
 	if($type == 4){
- 		$this->db->where('pr_emp_shift_log.late_status', 1);
+ 		$this->db->where('pr_emp_shift_log.late_status = 1');
 	}
 
 	if($type == 5){
