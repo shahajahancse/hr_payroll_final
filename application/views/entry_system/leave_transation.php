@@ -463,19 +463,19 @@
         if (sql == '') {
             alert('Please select employee Id');
             $("#loader").hide();
-            return;
+            return false;
         }
         var date = $('#date').val();
         if (date == '') {
             alert('Please select Date');
             $("#loader").hide();
-            return;
+            return false;
         }
         var unit_id = $('#unit_id').val();
         if (unit_id == '') {
             alert('Please select Unit');
             $("#loader").hide();
-            return;
+            return false;
         }
         $.ajax({
             type: "POST",
@@ -577,13 +577,16 @@
         let numbersArray = sql.split(",");
         if (numbersArray == '') {
             alert('Please select employee Id');
+            return false;
         }
         if (numbersArray.length > 1) {
             alert('Please select max one employee');
+            return false;
         }
         var unit_id = $('#unit_id').val();
         if (unit_id == '') {
             alert('Please select Unit');
+            return false;
         }
 
         var formdata = $("#leave_entry_form").serialize();

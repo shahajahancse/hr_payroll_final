@@ -331,19 +331,19 @@ $(document).ready(function() {
     if (sql =='') {
       alert('Please select employee Id');
       $("#loader").hide();
-      return ;
+      return false;
     }
     var date = $('#date').val();
     if (date =='') {
       alert('Please select Date');
       $("#loader").hide();
-      return ;
+      return false;
     }
     var unit_id = $('#unit_id').val();
     if (unit_id =='') {
       alert('Please select Unit');
       $("#loader").hide();
-      return ;
+      return false;
     }
     $.ajax({
       type: "POST",
@@ -374,19 +374,19 @@ $(document).ready(function() {
     if (sql =='') {
       alert('Please select employee Id');
       $("#loader").hide();
-      return ;
+      return false;
     }
     var date = $('#date').val();
     if (date =='') {
       alert('Please select Date');
       $("#loader").hide();
-      return ;
+      return false;
     }
     var unit_id = $('#unit_id').val();
     if (unit_id =='') {
       alert('Please select Unit');
       $("#loader").hide();
-      return ;
+      return false;
     }
     $.ajax({
       type: "POST",

@@ -344,28 +344,28 @@
     if (sql =='') {
       alert('Please select employee Id');
       $("#loader").hide();
-      return ;
+      return false;
     }
 
     var unit_id = document.getElementById('unit_id').value;
     if (unit_id =='') {
       alert('Please select Unit');
       $("#loader").hide();
-      return ;
+      return false;
     }
 
      var types = document.getElementById('types').value;
     if (types =='') {
       alert('Please select Type');
       $("#loader").hide();
-      return ;
+      return false;
     }
 
     var date = document.getElementById('date').value;
     if (date == '' && types != 1) {
       alert('Please select Effect Date');
       $("#loader").hide();
-      return ;
+      return false;
     }
 
     $.ajax({
