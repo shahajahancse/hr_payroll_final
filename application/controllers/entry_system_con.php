@@ -431,7 +431,7 @@ class Entry_system_con extends CI_Controller
         }
 
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url('entry_system_con/leave_list'));
+        redirect(base_url('entry_system_con/left_list'));
     }
 
     public function resign_delete($id){
@@ -441,7 +441,7 @@ class Entry_system_con extends CI_Controller
         }
 
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url('entry_system_con/leave_list'));
+        redirect(base_url('entry_system_con/resign_list'));
     }
     //-------------------------------------------------------------------------------------------------------
     // Left/Resign end
