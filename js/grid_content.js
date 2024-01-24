@@ -1267,12 +1267,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert('Please select employee Id');
 		return false;
 	}
-		// 
-		// 
-	//url =  hostname+"index.php/grid_con/grid_daily_costing_report/"+firstdate+"/"+unit_id;
-
-	//daily_costing_rpt = window.open(url,'daily_costing_rpt',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	//daily_costing_rpt.moveTo(0,0);
+	document.getElementById('loaader').style.display = 'flex';
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_continuous_costing_report/";
     
@@ -1281,6 +1276,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
    ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			
