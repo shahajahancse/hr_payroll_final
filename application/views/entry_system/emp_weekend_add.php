@@ -127,7 +127,7 @@
             <div class="col-lg-5">
                 <div class="input-group" style="gap: 14px; display: flex;">
                     <input type="date" class="form-control" id="date" placeholder="select date">
-                    <span class="input-group-btn">
+                    <span class="input-group-btn" style="display: flex; gap: 10px;">
                         <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Add Weekend' />
                         <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
                     </span>
