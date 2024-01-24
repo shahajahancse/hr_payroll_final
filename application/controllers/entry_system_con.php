@@ -104,22 +104,13 @@ class Entry_system_con extends CI_Controller
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
-        dd($emp_ids);
-        $data = [];
 
-        $this->db->where('work_off_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
-        $this->db->delete('attn_work_off');
-
-        foreach ($emp_ids as $value) {
-            $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
-        }
-        if ( $this->db->insert_batch('attn_work_off', $data)) {      
+        $this->db->where('work_off_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_work_off') ) {      
             echo 'success';
         }else{
             echo 'error';
         }
-
-
     }
     //-------------------------------------------------------------------------------------------------------
     // CRUD for weekend 
