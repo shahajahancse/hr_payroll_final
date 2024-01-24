@@ -347,21 +347,21 @@
       return ;
     }
 
-    var unit_id = $('#unit_id').val();
+    var unit_id = document.getElementById('unit_id').value;
     if (unit_id =='') {
       alert('Please select Unit');
       $("#loader").hide();
       return ;
     }
 
-    var status = $('#status').val();
+     var status = document.getElementById('status').value;
     if (status =='') {
       alert('Please select Status');
       $("#loader").hide();
       return ;
     }
 
-    var date = $('#date').val();
+    var date = document.getElementById('date').value;
     if (date == '' && status != 3) {
       alert('Please select Effect Date ' +status);
       $("#loader").hide();
