@@ -124,8 +124,8 @@
             <div class="col-lg-4">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6">
-                <div class="input-group" style="gap: 14px">
+            <div class="col-lg-5">
+                <div class="input-group" style="gap: 14px; display: flex;">
                     <input type="date" class="form-control" id="date" placeholder="select date">
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Add Weekend' />
