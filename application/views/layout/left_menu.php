@@ -37,13 +37,13 @@
             <li class="start <?= activate_method('leave_transation')?> "><a href="<?= base_url('entry_system_con/leave_transation')?>" class="anchor_cls">Leave Transaction</a> </li>
             <li class="start <?= activate_method('leave_list')?> "><a href="<?= base_url('entry_system_con/leave_list')?>" class="anchor_cls">Leave List</a></li>
 
-            <li class="start <?= activate_method('left_resign_entry')?> "><a href="<?= base_url('entry_system_con/left_resign_entry')?>" class="anchor_cls">Left / Resign Entry</a> </li>
-            <li class="start <?= activate_method('left_delete')?> "><a href="<?= base_url('entry_system_con/left_delete');?>" class="anchor_cls" >Left</a></li>
-            <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan</a> </li>
+            <li class="start <?= activate_method('left_resign_entry')?> "><a href="<?= base_url('entry_system_con/left_resign_entry')?>" class="anchor_cls">Left / Resign / Regular</a> </li>
+            <li class="start <?= activate_method('left_list')?> "><a href="<?= base_url('entry_system_con/left_list');?>" class="anchor_cls" >Left List</a></li>
+            <li class="start <?= activate_method('resign_list')?> "><a href="<?= base_url('entry_system_con/resign_list');?>" class="anchor_cls" >Resign List</a></li>
+            
+            <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
 
-            <li class="start <?= activate_method('new_to_regular')?> "><a href="<?= base_url('entry_system_con/new_to_regular')?>" class="anchor_cls">New To Regular</a> </li>
-            <li class="start <?= activate_method('increment_info')?> "><a href="<?= base_url('emp_increment_con/increment_info')?>" class="anchor_cls">Increment Entry</a> </li>
-            <li class="start <?= activate_method('promotion_info')?> "><a href="<?= base_url('emp_increment_con/promotion_info')?>" class="anchor_cls">Promotion Entry</a> </li>
+            <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan</a> </li>
             <!-- <li class="start <?= activate_method('proximity_card_edit')?> "><a href="<?= base_url('entry_system_con/proximity_card_edit')?>" class="anchor_cls">Proximity Card Edit</a> </li> -->
             <!-- <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li> -->
         </ul>

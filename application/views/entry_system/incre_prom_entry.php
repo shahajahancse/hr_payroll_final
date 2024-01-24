@@ -109,21 +109,21 @@
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
         <div class="row nav_head">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <input class="btn btn-primary" onclick='toggleSection("leave_entry")' type="button"
-                        value='Leave Entry' />
-                    <input class="btn btn-info" onclick='toggleSection("leave_balance_check")' type="button"
-                        value='Leave Balance Check' />
+                    <input class="btn btn-primary" onclick='toggleSection("increment_entry")' type="button"
+                        value='Increment Entry' />
+                    <input class="btn btn-info" onclick='toggleSection("promotion_entry")' type="button"
+                        value='Promotion Entry' />
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
-        <div id="leave_entry" class="row nav_head" style="margin-top: 13px;">
-            <form class="col-md-12" action="<?= base_url('entry_system_con/leave_entry') ?>" method="post"
-                id="leave_entry_form">
+        <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
+            <form class="col-md-12" action="<?= base_url('entry_system_con/increment_entry') ?>" method="post"
+                id="increment_entry_form">
                 <div class="col-md-12">
                     <div class="raw">
                         <div class="col-md-4">
@@ -169,7 +169,7 @@
                 </div>
             </form>
         </div><!-- /.row -->
-        <div id="leave_balance_check" class="row nav_head" style="margin-top: 13px;">
+        <div id="promotion_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
@@ -242,11 +242,9 @@
                     </table>
                 </div>
             </div>
-
         </div>
-
-
     </div>
+
     <div class="col-md-4 tablebox">
         <input type="text" id="searchi" class="form-control" placeholder="Search">
         <div style="height: 80vh; overflow-y: scroll;">
@@ -340,7 +338,6 @@
             }
         });
     }
-
 
     $(document).ready(function() {
         // select all item or deselect all item
@@ -507,14 +504,14 @@
             alert('Please select employee Id');
             $("#loader").hide();
             setTimeout(() => {
-                $("#leave_balance_check").hide();
+                $("#promotion_entry").hide();
             }, 500);
         }
         if (numbersArray.length > 1) {
             alert('Please select max one employee');
             $("#loader").hide();
             setTimeout(() => {
-                $("#leave_balance_check").hide();
+                $("#promotion_entry").hide();
             }, 100);
         }
         var bal_get_year = $('#bal_get_year').val();
@@ -532,7 +529,7 @@
             success: function(d) {
                 var data = JSON.parse(d);
                 $("#loader").hide();
-                $("#leave_balance_check").show();
+                $("#promotion_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + data.epm_info.img_source);
                 $('#emp_name').html(data.epm_info.name_en);
                 $('#leave_entitle_casual').html(data.leave_entitle_casual);
@@ -557,16 +554,16 @@
 </script>
 <script>
     function toggleSection(sectionId) {
-        if (sectionId == 'leave_entry') {
-            $("#leave_balance_check").hide();
+        if (sectionId == 'increment_entry') {
+            $("#promotion_entry").hide();
         } else {
-            $("#leave_entry").hide();
+            $("#increment_entry").hide();
             get_leave_balance();
         }
         $("#" + sectionId).slideToggle();
     }
     // Initial hiding of both sections
-    $("#leave_entry, #leave_balance_check").hide();
+    $("#increment_entry, #promotion_entry").hide();
 </script>
 <script>
     function leave_add(e) {
@@ -589,13 +586,13 @@
             return false;
         }
 
-        var formdata = $("#leave_entry_form").serialize();
+        var formdata = $("#increment_entry_form").serialize();
         var data = "unit_id=" + unit_id + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
         console.log(data);
 
         $.ajax({
             type: "POST",
-            url: hostname + "entry_system_con/leave_entry",
+            url: hostname + "entry_system_con/increment_entry",
             data: data,
             success: function(data) {
                 $("#loader").hide();

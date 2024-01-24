@@ -109,20 +109,33 @@
         <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
+
+        <style>
+            .input-group .form-control {
+                width: 90% !important;
+            }
+            .input-group-btn .btn {
+                padding: 8px 10px !important;
+            }
+        </style> 
+
         <div class="row nav_head">
             <div class="col-lg-4">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6">
-                <div class="input-group" style="display:flex; gap: 14px">
+            <div class="col-lg-5">
+                <div class="input-group" style="gap: 14px; display: flex;">
                     <input type="date" class="form-control" id="date" placeholder="select date">
-                    <span class="input-group-btn">
+                    <span class="input-group-btn" style="display: flex; gap: 10px;">
                         <input class="btn btn-primary" onclick='add_Holiday()' type="button" value='Add Holiday' />
+                        <input class="btn btn-danger" onclick="delete_holiday()" type="button" value="Delete">
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
     </div>
+
+
     <div class="col-md-4 tablebox">
         <div style="height: 80vh; overflow-y: scroll;">
             <table class="table table-hover" id="fileDiv">
@@ -136,7 +149,7 @@
 					  		foreach ($employees as $key => $emp) {
 					  	?>
                 <tr id="removeTr">
-                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
+                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
                     </td>
                     <td class="success"><?= $emp->emp_id ?></td>
                     <td class="warning "><?= $emp->name_en ?></td>
@@ -181,7 +194,7 @@ function grid_emp_list() {
                 $.each(response, function(index, value) {
                     items += '<tr id="removeTr">';
                     items +=
-                        '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
+                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
                         value.emp_id + '" ></td>';
                     items += '<td class="success">' + value.emp_id + '</td>';
                     items += '<td class="warning ">' + value.name_en + '</td>';
@@ -313,24 +326,24 @@ $(document).ready(function() {
 <script>
   function add_Holiday() {
     $("#loader").show();
-    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var checkboxes = document.getElementsByName('emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql =='') {
       alert('Please select employee Id');
       $("#loader").hide();
-      return ;
+      return false;
     }
     var date = $('#date').val();
     if (date =='') {
       alert('Please select Date');
       $("#loader").hide();
-      return ;
+      return false;
     }
     var unit_id = $('#unit_id').val();
     if (unit_id =='') {
       alert('Please select Unit');
       $("#loader").hide();
-      return ;
+      return false;
     }
     $.ajax({
       type: "POST",
@@ -347,6 +360,49 @@ $(document).ready(function() {
               showMessage('success', 'Holiday Added Successfully'); 
           }else {
               showMessage('error', 'Holiday Not Added');
+          }
+      }
+    })
+  }
+</script>
+
+<script>
+  function delete_holiday() {
+    $("#loader").show();
+    var checkboxes = document.getElementsByName('emp_id[]');
+    var sql = get_checked_value(checkboxes);
+    if (sql =='') {
+      alert('Please select employee Id');
+      $("#loader").hide();
+      return false;
+    }
+    var date = $('#date').val();
+    if (date =='') {
+      alert('Please select Date');
+      $("#loader").hide();
+      return false;
+    }
+    var unit_id = $('#unit_id').val();
+    if (unit_id =='') {
+      alert('Please select Unit');
+      $("#loader").hide();
+      return false;
+    }
+    $.ajax({
+      type: "POST",
+      url: hostname + "entry_system_con/holiday_delete_all",
+      data: {
+        sql: sql,
+        date: date,
+        unit_id: unit_id
+      },
+      success: function(data) {
+        // console.log(data);
+          $("#loader").hide();
+          if (data == 'success') {
+              showMessage('success', 'Holiday Deleted Successfully'); 
+          }else {
+              showMessage('error', 'Holiday Not Deleted');
           }
       }
     })
