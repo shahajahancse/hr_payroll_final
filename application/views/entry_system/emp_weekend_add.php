@@ -109,12 +109,23 @@
         <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
+
+        <style>
+            .input-group .form-control {
+                width: 90% !important;
+            }
+            .input-group-btn .btn {
+                padding: 8px 10px !important;
+            }
+        </style> 
+
+        <!-- Button section -->
         <div class="row nav_head">
             <div class="col-lg-4">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
-                <div class="input-group" style="display:flex; gap: 14px">
+                <div class="input-group" style="gap: 14px">
                     <input type="date" class="form-control" id="date" placeholder="select date">
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Add Weekend' />
@@ -124,6 +135,8 @@
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
     </div>
+
+
     <div class="col-md-4 tablebox">
         <div style="height: 80vh; overflow-y: scroll;">
             <table class="table table-hover" id="fileDiv">
