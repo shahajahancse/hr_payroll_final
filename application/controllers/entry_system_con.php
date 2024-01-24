@@ -332,9 +332,9 @@ class Entry_system_con extends CI_Controller
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        // dd($this->data['user_data']->unit_name);
+        dd($this->data['employees']);
         
         $this->data['title'] = 'Left / Resign Entry'; 
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -480,14 +480,19 @@ class Entry_system_con extends CI_Controller
     // Left/Resign end
     //-------------------------------------------------------------------------------------------------------
     public function get_emp_by_unit($unit) {
-        $this->db->select('pr_emp_per_info.*, pr_emp_com_info.emp_id, pr_emp_com_info.unit_id, pr_emp_com_info.id');
+        $this->db->select('
+                    pr_emp_com_info.id,
+                    pr_emp_com_info.emp_id, 
+                    pr_emp_com_info.unit_id, 
+                    pr_emp_per_info.name_en, 
+                    pr_emp_per_info.name_bn, 
+                ');
         $this->db->from('pr_emp_com_info');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id', 'left');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id', 'left');
         $this->db->where('pr_units.unit_id', $unit);
         $this->db->where('pr_emp_com_info.emp_cat_id', 1);
-        $query = $this->db->get()->result();
-        dd($query);
+        return $this->db->get();
     }
 
 
