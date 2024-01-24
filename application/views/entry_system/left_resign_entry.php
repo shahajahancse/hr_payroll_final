@@ -117,7 +117,7 @@
                     <span style="font-size: 16px !important; width: 220px !important; line-height: 35px;"><?= 'Effect Date'; ?></span>
                     <input type="date" class="form-control" id="date" placeholder="select date">
                     <select name="types" id="types">
-                        <option value="">select one</option>
+                        <option value="">Type</option>
                         <option value="1">Left</option>
                         <option value="2">Resign</option>
                         <option value="3">Repular</option>
@@ -356,7 +356,7 @@
 
      var types = document.getElementById('types').value;
     if (types =='') {
-      alert('Please select Status');
+      alert('Please select Type');
       $("#loader").hide();
       return ;
     }
