@@ -116,8 +116,8 @@
                 <div class="input-group" style="display:flex; gap: 14px">
                     <span style="font-size: 16px !important; width: 220px !important; line-height: 35px;"><?= 'Effect Date'; ?></span>
                     <input type="date" class="form-control" id="date" placeholder="select date">
-                    <select name="type" id="type">
-                        <option value="">Type</option>
+                    <select name="status" id="status">
+                        <option value="">Status</option>
                         <option value="1">Left</option>
                         <option value="2">Resign</option>
                         <option value="3">Repular</option>
@@ -354,15 +354,15 @@
       return ;
     }
 
-    var type = $('#type').val();
-    if (type =='') {
+    var status = $('#status').val();
+    if (status =='') {
       alert('Please select Type');
       $("#loader").hide();
       return ;
     }
 
     var date = $('#date').val();
-    if (date == '' type != 3) {
+    if (date == '' status != 3) {
       alert('Please select Effect Date');
       $("#loader").hide();
       return ;
@@ -374,7 +374,7 @@
       data: {
         sql: sql,
         date: date,
-        type: type,
+        status: status,
         unit_id: unit_id
       },
       success: function(data) {
