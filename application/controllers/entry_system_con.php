@@ -390,7 +390,7 @@ class Entry_system_con extends CI_Controller
 
     public function left_list()
     {
-        $this->db->select('lf.*, pr_units.unit_name, per.name_en as user_name');
+        $this->db->select('lf.*, pr_units.unit_name, per.name_en as user_name, lf.left_id as id');
         $this->db->from('pr_emp_left_history as lf');
         $this->db->join('pr_units', 'pr_units.unit_id = lf.unit_id', 'left');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = lf.emp_id', 'left');
@@ -408,7 +408,7 @@ class Entry_system_con extends CI_Controller
 
     public function resign_list()
     {
-        $this->db->select('rs.*, pr_units.unit_name, per.name_en as user_name');
+        $this->db->select('rs.*, pr_units.unit_name, per.name_en as user_name, rs.resign_id as id');
         $this->db->from('pr_emp_resign_history as rs');
         $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = rs.emp_id', 'left');
