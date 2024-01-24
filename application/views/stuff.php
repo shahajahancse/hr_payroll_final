@@ -19,6 +19,12 @@
         h3{
             font-size: 1.5rem;
         }
+        body {
+            font-family: "The Times Roman";
+        }
+        p{
+            font-size: 18px !important;
+        }
     </style>
 </head>
 
@@ -40,20 +46,20 @@
                 <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 40%">
             </div>
             <div class="col-md-7">
-                <h3 class="text-center">Honeywell Garments Ltd. </h3>
+                <h1 class="text-center">Honeywell Garments Ltd. </h1>
             </div>
             <div class="col-md-3"></div>
             <br>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-            <p class="text-center h6">799,(Old Plot No-1010/1011) Ambag,Mouza Baghia, Konabari, Gazipur -1700</p>
+            <p class="text-center h5">799,(Old Plot No-1010/1011) Ambag,Mouza Baghia, Konabari, Gazipur -1700</p>
         </div>
         <div>
 
         <div class="d-flex mt-2">
         <div class="col-md-4 ">
             <p>Ref: HGL/HRD/AL/10069</p>
-            <p>date :</p>
+            <p>Date :</p>
         </div>
 
         <div class="col-md-8">
@@ -79,14 +85,14 @@
                 <b><?php echo $value->desig_name?></b> id no: <b><?php echo $value->emp_id?></b> in Template from the date of <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?></b> under
                 the following terms and conditions.
             </p>
-            <p>1. Your position name is <b>"<?php echo $value->desig_name?>"</b> in <b><?php echo $value->line_name_en?></b>, <b><?php echo $value->sec_name_en?></b> section for Honeywell Garments Limited, 799, (Old Plot No -1010/1011) Ambag, Mouza Baghia, Konabari, Gazipur-1700. </p>
-            <p>2. Your probationary period will be 06 (Six) month. </p>
-            <p>3. After successful completion of probation period you will be issued service confirmation letter. </p>
-            <p>4. Your appraisal will be made at the end of calendar year of your service. </p>
-            <p>5. You will get one day off per week. but definitely that day will be fixed by the company. </p>
-            <p>6. Your leaves and holidays entitlement will be as per company's "Leave Policy". </p>
-            <p>7. Your salary deduction of tax as per government rules.</p>
-            <p>8. Your consolidated salary shall be as follow:</p>
+            <p style="line-height:1.3">1. Your position name is <b>"<?php echo $value->desig_name?>"</b> in <b><?php echo $value->line_name_en?></b>, <b><?php echo $value->sec_name_en?></b> section for Honeywell Garments Limited, 799, (Old Plot No -1010/1011) Ambag, Mouza Baghia, Konabari, Gazipur-1700. </p>
+            <p style="line-height:1.3">2. Your probationary period will be 06 (Six) month. </p>
+            <p style="line-height:1.3">3. After successful completion of probation period you will be issued service confirmation letter. </p>
+            <p style="line-height:1.3">4. Your appraisal will be made at the end of calendar year of your service. </p>
+            <p style="line-height:1.3">5. You will get one day off per week. but definitely that day will be fixed by the company. </p>
+            <p style="line-height:1.3">6. Your leaves and holidays entitlement will be as per company's "Leave Policy". </p>
+            <p style="line-height:1.3">7. Your salary deduction of tax as per government rules.</p>
+            <p style="line-height:1.3">8. Your consolidated salary shall be as follow:</p>
 
             <table>
                 <tr>
@@ -124,36 +130,36 @@
                 <tr>
                     <th>Total  Salary </th>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;: </td>
-                    <td>&nbsp;&nbsp;<?php echo $value->salary?></td>
+                    <td>&nbsp;&nbsp;<b><?php echo $value->salary?></b></td>
                     <td>&nbsp;&nbsp;TK </td>
                 </tr>
             </table>
 
-            <p>9. You need to follow the company rules regulations and policies. Breaking of any such may cause the termination of
+            <p style="line-height:1.3">9. You need to follow the company rules regulations and policies. Breaking of any such may cause the termination of
             your service of AJ Group.</p>
             
           
-            <p>10. At least 2 (two) months’ notice in writing must be given if you intend to discontinue your employment with the
+            <p style="line-height:1.3">10. At least 2 (two) months’ notice in writing must be given if you intend to discontinue your employment with the
             company at any time. Company also can discontinue your service by providing two months’ notice period or pay two
             months’ basic salary.</p>
             <p>Thank you to be a member of AJ Group family.</p>
+            <br>
             <p>Thanking You </p>
+            <br><br>
             <p>
                 Maminul Islam
             </p>
             <p>Group - General Manager</p>
             <p>HR. Admin Compliance</p>
             <p>AJ Group.<span style="float:right">Signature...................√.............</span></p>
-            <p>CC: 1) Personal File.</p>
-            <p>2) HRD Department.</p>
-            <p>3) Accounts Department.</p>
+            <p style="line-height:1.3">CC: 1) Personal File.</p>
+            <p style="line-height:1.3">2) HRD Department.</p>
+            <p style="line-height:1.3">3) Accounts Department.</p>
             
         </div>
         <?php }?>
     </div>
-    <br>
-    <br>
-    <br>
+
     <br>
         <div class="container break_page">
         <div class="d-flex flex-row justify-content-between">
@@ -171,20 +177,20 @@
                 <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 40%;">
             </div>
             <div class="col-md-7">
-                <h3 class="text-center">Honeywell Garments Ltd. </h3>
+                <h1 class="text-center">Honeywell Garments Ltd. </h1>
             </div>
             <div class="col-md-3"></div>
             <br>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-            <p class="text-center h6">799,(Old Plot No-1010/1011) Ambag,Mouza Baghia, Konabari, Gazipur -1700</p>
+            <p class="text-center h5">799,(Old Plot No-1010/1011) Ambag,Mouza Baghia, Konabari, Gazipur -1700</p>
         </div>
         <div>
 
         <div class="d-flex mt-2">
         <div class="col-md-4 ">
             <p>Ref: HGL/HRD/AL/10069</p>
-            <p>date :</p>
+            <p>Date :</p>
         </div>
 
         <div class="col-md-8">
