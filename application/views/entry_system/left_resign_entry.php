@@ -119,8 +119,8 @@
                     <select name="types" id="types">
                         <option value="">Type</option>
                         <option value="1">Repular</option>
-                        <option value="2">Left</option>
-                        <option value="3">Resign</option>
+                        <option value="3">Left</option>
+                        <option value="4">Resign</option>
                     </select>
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='add_left_regign()' type="button" value='Save' />
@@ -381,9 +381,9 @@
         // console.log(data);
           $("#loader").hide();
           if (data == 'success') {
-              showMessage('success', 'Added Successfully'); 
+              showMessage('success', 'Updated Successfully'); 
           }else {
-              showMessage('error', 'Sorry! Not Added');
+              showMessage('error', 'Sorry! Not Updated');
           }
       }
     })

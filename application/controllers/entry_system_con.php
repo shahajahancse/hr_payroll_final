@@ -359,7 +359,7 @@ class Entry_system_con extends CI_Controller
             }else{
                 echo 'error';
             }
-        } else if ($type == 2 && !empty($date)) {
+        } else if ($type == 3 && !empty($date)) {
             $data = [];
             foreach ($emp_ids as $value) {
                 $data[] = array('unit_id' => $unit_id, 'emp_id' => $value, 'left_date' => $date);
@@ -367,7 +367,7 @@ class Entry_system_con extends CI_Controller
             $this->db->insert_batch('pr_emp_left_history', $data);
 
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 2))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3))) {
                 echo 'success';
             }else{
                 echo 'error';
@@ -380,7 +380,7 @@ class Entry_system_con extends CI_Controller
             $this->db->insert_batch('pr_emp_resign_history', $data);
 
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 4))) {
                 echo 'success';
             }else{
                 echo 'error';
