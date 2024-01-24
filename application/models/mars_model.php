@@ -752,7 +752,7 @@ function line_logout_summary($report_date, $unit_id)
 			//$emp_cat = array(1,2);
 			// echo "<pre>";print_r($first_time.'==='.$secoend_time);exit;
 
-			$this->db->select("count(DISTINCT pr_emp_shift_log.emp_id) as emp_id, SUM(pr_emp_shift_log.ot_hour) as ot_hour, SUM(pr_emp_shift_log.extra_ot_hour) as extra_ot_hour,SUM(pr_emp_shift_log.modify_eot) as modify_eot,SUM(pr_emp_shift_log.deduction_hour) as deduction_hour");
+			$this->db->select("count(DISTINCT pr_emp_shift_log.emp_id) as emp_id, SUM(pr_emp_shift_log.ot) as ot_hour, SUM(pr_emp_shift_log.eot) as extra_ot_hour,SUM(pr_emp_shift_log.modify_eot) as modify_eot,SUM(pr_emp_shift_log.deduction_hour) as deduction_hour");
 			// $this->db->select("pr_emp_shift_log.in_time");	
 			// $this->db->select("pr_emp_shift_log.out_time");
 			$this->db->from("pr_emp_com_info");
@@ -812,7 +812,7 @@ function line_logout_summary($report_date, $unit_id)
 		function get_dept_emp_logout($dept_id, $unit_id, $report_date, $first_time, $secoend_time)
 		{
 			//$emp_cat = array(1,2);
-			$this->db->select("count(DISTINCT pr_emp_shift_log.emp_id) as emp_id, SUM(pr_emp_shift_log.ot_hour) as ot_hour, SUM(pr_emp_shift_log.extra_ot_hour) as extra_ot_hour,SUM(pr_emp_shift_log.modify_eot) as modify_eot,SUM(pr_emp_shift_log.deduction_hour) as deduction_hour");
+			$this->db->select("count(DISTINCT pr_emp_shift_log.emp_id) as emp_id, SUM(pr_emp_shift_log.ot) as ot_hour, SUM(pr_emp_shift_log.eot) as extra_ot_hour,SUM(pr_emp_shift_log.modify_eot) as modify_eot,SUM(pr_emp_shift_log.deduction_hour) as deduction_hour");
 			$this->db->from("pr_emp_com_info");
 			$this->db->from("pr_emp_shift_log");
 			$this->db->where("pr_emp_com_info.unit_id", $unit_id);
@@ -874,7 +874,7 @@ function line_logout_summary($report_date, $unit_id)
 		function get_sec_emp_logout($sec_id, $unit_id, $report_date, $first_time, $secoend_time)
 		{
 			//$emp_cat = array(1,2);
-			$this->db->select("count(DISTINCT pr_emp_shift_log.emp_id) as emp_id, SUM(pr_emp_shift_log.ot_hour) as ot_hour, SUM(pr_emp_shift_log.extra_ot_hour) as extra_ot_hour,SUM(pr_emp_shift_log.modify_eot) as modify_eot,SUM(pr_emp_shift_log.deduction_hour) as deduction_hour");
+			$this->db->select("count(DISTINCT pr_emp_shift_log.emp_id) as emp_id, SUM(pr_emp_shift_log.ot) as ot_hour, SUM(pr_emp_shift_log.eot) as extra_ot_hour,SUM(pr_emp_shift_log.modify_eot) as modify_eot,SUM(pr_emp_shift_log.deduction_hour) as deduction_hour");
 			$this->db->from("pr_emp_com_info");
 			$this->db->from("pr_emp_shift_log");
 			$this->db->where("pr_emp_com_info.unit_id", $unit_id);

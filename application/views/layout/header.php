@@ -9,7 +9,7 @@
     <title>ERP | AJ Group</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="Mysoftheaven (BD) Ltd." name="author" />
-
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <link href="<?=base_url()?>awedget/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css"
         media="screen" />
     <link href="<?=base_url()?>awedget/assets/plugins/jquery-superbox/css/style.css" rel="stylesheet" type="text/css"
@@ -72,6 +72,7 @@
     </script>
 
     <style type="text/css">
+       
     .n_demand {
         position: absolute;
         top: 10px;

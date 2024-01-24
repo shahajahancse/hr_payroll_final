@@ -1790,7 +1790,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$select_column 	= "date_$day";
 		$status_absent = 'A';
 		
-		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, pr_designation.desig_name, pr_section.sec_name,pr_line_num.line_name,pr_attn_monthly.$select_column,pr_emp_shift_log.ot_hour,pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.modify_eot,pr_emp_shift_log.deduction_hour");
+		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, pr_designation.desig_name, pr_section.sec_name,pr_line_num.line_name,pr_attn_monthly.$select_column,pr_emp_shift_log.ot,pr_emp_shift_log.eot,pr_emp_shift_log.modify_eot,pr_emp_shift_log.deduction_hour");
 	
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -1862,8 +1862,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	{
 		$firstdate 		= date("Y-m-d",strtotime($firstdate));
 		$seconddate 	= date("Y-m-d",strtotime($seconddate));
-		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, emp_designation.desig_name, emp_section.sec_name_en,emp_line_num.line_name_en,SUM(pr_emp_shift_log.ot_hour) as total_ot,SUM(pr_emp_shift_log.extra_ot_hour) as total_extra_ot_hour,COUNT(present_status) as total_day,SUM(pr_emp_shift_log.deduction_hour) as total_deduction_hour");
-		//,SUM(pr_emp_shift_log.ot_hour) as total_ot,SUM(pr_emp_shift_log.extra_ot_hour) as total_extra_ot_hour
+		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, emp_designation.desig_name, emp_section.sec_name_en,emp_line_num.line_name_en,SUM(pr_emp_shift_log.ot) as total_ot,SUM(pr_emp_shift_log.eot) as total_extra_ot_hour,COUNT(present_status) as total_day,SUM(pr_emp_shift_log.deduction_hour) as total_deduction_hour");
+		//,SUM(pr_emp_shift_log.ot) as total_ot,SUM(pr_emp_shift_log.eot) as total_extra_ot_hour
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -3897,18 +3897,15 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$grid_emp_id =  new RecursiveIteratorIterator(new RecursiveArrayIterator($grid_emp_id));
 		$grid_emp_id = iterator_to_array($grid_emp_id, false);
 		$data = array();
-		//foreach($grid_emp_id as $emp_id)
-		//{
+		
 			$this->db->select('prev_emp_id,new_emp_id,prev_dept,new_dept,prev_section,new_section,prev_line, new_line, prev_desig,new_desig,prev_salary,new_salary,effective_month, ref_id, new_grade');
 			$this->db->where_in("ref_id",$grid_emp_id);
 			$this->db->where("status","1");
 			$where ="effective_month BETWEEN '$grid_firstdate' and '$grid_seconddate'";
 			$this->db->where($where);
 			$this->db->order_by("new_section","ASC");
-			//$this->db->order_by("new_line","ASC");
 			$this->db->order_by("ref_id","ASC");
 			$this->db->order_by("effective_month","desc");
-
 			$query = $this->db->get('pr_incre_prom_pun');
 			if($query->num_rows() != 0)
 			{
@@ -3944,9 +3941,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 				}
 			}
-		//}
-
-		//print_r($data);
 		if($data)
 		{
 
@@ -4969,7 +4963,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				{
 					$holiday = $this->check_holiday($emp_id, $day);
 				}
-				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.late_status');
+				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot, pr_emp_shift_log.eot,pr_emp_shift_log.late_status');
 				$this->db->from('pr_emp_shift_log');
 				$this->db->where('pr_emp_shift_log.emp_id',$emp_id);
 				$this->db->where("pr_emp_shift_log.shift_log_date", $day);
@@ -5544,7 +5538,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				{
 					$holiday = $this->check_holiday($emp_id, $day);
 				}
-				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.late_status');
+				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot, pr_emp_shift_log.eot,pr_emp_shift_log.late_status');
 				$this->db->from('pr_emp_shift_log');
 				$this->db->where('pr_emp_shift_log.emp_id',$emp_id);
 				$this->db->where("pr_emp_shift_log.shift_log_date", $day);
@@ -5853,7 +5847,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				{
 					$holiday = $this->check_holiday($emp_id, $day);
 				}
-				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.late_status');
+				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot, pr_emp_shift_log.eot,pr_emp_shift_log.late_status');
 				$this->db->from('pr_emp_shift_log');
 				$this->db->where('pr_emp_shift_log.emp_id',$emp_id);
 				$this->db->where("pr_emp_shift_log.shift_log_date", $day);
@@ -6541,7 +6535,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	{
 		$yearmonth = date('Y-m', strtotime($sal_year_month));
 
-		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_pay_scale_sheet.*,pr_emp_com_info.emp_join_date,emp_line_num.line_name_en, sum(pr_emp_shift_log.extra_ot_hour) as eot_hour');
+		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_pay_scale_sheet.*,pr_emp_com_info.emp_join_date,emp_line_num.line_name_en, sum(pr_emp_shift_log.eot) as eot_hour');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
@@ -8266,7 +8260,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$data = array();
 		foreach($query->result() as $row)
 		{
-			$this->db->select('pr_emp_shift_log.emp_id,SUM(pr_emp_shift_log.ot_hour + pr_emp_shift_log.extra_ot_hour) as total');
+			$this->db->select('pr_emp_shift_log.emp_id,SUM(pr_emp_shift_log.ot + pr_emp_shift_log.eot) as total');
 			$this->db->from('pr_emp_shift_log');
 			$this->db->where('pr_emp_shift_log.shift_log_date',$grid_firstdate);
 			$this->db->where('pr_emp_shift_log.emp_id',$row->emp_id);
@@ -9497,7 +9491,7 @@ function grid_emp_job_application($grid_emp_id){
 			foreach($query->result() as $rows)
 			{
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name,emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.deduction_hour');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name,emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot, pr_emp_shift_log.eot,pr_emp_shift_log.deduction_hour');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_designation');
@@ -9519,7 +9513,7 @@ function grid_emp_job_application($grid_emp_id){
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
 			$this->db->where("pr_emp_shift_log.shift_log_date", $grid_firstdate);
-			$this->db->where("pr_emp_shift_log.extra_ot_hour !=", 0 );
+			$this->db->where("pr_emp_shift_log.eot !=", 0 );
 			$this->db->order_by("pr_emp_com_info.emp_id","ASC");
 			$query2 = $this->db->get();
 
@@ -9588,7 +9582,7 @@ function grid_emp_job_application($grid_emp_id){
 			foreach($query->result() as $rows)
 			{
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot, pr_emp_shift_log.eot');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -9610,7 +9604,7 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
 		$this->db->where("pr_emp_shift_log.shift_log_date", $grid_firstdate);
-		$this->db->where("pr_emp_shift_log.ot_hour !=", 0 );
+		$this->db->where("pr_emp_shift_log.ot !=", 0 );
 		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
 		$query = $this->db->get();
 		//echo $this->db->last_query();
@@ -9668,7 +9662,7 @@ function grid_emp_job_application($grid_emp_id){
 		$query = $this->db->get("pr_emp_com_info");*/
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,emp_designation.desig_name,emp_designation.id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en,emp_section.id, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.night_allo');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,emp_designation.desig_name,emp_designation.id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en,emp_section.id, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot, pr_emp_shift_log.eot,pr_emp_shift_log.night_allo');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -9818,7 +9812,7 @@ function grid_emp_job_application($grid_emp_id){
 		$query = $this->db->get("pr_emp_com_info");*/
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,emp_designation.desig_name,emp_designation.id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en,emp_section.id, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,emp_designation.desig_name,emp_designation.id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en,emp_section.id, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot, pr_emp_shift_log.eot');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -9840,7 +9834,7 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
 		$this->db->where("pr_emp_shift_log.shift_log_date", $att_date);
-		//$this->db->where("pr_emp_shift_log.ot_hour !=", 0 );
+		//$this->db->where("pr_emp_shift_log.ot !=", 0 );
 		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
 		$query = $this->db->get();
 		foreach($query->result() as $rows)
@@ -9924,7 +9918,7 @@ function grid_emp_job_application($grid_emp_id){
 	{
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,emp_designation.desig_name,emp_designation.id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en,emp_section.id, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,emp_designation.desig_name,emp_designation.id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en,emp_section.id, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot, pr_emp_shift_log.eot');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -10007,7 +10001,7 @@ function grid_emp_job_application($grid_emp_id){
 	{
 		$data = array();
 		$this->db->distinct();
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,emp_designation.desig_name,emp_designation.id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en,emp_section.id, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,emp_designation.desig_name,emp_designation.id, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en,emp_section.id, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_com_info.ot_entitle, pr_emp_add.emp_pre_add, pr_emp_shift_log.in_time, pr_emp_shift_log.out_time, pr_emp_shift_log.ot, pr_emp_shift_log.eot');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -10287,62 +10281,47 @@ function grid_emp_job_application($grid_emp_id){
 	}
 	function continuous_ot_eot_report($grid_firstdate, $grid_seconddate, $grid_emp_id)
 	{
-		$data=[];
-		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
-		$data = array();
-		$search_year_month = substr($grid_firstdate,0,7);
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.id as user_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('emp_line_num');
-		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_emp_shift');
-		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
-		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
-		$query = $this->db->get();
 
-		foreach($query->result() as $rows)
-		{
-			$emp_id = $rows->emp_id;
+		$this->db->select('pr_emp_com_info.emp_id, pr_emp_com_info.id as user_id,pr_emp_com_info.unit_id, pr_emp_per_info.name_en, emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name, pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal');
+		$this->db->from('pr_emp_per_info');
+		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+		$this->db->join('pr_id_proxi', 'pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
+		$this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift');
+		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
+		$this->db->order_by("pr_emp_com_info.emp_id", "ASC");
+
+		$query = $this->db->get();
+		$data = [];
+
+		foreach ($query->result() as $rows) {
 			$user_id = $rows->user_id;
 			$gross_sal = $rows->gross_sal;
 
-			$basic_sal_payable = ($gross_sal * 60 / 100);
+			$basic_sal_payable = round($gross_sal * 60 / 100);
 			$basic_sal = round($basic_sal_payable);
-			$ot_rate = $basic_sal * 2 / 208 ;
-			$ot_rate = round($ot_rate,2);
+			$ot_rate = round($basic_sal * 2 / 208, 2);
 
-			$query = $this->db->query("SELECT SUM(`ot`) AS ot_hour,SUM(`eot`) AS extra_ot_hour ,SUM(`deduction_hour`) AS deduction_hour FROM `pr_emp_shift_log` WHERE `emp_id` = '$user_id' AND `shift_log_date` BETWEEN '$grid_firstdate' and '$grid_seconddate'");
+			$query_log = $this->db->query("SELECT SUM(`ot`) AS ot_hour, SUM(`eot`) AS extra_ot_hour, SUM(`deduction_hour`) AS deduction_hour FROM `pr_emp_shift_log` WHERE `emp_id` = '$user_id' AND `shift_log_date` BETWEEN '$grid_firstdate' and '$grid_seconddate'");
 
-			if($query->num_rows() > 0)
-			{
-				$row = $query->row();
-				$ot_hour = $row->ot_hour;// + $total_extra_ot_hour; This is for extra OT hour add to the Monthly
-				$extra_ot_hour = $row->extra_ot_hour;
-				// $modify_eot = $row->modify_eot;
-				$deduction_hour = $row->deduction_hour;
+			if ($query_log->num_rows() > 0) {
+				$row_log = $query_log->row();
+				$ot_hour = $row_log->ot_hour;
+				$extra_ot_hour = $row_log->extra_ot_hour;
+				$deduction_hour = $row_log->deduction_hour;
 
-				$eot_hour = $extra_ot_hour  - 	$deduction_hour;
+				$eot_hour = $extra_ot_hour - $deduction_hour;
 				$total_ot_eot = $ot_hour + $eot_hour;
 				$total_ot_eot_amount = round($total_ot_eot * $ot_rate);
-				// if($total_ot_eot == 0)
-				// {
-				// 	continue;
-				// }
 
-				$data["emp_id"][] 				= $emp_id;
+				$data["emp_id"][] 				= $user_id;
 				$data["proxi_id"][] 			= $rows->proxi_id;
+				$data["unit_id"][] 			= $rows->unit_id;
 				$data["emp_name"][] 			= $rows->name_en;
 				$data["doj"][] 					= $rows->emp_join_date;
 				$data["dept_name"][] 			= $rows->dept_name;
@@ -10358,10 +10337,10 @@ function grid_emp_job_application($grid_emp_id){
 				$data["total_ot_eot_amount"][]	= $total_ot_eot_amount;
 			}
 		}
-			return $data;
-		
-		
+
+		return $data;
 	}
+
 	function grid_monthly_allowance_register($grid_firstdate, $grid_emp_id)
 	{
 		$data = array();
@@ -11064,7 +11043,7 @@ function grid_emp_job_application($grid_emp_id){
 			foreach($days as $day)
 			{
 
-				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour');
+				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot, pr_emp_shift_log.eot');
 				$this->db->from('pr_emp_shift_log');
 				$this->db->where('pr_emp_shift_log.emp_id', $emp_id);
 				$this->db->where("pr_emp_shift_log.shift_log_date", $day);
@@ -11275,7 +11254,7 @@ function grid_emp_job_application($grid_emp_id){
 
 			foreach($days as $day)
 			{
-				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour,pr_emp_shift_log.present_status');
+				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot, pr_emp_shift_log.eot,pr_emp_shift_log.present_status');
 				$this->db->from('pr_emp_shift_log');
 				$this->db->where('pr_emp_shift_log.emp_id', $emp_id);
 				$this->db->where("pr_emp_shift_log.shift_log_date", $day);
