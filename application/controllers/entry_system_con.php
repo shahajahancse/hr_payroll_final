@@ -62,7 +62,7 @@ class Entry_system_con extends CI_Controller
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();  
         }
         
@@ -140,8 +140,8 @@ class Entry_system_con extends CI_Controller
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
         
         $this->data['title'] = 'Holiday Add'; 
@@ -203,8 +203,8 @@ class Entry_system_con extends CI_Controller
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
         dd($this->data['employees']);
         $this->data['title'] = 'Leave Transaction'; 
@@ -556,15 +556,6 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // Form Display for Leave Transaction
     //-------------------------------------------------------------------------------------------------------
-    // function get_emp_by_unit($id){
-    //     $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
-    //     $this->db->from('pr_emp_com_info as com');
-    //     $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
-    //     $this->db->where('com.emp_cat_id', 1);
-    //     $this->db->group_by('com.id');
-    //     return $this->db->where('com.unit_id', $id)->get()->result();
-    // }
-
 
     public function get_leave_data($offset = 0, $limit = 10) {
         $searchQuery = $this->input->get('search'); // Get the search query from the request
