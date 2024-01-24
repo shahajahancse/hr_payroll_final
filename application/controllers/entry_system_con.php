@@ -241,7 +241,6 @@ class Entry_system_con extends CI_Controller
     }
 
     public function leave_balance_ajax(){
-        dd($_POST);
         $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
         $this->db->where('emp_id', $_POST['emp_id']);
         $data['epm_info']=$this->db->get('pr_emp_per_info')->row();
@@ -260,7 +259,7 @@ class Entry_system_con extends CI_Controller
         $year = date( $_POST['year']);
         $first_date = $year . "-01-01";
         $last_date = $year . "-12-31";
-        $this->db->where('emp_id', $emp_id);
+        $this->db->where('emp_id', $_POST['emp_id']);
         $this->db->where('leave_start >=', $first_date);
         $this->db->where('leave_end <=', $last_date);
         $leavei = $this->db->get('pr_leave_trans')->result();
