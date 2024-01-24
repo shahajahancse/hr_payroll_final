@@ -347,13 +347,6 @@
       return ;
     }
 
-    var date = $('#date').val();
-    if (date =='') {
-      alert('Please select Effect Date');
-      $("#loader").hide();
-      return ;
-    }
-
     var unit_id = $('#unit_id').val();
     if (unit_id =='') {
       alert('Please select Unit');
@@ -364,6 +357,13 @@
     var type = $('#type').val();
     if (type =='') {
       alert('Please select Type');
+      $("#loader").hide();
+      return ;
+    }
+
+    var date = $('#date').val();
+    if (date == '' type != 3) {
+      alert('Please select Effect Date');
       $("#loader").hide();
       return ;
     }

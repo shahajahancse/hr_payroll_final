@@ -348,6 +348,7 @@ class Entry_system_con extends CI_Controller
         $type = $_POST['type'];
         $unit_id = $_POST['unit_id'];  
         $emp_ids = explode(',', $sql);
+        dd($_POST);
 
         $emp_id = $this->db->where_in('id', $emp_ids)->get('pr_emp_com_info')->result();
 
