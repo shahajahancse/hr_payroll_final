@@ -363,7 +363,7 @@
 
     var date = document.getElementById('date').value;
     if (date == '' && types != 1) {
-      alert('Please select Effect Date ' +types);
+      alert('Please select Effect Date');
       $("#loader").hide();
       return ;
     }
