@@ -118,6 +118,7 @@
                     <input type="date" class="form-control" id="date" placeholder="select date">
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Add Weekend' />
+                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->

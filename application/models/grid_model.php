@@ -1270,6 +1270,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
  		$this->db->where("pr_emp_shift_log.in_time = '00:00:00'");
  		$this->db->or_where("pr_emp_shift_log.out_time = '00:00:00'");
 	}
+	$this->db->order_by('pr_emp_com_info.emp_line_id','ASC');
 	$this->db->group_by('pr_emp_com_info.emp_id');
     $query = $this->db->get()->result_array();
 	// dd($query);
@@ -1424,59 +1425,38 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 
 
-	function attendance_check_for_absent($emp_id,$present_status,$num_of_days, $start_date){
-		//echo "$present_status=> $num_of_days, $start_date###";
-		
-		$count = 0;
-		$no_imp = 0;
-		$i= 0;
-		
-			for($i=1; $i<= $num_of_days ; $i++)
-			{
-				if($i==1)
-				{
-					$get_date = $start_date;
-				}
-				else
-				{
-					$get_date = date('Y-m-d',(strtotime ( '-1 day' , strtotime ( $get_date) ) ));
-				}
-				
-					$search_year_month =trim(substr($get_date,0,7));
-					$this->db->select("");
-					$this->db->where("emp_id",$emp_id);
-					$this->db->like("shift_log_date",$search_year_month);
-					$query = $this->db->get("pr_emp_shift_log");
-				
-				//echo $get_date."===";
-				$idate = date('d',(strtotime ($get_date)));
-				$date="date_$idate";
-				
-				//echo "$date</br>";
-				foreach($query->result_array() as $rows => $value)
-				{
-				
-					if($value[$date] == "$present_status")
-					{
-						$count++;
-					}
-					else if ($value[$date] == "W")
-					{
-						$no_imp = 0;//return $count;
-					}
-					else if ($value[$date] == "H")
-					{
-						$no_imp = 0;//return $count;
-					}
-					else
-					{
-						return $count;
-					}
-				}
+	function attendance_check_for_absent($emp_id, $start_date){
+    $count = 0;
+    $no_imp = 0;
+
+    for ($i = 1; $i <= 31; $i++) {
+        if ($i == 1) {
+            $get_date = $start_date;
+        } else {
+            $get_date = date('Y-m-d', strtotime('-1 day', strtotime($get_date)));
+        }
+
+        $id = $this->db->select('id')->where('emp_id', $emp_id)->get('pr_emp_com_info')->row()->id;
+        $this->db->select("*");
+        $this->db->where("emp_id", $id);
+        $this->db->where("shift_log_date", $get_date); 
+        $query = $this->db->get("pr_emp_shift_log");
+
+        foreach ($query->result() as $rows => $value) {
+            if ($value->present_status == "A") {
+                $count++;
+            } elseif ($value->present_status == "W" || $value->present_status == "H") {
+                $no_imp = 0;
+            }
+			else{
+				return $count;
 			}
-		
-		return $count;
-	}
+        }
+    }
+
+    return $count;
+}
+
 
 
 
@@ -8621,15 +8601,24 @@ function grid_emp_job_application($grid_emp_id){
 		emp_section.sec_name_en, 
 		emp_section.sec_name_bn, 
 		emp_line_num.line_name_bn, 
+		emp_line_num.line_name_en, 
 		pr_religions.religion_id,
 
 		per_dis.name_bn as dis_name_bn,
 		per_upa.name_bn as upa_name_bn,
 		per_post.name_bn as post_name_bn,
 
+		per_dis.name_en as dis_name_en,
+		per_upa.name_en as upa_name_en,
+		per_post.name_en as post_name_en,
+
 		pre_dis.name_bn as pre_dis_name_bn,
 		pre_upa.name_bn as pre_upa_name_bn,
 		pre_post.name_bn as pre_post_name_bn,
+
+		pre_dis.name_en as pre_dis_name_en,
+		pre_upa.name_en as pre_upa_name_en,
+		pre_post.name_en as pre_post_name_en,
 
 		ref_dis.name_bn as ref_dis_name_bn,
 		ref_upa.name_bn as ref_upa_name_bn,

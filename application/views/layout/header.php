@@ -72,7 +72,10 @@
     </script>
 
     <style type="text/css">
-       
+        /* input[type="text"] {
+        font-family:"Helvetica Neue",Helvetica,Arial,"SutonnyMJ";
+        } */
+
     .n_demand {
         position: absolute;
         top: 10px;
@@ -135,12 +138,13 @@
     .page-sidebar .page-sidebar-wrapper>ul>li>ul.sub-menu li>ul.sub-menu>li>a {
         color: #683091;
     }
+
     </style>
 </head> <!-- END HEAD -->
 
 <style type="text/css">
 @font-face {
-    font-family: 'Kalpurush';
+    font-family: 'Kalpurush,';
     src: url('<?=base_url()?>awedget/assets/fonts/Kalpurush.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;

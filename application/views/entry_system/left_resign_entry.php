@@ -116,13 +116,13 @@
                 <div class="input-group" style="display:flex; gap: 14px">
                     <span style="font-size: 16px !important; width: 220px !important; line-height: 35px;"><?= 'Effect Date'; ?></span>
                     <input type="date" class="form-control" id="date" placeholder="select date">
-                    <select name="type" id="">
+                    <select name="type" id="type">
                         <option value="">Type</option>
                         <option value="1">Left</option>
                         <option value="2">Resign</option>
                     </select>
                     <span class="input-group-btn">
-                        <input class="btn btn-primary" onclick='add_Holiday()' type="button" value='Save' />
+                        <input class="btn btn-primary" onclick='add_left_regign()' type="button" value='Save' />
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
@@ -335,6 +335,58 @@
     }
 </script>
 
+<script>
+  function add_left_regign() {
+    $("#loader").show();
+    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var sql = get_checked_value(checkboxes);
+    if (sql =='') {
+      alert('Please select employee Id');
+      $("#loader").hide();
+      return ;
+    }
 
+    var date = $('#date').val();
+    if (date =='') {
+      alert('Please select Effect Date');
+      $("#loader").hide();
+      return ;
+    }
+
+    var unit_id = $('#unit_id').val();
+    if (unit_id =='') {
+      alert('Please select Unit');
+      $("#loader").hide();
+      return ;
+    }
+
+    var type = $('#type').val();
+    if (type =='') {
+      alert('Please select Type');
+      $("#loader").hide();
+      return ;
+    }
+
+    $.ajax({
+      type: "POST",
+      url: hostname + "entry_system_con/add_left_regign",
+      data: {
+        sql: sql,
+        date: date,
+        type: type,
+        unit_id: unit_id
+      },
+      success: function(data) {
+        // console.log(data);
+          $("#loader").hide();
+          if (data == 'success') {
+              showMessage('success', 'Added Successfully'); 
+          }else {
+              showMessage('error', 'Sorry! Not Added');
+          }
+      }
+    })
+  }
+</script>
 
 
