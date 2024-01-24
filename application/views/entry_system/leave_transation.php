@@ -264,7 +264,7 @@
                                   foreach ($employees as $key => $emp) {
                               ?>
                     <tr class="removeTr">
-                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
+                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
                         </td>
                         <td class="success"><?= $emp->emp_id ?></td>
                         <td class="warning "><?= $emp->name_en ?></td>
@@ -326,7 +326,7 @@
                         items += '<tr class="removeTr">';
                         items +=
                             '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                            value.id + '" ></td>';
+                            value.emp_id + '" ></td>';
                         items += '<td class="success">' + value.emp_id + '</td>';
                         items += '<td class="warning ">' + value.name_en + '</td>';
                         items += '</tr>';

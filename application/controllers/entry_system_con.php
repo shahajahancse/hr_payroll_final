@@ -214,7 +214,7 @@ class Entry_system_con extends CI_Controller
 
     public function leave_entry(){
         // dd($_POST);
-        $emp_id = $this->db->where('id', $_POST['emp_id'])->get('pr_emp_com_info')->row()->emp_id;
+        $emp_id = $_POST['emp_id'];
         $from_date = $_POST['from_date'];
         $to_date = $_POST['to_date'];
         $leave_type = $_POST['leave_type'];
@@ -241,12 +241,11 @@ class Entry_system_con extends CI_Controller
     }
 
     public function leave_balance_ajax(){
-        $emp_id = $this->db->where('id', $_POST['emp_id'])->get('pr_emp_com_info')->row()->emp_id;
         $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
-        $this->db->where('emp_id', $emp_id);
+        $this->db->where('emp_id', $_POST['emp_id']);
         $data['epm_info']=$this->db->get('pr_emp_per_info')->row();
 
-        $this->db->where('id', $_POST['emp_id']);
+        $this->db->where('emp_id', $_POST['emp_id']);
         $unit_id=$this->db->get('pr_emp_com_info')->row()->unit_id;
 
         $this->db->where('unit_id', $unit_id);
