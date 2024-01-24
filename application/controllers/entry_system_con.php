@@ -174,6 +174,20 @@ class Entry_system_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url('entry_system_con/holiday_list'));
     }
+
+    public function holiday_delete_all(){
+        $date = $this->input->post('date');
+        $sql = $this->input->post('sql');
+        $unit_id = $this->input->post('unit_id');
+        $emp_ids = explode(',', $sql);
+
+        $this->db->where('holiday_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_holyday_off') ) {      
+            echo 'success';
+        }else{
+            echo 'error';
+        }
+    }
     //-------------------------------------------------------------------------------------------------------
     // GRID for holiday
     //-------------------------------------------------------------------------------------------------------
