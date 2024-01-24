@@ -206,7 +206,7 @@ class Attn_process_model extends CI_Model{
 
 							// OT Calculation
 							$ot_hour = floor($minute / 60);
-							dd($ot_hour .' = '. $minute .' = '. $ot_last_hour);
+							dd($minute % 60);
 							if ($minute % 60 >= $ot_last_hour) {
 								$ot_hour = $ot_hour + 1;
 							}
