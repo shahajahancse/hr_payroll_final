@@ -173,6 +173,7 @@ class Attn_process_model extends CI_Model{
 
 						// Total eot cal...
 						$eot_hour 	= floor($minute / 60);
+						echo $emp_id ."<br>";
 						if ($minute % 60 >= $ot_last_hour) {
 							$eot_hour = $eot_hour + 1;
 						}
