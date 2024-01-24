@@ -209,7 +209,7 @@
                         items += '<tr class="removeTr">';
                         items +=
                             '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
-                            value.id + '" ></td>';
+                            value.emp_id + '" ></td>';
                         items += '<td class="success">' + value.emp_id + '</td>';
                         items += '<td class="warning ">' + value.name_en + '</td>';
                         items += '</tr>';
