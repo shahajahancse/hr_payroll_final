@@ -120,6 +120,7 @@
                         <option value="">Type</option>
                         <option value="1">Left</option>
                         <option value="2">Resign</option>
+                        <option value="3">Repular</option>
                     </select>
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='add_left_regign()' type="button" value='Save' />
