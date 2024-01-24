@@ -88,7 +88,7 @@ elseif($daily_status == 6)
 		} 
 		foreach ($groupedData as $sectionName => $employees) { ?>
 	<tr>
-		<th colspan="10" style="border:none;font-size:14px;float:left"><b><?php echo $sectionName ?></b></th>
+		<th colspan="10" style="border:none;font-size:14px;float:left;white-space:nowrap"><b><?php echo $sectionName ?></b></th>
 	</tr>	
 	<tr>
 		<th style="padding-left:10px;padding-right:10px;">SL</th>
@@ -165,7 +165,7 @@ elseif($daily_status == 6)
 		</td>
 		<?php if($daily_status == 2){?>
 		<td><?php echo $employee['personal_mobile']?></td>
-		<td style="padding-top:30px;padding-left:80px"></td>
+		<td style="padding-top:30px;padding-left:80px;white-space:nowrap"></td>
 		<!-- <td></td> -->
 		<?php }?>
 		<?php if($daily_status == 2 || $daily_status == 4){?>
@@ -179,7 +179,7 @@ elseif($daily_status == 6)
 	} ?>
 	<tr  style="border:none;font-size:14px">
 		<th>
-			<?php echo "<style='float:left'>Total : " . count($values)?>
+			<?php echo "<style='float:left;white-space:nowrap'>Total : " . count($values)?>
 		</th>
 	</tr>
 </table>
