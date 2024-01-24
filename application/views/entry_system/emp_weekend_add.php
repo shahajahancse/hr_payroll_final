@@ -196,7 +196,7 @@
                     $.each(response, function(index, value) {
                         items += '<tr id="removeTr">';
                         items +=
-                            '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
+                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
                             value.emp_id + '" ></td>';
                         items += '<td class="success">' + value.emp_id + '</td>';
                         items += '<td class="warning ">' + value.name_en + '</td>';
@@ -329,7 +329,7 @@
 <script>
   function add_weekend() {
     $("#loader").show();
-    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var checkboxes = document.getElementsByName('emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql =='') {
       alert('Please select employee Id');
@@ -372,7 +372,7 @@
 <script>
   function delete_weekend() {
     $("#loader").show();
-    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var checkboxes = document.getElementsByName('emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql =='') {
       alert('Please select employee Id');

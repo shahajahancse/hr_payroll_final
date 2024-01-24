@@ -194,7 +194,7 @@ function grid_emp_list() {
                 $.each(response, function(index, value) {
                     items += '<tr id="removeTr">';
                     items +=
-                        '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
+                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
                         value.emp_id + '" ></td>';
                     items += '<td class="success">' + value.emp_id + '</td>';
                     items += '<td class="warning ">' + value.name_en + '</td>';
@@ -326,7 +326,7 @@ $(document).ready(function() {
 <script>
   function add_Holiday() {
     $("#loader").show();
-    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var checkboxes = document.getElementsByName('emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql =='') {
       alert('Please select employee Id');
@@ -369,7 +369,7 @@ $(document).ready(function() {
 <script>
   function delete_holiday() {
     $("#loader").show();
-    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var checkboxes = document.getElementsByName('emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql =='') {
       alert('Please select employee Id');

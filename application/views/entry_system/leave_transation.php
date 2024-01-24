@@ -325,7 +325,7 @@
                     $.each(response, function(index, value) {
                         items += '<tr class="removeTr">';
                         items +=
-                            '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
+                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
                             value.id + '" ></td>';
                         items += '<td class="success">' + value.emp_id + '</td>';
                         items += '<td class="warning ">' + value.name_en + '</td>';
@@ -458,7 +458,7 @@
 <script>
     function add_weekend() {
         
-        var checkboxes = document.getElementsByName('select_emp_id[]');
+        var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         if (sql == '') {
             alert('Please select employee Id');
@@ -500,7 +500,7 @@
 <script>
     function get_leave_balance() {
         
-        var checkboxes = document.getElementsByName('select_emp_id[]');
+        var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
         if (numbersArray == '') {
@@ -572,7 +572,7 @@
     function leave_add(e) {
         e.preventDefault();
         
-        var checkboxes = document.getElementsByName('select_emp_id[]');
+        var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
         if (numbersArray == '') {
