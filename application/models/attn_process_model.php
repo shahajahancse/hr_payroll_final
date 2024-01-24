@@ -155,7 +155,7 @@ class Attn_process_model extends CI_Model{
 
                 		$start_date_time = strtotime($in_time);
 						$end_date_time 	= strtotime($out_time);
-						$minute = ($end_date_time - $start_date_time)/60;
+						$minute = round(($end_date_time - $start_date_time)/60);
 
 						// Lunch break Deduction 
 						if (($out_time > $lunch_in_time) && ($lunch_minute != 0)) {
@@ -184,7 +184,7 @@ class Attn_process_model extends CI_Model{
 
 						if ($end_date_time > $start_date_time && $in_time != '') {
 
-							$minute = ($end_date_time - $start_date_time)/60;
+							$minute = round(($end_date_time - $start_date_time)/60);
 
 							// Tiffin break Deduction Hour
 							if ($tiffin_break_end1 < $out_time && $tiffin_minute != 0) {
