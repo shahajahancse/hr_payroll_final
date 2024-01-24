@@ -333,7 +333,6 @@ class Entry_system_con extends CI_Controller
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
-            $this->data['employees'] = $this->data['employees']->result();
         }
         // dd($this->data['user_data']->unit_name);
         
@@ -487,8 +486,8 @@ class Entry_system_con extends CI_Controller
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id', 'left');
         $this->db->where('pr_units.unit_id', $unit);
         $this->db->where('pr_emp_com_info.emp_cat_id', 1);
-        $query = $this->db->get();
-        // dd($query->result_array());
+        $query = $this->db->get()->result();
+        dd($query);
     }
 
 
