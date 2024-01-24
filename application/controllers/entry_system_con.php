@@ -390,22 +390,53 @@ class Entry_system_con extends CI_Controller
 
     public function left_list()
     {
-        $this->data['user_data'] = $this->session->userdata('data');
-        $this->data['username'] =  $this->data['user_data']->id_number;
-        $this->data['subview'] = 'left_del_list';
+        $this->db->select('lf.*, pr_units.unit_name, per.name_en as user_name');
+        $this->db->from('pr_emp_left_history as lf');
+        $this->db->join('pr_units', 'pr_units.unit_id = lf.unit_id', 'left');
+        $this->db->join('pr_emp_per_info as per', 'per.emp_id = lf.emp_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->db->group_by('lf.emp_id');
+        $this->data['results'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Left List'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/left_list';
         $this->load->view('layout/template', $this->data);
     }
 
     public function resign_list()
     {
-        $this->data['user_data'] = $this->session->userdata('data');
-        $this->data['username'] =  $this->data['user_data']->id_number;
-        $this->data['subview'] = 'left_del_list';
+        $this->db->select('rs.*, pr_units.unit_name, per.name_en as user_name');
+        $this->db->from('pr_emp_resign_history as rs');
+        $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
+        $this->db->join('pr_emp_per_info as per', 'per.emp_id = rs.emp_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->db->group_by('rs.emp_id');
+        $this->data['results'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Left List'; 
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/resign_list';
         $this->load->view('layout/template', $this->data);
     }
 
+    public function left_delete($id){
+        $this->db->where('left_id', $id);
+        $this->db->delete('pr_emp_left_history');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url('entry_system_con/leave_list'));
+    }
 
-
+    public function resign_delete($id){
+        $this->db->where('resign_id', $id);
+        $this->db->delete('pr_emp_resign_history');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url('entry_system_con/leave_list'));
+    }
     //-------------------------------------------------------------------------------------------------------
     // Left/Resign end
     //-------------------------------------------------------------------------------------------------------
