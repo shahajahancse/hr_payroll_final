@@ -368,3 +368,46 @@
     })
   }
 </script>
+
+<script>
+  function delete_weekend() {
+    $("#loader").show();
+    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var sql = get_checked_value(checkboxes);
+    if (sql =='') {
+      alert('Please select employee Id');
+      $("#loader").hide();
+      return ;
+    }
+    var date = $('#date').val();
+    if (date =='') {
+      alert('Please select Date');
+      $("#loader").hide();
+      return ;
+    }
+    var unit_id = $('#unit_id').val();
+    if (unit_id =='') {
+      alert('Please select Unit');
+      $("#loader").hide();
+      return ;
+    }
+    $.ajax({
+      type: "POST",
+      url: hostname + "entry_system_con/weekend_delete_all",
+      data: {
+        sql: sql,
+        date: date,
+        unit_id: unit_id
+      },
+      success: function(data) {
+        // console.log(data);
+          $("#loader").hide();
+          if (data == 'success') {
+              showMessage('success', 'Weekend Deleted Successfully'); 
+          }else {
+              showMessage('error', 'Weekend Not Deleted');
+          }
+      }
+    })
+  }
+</script>

@@ -99,11 +99,12 @@ class Entry_system_con extends CI_Controller
 
     }
 
-    public function weekend_delete_all($id){
+    public function weekend_delete_all(){
         $date = $this->input->post('date');
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
+        dd($emp_ids);
         $data = [];
 
         $this->db->where('work_off_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
