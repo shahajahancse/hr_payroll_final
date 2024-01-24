@@ -332,7 +332,8 @@ class Entry_system_con extends CI_Controller
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+            $this->data['employees'] = $this->data['employees']->result();
         }
         // dd($this->data['user_data']->unit_name);
         
