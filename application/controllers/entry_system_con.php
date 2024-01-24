@@ -334,7 +334,6 @@ class Entry_system_con extends CI_Controller
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        dd($this->data['employees']);
         
         $this->data['title'] = 'Left / Resign Entry'; 
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -489,7 +488,7 @@ class Entry_system_con extends CI_Controller
                 ');
         $this->db->from('pr_emp_com_info');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id', 'left');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id', 'left');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
         $this->db->where('pr_units.unit_id', $unit);
         $this->db->where('pr_emp_com_info.emp_cat_id', 1);
         return $this->db->get();
