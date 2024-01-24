@@ -74,7 +74,7 @@
                         <td><?php echo $r->unit_name ?></td>
                         <td><?php echo date('d-m-Y', strtotime($r->left_date))?></td>
                         <td>
-                            <a href="<?=base_url('entry_system_con/left_delete/'.$r->id)?>"
+                            <a href="<?=base_url('entry_system_con/left_delete/'.$r->emp_id)?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
