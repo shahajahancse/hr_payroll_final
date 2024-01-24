@@ -323,7 +323,7 @@ class Job_card_model extends CI_Model{
 		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
 		
 			
-		$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot_hour, pr_emp_shift_log.eot, pr_emp_shift_log.late_status,pr_emp_shift_log.deduction_hour');
+		$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour, pr_emp_shift_log.late_status,pr_emp_shift_log.deduction_hour');
 		$this->db->from('pr_emp_shift_log');
 		$this->db->where('pr_emp_shift_log.emp_id', $emp_id);
 		$this->db->where("pr_emp_shift_log.shift_log_date >=", $start_date);

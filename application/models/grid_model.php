@@ -1838,72 +1838,55 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		}
 	}
 	
-	function grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id)
+	function grid_continuous_costing_report($firstdate, $seconddate, $grid_unit, $grid_emp_id)
 	{
-		$firstdate 		= date("Y-m-d",strtotime($firstdate));
-		$seconddate 	= date("Y-m-d",strtotime($seconddate));
-		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, emp_designation.desig_name, emp_section.sec_name_en,emp_line_num.line_name_en,SUM(pr_emp_shift_log.ot) as total_ot,SUM(pr_emp_shift_log.eot) as total_extra_ot_hour,COUNT(present_status) as total_day,SUM(pr_emp_shift_log.deduction_hour) as total_deduction_hour");
-		//,SUM(pr_emp_shift_log.ot) as total_ot,SUM(pr_emp_shift_log.eot) as total_extra_ot_hour
+		$firstdate = date("Y-m-d", strtotime($firstdate));
+		$seconddate = date("Y-m-d", strtotime($seconddate));
+	
+		$this->db->select("pr_emp_com_info.emp_id, pr_emp_per_info.name_en, emp_designation.desig_name, emp_section.sec_name_en, emp_line_num.line_name_en, 
+			SUM(pr_emp_shift_log.ot) as total_ot, SUM(pr_emp_shift_log.eot) as total_extra_ot_hour, COUNT(present_status) as total_day, SUM(pr_emp_shift_log.deduction_hour) as total_deduction_hour, pr_emp_com_info.gross_sal");
 		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_section');
-		$this->db->from('emp_line_num');
-		$this->db->from('pr_emp_shift_log');
-
-
-		$this->db->where("pr_emp_com_info.unit_id",$grid_unit);
-		$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
-		$this->db->where("pr_emp_shift_log.shift_log_date BETWEEN '$firstdate' AND '$seconddate' ");
-		$this->db->where("pr_emp_shift_log.present_status !=","A");
-
-		$this->db->where("pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id");
-		$this->db->where("pr_emp_per_info.emp_id = pr_emp_com_info.emp_id");
-
-
-		$this->db->where("pr_emp_com_info.emp_desi_id = emp_designation.id");
-		$this->db->where("pr_emp_com_info.emp_sec_id = emp_section.id");
-		$this->db->where("pr_emp_com_info.emp_line_id = emp_line_num.id");
+		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id', 'left');
+		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id', 'left');
+		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id', 'left');
+		$this->db->join('pr_emp_shift_log', 'pr_emp_com_info.id = pr_emp_shift_log.emp_id', 'left');
+		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date >=", $firstdate);
+		$this->db->where("pr_emp_shift_log.shift_log_date <=", $seconddate);
+		$this->db->where("pr_emp_shift_log.present_status !=", "A");
 		$this->db->group_by("pr_emp_com_info.emp_id");
 		$this->db->order_by("emp_line_num.line_name_en");
 		$query = $this->db->get();
-
-		//echo $query->num_rows();
-
-		foreach($query->result() as $rows)
-		{
-			$emp_id 		= $rows->emp_id;
-
-			$data['emp_id'] []			= $emp_id ;
-			$data['emp_full_name'] []	= $rows->emp_full_name ;
-			$data['sec_name_en'] []		= $rows->sec_name_en ;
-			$data['line_name'] []		= $rows->line_name ;
-			$data['desig_name'][] 		= $rows->desig_name ;
-			$data['gross_sal'] []		= $rows->gross_sal ;
-
-			$salary_structure 			= $this->common_model->salary_structure($rows->gross_sal);
+	
+		$data = [];
+	
+		foreach ($query->result() as $rows) {
+			$emp_id = $rows->emp_id;
+	
+			$data['emp_id'][] = $emp_id;
+			$data['emp_full_name'][] = $rows->name_en;
+			$data['sec_name'][] = $rows->sec_name_en;
+			$data['line_name'][] = $rows->line_name_en;
+			$data['desig_name'][] = $rows->desig_name;
+			$data['gross_sal'][] = $rows->gross_sal;
+	
+			$salary_structure = $this->common_model->salary_structure($rows->gross_sal);
 			$ot_rate = $salary_structure['ot_rate'];
-			$data['ot_hour'] []			= $rows->total_ot ;//$shift_log_data['ot_hour'];
-
-			//$data['extra_ot_hour'][] 	= $rows->total_extra_ot_hour ;
-			$total_extra_ot_hour 	= $rows->total_extra_ot_hour - $rows->total_deduction_hour;
-
-			$data['extra_ot_hour'][] 	= $total_extra_ot_hour;//$shift_log_data['extra_ot_hour'];
-			$data['total_day'][] 		= $rows->total_day ;
-			$data['ot_rate'][] 			= $ot_rate;
+			$data['ot_hour'][] = $rows->total_ot;
+			$total_extra_ot_hour = $rows->total_extra_ot_hour - $rows->total_deduction_hour;
+			$data['extra_ot_hour'][] = $total_extra_ot_hour;
+			$data['total_day'][] = $rows->total_day;
+			$data['ot_rate'][] = $ot_rate;
 		}
-
-
-		if(isset($data))
-		{
-
+	
+		if (!empty($data)) {
 			return $data;
-		}
-		else
-		{
+		} else {
 			return "Requested list is empty";
 		}
 	}
+	
 
 
 	function grid_leave_application_form($firstdate,$seconddate,$leave_type,$emp_id)
