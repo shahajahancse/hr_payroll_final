@@ -447,6 +447,7 @@ class Entry_system_con extends CI_Controller
     //---------------------------------------------------------------------------------------- 
     public function incre_prom_entry()
     {
+        dd('coming soon');
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
