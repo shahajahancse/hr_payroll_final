@@ -147,7 +147,7 @@
                                   foreach ($employees as $key => $emp) {
                               ?>
                     <tr class="removeTr">
-                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
+                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
                         </td>
                         <td class="success"><?= $emp->emp_id ?></td>
                         <td class="warning "><?= $emp->name_en ?></td>
@@ -208,7 +208,7 @@
                     $.each(response, function(index, value) {
                         items += '<tr class="removeTr">';
                         items +=
-                            '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
+                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
                             value.emp_id + '" ></td>';
                         items += '<td class="success">' + value.emp_id + '</td>';
                         items += '<td class="warning ">' + value.name_en + '</td>';
@@ -339,7 +339,7 @@
 <script>
   function add_left_regign() {
     $("#loader").show();
-    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var checkboxes = document.getElementsByName('emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql =='') {
       alert('Please select employee Id');
@@ -363,7 +363,7 @@
 
     var date = $('#date').val();
     if (date == '' && status != 3) {
-      alert('Please select Effect Date');
+      alert('Please select Effect Date ' +status);
       $("#loader").hide();
       return ;
     }
