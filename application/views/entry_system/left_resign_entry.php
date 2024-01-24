@@ -117,7 +117,7 @@
                     <span style="font-size: 16px !important; width: 220px !important; line-height: 35px;"><?= 'Effect Date'; ?></span>
                     <input type="date" class="form-control" id="date" placeholder="select date">
                     <select name="status" id="status">
-                        <option value="">Status</option>
+                        <option value="">select one</option>
                         <option value="1">Left</option>
                         <option value="2">Resign</option>
                         <option value="3">Repular</option>
@@ -356,7 +356,7 @@
 
     var status = $('#status').val();
     if (status =='') {
-      alert('Please select Type');
+      alert('Please select Status');
       $("#loader").hide();
       return ;
     }
