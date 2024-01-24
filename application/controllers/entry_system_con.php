@@ -241,6 +241,7 @@ class Entry_system_con extends CI_Controller
     }
 
     public function leave_balance_ajax(){
+        dd($_POST);
         $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
         $this->db->where('emp_id', $_POST['emp_id']);
         $data['epm_info']=$this->db->get('pr_emp_per_info')->row();
