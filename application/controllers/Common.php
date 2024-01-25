@@ -221,7 +221,7 @@ class Common extends CI_Controller {
         exit;
     }
     
-    function get_emp_info_by_id($id){
+    function get_emp_info_by_id($id, $unit_id = null){
 
         $this->db->select('
                     com.*,

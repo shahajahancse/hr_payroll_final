@@ -314,14 +314,14 @@
         }
 
         $.ajax({
-            type: "POST",
-            url: hostname + "common/get_emp_info_by_id", 
-            data: {
-                emp_id: numbersArray[0],
-                year: bal_get_year
-            },
+            type: "POST",            
+            contentType: "application/json",
+            dataType: "json",
+            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
             success: function(d) {
-                var data = JSON.parse(d);
+                console.log(d); return;
+                
+                /*var data = JSON.parse(d);
                 $("#loader").hide();
                 $("#promotion_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + data.epm_info.img_source);
@@ -337,7 +337,7 @@
                 $('#leave_balance_casual').html(data.leave_balance_casual);
                 $('#leave_balance_sick').html(data.leave_balance_sick);
                 $('#leave_balance_maternity').html(data.leave_balance_maternity);
-                $('#leave_balance_paternity').html(data.leave_balance_paternity);
+                $('#leave_balance_paternity').html(data.leave_balance_paternity);*/
             },
             error: function() {
                 $("#loader").hide();
