@@ -223,9 +223,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" top='20px'>
                             <div class="col-md-3">
-                                <span>Effective Date</span>
+                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group" style="gap: 14px; display: flex;">
