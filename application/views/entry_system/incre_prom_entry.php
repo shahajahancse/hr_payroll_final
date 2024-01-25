@@ -285,22 +285,31 @@
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
         if (numbersArray == '') {
-            $("#increment_entry").hide();
-            $("#promotion_entry").hide();
             showMessage('error', 'Please select employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
             return false;
         }
         if (numbersArray.length > 1) {
-            $("#increment_entry").hide();
-            $("#promotion_entry").hide();
             showMessage('error', 'Please select max one employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
             return false;
         }
         unit_id = document.getElementById('unit_id').value;
         if (unit_id == '') {
-            $("#increment_entry").hide();
-            $("#promotion_entry").hide();
             showMessage('error', 'Please select Unit');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
             return false;
         }
 
