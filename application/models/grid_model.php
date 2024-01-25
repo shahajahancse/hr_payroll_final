@@ -1331,8 +1331,10 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	}
 
 	if($type == 8){
+		// dd($date);
  		$this->db->where("pr_emp_shift_log.in_time = '00:00:00'");
- 		$this->db->or_where("pr_emp_shift_log.out_time = '00:00:00'");
+ 		$this->db->where("pr_emp_shift_log.out_time = '00:00:00'");
+ 		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
 	}
 	$this->db->order_by('pr_emp_com_info.emp_line_id','ASC');
 	$this->db->group_by('pr_emp_com_info.emp_id');

@@ -136,14 +136,14 @@ for($counter = 1; $counter <= $page; $counter ++)
 	echo $values_2["line_name"][$k];
 	echo "</td>";
 //type
-	echo "<td style='text-transform: uppercase;width:75px;height:auto;'>";
+	echo "<td style='width:75px;height:auto;'>";
 	echo $values_2["leave_type"][$k] == 'cl' ? 'Casual Leave' :($values_2["leave_type"][$k] == 'sl' ? 'Sick Leave' : ($values_2["leave_type"][$k] == 'ml' ? 'Maternity Leave' : $values_2["leave_type"][$k]));
 
 	echo "</td>";
-	echo "<td style='text-transform: uppercase;width:75px;height:auto;'>";
+	echo "<td style='width:75px;height:auto;'>";
 	echo $values_2["leave_start"][$k];
 	echo "</td>";
-	echo "<td style='text-transform: uppercase;width:75px;height:auto;'>";
+	echo "<td style='width:75px;height:auto;'>";
 	echo $values_2["leave_end"][$k];
 	echo "</td>";
 
