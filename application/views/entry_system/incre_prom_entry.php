@@ -29,7 +29,7 @@
         <div class="row tablebox" style="display: block;">
             <h3 style="font-weight: 600;"><?= $title ?></h3>
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
@@ -49,7 +49,7 @@
             </div>
             <!-- department -->
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
                         <?php if (!empty($user_data->unit_name)) { 
@@ -64,7 +64,7 @@
             </div>
             <!-- section -->
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Section </label>
                     <select class="form-control input-sm section" id='section' name='section'>
                         <option value=''></option>
@@ -73,7 +73,7 @@
             </div>
             <!-- line -->
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Line </label>
                     <select class="form-control input-sm line" id='line' name='line'>
                         <option value=''></option>
@@ -82,7 +82,7 @@
             </div>
             <!-- Designation -->
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Designation</label>
                     <select class="form-control input-sm desig" id='desig' name='desig' onChange="grid_emp_list()">
                         <option value=''></option>
@@ -92,7 +92,7 @@
             <!-- status -->
             <div class="col-md-6">
                 <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Status </label>
                     <select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
                         <option value="">All Employee</option>
