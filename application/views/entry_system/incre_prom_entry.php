@@ -198,26 +198,26 @@
                     <form class="col-md-12" method="post" id="increment_entry_form">
                         <div class="raw">
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div class="form-group" style="padding: 5px 0px !important; margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
                                     <input class="form-control input-sm" id="salary" name="salary">
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div class="form-group" style="padding: 5px 0px !important; margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
                                     <input class="form-control input-sm" id="gross_sal" name="gross_sal">
 
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div class="form-group" style="padding: 5px 0px !important; margin-bottom: 3px !important;">
                                     <label class="control-label">Com. Salary</label>
                                     <input class="form-control input-sm" id="com_salary" name="com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div class="form-group" style="padding: 5px 0px !important; margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
                                     <input class="form-control input-sm" id="com_gross_sal" name="com_gross_sal">
                                 </div>
