@@ -565,7 +565,7 @@
                     <p style="font-size:21px">2| wcZvi bvgt <span style="font-size:15px"><?php echo $value->father_name?></span></p>
                     <p style="font-size:21px">3| gvZvi bvgt <span style="font-size:15px"><?php echo $value->mother_name?></span></p>
                     <p style="font-size:21px">4| ¯’vqx wVKvbvt  <span style="font-size:15px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> |</p>
-                    <p style="font-size:21px"> &nbsp;&nbsp;&nbsp;&nbsp;    wbR †gvevBj bs <span><?php echo $value->personal_mobile?></span> &nbsp; &nbsp;&nbsp;&nbsp;AwfeveK †gvevBj bs <span><?php echo $value->refer_mobile?></span> &nbsp; &nbsp;&nbsp;&nbsp;bwgwb †gvevBjBs <span><?php echo $value->nomi_mobile?></span></p>
+                    <p style="font-size:21px">     wbR †gvevBj bs <span><?php echo $value->personal_mobile?></span>  AwfeveK †gvevBj bs <span><?php echo $value->refer_mobile?></span>  bwgwb †gvevBjBs <span><?php echo $value->nomi_mobile?></span></p>
                     <p style="font-size:21px">5| wj½t <span style="font-size:15px"><?php echo $value->gender == 'Male' ? 'পুরুষ':'নারী'?></span></p>
                     <p style="font-size:21px">6| ‰eevwnK Ae¯’vt <span><?php 
                                                 if($value->marital_status == 'Unmarried'){
@@ -583,13 +583,13 @@
                     </p>
                     <p style="font-size:21px">7| eZ©gvb wVKvbvt <span style="font-size:15px"><?php echo $value->pre_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span>|</p>
                     <p style="font-size:21px">8| fvovwUqv n‡j - </p>
-                    <p style="font-size:21px">&nbsp;&nbsp;&nbsp;&nbsp; evwoi gvwj‡Ki bvgt  <span style="font-size:15px"><?php echo $value->pre_home_owner?></span></p>
-                    <p style="font-size:21px">&nbsp;&nbsp;&nbsp;&nbsp; †dvb / †gvevBj bs (hw` _v‡K)/t <span><?php echo $value->home_own_mobile?></span></p>
+                    <p style="font-size:21px"> evwoi gvwj‡Ki bvgt  <span style="font-size:15px"><?php echo $value->pre_home_owner?></span></p>
+                    <p style="font-size:21px"> †dvb / †gvevBj bs (hw` _v‡K)/t <span><?php echo $value->home_own_mobile?></span></p>
         
                     <p style="font-size:21px">9| ‡idv‡iÝKvixi / Awfeve‡Ki bvgt<span style="font-size:15px"><?php echo $value->refer_name?></span>
                         <!-- <p>‡ckv t ............«Referees_job»|</p> -->
-                    <p style="font-size:21px">&nbsp;&nbsp;&nbsp;&nbsp; wVKvbvt <span style="font-size:15px"><?php echo $value->refer_village?>,<?php echo $value->ref_post_name_bn?>, <?php echo $value->ref_upa_name_bn?>, <?php echo $value->ref_dis_name_bn?></span>|</p>
-                    <p style="font-size:21px">&nbsp;&nbsp;&nbsp;&nbsp; †gvevBjt <span><?php echo $value->refer_mobile?></span></p>
+                    <p style="font-size:21px"> wVKvbvt <span style="font-size:15px"><?php echo $value->refer_village?>,<?php echo $value->ref_post_name_bn?>, <?php echo $value->ref_upa_name_bn?>, <?php echo $value->ref_dis_name_bn?></span>|</p>
+                    <p style="font-size:21px"> †gvevBjt <span><?php echo $value->refer_mobile?></span></p>
                     <br>                            
                     <p style="width:160px;border-bottom: 1px solid black;font-size:21px"><b>wbixÿbKvixi gšÍe¨t</b></p>
                     <p style="font-size:21px">Avwg m‡iRwg‡b/†gvevBj †dv‡bi gva¨‡g †idv‡iÝKvix e¨w³i mv‡_ †hvMv‡hvM K‡i wb‡¤œv³ Z_¨w` mwVK †cjvg:</p>
@@ -613,7 +613,7 @@
             <br>
         <!-- abedon -->
 
-        <div class="container-fluid break_page" style=" font-family: sutonnymj;margin-left:-10px">
+        <div class="container-fluid break_page" style=" font-family: sutonnymj;margin-left:-15px">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
@@ -750,25 +750,25 @@
             </div>
             <br>
             <div>
-                <p> 1| KviLvbv / cÖwZôv‡bi bvg &nbsp;t&nbsp; nvwbI‡qj Mv‡g©›Um wjwg‡UW|</p>
-                <p> 2| KviLvbv / cÖwZôv‡bi wVKvbv &nbsp;t&nbsp; 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                <p> 1| KviLvbv / cÖwZôv‡bi bvg t nvwbI‡qj Mv‡g©›Um wjwg‡UW|</p>
+                <p> 2| KviLvbv / cÖwZôv‡bi wVKvbv t 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <div class="d-flex flex-row">
                     <p> 3| kÖwg‡Ki bvg I wVKvbvt</p>
                     <p> bvgt <span style='font-size:15px'> <?php echo $value->name_bn?> </p>
-                    <p>,&nbsp;MÖvgt <span style="font-size:15px"> <?php echo $value->per_village_bn?></span> </p>
-                    <p>,&nbsp; WvKNit  <span style="font-size:15px"> <?php echo $value->pre_post_name_bn?></span> </p>
-                    <p>,&nbsp;_vbvt   <span style="font-size:15px"> <?php echo $value->pre_upa_name_bn?> </p>
-                    <p>,&nbsp; ‡Rjvt <span style="font-size:15px"> <?php echo $value->pre_dis_name_bn?></span> </p>
+                    <p>,MÖvgt <span style="font-size:15px"> <?php echo $value->per_village_bn?></span> </p>
+                    <p>, WvKNit  <span style="font-size:15px"> <?php echo $value->pre_post_name_bn?></span> </p>
+                    <p>,_vbvt   <span style="font-size:15px"> <?php echo $value->pre_upa_name_bn?> </p>
+                    <p>, ‡Rjvt <span style="font-size:15px"> <?php echo $value->pre_dis_name_bn?></span> </p>
                   
                 </div>
                 <p>4| wj½t <span style="font-size:15px"><?php echo $value->gender == "Male"? "পুরুষ":"নারী"?></span></p>
                 <p>5| Rb¥ ZvwiLt <?php echo date("d-m-Y",strtotime($value->emp_dob))?> Bs</span></p>
                 <p>6| mbv³ KiY wPý (hw` _v‡K)t ------------------------------------ |</p>
                 <div class="d-flex">
-                    <p>7| ¯’vqx wVKvbvt &nbsp; MÖvgt <span style="font-size:15px"><?php echo $value->per_village_bn?></span></p>
-                    <p>,&nbsp;WvKNit <span style="font-size:15px"><?php echo $value->pre_post_name_bn?></span></p>
-                    <p>,&nbsp;_vbvt <span style="font-size:15px"><?php echo $value->pre_upa_name_bn?></span></p>
-                    <p>,&nbsp;‡Rjvt <span style="font-size:15px"><?php echo $value->pre_dis_name_bn?></span></p>
+                    <p>7| ¯’vqx wVKvbvt  MÖvgt <span style="font-size:15px"><?php echo $value->per_village_bn?></span></p>
+                    <p>,WvKNit <span style="font-size:15px"><?php echo $value->pre_post_name_bn?></span></p>
+                    <p>,_vbvt <span style="font-size:15px"><?php echo $value->pre_upa_name_bn?></span></p>
+                    <p>,‡Rjvt <span style="font-size:15px"><?php echo $value->pre_dis_name_bn?></span></p>
 
                     
                 </div>
