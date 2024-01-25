@@ -214,6 +214,19 @@
 
                         <div class="row" top='20px'>
                             <div class="col-md-3">
+                                <select name="" id="" class="form-control input-sm">
+                                    <option value="">Grade</option>
+                                    <option value="8">1</option>
+                                    <option value="7">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="7">5</option>
+                                    <option value="6">6</option>
+                                    <option value="5">7</option>
+                                    <option value="1">None</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
                                 <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
                             </div>
                             <div class="col-md-6">
