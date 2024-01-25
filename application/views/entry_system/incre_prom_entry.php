@@ -200,7 +200,7 @@
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
-                                    <input class="form-control input-sm" id="salary" name="salary">
+                                    <input class="form-control input-sm" readonly id="salary" name="salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
@@ -213,29 +213,30 @@
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Com. Salary</label>
-                                    <input class="form-control input-sm" id="com_salary" name="com_salary">
+                                    <input class="form-control input-sm" readonly id="com_salary" name="com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Salary</label>
+                                    <label class="control-label">New Com. Salary</label>
                                     <input class="form-control input-sm" id="com_gross_sal" name="com_gross_sal">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="padding: 5px !important">
                                 <div class="form-group" style="">
                                     <label class="control-label">Effective Date</label>
                                     <input type="date" class="form-control input-sm" id="effect_date" name="effect_date">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group" style="">
-                                    <div style="margin: 8px -16px; display: flex; justify-content: flex-end;">
-                                        <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary">
-                                    </div>
-                                </div>
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <div class="input-group">
+                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Add Weekend' />
+                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                                    </span>
+                                </div><!-- /input-group -->
                             </div>
                         </div>
                     </form>
