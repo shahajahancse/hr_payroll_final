@@ -689,7 +689,7 @@
         
         
         
-                    <p style="font-size:21px">10| †idv‡iÝt (1) bvgt <?php echo $value->refer_name?></p>
+                    <p style="font-size:21px">10| †idv‡iÝt (1) bvgt <span style="font-size:15px"><?php echo $value->refer_name?></span></p>
                     <p style="font-size:21px">wVKvbvt <span style="font-size:15px"><?php echo $value->refer_village?>, <?php echo $value->ref_post_name_bn.', '.$value->ref_upa_name_bn.', '.$value->ref_dis_name_bn?></span></p>
                     <p style="font-size:21px"> †dvbt <?php echo $value->refer_mobile?></p>
         
