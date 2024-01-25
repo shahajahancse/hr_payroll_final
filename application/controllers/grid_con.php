@@ -33,16 +33,8 @@ class Grid_con extends CI_Controller {
 		$month=date("m",strtotime($date)); 
 		$day=date("d",strtotime($date));
 		$grid_emp_id = explode(',', trim($grid_data));
-		// if($type == 2){
-		// 	// dd("KO");
-		// 	$data["values"] = $this->grid_model->grid_daily_absent_report($year, $month, $day, $grid_emp_id, $type);
-		// }else{
-			// dd("OK");
-			$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
-		// }
-		// dd($data);
+		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
 		if($type == 9){
-			// dd("9");
 		    $data['values'] =	$this->grid_model->grid_daily_costing_report($date,$unit_id);
 			$data['unit_id']= $unit_id;
 			$data['date']= $date;
@@ -85,6 +77,9 @@ class Grid_con extends CI_Controller {
 		$data['report_date'] = $date;
 		$data['category']    = 'Line';
 		$data['unit_id']    = $unit_id;
+		$data['results']= $data['values']['results'];
+		$data['keys']= $data['values']['keys'];
+		// dd($data['keys']);
 
 		$this->load->view('attn_report/daily_attendance_summary', $data);
 		// $this->load->view('others_report/attendance_summary', $data);

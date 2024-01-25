@@ -402,7 +402,8 @@ class Grid_model extends CI_Model{
 		foreach ($results as $key => $r) {
 			$data[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
 		}
-
+		$data['keys'] = array_keys($data);
+	
 		$this->db->select("
 					num.id as line_id, num.line_name_en, num.line_name_bn,
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS all_emp,
@@ -438,7 +439,9 @@ class Grid_model extends CI_Model{
 			$data['results'][$key]->group_data = $d;
 		}
 
-		dd($data);
+		// dd($r);
+		return $data;
+
 		
 	}
 
@@ -1331,7 +1334,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	}
 
 	if($type == 8){
-		// dd($date);
  		$this->db->where("pr_emp_shift_log.in_time = '00:00:00'");
  		$this->db->where("pr_emp_shift_log.out_time = '00:00:00'");
  		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
