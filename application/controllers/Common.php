@@ -243,7 +243,7 @@ class Common extends CI_Controller {
         $this->db->join('emp_section as sec', 'sec.id = com.emp_sec_id', 'left');
         $this->db->join('emp_line_num as line', 'line.id = com.emp_line_id', 'left');
         $this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
-        $r = $this->db->where('com.emp_id', $id)->row();
+        $r = $this->db->where('com.emp_id', $id)->get()->row();
 
         header('Content-Type: application/x-json; charset=utf-8');
         echo json_encode($r);
