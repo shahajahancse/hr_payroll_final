@@ -31,13 +31,9 @@ class Entry_system_con extends CI_Controller
     }
 
 
-    //-------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------
     // CRUD for weekend 
-    //-------------------------------------------------------------------------------------------------------
-
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for weekend 
-    //-------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------
     public function weekend_list()
     {
         $this->db->select('attn_work_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
@@ -112,13 +108,13 @@ class Entry_system_con extends CI_Controller
             echo 'error';
         }
     }
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
     // CRUD for weekend 
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
 
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
     // CRUD for holiday 
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
     public function holiday_list(){
         $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
         $this->db->from('attn_holyday_off');
@@ -314,13 +310,13 @@ class Entry_system_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url('entry_system_con/leave_list'));
     }
-    //-------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------
     // Leave end
-    //-------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------
 
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
     // CRUD for // Left/Resign 
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
     public function left_resign_entry()
     {
         if ($this->session->userdata('logged_in') == false) {
@@ -441,13 +437,16 @@ class Entry_system_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url('entry_system_con/resign_list'));
     }
+    //--------------------------------------------------------------------------- 
+    // Left/Resign end
+    //----------------------------------------------------------------------------
 
-    //--------------------------------------------------------------------------------------- 
+    //-------------------------------------------------------------------------------
     // Increment and Promotion entry to the Database
-    //---------------------------------------------------------------------------------------- 
+    //-------------------------------------------------------------------------------
     public function incre_prom_entry()
     {
-        dd('coming soon');
+
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
@@ -465,11 +464,6 @@ class Entry_system_con extends CI_Controller
     //--------------------------------------------------------------------------- 
     // Increment and Promotion end
     //--------------------------------------------------------------------------- 
-
-
-    //--------------------------------------------------------------------------- 
-    // Left/Resign end
-    //----------------------------------------------------------------------------
     public function get_emp_by_unit($unit) {
         $this->db->select('
                     pr_emp_com_info.id,
@@ -575,27 +569,6 @@ class Entry_system_con extends CI_Controller
 
         $data = $this->processdb->due_amt_insert($emp_id, $due_amt, $due_pay_amt, $due_pay_date);
         echo $data;
-    }
-
-    //-------------------------------------------------------------------------------------------------------
-    // Form Display for Leave Transaction
-    //-------------------------------------------------------------------------------------------------------
-
-    public function get_leave_data($offset = 0, $limit = 10) {
-        $searchQuery = $this->input->get('search'); // Get the search query from the request
-        $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
-        echo json_encode($data);
-    }
-
-    public function save_leave_co(){
-        $result = $this->leave_model->save_leave_db();
-        echo $result;
-    }
-
-    public function leave_transaction_co()
-    {
-        $result = $this->leave_model->leave_transaction_db();
-        echo $result;
     }
 
 
@@ -792,206 +765,8 @@ class Entry_system_con extends CI_Controller
         exit;*/
         echo "Data Inserted Successfully!";
     }
-    //-------------------------------------------------------------------------------------------------------
-    // Workoff Entry
-    //-------------------------------------------------------------------------------------------------------
-    public function save_work_off()
-    {
-        $grid_firstdate = $this->input->post('firstdate');
 
-        $grid_data = $this->input->post('spl');
-        $grid_emp_id = explode('xxx', trim($grid_data));
-        $unit_id = $this->input->post('unit_id');
-        $friday_val = $this->input->post('F_rpl_val');
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $data = $this->grid_model->save_work_off($grid_firstdate, $grid_emp_id, $unit_id, $friday_val);
-        echo $data;
-    }
-
-    public function delete_work_off()
-    {
-        $grid_firstdate = $this->input->post('firstdate');
-
-        $grid_data = $this->input->post('spl');
-        $grid_emp_id = explode('xxx', trim($grid_data));
-        $unit_id = $this->input->post('unit_id');
-        //print_r($grid_emp_id);
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $data = $this->grid_model->delete_work_off($grid_firstdate, $grid_emp_id, $unit_id);
-        echo $data;
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Holiday Entry
-    //-------------------------------------------------------------------------------------------------------
-    public function save_holiday()
-    {
-        $grid_firstdate = $this->input->post('firstdate');
-        $holiday_description = $this->input->post('holiday_description');
-        $grid_data = $this->input->post('spl');
-        $unit_id = $this->input->post('unit_id');
-        $holiday_val = $this->input->post('h_rpl_val');
-        $grid_emp_id = explode('xxx', trim($grid_data));
-
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $data = $this->grid_model->save_holiday($grid_firstdate, $holiday_description, $grid_emp_id, $unit_id, $holiday_val);
-        echo $data;
-    }
-
-    public function delete_holiday()
-    {
-        $grid_firstdate = $this->input->post('firstdate');
-        $grid_data = $this->input->post('spl');
-        $unit_id = $this->input->post('unit_id');
-        $grid_emp_id = explode('xxx', trim($grid_data));
-
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $data = $this->grid_model->delete_holiday($grid_firstdate, $grid_emp_id, $unit_id);
-        echo $data;
-    }
-
-    public function save_date()
-    {
-
-        $grid_firstdate = $this->input->post('firstdate');
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-        $data = array(
-            'date' => $grid_firstdate,
-        );
-
-        $this->db->select('*');
-        $this->db->from('setup_auto_date');
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            $this->db->update('setup_auto_date', $data);
-            echo "Date Updated Successfully";
-        } else {
-            $this->db->insert('setup_auto_date', $data);
-            echo "Date Inserted Successfully";
-        }
-
-    }
-
-    public function shift_log_delete()
-    {
-        $this->load->view('delete_shift_log');
-    }
-
-    public function delete_shift_log_info()
-    {
-        // echo "hi";exit;
-        $grid_firstdate = $this->input->post('firstdate');
-        $grid_emp_id = $this->input->post('spl');
-        $grid_emp_id = explode('xxx', trim($grid_emp_id));
-        // print_r($grid_emp_id);exit;
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $this->db->where_in('pr_emp_shift_log.emp_id', $grid_emp_id);
-        $this->db->where('pr_emp_shift_log.shift_log_date', $grid_firstdate);
-        $query = $this->db->delete('pr_emp_shift_log');
-        if ($query) {
-            echo "Delete Successfully";
-        } else {
-            echo "not";
-        }
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Resign Entry
-    //-------------------------------------------------------------------------------------------------------
-    public function resign_entry()
-    {
-        $crud = new grocery_CRUD();
-
-        $crud->set_table('pr_emp_resign_history');
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
-        if ($get_session_user_unit != 0) {
-            $crud->where('pr_emp_resign_history.unit_id', $get_session_user_unit);
-        }
-        $crud->set_subject('Resign Employee');
-        $crud->required_fields('emp_id', 'resign_date', 'unit_id');
-        if ($get_session_user_unit != 0) {
-            $crud->set_relation('unit_id', 'pr_units', 'unit_name', array('unit_id' => $get_session_user_unit));
-        } else {
-            $crud->set_relation('unit_id', 'pr_units', 'unit_name');
-        }
-        $crud->display_as('emp_id', 'Employee ID');
-        $crud->set_rules('emp_id', 'Employee ID', 'required|is_unique[pr_emp_resign_history.emp_id]|callback_employee_id_check');
-        $crud->set_rules('resign_date', 'Resign Date', 'required');
-        $crud->callback_after_insert(array($this, 'insert_resign_in_emp_table'));
-        //$crud->unset_delete();
-        $crud->unset_edit();
-        $crud->callback_before_delete(array($this, 'insert_join_in_emp_table_resign'));
-
-        $output = $crud->render();
-
-        $this->crud_output($output);
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Insert employee status regular to pr_emp_com_info table
-    //-------------------------------------------------------------------------------------------------------
-    public function insert_join_in_emp_table_resign($primary_key)
-    {
-        $this->db->select('emp_id');
-        $this->db->where('resign_id', $primary_key);
-        $query = $this->db->get('pr_emp_resign_history');
-        $rows = $query->row();
-        $emp_id = $rows->emp_id;
-        $data = array('emp_cat_id' => 1);
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_emp_com_info', $data);
-        // Log generate for left employee
-        $this->log_model->log_profile_resign($emp_id);
-        return true;
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Employee ID exist or not
-    //-------------------------------------------------------------------------------------------------------
-    public function username_check($emp_id)
-    {
-        $check_emp = $this->get_emp_id_existance($emp_id);
-        if ($check_emp == false) {
-            $this->form_validation->set_message('username_check', "%s $emp_id does't not exist!");
-            return false;
-        } else {
-            return true;
-        }
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Employee ID exist or not
-    //-------------------------------------------------------------------------------------------------------
-    public function get_emp_id_existance($emp_id)
-    {
-        $this->db->select("emp_id");
-        $this->db->where("emp_id", $emp_id);
-        $query = $this->db->get("pr_emp_com_info");
-        if ($query->num_rows() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Insert employee status resign to pr_emp_com_info table
-    //-------------------------------------------------------------------------------------------------------
-    public function insert_resign_in_emp_table($post_array)
-    {
-        $emp_id = $post_array['emp_id'];
-        $data = array('emp_cat_id' => 4);
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_emp_com_info', $data);
-
-        $data1 = array('proxi_id' => '');
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_id_proxi', $data1);
-
-        // Log generate for resign employee
-        $this->log_model->log_profile_resign($emp_id);
-        return $post_array;
-    }
+ 
     //-------------------------------------------------------------------------------------------------------
     // CRUD output method
     //-------------------------------------------------------------------------------------------------------
@@ -1056,70 +831,8 @@ class Entry_system_con extends CI_Controller
         }
     }
 
-    //-------------------------------------------------------------------------------------------------------
-    // Left Entry
-    //-------------------------------------------------------------------------------------------------------
-    public function left_entry()
-    {
-        $crud = new grocery_CRUD();
 
-        $crud->set_table('pr_emp_left_history');
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
-        if ($get_session_user_unit != 0) {
-            $crud->where('pr_emp_left_history.unit_id', $get_session_user_unit);
-        }
-        $crud->set_subject('Left Employee');
-        $crud->required_fields('emp_id', 'left_date', 'unit_id');
-        if ($get_session_user_unit != 0) {
-            $crud->set_relation('unit_id', 'pr_units', 'unit_name', array('unit_id' => $get_session_user_unit));
-        } else {
-            $crud->set_relation('unit_id', 'pr_units', 'unit_name');
-        }
-        $crud->display_as('emp_id', 'Employee ID');
-        $crud->set_rules('emp_id', 'Employee ID', 'required|is_unique[pr_emp_left_history.emp_id]|callback_employee_id_check');
-        $crud->set_rules('left_date', 'Left Date', 'required');
-        $crud->callback_after_insert(array($this, 'insert_left_in_emp_table'));
-        $crud->unset_edit();
-        $crud->callback_before_delete(array($this, 'insert_join_in_emp_table'));
-        $output = $crud->render();
-        $this->crud_output($output);
-    }
 
-    //-------------------------------------------------------------------------------------------------------
-    // Insert employee status left to pr_emp_com_info table
-    //-------------------------------------------------------------------------------------------------------
-    public function insert_left_in_emp_table($post_array)
-    {
-        $emp_id = $post_array['emp_id'];
-        $data = array('emp_cat_id' => 3);
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_emp_com_info', $data);
-
-        $data1 = array('proxi_id' => '');
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_id_proxi', $data1);
-        // Log generate for left employee
-        $this->log_model->log_profile_resign($emp_id);
-        return $post_array;
-    }
-
-    //-------------------------------------------------------------------------------------------------------
-    // Insert employee status regular to pr_emp_com_info table
-    //-------------------------------------------------------------------------------------------------------
-    public function insert_join_in_emp_table($primary_key)
-    {
-        $this->db->select('emp_id');
-        $this->db->where('left_id', $primary_key);
-        $query = $this->db->get('pr_emp_left_history');
-        $rows = $query->row();
-        $emp_id = $rows->emp_id;
-        $data = array('emp_cat_id' => 1);
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_emp_com_info', $data);
-        // Log generate for left employee
-        $this->log_model->log_profile_resign($emp_id);
-        return true;
-    }
 
     //-------------------------------------------------------------------------------------------------------
     // New to regular :Tofayel
@@ -1218,25 +931,6 @@ class Entry_system_con extends CI_Controller
 
         // Config setup
 
-        // $num_rows=$this->db->count_all("users");
-        /* $config['base_url'] = base_url().'index.php/entry_system_con/proximity_card_edit/';
-        $config['total_rows'] = $num_rows;
-        $config['per_page'] = 5;
-        $config['num_links'] = $num_rows;
-        $config['use_page_numbers'] = TRUE;
-        $config['full_tag_open'] = '<ul class="pagination">'; $config['full_tag_close'] = '</ul>';
-        $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] = '<li>';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        $config['next_link'] = '&raquo;';
-         */
-
         // print_r($config);exit('ali');
         $this->pagination->initialize($config);
         $param['links'] = $this->pagination->create_links();
@@ -1267,34 +961,6 @@ class Entry_system_con extends CI_Controller
             return true;
         }
     }
-
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for Leave Modification
-    //-------------------------------------------------------------------------------------------------------
- 
-
-    /* function leave_delete($start=0)
-    {
-    $this->load->library('pagination');
-    $param = array();
-    $limit = 25;
-    $config['base_url'] = base_url()."index.php/entry_system_con/leave_delete/";
-    $config['per_page'] = $limit;
-    $this->load->model('crud_model');
-    $pr_leave_trans = $this->crud_model->leave_del_infos($limit,$start);
-    $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-    $config['total_rows'] = $total;
-    $config["uri_segment"] = 3;
-    // $this->load->library('pagination');
-
-    $this->pagination->initialize($config);
-    $param['links'] = $this->pagination->create_links();
-    $param['pr_leave_trans'] = $pr_leave_trans;
-
-    $this->load->view('leave_del_list',$param);
-    // exit('ali');
-    } */
-
 
     public function stop_salary_update($post_array, $primary_key)
     {
