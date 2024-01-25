@@ -108,8 +108,7 @@ class Grid_con extends CI_Controller {
 	}
 
 
-	function grid_continuous_report()
-	{
+	function grid_continuous_report(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
 		$status = $this->input->post('status');

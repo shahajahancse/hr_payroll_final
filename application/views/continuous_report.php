@@ -104,13 +104,13 @@
 					
 					echo "<tr>";
 					$section=$values["sec_name_en"][$i];
-					if ($r==$per_page) {?>
-						<tr class="page_break_t" style="border: none;">
-							<td colspan="7" class="page_break"></td>
-						</tr>
-						<?php
-						$per_page+=$per_page;
-					}
+					// if ($r==$per_page) {?>
+					<!-- // 	<tr class="page_break" style="border: none;"> -->
+					<!-- // 		<td colspan="7" class="page_break"></td> -->
+					<!-- // 	</tr> -->
+					<!-- // 	<?php -->
+					// 	$per_page+=$per_page;
+					// }
 				}
 			?>
 		</table>
