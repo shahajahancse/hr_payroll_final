@@ -689,9 +689,9 @@
         
         
         
-                    <p style="font-size:21px">10| †idv‡iÝt (1) bvgt ........................................</p>
-                    <p style="font-size:21px">wVKvbvt ........................................</p>
-                    <p style="font-size:21px"> †dvbt ..........................................</p>
+                    <p style="font-size:21px">10| †idv‡iÝt (1) bvgt <?php echo $value->refer_name?></p>
+                    <p style="font-size:21px">wVKvbvt <?php echo $value->refer_village?>, <?php echo $value->ref_post_name_bn.', '.$value->ref_upa_name_bn.', '.$value->ref_dis_name_bn?></p>
+                    <p style="font-size:21px"> †dvbt <?php echo $value->refer_mobile?></p>
         
         
         
