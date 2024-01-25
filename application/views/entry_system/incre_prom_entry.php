@@ -205,20 +205,20 @@
                         <div class="col-md-8">
                             <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
                                 <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
+                                    <img id="inc_profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
                                 </span>
                             </div>
                             <div class="col-md-9">
-                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="emp_name"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="departments_ids"> </span></p>
-                                <p style="font-weight: bold;">Sec : <span id="sections_ids"> </span></p>
+                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="inc_emp_name"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="inc_departments_ids"> </span></p>
+                                <p style="font-weight: bold;">Sec : <span id="inc_sections_ids"> </span></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="emps_ids"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="lines_ids"> </span></p>
-                                <p style="font-weight: bold;">Desig : <span id="desigs_id"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="inc_emps_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="inc_lines_ids"> </span></p>
+                                <p style="font-weight: bold;">Desig : <span id="inc_desigs_id"> </span></p>
                             </div>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="salary" name="salary">
+                                    <input class="form-control" readonly id="inc_salary" name="salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
@@ -242,7 +242,81 @@
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Com. Salary</label>
-                                    <input class="form-control" readonly id="com_salary" name="com_salary">
+                                    <input class="form-control" readonly id="inc_com_salary" name="com_salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Com. Salary</label>
+                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" top='20px'>
+                            <div class="col-md-3">
+                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group" style="gap: 14px; display: flex;">
+                                    <input type="date" class="form-control" id="date" placeholder="select date">
+                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Save' />
+                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- increment entry  -->
+        <div id="line_change" class="row nav_head" style="margin-top: 13px;">
+            <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
+                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
+                                    <img id="line_profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
+                                </span>
+                            </div>
+                            <div class="col-md-9">
+                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="line_emp_name"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="line_departments_ids"> </span></p>
+                                <p style="font-weight: bold;">Sec : <span id="line_sections_ids"> </span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="line_emps_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="line_lines_ids"> </span></p>
+                                <p style="font-weight: bold;">Desig : <span id="line_desigs_id"> </span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
+                    <form class="col-md-12" method="post" id="increment_entry_form">
+                        <div class="raw">
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Gross Salary</label>
+                                    <input class="form-control" readonly id="line_salary" name="salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Salary</label>
+                                    <input class="form-control" id="gross_sal" name="gross_sal">
+
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Com. Salary</label>
+                                    <input class="form-control" readonly id="line_com_salary" name="com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
@@ -317,6 +391,7 @@
                 $("#loader").hide();
                 $("#increment_entry").hide();
                 $("#promotion_entry").hide();
+                $("#line_change").hide();
             }, 500);
             return false;
         }
@@ -326,6 +401,7 @@
                 $("#loader").hide();
                 $("#increment_entry").hide();
                 $("#promotion_entry").hide();
+                $("#line_change").hide();
             }, 500);
             return false;
         }
@@ -336,6 +412,7 @@
                 $("#loader").hide();
                 $("#increment_entry").hide();
                 $("#promotion_entry").hide();
+                $("#line_change").hide();
             }, 500);
             return false;
         }
@@ -376,6 +453,7 @@
                 $("#loader").hide();
                 $("#increment_entry").hide();
                 $("#promotion_entry").hide();
+                $("#line_change").hide();
             }, 500);
             return false;
         }
@@ -385,6 +463,7 @@
                 $("#loader").hide();
                 $("#increment_entry").hide();
                 $("#promotion_entry").hide();
+                $("#line_change").hide();
             }, 500);
             return false;
         }
@@ -395,6 +474,7 @@
                 $("#loader").hide();
                 $("#increment_entry").hide();
                 $("#promotion_entry").hide();
+                $("#line_change").hide();
             }, 500);
             return false;
         }
@@ -408,15 +488,77 @@
                 console.log(d);
                 $("#loader").hide();
                 $("#increment_entry").show();
-                $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
-                $('#emp_name').html(d.name_en);
-                $('#departments_ids').html(d.dept_name);
-                $('#sections_ids').html(d.sec_name_en);
-                $('#emps_ids').html(d.emp_id);
-                $('#lines_ids').html(d.line_name_en);
-                $('#desigs_id').html(d.desig_name);
-                $('#salary').html(d.gross_sal);
-                $('#com_salary').html(d.com_gross_sal);
+                $('#inc_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
+                $('#inc_emp_name').html(d.name_en);
+                $('#inc_departments_ids').html(d.dept_name);
+                $('#inc_sections_ids').html(d.sec_name_en);
+                $('#inc_emps_ids').html(d.emp_id);
+                $('#inc_lines_ids').html(d.line_name_en);
+                $('#inc_desigs_id').html(d.desig_name);
+                $('#inc_salary').html(d.gross_sal);
+                $('#inc_com_salary').html(d.com_gross_sal);
+            },
+            error: function() {
+                $("#loader").hide();
+                alert('Something went wrong');
+            }
+        })
+    }
+    function get_emp_info_line() {
+
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+                $("#line_change").hide();
+            }, 500);
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+                $("#line_change").hide();
+            }, 500);
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+                $("#line_change").hide();
+            }, 500);
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",            
+            contentType: "application/json",
+            dataType: "json",
+            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
+            success: function(d) {
+                console.log(d);
+                $("#loader").hide();
+                $("#line_change").show();
+                $('#line_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
+                $('#line_emp_name').html(d.name_en);
+                $('#line_departments_ids').html(d.dept_name);
+                $('#line_sections_ids').html(d.sec_name_en);
+                $('#line_emps_ids').html(d.emp_id);
+                $('#line_lines_ids').html(d.line_name_en);
+                $('#line_desigs_id').html(d.desig_name);
+                $('#line_salary').html(d.gross_sal);
+                $('#line_com_salary').html(d.com_gross_sal);
             },
             error: function() {
                 $("#loader").hide();
