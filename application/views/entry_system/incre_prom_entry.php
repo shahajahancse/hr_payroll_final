@@ -185,28 +185,26 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="raw">
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
                                     <input class="form-control" readonly id="salary" name="salary">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
                                     <input class="form-control" id="gross_sal" name="gross_sal">
-
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Com. Salary</label>
                                     <input class="form-control" readonly id="com_salary" name="com_salary">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Com. Salary</label>
                                     <input class="form-control" id="com_gross_sal" name="com_gross_sal">
