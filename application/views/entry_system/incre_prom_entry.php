@@ -407,7 +407,7 @@
             success: function(d) {
                 console.log(d);
                 $("#loader").hide();
-                $("#promotion_entry").show();
+                $("#increment_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
                 $('#emp_name').html(d.name_en);
                 $('#departments_ids').html(d.dept_name);
@@ -646,10 +646,10 @@
     function toggleSection(sectionId) {
         if (sectionId == 'increment_entry') {
             $("#promotion_entry").hide();
-            get_emp_info_promotion();
+            get_emp_info_increment();
         } else {
             $("#increment_entry").hide();
-            get_emp_info_increment();
+            get_emp_info_promotion();
         }
         $("#" + sectionId).slideToggle();
     }
