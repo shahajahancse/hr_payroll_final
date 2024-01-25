@@ -155,7 +155,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Department</label>
-                                    <select name="pro_department" id="pro_department" class="form-control">
+                                    <select name="pro_department" id="pro_department" class="form-control input-sm">
                                         <option value="">Select Department</option>
                                     </select>
                                 </div>
@@ -163,7 +163,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Section</label>
-                                    <select name="pro_section" id="pro_section" class="form-control">
+                                    <select name="pro_section" id="pro_section" class="form-control input-sm">
                                         <option value="">Select Section</option>
                                     </select>
                                 </div>
@@ -171,7 +171,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Line</label>
-                                    <select name="pro_line" id="pro_line" class="form-control">
+                                    <select name="pro_line" id="pro_line" class="form-control input-sm">
                                         <option value="">Select Line</option>
                                     </select>
                                 </div>
@@ -179,7 +179,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Designation</label>
-                                    <select name="pro_designation" id="pro_designation" class="form-control">
+                                    <select name="pro_designation" id="pro_designation" class="form-control input-sm">
                                         <option value="">Select Designation</option>
                                     </select>
                                 </div>
