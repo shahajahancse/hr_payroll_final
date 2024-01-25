@@ -174,22 +174,22 @@
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="padding: 0px !important">
                                 <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="profile_image" style="height: 78px;width: 100px;" class="img-responsive" >
+                                    <img id="profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
                                 </span>
                             </div>
                             <div class="col-md-9">
                                 <p style="font-size: 16px;">Name: <span id="emp_name"> </span></p>
-                                <p style="">Dept: <span id="departments_ids"> </span></p>
-                                <p style="">Sec : <span id="sections_ids"> </span></p>
+                                <p style="font-weight: bold;">Dept: <span id="departments_ids"> </span></p>
+                                <p style="font-weight: bold;">Sec : <span id="sections_ids"> </span></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <p style="">Emp Id: <span id="emps_ids"> </span></p>
-                                <p style="">Line  : <span id="lines_ids"> </span></p>
-                                <p style="">Desig : <span id="desigs_id"> </span></p>
+                                <p style="font-weight: bold;">Emp Id: <span id="emps_ids"> </span></p>
+                                <p style="font-weight: bold;">Line  : <span id="lines_ids"> </span></p>
+                                <p style="font-weight: bold;">Desig : <span id="desigs_id"> </span></p>
                             </div>
                         </div>
                     </div>
