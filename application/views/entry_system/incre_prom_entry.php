@@ -111,10 +111,10 @@
 
         <!-- Increment Promtion Line change -->
         <div class="row nav_head">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
-            <div class="col-lg-8">
+            <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
                     <input class="btn btn-primary" onclick='toggleSection("increment_entry")' type="button" value="Increment" />
                     <input class="btn btn-info" onclick='toggleSection("promotion_entry")' type="button" value="Promotion" />
