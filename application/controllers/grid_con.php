@@ -97,7 +97,6 @@ class Grid_con extends CI_Controller {
 		$status  = $this->input->post('status');
 
 		$data['values'] = $this->grid_model->daily_logout_report($date, $unit_id);
-		dd($data['values']);
 
 		$data['title'] 		 = 'Daily Logout Summary';
 		$data['report_date'] = $date;
@@ -106,6 +105,55 @@ class Grid_con extends CI_Controller {
 		
 		$this->load->view('attn_report/daily_logout_report', $data);
 		// $this->load->view('others_report/daily_logout', $data);
+	}
+
+
+	function grid_continuous_report()
+	{
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$status = $this->input->post('status');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+		
+		$data["values"] = $this->grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
+
+		if($status =="A")
+		{
+			$status = "Absent";
+		}
+		elseif($status =="P")
+		{
+			$status = "Present";
+		}
+		elseif($status =="L")
+		{
+			$status = "Leave";
+		}
+		elseif($status =="LA")
+		{
+			$status = "Late";
+		}
+
+		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
+		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
+
+		$data["status"] 	= $status;
+		$data["start_date"] = $sStartDate;
+		$data["end_date"] 	= $sEndDate;
+		$data["unit_id"] 	= $unit_id;
+		//print_r($data);
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('continuous_report',$data);
+		}
+
+
 	}
 
 
@@ -1038,53 +1086,7 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_continuous_report()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$status = $this->input->post('status');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		
-		$data["values"] = $this->grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
-
-		if($status =="A")
-		{
-			$status = "Absent";
-		}
-		elseif($status =="P")
-		{
-			$status = "Present";
-		}
-		elseif($status =="L")
-		{
-			$status = "Leave";
-		}
-		elseif($status =="LA")
-		{
-			$status = "Late";
-		}
-
-		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
-		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
-
-		$data["status"] 	= $status;
-		$data["start_date"] = $sStartDate;
-		$data["end_date"] 	= $sEndDate;
-		$data["unit_id"] 	= $unit_id;
-		//print_r($data);
-		if(is_string($data["values"]))
-		{
-			echo $data["values"];
-		}
-		else
-		{
-			$this->load->view('continuous_report',$data);
-		}
-
-
-	}
+	
 
 
 	function grid_continuous_report_limit()

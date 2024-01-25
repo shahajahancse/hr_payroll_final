@@ -9,7 +9,7 @@
 <body style="margin: 0px;">
 
 <?php 
-$per_page_id = 20;
+$per_page_id = 30;
 $row_count = count($values_2["emp_id"]);
 $max = $row_count;
 if($row_count >$per_page_id)
@@ -68,7 +68,10 @@ for($counter = 1; $counter <= $page; $counter ++)
 <table border="1" align="center" style="border:1px solid; border-collapse: collapse; border-spacing: 10px;font-size:12px; width:750px; margin-bottom:0px;">
 <tr style="border:1px solid">
 
-	<th >SL</th><th>Emp ID</th><th>Proxi ID</th><th>Name</th><!--<th>DOJ</th>--><th>Section</th><th>Designation</th>
+	<th >SL</th>
+	<th>Emp ID</th>
+	<th>Name</th>
+	<th>Line</th>
 
 	<?php 
 		 if($status == "Leave"){
@@ -83,12 +86,7 @@ for($counter = 1; $counter <= $page; $counter ++)
 	?>
 	<th>From Date</th>
 	<th>To Date</th>
-	<th>Total Leave Between Date</th>
-	<th>Enjoy Leave This Year</th>
-	<th>Casual(10)</th>
-	<th>Sick(14)</th>
-	<th>Earn(18)</th>
-	<th>Maternity(112)</th>
+	<th>Total Leave Between Date</th>	
 	<th>Purpose</th>
 </tr>
 
@@ -110,117 +108,47 @@ for($counter = 1; $counter <= $page; $counter ++)
 		}
 
 	echo "<tr bgcolor='#CCCCCC'>";
-	echo "<td colspan='16' style='font-size:14px'>Section :&nbsp".$values_2["sec_name_en"][$k]."</td>";
+	echo "<td colspan='9' style='font-size:14px'>Section :&nbsp".$values_2["sec_name_en"][$k]."</td>";
 	echo "</tr>";
 	
 	$cnt++;
 	}
 
 	echo "<tr>";
-	
+	// sl
 	echo "<td>";
 	echo $s=$k+1;
 	echo "</td>";
 	
+	// <th>Emp ID</th>
+	
 	echo "<td>";
 	echo $values_2["emp_id"][$k];
 	echo "</td>";
-	
-	echo "<td>";
-	echo "&nbsp;";
-	echo $values_2["prox_id"][$k];
-	echo "</td>";
-	
+	// <th>Name</th>
 	echo "<td >";
 	echo $values_2["full_name"][$k];
 	echo "</td>";
 
+	// <th>Line</th>
 
 	echo "<td>";
-	echo $values_2["sec_name_en"][$k];
+	echo $values_2["line_name"][$k];
 	echo "</td>";
-	
-	echo "<td >";
-	echo $values_2["desig_name"][$k];
-	echo "</td>";
-
+//type
 	echo "<td style='text-transform: uppercase;width:75px;height:auto;'>";
-
-	if($status == "Leave"){
-	   $leave_data = $this->grid_model->continuous_multiple_leave_report($start_date,$end_date,$values_2["emp_id"][$k]);
-
-		$leave = array();
-		$date = array();
-		foreach($leave_data as $rows){
-				$leave_type = $rows['leave_type'];
-				$leave[] = $leave_type;
-				$date_item = $rows['start_date'];
-				$date[] = $date_item;
-			}
-			echo $leave[0];
-	}
+	echo $values_2["leave_type"][$k];
+	echo "</td>";
+	echo "<td style='text-transform: uppercase;width:75px;height:auto;'>";
+	echo $values_2["leave_start"][$k];
+	echo "</td>";
+	echo "<td style='text-transform: uppercase;width:75px;height:auto;'>";
+	echo $values_2["leave_end"][$k];
 	echo "</td>";
 
-	echo "<td style='text-align:center'>";
-	echo $date[0];
-	echo "</td>";
 
-	echo "<td style='text-align:center'>";
-	echo end($date);
-	echo "</td>";
-	
 	echo "<td style='text-align:center;width:80px;'>";
 	echo $values_2["total"][$k];
-	echo "</td>";
-
-	$y = date('Y');
-	$first_date = $y.'-01-01';
-	$second_date = $y.'-12-31';
-
-	echo "<td style='text-align:center;width:80px;'>";
-	$total_enjoy_leave_this_year = $this->grid_model->total_enjoyable_leave($values_2["emp_id"][$k],$first_date,$second_date);
-	echo $total_enjoy_leave_this_year;
-	echo "</td>";
-
-	
-	echo "<td style='text-align:center'>";
-	$total_cl_leave = $this->grid_model->total_year_pass_leave($values_2["emp_id"][$k],'cl',$first_date,$second_date);
-	$bal_cl = 10 - $total_cl_leave;
-	if($bal_cl < 1){
-		echo 0;
-	}else{
-		echo 'Bal('.$bal_cl.')';
-	}
-	echo "</td>";
-
-	echo "<td style='text-align:center'>";
-	$total_sl_leave = $this->grid_model->total_year_pass_leave($values_2["emp_id"][$k],'sl',$first_date,$second_date);
-	$bal_sl = 14 - $total_sl_leave;
-	if($bal_sl < 1){
-		echo 0;
-	}else{
-		echo 'Bal('.$bal_sl.')';
-	}
-	echo "</td>";
-
-	echo "<td style='text-align:center'>";
-	$total_el_leave = $this->grid_model->total_year_pass_leave($values_2["emp_id"][$k],'el',$first_date,$second_date);
-	$bal_el = 18 - $total_el_leave;
-	if($bal_el < 1){
-		echo 0;
-	}else{
-		echo 'Bal('.$bal_el.')';
-	}
-	echo "</td>";
-
-	echo "<td style='text-align:center'>";
-	$total_ml_leave = $this->grid_model->total_year_pass_leave($values_2["emp_id"][$k],'ml',$first_date,$second_date);
-	$bal_ml = 112 - $total_ml_leave;
-	if($bal_ml < 1){
-		echo 0;
-	}else{
-		echo 'Bal('.$bal_ml.')';
-	}
 	echo "</td>";
 
 	echo "<td style='text-align:center;width:120px;'>";
@@ -242,16 +170,16 @@ for($counter = 1; $counter <= $page; $counter ++)
 }
 
 	echo "<tr bgcolor='#CCCCCC'>";
-	echo "<td colspan='6' style='font-size:14px'>Total :&nbsp".$m."</td>";
-	echo "<td colspan='3' style='font-size:14px'>".' '."</td>";
-	echo "<td colspan='7' style='font-size:14px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$total_per_page_leave_days."</td>";
+	echo "<td colspan='7' style='font-size:14px'>Total :&nbsp".$m."</td>";
+	echo "<td colspan='1' style='text-align:center;width:80px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$total_per_page_leave_days."</td>";
+	echo "<td colspan='' style='font-size:14px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
 	echo "</tr>";
 
 if($counter == $page){
 	echo "<tr bgcolor='#CCCCCC'>";
-	echo "<td colspan='6' style='font-size:14px'>Total :&nbsp".$m."</td>";
-	echo "<td colspan='3' style='font-size:14px'>".' '."</td>";
-	echo "<td colspan='7' style='font-size:14px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$total_leave_days."</td>";
+	echo "<td colspan='7' style='font-size:14px'>Total :&nbsp".$k."</td>";
+	echo "<td colspan='1'style='text-align:center;width:80px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$total_leave_days."</td>";
+	echo "<td colspan='' style='font-size:14px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
 	echo "</tr>";
   }
  ?>
