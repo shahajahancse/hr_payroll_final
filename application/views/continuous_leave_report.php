@@ -65,8 +65,30 @@ for($counter = 1; $counter <= $page; $counter ++)
 	</tr>
 </table>
 <div align="center" style=" margin:0 auto; overflow:hidden; font-family: 'Times New Roman', Times, serif;">
-<table border="1" align="center" style="border:1px solid; border-collapse: collapse; border-spacing: 10px;font-size:12px; width:750px; margin-bottom:0px;">
-<tr style="border:1px solid">
+<table border="1" align="center" style="border:1px solid black; border-collapse: collapse; border-spacing: 10px;font-size:12px; width:750px; margin-bottom:0px;">
+
+
+<?php
+	$section=array();
+	for($i=0; $i<=$per_page_id; $i++)
+	{
+
+	if($section!=$values_2["sec_name_en"][$k]){
+		$i=$i+1;
+		$row_count = $row_count+1;
+		if($row_count >$per_page_id)
+		{
+		$page=ceil($row_count/$per_page_id);
+		}
+		else
+		{
+		$page=1;
+		}
+
+	echo "<tr bgcolor='#CCCCCC'>";
+	echo "<td colspan='9' style='font-size:14px'>Section :&nbsp".$values_2["sec_name_en"][$k]."</td>";
+	echo "</tr>";?>
+<tr style="border:1px solid black">
 
 	<th >SL</th>
 	<th>Emp ID</th>
@@ -89,31 +111,9 @@ for($counter = 1; $counter <= $page; $counter ++)
 	<th>Total Leave Between Date</th>	
 	<th>Purpose</th>
 </tr>
-
-<?php
-	$section=array();
-	for($i=0; $i<=$per_page_id; $i++)
-	{
-
-	if($section!=$values_2["sec_name_en"][$k]){
-		$i=$i+1;
-		$row_count = $row_count+1;
-		if($row_count >$per_page_id)
-		{
-		$page=ceil($row_count/$per_page_id);
-		}
-		else
-		{
-		$page=1;
-		}
-
-	echo "<tr bgcolor='#CCCCCC'>";
-	echo "<td colspan='9' style='font-size:14px'>Section :&nbsp".$values_2["sec_name_en"][$k]."</td>";
-	echo "</tr>";
 	
-	$cnt++;
+	<?php $cnt++;
 	}
-
 	echo "<tr>";
 	// sl
 	echo "<td>";
@@ -137,7 +137,8 @@ for($counter = 1; $counter <= $page; $counter ++)
 	echo "</td>";
 //type
 	echo "<td style='text-transform: uppercase;width:75px;height:auto;'>";
-	echo $values_2["leave_type"][$k];
+	echo $values_2["leave_type"][$k] == 'cl' ? 'Casual Leave' :($values_2["leave_type"][$k] == 'sl' ? 'Sick Leave' : ($values_2["leave_type"][$k] == 'ml' ? 'Maternity Leave' : $values_2["leave_type"][$k]));
+
 	echo "</td>";
 	echo "<td style='text-transform: uppercase;width:75px;height:auto;'>";
 	echo $values_2["leave_start"][$k];
