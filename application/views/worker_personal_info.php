@@ -266,7 +266,7 @@
         </div>
       
       
-        <div class="container break_page" style=" font-family: sutonnymj;margin-left: -15px;">
+        <div class="container break_page" style=" font-family: sutonnymj;">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
@@ -453,7 +453,7 @@
             </div>
         </div>    
         <!-- jogdan --> 
-        <div class="container break_page" style="font-family:sutonnymj;margin-left: -15px;">
+        <div class="container break_page" style="font-family:sutonnymj;">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
