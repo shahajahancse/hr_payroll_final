@@ -41,14 +41,11 @@
             $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;
         ?>
 
-        <div class="d-flex mt-3">
-            <div class="col-md-2 ">
-                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 40%">
-            </div>
-            <div class="col-md-7">
-                <h1 class="text-center">Honeywell Garments Ltd. </h1>
-            </div>
-            <div class="col-md-3"></div>
+        <div class="d-flex justify-content-between mt-3">
+                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 8%">
+            <!-- <div class="col-md-12"> -->
+                <h1 class="">Honeywell Garments Ltd. </h1>
+            <!-- </div> -->
             <br>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
@@ -70,14 +67,14 @@
         <?php foreach($values as $value){?>
         <div style="margin-left:15px ;">
             <p>To,</p> 
-            <p><b><?php echo $value->name_en?></b></p>
+            <p><b> <?php echo $value->gender == 'Male' ? 'Mr.':'Mrs.'?>  <?php echo $value->name_en?></b></p>
             <p>Present Address: Vill: <?php echo $value->pre_village?>, Post: <?php echo $value->pre_dis_name_en?>, Thana: <?php echo $value->pre_upa_name_en?>, Dist: <?php echo $value->pre_post_name_en?></p>
             <p>Permanent Address: Vill: <?php echo $value->per_village?>, Post: <?php echo $value->post_name_en?>, Thana: <?php echo $value->upa_name_en?>, Dist: <?php echo $value->dis_name_en?> </p>
             <p>Mobile Number: <?php echo $value->personal_mobile?></p>
             <br>
             <p><b>Subject: Appointment Letter</b></p>
             <br>
-            <p><b>Dear <?php echo $value->name_en?></b></p> 
+            <p><b>Dear <?php echo $value->gender == 'Male' ? 'Mr.':'Mrs.'?> <?php echo $value->name_en?></b></p> 
             
             <p>
                 With reference to your interest about our company and subsequent interview with us, the
@@ -159,9 +156,8 @@
         </div>
         <?php }?>
     </div>
-
-    <br>
-        <div class="container break_page">
+      <br>      
+    <div class="container break_page">
         <div class="d-flex flex-row justify-content-between">
             <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
             <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
@@ -172,14 +168,14 @@
             $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;
         ?>
 
-        <div class="d-flex mt-3">
-            <div class="col-md-2 ">
-                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 40%;">
-            </div>
-            <div class="col-md-7">
-                <h1 class="text-center">Honeywell Garments Ltd. </h1>
-            </div>
-            <div class="col-md-3"></div>
+        <div class="d-flex justify-content-between mt-3">
+            <!-- <div class="col-md-2 "> -->
+                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 8%;">
+            <!-- </div> -->
+            <!-- <div class="col-md-9"> -->
+                <h1 class="">Honeywell Garments Ltd. </h1>
+            <!-- </div> -->
+            <!-- <div class="col-md-1"></div> -->
             <br>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
@@ -201,14 +197,14 @@
         <?php foreach($values as $value){?>
         <div style="margin-left:15px ;">
             <p>To,</p> 
-            <p><b><?php echo $value->name_en?></b></p>
+            <p><b> <?php echo $value->gender == 'Male' ? 'Mr.':'Mrs.'?>  <?php echo $value->name_en?></b></p>
             <p>Present Address: Vill: <?php echo $value->pre_village?>, Post: <?php echo $value->pre_dis_name_en?>, Thana: <?php echo $value->pre_upa_name_en?>, Dist: <?php echo $value->pre_post_name_en?></p>
             <p>Permanent Address: Vill: <?php echo $value->per_village?>, Post: <?php echo $value->post_name_en?>, Thana: <?php echo $value->upa_name_en?>, Dist: <?php echo $value->dis_name_en?> </p>
             <p>Mobile Number: <?php echo $value->personal_mobile?></p>
             <br>
             <p><b>Subject: Appointment Letter</b></p>
             <br>
-            <p><b>Dear <?php echo $value->name_en?></b></p> 
+            <p><b>Dear  <?php echo $value->gender == 'Male' ? 'Mr.':'Mrs.'?>  <?php echo $value->name_en?></b></p> 
             
             <p>
                 With reference to your interest about our company and subsequent interview with us, the
@@ -289,10 +285,5 @@
         <?php }?>
     </div>
 
-   
-        <br>
-        <br>
-        <br>
-        <br>
 </body>
 </html>
