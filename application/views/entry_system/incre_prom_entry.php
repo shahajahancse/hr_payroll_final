@@ -176,28 +176,19 @@
                         <div class="col-md-8">
                             <div style="display: flex; gap: 10px">
                                 <span>
-                                    <img id="profile_image" style="height: 68px;width: 86px;" class="img-responsive"
+                                    <img id="profile_image" style="height: 78px;width: 100px;" class="img-responsive"
                                         alt="">
                                 </span>
                                 <p style="font-size: 20px;">Name: <span id="emp_name"> </span></p>
+                                <p style="">Dept: <span id="departments_ids"> </span></p>
+                                <p style="">Sec : <span id="sections_ids"> </span></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="year">Select Year:</label>
-                                <select id="bal_get_year" name="year" style="width: 98px;"></select>
-                                <script>
-                                const currentYear = new Date().getFullYear();
-                                const yearSelect = document.getElementById('bal_get_year');
-                                for (let year = currentYear; year >= 1900; year--) {
-                                    const option = document.createElement('option');
-                                    option.value = year;
-                                    option.text = year;
-                                    yearSelect.add(option);
-                                }
-                                </script>
-                                <a class="btn btn-primary" style="margin: -5px 0px 0px 12px;"
-                                    onclick='get_leave_balance()'>Get</a>
+                                <p style="">Emp Id: <span id="emps_ids"> </span></p>
+                                <p style="">Line  : <span id="lines_ids"> </span></p>
+                                <p style="">Desig : <span id="desigs_id"> </span></p>
                             </div>
                         </div>
                     </div>
@@ -324,6 +315,11 @@
                 $("#promotion_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
                 $('#emp_name').html(d.name_en);
+                $('#departments_ids').html(d.dept_name);
+                $('#sections_ids').html(d.sec_name_bn);
+                $('#emps_ids').html(d.emp_id);
+                $('#lines_ids').html(d.line_name_en);
+                $('#desigs_id').html(d.desig_name);
 
                 /*$('#leave_entitle_casual').html(d.leave_entitle_casual);
                 $('#leave_entitle_sick').html(d.leave_entitle_sick);
