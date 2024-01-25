@@ -229,7 +229,7 @@
                             <div class="col-md-3">
                                 <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
                                 <input type="date" class="form-control" id="date" placeholder="select date">
                             </div>
                             <div class="col-md-3">
