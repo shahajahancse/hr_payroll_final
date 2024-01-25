@@ -433,8 +433,8 @@
                 $('#emps_ids').html(d.emp_id);
                 $('#lines_ids').html(d.line_name_en);
                 $('#desigs_id').html(d.desig_name);
-                $('#salary').html(d.gross_sal);
-                $('#com_salary').html(d.com_gross_sal);
+                $('#salary').val(d.gross_sal);
+                $('#com_salary').val(d.com_gross_sal);
             },
             error: function() {
                 $("#loader").hide();
