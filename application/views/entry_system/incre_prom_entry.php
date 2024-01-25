@@ -174,12 +174,12 @@
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
                         <div class="col-md-8">
-                            <div style="display: flex; gap: 10px">
-                                <span>
-                                    <img id="profile_image" style="height: 78px;width: 100px;" class="img-responsive"
-                                        alt="">
+                            <div class="col-md-3">
+                                <img id="profile_image" style="height: 78px;width: 100px;" class="img-responsive" >
                                 </span>
-                                <p style="font-size: 20px;">Name: <span id="emp_name"> </span></p>
+                            </div>
+                            <div class="col-md-9">
+                                <p style="font-size: 16px;">Name: <span id="emp_name"> </span></p>
                                 <p style="">Dept: <span id="departments_ids"> </span></p>
                                 <p style="">Sec : <span id="sections_ids"> </span></p>
                             </div>
