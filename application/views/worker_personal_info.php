@@ -613,7 +613,7 @@
             <br>
         <!-- abedon -->
 
-        <div class="container-fluid break_page" style=" font-family: sutonnymj;">
+        <div class="container-fluid break_page" style=" font-family: sutonnymj;margin-left:-10px">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
@@ -723,7 +723,7 @@
         <br>
         <br>
         <!-- nominee -->
-        <div class="container-fluid break_page">
+        <div class="container-fluid break_page" style="margin-left:-10px">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
@@ -909,7 +909,7 @@
 
         <!-- account  -->
 
-        <div class="container break_page">
+        <div class="container break_page" style="margin-left:-10px">
             <div class="d-flex flex-row justify-content-between p_screen">
                 <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
