@@ -63,7 +63,7 @@
                 height: 175px;
                 position: absolute;
                 left: 77%;
-                margin-top: 175px;
+                margin-top: 190px;
                 transform: rotate(13deg);
             }
         </style>
@@ -84,7 +84,7 @@
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
             </div>
-            <div class="d-flex mt-3">
+            <div class="d-flex">
                 <div class="col-md-2">
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
@@ -114,23 +114,23 @@
                         <tr>
                             <th >bvg </th>
                             <td> t </td>
-                            <td><span style="font-size:15px"> <?php echo $value->name_bn?> </span></td>
+                            <td> <span style="font-size:15px"> <?php echo $value->name_bn?> </span></td>
                         </tr>
                         <tr>
-                            <th>eZ©gvb wVKvbvt </th>
+                            <th>eZ©gvb wVKvbv </th>
                             <td> t </td>
                             <td> <span style="font-size:15px"> <?php echo $value->pre_village_bn?>, <?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
                         </tr>
                         <tr>
                             <th>¯’vqx wVKvbv </th>
                             <td> t </td>
-                            <td> <span style="font-size:15px"> <?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> </td>
+                            <td> <span style="font-size:15px"> <?php echo $value->per_village_bn?>, <?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> </td>
                         </tr>
                     </table>
                 </div>
                 <div class="col-md-12">
                     <p style="font-size:21px !important;line-height:21px !important;">
-                        <span><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</span><br>
+                        <span><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</span><br>
                         Avcbvi <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs Zvwi†Li Av‡e`b cÎ Ges cieZx©Kv‡j M„nxZ mv¶vrKvi / cix¶vi cwi‡cÖw¶‡Z Avcbv‡K
                         <?php echo "<span style='font-size:15px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:15px'>".$value->sec_name_bn."</span>"?> ,<span style='font-size:15px'>লাইনt <?php echo $value->line_name_bn?> </span>,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
                     </p>
@@ -146,7 +146,7 @@
                         cvwi‡eb|</p>
                     <p style="font-size:21px !important;line-height:21px !important;">
                         2. Avcbvi gRyix / †eZb KvVv‡gv wb¤œiæct
-                    <table>
+                    <table style="line-height: 1.2;">
                         <tr>
                             <th>g~j gRyix</th>
                             <td>t</td>
@@ -263,16 +263,16 @@
                    </table>
                 </div>
             </div>
-        
+        </div>
       
       
-        <div class="container break_page" style=" font-family: sutonnymj;">
+        <div class="container break_page" style=" font-family: sutonnymj;margin-left: -15px;">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
             </div>
-            <div class="d-flex mt-3">
+            <div class="d-flex">
                 <div class="col-md-2">
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
@@ -305,7 +305,7 @@
                             <td><span style="font-size:15px"> <?php echo $value->name_bn?> </span></td>
                         </tr>
                         <tr>
-                            <th>eZ©gvb wVKvbvt </th>
+                            <th>eZ©gvb wVKvbv </th>
                             <td> t </td>
                             <td> <span style="font-size:15px"> <?php echo $value->pre_village_bn?>, <?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span></td>
                         </tr>
@@ -318,7 +318,7 @@
                 </div>
                 <div class="col-md-12">
                     <p style="font-size:21px !important;line-height:21px !important;">
-                        <span><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</span><br>
+                        <span><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</span><br>
                         Avcbvi <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs Zvwi†Li Av‡e`b cÎ Ges cieZx©Kv‡j M„nxZ mv¶vrKvi / cix¶vi cwi‡cÖw¶‡Z Avcbv‡K
                         <?php echo "<span style='font-size:15px'>".$value->desig_bangla ."</span>"?> c‡`, KvW© bst <?php echo $value->emp_id?> , ‡mKkbt <?php echo "<span style='font-size:15px'>".$value->sec_name_bn."</span>"?> ,<span style='font-size:15px'>লাইনt <?php echo $value->line_name_bn?> </span>,‡MÖWt <?php echo $value->grade?> ,wb‡qvM †`Iqv nBj|
                     </p>
@@ -334,7 +334,7 @@
                         cvwi‡eb|</p>
                     <p style="font-size:21px !important;line-height:21px !important;">
                         2. Avcbvi gRyix / †eZb KvVv‡gv wb¤œiæct
-                    <table>
+                    <table style="line-height: 1.2;">
                         <tr>
                             <th>g~j gRyix</th>
                             <td>t</td>
@@ -451,14 +451,15 @@
                    </table>
                 </div>
             </div>
+        </div>    
         <!-- jogdan --> 
-        <div class="container break_page" style="font-family:sutonnymj;">
+        <div class="container break_page" style="font-family:sutonnymj;margin-left: -15px;">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/002</p>
             </div>
-            <div class="d-flex mt-3">
+            <div class="d-flex">
                 <div class="col-md-2">
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
@@ -498,7 +499,7 @@
                     <p style="font-size:21px;">wVKvbvt 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
                     <p style="font-size:22px;" class="mt-4"><b>welqt Kv‡R †hvM`vb cÎ</b></p>
         
-                    <p style="font-size:21px;" class="mt-4"><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
+                    <p style="font-size:21px;" class="mt-4"><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
                     <p style="font-size:21px;"> Avcbvi wbKU †_‡K cªvß wb‡qvM cÎ AvBwW bs <?php echo $value->emp_id?> Bs ZvwiL <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs Gi ‡cªwÿ‡Z Rvbv‡bv
                         hv‡”Q †h Avwg A`¨ <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs ZvwiL n‡Z Avcbvi wkícÖwZôv‡b Dc‡i D‡jwLZwb‡qvM c‡Îi kZ©
                         †gvZv‡eK <span style="font-size:15px"><?php echo $value->desig_bangla?></span> c‡` †hvM`vb Kijvg|</p>
@@ -530,7 +531,7 @@
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/005</p>
             </div>
-            <div class="d-flex mt-3">
+            <div class="d-flex">
                 <div class="col-md-2">
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
@@ -545,7 +546,7 @@
             <br>
             <div class="title_box mt-2">
                 <h3 style="font-family:Arial;border-bottom:1px solid black;padding-left:2px;padding-right:2px">Background Check</h3>
-                <h4>cUf~wg wbixÿb</h4>
+                <h3>cUf~wg wbixÿb</h3>
             </div>
         
             <div class="row">
@@ -565,7 +566,7 @@
                     <p style="font-size:21px">3| gvZvi bvgt <span style="font-size:15px"><?php echo $value->mother_name?></span></p>
                     <p style="font-size:21px">4| ¯’vqx wVKvbvt  <span style="font-size:15px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> |</p>
                     <p style="font-size:21px"> &nbsp;&nbsp;&nbsp;&nbsp;    wbR †gvevBj bs <span><?php echo $value->personal_mobile?></span> &nbsp; &nbsp;&nbsp;&nbsp;AwfeveK †gvevBj bs <span><?php echo $value->refer_mobile?></span> &nbsp; &nbsp;&nbsp;&nbsp;bwgwb †gvevBjBs <span><?php echo $value->nomi_mobile?></span></p>
-                    <p style="font-size:21px">5| wj½t <span style="font-size:15px"><?php echo $value->sex_name == 'Male' ? 'পুরুষ':'নারী'?></span></p>
+                    <p style="font-size:21px">5| wj½t <span style="font-size:15px"><?php echo $value->gender == 'Male' ? 'পুরুষ':'নারী'?></span></p>
                     <p style="font-size:21px">6| ‰eevwnK Ae¯’vt <span><?php 
                                                 if($value->marital_status == 'Unmarried'){
                                                     echo 'AweevwnZ' ;
@@ -618,7 +619,7 @@
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/003</p>
             </div>
-            <div class="d-flex mt-3">
+            <div class="d-flex">
                 <div class="col-md-2">
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
@@ -652,7 +653,7 @@
                     <p style="font-size:21px">wVKvbvt 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
                     <p style="font-size:21px" class="mt-3">welqt c‡` PvKzixi Rb¨ Av‡e`b |</p>
         
-                    <p style="font-size:21px" class="mt-3"><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
+                    <p style="font-size:21px" class="mt-3"><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
                     <p style="font-size:21px"> h_vwenxZ m¤§vb cÖ`k©b c~e©K weYxZ wb‡e`b GB †h, Avwg Avcbvi KviLvbvq <span style='font-size:15px'><?php echo $value->sec_name_bn?></span> c‡`
                         †hvM`vb Ki‡Z
                         B”QzK| D³ c‡`i GKRb cÖv_x© wnmv‡e Avgvi Rxeb e„ËvšÍ Avcbvi my-we‡ePbvi Rb¨ `vwLj Kijvg|</p>
@@ -728,7 +729,7 @@
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/007</p>
             </div>
-            <div class="d-flex mt-3">
+            <div class="d-flex">
                 <div class="col-md-2">
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
@@ -760,7 +761,7 @@
                     <p>,&nbsp; ‡Rjvt <span style="font-size:15px"> <?php echo $value->pre_dis_name_bn?></span> </p>
                   
                 </div>
-                <p>4| wj½t <span style="font-size:15px"><?php echo $value->sex_name == "Male"? "পুরুষ":"নারী"?></span></p>
+                <p>4| wj½t <span style="font-size:15px"><?php echo $value->gender == "Male"? "পুরুষ":"নারী"?></span></p>
                 <p>5| Rb¥ ZvwiLt <?php echo date("d-m-Y",strtotime($value->emp_dob))?> Bs</span></p>
                 <p>6| mbv³ KiY wPý (hw` _v‡K)t ------------------------------------ |</p>
                 <div class="d-flex">
@@ -914,7 +915,7 @@
                 <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Document Code :HGL/HRD/HR/03/028</p>
             </div>
-            <div class="d-flex mt-3">
+            <div class="d-flex">
                 <div class="col-md-2">
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
@@ -936,7 +937,7 @@
                 <p>wVKvbvt 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <p>welqt weKvk bv¤^v‡i ‡eZbvw` cÖ`v‡bi Rb¨ Av‡e`b cÎ</p>
                 <br>
-                <p><?php echo $value->sex_name == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
+                <p><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
             
                 <p>Avwg <span style='font-size:15px'><?php echo $value->name_bn?></span>,c`ext <span style='font-size:15px'><?php echo $value->desig_bangla?></span>,KvW© bst <span><?php echo $value->emp_id?></span>, ‡mKkbt <span style='font-size:15px'><?php echo $value->sec_name_bn?></span>,<span style='font-size:15px'>লাইনt <?php echo $value->line_name_bn?> </span></p>
                 <p>Avwg Avgvi hveZxq ‡eZbvw` wb‡gœv³ weKvk bv¤^v‡i cÖ`v‡bi Rb¨ Aby‡iva KiwQ|</p>
