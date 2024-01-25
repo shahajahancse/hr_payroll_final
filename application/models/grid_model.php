@@ -8576,7 +8576,6 @@ function grid_emp_job_application($grid_emp_id){
 		// dd($grid_emp_id);
 		$this->db->select('
 		pr_emp_per_info.*,
-		pr_emp_sex.sex_name,
 		pr_emp_com_info.emp_join_date, 
 		pr_emp_blood_groups.blood_name,
 
@@ -8629,7 +8628,7 @@ function grid_emp_job_application($grid_emp_id){
 	$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
 	$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
 	$this->db->join('pr_religions', 'pr_emp_per_info.emp_religion = pr_religions.religion_id');
-	$this->db->join('pr_emp_sex', 'pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
+	// $this->db->join('pr_emp_sex', 'pr_emp_per_info.emp_sex = pr_emp_sex.sex_id');
 	$this->db->join('pr_emp_edu', 'pr_emp_com_info.emp_id = pr_emp_edu.emp_id');
 	$this->db->join('pr_emp_skill', 'pr_emp_com_info.emp_id = pr_emp_skill.emp_id');
 	$this->db->join('pr_emp_blood_groups', 'pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id');
