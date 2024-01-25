@@ -319,7 +319,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
             success: function(d) {
-                console.log(d); return;
+                console.log(d);
                 $("#loader").hide();
                 $("#promotion_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
