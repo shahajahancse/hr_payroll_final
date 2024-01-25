@@ -800,7 +800,7 @@
                         <td class="text-center" colspan="2">(4)</td>
                     </tr>
                     <tr>
-                        <td class="text-center" style=""><?php echo $value->nominee_name?></td>
+                        <td class="text-center" ><span style="font-size:15px"><?php echo $value->nominee_name?></span></td>
                         <td class="text-center">
                             <?php 
                                 if($value->nomi_relation == 1){
