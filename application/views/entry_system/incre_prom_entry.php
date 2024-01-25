@@ -116,8 +116,8 @@
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <input class="btn btn-primary" onclick='toggleSection("increment_entry")' type="button" value="Increment" />
-                    <input class="btn btn-info" onclick='toggleSection("promotion_entry")' type="button" value="Promotion" />
+                    <input class="btn btn-primary" onclick='toggleSection("increment")' type="button" value="Increment" />
+                    <input class="btn btn-info" onclick='toggleSection("promotion")' type="button" value="Promotion" />
                     <input class="btn btn-success" onclick='toggleSection("line_change")' type="button" value="Line" />
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
@@ -786,12 +786,18 @@
 </script>
 <script>
     function toggleSection(sectionId) {
-        if (sectionId == 'increment_entry') {
+        if (sectionId == 'increment') {
             $("#promotion_entry").hide();
+            $("#line_change").hide();
             get_emp_info_increment();
-        } else {
+        } else if(sectionId == 'promotion') {
             $("#increment_entry").hide();
+            $("#line_change").hide();
             get_emp_info_promotion();
+        } else {
+            $("#promotion_entry").hide();
+            $("#increment_entry").hide();
+            get_emp_info_line();
         }
         $("#" + sectionId).slideToggle();
     }
