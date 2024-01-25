@@ -152,6 +152,41 @@
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="promotion_entry_entry_form">
                         <div class="raw">
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Department</label>
+                                    <select name="pro_department" id="pro_department">
+                                        <option value="">Select Department</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Section</label>
+                                    <select name="pro_section" id="pro_section">
+                                        <option value="">Select Section</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Line</label>
+                                    <select name="pro_line" id="pro_line">
+                                        <option value="">Select Line</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Designation</label>
+                                    <select name="pro_designation" id="pro_designation">
+                                        <option value="">Select Designation</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="raw">
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
@@ -178,6 +213,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row" top='20px'>
                             <div class="col-md-3">
                                 <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
