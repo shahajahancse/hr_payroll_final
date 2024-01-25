@@ -8,6 +8,7 @@
         <style>
             .table td{
                 padding: 0px;
+                
             }
             p{
                 margin-bottom: 4px;
@@ -666,7 +667,7 @@
                     <p style="font-size:21px">4| ¯’vqx wVKvbvt <span style="font-size:15px"><?php echo $value->per_village_bn?>,<?php echo $value->pre_post_name_bn?>, <?php echo $value->pre_upa_name_bn?>, <?php echo $value->pre_dis_name_bn?></span>| </p>
                     <p style="font-size:21px">5| wkÿvMZ †hvM¨Zv <span style="font-size:15px"><?php echo $value->education?></span> </p>
                     <p style="font-size:21px">6| R¤œ ZvwiLt <?php echo $value->emp_dob?> Bs </p>
-                    <p style="font-size:21px">7| ag©t <span style="font-size:15px"><?php echo $value->religion?></span> </p>
+                    <p style="font-size:21px">7| ag©t <span style="font-size:21px"><?php echo $value->religion == 'Islam' ?'Bmjvg':($value->religion == 'Hindu' ? 'wn›`y':($value->religion=='Christian' ?'wLª÷vb':'‡eŠ×')) ?></span> </p>
                     <p style="font-size:21px">8| RvZxqZvt  Kg©xi †gvevBj bs <span><?php echo $value->bank_bkash_no?></span></p>
                     <p style="font-size:21px">9| AwfÁZvt </p>
         
@@ -679,9 +680,9 @@
                         </tr>
                         <tr>
                             <td class="text-center">1.</td>
-                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_dasignation?></span></td>
-                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_factory_name?></span></td>
-                            <td class="text-center"><span style="font-size:18px"><?php echo $value->exp_duration?></span></td>
+                            <td class="text-center"><span style="font-size:15px"><?php echo $value->exp_dasignation?></span></td>
+                            <td class="text-center"><span style="font-size:15px"><?php echo $value->exp_factory_name?></span></td>
+                            <td class="text-center"><span style="font-size:15px"><?php echo $value->exp_duration?></span></td>
                         </tr>
                     </table>
         
@@ -799,7 +800,7 @@
                         <td class="text-center" colspan="2">(4)</td>
                     </tr>
                     <tr>
-                        <td class="text-center"><?php echo $value->nominee_name?></td>
+                        <td class="text-center" style=""><?php echo $value->nominee_name?></td>
                         <td class="text-center">
                             <?php 
                                 if($value->nomi_relation == 1){
@@ -835,28 +836,28 @@
                         <td style="width:10%;text-align:center">100% Ask</td>
                     </tr>
                     <tr>
-                        <td style="padding-left:5px">MÖvgt <?php echo $value->nominee_vill ?></td>
+                        <td style="padding-left:5px;">MÖvgt <span style="font-size:15px !important"><?php echo $value->nominee_vill ?></span></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">e‡KqvLvZ</td>
                         <td style="width:10%"></td>
                     </tr>
                     <tr>
-                        <td style="padding-left:5px">‡cv÷t  <?php echo $value->nomi_post_name_bn ?></td>
+                        <td style="padding-left:5px;">‡cv÷t <span style="font-size:15px !important"> <?php echo $value->nomi_post_name_bn ?></span></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">cÖwf‡W›U dvÛ</td>
                         <td style="width:10%"></td>
                     </tr>
                     <tr>
-                        <td style="padding-left:5px">_vbvt <?php echo $value->nomi_upa_name_bn ?></td>
+                        <td style="padding-left:5px;">_vbvt <span style="font-size:15px !important"><?php echo $value->nomi_upa_name_bn ?></span></td>
                         <td></td>
                         <td></td>
                         <td class="text-center">exgv</td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td style="padding-left:5px">‡Rjvt <?php echo $value->nomi_dis_name_bn ?></td>
+                        <td style="padding-left:5px;">‡Rjvt <span style="font-size:15px !important"><?php echo $value->nomi_dis_name_bn ?></span></td>
                         <td></td>
                         <td></td>
                         <td class="text-center" style="width:10%">`~N©Ubvi ÿwZc~iY</td>
