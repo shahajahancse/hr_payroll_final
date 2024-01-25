@@ -155,7 +155,7 @@
                             <div class="col-md-6">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Department</label>
-                                    <select name="pro_department" id="pro_department">
+                                    <select name="pro_department" id="pro_department" class="form-control">
                                         <option value="">Select Department</option>
                                     </select>
                                 </div>
@@ -163,7 +163,7 @@
                             <div class="col-md-6">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Section</label>
-                                    <select name="pro_section" id="pro_section">
+                                    <select name="pro_section" id="pro_section" class="form-control">
                                         <option value="">Select Section</option>
                                     </select>
                                 </div>
@@ -171,7 +171,7 @@
                             <div class="col-md-6">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Line</label>
-                                    <select name="pro_line" id="pro_line">
+                                    <select name="pro_line" id="pro_line" class="form-control">
                                         <option value="">Select Line</option>
                                     </select>
                                 </div>
@@ -179,7 +179,7 @@
                             <div class="col-md-6">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Designation</label>
-                                    <select name="pro_designation" id="pro_designation">
+                                    <select name="pro_designation" id="pro_designation" class="form-control">
                                         <option value="">Select Designation</option>
                                     </select>
                                 </div>
@@ -187,26 +187,26 @@
                         </div>
 
                         <div class="raw">
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-3">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
                                     <input class="form-control" readonly id="salary" name="salary">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-3">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
                                     <input class="form-control" id="gross_sal" name="gross_sal">
 
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-3">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Com. Salary</label>
                                     <input class="form-control" readonly id="com_salary" name="com_salary">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-3">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Com. Salary</label>
                                     <input class="form-control" id="com_gross_sal" name="com_gross_sal">
