@@ -194,61 +194,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="increment_entry_form">
                         <div class="raw">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="control-label">From Date</label>
-                                    <input type="date" class="form-control input-sm" id="from_date" name="from_date"
-                                        value="<?= date('Y-m-d') ?>">
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Gross Salary</label>
+                                    <input class="form-control" readonly id="salary" name="salary">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="control-label">To Date</label>
-                                    <input type="date" class="form-control input-sm" id="to_date" name="to_date"
-                                        value="<?= date('Y-m-d') ?>">
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Salary</label>
+                                    <input class="form-control" id="gross_sal" name="gross_sal">
+
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="control-label">Leave Type</label>
-                                    <select class="form-control select22" name='leave_type' id='leave_type'
-                                        style="padding: 1px 12px; height: 29px;">
-                                        <option value='cl'>Casual</option>
-                                        <option value='sl'>Sick</option>
-                                        <option value='pl'>Paternity</option>
-                                        <option value='ml'>Maternity</option>
-                                    </select>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Com. Salary</label>
+                                    <input class="form-control" readonly id="com_salary" name="com_salary">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="control-label">Leave Type</label>
-                                    <select class="form-control select22" name='leave_type' id='leave_type'
-                                        style="padding: 1px 12px; height: 29px;">
-                                        <option value='cl'>Casual</option>
-                                        <option value='sl'>Sick</option>
-                                        <option value='pl'>Paternity</option>
-                                        <option value='ml'>Maternity</option>
-                                    </select>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Com. Salary</label>
+                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group" style="margin: 8px 16px;">
-                                    <label class="control-label">Description</label>
-                                    <textarea class="form-control input-sm" id="reason" name="reason"></textarea>
-                                </div>
+                            <div class="col-md-3">
+                                <span>Effective Date</span>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group" style="margin: 8px 16px;">
-                                    <div style="margin: 8px -16px; display: flex; justify-content: flex-end;">
-                                        <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary">
-                                    </div>
-                                </div>
+                                <div class="input-group" style="gap: 14px; display: flex;">
+                                    <input type="date" class="form-control" id="date" placeholder="select date">
+                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Save' />
+                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                                    </span>
+                                </div><!-- /input-group -->
                             </div>
                         </div>
                     </form>
