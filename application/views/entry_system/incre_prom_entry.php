@@ -29,7 +29,7 @@
         <div class="row tablebox" style="display: block;">
             <h3 style="font-weight: 600;"><?= $title ?></h3>
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
@@ -49,7 +49,7 @@
             </div>
             <!-- department -->
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
                         <?php if (!empty($user_data->unit_name)) { 
@@ -64,7 +64,7 @@
             </div>
             <!-- section -->
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Section </label>
                     <select class="form-control input-sm section" id='section' name='section'>
                         <option value=''></option>
@@ -73,7 +73,7 @@
             </div>
             <!-- line -->
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Line </label>
                     <select class="form-control input-sm line" id='line' name='line'>
                         <option value=''></option>
@@ -82,7 +82,7 @@
             </div>
             <!-- Designation -->
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Designation</label>
                     <select class="form-control input-sm desig" id='desig' name='desig' onChange="grid_emp_list()">
                         <option value=''></option>
@@ -92,7 +92,7 @@
             <!-- status -->
             <div class="col-md-6">
                 <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Status </label>
                     <select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
                         <option value="">All Employee</option>
@@ -174,72 +174,84 @@
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
                         <div class="col-md-8">
-                            <div style="display: flex; gap: 10px">
-                                <span>
-                                    <img id="profile_image" style="height: 68px;width: 86px;" class="img-responsive"
-                                        alt="">
+                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
+                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
+                                    <img id="profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
                                 </span>
-                                <p style="font-size: 20px;">Name: <span id="emp_name"> </span></p>
+                            </div>
+                            <div class="col-md-9">
+                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="emp_name"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="departments_ids"> </span></p>
+                                <p style="font-weight: bold;">Sec : <span id="sections_ids"> </span></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="year">Select Year:</label>
-                                <select id="bal_get_year" name="year" style="width: 98px;"></select>
-                                <script>
-                                const currentYear = new Date().getFullYear();
-                                const yearSelect = document.getElementById('bal_get_year');
-                                for (let year = currentYear; year >= 1900; year--) {
-                                    const option = document.createElement('option');
-                                    option.value = year;
-                                    option.text = year;
-                                    yearSelect.add(option);
-                                }
-                                </script>
-                                <a class="btn btn-primary" style="margin: -5px 0px 0px 12px;"
-                                    onclick='get_leave_balance()'>Get</a>
+                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="emps_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="lines_ids"> </span></p>
+                                <p style="font-weight: bold;">Desig : <span id="desigs_id"> </span></p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
-                    <table class="table col-md-12">
-                        <thead>
-                            <tr>
-                                <th>Leave Type</th>
-                                <th>Entitle</th>
-                                <th>Taken</th>
-                                <th>Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leave_balance">
-                            <tr>
-                                <th>Casual Leave</th>
-                                <td id="leave_entitle_casual">12</td>
-                                <td id="leave_taken_casual">6</td>
-                                <td id="leave_balance_casual">5</td>
-                            </tr>
-                            <tr>
-                                <th>Sick Leave</th>
-                                <td id="leave_entitle_sick">12</td>
-                                <td id="leave_taken_sick">4</td>
-                                <td id="leave_balance_sick">8</td>
-                            </tr>
-                            <tr>
-                                <th>Maternity Leave</th>
-                                <td id="leave_entitle_maternity">12</td>
-                                <td id="leave_taken_maternity">4</td>
-                                <td id="leave_balance_maternity">8</td>
-                            </tr>
-                            <tr>
-                                <th>Paternity Leave</th>
-                                <td id="leave_entitle_paternity">12</td>
-                                <td id="leave_taken_paternity">4</td>
-                                <td id="leave_balance_paternity">8</td>
-                            </tr>
-                        </tbody>
-
-                    </table>
+                    <form class="col-md-12" method="post" id="increment_entry_form">
+                        <div class="raw">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">From Date</label>
+                                    <input type="date" class="form-control input-sm" id="from_date" name="from_date"
+                                        value="<?= date('Y-m-d') ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">To Date</label>
+                                    <input type="date" class="form-control input-sm" id="to_date" name="to_date"
+                                        value="<?= date('Y-m-d') ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Leave Type</label>
+                                    <select class="form-control select22" name='leave_type' id='leave_type'
+                                        style="padding: 1px 12px; height: 29px;">
+                                        <option value='cl'>Casual</option>
+                                        <option value='sl'>Sick</option>
+                                        <option value='pl'>Paternity</option>
+                                        <option value='ml'>Maternity</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Leave Type</label>
+                                    <select class="form-control select22" name='leave_type' id='leave_type'
+                                        style="padding: 1px 12px; height: 29px;">
+                                        <option value='cl'>Casual</option>
+                                        <option value='sl'>Sick</option>
+                                        <option value='pl'>Paternity</option>
+                                        <option value='ml'>Maternity</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin: 8px 16px;">
+                                    <label class="control-label">Description</label>
+                                    <textarea class="form-control input-sm" id="reason" name="reason"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin: 8px 16px;">
+                                    <div style="margin: 8px -16px; display: flex; justify-content: flex-end;">
+                                        <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -285,50 +297,63 @@
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
         if (numbersArray == '') {
-            $("#increment_entry").hide();
-            $("#promotion_entry").hide();
             showMessage('error', 'Please select employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
             return false;
         }
         if (numbersArray.length > 1) {
-            $("#increment_entry").hide();
-            $("#promotion_entry").hide();
             showMessage('error', 'Please select max one employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
             return false;
         }
         unit_id = document.getElementById('unit_id').value;
         if (unit_id == '') {
-            $("#increment_entry").hide();
-            $("#promotion_entry").hide();
             showMessage('error', 'Please select Unit');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
             return false;
         }
 
         $.ajax({
-            type: "POST",
-            url: hostname + "common/get_emp_info_by_id", 
-            data: {
-                emp_id: numbersArray[0],
-                year: bal_get_year
-            },
+            type: "POST",            
+            contentType: "application/json",
+            dataType: "json",
+            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
             success: function(d) {
-                var data = JSON.parse(d);
+                console.log(d);
                 $("#loader").hide();
                 $("#promotion_entry").show();
-                $('#profile_image').attr('src', hostname + 'uploads/photo/' + data.epm_info.img_source);
-                $('#emp_name').html(data.epm_info.name_en);
-                $('#leave_entitle_casual').html(data.leave_entitle_casual);
-                $('#leave_entitle_sick').html(data.leave_entitle_sick);
-                $('#leave_entitle_maternity').html(data.leave_entitle_maternity);
-                $('#leave_entitle_paternity').html(data.leave_entitle_paternity);
-                $('#leave_taken_casual').html(data.leave_taken_casual);
-                $('#leave_taken_sick').html(data.leave_taken_sick);
-                $('#leave_taken_maternity').html(data.leave_taken_maternity);
-                $('#leave_taken_paternity').html(data.leave_taken_paternity);
-                $('#leave_balance_casual').html(data.leave_balance_casual);
-                $('#leave_balance_sick').html(data.leave_balance_sick);
-                $('#leave_balance_maternity').html(data.leave_balance_maternity);
-                $('#leave_balance_paternity').html(data.leave_balance_paternity);
+                $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
+                $('#emp_name').html(d.name_en);
+                $('#departments_ids').html(d.dept_name);
+                $('#sections_ids').html(d.sec_name_bn);
+                $('#emps_ids').html(d.emp_id);
+                $('#lines_ids').html(d.line_name_en);
+                $('#desigs_id').html(d.desig_name);
+
+                /*$('#leave_entitle_casual').html(d.leave_entitle_casual);
+                $('#leave_entitle_sick').html(d.leave_entitle_sick);
+                $('#leave_entitle_maternity').html(d.leave_entitle_maternity);
+                $('#leave_entitle_paternity').html(d.leave_entitle_paternity);
+                $('#leave_taken_casual').html(d.leave_taken_casual);
+                $('#leave_taken_sick').html(d.leave_taken_sick);
+                $('#leave_taken_maternity').html(d.leave_taken_maternity);
+                $('#leave_taken_paternity').html(d.leave_taken_paternity);
+                $('#leave_balance_casual').html(d.leave_balance_casual);
+                $('#leave_balance_sick').html(d.leave_balance_sick);
+                $('#leave_balance_maternity').html(d.leave_balance_maternity);
+                $('#leave_balance_paternity').html(d.leave_balance_paternity);*/
             },
             error: function() {
                 $("#loader").hide();
