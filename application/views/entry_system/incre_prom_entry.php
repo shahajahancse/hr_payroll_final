@@ -795,8 +795,8 @@
         }
         $("#" + sectionId).slideToggle();
     }
-    // Initial hiding of both sections
-    $("#increment_entry, #promotion_entry").hide();
+    // Initial hiding of all sections
+    $("#increment_entry, #promotion_entry, #line_change").hide();
 </script>
 
 
