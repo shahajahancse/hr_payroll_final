@@ -3682,9 +3682,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 	return $data;
 	}
 
-	
-	
-
 	function continuous_report_limit($grid_firstdate, $grid_seconddate, $status, $grid_emp_id, $limit)
 	{
 		$data = array();

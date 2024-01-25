@@ -105,71 +105,100 @@
             </div>
         </div>
         <br>
-        <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
+        <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:5px;">
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
+
+        <!-- Increment Promtion Line change -->
         <div class="row nav_head">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <input class="btn btn-primary" onclick='toggleSection("increment_entry")' type="button"
-                        value='Increment Entry' />
-                    <input class="btn btn-info" onclick='toggleSection("promotion_entry")' type="button"
-                        value='Promotion Entry' />
+                    <input class="btn btn-primary" onclick='toggleSection("increment_entry")' type="button" value="Increment" />
+                    <input class="btn btn-info" onclick='toggleSection("promotion_entry")' type="button" value="Promotion" />
+                    <input class="btn btn-success" onclick='toggleSection("line_change")' type="button" value="Line" />
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
-        <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
-            <form class="col-md-12" action="<?= base_url('entry_system_con/increment_entry') ?>" method="post"
-                id="increment_entry_form">
-                <div class="col-md-12">
-                    <div class="raw">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">From Date</label>
-                                <input type="date" class="form-control input-sm" id="from_date" name="from_date"
-                                    value="<?= date('Y-m-d') ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">To Date</label>
-                                <input type="date" class="form-control input-sm" id="to_date" name="to_date"
-                                    value="<?= date('Y-m-d') ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">Leave Type</label>
-                                <select class="form-control select22" name='leave_type' id='leave_type'
-                                    style="padding: 1px 12px; height: 29px;">
-                                    <option value='cl'>Casual</option>
-                                    <option value='sl'>Sick</option>
-                                    <option value='pl'>Paternity</option>
-                                    <option value='ml'>Maternity</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+
+        <!-- promotion entry  -->
+        <div id="promotion_entry" class="row nav_head" style="margin-top: 13px;">
+            <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group" style="margin: 8px 16px;">
-                                <label class="control-label">Description</label>
-                                <textarea class="form-control input-sm" id="reason" name="reason"></textarea>
+                        <div class="col-md-8">
+                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
+                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
+                                    <img id="profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
+                                </span>
+                            </div>
+                            <div class="col-md-9">
+                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="emp_name"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="departments_ids"> </span></p>
+                                <p style="font-weight: bold;">Sec : <span id="sections_ids"> </span></p>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12" style="margin: 8px -16px; display: flex; justify-content: flex-end;">
-                            <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="emps_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="lines_ids"> </span></p>
+                                <p style="font-weight: bold;">Desig : <span id="desigs_id"> </span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div><!-- /.row -->
-        <div id="promotion_entry" class="row nav_head" style="margin-top: 13px;">
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
+                    <form class="col-md-12" method="post" id="promotion_entry_entry_form">
+                        <div class="raw">
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Gross Salary</label>
+                                    <input class="form-control" readonly id="salary" name="salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Salary</label>
+                                    <input class="form-control" id="gross_sal" name="gross_sal">
+
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Com. Salary</label>
+                                    <input class="form-control" readonly id="com_salary" name="com_salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Com. Salary</label>
+                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" top='20px'>
+                            <div class="col-md-3">
+                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group" style="gap: 14px; display: flex;">
+                                    <input type="date" class="form-control" id="date" placeholder="select date">
+                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Save' />
+                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>    
+
+        <!-- increment entry  -->
+        <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
@@ -277,7 +306,7 @@
 </div>
 
 <script>
-    function get_emp_info_by_id() {
+    function get_emp_info_promotion() {
 
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
@@ -323,23 +352,71 @@
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
                 $('#emp_name').html(d.name_en);
                 $('#departments_ids').html(d.dept_name);
-                $('#sections_ids').html(d.sec_name_bn);
+                $('#sections_ids').html(d.sec_name_en);
                 $('#emps_ids').html(d.emp_id);
                 $('#lines_ids').html(d.line_name_en);
                 $('#desigs_id').html(d.desig_name);
+                $('#salary').html(d.gross_sal);
+                $('#com_salary').html(d.com_gross_sal);
+            },
+            error: function() {
+                $("#loader").hide();
+                alert('Something went wrong');
+            }
+        })
+    }
+    function get_emp_info_increment() {
 
-                /*$('#leave_entitle_casual').html(d.leave_entitle_casual);
-                $('#leave_entitle_sick').html(d.leave_entitle_sick);
-                $('#leave_entitle_maternity').html(d.leave_entitle_maternity);
-                $('#leave_entitle_paternity').html(d.leave_entitle_paternity);
-                $('#leave_taken_casual').html(d.leave_taken_casual);
-                $('#leave_taken_sick').html(d.leave_taken_sick);
-                $('#leave_taken_maternity').html(d.leave_taken_maternity);
-                $('#leave_taken_paternity').html(d.leave_taken_paternity);
-                $('#leave_balance_casual').html(d.leave_balance_casual);
-                $('#leave_balance_sick').html(d.leave_balance_sick);
-                $('#leave_balance_maternity').html(d.leave_balance_maternity);
-                $('#leave_balance_paternity').html(d.leave_balance_paternity);*/
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+            }, 500);
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",            
+            contentType: "application/json",
+            dataType: "json",
+            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
+            success: function(d) {
+                console.log(d);
+                $("#loader").hide();
+                $("#promotion_entry").show();
+                $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
+                $('#emp_name').html(d.name_en);
+                $('#departments_ids').html(d.dept_name);
+                $('#sections_ids').html(d.sec_name_en);
+                $('#emps_ids').html(d.emp_id);
+                $('#lines_ids').html(d.line_name_en);
+                $('#desigs_id').html(d.desig_name);
+                $('#salary').html(d.gross_sal);
+                $('#com_salary').html(d.com_gross_sal);
             },
             error: function() {
                 $("#loader").hide();
@@ -350,7 +427,7 @@
 </script>
 
 <script>
-    function leave_add(e) {
+    function increment_entry_form(e) {
         e.preventDefault();
         
         var checkboxes = document.getElementsByName('emp_id[]');
@@ -381,14 +458,14 @@
             success: function(data) {
                 $("#loader").hide();
                 if (data == 'success') {
-                    showMessage('success', 'Leave Added Successfully');
+                    showMessage('success', 'Increment Added Successfully');
                 } else {
-                    showMessage('error', 'Leave Not Added');
+                    showMessage('error', 'Increment Not Added');
                 }
             },
             error: function(data) {
                 $("#loader").hide();
-                showMessage('error', 'Leave Not Added');
+                showMessage('error', 'Increment Not Added');
             }
         })
     }
@@ -569,10 +646,10 @@
     function toggleSection(sectionId) {
         if (sectionId == 'increment_entry') {
             $("#promotion_entry").hide();
-            get_emp_info_by_id();
+            get_emp_info_promotion();
         } else {
             $("#increment_entry").hide();
-            get_emp_info_by_id();
+            get_emp_info_increment();
         }
         $("#" + sectionId).slideToggle();
     }
