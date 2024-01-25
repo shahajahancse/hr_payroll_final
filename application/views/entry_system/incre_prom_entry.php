@@ -279,6 +279,111 @@
 </div>
 
 <script>
+    function get_emp_info_by_id() {
+
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            $("#increment_entry").hide();
+            $("#promotion_entry").hide();
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            $("#increment_entry").hide();
+            $("#promotion_entry").hide();
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            $("#increment_entry").hide();
+            $("#promotion_entry").hide();
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/get_emp_info_by_id", 
+            data: {
+                emp_id: numbersArray[0],
+                year: bal_get_year
+            },
+            success: function(d) {
+                var data = JSON.parse(d);
+                $("#loader").hide();
+                $("#promotion_entry").show();
+                $('#profile_image').attr('src', hostname + 'uploads/photo/' + data.epm_info.img_source);
+                $('#emp_name').html(data.epm_info.name_en);
+                $('#leave_entitle_casual').html(data.leave_entitle_casual);
+                $('#leave_entitle_sick').html(data.leave_entitle_sick);
+                $('#leave_entitle_maternity').html(data.leave_entitle_maternity);
+                $('#leave_entitle_paternity').html(data.leave_entitle_paternity);
+                $('#leave_taken_casual').html(data.leave_taken_casual);
+                $('#leave_taken_sick').html(data.leave_taken_sick);
+                $('#leave_taken_maternity').html(data.leave_taken_maternity);
+                $('#leave_taken_paternity').html(data.leave_taken_paternity);
+                $('#leave_balance_casual').html(data.leave_balance_casual);
+                $('#leave_balance_sick').html(data.leave_balance_sick);
+                $('#leave_balance_maternity').html(data.leave_balance_maternity);
+                $('#leave_balance_paternity').html(data.leave_balance_paternity);
+            },
+            error: function() {
+                $("#loader").hide();
+                alert('Something went wrong');
+            }
+        })
+    }
+</script>
+
+<script>
+    function leave_add(e) {
+        e.preventDefault();
+        
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+        return ;
+        var formdata = $("#increment_entry_form").serialize();
+        var data = "unit_id=" + unit_id + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
+        console.log(data);
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/increment_entry",
+            data: data,
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Leave Added Successfully');
+                } else {
+                    showMessage('error', 'Leave Not Added');
+                }
+            },
+            error: function(data) {
+                $("#loader").hide();
+                showMessage('error', 'Leave Not Added');
+            }
+        })
+    }
+</script>
+
+<script>
     $(document).ready(function() {
         $("#searchi").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -449,165 +554,21 @@
         return vals;
     }
 </script>
-
-
-
-<script>
-    function add_weekend() {
-        
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        if (sql == '') {
-            alert('Please select employee Id');
-            $("#loader").hide();
-            return false;
-        }
-        var date = $('#date').val();
-        if (date == '') {
-            alert('Please select Date');
-            $("#loader").hide();
-            return false;
-        }
-        var unit_id = $('#unit_id').val();
-        if (unit_id == '') {
-            alert('Please select Unit');
-            $("#loader").hide();
-            return false;
-        }
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/weekend_add_ajax",
-            data: {
-                sql: sql,
-                date: date,
-                unit_id: unit_id
-            },
-            success: function(data) {
-                // console.log(data);
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Weekend Added Successfully');
-                } else {
-                    showMessage('error', 'Weekend Not Added');
-                }
-            }
-        })
-    }
-</script>
-<script>
-    function get_leave_balance() {
-        
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            alert('Please select employee Id');
-            $("#loader").hide();
-            setTimeout(() => {
-                $("#promotion_entry").hide();
-            }, 500);
-        }
-        if (numbersArray.length > 1) {
-            alert('Please select max one employee');
-            $("#loader").hide();
-            setTimeout(() => {
-                $("#promotion_entry").hide();
-            }, 100);
-        }
-        var bal_get_year = $('#bal_get_year').val();
-        if (bal_get_year == '') {
-            alert('Please select Year');
-            $("#loader").hide();
-        }
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/leave_balance_ajax", 
-            data: {
-                emp_id: numbersArray[0],
-                year: bal_get_year
-            },
-            success: function(d) {
-                var data = JSON.parse(d);
-                $("#loader").hide();
-                $("#promotion_entry").show();
-                $('#profile_image').attr('src', hostname + 'uploads/photo/' + data.epm_info.img_source);
-                $('#emp_name').html(data.epm_info.name_en);
-                $('#leave_entitle_casual').html(data.leave_entitle_casual);
-                $('#leave_entitle_sick').html(data.leave_entitle_sick);
-                $('#leave_entitle_maternity').html(data.leave_entitle_maternity);
-                $('#leave_entitle_paternity').html(data.leave_entitle_paternity);
-                $('#leave_taken_casual').html(data.leave_taken_casual);
-                $('#leave_taken_sick').html(data.leave_taken_sick);
-                $('#leave_taken_maternity').html(data.leave_taken_maternity);
-                $('#leave_taken_paternity').html(data.leave_taken_paternity);
-                $('#leave_balance_casual').html(data.leave_balance_casual);
-                $('#leave_balance_sick').html(data.leave_balance_sick);
-                $('#leave_balance_maternity').html(data.leave_balance_maternity);
-                $('#leave_balance_paternity').html(data.leave_balance_paternity);
-            },
-            error: function() {
-                $("#loader").hide();
-                alert('Something went wrong');
-            }
-        })
-    }
-</script>
 <script>
     function toggleSection(sectionId) {
         if (sectionId == 'increment_entry') {
             $("#promotion_entry").hide();
+            get_emp_info_by_id();
         } else {
             $("#increment_entry").hide();
-            get_leave_balance();
+            get_emp_info_by_id();
         }
         $("#" + sectionId).slideToggle();
     }
     // Initial hiding of both sections
     $("#increment_entry, #promotion_entry").hide();
 </script>
-<script>
-    function leave_add(e) {
-        e.preventDefault();
-        
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            alert('Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            alert('Please select max one employee');
-            return false;
-        }
-        var unit_id = $('#unit_id').val();
-        if (unit_id == '') {
-            alert('Please select Unit');
-            return false;
-        }
 
-        var formdata = $("#increment_entry_form").serialize();
-        var data = "unit_id=" + unit_id + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
-        console.log(data);
 
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/increment_entry",
-            data: data,
-            success: function(data) {
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Leave Added Successfully');
-                } else {
-                    showMessage('error', 'Leave Not Added');
-                }
-            },
-            error: function(data) {
-                $("#loader").hide();
-                showMessage('error', 'Leave Not Added');
-            }
-        })
-    }
-</script>
 
 
