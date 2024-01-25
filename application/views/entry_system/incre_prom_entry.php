@@ -194,7 +194,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="increment_entry_form">
                         <div class="raw">
                             <div class="col-md-3" style="padding: 5px !important">
@@ -224,12 +224,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6" style="padding: 5px !important">
-                                <div class="form-group" style="">
-                                    <label class="control-label">Effective Date</label>
-                                </div>
+                            <div class="col-md-3">
+                                <span>Effective Date</span>
                             </div>
-                            <div class="col-md-6" style="padding: 5px !important">
+                            <div class="col-md-6">
                                 <div class="input-group" style="gap: 14px; display: flex;">
                                     <input type="date" class="form-control" id="date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
