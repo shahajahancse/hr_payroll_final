@@ -175,7 +175,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="col-md-3">
-                                <img id="profile_image" style="height: 78px;width: 100px;" class="img-responsive" >
+                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
+                                    <img id="profile_image" style="height: 78px;width: 100px;" class="img-responsive" >
                                 </span>
                             </div>
                             <div class="col-md-9">
