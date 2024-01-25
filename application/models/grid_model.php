@@ -13,6 +13,68 @@ class Grid_model extends CI_Model{
 		$this->load->model('salary_process_model');
 		$this->load->model('attn_process_model');
 	}
+	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
+	{
+		$data = array();
+		if (!empty($grid_emp_id)) {
+			if($status=='LA'){
+				$this->db->select('emp_line_num.line_name_en,
+									pr_emp_com_info.id,
+									pr_emp_com_info.emp_id,
+									pr_emp_com_info.proxi_id,
+									pr_emp_com_info.emp_join_date,
+									pr_emp_per_info.name_en,
+									emp_designation.desig_name,
+									emp_depertment.dept_name,
+									emp_section.sec_name_en,
+									COALESCE(SUM(CASE WHEN pr_emp_shift_log.late_status = 1 AND pr_emp_com_info.emp_join_date <= pr_emp_shift_log.shift_log_date THEN 1 ELSE 0 END), 0) AS total
+									');
+			}else{
+				$this->db->select('emp_line_num.line_name_en,
+									pr_emp_com_info.id,
+									pr_emp_com_info.emp_id,
+									pr_emp_com_info.proxi_id,
+									pr_emp_com_info.emp_join_date,
+									pr_emp_per_info.name_en,
+									emp_designation.desig_name,
+									emp_depertment.dept_name,
+									emp_section.sec_name_en,
+									COALESCE(SUM(CASE WHEN pr_emp_shift_log.present_status = "' . $status . '" AND pr_emp_com_info.emp_join_date <= pr_emp_shift_log.shift_log_date THEN 1 ELSE 0 END), 0) AS total
+									');
+			}
+			$this->db->from('pr_emp_com_info');
+			$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+			$this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id', 'LEFT');
+			$this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id', 'LEFT');
+			$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
+			$this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id', 'LEFT');
+			$this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
+			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+			$this->db->where('pr_emp_shift_log.shift_log_date >=', $grid_firstdate);
+			$this->db->where('pr_emp_shift_log.shift_log_date <=', $grid_seconddate);
+			$this->db->group_by('pr_emp_com_info.emp_id');
+			$this->db->order_by('pr_emp_com_info.emp_sec_id','ASC' );
+	
+			$query = $this->db->get()->result_array();
+	
+			foreach ($query as $rows) {
+				if ($rows["total"] == 0) {
+					continue;
+				}
+				$data['empid'][] = $rows["emp_id"];
+				$data['proxid'][] = $rows["proxi_id"];
+				$data['fullname'][] = $rows["name_en"];
+				$data['jdate'][] = $rows["emp_join_date"];
+				$data['dept_name'][] = $rows["dept_name"];
+				$data['sec_name_en'][] = $rows["sec_name_en"];
+				$data['line_name'][] = $rows["line_name_en"];
+				$data['desig'][] = $rows["desig_name"];
+				$data['total'][] = $rows["total"];
+			}
+		}
+	
+		return (!empty($data)) ? $data : 'No Data Found';
+	}
 
 	// actual salary report generate
 	function actual_monthly_salary_sheet($salary_month = null, $status = null, $emp_id = null, $unit_id = null)
@@ -3293,72 +3355,47 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	function continuous_leave_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
 	{
+		foreach($grid_emp_id as $emp_id){
+			$this->db->select("pr_leave_trans.*, emp_section.sec_name_en, pr_emp_com_info.emp_join_date, pr_emp_per_info.name_en,emp_line_num.line_name_en");
+			$this->db->from("pr_leave_trans");
+			$this->db->join('pr_emp_com_info', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id');
+			$this->db->join('pr_emp_per_info', 'pr_emp_com_info.emp_id = pr_emp_per_info.emp_id');
+			$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+			$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id');
+			$this->db->where("pr_leave_trans.emp_id", $emp_id);
+			$this->db->where("pr_leave_trans.leave_start Between '$grid_firstdate' and '$grid_seconddate'");
+			// $this->db->group_by('pr_emp_com_info.emp_id');
+			// $this->db->order_by('pr_emp_com_info.emp_sec_id','ASC' );
+			$query = $this->db->get()->result();
+			if (!empty($query)) {
+				foreach($query as $rows){					
+					// [id] => 18655
+					// [emp_id] => 1000004
+					// [unit_id] => 1
+					// [start_date] => 2018-01-27
+					// [leave_type] => cl
+					// [leave_start] => 2018-01-27
+					// [leave_end] => 2018-01-29
+					// [total_leave] => 0
+					// [leave_descrip] => 
+					// [emp_join_date] => 1996-05-26
+					// [name_en] => Shujata Pervin
+					// [line_name_en] => Prod. Staff
 
-		$data = array();
-		$this->db->distinct();
-		$this->db->select("pr_emp_com_info.emp_id,emp_section.id");
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_section');
-		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		// $this->db->order_by("emp_section.sec_name_en");
-		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
-		$query = $this->db->get();
-		if($query->num_rows() == 0)
-		{
-			return "Requested list is empty";
-		}
-
-		foreach($query->result() as $rows)
-		{
-			if($rows->emp_id != '')
-			{
-				if($status=='L')
-				{
-					$count_leave = $this->leave_count_new($rows->emp_id,$grid_firstdate, $grid_seconddate);
-					$count = $count_leave;
+					$data['emp_id'][]= $rows->emp_id;
+					$data['full_name'][]= $rows->name_en;
+					$data['jdate'][]=$rows->emp_join_date;
+					$data['line_name'][]= $rows->line_name_en;
+					$data['sec_name_en'][]= $rows->sec_name_en;
+					$data['leave_type'][]= $rows->leave_type;
+					$data['leave_start'][]= $rows->leave_start;
+					$data['leave_end'][]= $rows->leave_end;
+					$data['total'][]= $rows->total_leave;
+					$data['leave_descrip'][]= $rows->leave_descrip;
 				}
-
-				if($count != 0)
-			    {
-					$this->db->select('pr_emp_per_info.*, pr_id_proxi.*, emp_designation.*,emp_section.*, emp_line_num.*, pr_emp_com_info.*,pr_leave_trans.*');
-					$this->db->from('pr_emp_com_info');
-
-					$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
-					$this->db->join('emp_designation','emp_designation.id = pr_emp_com_info.emp_desi_id','LEFT');
-					$this->db->join('emp_section','emp_section.id = pr_emp_com_info.emp_sec_id','LEFT');
-					$this->db->join('emp_line_num','emp_line_num.id = pr_emp_com_info.emp_line_id','LEFT');
-					$this->db->join('pr_id_proxi',"pr_id_proxi.emp_id = pr_emp_com_info.emp_id",'LEFT');
-					$this->db->join('pr_leave_trans',"pr_leave_trans.emp_id = pr_emp_com_info.emp_id",'LEFT');
-					
-					$this->db->where("pr_emp_com_info.emp_id",$rows->emp_id);
-
-					$query1 = $this->db->get();
-					foreach($query1->result_array() as $row)
-					{
-						$emp_id = $rows->emp_id;
-						$emp_full_name = $row["name_en"];
-						$proxi_id = $row["proxi_id"];
-						$desig_name = $row["desig_name"];
-						$sec_name_en = $row["sec_name_en"];
-						$line_name = $row["line_name_en"];
-						$emp_join_date = $row["emp_join_date"];
-						$leave_descrip = $row["leave_descrip"];
-
-						$data['emp_id'][]= $emp_id;
-						$data['prox_id'][]= $proxi_id;
-						$data['full_name'][]= $emp_full_name;
-						$data['jdate'][]= $emp_join_date;
-						$data['sec_name_en'][]= $sec_name_en;
-						$data['line_name'][]= $line_name;
-						$data['desig_name'][]= $desig_name;
-						$data['leave_descrip'][]= $leave_descrip;
-						$data['total'][]= $count;
-					}
-				}
+						
 			}
-		}
-
+		}		
 		if($data)
 		{
 			return $data;
@@ -3643,69 +3680,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			}
 		}
 	return $data;
-	}
-
-	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id){
-		$data = array();
-		if (!empty($grid_emp_id)) {
-			if($status=='LA'){
-				$this->db->select(
-					'emp_line_num.line_name_en,
-					pr_emp_com_info.id,
-					pr_emp_com_info.emp_id,
-					pr_emp_com_info.proxi_id,
-					pr_emp_com_info.emp_join_date,
-					pr_emp_per_info.name_en,
-					emp_designation.desig_name,
-					emp_depertment.dept_name,
-					emp_section.sec_name_en,
-					COALESCE(SUM(pr_emp_shift_log.late_status = 1), 0) AS total
-				');
-			}else{
-				$this->db->select(
-					'emp_line_num.line_name_en,
-					pr_emp_com_info.id,
-					pr_emp_com_info.emp_id,
-					pr_emp_com_info.proxi_id,
-					pr_emp_com_info.emp_join_date,
-					pr_emp_per_info.name_en,
-					emp_designation.desig_name,
-					emp_depertment.dept_name,
-					emp_section.sec_name_en,
-					COALESCE(SUM(pr_emp_shift_log.present_status = "'.$status.'"), 0) AS total
-				');
-			}
-			$this->db->from('pr_emp_com_info');
-			$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');
-			$this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id', 'LEFT');
-			$this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id', 'LEFT');
-			$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
-			$this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id', 'LEFT');
-			$this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$this->db->where('pr_emp_shift_log.shift_log_date >=', $grid_firstdate);
-			$this->db->where('pr_emp_shift_log.shift_log_date <=', $grid_seconddate);
-			$this->db->group_by('pr_emp_com_info.emp_id');
-	
-			$query = $this->db->get()->result_array();
-	
-			foreach ($query as $rows) {
-				if ($rows["total"] == 0) {
-					continue;
-				}
-				$data['empid'][] = $rows["emp_id"];
-				$data['proxid'][] = $rows["proxi_id"];
-				$data['fullname'][] = $rows["name_en"];
-				$data['jdate'][] = $rows["emp_join_date"];
-				$data['dept_name'][] = $rows["dept_name"];
-				$data['sec_name_en'][] = $rows["sec_name_en"];
-				$data['line_name'][] = $rows["line_name_en"];
-				$data['desig'][] = $rows["desig_name"];
-				$data['total'][] = $rows["total"];
-			}
-		}
-	
-		return (!empty($data)) ? $data : 'No Data Found';
 	}
 	
 
