@@ -495,8 +495,8 @@
                 $('#inc_emps_ids').html(d.emp_id);
                 $('#inc_lines_ids').html(d.line_name_en);
                 $('#inc_desigs_id').html(d.desig_name);
-                $('#inc_salary').html(d.gross_sal);
-                $('#inc_com_salary').html(d.com_gross_sal);
+                $('#inc_salary').val(d.gross_sal);
+                $('#inc_com_salary').val(d.com_gross_sal);
             },
             error: function() {
                 $("#loader").hide();
@@ -557,8 +557,8 @@
                 $('#line_emps_ids').html(d.emp_id);
                 $('#line_lines_ids').html(d.line_name_en);
                 $('#line_desigs_id').html(d.desig_name);
-                $('#line_salary').html(d.gross_sal);
-                $('#line_com_salary').html(d.com_gross_sal);
+                $('#line_salary').val(d.gross_sal);
+                $('#line_com_salary').val(d.com_gross_sal);
             },
             error: function() {
                 $("#loader").hide();
