@@ -227,6 +227,7 @@ class Common extends CI_Controller {
                     com.*,
                     per.name_en,
                     per.name_bn,
+                    per.img_source,
 
                     dept.dept_name,
                     dept.dept_bangla,

@@ -320,24 +320,23 @@
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
             success: function(d) {
                 console.log(d); return;
-                
-                /*var data = JSON.parse(d);
                 $("#loader").hide();
                 $("#promotion_entry").show();
-                $('#profile_image').attr('src', hostname + 'uploads/photo/' + data.epm_info.img_source);
-                $('#emp_name').html(data.epm_info.name_en);
-                $('#leave_entitle_casual').html(data.leave_entitle_casual);
-                $('#leave_entitle_sick').html(data.leave_entitle_sick);
-                $('#leave_entitle_maternity').html(data.leave_entitle_maternity);
-                $('#leave_entitle_paternity').html(data.leave_entitle_paternity);
-                $('#leave_taken_casual').html(data.leave_taken_casual);
-                $('#leave_taken_sick').html(data.leave_taken_sick);
-                $('#leave_taken_maternity').html(data.leave_taken_maternity);
-                $('#leave_taken_paternity').html(data.leave_taken_paternity);
-                $('#leave_balance_casual').html(data.leave_balance_casual);
-                $('#leave_balance_sick').html(data.leave_balance_sick);
-                $('#leave_balance_maternity').html(data.leave_balance_maternity);
-                $('#leave_balance_paternity').html(data.leave_balance_paternity);*/
+                $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
+                $('#emp_name').html(d.name_en);
+
+                /*$('#leave_entitle_casual').html(d.leave_entitle_casual);
+                $('#leave_entitle_sick').html(d.leave_entitle_sick);
+                $('#leave_entitle_maternity').html(d.leave_entitle_maternity);
+                $('#leave_entitle_paternity').html(d.leave_entitle_paternity);
+                $('#leave_taken_casual').html(d.leave_taken_casual);
+                $('#leave_taken_sick').html(d.leave_taken_sick);
+                $('#leave_taken_maternity').html(d.leave_taken_maternity);
+                $('#leave_taken_paternity').html(d.leave_taken_paternity);
+                $('#leave_balance_casual').html(d.leave_balance_casual);
+                $('#leave_balance_sick').html(d.leave_balance_sick);
+                $('#leave_balance_maternity').html(d.leave_balance_maternity);
+                $('#leave_balance_paternity').html(d.leave_balance_paternity);*/
             },
             error: function() {
                 $("#loader").hide();
