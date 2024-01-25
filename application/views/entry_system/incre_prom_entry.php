@@ -180,15 +180,15 @@
                                 </span>
                             </div>
                             <div class="col-md-9">
-                                <p style="font-size: 16px;">Name: <span id="emp_name"> </span></p>
-                                <p style="font-weight: bold;">Dept: <span id="departments_ids"> </span></p>
+                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="emp_name"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="departments_ids"> </span></p>
                                 <p style="font-weight: bold;">Sec : <span id="sections_ids"> </span></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <p style="font-weight: bold;">Emp Id: <span id="emps_ids"> </span></p>
-                                <p style="font-weight: bold;">Line  : <span id="lines_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="emps_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="lines_ids"> </span></p>
                                 <p style="font-weight: bold;">Desig : <span id="desigs_id"> </span></p>
                             </div>
                         </div>
