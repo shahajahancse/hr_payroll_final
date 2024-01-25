@@ -214,7 +214,7 @@
 
                         <div class="row" top='20px'>
                             <div class="col-md-3">
-                                <select name="" id="" class="form-control input-sm">
+                                <select name="" id="" class="form-control">
                                     <option value="">Grade</option>
                                     <option value="8">1</option>
                                     <option value="7">2</option>
