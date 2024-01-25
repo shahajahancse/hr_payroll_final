@@ -174,7 +174,7 @@
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="col-md-3" style="padding: 0px !important">
+                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
                                 <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
                                     <img id="profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
                                 </span>
@@ -195,43 +195,63 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
-                    <table class="table col-md-12">
-                        <thead>
-                            <tr>
-                                <th>Leave Type</th>
-                                <th>Entitle</th>
-                                <th>Taken</th>
-                                <th>Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leave_balance">
-                            <tr>
-                                <th>Casual Leave</th>
-                                <td id="leave_entitle_casual">12</td>
-                                <td id="leave_taken_casual">6</td>
-                                <td id="leave_balance_casual">5</td>
-                            </tr>
-                            <tr>
-                                <th>Sick Leave</th>
-                                <td id="leave_entitle_sick">12</td>
-                                <td id="leave_taken_sick">4</td>
-                                <td id="leave_balance_sick">8</td>
-                            </tr>
-                            <tr>
-                                <th>Maternity Leave</th>
-                                <td id="leave_entitle_maternity">12</td>
-                                <td id="leave_taken_maternity">4</td>
-                                <td id="leave_balance_maternity">8</td>
-                            </tr>
-                            <tr>
-                                <th>Paternity Leave</th>
-                                <td id="leave_entitle_paternity">12</td>
-                                <td id="leave_taken_paternity">4</td>
-                                <td id="leave_balance_paternity">8</td>
-                            </tr>
-                        </tbody>
-
-                    </table>
+                    <form class="col-md-12" method="post" id="increment_entry_form">
+                        <div class="raw">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">From Date</label>
+                                    <input type="date" class="form-control input-sm" id="from_date" name="from_date"
+                                        value="<?= date('Y-m-d') ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">To Date</label>
+                                    <input type="date" class="form-control input-sm" id="to_date" name="to_date"
+                                        value="<?= date('Y-m-d') ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Leave Type</label>
+                                    <select class="form-control select22" name='leave_type' id='leave_type'
+                                        style="padding: 1px 12px; height: 29px;">
+                                        <option value='cl'>Casual</option>
+                                        <option value='sl'>Sick</option>
+                                        <option value='pl'>Paternity</option>
+                                        <option value='ml'>Maternity</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Leave Type</label>
+                                    <select class="form-control select22" name='leave_type' id='leave_type'
+                                        style="padding: 1px 12px; height: 29px;">
+                                        <option value='cl'>Casual</option>
+                                        <option value='sl'>Sick</option>
+                                        <option value='pl'>Paternity</option>
+                                        <option value='ml'>Maternity</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin: 8px 16px;">
+                                    <label class="control-label">Description</label>
+                                    <textarea class="form-control input-sm" id="reason" name="reason"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin: 8px 16px;">
+                                    <div style="margin: 8px -16px; display: flex; justify-content: flex-end;">
+                                        <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
