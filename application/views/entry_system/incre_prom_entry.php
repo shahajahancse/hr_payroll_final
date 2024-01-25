@@ -199,52 +199,39 @@
                         <div class="raw">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="control-label">From Date</label>
-                                    <input type="date" class="form-control input-sm" id="from_date" name="from_date"
-                                        value="<?= date('Y-m-d') ?>">
+                                    <label class="control-label">Gross Salary</label>
+                                    <input class="form-control input-sm" id="salary" name="salary">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="control-label">To Date</label>
-                                    <input type="date" class="form-control input-sm" id="to_date" name="to_date"
-                                        value="<?= date('Y-m-d') ?>">
+                                    <label class="control-label">New Salary</label>
+                                    <input class="form-control input-sm" id="gross_sal" name="gross_sal">
+
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="control-label">Leave Type</label>
-                                    <select class="form-control select22" name='leave_type' id='leave_type'
-                                        style="padding: 1px 12px; height: 29px;">
-                                        <option value='cl'>Casual</option>
-                                        <option value='sl'>Sick</option>
-                                        <option value='pl'>Paternity</option>
-                                        <option value='ml'>Maternity</option>
-                                    </select>
+                                    <label class="control-label">Com. Salary</label>
+                                    <input class="form-control input-sm" id="com_salary" name="com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="control-label">Leave Type</label>
-                                    <select class="form-control select22" name='leave_type' id='leave_type'
-                                        style="padding: 1px 12px; height: 29px;">
-                                        <option value='cl'>Casual</option>
-                                        <option value='sl'>Sick</option>
-                                        <option value='pl'>Paternity</option>
-                                        <option value='ml'>Maternity</option>
-                                    </select>
+                                    <label class="control-label">New Salary</label>
+                                    <input class="form-control input-sm" id="com_gross_sal" name="com_gross_sal">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group" style="margin: 8px 16px;">
-                                    <label class="control-label">Description</label>
-                                    <textarea class="form-control input-sm" id="reason" name="reason"></textarea>
+                                <div class="form-group" style="">
+                                    <label class="control-label">Effective Date</label>
+                                    <input type="date" class="form-control input-sm" id="effect_date" name="effect_date">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group" style="margin: 8px 16px;">
+                                <div class="form-group" style="">
                                     <div style="margin: 8px -16px; display: flex; justify-content: flex-end;">
                                         <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary">
                                     </div>
