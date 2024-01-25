@@ -197,26 +197,26 @@
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <form class="col-md-12" method="post" id="increment_entry_form">
                         <div class="raw">
-                            <div class="col-md-3" style="padding: 5px 0px !important">
+                            <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
                                     <input class="form-control input-sm" id="salary" name="salary">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px 0px !important">
+                            <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
                                     <input class="form-control input-sm" id="gross_sal" name="gross_sal">
 
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px 0px !important">
+                            <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Com. Salary</label>
                                     <input class="form-control input-sm" id="com_salary" name="com_salary">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px 0px !important">
+                            <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
                                     <input class="form-control input-sm" id="com_gross_sal" name="com_gross_sal">
