@@ -111,7 +111,7 @@ elseif($daily_status == 6)
 			$groupedData[$sectionName][] = $employee;
 		} 
 		foreach ($groupedData as $sectionName => $employees) { ?>
-	<tr style="background:radial-gradient(#585252, transparent);    backdrop-filter: brightness(0.5);padding: 3px;">
+	<tr style="background:radial-gradient(#585252, transparent); backdrop-filter: brightness(0.5);padding: 3px;">
 		<td style="width:0px;border:none;font-size:14px;float:left;white-space:nowrap;padding:0 4px">
 		 <b> <?php echo $sectionName ?></b></td>
 	</tr>	

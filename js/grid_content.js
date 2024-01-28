@@ -347,8 +347,8 @@ function daily_costing_summary()
 
 	var status = document.getElementById('status').value;
 	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&status="+status;
-   url =  hostname+"grid_con/daily_costing_summary/";
-
+    url =  hostname+"grid_con/daily_costing_summary/";
+	document.getElementById('loaader').style.display = 'flex';
 
 	ajaxRequest = new XMLHttpRequest();
    ajaxRequest.open("POST", url, true);
@@ -356,6 +356,7 @@ function daily_costing_summary()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');

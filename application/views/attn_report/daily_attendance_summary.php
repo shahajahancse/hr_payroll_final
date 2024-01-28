@@ -44,14 +44,8 @@
 			</tr>
             <?php 
                 $i=1; 
-                $sumAllEmp=0;
-                $sumAllPresent=0; 
-                $sumAllPresent=0; 
-                $sumAllAbsent=0; 
-                $sumAllMale=0; 
-                $sumAllFemale=0; 
-                $sumAllLeave=0; 
-                $sumAllLate=0; 
+                $sumAllEmp=$sumAllPresent=$sumAllPresent=$sumAllAbsent=$sumAllMale=$sumAllFemale=$sumAllLeave=$sumAllLate=0;
+                $tt=$pr=$ab= array();
                 foreach($results as $row){ 
                 $sumAllEmp      += $row->all_emp;
                 $sumAllPresent  += $row->all_present;
@@ -70,7 +64,19 @@
 				<td class="text-center"><?php echo $row->all_absent?></td>
 				<td class="text-center"><?php echo $row->all_male?></td>
 				<td class="text-center"><?php echo $row->all_female?></td>
-               <?php foreach($keys as $key){ $group_data =$row->group_data[$key];?>
+               <?php 
+                    foreach($keys as $key){ $group_data =$row->group_data[$key];
+
+                        if(!isset($tt[$key])){
+                            $tt[$key] =0;
+                            $ab[$key] =0;
+                            $pr[$key] =0;
+                        }
+                        
+                    $tt[$key] +=(!empty($group_data))?$group_data->total_emp :0;
+                    $pr[$key] += (!empty($group_data))?$group_data->emp_present :0;
+                    $ab[$key] += (!empty($group_data))?$group_data->emp_absent :0;
+                ?>
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                         <tr>
@@ -87,44 +93,59 @@
 			</tr>
             <?php }?>
 			<tr>
-				<td colspan="2" class="text-right">Total</td>
-                <td class="text-center">
+				<td colspan="2" style="vertical-align: middle;text-align: center;font-weight:bold">Total</td>
+                <td class="text-center" style="vertical-align: middle;text-align: center;font-weight:bold">
                     <?php echo $sumAllEmp;
                         // $result = ($percentage / 100) * $number;
                     ?>
                 </td>
-                <td class="text-center">
-                    <?php echo $sumAllPresent
-                        $result = ($sumAllPresent / 100) * $sumAllEmp;
-                        echo "(.".$result."%)"
+                <td class="text-center" style="font-weight:bold">
+                    <?php echo $sumAllPresent.'<br>';
+                        $result = ($sumAllPresent / $sumAllEmp) * 100;
+                        echo "(".round($result, 2)."%)";
                     ?>
                 </td>
-                <td class="text-center">
-                    <?php echo $sumAllAbsent
-                        $result = ($sumAllAbsent / 100) * $sumAllEmp;
-                        echo "(.".$result."%)"
+                <td class="text-center" style="font-weight:bold">
+                    <?php echo $sumAllAbsent.'<br>';
+                        $result = ($sumAllAbsent / $sumAllEmp) * 100;
+                        echo "(".round($result, 2)."%)";
                     ?>
                 </td>
-                <td class="text-center">
-                    <?php echo $sumAllMale
-                        $result = ($sumAllMale / 100) * $sumAllEmp;
-                        echo "(.".$result."%)"
+                <td class="text-center" style="font-weight:bold">
+                    <?php echo $sumAllMale.'<br>';
+                        $result = ($sumAllMale / $sumAllEmp) * 100;
+                        echo "(".round($result, 2)."%)";
                     ?>
                 </td>
-                <td class="text-center">
-                    <?php echo $sumAllFemale
-                        $result = ($sumAllFemale / 100) * $sumAllEmp;
-                        echo "(.".$result."%)"
+                <td class="text-center" style="font-weight:bold">
+                    <?php echo $sumAllFemale.'<br>';
+                        $result = ($sumAllFemale / $sumAllEmp) * 100;
+                        echo "(".round($result, 2)."%)";
                     ?>
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="text-center"><?php echo $sumAllLeave?></td>
-                <td class="text-center"><?php echo $sumAllLate?></td>
+               <?php foreach($keys as $key){?>
+                <td style="padding:0px">
+                    <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
+                        <tr>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-right:1px solid #dee2e6;"><?php echo $tt[$key];?></td>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;"><?php echo  $pr[$key]?></td>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-left:1px solid #dee2e6;"><?php echo $ab[$key] ?></td>
+                        </tr>
+                    </table>
+               </td>
+                <?php }?>
+                <td class="text-center" style="font-weight:bold">
+                    <?php echo $sumAllLeave.'<br>';
+                         $result = ($sumAllLeave / $sumAllEmp) * 100;
+                         echo "(".round($result, 2)."%)";
+                    ?>
+                </td>
+                <td class="text-center" style="font-weight:bold">
+                    <?php echo $sumAllLate.'<br>';
+                        $result = ($sumAllLate / $sumAllEmp) * 100;
+                        echo "(".round($result, 2)."%)";
+                    ?>
+                </td>
                 <td></td>
 			</tr>
 		</table>

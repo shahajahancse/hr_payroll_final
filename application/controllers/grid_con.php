@@ -97,6 +97,7 @@ class Grid_con extends CI_Controller {
 		$data['report_date'] = $date;
 		$data['category']    = 'Line';
 		$data['unit_id']    = $unit_id;
+		// dd($data);
 		
 		$this->load->view('attn_report/daily_logout_report', $data);
 		// $this->load->view('others_report/daily_logout', $data);
