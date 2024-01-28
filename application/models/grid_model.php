@@ -439,8 +439,12 @@ class Grid_model extends CI_Model{
 			$data['results'][$key]->group_data = $d;
 		}
 
-		// dd($r);
-		return $data;
+		// dd($data);
+		if($data['results'] == null){
+		 echo "Requested list is empty"; exit;
+		}else{
+			return $data;
+		}
 
 		
 	}
