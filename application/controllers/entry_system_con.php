@@ -39,7 +39,7 @@ class Entry_system_con extends CI_Controller
         dd($_POST);
     }
 
-    
+
     public function incre_prom_entry()
     {
 
@@ -52,17 +52,26 @@ class Entry_system_con extends CI_Controller
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        $this->data['title'] = 'Increment / Promotion'; 
+
+        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $this->db->from('emp_depertment.*');
+        $this->db->join('pr_units', 'pr_units.id = emp_depertment.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['departments'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Increment / Promotion';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/incre_prom_entry';
         $this->load->view('layout/template', $this->data);
     }
-    //--------------------------------------------------------------------------- 
+    //---------------------------------------------------------------------------
     // Increment and Promotion end
-    //--------------------------------------------------------------------------- 
+    //---------------------------------------------------------------------------
 
     //---------------------------------------------------------------------------------------
-    // CRUD for weekend 
+    // CRUD for weekend
     //---------------------------------------------------------------------------------------
     public function weekend_list()
     {
@@ -73,7 +82,7 @@ class Entry_system_con extends CI_Controller
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Weekend List'; 
+        $this->data['title'] = 'Weekend List';
         $this->data['username'] = $this->data['user_data']->id_number;
         // dd($this->data);
         $this->data['subview'] = 'entry_system/weekend_list';
@@ -89,10 +98,10 @@ class Entry_system_con extends CI_Controller
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();  
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        
-        $this->data['title'] = 'Weekend Add'; 
+
+        $this->data['title'] = 'Weekend Add';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/emp_weekend_add';
         $this->load->view('layout/template', $this->data);
@@ -111,7 +120,7 @@ class Entry_system_con extends CI_Controller
         foreach ($emp_ids as $value) {
             $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
-        if ( $this->db->insert_batch('attn_work_off', $data)) {      
+        if ( $this->db->insert_batch('attn_work_off', $data)) {
             echo 'success';
         }else{
             echo 'error';
@@ -132,18 +141,18 @@ class Entry_system_con extends CI_Controller
         $emp_ids = explode(',', $sql);
 
         $this->db->where('work_off_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
-        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_work_off') ) {      
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_work_off') ) {
             echo 'success';
         }else{
             echo 'error';
         }
     }
     //-------------------------------------------------------------------------------------
-    // CRUD for weekend 
+    // CRUD for weekend
     //-------------------------------------------------------------------------------------
 
     //-------------------------------------------------------------------------------------
-    // CRUD for holiday 
+    // CRUD for holiday
     //-------------------------------------------------------------------------------------
     public function holiday_list(){
         $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
@@ -153,7 +162,7 @@ class Entry_system_con extends CI_Controller
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Holiday List'; 
+        $this->data['title'] = 'Holiday List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/holiday_list';
         $this->load->view('layout/template', $this->data);
@@ -169,8 +178,8 @@ class Entry_system_con extends CI_Controller
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        
-        $this->data['title'] = 'Holiday Add'; 
+
+        $this->data['title'] = 'Holiday Add';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/emp_holiday_add';
         $this->load->view('layout/template', $this->data);
@@ -188,7 +197,7 @@ class Entry_system_con extends CI_Controller
         foreach ($emp_ids as $value) {
             $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
-        if ( $this->db->insert_batch('attn_holyday_off', $data)) {      
+        if ( $this->db->insert_batch('attn_holyday_off', $data)) {
             echo 'success';
         }else{
             echo 'error';
@@ -208,7 +217,7 @@ class Entry_system_con extends CI_Controller
         $emp_ids = explode(',', $sql);
 
         $this->db->where('holiday_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
-        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_holyday_off') ) {      
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_holyday_off') ) {
             echo 'success';
         }else{
             echo 'error';
@@ -232,7 +241,7 @@ class Entry_system_con extends CI_Controller
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        $this->data['title'] = 'Leave Transaction'; 
+        $this->data['title'] = 'Leave Transaction';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/leave_transation';
         $this->load->view('layout/template', $this->data);
@@ -245,7 +254,7 @@ class Entry_system_con extends CI_Controller
         $to_date = $_POST['to_date'];
         $leave_type = $_POST['leave_type'];
         $reason = $_POST['reason'];
-        $unit_id = $_POST['unit_id'];  
+        $unit_id = $_POST['unit_id'];
         $leave_start = date("Y-m-d", strtotime($from_date));
         $leave_end = date("Y-m-d", strtotime($to_date));
         $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
@@ -276,7 +285,7 @@ class Entry_system_con extends CI_Controller
 
         $this->db->where('unit_id', $unit_id);
         $leave_entitle=$this->db->get('pr_leave')->row();
-       
+
         $data['leave_entitle_casual']= $leave_entitle->lv_cl;
         $data['leave_entitle_sick']= $leave_entitle->lv_sl;
         $data['leave_entitle_maternity']= $leave_entitle->lv_ml;
@@ -310,12 +319,12 @@ class Entry_system_con extends CI_Controller
         $data['leave_taken_sick'] = $leave_taken_sick;
         $data['leave_taken_maternity'] = $leave_taken_maternity;
         $data['leave_taken_paternity'] = $leave_taken_paternity;
-        
+
         $data['leave_balance_casual'] = $data['leave_entitle_casual'] - $data['leave_taken_casual'];
         $data['leave_balance_sick'] = $data['leave_entitle_sick'] - $data['leave_taken_sick'];
         $data['leave_balance_maternity'] = $data['leave_entitle_maternity'] - $data['leave_taken_maternity'];
         $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
-        echo json_encode($data);   
+        echo json_encode($data);
     }
 
     public function leave_list(){
@@ -327,7 +336,7 @@ class Entry_system_con extends CI_Controller
         $this->db->order_by('pr_leave_trans.leave_start', 'DESC');
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Leave List'; 
+        $this->data['title'] = 'Leave List';
         $this->data['username'] = $this->data['user_data']->id_number;
         // dd($this->data);
         $this->data['subview'] = 'entry_system/leave_list';
@@ -345,7 +354,7 @@ class Entry_system_con extends CI_Controller
     //--------------------------------------------------------------------------------------
 
     //-------------------------------------------------------------------------------------
-    // CRUD for // Left/Resign 
+    // CRUD for // Left/Resign
     //-------------------------------------------------------------------------------------
     public function left_resign_entry()
     {
@@ -358,8 +367,8 @@ class Entry_system_con extends CI_Controller
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        
-        $this->data['title'] = 'Left / Resign Entry'; 
+
+        $this->data['title'] = 'Left / Resign Entry';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/left_resign_entry';
         $this->load->view('layout/template', $this->data);
@@ -370,7 +379,7 @@ class Entry_system_con extends CI_Controller
         $sql = $_POST['sql'];
         $date = $_POST['date'];
         $type = $_POST['type'];
-        $unit_id = $_POST['unit_id'];  
+        $unit_id = $_POST['unit_id'];
         $emp_ids = explode(',', $sql);
 
         if ($type == 1) {
@@ -410,7 +419,7 @@ class Entry_system_con extends CI_Controller
                 echo 'error';
             }
         }
-    }    
+    }
 
     public function left_list()
     {
@@ -424,7 +433,7 @@ class Entry_system_con extends CI_Controller
         $this->db->group_by('lf.emp_id');
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Left List'; 
+        $this->data['title'] = 'Left List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/left_list';
         $this->load->view('layout/template', $this->data);
@@ -442,7 +451,7 @@ class Entry_system_con extends CI_Controller
         $this->db->group_by('rs.emp_id');
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Left List'; 
+        $this->data['title'] = 'Left List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/resign_list';
         $this->load->view('layout/template', $this->data);
@@ -467,16 +476,16 @@ class Entry_system_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url('entry_system_con/resign_list'));
     }
-    //--------------------------------------------------------------------------- 
+    //---------------------------------------------------------------------------
     // Left/Resign end
     //----------------------------------------------------------------------------
     public function get_emp_by_unit($unit) {
         $this->db->select('
                     pr_emp_com_info.id,
-                    pr_emp_com_info.emp_id, 
-                    pr_emp_com_info.unit_id, 
-                    pr_emp_per_info.name_en, 
-                    pr_emp_per_info.name_bn, 
+                    pr_emp_com_info.emp_id,
+                    pr_emp_com_info.unit_id,
+                    pr_emp_per_info.name_en,
+                    pr_emp_per_info.name_bn,
                 ');
         $this->db->from('pr_emp_com_info');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id', 'left');
@@ -498,7 +507,7 @@ class Entry_system_con extends CI_Controller
 
 
     ///////////////////////////////////////////////////////////////////
-    // old code 
+    // old code
     //-------------------------------------------------------------------------------------------------------
     // GRID Display for Entry System
     //-------------------------------------------------------------------------------------------------------
@@ -772,7 +781,7 @@ class Entry_system_con extends CI_Controller
         echo "Data Inserted Successfully!";
     }
 
- 
+
     //-------------------------------------------------------------------------------------------------------
     // CRUD output method
     //-------------------------------------------------------------------------------------------------------
