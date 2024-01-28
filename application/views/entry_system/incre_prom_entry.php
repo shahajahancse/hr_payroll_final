@@ -17,7 +17,7 @@
             <?php $success = $this->session->flashdata('success');
 	        if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
 	         $error = $this->session->flashdata('error');
 	         if ($error) { ?>
             <div class="alert alert-failuer"><?php echo $error; ?></div>
@@ -33,13 +33,13 @@
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
-                        <?php 
+                        <?php
 							foreach ($dept as $row) {
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
 								$select_data='';
-								}  
+								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
 							}
@@ -52,7 +52,7 @@
                 <div class="form-group" style="margin-bottom: 10px !important;">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
-                        <?php if (!empty($user_data->unit_name)) { 
+                        <?php if (!empty($user_data->unit_name)) {
 										$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
                         <option value=''>Select Department</option>
                         <?php foreach ($dpts->result() as $key => $val) { ?>
@@ -157,6 +157,9 @@
                                     <label class="control-label">Department</label>
                                     <select name="pro_department" id="pro_department" class="form-control input-sm">
                                         <option value="">Select Department</option>
+                                        <?php foreach ($departments as $key => $r) { ?>
+                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name .' >> '. $r->unit_name ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -214,7 +217,7 @@
 
                         <div class="row" top='20px'>
                             <div class="col-md-3">
-                                <select name="" id="" class="form-control">
+                                <select name="grade_id" id="grade_id" class="form-control">
                                     <option value="">Grade</option>
                                     <option value="8">1</option>
                                     <option value="7">2</option>
@@ -244,7 +247,7 @@
                     </form>
                 </div>
             </div>
-        </div>    
+        </div>
 
         <!-- increment entry  -->
         <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
@@ -408,7 +411,7 @@
                     </tr>
                 </thead>
                 <tbody id="tbody">
-                    <?php if (!empty($employees)) { 
+                    <?php if (!empty($employees)) {
                                   foreach ($employees as $key => $emp) {
                               ?>
                     <tr class="removeTr">
@@ -467,10 +470,10 @@
         }
 
         $.ajax({
-            type: "POST",            
+            type: "POST",
             contentType: "application/json",
             dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
+            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
                 console.log(d);
                 $("#loader").hide();
@@ -529,10 +532,10 @@
         }
 
         $.ajax({
-            type: "POST",            
+            type: "POST",
             contentType: "application/json",
             dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
+            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
                 console.log(d);
                 $("#loader").hide();
@@ -591,10 +594,10 @@
         }
 
         $.ajax({
-            type: "POST",            
+            type: "POST",
             contentType: "application/json",
             dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id, 
+            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
                 console.log(d);
                 $("#loader").hide();
@@ -620,7 +623,7 @@
 <script>
     function increment_entry_form(e) {
         e.preventDefault();
-        
+
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
