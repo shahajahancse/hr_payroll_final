@@ -106,7 +106,7 @@ elseif($daily_status == 6)
 		$this->load->model('grid_model');
 		$i=1;
 		$groupedData = array();
-		foreach ($pageData as $employee) {
+		foreach ($values as $employee) {
 			$sectionName = $employee['sec_name_en'];
 			$groupedData[$sectionName][] = $employee;
 		} 
