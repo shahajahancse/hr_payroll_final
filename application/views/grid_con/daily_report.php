@@ -51,15 +51,13 @@ elseif($daily_status == 6)
 <?php 
 // dd($values);
 
-$pageSize = 30; // Set the number of rows per page
+// $pageSize = 30; // Set the number of rows per page
 
-$pageCount = ceil(count($values) / $pageSize);
-$pageNumber = 1;
+// $pageCount = ceil(count($values) / $pageSize);
+// $pageNumber = 1;
 
-foreach (array_chunk($values, $pageSize) as $pageData) {
-    echo "Page " . $pageNumber . ":\n";
-
-    echo "\nPage Break\n\n";
+// foreach (array_chunk($values, $pageSize) as $pageData) {
+    // echo "Page " . $pageNumber . ":\n";
 
    
 
@@ -108,12 +106,12 @@ elseif($daily_status == 6)
 		$this->load->model('grid_model');
 		$i=1;
 		$groupedData = array();
-		foreach ($pageData as $employee) {
+		foreach ($values as $employee) {
 			$sectionName = $employee['sec_name_en'];
 			$groupedData[$sectionName][] = $employee;
 		} 
 		foreach ($groupedData as $sectionName => $employees) { ?>
-	<tr style="background:radial-gradient(#585252, transparent);    backdrop-filter: brightness(0.5);padding: 3px;">
+	<tr style="background:radial-gradient(#585252, transparent); backdrop-filter: brightness(0.5);padding: 3px;">
 		<td style="width:0px;border:none;font-size:14px;float:left;white-space:nowrap;padding:0 4px">
 		 <b> <?php echo $sectionName ?></b></td>
 	</tr>	
@@ -217,8 +215,9 @@ elseif($daily_status == 6)
 	<?php 		}
 		
 	} 
-	 $pageNumber++;
-	}?>
+	//  $pageNumber++;
+	// }
+	?>
 	<tr   style="border:none;font-size:14px;white-space:nowrap">
 		<td colspan="10" style="padding:0 4px">
 			<?php echo "<style='float:left;'>Total : " . count($values)?>

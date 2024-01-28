@@ -45,109 +45,6 @@
 		<br />
 		<table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:13px;">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<?php
-
-	$section=array();
-	$i=0;
-	$count = count($values["empid"]);
-	for($i=0; $i<$count; $i++ ){
-=======
-                <?php
-$section=array();
-$i=0;
-$r=0;
-$per_page=35;
-$count = count($values["empid"]);
-for($i=0; $i<$count; $i++ )
-{
-	
->>>>>>> 41bf2ac86bc15436190edb307181b178ed23ee70
-	if($section!=$values["sec_name_en"][$i]){
-	echo "<tr bgcolor='#CCCCCC'>";
-	$r++;
-	echo "<td colspan='7' style='font-size:16px'>Section :".$values["sec_name_en"][$i]."</td>";
-	echo "</tr>";
-<<<<<<< HEAD
-?>
-		
-	<th>SL</th>
-	<th>Emp ID</th>
-	<th>Name</th>
-	<th>Designation</th>
-	<th>Line</th>
-	<th>Total <?php echo $status; ?></th> 
-	<?php
-=======
-	
-	 ?>
-
-			<tr>
-				<?php $r++;?>	
-                <th>SL</th>
-                <th>Emp ID</th>
-                <th>Name</th>
-                <!--<th>DOJ</th><th>Dept.</th><th>Section</th>-->
-                <th> Line</th>
-                <th>Designation</th>
-                <th>Total <?php echo $status; ?></th>
-			</tr>
-                <?php
->>>>>>> 41bf2ac86bc15436190edb307181b178ed23ee70
-	
-	}
-	
-	echo "<tr>";
-	$r++;
-	
-	echo "<td>";
-	echo $i+1;
-	echo "</td>";
-	
-	echo "<td>";
-	echo $values["empid"][$i];
-	echo "</td>";
-<<<<<<< HEAD
-=======
-
->>>>>>> 41bf2ac86bc15436190edb307181b178ed23ee70
-	
-	echo "<td>";
-	echo $values["fullname"][$i];
-	echo "</td>";
-<<<<<<< HEAD
-
-=======
-	
-	
->>>>>>> 41bf2ac86bc15436190edb307181b178ed23ee70
-	echo "<td>";
-	echo $values["line_name"][$i];
-	echo "</td>";
-	
-	echo "<td>";
-	echo $values["desig"][$i];
-	echo "</td>";
-	
-	echo "<td style='text-align:center; font-weight:bold;'>";
-	echo $values["total"][$i];
-	echo "</td>";
-	
-	echo "<tr>";
-	$section=$values["sec_name_en"][$i];
-	if ($r==$per_page) {?>
-		<tr class="page_break_t" style="border: none;">
-			<td colspan="7" class="page_break"></td>
-		</tr>
-		<?php
-		$per_page+=$per_page;
-	}
-}
-?>
-            </table>
-        </div>
-=======
 			<?php
 				$section=array();
 				$i=0;
@@ -170,7 +67,6 @@ for($i=0; $i<$count; $i++ )
 							<th>SL</th>
 							<th>Emp ID</th>
 							<th>Name</th>
-							<!--<th>DOJ</th><th>Dept.</th><th>Section</th>-->
 							<th> Line</th>
 							<th>Designation</th>
 							<th>Total <?php echo $status; ?></th>
@@ -207,18 +103,18 @@ for($i=0; $i<$count; $i++ )
 					
 					echo "<tr>";
 					$section=$values["sec_name_en"][$i];
-					// if ($r==$per_page) {?>
-					<!-- // 	<tr class="page_break" style="border: none;"> -->
-					<!-- // 		<td colspan="7" class="page_break"></td> -->
-					<!-- // 	</tr> -->
-					<!-- // 	<?php -->
-					// 	$per_page+=$per_page;
+					// if ($r==$per_page) {
+						?>
+						<!-- <tr class="page_break" style="border: none;">
+							<td colspan="7" class="page_break"></td>
+						</tr> -->
+						<?php
+						// $per_page+=$per_page;
 					// }
 				}
 			?>
 		</table>
 	</div>
->>>>>>> d7b5bd89312dc5023d9309a9555592e51dee54b8
 </body>
 
 </html>

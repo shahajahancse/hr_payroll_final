@@ -402,7 +402,8 @@ class Grid_model extends CI_Model{
 		foreach ($results as $key => $r) {
 			$data[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
 		}
-
+		$data['keys'] = array_keys($data);
+	
 		$this->db->select("
 					num.id as line_id, num.line_name_en, num.line_name_bn,
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS all_emp,
@@ -438,7 +439,13 @@ class Grid_model extends CI_Model{
 			$data['results'][$key]->group_data = $d;
 		}
 
-		dd($data);
+		// dd($data);
+		if($data['results'] == null){
+		 echo "Requested list is empty"; exit;
+		}else{
+			return $data;
+		}
+
 		
 	}
 
@@ -459,21 +466,21 @@ class Grid_model extends CI_Model{
 		$this->db->select("
 					num.id as line_id, num.line_name_en, num.line_name_bn,
 					SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
-	                SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:00:00' THEN 1 ELSE 0 END ) AS 4pm,
-	                SUM( CASE WHEN log.out_time > '16:00:00' AND log.out_time <= '17:00:00' THEN 1 ELSE 0 END ) AS 5pm,
-	                SUM( CASE WHEN log.out_time > '17:00:00' AND log.out_time <= '18:00:00' THEN 1 ELSE 0 END ) AS 6pm,
-	                SUM( CASE WHEN log.out_time > '18:00:00' AND log.out_time <= '19:00:00' THEN 1 ELSE 0 END ) AS 7pm,
-	                SUM( CASE WHEN log.out_time > '19:00:00' AND log.out_time <= '20:00:00' THEN 1 ELSE 0 END ) AS 8pm,
-	                SUM( CASE WHEN log.out_time > '20:00:00' AND log.out_time <= '21:00:00' THEN 1 ELSE 0 END ) AS 9pm,
-	                SUM( CASE WHEN log.out_time > '21:00:00' AND log.out_time <= '22:00:00' THEN 1 ELSE 0 END ) AS 10pm,
-	                SUM( CASE WHEN log.out_time > '22:00:00' AND log.out_time <= '23:00:00' THEN 1 ELSE 0 END ) AS 11pm,
-	                SUM( CASE WHEN log.out_time > '23:00:00' AND log.out_time <= '23:59:25' THEN 1 ELSE 0 END ) AS 12pm,
-	                SUM( CASE WHEN log.out_time > '00:00:01' AND log.out_time <= '01:00:00' THEN 1 ELSE 0 END ) AS 1am,
-	                SUM( CASE WHEN log.out_time > '01:00:00' AND log.out_time <= '02:00:00' THEN 1 ELSE 0 END ) AS 2am,
-	                SUM( CASE WHEN log.out_time > '02:00:00' AND log.out_time <= '03:00:00' THEN 1 ELSE 0 END ) AS 3am,
-	                SUM( CASE WHEN log.out_time > '03:00:00' AND log.out_time <= '04:00:00' THEN 1 ELSE 0 END ) AS 4am,
-	                SUM( CASE WHEN log.out_time > '04:00:00' AND log.out_time <= '05:00:00' THEN 1 ELSE 0 END ) AS 5am,
-	                SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '06:00:00' THEN 1 ELSE 0 END ) AS 6am,
+	                SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:00:00' THEN 1 ELSE 0 END ) AS four_pm,
+	                SUM( CASE WHEN log.out_time > '16:00:00' AND log.out_time <= '17:00:00' THEN 1 ELSE 0 END ) AS five_pm,
+	                SUM( CASE WHEN log.out_time > '17:00:00' AND log.out_time <= '18:00:00' THEN 1 ELSE 0 END ) AS six_pm,
+	                SUM( CASE WHEN log.out_time > '18:00:00' AND log.out_time <= '19:00:00' THEN 1 ELSE 0 END ) AS seven_pm,
+	                SUM( CASE WHEN log.out_time > '19:00:00' AND log.out_time <= '20:00:00' THEN 1 ELSE 0 END ) AS eight_pm,
+	                SUM( CASE WHEN log.out_time > '20:00:00' AND log.out_time <= '21:00:00' THEN 1 ELSE 0 END ) AS nine_pm,
+	                SUM( CASE WHEN log.out_time > '21:00:00' AND log.out_time <= '22:00:00' THEN 1 ELSE 0 END ) AS ten_pm,
+	                SUM( CASE WHEN log.out_time > '22:00:00' AND log.out_time <= '23:00:00' THEN 1 ELSE 0 END ) AS eleven_pm,
+	                SUM( CASE WHEN log.out_time > '23:00:00' AND log.out_time <= '23:59:25' THEN 1 ELSE 0 END ) AS tweelve_pm,
+	                SUM( CASE WHEN log.out_time > '00:00:01' AND log.out_time <= '01:00:00' THEN 1 ELSE 0 END ) AS one_am,
+	                SUM( CASE WHEN log.out_time > '01:00:00' AND log.out_time <= '02:00:00' THEN 1 ELSE 0 END ) AS two_am,
+	                SUM( CASE WHEN log.out_time > '02:00:00' AND log.out_time <= '03:00:00' THEN 1 ELSE 0 END ) AS three_am,
+	                SUM( CASE WHEN log.out_time > '03:00:00' AND log.out_time <= '04:00:00' THEN 1 ELSE 0 END ) AS four_am,
+	                SUM( CASE WHEN log.out_time > '04:00:00' AND log.out_time <= '05:00:00' THEN 1 ELSE 0 END ) AS five_am,
+	                SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '06:00:00' THEN 1 ELSE 0 END ) AS six_am,
 				");
 
 		$this->db->from("pr_emp_shift_log as log");
@@ -1332,7 +1339,8 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	if($type == 8){
  		$this->db->where("pr_emp_shift_log.in_time = '00:00:00'");
- 		$this->db->or_where("pr_emp_shift_log.out_time = '00:00:00'");
+ 		$this->db->where("pr_emp_shift_log.out_time = '00:00:00'");
+ 		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
 	}
 	$this->db->order_by('pr_emp_com_info.emp_line_id','ASC');
 	$this->db->group_by('pr_emp_com_info.emp_id');
