@@ -55,9 +55,9 @@ class Entry_system_con extends CI_Controller
 
         $this->db->select('emp_depertment.*, pr_units.unit_name');
         $this->db->from('emp_depertment.*');
-        $this->db->join('pr_units', 'pr_units.id = emp_depertment.unit_id', 'left');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->db->where('unit_id', $this->data['user_data']->unit_name);
+            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
         }
         $this->data['departments'] = $this->db->get()->result();
 
