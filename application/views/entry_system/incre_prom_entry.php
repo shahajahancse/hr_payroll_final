@@ -502,11 +502,11 @@
         grade_id = document.getElementById('grade_id').value;
 
         var formdata = $("#promotion_entry_form").serialize();
-        var data = "unit_id="+unit_id +"unit_id="+unit_id +"unit_id="+unit_id +"unit_id="+unit_id +"unit_id="+unit_id +"&prom_date="+prom_date +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+        var data = "unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation +"&grade_id="+grade_id +"&prom_date="+prom_date +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
-            url: hostname + "entry_system_con/increment_entry",
+            url: hostname + "entry_system_con/promotion_entry",
             data: data,
             success: function(data) {
                 $("#loader").hide();
