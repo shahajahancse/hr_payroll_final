@@ -68,8 +68,6 @@ class Entry_system_con extends CI_Controller
             'prev_line' => $r->emp_line_id,
             'prev_desig' => $r->emp_desi_id,
             'prev_grade' => $r->emp_sal_gra_id,
-            'prev_salary' => $r->gross_sal,
-            'prev_com_salary' => $r->com_gross_sal,
             'new_emp_id' => $r->emp_id,
             'new_dept' => $r->emp_dept_id,
             'new_section' => $r->emp_sec_id,
@@ -90,6 +88,8 @@ class Entry_system_con extends CI_Controller
 
         $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->get('pr_incre_prom_pun');
         if ($check->num_rows() > 0) {
+            $data['prev_salary']      = $check->row()->prev_salary;
+            $data['prev_com_salary']  = $check->row()->prev_com_salary;
             $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
             if ( $this->db->update('pr_incre_prom_pun', $data) ) {
                 $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
@@ -98,6 +98,8 @@ class Entry_system_con extends CI_Controller
                 echo 'error';
             }
         } else {
+            $data['prev_salary']      = $r->gross_sal;
+            $data['prev_com_salary']  = $r->com_gross_sal;
             if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
                 $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
                 echo 'success';
@@ -108,15 +110,23 @@ class Entry_system_con extends CI_Controller
     }
 
     public function increment_delete_ajax(){
-        dd($_POST);
-        $emp_id         = $_POST['emp_id'];
+        $emp_id         = $_POST['sql'];
         $unit_id        = $_POST['unit_id'];
-        $incr_date      = date('Y-m-01', strtotime($_POST['incr_date']));
-
-        $this->db->where('work_off_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
-        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_work_off') ) {
-            echo 'success';
-        }else{
+        $incr_date      = date('Y-m-01', strtotime($_POST['date']));
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+        $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
+        if (!empty($r)) {
+            $dd = array(
+                'gross_sal' => $r->prev_salary,
+                'com_gross_sal' => $r->prev_com_salary,
+            );
+            if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
+                $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
             echo 'error';
         }
     }
