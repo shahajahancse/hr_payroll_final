@@ -4201,7 +4201,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	}
 
-	function grid_letter1_report($grid_emp_id, $firstdate)
+	function grid_letter_report($grid_emp_id, $firstdate)
 	{
 		$newDate = date("Y-m-d", strtotime($firstdate));
 		// echo $newDate; exit;
@@ -4211,17 +4211,14 @@ function grid_daily_report($date, $grid_emp_id,$type){
 				pr_emp_com_info.gross_sal,
 				pr_emp_com_info.emp_join_date, 
 				pr_emp_com_info.emp_sal_gra_id,
-
 				pr_emp_per_info.name_en, 
-				pr_emp_per_info.bangla_nam,
-				pr_emp_per_info.emp_fname,
-				pr_emp_per_info.emp_mname,
-
+				pr_emp_per_info.name_bn,
+				pr_emp_per_info.father_name,
+				pr_emp_per_info.mother_name,
+				pr_emp_per_info.*,
 				emp_designation.desig_name, 
 				emp_depertment.dept_name, 
 				emp_section.sec_name_en, 
-				pr_emp_add.emp_pre_add, 
-				pr_emp_add.emp_par_add,
 				pr_emp_left_history.left_date
 			');
 		$this->db->from('pr_emp_per_info');
@@ -4229,12 +4226,10 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->from('emp_designation');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
-		$this->db->from('pr_emp_add');
 		$this->db->from('pr_emp_left_history');
 
 		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
 		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
@@ -4243,19 +4238,13 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
-		/*echo "<pre>";
-		print_r($query->result()); exit();*/
-
-		if($query->num_rows() == 0)
-		{
+		// dd($query->result());
+		if($query->num_rows() == 0){
 			return "Employee ID range does not exist!";
 		}
-		else
-		{
+		else{
 			return $query;
 		}
-		//print_r($query->result_array());
-
 	}
 
 	function get_absent_start_date($emp_id,$firstdate,$limit)
