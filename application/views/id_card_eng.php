@@ -110,7 +110,7 @@
           </div>
           <p class="text-center bg-info" style="width:100% ; border-radius: 10px 10px 0 0;position: absolute;bottom: -1px;left: -1px;">www.ajgroupbd.com</p>
         </div>
-        <div class="box text-center p_padding" style="line-height: 22px;">
+        <div class="box text-center p_padding" style="line-height: 20px;">
           <p><b>Document Code : HGL/HRD/HR/03/051</b></p>
           <p><b>Validity: Till The Time of Employement</b></p>
           <p>Issue Date: <?php echo date('d-m-Y',strtotime($value->emp_join_date))?></p>
