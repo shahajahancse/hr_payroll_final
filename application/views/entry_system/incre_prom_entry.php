@@ -395,7 +395,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="incr_date" placeholder="select date">
+                                    <input type="date" class="form-control" id="line_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='line_entry(event)' type="button" value='Save' />
                                         <input class="btn btn-danger" onclick="line_delete(event)" type="button" value="Delete">
@@ -441,6 +441,119 @@
     </div>
     <!-- </div> -->
 </div>
+
+<script>
+    function line_entry(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        line_date = document.getElementById('line_date').value;
+        if (line_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+        department = document.getElementById('line_change_department').value;
+        if (department == '') {
+            showMessage('error', 'Please select Department');
+            return false;
+        }
+        section = document.getElementById('line_change_section').value;
+        if (section == '') {
+            showMessage('error', 'Please select Section');
+            return false;
+        }
+        line = document.getElementById('line_change_line').value;
+        if (line == '') {
+            showMessage('error', 'Please select Line');
+            return false;
+        }
+        designation = document.getElementById('line_change_desig').value;
+        if (designation == '') {
+            showMessage('error', 'Please select Designation');
+            return false;
+        }
+
+        var formdata = $("#line_change_entry_form").serialize();
+        var data = "unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation +"&line_date="+line_date +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/line_entry",
+            data: data,
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Line changed Successfully');
+                } else {
+                    showMessage('error', 'Line Not changed');
+                }
+            },
+            error: function(data) {
+                $("#loader").hide();
+                showMessage('error', 'Line Not changed');
+            }
+        })
+    }
+
+    function line_delete(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        line_date = document.getElementById('line_date').value;
+        if (line_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/line_delete_ajax",
+            data: {
+                sql: numbersArray[0],
+                date: line_date,
+                unit_id: unit_id
+            },
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Line change Deleted Successfully');
+                }else {
+                    showMessage('error', 'Line change Not Deleted');
+                }
+            }
+        })
+    }
+</script>
 
 <script>
     function promotion_entry(e) {
@@ -511,14 +624,14 @@
             success: function(data) {
                 $("#loader").hide();
                 if (data == 'success') {
-                    showMessage('success', 'Increment Added Successfully');
+                    showMessage('success', 'Promotion Added Successfully');
                 } else {
-                    showMessage('error', 'Increment Not Added');
+                    showMessage('error', 'Promotion Not Added');
                 }
             },
             error: function(data) {
                 $("#loader").hide();
-                showMessage('error', 'Increment Not Added');
+                showMessage('error', 'Promotion Not Added');
             }
         })
     }
@@ -542,32 +655,31 @@
             return false;
         }
 
-        incr_date = document.getElementById('incr_date').value;
-        if (incr_date == '') {
+        prom_date = document.getElementById('prom_date').value;
+        if (prom_date == '') {
             showMessage('error', 'Please select Effective date');
             return false;
         }
 
         $.ajax({
             type: "POST",
-            url: hostname + "entry_system_con/increment_delete_ajax",
+            url: hostname + "entry_system_con/prom_delete_ajax",
             data: {
                 sql: numbersArray[0],
-                date: incr_date,
+                date: prom_date,
                 unit_id: unit_id
             },
             success: function(data) {
                 $("#loader").hide();
                 if (data == 'success') {
-                    showMessage('success', 'Increment Deleted Successfully');
+                    showMessage('success', 'Promotion Deleted Successfully');
                 }else {
-                    showMessage('error', 'Increment Not Deleted');
+                    showMessage('error', 'Promotion Not Deleted');
                 }
             }
         })
     }
 </script>
-
 <script>
     function increment_entry(e) {
         e.preventDefault();
