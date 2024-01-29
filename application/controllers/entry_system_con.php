@@ -108,15 +108,23 @@ class Entry_system_con extends CI_Controller
     }
 
     public function increment_delete_ajax(){
-        dd($_POST);
-        $emp_id         = $_POST['emp_id'];
+        $emp_id         = $_POST['sql'];
         $unit_id        = $_POST['unit_id'];
-        $incr_date      = date('Y-m-01', strtotime($_POST['incr_date']));
-
-        $this->db->where('work_off_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
-        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_work_off') ) {
-            echo 'success';
-        }else{
+        $incr_date      = date('Y-m-01', strtotime($_POST['date']));
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+        $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
+        if (!empty($r)) {
+            $dd = array(
+                'gross_sal' => $r->new_salary,
+                'com_gross_sal' => $r->new_com_salary,
+            );
+            if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
+                $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
             echo 'error';
         }
     }
