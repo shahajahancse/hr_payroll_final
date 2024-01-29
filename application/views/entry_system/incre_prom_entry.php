@@ -272,7 +272,7 @@
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="gross_sal" name="gross_sal">
+                                    <input class="form-control" id="prom_gross_sal" name="prom_gross_sal">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
@@ -284,7 +284,7 @@
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
                                     <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                                    <input class="form-control" id="prom_com_gross_sal" name="prom_com_gross_sal">
                                 </div>
                             </div>
                         </div>
@@ -462,14 +462,14 @@
             return false;
         }
 
-        gross_sal = document.getElementById('gross_sal').value;
-        if (gross_sal == '') {
+        prom_gross_sal = document.getElementById('prom_gross_sal').value;
+        if (prom_gross_sal == '') {
             showMessage('error', 'Please input the New Salary');
             return false;
         }
 
-        com_gross_sal = document.getElementById('com_gross_sal').value;
-        if (com_gross_sal == '') {
+        prom_com_gross_sal = document.getElementById('prom_com_gross_sal').value;
+        if (prom_com_gross_sal == '') {
             showMessage('error', 'Please input the New Com. Salary');
             return false;
         }
@@ -502,7 +502,7 @@
         grade_id = document.getElementById('grade_id').value;
 
         var formdata = $("#promotion_entry_form").serialize();
-        var data = "unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation +"&grade_id="+grade_id +"&prom_date="+prom_date +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+        var data = "unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation +"&grade_id="+grade_id +"&prom_date="+prom_date +"&prom_gross_sal="+prom_gross_sal +"&prom_com_gross_sal="+prom_com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
