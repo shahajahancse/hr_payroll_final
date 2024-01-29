@@ -6,15 +6,6 @@ class Entry_system_con extends CI_Controller
     {
         parent::__construct();
 
-        /* Standard Libraries */
-        // $this->load->model('attn_process_model');
-        // $this->load->model('processdb');
-        // $this->load->model('grid_model');
-        // $this->load->model('log_model');
-        // $this->load->library('grocery_CRUD');
-        // $this->load->model('acl_model');
-        // $this->load->model('crud_model');
-        // $this->load->library('pagination_bootstrap');
         $this->load->model('leave_model');
         $this->load->model('common_model');
         $this->load->helper('url');
@@ -42,7 +33,6 @@ class Entry_system_con extends CI_Controller
 
     public function incre_prom_entry()
     {
-
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
