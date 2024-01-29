@@ -25,6 +25,32 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------
     // Increment and Promotion entry to the Database
     //-------------------------------------------------------------------------------
+    public function incre_prom_entry()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $this->db->from('emp_depertment');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['departments'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Increment / Promotion';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/incre_prom_entry';
+        $this->load->view('layout/template', $this->data);
+    }
+
     public function increment_entry()
     {
         $emp_id         = $_POST['emp_id'];
@@ -81,31 +107,18 @@ class Entry_system_con extends CI_Controller
         }
     }
 
+    public function increment_delete_ajax(){
+        dd($_POST);
+        $emp_id         = $_POST['emp_id'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['incr_date']));
 
-    public function incre_prom_entry()
-    {
-        if ($this->session->userdata('logged_in') == false) {
-            redirect("authentication");
+        $this->db->where('work_off_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_work_off') ) {
+            echo 'success';
+        }else{
+            echo 'error';
         }
-        $this->data['employees'] = array();
-        $this->db->select('pr_units.*');
-        $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
-        }
-
-        $this->db->select('emp_depertment.*, pr_units.unit_name');
-        $this->db->from('emp_depertment');
-        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
-        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
-        }
-        $this->data['departments'] = $this->db->get()->result();
-
-        $this->data['title'] = 'Increment / Promotion';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/incre_prom_entry';
-        $this->load->view('layout/template', $this->data);
     }
     //---------------------------------------------------------------------------
     // Increment and Promotion end

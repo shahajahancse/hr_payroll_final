@@ -187,7 +187,7 @@
                                     <input type="date" class="form-control" id="incr_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                                        <input class="btn btn-danger" onclick="incr_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
@@ -492,6 +492,50 @@
             error: function(data) {
                 $("#loader").hide();
                 showMessage('error', 'Increment Not Added');
+            }
+        })
+    }
+
+    function incr_delete(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        incr_date = document.getElementById('incr_date').value;
+        if (incr_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/increment_delete_ajax",
+            data: {
+                sql: numbersArray[0],
+                date: incr_date,
+                unit_id: unit_id
+            },
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Increment Deleted Successfully');
+                }else {
+                    showMessage('error', 'Increment Not Deleted');
+                }
             }
         })
     }
