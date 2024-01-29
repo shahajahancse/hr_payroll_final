@@ -121,7 +121,7 @@
           <p>Emergancy Contact Number:- <?php echo $value->bank_bkash_no?></p>
           <p><?php echo $value->nid_dob_check == 1?'NID':'Birth Cer.'?>: <?php echo $value->nid_dob_id?> </p>
           <p><b>Permanent Address:-</b></p>
-          <p>Vill: <b><?php echo $value->per_village?></b>, Post: <b><?php echo $value->post_name_en?></b>,</p>
+          <p style="white-space:nowrap">Vill: <b><?php echo $value->per_village?></b>, Post: <b><?php echo $value->post_name_en?></b>,</p>
           <p>Upazila: <b><?php echo $value->upa_name_en?></b>, District: <b><?php echo $value->dis_name_en?></b></p>
           <p class="text-center bg-info" style="width:100% ; border-radius: 10px 10px 0 0;position: absolute;bottom: -1px;left: -1px;height: 26px;"></p>
         </div> 
