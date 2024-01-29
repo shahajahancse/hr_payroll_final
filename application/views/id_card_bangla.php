@@ -86,7 +86,7 @@ p {
         </div>
       </div>
       <h4 class="col-md-12 text-center" style="margin-top:-18px"><b>cwiPq cÎ</b></h4>
-        <div class="ml-2">
+        <div>
           <img src="<?php echo base_url('/uploads'.'/photo/'.$value->img_source)?>" alt="" class="box-img" style="border:1px solid black">
           <p class="box-top ">AvBwW KvW© bst <span style="font-size:19px"> <b><?php echo $value->emp_id?></b></span></p>
           <p class="box-top"> Bmyy¨i ZvwiL t <span style="font-size:19px"> <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</b></span></p>
