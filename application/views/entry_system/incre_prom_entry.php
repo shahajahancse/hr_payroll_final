@@ -123,6 +123,80 @@
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
 
+        <!-- increment entry  -->
+        <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
+            <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
+                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
+                                    <img id="inc_profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
+                                </span>
+                            </div>
+                            <div class="col-md-9">
+                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="inc_emp_name"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="inc_departments_ids"> </span></p>
+                                <p style="font-weight: bold;">Sec : <span id="inc_sections_ids"> </span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="inc_emps_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="inc_lines_ids"> </span></p>
+                                <p style="font-weight: bold;">Desig : <span id="inc_desigs_id"> </span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
+                    <form class="col-md-12" method="post" id="increment_entry_form">
+                        <div class="raw">
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Gross Salary</label>
+                                    <input class="form-control" readonly id="inc_salary" name="salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Salary</label>
+                                    <input class="form-control" id="gross_sal" name="gross_sal">
+
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Com. Salary</label>
+                                    <input class="form-control" readonly id="inc_com_salary" name="com_salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Com. Salary</label>
+                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" top='20px'>
+                            <div class="col-md-3">
+                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group" style="gap: 14px; display: flex;">
+                                    <input type="date" class="form-control" id="date" placeholder="select date">
+                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                        <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- promotion entry  -->
         <div id="promotion_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
@@ -166,7 +240,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
                                     <label class="control-label">Section</label>
-                                    <select name="pro_section" id="pro_section" class="form-control input-sm">
+                                    <select id="pro_section" class="form-control input-sm pro_section">
                                         <option value="">Select Section</option>
                                     </select>
                                 </div>
@@ -174,7 +248,7 @@
                             <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
                                 <div class="form-group">
                                     <label class="control-label">Line</label>
-                                    <select name="pro_line" id="pro_line" class="form-control input-sm">
+                                    <select id="pro_line" class="form-control input-sm pro_line">
                                         <option value="">Select Line</option>
                                     </select>
                                 </div>
@@ -182,7 +256,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
                                     <label class="control-label">Designation</label>
-                                    <select name="pro_designation" id="pro_designation" class="form-control input-sm">
+                                    <select id="pro_designation" class="form-control input-sm pro_designation">
                                         <option value="">Select Designation</option>
                                     </select>
                                 </div>
@@ -249,81 +323,7 @@
             </div>
         </div>
 
-        <!-- increment entry  -->
-        <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
-            <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
-                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="inc_profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
-                                </span>
-                            </div>
-                            <div class="col-md-9">
-                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="inc_emp_name"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="inc_departments_ids"> </span></p>
-                                <p style="font-weight: bold;">Sec : <span id="inc_sections_ids"> </span></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="inc_emps_ids"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="inc_lines_ids"> </span></p>
-                                <p style="font-weight: bold;">Desig : <span id="inc_desigs_id"> </span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="increment_entry_form">
-                        <div class="raw">
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="inc_salary" name="salary">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="gross_sal" name="gross_sal">
-
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Com. Salary</label>
-                                    <input class="form-control" readonly id="inc_com_salary" name="com_salary">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" top='20px'>
-                            <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="date" placeholder="select date">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
-                                    </span>
-                                </div><!-- /input-group -->
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- increment entry  -->
+        <!-- Line change entry  -->
         <div id="line_change" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
@@ -350,44 +350,50 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="increment_entry_form">
+                    <form class="col-md-12" method="post" id="line_change_entry_form">
                         <div class="raw">
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="line_salary" name="salary">
+                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
+                                <div class="form-group">
+                                    <label class="control-label">Department</label>
+                                    <select id="line_change_department" class="form-control input-sm line_change_department">
+                                        <option value="">Select Department</option>
+                                        <?php foreach ($departments as $key => $r) { ?>
+                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name .' >> '. $r->unit_name ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="gross_sal" name="gross_sal">
-
+                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
+                                <div class="form-group">
+                                    <label class="control-label">Section</label>
+                                    <select id="line_change_section" class="form-control input-sm line_change_section">
+                                        <option value="">Select Section</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Com. Salary</label>
-                                    <input class="form-control" readonly id="line_com_salary" name="com_salary">
+                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
+                                <div class="form-group">
+                                    <label class="control-label">Line</label>
+                                    <select id="line_change_line" class="form-control input-sm line_change_line">
+                                        <option value="">Select Line</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
+                                <div class="form-group">
+                                    <label class="control-label">Designation</label>
+                                    <select id="line_change_desig" class="form-control input-sm line_change_desig">
+                                        <option value="">Select Designation</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row" top='20px'>
-                            <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="date" placeholder="select date">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                            <div class="col-md-3 pull-right">
+                                <div class="input-group pull-right" style="gap: 14px; display: flex;">
+                                    <span class="input-group-btn">
+                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Update' />
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
@@ -430,6 +436,60 @@
     </div>
     <!-- </div> -->
 </div>
+<script>
+    function increment_entry(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        gross_sal = document.getElementById('gross_sal').value;
+        if (gross_sal == '') {
+            showMessage('error', 'Please input the New Salary');
+            return false;
+        }
+
+        com_gross_sal = document.getElementById('com_gross_sal').value;
+        if (com_gross_sal == '') {
+            showMessage('error', 'Please input the New Com. Salary');
+            return false;
+        }
+
+        var formdata = $("#increment_entry_form").serialize();
+        var data = "unit_id="+unit_id +"gross_sal="+gross_sal +"com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/increment_entry",
+            data: data,
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Increment Added Successfully');
+                } else {
+                    showMessage('error', 'Increment Not Added');
+                }
+            },
+            error: function(data) {
+                $("#loader").hide();
+                showMessage('error', 'Increment Not Added');
+            }
+        })
+    }
+</script>
 
 <script>
     function get_emp_info_promotion() {
@@ -609,8 +669,6 @@
                 $('#line_emps_ids').html(d.emp_id);
                 $('#line_lines_ids').html(d.line_name_en);
                 $('#line_desigs_id').html(d.desig_name);
-                $('#line_salary').val(d.gross_sal);
-                $('#line_com_salary').val(d.com_gross_sal);
             },
             error: function() {
                 $("#loader").hide();
@@ -619,52 +677,130 @@
         })
     }
 </script>
-
 <script>
-    function increment_entry_form(e) {
-        e.preventDefault();
-
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
-            return false;
-        }
-        unit_id = document.getElementById('unit_id').value;
-        if (unit_id == '') {
-            showMessage('error', 'Please select Unit');
-            return false;
-        }
-        return ;
-        var formdata = $("#increment_entry_form").serialize();
-        var data = "unit_id=" + unit_id + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
-        console.log(data);
-
+    //section dropdown
+    $('#line_change_department').change(function() {
+        $('.line_change_section').addClass('form-control input-sm');
+        $(".line_change_section > option").remove();
+        $(".line_change_line > option").remove();
+        $(".line_change_desig > option").remove();
+        var id = $('#line_change_department').val();
         $.ajax({
             type: "POST",
-            url: hostname + "entry_system_con/increment_entry",
-            data: data,
-            success: function(data) {
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Increment Added Successfully');
-                } else {
-                    showMessage('error', 'Increment Not Added');
-                }
-            },
-            error: function(data) {
-                $("#loader").hide();
-                showMessage('error', 'Increment Not Added');
+            url: hostname + "common/ajax_section_by_dept_id/" + id,
+            success: function(func_data) {
+                $('.line_change_section').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.line_change_section').append(opt);
+                });
             }
-        })
-    }
+        });
+    });
+    //Line dropdown
+    $('#line_change_section').change(function() {
+        $('.line_change_line').addClass('form-control input-sm');
+        $(".line_change_line > option").remove();
+        $(".line_change_desig > option").remove();
+        var id = $('#line_change_section').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_line_by_sec_id/" + id,
+            success: function(func_data) {
+                $('.line_change_line').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.line_change_line').append(opt);
+                });
+            }
+        });
+    });
+    //Designation dropdown
+    $('#line_change_line').change(function() {
+        $('.line_change_desig').addClass('form-control input-sm');
+        $(".line_change_desig > option").remove();
+        var id = $('#line_change_line').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_designation_by_line_id/" + id,
+            success: function(func_data) {
+                $('.line_change_desig').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.line_change_desig').append(opt);
+                });
+            }
+        });
+    });
 </script>
-
+<script>
+    //section dropdown
+    $('#pro_department').change(function() {
+        $('.pro_section').addClass('form-control input-sm');
+        $(".pro_section > option").remove();
+        $(".pro_line > option").remove();
+        $(".pro_designation > option").remove();
+        var id = $('#pro_department').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_section_by_dept_id/" + id,
+            success: function(func_data) {
+                $('.pro_section').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.pro_section').append(opt);
+                });
+            }
+        });
+    });
+    //Line dropdown
+    $('#pro_section').change(function() {
+        $('.pro_line').addClass('form-control input-sm');
+        $(".pro_line > option").remove();
+        $(".pro_designation > option").remove();
+        var id = $('#pro_section').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_line_by_sec_id/" + id,
+            success: function(func_data) {
+                $('.pro_line').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.pro_line').append(opt);
+                });
+            }
+        });
+    });
+    //Designation dropdown
+    $('#pro_line').change(function() {
+        $('.pro_designation').addClass('form-control input-sm');
+        $(".pro_designation > option").remove();
+        var id = $('#pro_line').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_designation_by_line_id/" + id,
+            success: function(func_data) {
+                $('.pro_designation').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.pro_designation').append(opt);
+                });
+            }
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         $("#searchi").on("keyup", function() {
