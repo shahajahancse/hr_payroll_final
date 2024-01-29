@@ -166,7 +166,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
                                     <label class="control-label">Section</label>
-                                    <select name="pro_section" id="pro_section" class="form-control input-sm">
+                                    <select id="pro_section" class="form-control input-sm pro_section">
                                         <option value="">Select Section</option>
                                     </select>
                                 </div>
@@ -174,7 +174,7 @@
                             <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
                                 <div class="form-group">
                                     <label class="control-label">Line</label>
-                                    <select name="pro_line" id="pro_line" class="form-control input-sm">
+                                    <select id="pro_line" class="form-control input-sm pro_line">
                                         <option value="">Select Line</option>
                                     </select>
                                 </div>
@@ -182,7 +182,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
                                     <label class="control-label">Designation</label>
-                                    <select name="pro_designation" id="pro_designation" class="form-control input-sm">
+                                    <select id="pro_designation" class="form-control input-sm pro_designation">
                                         <option value="">Select Designation</option>
                                     </select>
                                 </div>
@@ -323,7 +323,7 @@
             </div>
         </div>
 
-        <!-- increment entry  -->
+        <!-- Line change entry  -->
         <div id="line_change" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
@@ -350,41 +350,67 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="increment_entry_form">
+                    <form class="col-md-12" method="post" id="line_change_entry_form">
                         <div class="raw">
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="line_salary" name="salary">
+                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
+                                <div class="form-group">
+                                    <label class="control-label">Department</label>
+                                    <select id="line_change_department" class="form-control input-sm line_change_department">
+                                        <option value="">Select Department</option>
+                                        <?php foreach ($departments as $key => $r) { ?>
+                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name .' >> '. $r->unit_name ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="gross_sal" name="gross_sal">
-
+                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
+                                <div class="form-group">
+                                    <label class="control-label">Section</label>
+                                    <select id="line_change_section" class="form-control input-sm line_change_section">
+                                        <option value="">Select Section</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Com. Salary</label>
-                                    <input class="form-control" readonly id="line_com_salary" name="com_salary">
+                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
+                                <div class="form-group">
+                                    <label class="control-label">Line</label>
+                                    <select id="line_change_line" class="form-control input-sm line_change_line">
+                                        <option value="">Select Line</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
+                                <div class="form-group">
+                                    <label class="control-label">Designation</label>
+                                    <select id="line_change_desig" class="form-control input-sm line_change_desig">
+                                        <option value="">Select Designation</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row" top='20px'>
+                            <div class="col-md-3">
+                                <select name="grade_id" id="grade_id" class="form-control">
+                                    <option value="">Grade</option>
+                                    <option value="8">1</option>
+                                    <option value="7">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="7">5</option>
+                                    <option value="6">6</option>
+                                    <option value="5">7</option>
+                                    <option value="1">None</option>
+                                </select>
+                            </div>
                             <div class="col-md-3">
                                 <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                <input type="date" class="form-control" id="date" placeholder="select date">
+                            </div>
+                            <div class="col-md-3">
                                 <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Save' />
                                         <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
@@ -665,6 +691,130 @@
     }
 </script>
 
+<script>
+    //section dropdown
+    $('#line_change_department').change(function() {
+        $('.line_change_section').addClass('form-control input-sm');
+        $(".line_change_section > option").remove();
+        $(".line_change_line > option").remove();
+        $(".line_change_desig > option").remove();
+        var id = $('#line_change_department').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_section_by_dept_id/" + id,
+            success: function(func_data) {
+                $('.line_change_section').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.line_change_section').append(opt);
+                });
+            }
+        });
+    });
+    //Line dropdown
+    $('#line_change_section').change(function() {
+        $('.line_change_line').addClass('form-control input-sm');
+        $(".line_change_line > option").remove();
+        $(".line_change_desig > option").remove();
+        var id = $('#line_change_section').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_line_by_sec_id/" + id,
+            success: function(func_data) {
+                $('.line_change_line').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.line_change_line').append(opt);
+                });
+            }
+        });
+    });
+    //Designation dropdown
+    $('#line_change_line').change(function() {
+        $('.line_change_desig').addClass('form-control input-sm');
+        $(".line_change_desig > option").remove();
+        var id = $('#line_change_line').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_designation_by_line_id/" + id,
+            success: function(func_data) {
+                $('.line_change_desig').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.line_change_desig').append(opt);
+                });
+            }
+        });
+    });
+</script>
+<script>
+    //section dropdown
+    $('#pro_department').change(function() {
+        $('.pro_section').addClass('form-control input-sm');
+        $(".pro_section > option").remove();
+        $(".pro_line > option").remove();
+        $(".pro_designation > option").remove();
+        var id = $('#pro_department').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_section_by_dept_id/" + id,
+            success: function(func_data) {
+                $('.pro_section').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.pro_section').append(opt);
+                });
+            }
+        });
+    });
+    //Line dropdown
+    $('#pro_section').change(function() {
+        $('.pro_line').addClass('form-control input-sm');
+        $(".pro_line > option").remove();
+        $(".pro_designation > option").remove();
+        var id = $('#pro_section').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_line_by_sec_id/" + id,
+            success: function(func_data) {
+                $('.pro_line').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.pro_line').append(opt);
+                });
+            }
+        });
+    });
+    //Designation dropdown
+    $('#pro_line').change(function() {
+        $('.pro_designation').addClass('form-control input-sm');
+        $(".pro_designation > option").remove();
+        var id = $('#pro_line').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_designation_by_line_id/" + id,
+            success: function(func_data) {
+                $('.pro_designation').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.pro_designation').append(opt);
+                });
+            }
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         $("#searchi").on("keyup", function() {
