@@ -115,8 +115,8 @@ class Entry_system_con extends CI_Controller
         $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
         if (!empty($r)) {
             $dd = array(
-                'gross_sal' => $r->new_salary,
-                'com_gross_sal' => $r->new_com_salary,
+                'gross_sal' => $r->prev_salary,
+                'com_gross_sal' => $r->prev_com_salary,
             );
             if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
                 $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
