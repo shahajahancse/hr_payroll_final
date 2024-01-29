@@ -163,13 +163,13 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
-		if($type == 1)
-			$this->load->view('letter1',$data);
-		}else if($type == 2){
-			$this->load->view('letter2',$data);
-		}else{
-			$this->load->view('letter3',$data);
-		}
+		// if($type == 1)
+		// 	$this->load->view('letter1',$data);
+		// }else if($type == 2){
+		// 	$this->load->view('letter2',$data);
+		// }else{
+		// 	$this->load->view('letter3',$data);
+		// }
 	}
 
 
