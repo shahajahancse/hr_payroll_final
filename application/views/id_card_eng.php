@@ -58,8 +58,8 @@
         }
 
         .box {
-          width: 290px;
-          height:430px;
+          width: 288px;
+          height:338px;
           margin: 19px;
         }
         h6{
@@ -96,12 +96,12 @@
           <h6>Honeywell Garments Ltd.</h6>
           <img src="<?php echo base_url('/uploads/photo'.'/'.$value->img_source)?>" alt="" class="box-img">
           <p><b><?php echo $value->name_en?></b></p> 
-          <p><?php echo $value->line_name_en?></p>
+          <p><b><?php echo $value->line_name_en?></b></p>
           <div class="left_content">
-            <p>Department : <?php echo $value->dept_name?></p>
-            <p>ID Card No : <?php echo $value->emp_id?></p>
-            <p>Join Date : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?></p>
-            <p>Blood Group: <?php echo $value->blood_name?></p>
+            <p>Department : <b><?php echo $value->dept_name?></b></p>
+            <p>ID Card No : <b><?php echo $value->emp_id?></b></p>
+            <p>Join Date : <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?></b></p>
+            <p>Blood Group: <b><?php echo $value->blood_name?></b></p>
           </div>
 
           <div class="d_flex">

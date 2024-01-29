@@ -152,9 +152,25 @@ class Grid_con extends CI_Controller {
 	}
 
 
+	// letter for continuous absent
 
-
-
+	function grid_letter_report(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+		$firstdate = $this->input->post('firstdate');
+		$data['values'] 	= $this->grid_model->grid_letter_report($grid_emp_id, $firstdate);
+		$data['unit_id']	= $unit_id;
+		$firstdate = date("Y-m-d", strtotime($firstdate));
+		$data['firstdate']	= $firstdate;
+		// if($type == 1)
+		// 	$this->load->view('letter1',$data);
+		// }else if($type == 2){
+		// 	$this->load->view('letter2',$data);
+		// }else{
+		// 	$this->load->view('letter3',$data);
+		// }
+	}
 
 
 
@@ -1353,73 +1369,49 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_letter1_report()
-	{
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$firstdate = $this->input->post('firstdate');
 
-		// $data['values'] 	= $this->grid_model->grid_letter1_report_old($grid_emp_id);
-		$data['values'] 	= $this->grid_model->grid_letter1_report($grid_emp_id, $firstdate);
-		$data['unit_id']	= $unit_id;
-		$firstdate = date("Y-m-d", strtotime($firstdate));
-		$data['firstdate']	= $firstdate;
-		if(is_string($data['values']))
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('letter1',$data);
-		}
-	}
-	function grid_letter2_report()
-	{
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$firstdate = $this->input->post('firstdate');
+	// function grid_letter2_report()
+	// {
+	// 	$grid_data = $this->input->post('spl');
+	// 	$grid_emp_id = explode(',', trim($grid_data));
+	// 	$unit_id = $this->input->post('unit_id');
+	// 	$firstdate = $this->input->post('firstdate');
 
-		$data['values'] 	= $this->grid_model->grid_letter1_report($grid_emp_id,$firstdate);
-		// $data['values'] 	= $this->grid_model->grid_letter2_report($grid_emp_id,$firstdate);
-		$data['unit_id']	= $unit_id;
-		$firstdate = date("Y-m-d", strtotime($firstdate));
-		$data['firstdate']	= $firstdate;
-		
-		/*echo "<pre>";
-		print_r($data['values']->result()); exit();*/
-		if(is_string($data['values']))
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('letter2',$data);
-		}
-	}
-	function grid_letter3_report()
-	{
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$firstdate = $this->input->post('firstdate');
+	// 	$data['values'] 	= $this->grid_model->grid_letter1_report($grid_emp_id,$firstdate);
+	// 	$data['unit_id']	= $unit_id;
+	// 	$firstdate = date("Y-m-d", strtotime($firstdate));
+	// 	$data['firstdate']	= $firstdate;
 
-		$data['values'] 	= $this->grid_model->grid_letter1_report($grid_emp_id, $firstdate);
-		// $data['values'] 	= $this->grid_model->grid_letter3_report($grid_emp_id, $firstdate);
-		$data['unit_id']	= $unit_id;
-		$firstdate = date("Y-m-d", strtotime($firstdate));
-		$data['firstdate']	= $firstdate;
+	// 	if(is_string($data['values']))
+	// 	{
+	// 		echo $data['values'];
+	// 	}
+	// 	else
+	// 	{
+	// 		$this->load->view('letter2',$data);
+	// 	}
+	// }
+	// function grid_letter3_report()
+	// {
+	// 	$grid_data = $this->input->post('spl');
+	// 	$grid_emp_id = explode(',', trim($grid_data));
+	// 	$unit_id = $this->input->post('unit_id');
+	// 	$firstdate = $this->input->post('firstdate');
 
-		if(is_string($data['values']))
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('letter3',$data);
-		}
-	}
+	// 	$data['values'] 	= $this->grid_model->grid_letter1_report($grid_emp_id, $firstdate);
+	// 	$data['unit_id']	= $unit_id;
+	// 	$firstdate = date("Y-m-d", strtotime($firstdate));
+	// 	$data['firstdate']	= $firstdate;
+
+	// 	if(is_string($data['values']))
+	// 	{
+	// 		echo $data['values'];
+	// 	}
+	// 	else
+	// 	{
+	// 		$this->load->view('letter3',$data);
+	// 	}
+	// }
 
 	function grid_pay_slip()
 	{
