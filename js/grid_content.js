@@ -3618,7 +3618,7 @@ function id_card(status){
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1000,height=800');
 			daily_present_report.document.write(resp);
 		}
 	}
