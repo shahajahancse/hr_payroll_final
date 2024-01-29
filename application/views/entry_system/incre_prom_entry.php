@@ -469,7 +469,7 @@
         }
 
         var formdata = $("#increment_entry_form").serialize();
-        var data = "unit_id="+unit_id +"gross_sal="+gross_sal +"com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+        var data = "unit_id="+unit_id +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
