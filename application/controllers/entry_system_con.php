@@ -89,7 +89,7 @@ class Entry_system_con extends CI_Controller
         $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->get('pr_incre_prom_pun');
         if ($check->num_rows() > 0) {
             $data['prev_salary']      = $check->row()->prev_salary;
-            $data['prev_com_salary']  => $check->row()->prev_com_salary;
+            $data['prev_com_salary']  = $check->row()->prev_com_salary;
             $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
             if ( $this->db->update('pr_incre_prom_pun', $data) ) {
                 $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
@@ -99,7 +99,7 @@ class Entry_system_con extends CI_Controller
             }
         } else {
             $data['prev_salary']      = $r->gross_sal;
-            $data['prev_com_salary']  => $r->com_gross_sal;
+            $data['prev_com_salary']  = $r->com_gross_sal;
             if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
                 $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
                 echo 'success';
