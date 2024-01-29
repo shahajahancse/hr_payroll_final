@@ -404,16 +404,9 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
-                                <input type="date" class="form-control" id="date" placeholder="select date">
-                            </div>
-                            <div class="col-md-3">
                                 <div class="input-group" style="gap: 14px; display: flex;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Update' />
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
