@@ -50,7 +50,6 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/incre_prom_entry';
         $this->load->view('layout/template', $this->data);
     }
-
     public function increment_entry()
     {
         $emp_id         = $_POST['emp_id'];
@@ -108,7 +107,6 @@ class Entry_system_con extends CI_Controller
             }
         }
     }
-
     public function increment_delete_ajax(){
         $emp_id         = $_POST['sql'];
         $unit_id        = $_POST['unit_id'];
@@ -119,6 +117,224 @@ class Entry_system_con extends CI_Controller
             $dd = array(
                 'gross_sal' => $r->prev_salary,
                 'com_gross_sal' => $r->prev_com_salary,
+            );
+            if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
+                $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            echo 'error';
+        }
+    }
+
+    public function promotion_entry()
+    {
+        $emp_id         = $_POST['emp_id'];
+        $unit_id        = $_POST['unit_id'];
+        $prom_date      = date('Y-m-01', strtotime($_POST['prom_date']));
+        $new_salary     = $_POST['prom_gross_sal'];
+        $new_com_salary = $_POST['prom_com_gross_sal'];
+        $department     = $_POST['department'];
+        $section        = $_POST['section'];
+        $line           = $_POST['line'];
+        $designation    = $_POST['designation'];
+        $grade_id       = $_POST['grade_id'];
+        $old_salary     = $_POST['salary'];
+        $old_com_salary = $_POST['com_salary'];
+
+        $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
+        $dd = array(
+            'gross_sal'         => $new_salary,
+            'com_gross_sal'     => $new_com_salary,
+            'emp_dept_id'       => $department,
+            'emp_sec_id'        => $section,
+            'emp_line_id'       => $line,
+            'emp_desi_id'       => $designation,
+            'emp_sal_gra_id'    => (!empty($grade_id))? grade_id : $r->emp_sal_gra_id,
+        );
+
+        $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $prom_date)->get('pr_incre_prom_pun');
+        if ($check->num_rows() > 0) {
+            $rr = $check->row();
+            $data = array(
+                'prev_emp_id'       => $emp_id,
+                'prev_dept'         => $rr->prev_dept,
+                'prev_section'      => $rr->prev_section,
+                'prev_line'         => $rr->prev_line,
+                'prev_desig'        => $rr->prev_desig,
+                'prev_grade'        => $rr->prev_grade,
+                'prev_salary'       => $rr->prev_salary,
+                'prev_com_salary'   => $rr->prev_com_salary,
+                'new_emp_id'        =>  $emp_id,
+                'new_dept'          => $department,
+                'new_section'       => $section,
+                'new_line'          => $line,
+                'new_desig'         => $designation,
+                'new_grade'         => (!empty($grade_id))? grade_id : $r->emp_sal_gra_id,
+                'new_salary'        => $new_salary,
+                'new_com_salary'    => $new_com_salary,
+                'effective_month'   => $prom_date,
+                'ref_id'            => $emp_id,
+                'status'            => 2,
+            );
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $prom_date);
+            if ( $this->db->update('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            $data = array(
+                'prev_emp_id'       => $emp_id,
+                'prev_dept'         => $r->emp_dept_id,
+                'prev_section'      => $r->emp_sec_id,
+                'prev_line'         => $r->emp_line_id,
+                'prev_desig'        => $r->emp_desi_id,
+                'prev_grade'        => $r->emp_sal_gra_id,
+                'prev_salary'       => $r->gross_sal,
+                'prev_com_salary'   => $r->com_gross_sal,
+                'new_emp_id'        =>  $emp_id,
+                'new_dept'          => $department,
+                'new_section'       => $section,
+                'new_line'          => $line,
+                'new_desig'         => $designation,
+                'new_grade'         => (!empty($grade_id))? grade_id : $r->emp_sal_gra_id,
+                'new_salary'        => $new_salary,
+                'new_com_salary'    => $new_com_salary,
+                'effective_month'   => $prom_date,
+                'ref_id'            => $emp_id,
+                'status'            => 2,
+            );
+            if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        }
+    }
+    public function prom_delete_ajax(){
+        $emp_id         = $_POST['sql'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['date']));
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+        $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
+        if (!empty($r)) {
+            $dd = array(
+                'gross_sal'         => $r->prev_salary,
+                'com_gross_sal'     => $r->prev_com_salary,
+                'emp_dept_id'       => $r->prev_dept,
+                'emp_sec_id'        => $r->prev_section,
+                'emp_line_id'       => $r->prev_line,
+                'emp_desi_id'       => $r->prev_desig,
+                'emp_sal_gra_id'    => $r->prev_grade,
+            );
+            if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
+                $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            echo 'error';
+        }
+    }
+
+    public function line_entry()
+    {
+        $emp_id         = $_POST['emp_id'];
+        $unit_id        = $_POST['unit_id'];
+        $line_date      = date('Y-m-01', strtotime($_POST['line_date']));
+        $department     = $_POST['department'];
+        $section        = $_POST['section'];
+        $line           = $_POST['line'];
+        $designation    = $_POST['designation'];
+
+        $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
+            $dd = array(
+                'emp_dept_id'       => $department,
+                'emp_sec_id'        => $section,
+                'emp_line_id'       => $line,
+                'emp_desi_id'       => $designation,
+            );
+
+        $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $line_date)->get('pr_incre_prom_pun');
+        if ($check->num_rows() > 0) {
+            $rr = $check->row();
+            $data = array(
+                'prev_emp_id'       => $emp_id,
+                'prev_dept'         => $rr->prev_dept,
+                'prev_section'      => $rr->prev_section,
+                'prev_line'         => $rr->prev_line,
+                'prev_desig'        => $rr->prev_desig,
+                'prev_grade'        => $rr->prev_grade,
+                'prev_salary'       => $rr->prev_salary,
+                'prev_com_salary'   => $rr->prev_com_salary,
+                'new_emp_id'        => $emp_id,
+                'new_dept'          => $department,
+                'new_section'       => $section,
+                'new_line'          => $line,
+                'new_desig'         => $designation,
+                'new_grade'         => $rr->new_grade,
+                'new_salary'        => $rr->new_salary,
+                'new_com_salary'    => $rr->new_com_salary,
+                'effective_month'   => $line_date,
+                'ref_id'            => $emp_id,
+                'status'            => 4,
+            );
+
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+            if ( $this->db->update('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            $data = array(
+                'prev_emp_id'       => $emp_id,
+                'prev_dept'         => $r->emp_dept_id,
+                'prev_section'      => $r->emp_sec_id,
+                'prev_line'         => $r->emp_line_id,
+                'prev_desig'        => $r->emp_desi_id,
+                'prev_grade'        => $r->emp_sal_gra_id,
+                'prev_salary'       => $r->gross_sal,
+                'prev_com_salary'   => $r->com_gross_sal,
+                'new_emp_id'        => $emp_id,
+                'new_dept'          => $department,
+                'new_section'       => $section,
+                'new_line'          => $line,
+                'new_desig'         => $designation,
+                'new_grade'         => $r->emp_sal_gra_id,
+                'new_salary'        => $r->gross_sal,
+                'new_com_salary'    => $r->com_gross_sal,
+                'effective_month'   => $line_date,
+                'ref_id'            => $emp_id,
+                'status'            => 4,
+            );
+            if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        }
+    }
+    public function line_delete_ajax(){
+        $emp_id         = $_POST['sql'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['date']));
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+        $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
+        if (!empty($r)) {
+            $dd = array(
+                'emp_dept_id'       => $r->prev_dept,
+                'emp_sec_id'        => $r->prev_section,
+                'emp_line_id'       => $r->prev_line,
+                'emp_desi_id'       => $r->prev_desig,
             );
             if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
                 $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');

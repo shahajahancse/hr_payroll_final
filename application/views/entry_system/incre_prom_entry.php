@@ -224,7 +224,7 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="promotion_entry_entry_form">
+                    <form class="col-md-12" method="post" id="promotion_entry_form">
                         <div class="raw">
                             <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
                                 <div class="form-group">
@@ -272,7 +272,7 @@
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="gross_sal" name="gross_sal">
+                                    <input class="form-control" id="prom_gross_sal" name="prom_gross_sal">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
@@ -284,7 +284,7 @@
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
                                     <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                                    <input class="form-control" id="prom_com_gross_sal" name="prom_com_gross_sal">
                                 </div>
                             </div>
                         </div>
@@ -307,13 +307,13 @@
                                 <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
                             </div>
                             <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
-                                <input type="date" class="form-control" id="date" placeholder="select date">
+                                <input type="date" class="form-control" id="prom_date" placeholder="select date">
                             </div>
                             <div class="col-md-3">
                                 <div class="input-group" style="gap: 14px; display: flex;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
+                                        <input class="btn btn-primary" onclick='promotion_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-danger" onclick="prom_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
@@ -390,10 +390,15 @@
                         </div>
 
                         <div class="row" top='20px'>
-                            <div class="col-md-3 pull-right">
-                                <div class="input-group pull-right" style="gap: 14px; display: flex;">
-                                    <span class="input-group-btn">
-                                        <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Update' />
+                            <div class="col-md-3">
+                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group" style="gap: 14px; display: flex;">
+                                    <input type="date" class="form-control" id="line_date" placeholder="select date">
+                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                        <input class="btn btn-primary" onclick='line_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-danger" onclick="line_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
@@ -436,6 +441,245 @@
     </div>
     <!-- </div> -->
 </div>
+
+<script>
+    function line_entry(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        line_date = document.getElementById('line_date').value;
+        if (line_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+        department = document.getElementById('line_change_department').value;
+        if (department == '') {
+            showMessage('error', 'Please select Department');
+            return false;
+        }
+        section = document.getElementById('line_change_section').value;
+        if (section == '') {
+            showMessage('error', 'Please select Section');
+            return false;
+        }
+        line = document.getElementById('line_change_line').value;
+        if (line == '') {
+            showMessage('error', 'Please select Line');
+            return false;
+        }
+        designation = document.getElementById('line_change_desig').value;
+        if (designation == '') {
+            showMessage('error', 'Please select Designation');
+            return false;
+        }
+
+        var formdata = $("#line_change_entry_form").serialize();
+        var data = "unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation +"&line_date="+line_date +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/line_entry",
+            data: data,
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Line changed Successfully');
+                } else {
+                    showMessage('error', 'Line Not changed');
+                }
+            },
+            error: function(data) {
+                $("#loader").hide();
+                showMessage('error', 'Line Not changed');
+            }
+        })
+    }
+
+    function line_delete(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        line_date = document.getElementById('line_date').value;
+        if (line_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/line_delete_ajax",
+            data: {
+                sql: numbersArray[0],
+                date: line_date,
+                unit_id: unit_id
+            },
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Line change Deleted Successfully');
+                }else {
+                    showMessage('error', 'Line change Not Deleted');
+                }
+            }
+        })
+    }
+</script>
+
+<script>
+    function promotion_entry(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        prom_gross_sal = document.getElementById('prom_gross_sal').value;
+        if (prom_gross_sal == '') {
+            showMessage('error', 'Please input the New Salary');
+            return false;
+        }
+
+        prom_com_gross_sal = document.getElementById('prom_com_gross_sal').value;
+        if (prom_com_gross_sal == '') {
+            showMessage('error', 'Please input the New Com. Salary');
+            return false;
+        }
+
+        prom_date = document.getElementById('prom_date').value;
+        if (prom_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+        department = document.getElementById('pro_department').value;
+        if (department == '') {
+            showMessage('error', 'Please select Department');
+            return false;
+        }
+        section = document.getElementById('pro_section').value;
+        if (section == '') {
+            showMessage('error', 'Please select Section');
+            return false;
+        }
+        line = document.getElementById('pro_line').value;
+        if (line == '') {
+            showMessage('error', 'Please select Line');
+            return false;
+        }
+        designation = document.getElementById('pro_designation').value;
+        if (designation == '') {
+            showMessage('error', 'Please select Designation');
+            return false;
+        }
+        grade_id = document.getElementById('grade_id').value;
+
+        var formdata = $("#promotion_entry_form").serialize();
+        var data = "unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation +"&grade_id="+grade_id +"&prom_date="+prom_date +"&prom_gross_sal="+prom_gross_sal +"&prom_com_gross_sal="+prom_com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/promotion_entry",
+            data: data,
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Promotion Added Successfully');
+                } else {
+                    showMessage('error', 'Promotion Not Added');
+                }
+            },
+            error: function(data) {
+                $("#loader").hide();
+                showMessage('error', 'Promotion Not Added');
+            }
+        })
+    }
+
+    function prom_delete(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        prom_date = document.getElementById('prom_date').value;
+        if (prom_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/prom_delete_ajax",
+            data: {
+                sql: numbersArray[0],
+                date: prom_date,
+                unit_id: unit_id
+            },
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Promotion Deleted Successfully');
+                }else {
+                    showMessage('error', 'Promotion Not Deleted');
+                }
+            }
+        })
+    }
+</script>
 <script>
     function increment_entry(e) {
         e.preventDefault();
@@ -540,7 +784,6 @@
         })
     }
 </script>
-
 <script>
     function get_emp_info_promotion() {
 
