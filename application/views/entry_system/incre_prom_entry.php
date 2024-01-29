@@ -390,9 +390,9 @@
                         </div>
 
                         <div class="row" top='20px'>
-                            <div class="col-md-3">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <span class="input-group-btn pull-right">
+                            <div class="col-md-3 pull-right">
+                                <div class="input-group pull-right" style="">
+                                    <span class="input-group-btn">
                                         <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Update' />
                                     </span>
                                 </div><!-- /input-group -->
