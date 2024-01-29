@@ -391,21 +391,8 @@
 
                         <div class="row" top='20px'>
                             <div class="col-md-3">
-                                <select name="grade_id" id="grade_id" class="form-control">
-                                    <option value="">Grade</option>
-                                    <option value="8">1</option>
-                                    <option value="7">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="7">5</option>
-                                    <option value="6">6</option>
-                                    <option value="5">7</option>
-                                    <option value="1">None</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
                                 <div class="input-group" style="gap: 14px; display: flex;">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                    <span class="input-group-btn pull-right">
                                         <input class="btn btn-primary" onclick='add_weekend()' type="button" value='Update' />
                                     </span>
                                 </div><!-- /input-group -->
