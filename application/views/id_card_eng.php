@@ -83,7 +83,7 @@
         }
       }
   </style>
-  <title>A4 Page with Boxes</title>
+  <title>Id Card English</title>
 </head>
 
 <body>
@@ -95,7 +95,7 @@
       <?php $image =$this->db->select('company_logo')->get('company_infos')->row()->company_logo;?>
       <p><img src="<?php echo base_url('/images'.'/'.$image)?>" style="height: 30px;width: 50px;margin-top:5px"></p>
       <h6>Honeywell Garments Ltd.</h6>
-      <img src="<?php echo base_url('/uploads/logo.png')?>" alt="" class="box-img">
+      <img src="<?php echo base_url('/uploads/photo'.'/'.$value->image)?>" alt="" class="box-img">
       <p><b><?php echo $value->name_en?></b></p> 
       <p><?php echo $value->line_name_en?></p>
       <div class="left_content">
