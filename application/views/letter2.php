@@ -39,7 +39,7 @@
 #nav_inner {
          width:190px;
 		 height:30px;
-		 font-size:16px;
+		 font-size:14px
 		 font-weight:bold;
 		 padding-top:5px;
 		 border:1px solid #333333;
@@ -140,7 +140,7 @@
   }
   table.table-heading tr td{
     width:33.33%;
-    font-size: 16px;
+    font-size: 14px
     font-weight: bold;
   }       
 
@@ -151,59 +151,28 @@
   	
   	$emp_id = $row->emp_id;
   	$absent_start_date = $this->grid_model->get_absent_start_date($emp_id,$firstdate,$limit=10); ?>
-    <div style="width:770px; margin:0 auto; text-align:justify; font-family:SolaimanLipi; font-size:16px; margin-bottom:120px;">
+    <div style="width:770px; margin:0 auto; text-align:justify; font-family:SolaimanLipi; font-size:14px margin-bottom:120px;">
       <table width="740" style="font-family:SolaimanLipi;">
         <tr>
           <?php $company_logo = $this->common_model->company_information("company_logo"); ?>
           <td width="105"><img width="55" height="55" src="<?php echo base_url(); ?>images/<?php echo $company_logo; ?>" /></td>
-          <td width="740" style="font-size:15px;text-align:center;padding-right: 60px;"><span style="text-align:center"> <?php $this->load->view('head_bangla'); ?>  </span></td>
+          <td width="740" style="font-size:14pxtext-align:center;padding-right: 60px;"><span style="text-align:center"> <?php $this->load->view('head_bangla'); ?>  </span></td>
         </tr>
       </table>
       <div align="center" style="width:740px; border-bottom:2px solid #000;"></div>
       <table width="740px" cellpadding="3" style="">
           <tr>
-            <td style="width: 450px;text-align: left;font-size: 17px;font-weight: normal;">সূত্রঃ <span>রেজিস্ট্রি ডাকযোগে প্রেরিত</span></td>
-            <td style="width: 250px;text-align: right;font-size: 15px;">২য় চিঠি</td>
+            <td style="width: 450px;text-align: left;font-size: 14px;font-weight: normal;">সূত্রঃ <span>রেজিস্ট্রি ডাকযোগে প্রেরিত</span></td>
+            <td style="width: 250px;text-align: right;font-size: 14px">২য় চিঠি</td>
           </tr>
       </table>
       <table width="740px" cellpadding="3" style="">
           <tr>
-            <td style="font-size: 17px;font-weight: normal;">তারিখ :  .........................</td>
+            <td style="font-size: 14px;font-weight: normal;">তারিখ :  .........................</td>
           </tr>
       </table>
 
-      <?php
-        /*$emp_add_pre = explode(',',$row->emp_pre_add_ban);
-        $vill_pre = $emp_add_pre[0];
-        $post_pre = $emp_add_pre[1];
-        $thana_pre = $emp_add_pre[2];
-        $dist_pre = $emp_add_pre[3];
-        $vill_pre = split('ঃ', $vill_pre);
-        $post_pre = split('ঃ', $post_pre);
-        $thana_pre = split('ঃ', $thana_pre);
-        $dist_pre = split('ঃ', $dist_pre);
-        $vill_pre = $vill_pre[1];
-        $post_pre = $post_pre[1];
-        $thana_pre = $thana_pre[1];
-        $dist_pre = $dist_pre[1];
-
-
-        $emp_add_par = explode(',',$row->emp_par_add_ban);
-        $vill = $emp_add_par[0];
-        $post = $emp_add_par[1];
-        $thana = $emp_add_par[2];
-        $dist = $emp_add_par[3];
-        $vill = split('ঃ', $vill);
-        $post = split('ঃ', $post);
-        $thana = split('ঃ', $thana);
-        $dist = split('ঃ', $dist);
-        $vill = $vill[1];
-        $post = $post[1];
-        $thana = $thana[1];
-        $dist = $dist[1];*/
-      ?>
-
-      <table class="table-heading" style="display: table; font-size: 16px;">
+      <table class="table-heading" style="display: table; font-size: 14px">
         <tr>
           <td>প্রাপক,</td>
         </tr>
@@ -228,7 +197,7 @@
         <tr><td width=65px></td><td></td></tr>
       </table>
 
-      <table class="table-heading" style="display: table; width: 720px; font-size: 16px;">
+      <table class="table-heading" style="display: table; width: 720px; font-size: 14px">
         <tr>
           <td style="padding-left:6px;">বর্তমান ঠিকানা</td>
         </tr>
@@ -240,20 +209,7 @@
           <!-- <td><span class="colon">:</span><div class="border_div"><?php echo $vill_pre;?></div></td> -->
           <td><span class="colon">:</span><div class="border_div"><?php echo $row->emp_pre_add;?></div></td>
         </tr>
-       <!--  <tr>
-          <td width=65px>ডাকঘর</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $post_pre;?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>থানা</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $thana_pre;?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>জেলা</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $dist_pre;?></div></td>
-        </tr> -->
       </table>
-
       <table class="table-heading" style="display: table;font-size: 14px; width: 720px;">
          <tr>
           <td style="padding-left:9px;text-align: left;">স্থায়ী ঠিকানা</td>
@@ -268,28 +224,16 @@
        
         <tr>
           <td style="vertical-align: top;">ঠিকানা</td>
-          <!-- <td><span class="colon">:</span><?php echo $vill;?></td> -->
           <td><span class="colon">:</span><?php echo $row->emp_par_add; ?></td>
         </tr>
-        <!--<tr>
-          <td width=65px>ডাকঘর</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $post;?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>থানা</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $thana;?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>জেলা</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $dist;?></div></td>
-        </tr> -->
+
       </table>
 
 
-      <div id="sub" style="width:720px;"><h5 style="text-align:left;font-size: 17px;">বিষয়ঃ বাংলাদেশ শ্রম আইন ২০০৬ ও সংশোধিত ২০১৩ এর ২৭(৩ক) ধারা মোতাবেক, ১০ দিনের অধিক অনুপস্থিতির জন্য আত্মপক্ষ সমর্থনের সুযোগ প্রদান প্রসঙ্গে।</h5></div>
+      <div id="sub" style="width:720px;"><h5 style="text-align:left;font-size: 14px;">বিষয়ঃ বাংলাদেশ শ্রম আইন ২০০৬ ও সংশোধিত ২০১৩ এর ২৭(৩ক) ধারা মোতাবেক, ১০ দিনের অধিক অনুপস্থিতির জন্য আত্মপক্ষ সমর্থনের সুযোগ প্রদান প্রসঙ্গে।</h5></div>
 
       <div style="float:left; width:740px;position:relative;font-size:14px;">
-        <p>জনাব / জনাবা,<br>আপনি গত <!-- ............................. --> <span style="padding: 0 5px;font-family:SutonnyMJ;"><?php echo date('Y-m-d',strtotime($row->left_date)); ?> </span> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। এ প্রেক্ষিতে কারখানা কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <!-- .......................... --> <span style="padding: 0 5px;font-family:SutonnyMJ;"> <?php echo date('Y-m-d',strtotime($row->left_date .' + 10 days')); ?> </span>  ইং তারিখে বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে। কিন্তু অদ্যবধি আপনি উপরোক্ত বিষয়ে কোন ধরনের লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।</p>
+        <p>জনাব / জনাবা,<br>আপনি গত <span style="padding: 0 5px;font-family:SutonnyMJ;"><?php echo date('Y-m-d',strtotime($row->left_date)); ?> </span> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। এ প্রেক্ষিতে কারখানা কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <!-- .......................... --> <span style="padding: 0 5px;font-family:SutonnyMJ;"> <?php echo date('Y-m-d',strtotime($row->left_date .' + 10 days')); ?> </span>  ইং তারিখে বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে। কিন্তু অদ্যবধি আপনি উপরোক্ত বিষয়ে কোন ধরনের লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।</p>
 
         <p>অতএব,  অত্র পত্র প্রাপ্তির ০৭ (সাত) দিনের মধ্যে আত্মপক্ষ সমর্থন সহ কাজে যোগদান করতে আপনাকে নির্দেশ দেয়া গেল।</p>
 
