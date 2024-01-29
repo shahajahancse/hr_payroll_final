@@ -184,7 +184,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="date" placeholder="select date">
+                                    <input type="date" class="form-control" id="incr_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
                                         <input class="btn btn-danger" onclick="delete_weekend()" type="button" value="Delete">
@@ -468,8 +468,14 @@
             return false;
         }
 
+        incr_date = document.getElementById('incr_date').value;
+        if (incr_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+
         var formdata = $("#increment_entry_form").serialize();
-        var data = "unit_id="+unit_id +"gross_sal="+gross_sal +"com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+        var data = "unit_id="+unit_id +"&incr_date="+incr_date +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
