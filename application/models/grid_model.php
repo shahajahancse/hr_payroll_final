@@ -4201,7 +4201,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	}
 
-	function grid_letter_report($grid_emp_id, $firstdate)
+	function grid_letter1_report($grid_emp_id, $firstdate)
 	{
 		$newDate = date("Y-m-d", strtotime($firstdate));
 		// echo $newDate; exit;
@@ -4333,7 +4333,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		//echo $firstdate;
 		$newDate = date("Y-m-d", strtotime('-20 days', strtotime($firstdate)));
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, emp_section.sec_name_en, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add,pr_emp_left_history.left_date');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en, pr_emp_per_info.name_bn , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, emp_section.sec_name_en, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add,pr_emp_left_history.left_date');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');

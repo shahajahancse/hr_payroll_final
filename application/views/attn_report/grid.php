@@ -304,13 +304,13 @@
 
 
 							<?php if(in_array(61,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter1_report()">Letter 1</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter1_report(1)">Letter 1</button>
 							<?php } ?>
 							<?php if(in_array(62,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter2_report()">Letter 2</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter2_report(2)">Letter 2</button>
 							<?php } ?>
 							<?php if(in_array(63,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter3_report()">Letter 3</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter3_report(3)">Letter 3</button>
 							<?php } ?>
 							<?php if(in_array(64,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_employee_information()">Employee Information</button>
