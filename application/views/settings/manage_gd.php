@@ -96,7 +96,7 @@
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('setting_con/check_level_dg') ?>",
-            data: {id: id, gd_id: gd_id, unit_id: unit_id},
+            data: {id: id, gd_id: gd_id, unit_id: unit_id, is_check: is_check},
             success: function(data){
                 console.log('success');
             }
