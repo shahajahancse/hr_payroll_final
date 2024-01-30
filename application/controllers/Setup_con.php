@@ -1303,7 +1303,7 @@ class Setup_con extends CI_Controller
         $this->data['desig_id'] = $data1;
 
         $this->data['title'] = 'Manage Designation';
-        $this->load->view('setup/manage_designation_list_ajax', $this->data);
+        echo $this->load->view('setup/manage_designation_list_ajax', $this->data);
     }
 
     //----------------------------------------------------------------------------------

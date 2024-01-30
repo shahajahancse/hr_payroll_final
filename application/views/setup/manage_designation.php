@@ -86,27 +86,21 @@
 <script type="text/javascript">
     //Designation dropdown
     $('#line_id').change(function() {
-        var unit_id     = $('#unit_id').val();
-        var dept_id     = $('#dept_id').val();
-        var section_id  = $('#section_id').val();
-        var line_id     = $('#line_id').val();
+        var unit_id = $('#unit_id').val();
+        var dept_id = $('#dept_id').val();
+        var section_id = $('#section_id').val();
+        var line_id = $('#line_id').val();
         $.ajax({
             type: "POST",
             data: {
-                unit_id     : unit_id,
-                dept_id     : dept_id,
-                section_id  : section_id,
-                line_id     : line_id,
+                unit_id: unit_id,
+                dept_id: dept_id,
+                section_id: section_id,
+                line_id: line_id,
             },
             url: hostname + "setup_con/manage_designation_list_ajax/",
             success: function(func_data) {
-                $('.designation_id').append("<option value=''>-- Select District --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.designation_id').append(opt);
-                });
+                $('#target-div').show().empty().html(func_data);
             }
         });
     });
