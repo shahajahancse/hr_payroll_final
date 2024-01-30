@@ -1285,7 +1285,7 @@ class Setup_con extends CI_Controller
         $section_id = $this->input->post('section_id');
         $line_id    = $this->input->post('line_id');
 
-        $this->db->select('dacl.id');
+        $this->db->select('dacl.designation_id as id');
         $this->db->from('emp_dasignation_line_acl as dacl');
         $this->db->where('dacl.unit_id', $unit_id);
         $this->db->where('dacl.dept_id', $dept_id);
@@ -1308,7 +1308,26 @@ class Setup_con extends CI_Controller
 
     public function manage_designation_add_ajax()
     {
-        dd($_POST);
+        $is_check   = $this->input->post('is_check');
+        $id         = $this->input->post('id');
+        $unit_id    = $this->input->post('unit_id');
+        $dept_id    = $this->input->post('dept_id');
+        $section_id = $this->input->post('section_id');
+        $line_id    = $this->input->post('line_id');
+
+        if ($is_check == 1) {
+            $data = array(
+                'unit_id'           => $unit_id,
+                'dept_id'           => $dept_id,
+                'section_id'        => $section_id,
+                'line_id'           => $line_id,
+                'designation_id'    => $id,
+            );
+            $this->db->insert('emp_dasignation_line_acl', $data);
+        } else {
+            $this->db->where('designation_id', $id)->where('unit_id', $unit_id)->where('dept_id', $dept_id);
+            $this->db->where('section_id', $section_id)->where('line_id', $line_id)->delete('emp_dasignation_line_acl');
+        }
     }
 
     //----------------------------------------------------------------------------------
@@ -1329,7 +1348,6 @@ class Setup_con extends CI_Controller
     }
     public function shiftschedule_add()
     {
-
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $data['shiftscheduleinfo'] = $this->crud_model->shiftschedule_fetch();
