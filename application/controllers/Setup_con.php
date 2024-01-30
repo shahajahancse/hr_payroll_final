@@ -1262,7 +1262,7 @@ class Setup_con extends CI_Controller
         $this->data['units'] = $this->db->get('pr_units')->result();
         $this->data['title'] = 'Manage Designation';
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/manage_designation_add';
+        $this->data['subview'] = 'setup/manage_designation';
         $this->load->view('layout/template', $this->data);
     }
 
