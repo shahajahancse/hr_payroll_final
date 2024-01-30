@@ -16,8 +16,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 290px;
-      height:440px;
+      width: 288px;
+      height:338px;
       margin: 19px;
       border: 1px solid #ccc;
       position: relative;
