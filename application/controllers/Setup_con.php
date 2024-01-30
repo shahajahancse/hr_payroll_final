@@ -505,10 +505,10 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-          
+
             $this->db->select('pr_units.*');
             $this->data['unit'] = $this->db->get('pr_units')->result();
-            
+
             $this->data['line'] = $this->crud_model->getline($line_id);
             $this->data['title'] = 'Edit Section';
             $this->data['username'] = $this->data['user_data']->id_number;
@@ -1048,7 +1048,7 @@ class Setup_con extends CI_Controller
     // CRUD for Night Allowance Start
     //----------------------------------------------------------------------------------
     public function designation(){
-        $this->db->select(' emp_designation.*, 
+        $this->db->select(' emp_designation.*,
                             IFNULL(pr_units.unit_name, "none") as unit_name,
                             IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
                             IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
@@ -1130,7 +1130,7 @@ class Setup_con extends CI_Controller
                 'group_id' => $this->input->post('group_id'),
             );
             // dd($formArray);
-            if ($this->db->insert('emp_designation', $formArray)) {                
+            if ($this->db->insert('emp_designation', $formArray)) {
                 $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
@@ -1227,26 +1227,26 @@ class Setup_con extends CI_Controller
     public function manage_designation()
     {
         $this->db->select('
-            dacl.id, 
-            ed.desig_name, 
-            ed.desig_bangla, 
-            dacl.designation_id, 
+            dacl.id,
+            ed.desig_name,
+            ed.desig_bangla,
+            dacl.designation_id,
 
-            ln.line_name_en, 
-            ln.line_name_bn, 
-            dacl.line_id, 
+            ln.line_name_en,
+            ln.line_name_bn,
+            dacl.line_id,
 
-            es.sec_name_bn, 
-            es.sec_name_en, 
+            es.sec_name_bn,
+            es.sec_name_en,
             dacl.section_id,
 
             d.dept_name,
             d.dept_bangla,
-            dacl.dept_id, 
+            dacl.dept_id,
 
-            pr_units.unit_name, 
-            pr_units.unit_name_bangla, 
-            dacl.unit_id, 
+            pr_units.unit_name,
+            pr_units.unit_name_bangla,
+            dacl.unit_id,
         ');
         $this->db->from('emp_dasignation_line_acl as dacl');
 
@@ -1290,8 +1290,8 @@ class Setup_con extends CI_Controller
             );
             // dd($formArray);
             $check = $this->check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id);
-            if ($check == false) {              
-                $this->db->insert('emp_dasignation_line_acl', $formArray);  
+            if ($check == false) {
+                $this->db->insert('emp_dasignation_line_acl', $formArray);
                 $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
                 $this->session->set_flashdata('failure', 'Record Already Exist!');
@@ -1711,7 +1711,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('casual_leave', 'Casual Leave', 'required');
         $this->form_validation->set_rules('maternity_leave', 'Maternity Leave', 'required');
         $this->form_validation->set_rules('paternity_leave', 'Paternity Leave', 'required');
-     
+
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -1744,14 +1744,14 @@ class Setup_con extends CI_Controller
 
     public function leave_edit($shiftmanagementId)
     {
-      
+
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('leave_name', 'Leave_name', 'required');
         $this->form_validation->set_rules('sick_leave', 'Sick Leave', 'required');
         $this->form_validation->set_rules('casual_leave', 'Casual Leave', 'required');
         $this->form_validation->set_rules('maternity_leave', 'Maternity Leave', 'required');
         $this->form_validation->set_rules('paternity_leave', 'Paternity Leave', 'required');
-     
+
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -1827,7 +1827,7 @@ public function bonus_add()
     $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
     $this->form_validation->set_rules('festival', 'Festival', 'required');
     $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
- 
+
     if ($this->form_validation->run() == false) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -1871,7 +1871,7 @@ public function bonus_edit($shiftmanagementId)
     $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
     $this->form_validation->set_rules('festival', 'Festival', 'required');
     $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
- 
+
     if ($this->form_validation->run() == false) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -1917,7 +1917,7 @@ public function bonus_delete($shiftmanagementId)
    $this->db->where('id', $shiftmanagementId);
    if ($this->db->delete('pr_bonus_rules')) {
        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-    
+
    }else{
        $this->session->set_flashdata('failure', 'Record Delete failed!');
    };
@@ -2260,7 +2260,7 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Festival Bonus Setup
     //-------------------------------------------------------------------------------------------------------
-  
+
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Providend Fund Setup
     //-------------------------------------------------------------------------------------------------------
