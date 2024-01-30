@@ -1216,16 +1216,71 @@ class Setup_con extends CI_Controller
         redirect(base_url() . 'setup_con/designation');
     }
 
-    public function manage_designation_delete($id)
+    function check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id, $id = null)
     {
-        $this->db->where('id', $id);
-        $this->db->delete('emp_dasignation_line_acl');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'setup_con/manage_designation');
+        $this->db->select('id');
+        $this->db->from('emp_dasignation_line_acl');
+        if (!empty($id)) {
+            $this->db->where('id !=', $id);
+        }
+        $this->db->where('designation_id', $designation_id);
+        $this->db->where('line_id', $line_id);
+        $this->db->where('section_id', $section_id);
+        $this->db->where('dept_id', $dept_id);
+        $this->db->where('unit_id', $unit_id);
+        $row = $this->db->get()->num_rows();
+        if ($row > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
     public function manage_designation()
     {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('designation_id', 'Designation Name English', 'required');
+        $this->form_validation->set_rules('line_id', 'Line Name', 'required');
+        $this->form_validation->set_rules('section_id', 'Section Name', 'required');
+        $this->form_validation->set_rules('dept_id', 'Department Name', 'required');
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+
+        if ($this->form_validation->run() == TRUE) {
+
+            $designation_id = $this->input->post('designation_id');
+            $line_id = $this->input->post('line_id');
+            $section_id = $this->input->post('section_id');
+            $dept_id = $this->input->post('dept_id');
+            $unit_id = $this->input->post('unit_id');
+            $formArray = array(
+                'designation_id' => $designation_id,
+                'line_id' => $line_id,
+                'section_id' => $section_id,
+                'dept_id' => $dept_id,
+                'unit_id' => $unit_id,
+            );
+            // dd($formArray);
+            $check = $this->check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id);
+            if ($check == false) {
+                $this->db->insert('emp_dasignation_line_acl', $formArray);
+                $this->session->set_flashdata('success', 'Record add successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record Already Exist!');
+            }
+            redirect(base_url('setup_con/manage_designation'));
+        }
+
+        $this->db->select('pr_units.*');
+        $this->data['units'] = $this->db->get('pr_units')->result();
+        $this->data['title'] = 'Manage Designation';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/manage_designation';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function manage_designation_list_ajax()
+    {
+        dd($_POST);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('designation_id', 'Designation Name English', 'required');
         $this->form_validation->set_rules('line_id', 'Line Name', 'required');
@@ -1321,24 +1376,15 @@ class Setup_con extends CI_Controller
 
     }
 
-    function check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id, $id = null) {
-        $this->db->select('id');
-        $this->db->from('emp_dasignation_line_acl');
-        if (!empty($id)) {
-            $this->db->where('id !=', $id);
-        }
-        $this->db->where('designation_id', $designation_id);
-        $this->db->where('line_id', $line_id);
-        $this->db->where('section_id', $section_id);
-        $this->db->where('dept_id', $dept_id);
-        $this->db->where('unit_id', $unit_id);
-        $row = $this->db->get()->num_rows();
-        if ($row > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+    public function manage_designation_delete($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('emp_dasignation_line_acl');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url() . 'setup_con/manage_designation');
     }
+
+
 
     //----------------------------------------------------------------------------------
     // CRUD for Night Allowance end

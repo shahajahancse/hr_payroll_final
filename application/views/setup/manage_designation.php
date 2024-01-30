@@ -78,10 +78,7 @@
         </div>
     </div>
 
-    <div id="target-div" class="row tablebox">
-        <div class="col-md-12" style="display: flex;flex-wrap: wrap;">
-            dddddd
-        </div>
+    <div id="target-div" class="row tablebox" style="display: none;">
     </div>
 </div>
 
@@ -89,12 +86,19 @@
 <script type="text/javascript">
     //Designation dropdown
     $('#line_id').change(function() {
-        $('.designation_id').addClass('form-control input-sm');
-        $(".designation_id > option").remove();
-        var id = $('#unit_id').val();
+        var unit_id     = $('#unit_id').val();
+        var dept_id     = $('#dept_id').val();
+        var section_id  = $('#section_id').val();
+        var line_id     = $('#line_id').val();
         $.ajax({
             type: "POST",
-            url: hostname + "common/ajax_designation_by_unit/" + id,
+            data: {
+                unit_id     : unit_id,
+                dept_id     : dept_id,
+                section_id  : section_id,
+                line_id     : line_id,
+            },
+            url: hostname + "common/manage_designation_list_ajax/",
             success: function(func_data) {
                 $('.designation_id').append("<option value=''>-- Select District --</option>");
                 $.each(func_data, function(id, name) {
