@@ -280,7 +280,6 @@ class Setting_con extends CI_Controller {
 		$gd_id   = $this->input->post('gd_id');
 		$unit_id = $this->input->post('unit_id');
 		$is_check = $this->input->post('is_check');
-		dd($_POST);
 		if ($is_check == 1) {
 			$d['group_id'] = $gd_id;
 		} else {
