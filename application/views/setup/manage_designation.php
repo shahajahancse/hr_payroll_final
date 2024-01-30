@@ -99,7 +99,7 @@
                 unit_id     : unit_id,
                 dept_id     : dept_id,
                 section_id  : section_id,
-                line_id     : section_id,
+                line_id     : line_id,
                 id          : id,
                 is_check    : is_check,
             },

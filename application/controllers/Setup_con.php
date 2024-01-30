@@ -1238,38 +1238,6 @@ class Setup_con extends CI_Controller
 
     public function manage_designation()
     {
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('designation_id', 'Designation Name English', 'required');
-        $this->form_validation->set_rules('line_id', 'Line Name', 'required');
-        $this->form_validation->set_rules('section_id', 'Section Name', 'required');
-        $this->form_validation->set_rules('dept_id', 'Department Name', 'required');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-
-        if ($this->form_validation->run() == TRUE) {
-
-            $designation_id = $this->input->post('designation_id');
-            $line_id = $this->input->post('line_id');
-            $section_id = $this->input->post('section_id');
-            $dept_id = $this->input->post('dept_id');
-            $unit_id = $this->input->post('unit_id');
-            $formArray = array(
-                'designation_id' => $designation_id,
-                'line_id' => $line_id,
-                'section_id' => $section_id,
-                'dept_id' => $dept_id,
-                'unit_id' => $unit_id,
-            );
-            // dd($formArray);
-            $check = $this->check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id);
-            if ($check == false) {
-                $this->db->insert('emp_dasignation_line_acl', $formArray);
-                $this->session->set_flashdata('success', 'Record add successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record Already Exist!');
-            }
-            redirect(base_url('setup_con/manage_designation'));
-        }
-
         $this->db->select('pr_units.*');
         $this->data['units'] = $this->db->get('pr_units')->result();
         $this->data['title'] = 'Manage Designation';
@@ -1280,7 +1248,6 @@ class Setup_con extends CI_Controller
 
     public function manage_designation_list_ajax()
     {
-        dd($_POST);
         $unit_id    = $this->input->post('unit_id');
         $dept_id    = $this->input->post('dept_id');
         $section_id = $this->input->post('section_id');
@@ -1302,7 +1269,6 @@ class Setup_con extends CI_Controller
         $this->db->group_by("dg.id");
         $this->data['desig_id'] = $data1;
         $this->data['results'] = $this->db->get()->result();
-        dd($this->data);
         $this->data['title'] = 'Manage Designation';
         $this->load->view('setup/manage_designation_list_ajax', $this->data);
     }
