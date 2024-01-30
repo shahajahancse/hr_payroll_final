@@ -1,78 +1,68 @@
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
-        <div class="container-fluid nav_head">
-
-            <div class="tablebox">
-                <?php
-                if (!empty($user_data->unit_name)) {
-                    $depts = $this->db->where('unit_id', $user_data->unit_name);
-                }
-                $depts = $this->db->get('emp_depertment')->result();
-                ?>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Unit <span style="color: red;">*</span> </label>
-                            <select name="unit_id" id="unit_id" class="form-control input-sm" required>
-                                <option>Select Unit</option>
-                                <?php
-                                foreach ($units as $row) {
-                                    if ($row->unit_id == $user_data->unit_name) {
-                                        $select_data = "selected";
-                                    } else {
-                                        $select_data = '';
-                                    }
-                                    echo '<option ' . $select_data . '  value="' . $row->unit_id . '">' . $row->unit_name .
-                                        '</option>';
+        <div class="tablebox">
+            <?php
+            if (!empty($user_data->unit_name)) {
+                $depts = $this->db->where('unit_id', $user_data->unit_name);
+            }
+            $depts = $this->db->get('emp_depertment')->result();
+            ?>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Unit <span style="color: red;">*</span> </label>
+                        <select name="unit_id" id="unit_id" class="form-control input-sm" required>
+                            <option>Select Unit</option>
+                            <?php
+                            foreach ($units as $row) {
+                                if ($row->unit_id == $user_data->unit_name) {
+                                    $select_data = "selected";
+                                } else {
+                                    $select_data = '';
                                 }
-                                ?>
-                            </select>
-                        </div>
+                                echo '<option ' . $select_data . '  value="' . $row->unit_id . '">' . $row->unit_name .
+                                    '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
+                </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Department <span style="color: red;">*</span> </label>
-                            <?php echo form_error('dept_id'); ?>
-                            <select name="dept_id" id="dept_id" class="dept_id form-control input-sm" required>
-                                <option>-- Select Department --</option>
-                                <?php foreach ($depts as $key => $row) { ?>
-                                    <option value="<?= $row->dept_id ?>"><?= $row->dept_name . ' >>' . $row->dept_bangla; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Department <span style="color: red;">*</span> </label>
+                        <?php echo form_error('dept_id'); ?>
+                        <select name="dept_id" id="dept_id" class="dept_id form-control input-sm" required>
+                            <option>-- Select Department --</option>
+                            <?php foreach ($depts as $key => $row) { ?>
+                                <option value="<?= $row->dept_id ?>"><?= $row->dept_name . ' >>' . $row->dept_bangla; ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
+                </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Section <span style="color: red;">*</span> </label>
-                            <?php echo form_error('section_id'); ?>
-                            <select name="section_id" id="section_id" class="section_id form-control input-sm" required>
-                                <option>-- Select Section --</option>
-                            </select>
-                        </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Section <span style="color: red;">*</span> </label>
+                        <?php echo form_error('section_id'); ?>
+                        <select name="section_id" id="section_id" class="section_id form-control input-sm" required>
+                            <option>-- Select Section --</option>
+                        </select>
                     </div>
+                </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Line<span style="color: red;">*</span> </label>
-                            <?php echo form_error('line_id'); ?>
-                            <select name="line_id" id="line_id" class="line_id form-control input-sm" required>
-                                <option>-- Select Line --</option>
-                            </select>
-                        </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Line<span style="color: red;">*</span> </label>
+                        <?php echo form_error('line_id'); ?>
+                        <select name="line_id" id="line_id" class="line_id form-control input-sm" required>
+                            <option>-- Select Line --</option>
+                        </select>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </nav>
-
-
-
-
 
     <div class="row">
         <div class="col-md-12">
