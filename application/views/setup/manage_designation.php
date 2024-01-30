@@ -84,10 +84,10 @@
 
 
 <script>
-    function check_level(this) {
+    function check_level(e) {
         var is_check    = 0;
-        if (this.checked) { is_check= 1; }
-        var id          = $(this).val();
+        if (e.checked) { is_check= 1; }
+        var id          = $(e).val();
         var unit_id     = $('#unit_id').val();
         var dept_id     = $('#dept_id').val();
         var section_id  = $('#section_id').val();
