@@ -11,10 +11,10 @@
                 ?>
                     <div>
                         <?php if (!empty($desig_id) && in_array($v->id, $desig_id)) { ?>
-                            <input type="checkbox" value="<?= $v->id ?>" onchange="check_level(<?= $v->id ?>)" />
+                            <input type="checkbox" checked value="<?= $v->id ?>" onchange="check_level(this)" />
                             <span style="color: #0d14f3;"><?php echo $v->desig_name; ?></span>
                         <?php } else { ?>
-                            <input type="checkbox" value="<?= $v->id ?>" onchange="check_level(<?= $v->id ?>)" />
+                            <input type="checkbox" value="<?= $v->id ?>" onchange="check_level(this)" />
                             <span><?php echo $v->desig_name; ?></span>
                         <?php } ?>
                     </div>

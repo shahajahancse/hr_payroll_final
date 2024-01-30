@@ -1306,6 +1306,11 @@ class Setup_con extends CI_Controller
         $this->load->view('setup/manage_designation_list_ajax', $this->data);
     }
 
+    public function manage_designation_add_ajax()
+    {
+        dd($_POST);
+    }
+
     //----------------------------------------------------------------------------------
     // CRUD for Night Allowance end
     //----------------------------------------------------------------------------------
