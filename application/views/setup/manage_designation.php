@@ -83,6 +83,29 @@
 </div>
 
 
+<script>
+    function check_level(id) {
+        var unit_id     = $('#unit_id').val();
+        var dept_id     = $('#dept_id').val();
+        var section_id  = $('#section_id').val();
+        var line_id     = $('#line_id').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('setup_con/manage_designation_add_ajax') ?>",
+            data: {
+                unit_id     : unit_id,
+                dept_id     : dept_id,
+                section_id  : section_id,
+                line_id     : section_id,
+                id          : id,
+            },
+            success: function(data) {
+                console.log('success');
+            }
+        })
+    }
+</script>
+
 <script type="text/javascript">
     //Designation dropdown
     $('#line_id').change(function() {
