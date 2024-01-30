@@ -2656,7 +2656,7 @@ function grid_letter1_report()
 		alert('Please select employee Id');
 		return false;
 	}
-
+	var s;
 	var queryString="spl="+sql+"&unit_id="+unit_id+"&firstdate="+firstdate;
 	url =  hostname+"index.php/grid_con/grid_letter1_report/";
 	ajaxRequest.open("POST", url, true);

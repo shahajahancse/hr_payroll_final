@@ -1,58 +1,110 @@
-<?php error_reporting(0); ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title> Letter 1</title>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-</head>
-  <?php  foreach($values->result() as $row){
-  	$emp_id = $row->emp_id;
-  	$absent_start_date = $this->grid_model->get_absent_start_date($emp_id,$firstdate,$limit=10); ?>
-    <div style="width:770px; margin:0 auto; text-align:justify; font-family:SolaimanLipi; font-size:14px margin-bottom:120px;">
-      <table width="740" style="font-family:SolaimanLipi;">
-        <tr>
-          <?php $company_logo = $this->common_model->company_information("company_logo"); ?>
-          <td width="105"><img width="55" height="55" src="<?php echo base_url(); ?>images/<?php echo $company_logo; ?>" /></td>
-          <td width="740" style="font-size:14pxtext-align:center;padding-right: 60px;"><span style="text-align:center"> <?php $this->load->view('head_bangla'); ?>  </span></td>
-        </tr>
-      </table>
-      <div align="center" style="width:740px; border-bottom:2px solid #000;"></div>
-      <table width="740px" cellpadding="3" style="">
-          <tr>
-            <td style="width: 450px;text-align: left;font-size: 14px;font-weight: normal;">সূত্রঃ <span>রেজিস্ট্রি ডাকযোগে প্রেরিত</span></td>
-            <td style="width: 250px;text-align: right;font-size: 14px">২য় চিঠি</td>
-          </tr>
-      </table>
-      <p>তারিখঃ  .........................</p>
-      <p>প্রাপক,</p>
-      <p>নামঃ<?php echo $row->bangla_nam; ?></p>
-      <p>আইডি নংঃ <?php echo $row->emp_id; ?></p>
-      <p>পদবীঃ<?php echo $row->desig_name; ?></p>
-      <p>সেকশনঃ<?php echo $row->sec_name; ?></p>
-      <p>বর্তমান ঠিকানাঃ</p>
-      <p>ঠিকানাঃ <?php echo $row->emp_pre_add;?></p>
-      <p>স্থায়ী ঠিকানাঃ</p>
-      <p>পিতা/স্বামীঃ <span class="colon">:</span><?php echo $row->emp_fname; ?></p>
-      <p>ঠিকানাঃ<?php echo $row->emp_par_add; ?></p>
-      <div id="sub" style="width:720px;"><h5 style="text-align:left;font-size: 14px;">বিষয়ঃ বাংলাদেশ শ্রম আইন ২০০৬ ও সংশোধিত ২০১৩ এর ২৭(৩ক) ধারা মোতাবেক, ১০ দিনের অধিক অনুপস্থিতির জন্য আত্মপক্ষ সমর্থনের সুযোগ প্রদান প্রসঙ্গে।</h5></div>
 
-      <div style="float:left; width:740px;position:relative;font-size:14px;">
-        <p>জনাব / জনাবা,<br>আপনি গত <span style="padding: 0 5px;font-family:SutonnyMJ;"><?php echo date('Y-m-d',strtotime($row->left_date)); ?> </span> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। এ প্রেক্ষিতে কারখানা কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <!-- .......................... --> <span style="padding: 0 5px;font-family:SutonnyMJ;"> <?php echo date('Y-m-d',strtotime($row->left_date .' + 10 days')); ?> </span>  ইং তারিখে বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে। কিন্তু অদ্যবধি আপনি উপরোক্ত বিষয়ে কোন ধরনের লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Letter 2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+      body{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
 
-        <p>অতএব,  অত্র পত্র প্রাপ্তির ০৭ (সাত) দিনের মধ্যে আত্মপক্ষ সমর্থন সহ কাজে যোগদান করতে আপনাকে নির্দেশ দেয়া গেল।</p>
+<?php foreach($values as $value){?>
+  <div class="container w-75 mb-5">
+    <div class="d-flex flex-row justify-content-between">
+      <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
+      <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+      <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
+    </div>
+    <div class="d-flex">
+      <div class="col-md-2">
+        <?php $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;?>
+        <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+      </div>
+      <div class="col-md-12">
+        <h1 class="text-center" style="margin-left: -420px;">হানিওয়েল গার্মেন্টস লিমিটেড</h1>
+      </div>
+    </div>
+    <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+      <p class="text-center h5">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
+    </div>
+    <div class="d-flex">
+      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু ১৫৯১/১/২০২৪-এ</div>
+      <div class="col-md-6 text-right">তারিখঃ ২৫/০১/২০২৪</div>
+    </div>
 
-        <p>
-        	উক্ত সময়ের মধ্যে আপনি আত্মপক্ষ সমর্থনের জবাব সহ কাজে যোগদান করতে ব্যর্থ হলে বাংলাদেশ শ্রম আইন ২০০৬ ও সংশোধিত ২০১৩ এর ২৭(৩ক) ধারা অনুযায়ী আপনি স্বেচ্ছায় চাকুরী থেকে অব্যাহতি গ্রহন করেছেন বলে গন্য হবে।
-        </p>
+    <div>
+      <h5 class="text-center mt-5">"রেজিষ্ট্রি ডাক যোগে প্রেরিত" দ্বিতীয় চিঠি</h5>
+    </div>
+
+      <div class="d-flex ml-3 mt-5">
+        <div class="col-md-4 border" style="line-height: 10px;">
+          <p class="mt-3"><b>অফিস বিবরনীঃ</b></p>
+          <p>নামঃ <?php echo $value->name_bn?></p>
+          <p>পদবীঃ <?php echo $value->desig_bangla?></p>
+          <p>কার্ডঃ <?php echo $value->emp_id?></p>
+          <p>সেকশনঃ <?php echo $value->sec_name_bn?></p>
+          <p>লাইনঃ <?php echo $value->line_name_bn?></p>
+          <p>যোগদানঃ <?php echo date('d/m/Y',strtotime($value->emp_join_date))?> ইং</p>
+        </div>
+        <div class="col-md-4 border" style="line-height: 10px;">
+          <p class="mt-3"><b>বর্তমান ঠিকানাঃ</b></p>
+          <p>হোল্ডিং নংঃ <?php echo $value->holding_num?></p>
+          <p>গ্রামঃ <?php echo $value->pre_village_bn?></p>
+          <p>ডাকঘরঃ <?php echo $value->post_name_bn?></p>
+          <p>থানাঃ <?php echo $value->upa_name_bn?></p>
+          <p>জেলাঃ <?php echo $value->dis_name_bn?></p>
+        </div>
+        <div class="col-md-4 border" style="line-height: 10px;">
+          <p class="mt-3"><b>স্থায়ী ঠিকানাঃ</b></p>
+          <p>পিতার নামঃ <?php echo $value->father_name?></p>
+          <p>মাতার নামঃ <?php echo $value->mother_name?></p>
+          <p>গ্রামঃ <?php echo $value->per_village_bn?></p>
+          <p>ডাকঘরঃ <?php echo $value->post_bn?></p>
+          <p>থানাঃ <?php echo $value->upa_bn?></p>
+          <p>জেলাঃ <?php echo $value->dis_bn?></p>
+        </div>
       </div>
 
-      <p>ধন্যবাদান্তে</p> কর্তৃপক্ষ
+    
+      <h6 class="ml-3 mt-5"><b>বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭(৩ক) ধারা মোতাবেক আত্নপক্ষ সমর্থনের সুযোগ প্রদান প্রসঙ্গে।</b></h6>
+    <div class="ml-3 mt-5">
+      <p class="text-justify">
+        <span>জনাব/জনাবা,</span><br> 
+
+        আপনি গত ১১/০১/২০২৪ ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। এ প্রেক্ষিতে কারখানার
+        কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত ২৫/০১/২০২৪ ইং তারিখে যার সূত্র নংঃ-
+        এইচজিএল/অনু/১৫৯১/১/২০২৪ -এ এর বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে।
+        কিন্তু অদ্যবদি আপনি উপরোক্ত বিষয়ে লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।
         <br><br>
-        অনুলিপি:<br>
-        ১। ব্যবস্থাপনা পরিচালক।<br>
-        ২। নোটিশ বোর্ড।<br>
-        ৩। ব্যক্তিগত নথি
+        অতএব, অত্র পত্র প্রাপ্তির ০৭ (সাত) কর্ম দিবসের মধ্যে আত্মপক্ষ সমর্থন সহ কাজে যোগদান করিতে আপনাকে নির্দেশ দেওয়া হলো।
+        উক্ত সময়ের মধ্যে আপনি আত্মপক্ষ সমর্থন সহ কাজে যোগদান করতে ব্যর্থ হলে বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭ (৩ক) ধারা অনুযায়ী আপনি
+        স্বেচ্ছায় “চাকুরীতে ইস্তফা দিয়েছেন” বলে গন্য হবে।
+      </p>
+
+      <div class="mt-5">
+        <p style="margin-bottom: 117px !important;">ধন্যবাদান্তে,</p>
+        <p class="mt-5" style="border-top:2px solid black;width:200px;padding-top: 5px;">বিভাগীয় প্রধান</p>
+        <p>এইচআর, এডমিন এন্ড কমপ্লায়েন্স</p>
+        <p>হানিওয়েল গার্মেন্টস লিমিটেড।</p>
+        <p class="mt-5">অনুলিপিঃ</p>
+        <p>১ . কোম্পানীর সংশ্লিষ্ট বিভাগ সমূহ</p>
+        <p>২. কারখানার নোটিশ বোর্ড</p>
+        <p>৩. শ্রমিকের ব্যক্তিগত নথি।</p>
+      </div>
     </div>
-    <div style="page-break-after: always;"></div>
-  <?php } ?>
+  </div>    
+<div style="page-break-after:always"></div>
+  <?php }?>
+  </body>
 </html>
+
+
+

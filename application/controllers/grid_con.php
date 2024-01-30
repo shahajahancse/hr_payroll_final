@@ -1363,7 +1363,7 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
-
+		// dd($data);
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}
