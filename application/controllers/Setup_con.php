@@ -1280,6 +1280,7 @@ class Setup_con extends CI_Controller
 
     public function manage_designation_list_ajax()
     {
+        dd($_POST);
         $unit_id    = $this->input->post('unit_id');
         $dept_id    = $this->input->post('dept_id');
         $section_id = $this->input->post('section_id');
