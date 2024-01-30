@@ -1299,8 +1299,8 @@ class Setup_con extends CI_Controller
         $this->db->from("emp_designation as dg");
         $this->db->where("dg.unit_id", $unit_id);
         $this->db->group_by("dg.id");
-        $this->data['results'] = $this->db->get()->result();
         $this->data['desig_id'] = $data1;
+        $this->data['results'] = $this->db->get()->result();
         dd($this->data);
         $this->data['title'] = 'Manage Designation';
         $this->load->view('setup/manage_designation_list_ajax', $this->data);
