@@ -201,7 +201,7 @@ class Entry_system_con extends CI_Controller
                 'new_section'       => $section,
                 'new_line'          => $line,
                 'new_desig'         => $designation,
-                'new_grade'         => (!empty($grade_id))? grade_id : $r->emp_sal_gra_id,
+                'new_grade'         => (!empty($grade_id))? $grade_id : $r->emp_sal_gra_id,
                 'new_salary'        => $new_salary,
                 'new_com_salary'    => $new_com_salary,
                 'effective_month'   => $prom_date,
