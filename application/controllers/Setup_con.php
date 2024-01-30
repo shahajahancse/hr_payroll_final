@@ -1226,47 +1226,6 @@ class Setup_con extends CI_Controller
 
     public function manage_designation()
     {
-        $this->db->select('
-            dacl.id,
-            ed.desig_name,
-            ed.desig_bangla,
-            dacl.designation_id,
-
-            ln.line_name_en,
-            ln.line_name_bn,
-            dacl.line_id,
-
-            es.sec_name_bn,
-            es.sec_name_en,
-            dacl.section_id,
-
-            d.dept_name,
-            d.dept_bangla,
-            dacl.dept_id,
-
-            pr_units.unit_name,
-            pr_units.unit_name_bangla,
-            dacl.unit_id,
-        ');
-        $this->db->from('emp_dasignation_line_acl as dacl');
-
-        $this->db->join('emp_designation ed', 'ed.id = dacl.designation_id', 'left');
-        $this->db->join('emp_line_num ln', 'ln.id = dacl.line_id', 'left');
-        $this->db->join('emp_section es', 'es.id = dacl.section_id', 'left');
-        $this->db->join('emp_depertment d', 'd.dept_id = dacl.dept_id', 'left');
-        $this->db->join('pr_units', 'pr_units.unit_id = dacl.unit_id', 'left');
-        $this->db->order_by('dacl.line_id');
-        $this->data['results'] = $this->db->get()->result_array();
-
-        $this->data['title'] = 'Manage Designation';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/manage_designation';
-        $this->load->view('layout/template', $this->data);
-
-    }
-
-    public function manage_designation_add()
-    {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('designation_id', 'Designation Name English', 'required');
         $this->form_validation->set_rules('line_id', 'Line Name', 'required');
@@ -1305,7 +1264,6 @@ class Setup_con extends CI_Controller
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/manage_designation_add';
         $this->load->view('layout/template', $this->data);
-
     }
 
     public function manage_designation_edit($id)

@@ -1,135 +1,195 @@
-<style>
-    #mytable {
-        border-collapse: collapse;
-    }
-
-    #mytable, th, td {
-        border: 1px solid #b0c0df;
-        text-align: center;
-        vertical-align: middle !important;
-    }
-    .table td {
-        padding: 0px 3px !important;
-        font-size: 13px;
-      
-    }
-    table.dataTable thead th, table.dataTable thead td {
-        border-bottom: none;
-      white-space: nowrap;
-
-    }
-    table.dataTable tbody th, table.dataTable tbody td {
-      padding: 4px !important;
-      white-space: nowrap;
-    }
-    .center-text {
-        vertical-align: center;
-        padding: 5px 10px;
-    }
-</style>
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
-            <div class="navbar-header col-md-5">
+            <div class="navbar-header col-md-3" style="padding: 7px;">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('setup_con/manage_designation_add') ?>"><?= $title ?></a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/designation') ?>">
+                        < < Back</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="">
                         <form class="navbar-form pull-right" role="search">
                             <div class="input-group">
-                                <input id="deptSearch" type="text" class="form-control" placeholder="Search">
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            <!--/.nav-collapse -->
         </div>
+        <!--/.container-fluid -->
     </nav>
 
     <div class="row">
         <div class="col-md-12">
-            <?php $success = $this->session->flashdata('success');
-                if ($success != "") {  ?>
+            <?php
+            $success = $this->session->flashdata('success');
+            if ($success != "") {
+            ?>
                 <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } ?>
-
-
-            <?php $failure = $this->session->flashdata('failure');
-                if ($failure != "") { ?>
-                <div class="alert alert-failuer"><?php echo $failure; ?></div>
-            <?php }?>
+            <?php
+            }
+            $failuer = $this->session->flashdata('failure');
+            ?>
         </div>
     </div>
-    <div id="target-div" class="row tablebox table-responsive">
-        <div class="col-md-6" style="margin-left:-16px">
-             <h3 style="font-weight:bold">Designation List</h3>
-         </div>
-        <!-- <div class="col-md-12"> -->
-            <table class="table" id="mytable">
-                <thead>
-                    <tr>
-                        <th>Sl. No.</th>
-                        <th>Designation Name </th>
-                        <th>Line</th>
-                        <th>Section</th>
-                        <th>Department</th>
-                        <th>Unit Name </th>
-                        <th width="80">Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        if(!empty($results)){ foreach($results as $key => $data){?>
+    <!-- <h3>Create Designation</h3> -->
+    <!-- <hr> -->
+    <form action="<?= base_url('setup_con/manage_designation_add') ?>" enctype="multipart/form-data" method="post">
+        <div class="tablebox">
+            <?php
+            if (!empty($user_data->unit_name)) {
+                $depts = $this->db->where('unit_id', $user_data->unit_name);
+            }
+            $depts = $this->db->get('emp_depertment')->result();
+            ?>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Unit <span style="color: red;">*</span> </label>
+                        <select name="unit_id" id="unit_id" id="unit_id" class="form-control input-sm" required>
+                            <option>Select Unit</option>
+                            <?php
+                            foreach ($units as $row) {
+                                if ($row->unit_id == $user_data->unit_name) {
+                                    $select_data = "selected";
+                                } else {
+                                    $select_data = '';
+                                }
+                                echo '<option ' . $select_data . '  value="' . $row->unit_id . '">' . $row->unit_name .
+                                    '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
 
-                    <tr>
-                        <td><?php echo $key+1?></td>
-                        <td><?php echo $data['desig_name'] ?></td>
-                        <td><?php echo $data['line_name_en'] ?></td>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Department <span style="color: red;">*</span> </label>
+                        <?php echo form_error('dept_id'); ?>
+                        <select name="dept_id" id="dept_id" class="form-control input-sm" required>
+                            <option>-- Select Department --</option>
+                            <?php foreach ($depts as $key => $row) { ?>
+                                <option value="<?= $row->dept_id ?>"><?= $row->dept_name . ' >>' . $row->dept_bangla; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
 
-                        <td><?php echo $data['sec_name_en'] ?></td>
-                        <td><?php echo $data['dept_name'] ?></td>
-                        <td><?php echo $data['unit_name'] ?></td>
-                        <td>
-                            <a href="<?=base_url('setup_con/manage_designation_edit') . '/' . $data["id"]?>"
-                                 class="btn btn-primary center-text" role="button">Edit</a>
-                        </td>
-                        <td>
-                            <a href="<?=base_url('setup_con/manage_designation_delete') . '/' . $data["id"]?>"
-                                class="btn btn-danger center-text" role="button">Delete</a>
-                        </td>
-                    </tr>
-                    <?php } }else{?>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Section <span style="color: red;">*</span> </label>
+                        <?php echo form_error('section_id'); ?>
+                        <select name="section_id" id="section_id" class="section_id form-control input-sm" required>
+                            <option>-- Select Section --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-                    <tr>
-                        <td colspan="12">Records not Found</td>
-                    </tr>
-                    <?php }?>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Line<span style="color: red;">*</span> </label>
+                        <?php echo form_error('line_id'); ?>
+                        <select name="line_id" id="line_id" class="line_id form-control input-sm" required>
+                            <option>-- Select Section --</option>
+                        </select>
+                    </div>
+                </div>
 
-                </tbody>
-            </table>
-        <!-- </div> -->
-    </div>
-    <br><br>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Designation<span style="color: red;">*</span> </label>
+                        <?php echo form_error('designation_id'); ?>
+                        <select name="designation_id" id="designation_id" class="designation_id form-control input-sm"> <!--desig  -->
+                            <option>-- Select Section --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary ">Submit</button></button>
+                <a href="<?= base_url('setup_con/manage_designation') ?>" class="btn-warning btn">Cancel</a>
+            </div>
+        </div>
+
+    </form>
 </div>
 
+
 <script type="text/javascript">
-$(document).ready(function() {
-    $("#mytable").dataTable();
-    $('#mytable_filter').css({
-        "display": "none"
-    })
-    $('#mytable_length').css({
-        "display": "none"
-    })
-    $("#mytable").dataTable();
-    oTable = $('#mytable').DataTable();
-    $('#deptSearch').keyup(function() {
-        oTable.search($(this).val()).draw();
-    })
-});
+    //Designation dropdown
+    $('#line_id').change(function() {
+        $('.designation_id').addClass('form-control input-sm');
+        $(".designation_id > option").remove();
+        var id = $('#unit_id').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_designation_by_unit/" + id,
+            success: function(func_data) {
+                $('.designation_id').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.designation_id').append(opt);
+                });
+            }
+        });
+    });
+
+    //Line dropdown
+    $('#section_id').change(function() {
+        $('.line_id').addClass('form-control input-sm');
+        $(".line_id > option").remove();
+        $(".designation_id > option").remove();
+        var id = $('#section_id').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_line_by_sec_id/" + id,
+            success: function(func_data) {
+                $('.line_id').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.line_id').append(opt);
+                });
+            }
+        });
+    });
+
+    //section dropdown
+    $('#dept_id').change(function() {
+        $('.section_id').addClass('form-control input-sm');
+        $(".section_id > option").remove();
+        $(".line_id > option").remove();
+        var id = $('#dept_id').val();
+        var unit_id = $('#unit_id').val();
+        $.ajax({
+            type: "POST",
+            url: hostname + "common/ajax_section_by_dept_id/" + id + '/' + unit_id,
+            success: function(func_data) {
+                $('.section_id').append("<option value=''>-- Select District --</option>");
+                $.each(func_data, function(id, name) {
+                    var opt = $('<option />');
+                    opt.val(id);
+                    opt.text(name);
+                    $('.section_id').append(opt);
+                });
+            }
+        });
+    });
 </script>
