@@ -98,7 +98,7 @@
                 section_id  : section_id,
                 line_id     : line_id,
             },
-            url: hostname + "common/manage_designation_list_ajax/",
+            url: hostname + "setup_con/manage_designation_list_ajax/",
             success: function(func_data) {
                 $('.designation_id').append("<option value=''>-- Select District --</option>");
                 $.each(func_data, function(id, name) {
