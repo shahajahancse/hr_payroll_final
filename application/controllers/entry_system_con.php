@@ -21,6 +21,17 @@ class Entry_system_con extends CI_Controller
         }
     }
 
+    //-------------------------------------------------------------------------------------------------------
+    // GRID Display for Entry System
+    //-------------------------------------------------------------------------------------------------------
+    public function grid_entry_system()
+    {
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'grid_entry_system';
+        $this->load->view('layout/template', $this->data);
+
+    }
+
 
     //-------------------------------------------------------------------------------
     // Increment and Promotion entry to the Database
@@ -788,16 +799,7 @@ class Entry_system_con extends CI_Controller
 
     ///////////////////////////////////////////////////////////////////
     // old code
-    //-------------------------------------------------------------------------------------------------------
-    // GRID Display for Entry System
-    //-------------------------------------------------------------------------------------------------------
-    public function grid_entry_system()
-    {
-        // $this->load->view('grid_entry_system');
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'grid_entry_system';
-        $this->load->view('layout/template', $this->data);
-    }
+
     //-------------------------------------------------------------------------------------------------------
     // Form Display for Advance Loan
     //-------------------------------------------------------------------------------------------------------
