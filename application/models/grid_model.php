@@ -2,8 +2,7 @@
 class Grid_model extends CI_Model{
 
 
-	function __construct()
-	{
+	function __construct(){
 		parent::__construct();
 
 		/* Standard Libraries */
@@ -13,8 +12,7 @@ class Grid_model extends CI_Model{
 		$this->load->model('salary_process_model');
 		$this->load->model('attn_process_model');
 	}
-	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id)
-	{
+	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id){
 		$data = array();
 		if (!empty($grid_emp_id)) {
 			if($status=='LA'){
@@ -366,8 +364,7 @@ class Grid_model extends CI_Model{
 	//-------------------------------------------------------------------------------------------------
 	// Daily Cost Sheet
 	//-------------------------------------------------------------------------------------------------
-	function daily_costing_summary($date, $unit_id)
-	{
+	function daily_costing_summary($date, $unit_id){
 
 		$this->db->select(" 
 				num.id as line_id, num.line_name_en, num.line_name_bn, log.shift_log_date,
@@ -394,8 +391,7 @@ class Grid_model extends CI_Model{
 		return $this->db->get()->result();
 	}
 	// Daily attendance summary
-	function daily_attendance_summary($date, $unit_id)
-	{
+	function daily_attendance_summary($date, $unit_id){
 
 		$results = $this->db->where('unit_id', $unit_id)->order_by('id')->get('emp_group_dasignation')->result();
 		$data = array();
@@ -449,8 +445,7 @@ class Grid_model extends CI_Model{
 		
 	}
 
-	function get_group_dasig_id($id, $unit_id)	
-	{
+	function get_group_dasig_id($id, $unit_id)	{
 		$this->db->select('id')->where('group_id', $id)->where('unit_id', $unit_id);
 		$rows = $this->db->get('emp_designation')->result();
 		$data = array();
@@ -461,8 +456,7 @@ class Grid_model extends CI_Model{
 	}
 
 	// daily logout report 
-	function daily_logout_report($date, $unit_id)
-	{
+	function daily_logout_report($date, $unit_id){
 		$this->db->select("
 					num.id as line_id, num.line_name_en, num.line_name_bn,
 					SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
@@ -515,8 +509,7 @@ class Grid_model extends CI_Model{
 		// old code
 	// =======================================================
 
-	function grid_nominee($grid_emp_id)
-	{
+	function grid_nominee($grid_emp_id){
 		$this->db->select('pr_emp_skill.*,pr_emp_edu.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.name_en, emp_depertment.dept_name,emp_depertment.dept_bangla, emp_section.sec_name_en, emp_line_num.line_name_en, emp_line_num.line_bangla,emp_designation.desig_name,emp_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname_bn, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add_ban');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -547,8 +540,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function grid_requitement_form($grid_emp_id)
-	{
+	function grid_requitement_form($grid_emp_id){
 		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.name_en, emp_depertment.dept_name,emp_depertment.dept_bangla, emp_section.sec_name_en,emp_section.sec_name_en_bn, emp_line_num.line_name_en, emp_line_num.line_bangla,emp_designation.desig_name,emp_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -573,8 +565,7 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
-	function grid_verification_report($grid_emp_id)
-	{
+	function grid_verification_report($grid_emp_id){
 		$this->db->select('pr_emp_edu.*,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.name_en, emp_depertment.dept_name,emp_depertment.dept_bangla, emp_section.*, emp_line_num.line_name_en, emp_line_num.line_bangla,emp_designation.desig_name,emp_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -605,8 +596,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function first_letter_of_maternity_leave($grid_firstdate,$grid_emp_id)
-	{
+	function first_letter_of_maternity_leave($grid_firstdate,$grid_emp_id){
 		//print_r($grid_emp_id);
 		$this->db->select('pr_emp_blood_groups.blood_name,pr_emp_position.posi_name,pr_emp_skill.*,pr_emp_edu.*,pr_emp_per_info.no_child,pr_emp_sex.sex_nam_bng,pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name,emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add,pr_emp_add.emp_pre_add_ban, pr_emp_add.emp_par_add,pr_emp_add.emp_par_add_ban,pr_emp_per_info.emp_dob,pr_emp_per_info.emp_religion,pr_religions.religion_name');
 		$this->db->from('pr_emp_per_info');
@@ -653,8 +643,7 @@ class Grid_model extends CI_Model{
 		//print_r($query->result_array());
 	}
 
-	function incre_prom_report_db($grid_firstdate,$grid_emp_id)
-	{
+	function incre_prom_report_db($grid_firstdate,$grid_emp_id){
 		$data = array();
 		foreach($grid_emp_id as $emp_id)
 		{
@@ -715,8 +704,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function incre_prom_report_bn($grid_firstdate,$grid_emp_id)
-	{
+	function incre_prom_report_bn($grid_firstdate,$grid_emp_id){
 		//echo $grid_firstdate;
 		//echo $search_year_month = substr($grid_firstdate,0,7);
 		$data = array();
@@ -779,8 +767,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function prom_report_db($grid_firstdate,$grid_emp_id)
-	{
+	function prom_report_db($grid_firstdate,$grid_emp_id){
 		//echo $grid_firstdate;
 		//echo $search_year_month = substr($grid_firstdate,0,7);
 		$data = array();
@@ -843,8 +830,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function shorts_emp_summery($year, $month, $date, $status, $grid_emp_id)
-	{
+	function shorts_emp_summery($year, $month, $date, $status, $grid_emp_id){
 		$this->db->select('pr_emp_per_info.emp_id,pr_emp_com_info.emp_join_date,pr_emp_shift.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -987,8 +973,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function grid_job_description($grid_emp_id)
-	{
+	function grid_job_description($grid_emp_id){
 		$this->db->select('pr_emp_job_desc.description,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.name_en, emp_depertment.dept_name,emp_depertment.dept_bangla, emp_section.*, emp_line_num.line_name_en, emp_line_num.line_bangla,emp_designation.desig_name,emp_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -1018,8 +1003,7 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
-	function grid_age_estimation($grid_emp_id)
-	{
+	function grid_age_estimation($grid_emp_id){
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.*, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, emp_section.sec_name_en, emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.*');
 
 		$this->db->from('pr_emp_per_info');
@@ -1041,8 +1025,7 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
-	function bando_certificate_report($grid_emp_id)
-	{
+	function bando_certificate_report($grid_emp_id){
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.*, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, emp_section.sec_name_en, emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.*');
 
 		$this->db->from('pr_emp_per_info');
@@ -1065,8 +1048,7 @@ class Grid_model extends CI_Model{
 	}
 
 
-	function one_month_settel_paid_report($grid_emp_id,$year_month)
-	{
+	function one_month_settel_paid_report($grid_emp_id,$year_month){
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, emp_line_num.line_name_en ,emp_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet_com.* ,pr_emp_per_info.bangla_nam');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
@@ -1107,8 +1089,7 @@ class Grid_model extends CI_Model{
 		//return $query->result();
 	}
 
-	function grid_drugscreening_report($grid_emp_id)
-	{
+	function grid_drugscreening_report($grid_emp_id){
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, emp_section.sec_name_en, emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.*,pr_emp_operation.ope_name,pr_emp_position.posi_name');
 
 		$this->db->from('pr_emp_per_info');
@@ -1136,8 +1117,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function ackknowledgement_report($grid_emp_id)
-	{
+	function ackknowledgement_report($grid_emp_id){
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, emp_section.sec_name_en, emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.*');
 
 		$this->db->from('pr_emp_per_info');
@@ -1159,8 +1139,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function earnl_payment($grid_emp_id)
-	{
+	function earnl_payment($grid_emp_id){
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_com_info.emp_join_date,pr_emp_per_info.*, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, emp_section.sec_name_en, emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.*');
 
 		$this->db->from('pr_emp_per_info');
@@ -1183,8 +1162,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function grid_pension_report($grid_firstdate, $grid_seconddate, $grid_emp_id)
-	{
+	function grid_pension_report($grid_firstdate, $grid_seconddate, $grid_emp_id){
 		$first_check_day = 365*4 + 240 + 1; // 1 add for one leap year
 		$first_check_time = $first_check_day*24*60*60;
 
@@ -1273,7 +1251,7 @@ class Grid_model extends CI_Model{
 	//-------------------------------------------------------------------------------------------------
 	// Daily Report for Present, Absent, Leave
 	//-------------------------------------------------------------------------------------------------
-function grid_daily_report($date, $grid_emp_id,$type){
+  function grid_daily_report($date, $grid_emp_id,$type){
 	// dd($date);
 
     $this->db->select('
@@ -1439,95 +1417,45 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		}
 	}
 
-	// function attendance_check_for_absent($emp_id,$present_status,$num_of_days, $start_date)
-	// {
-	// 	//echo "$present_status=> $num_of_days, $start_date###";
-		
-	// 	$count = 0;
-	// 	$no_imp = 0;
-	// 	$i= 0;
-		
-	// 		for($i=1; $i<= $num_of_days ; $i++)
-	// 		{
-	// 			if($i==1)
-	// 			{
-	// 				$get_date = $start_date;
-	// 			}
-	// 			else
-	// 			{
-	// 				$get_date = date('Y-m-d',(strtotime ( '-1 day' , strtotime ( $get_date) ) ));
-	// 			}
-				
-	// 				$search_year_month =trim(substr($get_date,0,7));
-	// 				$this->db->select("");
-	// 				$this->db->where("emp_id",$emp_id);
-	// 				$this->db->like("att_month",$search_year_month);
-	// 				$query = $this->db->get("pr_attn_monthly");
-				
-	// 			//echo $get_date."===";
-	// 			$idate = date('d',(strtotime ($get_date)));
-	// 			$date="date_$idate";
-				
-	// 			//echo "$date</br>";
-	// 			foreach($query->result_array() as $rows => $value)
-	// 			{
-				
-	// 				if($value[$date] == "$present_status")
-	// 				{
-	// 					$count++;
-	// 				}
-	// 				else if ($value[$date] == "W")
-	// 				{
-	// 					$no_imp = 0;//return $count;
-	// 				}
-	// 				else if ($value[$date] == "H")
-	// 				{
-	// 					$no_imp = 0;//return $count;
-	// 				}
-	// 				else
-	// 				{
-	// 					return $count;
-	// 				}
-	// 			}
-	// 		}
-		
-	// 	return $count;
-	// }
-
-
-
 
 	function attendance_check_for_absent($emp_id, $start_date){
-    $count = 0;
-    $no_imp = 0;
+		// dd($emp_ids);
+		$count = 0;
+		$no_imp = 0;
 
-    for ($i = 1; $i <= 31; $i++) {
-        if ($i == 1) {
-            $get_date = $start_date;
-        } else {
-            $get_date = date('Y-m-d', strtotime('-1 day', strtotime($get_date)));
-        }
-
-        $id = $this->db->select('id')->where('emp_id', $emp_id)->get('pr_emp_com_info')->row()->id;
-        $this->db->select("*");
-        $this->db->where("emp_id", $id);
-        $this->db->where("shift_log_date", $get_date); 
-        $query = $this->db->get("pr_emp_shift_log");
-
-        foreach ($query->result() as $rows => $value) {
-            if ($value->present_status == "A") {
-                $count++;
-            } elseif ($value->present_status == "W" || $value->present_status == "H") {
-                $no_imp = 0;
-            }
-			else{
-				return $count;
+		for ($i = 1; $i <= 31; $i++) {
+			if ($i == 1) {
+				$get_date = $start_date;
+			} else {
+				$get_date = date('Y-m-d', strtotime('-1 day', strtotime($get_date)));
 			}
-        }
-    }
 
-    return $count;
-}
+				$id = $this->db->select('id')->where('emp_id', $emp_id)->get('pr_emp_com_info')->row()->id;
+				$this->db->select("*");
+				$this->db->where("emp_id", $id);
+				$this->db->where("shift_log_date", $get_date); 
+				$query = $this->db->get("pr_emp_shift_log");
+
+				foreach ($query->result() as $rows => $value) {
+					if ($value->present_status == "A") {
+						$count++;
+					} elseif ($value->present_status == "W" || $value->present_status == "H") {
+						$no_imp = 0;
+					}
+					else{
+						return $count;
+					}
+				}
+	
+
+		}
+
+		return $count;
+	}
+
+
+
+
 
 
 
@@ -3988,8 +3916,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		return $temp_unproposed_emp;
 	}
 
-	function continuous_increment_promotion_proposal($sStartDate,$sEndDate,$grid_emp_id)
-	{
+	function continuous_increment_promotion_proposal($sStartDate,$sEndDate,$grid_emp_id){
 		//echo "hi";exit;
 		$pre_year = date("Y-m-d", strtotime("-1 year", strtotime($sStartDate)));
 
@@ -4003,8 +3930,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$f_ym_day = date("Y-m-d", mktime(0, 0, 0, $first_m, $first_day, $first_y));
 		$l_ym_day = date("Y-m-d", mktime(0, 0, 0, $first_m, $last_day, $first_y));
 
-		//$last_day = date("Y-m-t",strtotime($pre_year));
-		//exit;
 		$regular_new = array(1,2);
 
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal,pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_emp_com_info.emp_cat_id');
@@ -4035,8 +3960,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$query = $this->db->get();
 		//echo $query->num_rows();
 
-		foreach($query->result() as $rows)
-		{
+		foreach($query->result() as $rows){
 			$emp_id 	= $rows->emp_id;
 			$emp_name	= $rows->emp_full_name;
 			$desig_name = $rows->desig_name;
@@ -4070,8 +3994,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	}
 
-	function get_last_incre_month_salary($emp_id)
-	{
+	function get_last_incre_month_salary($emp_id){
 
 		$this->db->select('*');
 		$this->db->from("pr_incre_prom_pun");
@@ -4096,11 +4019,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		return $data;
 	}
 
-
-
-	function grid_app_letter($grid_emp_id)
-	{
-		//print_r($grid_emp_id) ;
+	function grid_app_letter($grid_emp_id){
 		$this->db->select('
 				pr_grade.*,
 				emp_line_num.*,
@@ -4131,8 +4050,6 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->from('pr_emp_add');
 		$this->db->from('emp_line_num');
 		$this->db->from('pr_grade');
-		//$this->db->from('pr_district');
-		//$this->db->from('pr_upazila');
 		$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
@@ -4162,8 +4079,7 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	}
 
-	function grid_letter1_report_old($grid_emp_id)
-	{
+	function grid_letter1_report_old($grid_emp_id){
 
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, emp_section.sec_name_en, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
@@ -4201,54 +4117,62 @@ function grid_daily_report($date, $grid_emp_id,$type){
 
 	}
 
-	function grid_letter1_report($grid_emp_id, $firstdate)
-	{
+	function grid_letter1_report($grid_emp_id, $firstdate){
 		$newDate = date("Y-m-d", strtotime($firstdate));
-		// echo $newDate; exit;
-
-		$this->db->select('
-				pr_emp_com_info.emp_id,
-				pr_emp_com_info.gross_sal,
-				pr_emp_com_info.emp_join_date, 
-				pr_emp_com_info.emp_sal_gra_id,
-				pr_emp_per_info.name_en, 
-				pr_emp_per_info.name_bn,
-				pr_emp_per_info.father_name,
-				pr_emp_per_info.mother_name,
+		$data = array();
+		foreach ($grid_emp_id as $key => $id) {
+			$get_absent = $this->attendance_check_for_absent($id,$newDate);
+				$this->db->select('
 				pr_emp_per_info.*,
+				pr_emp_com_info.emp_join_date, 
 				emp_designation.desig_name, 
-				emp_depertment.dept_name, 
+				emp_designation.desig_bangla,
+				emp_depertment.dept_name,
+				emp_depertment.dept_bangla, 
 				emp_section.sec_name_en, 
+				emp_section.sec_name_bn, 
+				emp_line_num.line_name_bn, 
+				emp_line_num.line_name_en, 
+				per_dis.name_bn as dis_name_bn,
+				per_upa.name_bn as upa_name_bn,
+				per_post.name_bn as post_name_bn,
+				pre_dis.name_bn as dis_bn,
+				pre_upa.name_bn as upa_bn,
+				pre_post.name_bn as post_bn,
+				pr_emp_com_info.emp_sal_gra_id as grade,
+				pr_emp_com_info.com_gross_sal as salary,
 				pr_emp_left_history.left_date
 			');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('pr_emp_left_history');
-
-		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
-		$this->db->where('pr_emp_left_history.left_date <=', $newDate);
-
-		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
-		// dd($query->result());
-		if($query->num_rows() == 0){
-			return "Employee ID range does not exist!";
+			$this->db->from('pr_emp_per_info');
+			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+			$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+			$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+			$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+			$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+			$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
+			$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
+			$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
+			$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
+			$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
+			$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
+			$this->db->join('pr_emp_left_history','pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
+			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+			$this->db->where('pr_emp_left_history.left_date <=', $newDate);
+			$this->db->order_by("pr_emp_com_info.emp_id");
+			$query = $this->db->get();
+			if($query->num_rows() != 0){
+				$data[] = $query->row();		
+			}
+			
 		}
-		else{
-			return $query;
-		}
+			if(!empty($data)){
+				return $data;
+			}else{
+				return "Not Found Data";
+			}
 	}
 
-	function get_absent_start_date($emp_id,$firstdate,$limit)
-	{
+	function get_absent_start_date($emp_id,$firstdate,$limit){
 		//echo "$emp_id,$firstdate";
 		$check_date = $firstdate;
 		$this->db->select("shift_log_date");
@@ -4258,36 +4182,28 @@ function grid_daily_report($date, $grid_emp_id,$type){
 		$this->db->order_by("shift_log_date","DESC");
 		$this->db->limit($limit);
 		$query = $this->db->get('pr_emp_shift_log');
-		$this->db->last_query();
+		// $this->db->last_query();
 		$i = 1;
-		foreach($query->result() as $rows)
-		{
+		foreach($query->result() as $rows){
 			$date = $rows->shift_log_date;
-			if($i == 1)
-			{
-				if($date != $firstdate)
-				{
+			if($i == 1){
+				if($date != $firstdate){
 					$check_date = "0000-00-00";
 					return $check_date;
 				}
 			}
-			else
-			{
+			else{
 				$check_date_minus_one = date('Y-m-d',strtotime($check_date . "-1 days"));
 
-				if($date == $check_date_minus_one)
-				{
+				if($date == $check_date_minus_one){
 					$check_date = $date;
 
 				}
-				else
-				{
+				else{
 					return $check_date;
 				}
 			}
-
 			$i = $i + 1;
-
 		}
 		return $check_date;
 	}
