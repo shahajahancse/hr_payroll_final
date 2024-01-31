@@ -144,7 +144,7 @@ $unit = $this->common_model->get_unit_id_name();
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Time</label>
-                                    <input class="form-control" id="time" name="time" placeholder="HH:MM:SS">
+                                    <input class="form-control" id="time" name="time" placeholder="hh:mm:ss">
                                 </div>
                             </div>
                             <div class="col-md-3">
