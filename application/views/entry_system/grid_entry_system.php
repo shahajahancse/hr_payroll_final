@@ -117,7 +117,6 @@ $unit = $this->common_model->get_unit_id_name();
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
                     <input class="btn btn-primary" onclick='toggleSection("present")' type="button" value="Present" />
-                    <input class="btn btn-info" onclick='toggleSection("absent")' type="button" value="Absent" />
                     <input class="btn btn-success" onclick='toggleSection("eot")' type="button" value="EOT Modify" />
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
@@ -157,115 +156,12 @@ $unit = $this->common_model->get_unit_id_name();
                         </div>
                         <div class="raw">
                             <div class="col-md-12">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                <div class="input-group">
+                                    <span class="input-group-btn" style="display: flex; gap: 15px;">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
                                         <input class="btn btn-info" onclick='log_sheet(event)' type="button" value='Attn. Sheet' />
                                         <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
                                         <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
-                                    </span>
-                                </div><!-- /input-group -->
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- present to absent section  -->
-        <div id="absent_entry" class="row nav_head" style="margin-top: 13px;">
-            <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="absent_entry_form">
-                        <div class="raw">
-                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Department</label>
-                                    <select name="pro_department" id="pro_department" class="form-control input-sm">
-                                        <option value="">Select Department</option>
-                                        <?php foreach ($departments as $key => $r) { ?>
-                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name . ' >> ' . $r->unit_name ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Section</label>
-                                    <select id="pro_section" class="form-control input-sm pro_section">
-                                        <option value="">Select Section</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Line</label>
-                                    <select id="pro_line" class="form-control input-sm pro_line">
-                                        <option value="">Select Line</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Designation</label>
-                                    <select id="pro_designation" class="form-control input-sm pro_designation">
-                                        <option value="">Select Designation</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="raw">
-                            <div class="col-md-3" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="salary" name="salary">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="prom_gross_sal" name="prom_gross_sal">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Com. Salary</label>
-                                    <input class="form-control" readonly id="com_salary" name="com_salary">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="prom_com_gross_sal" name="prom_com_gross_sal">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" top='20px'>
-                            <div class="col-md-3">
-                                <select name="grade_id" id="grade_id" class="form-control">
-                                    <option value="">Grade</option>
-                                    <option value="8">1</option>
-                                    <option value="7">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="7">5</option>
-                                    <option value="6">6</option>
-                                    <option value="5">7</option>
-                                    <option value="1">None</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
-                                <input type="date" class="form-control" id="prom_date" placeholder="select date">
-                            </div>
-                            <div class="col-md-3">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='promotion_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="prom_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
@@ -839,20 +735,14 @@ $unit = $this->common_model->get_unit_id_name();
 <script>
     function toggleSection(sectionId) {
         if (sectionId == 'present') {
-            $("#absent_entry").hide();
             $("#eot_modify").hide();
             $("#present_entry").show();
-        } else if (sectionId == 'absent') {
-            $("#present_entry").hide();
-            $("#eot_modify").hide();
-            $("#absent_entry").show();
         } else {
             $("#present_entry").hide();
-            $("#absent_entry").hide();
             $("#eot_modify").show();
         }
         $("#" + sectionId).slideToggle();
     }
     // Initial hiding of all sections
-    $("#present_entry, #absent_entry, #eot_modify").hide();
+    $("#present_entry, #eot_modify").hide();
 </script>
