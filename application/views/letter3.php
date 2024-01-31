@@ -33,10 +33,10 @@
       </div>
     </div>
     <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-      <p class="text-center h5">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
+      <p class="text-center h6">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
     </div>
     <div class="d-flex">
-      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু ১৫৯১/১/২০২৪-এ</div>
+      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-সি</div>
       <div class="col-md-6 text-right">তারিখঃ ২৫/০১/২০২৪</div>
     </div>
 
@@ -49,14 +49,14 @@
           <p class="mt-3"><b>অফিস বিবরনীঃ</b></p>
           <p>নামঃ <?php echo $value->name_bn?></p>
           <p>পদবীঃ <?php echo $value->desig_bangla?></p>
-          <p>কার্ডঃ <?php echo $value->emp_id?></p>
+          <p>কার্ডঃ <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?></span></p>
           <p>সেকশনঃ <?php echo $value->sec_name_bn?></p>
           <p>লাইনঃ <?php echo $value->line_name_bn?></p>
-          <p>যোগদানঃ <?php echo date('d/m/Y',strtotime($value->emp_join_date))?> ইং</p>
+          <p>যোগদানঃ <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo date('d/m/Y',strtotime($value->emp_join_date))?></span> ইং</p>
         </div>
         <div class="col-md-4 border" style="line-height: 10px;">
           <p class="mt-3"><b>বর্তমান ঠিকানাঃ</b></p>
-          <p>হোল্ডিং নংঃ <?php echo $value->holding_num?></p>
+          <p>হোল্ডিং নংঃ <span style="font-family: SutonnyMJ;font-size:19px">  <?php echo $value->holding_num?></sapn></p>
           <p>গ্রামঃ <?php echo $value->pre_village_bn?></p>
           <p>ডাকঘরঃ <?php echo $value->post_name_bn?></p>
           <p>থানাঃ <?php echo $value->upa_name_bn?></p>
@@ -78,10 +78,10 @@
     <div class="ml-3 mt-5">
       <p class="text-justify">
         <span>জনাব/জনাবা,</span><br> 
-        আপনি গত ১১/০১/২০২৪ ইং তারিখ হতে অদ্যবদি পর্যন্ত কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত থাকার কারনে আপনাকে গত
-        ২৫/০১/২০২৪ ইং তারিখে যার সূত্র নংঃ- এইচজিএল/অনু/১৫৯১/১/২০২৪-এ এর একটি পত্রের মাধ্যেমে ১০ (দশ) দিনের সময় দিয়ে চাকুরীতে
+        আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ হতে অদ্যবদি পর্যন্ত কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত থাকার কারনে আপনাকে গত
+        <b>২৫/০১/২০২৪</b> ইং তারিখে যার সূত্র নংঃ- <b>এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</b> এর একটি পত্রের মাধ্যেমে ১০ (দশ) দিনের সময় দিয়ে চাকুরীতে
         যোগদান সহ ব্যাখ্যা প্রদান করতে বলা হয়েছিল। কিন্তু আপনি নির্ধারিত সময়ের মধ্যে কর্মস্থলে উপস্থিত হননি এবং কোন ব্যাখ্যা
-        প্রদান করেন নি। তথাপিও কর্তৃপক্ষ গত ১১/০২/২০২৪ ইং তারিখে যার সূত্র নংঃ- এইচজিএল/অনু/১৫৯১/১/২০২৪-বি এর আরও একটি পত্রর
+        প্রদান করেন নি। তথাপিও কর্তৃপক্ষ গত <b>১১/০২/২০২৪</b> ইং তারিখে যার সূত্র নংঃ-<b> এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-বি </b>এর আরও একটি পত্রর
         মাধ্যেমে আপনাকে আরো ০৭ (সাত) কর্মদিবসের সময় দিয়ে আত্মপক্ষ সমর্থন সহ চাকুরীতে যোগদানের জন্য পূণরায় নির্দেশ প্রদান করেন।
         তৎসত্বেও আপনি নির্ধারিত সময়ের মধ্যে আত্নপক্ষ সামর্থন করেননি এমনকি চাকুরীতেও যোগদান করেননি। সুতরাং বাংলাদেশ শ্রম আইন ২০০৬
         এর ২৭ (৩ক) ধারা অনুযায়ী অনুপস্থিত দিন থেকে আপনি স্বেচ্ছায় চাকুরী হতে ইস্তফা গ্রহন করেছেন বলে গন্য করা হলো।

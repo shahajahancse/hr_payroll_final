@@ -44,7 +44,7 @@
             <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
 
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan</a> </li>
-            <!-- <li class="start <?= activate_method('proximity_card_edit')?> "><a href="<?= base_url('entry_system_con/proximity_card_edit')?>" class="anchor_cls">Proximity Card Edit</a> </li> -->
+            <li class="start <?= activate_method('letter_notification')?> "><a href="<?= base_url('entry_system_con/letter_notification')?>" class="anchor_cls">Letter Notification</a> </li>
             <!-- <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li> -->
         </ul>
       </li>
