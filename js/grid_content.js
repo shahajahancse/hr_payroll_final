@@ -3704,6 +3704,8 @@ function grid_job_card()
 		alert('Please select employee Id');
 		return false;
 	}
+
+	document.getElementById('loaader').style.display = 'flex';
 	/*
 	
 
@@ -3721,7 +3723,8 @@ function grid_job_card()
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
 
-	ajaxRequest.onreadystatechange = function(){
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			

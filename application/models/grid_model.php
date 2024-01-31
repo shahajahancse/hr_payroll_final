@@ -2171,7 +2171,7 @@ class Grid_model extends CI_Model{
             }
             $schedule                    = $this->schedule_check($emp_shift);
             //print_r($schedule);
-            $shift_id                    = $schedule[0]["shift_id"];
+            $id                    = $schedule[0]["id"];
             $out_start                   = $schedule[0]["out_start"];
             $ot_start                    = $schedule[0]["ot_start"];
             $ot_minute                   = $schedule[0]["ot_minute_to_one_hour"];
@@ -2370,7 +2370,7 @@ class Grid_model extends CI_Model{
                     	}
 						else if($out_time < '12:59:59 AM')
 						{
-							if($shift_id==17){
+							if($id==17){
 								return $out_time = $this->time_am_pm_format($out_time);
 							}else
 							{
@@ -3020,7 +3020,7 @@ class Grid_model extends CI_Model{
 
 	function emp_shift_check($emp_id, $att_date)
 	{
-		$this->db->select("shift_id, shift_duty");
+		$this->db->select("id, schedule_id");
 		$this->db->from("pr_emp_shift_log");
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("shift_log_date", $att_date);
@@ -3030,12 +3030,12 @@ class Grid_model extends CI_Model{
 		{
 			foreach($query->result() as $row)
 			{
-				$shift_duty = $row->shift_duty;
+				$schedule_id = $row->schedule_id;
 			}
 
 			$this->db->select("sh_type");
 			$this->db->from("pr_emp_shift_schedule");
-			$this->db->where("shift_id", $shift_duty);
+			$this->db->where("id", $schedule_id);
 			$query1 = $this->db->get();
 			$row = $query1->row();
 			return $row->sh_type;
@@ -3048,7 +3048,7 @@ class Grid_model extends CI_Model{
 			$this->db->from("pr_emp_com_info");
 			$this->db->where("pr_emp_com_info.emp_id", $emp_id);
 			$this->db->where("pr_emp_shift.id = pr_emp_com_info.emp_shift");
-			$this->db->where("pr_emp_shift.shift_duty = pr_emp_shift_schedule.shift_id");
+			$this->db->where("pr_emp_shift.schedule_id = pr_emp_shift_schedule.id");
 			$query = $this->db->get();
 			//echo $this->db->last_query();
 			$row = $query->row();
@@ -4853,29 +4853,31 @@ class Grid_model extends CI_Model{
 				{
 					$holiday = $this->check_holiday($emp_id, $day);
 				}
-				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot, pr_emp_shift_log.eot,pr_emp_shift_log.late_status');
+				$id = $this->db->select('id')->where('emp_id',$emp_id)->get('pr_emp_com_info')->row()->id;
+				// dd();
+				$this->db->select('pr_emp_shift_log.in_time , 
+								   pr_emp_shift_log.out_time, 
+								   pr_emp_shift_log.shift_log_date, 
+								   pr_emp_shift_log.ot, 
+								   pr_emp_shift_log.eot,
+								   pr_emp_shift_log.late_status');
 				$this->db->from('pr_emp_shift_log');
-				$this->db->where('pr_emp_shift_log.emp_id',$emp_id);
+				$this->db->where('pr_emp_shift_log.emp_id',$id);
 				$this->db->where("pr_emp_shift_log.shift_log_date", $day);
 				$this->db->order_by("pr_emp_shift_log.shift_log_date");
 				$this->db->limit(1);
 				$query = $this->db->get();
 				//echo $this->db->last_query();
-				foreach($query->result() as $row)
-				{
-
-
-
-					if(in_array($row->shift_log_date,$leave))
-					{
+				foreach($query->result() as $row){
+					// dd($row);
+					if(in_array($row->shift_log_date,$leave)){
 						$leave_type = $this->get_leave_type($row->shift_log_date,$emp_id);
 						$att_status_count = "Leave";
 						$att_status = $leave_type;
 						$row->in_time = "00:00:00";
 						$row->out_time = "00:00:00";
 					}
-					elseif(in_array($row->shift_log_date,$holiday))
-					{
+					elseif(in_array($row->shift_log_date,$holiday)){
 						$att_status = "Holiday";
 						$att_status_count = "Holiday";
 						$row->in_time = "00:00:00";
@@ -4883,8 +4885,7 @@ class Grid_model extends CI_Model{
 						$row->ot_hour ="";
 
 					}
-					elseif(in_array($row->shift_log_date,$weekend))
-					{
+					elseif(in_array($row->shift_log_date,$weekend)){
 						/*echo $sec_name_en = $this->get_sec_name_en($emp_id);
 
 						if($sec_name_en=='Security'){
@@ -4921,7 +4922,8 @@ class Grid_model extends CI_Model{
 
 					if($att_status !="Leave" and $att_status !="Holiday" and $att_status !="Weekend" and $att_status !="A" )
 					{
-						$table = "temp_$emp_id";
+						$yera_month  = date('Y_m',strtotime($grid_firstdate));
+						$table = "att_$yera_month";
 						$lunch_out_start = "12:55:00";
 						$lunch_out_end = "15:00:00";
 						$lunch_out = $this->time_check_in($day, $lunch_out_start , $lunch_out_end , $table);
@@ -4964,7 +4966,7 @@ class Grid_model extends CI_Model{
 					$emp_shift = $this->emp_shift_check($emp_id, $day);
 
 					$schedule = $this->schedule_check($emp_shift);
-					//print_r($schedule);
+					// dd($schedule);
 					$start_time		=  $schedule[0]["in_start"];
 					$late_time 		=  $schedule[0]["late_start"];
 					$end_time   	=  $schedule[0]["in_end"];
@@ -5011,30 +5013,30 @@ class Grid_model extends CI_Model{
 						$out_time = $this->get_formated_out_time($emp_id, $out_time, $emp_shift,$shift_log_date);
 					  }
 					}
-					else
-					{
+					else{
 						$out_time = "00:00:00";
 					}
+					// dd($row->ot_hour);
 
-					$total_ot_hour = $row->ot_hour; // + $row->extra_ot_hour; , This is for extra ot hour add to Job card.
+					$total_ot_hour = $row->ot; // + $row->extra_ot_hour; , This is for extra ot hour add to Job card.
 
 					$data[$emp_id]["shift_log_date"][] 	= $shift_log_date;
 					$data[$emp_id]["in_time"][] 		= $in_time;
 					$data[$emp_id]["out_time"][] 		= $out_time;
 					$data[$emp_id]["ot_hour"][] 		= $total_ot_hour;
 					$data[$emp_id]["att_status"][] 		= $att_status;
-					$data[$emp_id]["att_status_count"][]= $att_status_count;
+					$data[$emp_id]["att_status_count"][] = $att_status_count;
 					$data[$emp_id]["lunch_out"][] 		= $lunch_out;
 					$data[$emp_id]["lunch_in"][] 		= $lunch_in;
 					$data[$emp_id]["remark"][] 			= $remark;
-				
+					// dd($
 					//echo "$emp_id=>$row->shift_log_date=>$row->in_time=>$row->out_time=>$row->ot_hour==>$att_status<==Lunch OUT=>$lunch_out==Lunch IN=>$lunch_in==Remark=>$remark<br>";
 
 
 				}
 			}
 		}
-		dd($shift_log_datea);
+		// dd($data);
 		return $data;
 
 	}
@@ -10427,10 +10429,10 @@ function grid_emp_job_application($grid_emp_id){
 		return $leave_type;
    }
 
-    function get_shift_out_time($shift_id)
+    function get_shift_out_time($id)
 	{
 		$this->db->select('*');
-		$this->db->where("shift_id",$shift_id);
+		$this->db->where("id",$id);
 		$query = $this->db->get('pr_emp_shift_schedule');
 		$rows = $query->row();
 		$end_time = $rows->ot_start;
@@ -10467,11 +10469,11 @@ function grid_emp_job_application($grid_emp_id){
 
 			foreach ($query1->result() as $row)
 			{
-				$shift_id = $row->shift_id;
+				$id = $row->id;
 				$out_time = $row->out_time;
 				//$out_time = "21:01:26";
 				//echo "--------".$out_time;
-				$shift_out_time = $this->get_shift_out_time($shift_id);
+				$shift_out_time = $this->get_shift_out_time($id);
 			}
 
 
