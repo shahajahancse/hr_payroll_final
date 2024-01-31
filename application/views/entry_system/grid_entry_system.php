@@ -147,10 +147,22 @@ $unit = $this->common_model->get_unit_id_name();
                                     <input class="form-control" id="time" name="time" placeholder="hh:mm:ss">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="input-group pull-right">
                                     <span class="input-group-btn pull-right" style="display: flex;">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
+                                    </span>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="raw">
+                            <div class="col-md-12">
+                                <div class="input-group" style="gap: 14px; display: flex;">
+                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-info" onclick='log_sheet(event)' type="button" value='Attn. Sheet' />
+                                        <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
+                                        <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
