@@ -148,8 +148,8 @@ $unit = $this->common_model->get_unit_id_name();
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
+                                <div class="input-group pull-right" style="display: flex; gap: 10px;">
+                                    <span class="input-group-btn pull-right">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
                                     </span>
                                 </div><!-- /input-group -->
