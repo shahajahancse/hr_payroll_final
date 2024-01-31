@@ -505,10 +505,10 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-          
+
             $this->db->select('pr_units.*');
             $this->data['unit'] = $this->db->get('pr_units')->result();
-            
+
             $this->data['line'] = $this->crud_model->getline($line_id);
             $this->data['title'] = 'Edit Section';
             $this->data['username'] = $this->data['user_data']->id_number;
@@ -1048,7 +1048,7 @@ class Setup_con extends CI_Controller
     // CRUD for Night Allowance Start
     //----------------------------------------------------------------------------------
     public function designation(){
-        $this->db->select(' emp_designation.*, 
+        $this->db->select(' emp_designation.*,
                             IFNULL(pr_units.unit_name, "none") as unit_name,
                             IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
                             IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
@@ -1130,7 +1130,7 @@ class Setup_con extends CI_Controller
                 'group_id' => $this->input->post('group_id'),
             );
             // dd($formArray);
-            if ($this->db->insert('emp_designation', $formArray)) {                
+            if ($this->db->insert('emp_designation', $formArray)) {
                 $this->session->set_flashdata('success', 'Record add successfully!');
             } else {
                 $this->session->set_flashdata('failure', 'Record add failed!');
@@ -1216,154 +1216,8 @@ class Setup_con extends CI_Controller
         redirect(base_url() . 'setup_con/designation');
     }
 
-    public function manage_designation_delete($id)
+    function check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id, $id = null)
     {
-        $this->db->where('id', $id);
-        $this->db->delete('emp_dasignation_line_acl');
-        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect(base_url() . 'setup_con/manage_designation');
-    }
-
-    public function manage_designation()
-    {
-        $this->db->select('
-            dacl.id, 
-            ed.desig_name, 
-            ed.desig_bangla, 
-            dacl.designation_id, 
-
-            ln.line_name_en, 
-            ln.line_name_bn, 
-            dacl.line_id, 
-
-            es.sec_name_bn, 
-            es.sec_name_en, 
-            dacl.section_id,
-
-            d.dept_name,
-            d.dept_bangla,
-            dacl.dept_id, 
-
-            pr_units.unit_name, 
-            pr_units.unit_name_bangla, 
-            dacl.unit_id, 
-        ');
-        $this->db->from('emp_dasignation_line_acl as dacl');
-
-        $this->db->join('emp_designation ed', 'ed.id = dacl.designation_id', 'left');
-        $this->db->join('emp_line_num ln', 'ln.id = dacl.line_id', 'left');
-        $this->db->join('emp_section es', 'es.id = dacl.section_id', 'left');
-        $this->db->join('emp_depertment d', 'd.dept_id = dacl.dept_id', 'left');
-        $this->db->join('pr_units', 'pr_units.unit_id = dacl.unit_id', 'left');
-        $this->db->order_by('dacl.line_id');
-        $this->data['results'] = $this->db->get()->result_array();
-
-        $this->data['title'] = 'Manage Designation';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/manage_designation';
-        $this->load->view('layout/template', $this->data);
-
-    }
-
-    public function manage_designation_add()
-    {
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('designation_id', 'Designation Name English', 'required');
-        $this->form_validation->set_rules('line_id', 'Line Name', 'required');
-        $this->form_validation->set_rules('section_id', 'Section Name', 'required');
-        $this->form_validation->set_rules('dept_id', 'Department Name', 'required');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-
-        if ($this->form_validation->run() == TRUE) {
-
-            $designation_id = $this->input->post('designation_id');
-            $line_id = $this->input->post('line_id');
-            $section_id = $this->input->post('section_id');
-            $dept_id = $this->input->post('dept_id');
-            $unit_id = $this->input->post('unit_id');
-            $formArray = array(
-                'designation_id' => $designation_id,
-                'line_id' => $line_id,
-                'section_id' => $section_id,
-                'dept_id' => $dept_id,
-                'unit_id' => $unit_id,
-            );
-            // dd($formArray);
-            $check = $this->check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id);
-            if ($check == false) {              
-                $this->db->insert('emp_dasignation_line_acl', $formArray);  
-                $this->session->set_flashdata('success', 'Record add successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record Already Exist!');
-            }
-            redirect(base_url('setup_con/manage_designation'));
-        }
-
-        $this->db->select('pr_units.*');
-        $this->data['units'] = $this->db->get('pr_units')->result();
-        $this->data['title'] = 'Manage Designation';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/manage_designation_add';
-        $this->load->view('layout/template', $this->data);
-
-    }
-
-    public function manage_designation_edit($id)
-    {
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('designation_id', 'Designation Name English', 'required');
-        $this->form_validation->set_rules('line_id', 'Line Name', 'required');
-        $this->form_validation->set_rules('section_id', 'Section Name', 'required');
-        $this->form_validation->set_rules('dept_id', 'Department Name', 'required');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-
-        $this->db->select('dl.*, dg.desig_name, ln.line_name_en, es.sec_name_en, d.dept_name, u.unit_name');
-        $this->db->from('emp_dasignation_line_acl dl');
-        $this->db->join('emp_designation dg', 'dg.id = dl.designation_id', 'left');
-        $this->db->join('emp_line_num ln', 'ln.id = dl.line_id', 'left');
-        $this->db->join('emp_section es', 'es.id = dl.section_id', 'left');
-        $this->db->join('emp_depertment d', 'd.dept_id = dl.dept_id', 'left');
-        $this->db->join('pr_units u', 'u.unit_id = dl.unit_id', 'left');
-        $this->db->where('dl.id', $id);
-        $this->data['desig'] = $this->db->get()->row();
-
-        if ($this->form_validation->run() == TRUE) {
-            $designation_id = $this->input->post('designation_id');
-            $line_id = $this->input->post('line_id');
-            $section_id = $this->input->post('section_id');
-            $dept_id = $this->input->post('dept_id');
-            $unit_id = $this->input->post('unit_id');
-            $formArray = array(
-                'designation_id' => $designation_id,
-                'line_id' => $line_id,
-                'section_id' => $section_id,
-                'dept_id' => $dept_id,
-                'unit_id' => $unit_id,
-            );
-            // dd($formArray);
-            $check = $this->check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id, $id);
-            if ($check == false) {
-                $this->db->where('id', $id);
-                $this->db->update('emp_dasignation_line_acl', $formArray);
-                $this->session->set_flashdata('success', 'Record Updated successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record Already Exist!');
-            }
-            redirect(base_url() . 'setup_con/manage_designation');
-        }
-
-        $this->db->select('*');
-        $this->db->where('unit_id', $this->data['desig']->unit_id);
-        $this->data['results'] = $this->db->get('emp_designation')->result();
-
-        $this->data['title'] = 'Manage Designation';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/manage_designation_edit';
-        $this->load->view('layout/template', $this->data);
-
-    }
-
-    function check_dasig_line_acl($line_id, $section_id, $dept_id, $unit_id, $designation_id, $id = null) {
         $this->db->select('id');
         $this->db->from('emp_dasignation_line_acl');
         if (!empty($id)) {
@@ -1379,6 +1233,67 @@ class Setup_con extends CI_Controller
             return TRUE;
         } else {
             return FALSE;
+        }
+    }
+
+    public function manage_designation()
+    {
+        $this->db->select('pr_units.*');
+        $this->data['units'] = $this->db->get('pr_units')->result();
+        $this->data['title'] = 'Manage Designation';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/manage_designation';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function manage_designation_list_ajax()
+    {
+        $unit_id    = $this->input->post('unit_id');
+        $dept_id    = $this->input->post('dept_id');
+        $section_id = $this->input->post('section_id');
+        $line_id    = $this->input->post('line_id');
+
+        $this->db->select('dacl.designation_id as id');
+        $this->db->from('emp_dasignation_line_acl as dacl');
+        $this->db->where('dacl.unit_id', $unit_id);
+        $this->db->where('dacl.dept_id', $dept_id);
+        $this->db->where('dacl.section_id', $section_id);
+        $this->db->where('dacl.line_id', $line_id);
+        $dgss = $this->db->get()->result();
+        $data1 = array();
+        foreach ($dgss as $key => $r) { $data1[$key] = $r->id; }
+
+        $this->db->select("dg.id, dg.desig_name, dg.unit_id ");
+        $this->db->from("emp_designation as dg");
+        $this->db->where("dg.unit_id", $unit_id);
+        $this->db->group_by("dg.id");
+        $this->data['desig_id'] = $data1;
+        $this->data['results'] = $this->db->get()->result();
+        $this->data['title'] = 'Manage Designation';
+        $this->load->view('setup/manage_designation_list_ajax', $this->data);
+    }
+
+    public function manage_designation_add_ajax()
+    {
+        $is_check   = $this->input->post('is_check');
+        $id         = $this->input->post('id');
+        $unit_id    = $this->input->post('unit_id');
+        $dept_id    = $this->input->post('dept_id');
+        $section_id = $this->input->post('section_id');
+        $line_id    = $this->input->post('line_id');
+
+        if ($is_check == 1) {
+            $data = array(
+                'unit_id'           => $unit_id,
+                'dept_id'           => $dept_id,
+                'section_id'        => $section_id,
+                'line_id'           => $line_id,
+                'designation_id'    => $id,
+            );
+            $this->db->insert('emp_dasignation_line_acl', $data);
+        } else {
+            $this->db->where('designation_id', $id)->where('unit_id', $unit_id)->where('dept_id', $dept_id);
+            $this->db->where('section_id', $section_id)->where('line_id', $line_id)->delete('emp_dasignation_line_acl');
         }
     }
 
@@ -1400,7 +1315,6 @@ class Setup_con extends CI_Controller
     }
     public function shiftschedule_add()
     {
-
         $this->load->library('form_validation');
         $this->load->model('crud_model');
         $data['shiftscheduleinfo'] = $this->crud_model->shiftschedule_fetch();
@@ -1711,7 +1625,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('casual_leave', 'Casual Leave', 'required');
         $this->form_validation->set_rules('maternity_leave', 'Maternity Leave', 'required');
         $this->form_validation->set_rules('paternity_leave', 'Paternity Leave', 'required');
-     
+
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -1744,14 +1658,14 @@ class Setup_con extends CI_Controller
 
     public function leave_edit($shiftmanagementId)
     {
-      
+
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('leave_name', 'Leave_name', 'required');
         $this->form_validation->set_rules('sick_leave', 'Sick Leave', 'required');
         $this->form_validation->set_rules('casual_leave', 'Casual Leave', 'required');
         $this->form_validation->set_rules('maternity_leave', 'Maternity Leave', 'required');
         $this->form_validation->set_rules('paternity_leave', 'Paternity Leave', 'required');
-     
+
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -1827,7 +1741,7 @@ public function bonus_add()
     $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
     $this->form_validation->set_rules('festival', 'Festival', 'required');
     $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
- 
+
     if ($this->form_validation->run() == false) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -1871,7 +1785,7 @@ public function bonus_edit($shiftmanagementId)
     $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
     $this->form_validation->set_rules('festival', 'Festival', 'required');
     $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
- 
+
     if ($this->form_validation->run() == false) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -1917,7 +1831,7 @@ public function bonus_delete($shiftmanagementId)
    $this->db->where('id', $shiftmanagementId);
    if ($this->db->delete('pr_bonus_rules')) {
        $this->session->set_flashdata('success', 'Record Deleted successfully!');
-    
+
    }else{
        $this->session->set_flashdata('failure', 'Record Delete failed!');
    };
@@ -2260,7 +2174,7 @@ return TRUE;
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Festival Bonus Setup
     //-------------------------------------------------------------------------------------------------------
-  
+
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Providend Fund Setup
     //-------------------------------------------------------------------------------------------------------

@@ -21,6 +21,17 @@ class Entry_system_con extends CI_Controller
         }
     }
 
+    //-------------------------------------------------------------------------------------------------------
+    // GRID Display for Entry System
+    //-------------------------------------------------------------------------------------------------------
+    public function grid_entry_system()
+    {
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'grid_entry_system';
+        $this->load->view('layout/template', $this->data);
+
+    }
+
 
     //-------------------------------------------------------------------------------
     // Increment and Promotion entry to the Database
@@ -152,7 +163,7 @@ class Entry_system_con extends CI_Controller
             'emp_sec_id'        => $section,
             'emp_line_id'       => $line,
             'emp_desi_id'       => $designation,
-            'emp_sal_gra_id'    => (!empty($grade_id))? grade_id : $r->emp_sal_gra_id,
+            'emp_sal_gra_id'    => (!empty($grade_id))? $grade_id : $r->emp_sal_gra_id,
         );
 
         $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $prom_date)->get('pr_incre_prom_pun');
@@ -172,7 +183,7 @@ class Entry_system_con extends CI_Controller
                 'new_section'       => $section,
                 'new_line'          => $line,
                 'new_desig'         => $designation,
-                'new_grade'         => (!empty($grade_id))? grade_id : $r->emp_sal_gra_id,
+                'new_grade'         => (!empty($grade_id))? $grade_id : $r->emp_sal_gra_id,
                 'new_salary'        => $new_salary,
                 'new_com_salary'    => $new_com_salary,
                 'effective_month'   => $prom_date,
@@ -201,7 +212,7 @@ class Entry_system_con extends CI_Controller
                 'new_section'       => $section,
                 'new_line'          => $line,
                 'new_desig'         => $designation,
-                'new_grade'         => (!empty($grade_id))? grade_id : $r->emp_sal_gra_id,
+                'new_grade'         => (!empty($grade_id))? $grade_id : $r->emp_sal_gra_id,
                 'new_salary'        => $new_salary,
                 'new_com_salary'    => $new_com_salary,
                 'effective_month'   => $prom_date,
@@ -788,16 +799,7 @@ class Entry_system_con extends CI_Controller
 
     ///////////////////////////////////////////////////////////////////
     // old code
-    //-------------------------------------------------------------------------------------------------------
-    // GRID Display for Entry System
-    //-------------------------------------------------------------------------------------------------------
-    public function grid_entry_system()
-    {
-        // $this->load->view('grid_entry_system');
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'grid_entry_system';
-        $this->load->view('layout/template', $this->data);
-    }
+
     //-------------------------------------------------------------------------------------------------------
     // Form Display for Advance Loan
     //-------------------------------------------------------------------------------------------------------

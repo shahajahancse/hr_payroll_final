@@ -37,7 +37,7 @@ class Setting_con extends CI_Controller {
 	function acl_access_add(){
 		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
 			$this->session->set_flashdata('success', 'ACL Added Successfully');
-			
+
 		}else{
 			$this->session->set_flashdata('failuer', 'ACL Added Failed');
 		}
@@ -58,10 +58,10 @@ class Setting_con extends CI_Controller {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-		
+
 		$this->data['users'] = $this->get_member();
 		// dd($this->data['users']);
-        $this->data['title'] = 'User Access HRM'; 
+        $this->data['title'] = 'User Access HRM';
         $this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['subview'] = 'settings/left_menu_acl';
         $this->load->view('layout/template', $this->data);
@@ -74,7 +74,7 @@ class Setting_con extends CI_Controller {
         }
 
 		$this->data['users'] = $this->get_member();
-        $this->data['title'] = 'User Access HRM'; 
+        $this->data['title'] = 'User Access HRM';
         $this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['subview'] = 'settings/user_acl_hrm';
         $this->load->view('layout/template', $this->data);
@@ -88,7 +88,7 @@ class Setting_con extends CI_Controller {
 
 		$this->data['users'] = $this->get_member();
 		// dd($this->data['users']);
-        $this->data['title'] = 'User Access HRM'; 
+        $this->data['title'] = 'User Access HRM';
         $this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['subview'] = 'settings/user_acl_pr';
         $this->load->view('layout/template', $this->data);
@@ -134,15 +134,15 @@ class Setting_con extends CI_Controller {
 			$this->db->insert('member_acl_level', array('username_id' => $user_id, 'acl_id' => $id));
 		}
 	}
-	
+
 	public function report_setting(){
-		
+
 		if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
 		$this->db->select('pr_units.*');
         $this->data['units'] = $this->db->get('pr_units')->result_array();
-		
+
 		$this->db->select('pr_report_setting.*, pr_units.unit_name');
 		$this->db->join('pr_units', 'pr_report_setting.unit_id = pr_units.unit_id', 'left');
 		$this->db->order_by('id', 'desc');
@@ -154,7 +154,7 @@ class Setting_con extends CI_Controller {
 
 	}
 	public function report_setting_save($status){
-		
+
 		$unit_id = $this->input->post('unit_id');
 		$date = date('Y-m-01', strtotime($this->input->post('date')));
 		$max_ot = $this->input->post('max_ot');
@@ -201,21 +201,21 @@ class Setting_con extends CI_Controller {
 			$dd = $this->get_manage_gd_id($id, $unit_id);
 			$this->data['match']     = $dd['match'];
 			$this->data['not_match'] = $dd['not_match'];
-			$this->data['row'] = $this->db->where('id', $id)->get('emp_group_dasignation')->row(); 
+			$this->data['row'] = $this->db->where('id', $id)->get('emp_group_dasignation')->row();
 			$this->data['results'] = $this->get_dasignations($unit_id);
 
-			$this->data['title'] = 'Manage Dasignation'; 
+			$this->data['title'] = 'Manage Dasignation';
 			$this->data['subview'] = 'settings/manage_gd';
 		} else if(!empty($id)) {
-			$this->data['row'] = $this->db->where('id', $id)->get('emp_group_dasignation')->row(); 
-	        $this->data['title'] = 'Edit Dasignation Group'; 
+			$this->data['row'] = $this->db->where('id', $id)->get('emp_group_dasignation')->row();
+	        $this->data['title'] = 'Edit Dasignation Group';
 			$this->data['subview'] = 'settings/dasig_group_edit';
 		} else {
 	        $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->order_by('u.unit_id', 'ASC');
 	        $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
 
 			$this->data['subview'] = 'settings/dasig_group';
-	        $this->data['title'] = 'Dasignation Group'; 
+	        $this->data['title'] = 'Dasignation Group';
 		}
 
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -276,14 +276,17 @@ class Setting_con extends CI_Controller {
 	}
 
 	public function check_level_dg(){
-
 		$id 	 = $this->input->post('id');
 		$gd_id   = $this->input->post('gd_id');
 		$unit_id = $this->input->post('unit_id');
-
-		$this->db->where('id', $id);
-		$this->db->update('emp_designation', array('group_id' => $gd_id));
+		$is_check = $this->input->post('is_check');
+		if ($is_check == 1) {
+			$d['group_id'] = $gd_id;
+		} else {
+			$d['group_id'] = 0;
+		}
+		$this->db->where('id', $id)->where('unit_id', $unit_id);
+		$this->db->update('emp_designation', $d);
 	}
-
 }
 
