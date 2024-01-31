@@ -110,20 +110,20 @@ $unit = $this->common_model->get_unit_id_name();
         </div>
 
         <!-- present absent eot  -->
-        <div class="row nav_head">
+        <?php /* <div class="row nav_head">
             <div class="col-lg-6">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
                     <input class="btn btn-primary" onclick='toggleSection("present")' type="button" value="Present" />
-                    <input class="btn btn-info" onclick='toggleSection("absent")' type="button" value="Absent" />
                     <input class="btn btn-success" onclick='toggleSection("eot")' type="button" value="EOT Modify" />
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
+        */ ?>
 
-        <!-- present entry  -->
+        <!-- present entry form -->
         <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
@@ -147,113 +147,22 @@ $unit = $this->common_model->get_unit_id_name();
                                     <input class="form-control" id="time" name="time" placeholder="hh:mm:ss">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="input-group pull-right">
                                     <span class="input-group-btn pull-right" style="display: flex;">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
                                     </span>
-                                </div><!-- /input-group -->
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- present to absent section  -->
-        <div id="absent_entry" class="row nav_head" style="margin-top: 13px;">
-            <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="absent_entry_form">
-                        <div class="raw">
-                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Department</label>
-                                    <select name="pro_department" id="pro_department" class="form-control input-sm">
-                                        <option value="">Select Department</option>
-                                        <?php foreach ($departments as $key => $r) { ?>
-                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name . ' >> ' . $r->unit_name ?></option>
-                                        <?php } ?>
-                                    </select>
                                 </div>
-                            </div>
-                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Section</label>
-                                    <select id="pro_section" class="form-control input-sm pro_section">
-                                        <option value="">Select Section</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Line</label>
-                                    <select id="pro_line" class="form-control input-sm pro_line">
-                                        <option value="">Select Line</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Designation</label>
-                                    <select id="pro_designation" class="form-control input-sm pro_designation">
-                                        <option value="">Select Designation</option>
-                                    </select>
-                                </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="raw">
-                            <div class="col-md-3" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="salary" name="salary">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="prom_gross_sal" name="prom_gross_sal">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Com. Salary</label>
-                                    <input class="form-control" readonly id="com_salary" name="com_salary">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="prom_com_gross_sal" name="prom_com_gross_sal">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" top='20px'>
-                            <div class="col-md-3">
-                                <select name="grade_id" id="grade_id" class="form-control">
-                                    <option value="">Grade</option>
-                                    <option value="8">1</option>
-                                    <option value="7">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="7">5</option>
-                                    <option value="6">6</option>
-                                    <option value="5">7</option>
-                                    <option value="1">None</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
-                                <input type="date" class="form-control" id="prom_date" placeholder="select date">
-                            </div>
-                            <div class="col-md-3">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='promotion_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="prom_delete(event)" type="button" value="Delete">
+                            <div class="col-md-12" style="padding: 10px 5px !important;">
+                                <div class="input-group">
+                                    <span class="input-group-btn" style="display: flex; gap: 15px;">
+                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-info" onclick='log_sheet(event)' type="button" value='Attn. Sheet' />
+                                        <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
+                                        <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
@@ -263,61 +172,41 @@ $unit = $this->common_model->get_unit_id_name();
             </div>
         </div>
 
-        <!-- eot modify section  -->
+        <style>
+            .hints {
+                color: #436D19;
+                font-weight: bold;
+            }
+        </style>
+        <!-- eot entry form   -->
         <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="eot_modify_form">
                         <div class="raw">
-                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Department</label>
-                                    <select id="line_change_department" class="form-control input-sm line_change_department">
-                                        <option value="">Select Department</option>
-                                        <?php foreach ($departments as $key => $r) { ?>
-                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name . ' >> ' . $r->unit_name ?></option>
-                                        <?php } ?>
-                                    </select>
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <div class="col-md-6" style="padding: 5px !important">
+                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                        <label class="control-label">Date</label>
+                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding: 5px !important">
+                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                        <label class="control-label">Date</label>
+                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Section</label>
-                                    <select id="line_change_section" class="form-control input-sm line_change_section">
-                                        <option value="">Select Section</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
                             </div>
-                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Line</label>
-                                    <select id="line_change_line" class="form-control input-sm line_change_line">
-                                        <option value="">Select Line</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Designation</label>
-                                    <select id="line_change_desig" class="form-control input-sm line_change_desig">
-                                        <option value="">Select Designation</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" top='20px'>
                             <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="line_date" placeholder="select date">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='line_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="line_delete(event)" type="button" value="Delete">
+                                <div class="input-group pull-right">
+                                    <span class="input-group-btn pull-right" style="display: flex;">
+                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
                                     </span>
-                                </div><!-- /input-group -->
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -598,17 +487,13 @@ $unit = $this->common_model->get_unit_id_name();
     }
 </script>
 <script>
-    function increment_entry(e) {
+    function present_entry(e) {
         e.preventDefault();
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
+        let emp_id = sql.split(",");
+        if (emp_id == '') {
             showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
             return false;
         }
         unit_id = document.getElementById('unit_id').value;
@@ -617,86 +502,40 @@ $unit = $this->common_model->get_unit_id_name();
             return false;
         }
 
-        gross_sal = document.getElementById('gross_sal').value;
-        if (gross_sal == '') {
-            showMessage('error', 'Please input the New Salary');
+        first_date = document.getElementById('first_date').value;
+        if (first_date == '') {
+            showMessage('error', 'Please select First date');
+            return false;
+        }
+        second_date = document.getElementById('second_date').value;
+        if (second_date == '') {
+            showMessage('error', 'Please select Second date');
+            return false;
+        }
+        time = document.getElementById('time').value;
+        if (time == '') {
+            showMessage('error', 'Please select Time');
             return false;
         }
 
-        com_gross_sal = document.getElementById('com_gross_sal').value;
-        if (com_gross_sal == '') {
-            showMessage('error', 'Please input the New Com. Salary');
-            return false;
-        }
-
-        incr_date = document.getElementById('incr_date').value;
-        if (incr_date == '') {
-            showMessage('error', 'Please select Effective date');
-            return false;
-        }
-
-        var formdata = $("#increment_entry_form").serialize();
-        var data = "unit_id=" + unit_id + "&incr_date=" + incr_date + "&gross_sal=" + gross_sal + "&com_gross_sal=" + com_gross_sal + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
+        var formdata = $("#present_entry_form").serialize();
+        var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
-            url: hostname + "entry_system_con/increment_entry",
+            url: hostname + "entry_system_con/present_entry",
             data: data,
             success: function(data) {
                 $("#loader").hide();
                 if (data == 'success') {
-                    showMessage('success', 'Increment Added Successfully');
+                    showMessage('success', 'Record Inserted Successfully');
                 } else {
-                    showMessage('error', 'Increment Not Added');
+                    showMessage('error', 'Record Not Inserted');
                 }
             },
             error: function(data) {
                 $("#loader").hide();
-                showMessage('error', 'Increment Not Added');
-            }
-        })
-    }
-
-    function incr_delete(e) {
-        e.preventDefault();
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
-            return false;
-        }
-        unit_id = document.getElementById('unit_id').value;
-        if (unit_id == '') {
-            showMessage('error', 'Please select Unit');
-            return false;
-        }
-
-        incr_date = document.getElementById('incr_date').value;
-        if (incr_date == '') {
-            showMessage('error', 'Please select Effective date');
-            return false;
-        }
-
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/increment_delete_ajax",
-            data: {
-                sql: numbersArray[0],
-                date: incr_date,
-                unit_id: unit_id
-            },
-            success: function(data) {
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Increment Deleted Successfully');
-                } else {
-                    showMessage('error', 'Increment Not Deleted');
-                }
+                showMessage('error', 'Record Not Inserted');
             }
         })
     }
@@ -874,23 +713,4 @@ $unit = $this->common_model->get_unit_id_name();
         return vals;
     }
 </script>
-<script>
-    function toggleSection(sectionId) {
-        if (sectionId == 'present') {
-            $("#absent_entry").hide();
-            $("#eot_modify").hide();
-            $("#present_entry").show();
-        } else if (sectionId == 'absent') {
-            $("#present_entry").hide();
-            $("#eot_modify").hide();
-            $("#absent_entry").show();
-        } else {
-            $("#present_entry").hide();
-            $("#absent_entry").hide();
-            $("#eot_modify").show();
-        }
-        $("#" + sectionId).slideToggle();
-    }
-    // Initial hiding of all sections
-    $("#present_entry, #absent_entry, #eot_modify").hide();
-</script>
+
