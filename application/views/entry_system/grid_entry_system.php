@@ -109,48 +109,25 @@ $unit = $this->common_model->get_unit_id_name();
             <img src="<?php echo base_url('images/ajax-loader.gif'); ?>" />
         </div>
 
-        <!-- Increment Promtion Line change -->
+        <!-- present absent eot  -->
         <div class="row nav_head">
             <div class="col-lg-6">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <input class="btn btn-primary" onclick='toggleSection("increment")' type="button" value="Increment" />
-                    <input class="btn btn-info" onclick='toggleSection("promotion")' type="button" value="Promotion" />
-                    <input class="btn btn-success" onclick='toggleSection("line_change")' type="button" value="Line" />
+                    <input class="btn btn-primary" onclick='toggleSection("present")' type="button" value="Present" />
+                    <input class="btn btn-info" onclick='toggleSection("absent")' type="button" value="Absent" />
+                    <input class="btn btn-success" onclick='toggleSection("eot")' type="button" value="EOT Modify" />
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
 
-        <!-- increment entry  -->
-        <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
+        <!-- present entry  -->
+        <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
-                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="inc_profile_image" style="height: 90px;width: 110px;" class="img-responsive">
-                                </span>
-                            </div>
-                            <div class="col-md-9">
-                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="inc_emp_name"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="inc_departments_ids"> </span></p>
-                                <p style="font-weight: bold;">Sec : <span id="inc_sections_ids"> </span></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="inc_emps_ids"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Line : <span id="inc_lines_ids"> </span></p>
-                                <p style="font-weight: bold;">Desig : <span id="inc_desigs_id"> </span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="increment_entry_form">
+                    <form class="col-md-12" method="post" id="present_entry_form">
                         <div class="raw">
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
@@ -197,34 +174,11 @@ $unit = $this->common_model->get_unit_id_name();
             </div>
         </div>
 
-        <!-- promotion entry  -->
-        <div id="promotion_entry" class="row nav_head" style="margin-top: 13px;">
+        <!-- present to absent section  -->
+        <div id="absent_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
-                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="profile_image" style="height: 90px;width: 110px;" class="img-responsive">
-                                </span>
-                            </div>
-                            <div class="col-md-9">
-                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="emp_name"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="departments_ids"> </span></p>
-                                <p style="font-weight: bold;">Sec : <span id="sections_ids"> </span></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="emps_ids"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Line : <span id="lines_ids"> </span></p>
-                                <p style="font-weight: bold;">Desig : <span id="desigs_id"> </span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="promotion_entry_form">
+                    <form class="col-md-12" method="post" id="absent_entry_form">
                         <div class="raw">
                             <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
                                 <div class="form-group">
@@ -323,34 +277,11 @@ $unit = $this->common_model->get_unit_id_name();
             </div>
         </div>
 
-        <!-- Line change entry  -->
-        <div id="line_change" class="row nav_head" style="margin-top: 13px;">
+        <!-- eot modify section  -->
+        <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
-                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
-                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="line_profile_image" style="height: 90px;width: 110px;" class="img-responsive">
-                                </span>
-                            </div>
-                            <div class="col-md-9">
-                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="line_emp_name"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="line_departments_ids"> </span></p>
-                                <p style="font-weight: bold;">Sec : <span id="line_sections_ids"> </span></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="line_emps_ids"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Line : <span id="line_lines_ids"> </span></p>
-                                <p style="font-weight: bold;">Desig : <span id="line_desigs_id"> </span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="line_change_entry_form">
+                    <form class="col-md-12" method="post" id="eot_modify_form">
                         <div class="raw">
                             <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
                                 <div class="form-group">
@@ -409,6 +340,7 @@ $unit = $this->common_model->get_unit_id_name();
         </div>
     </div>
 
+    <!-- employee list for right side -->
     <div class="col-md-4 tablebox">
         <input type="text" id="searchi" class="form-control" placeholder="Search">
         <div style="height: 80vh; overflow-y: scroll;">
@@ -554,7 +486,6 @@ $unit = $this->common_model->get_unit_id_name();
         })
     }
 </script>
-
 <script>
     function promotion_entry(e) {
         e.preventDefault();
@@ -784,318 +715,8 @@ $unit = $this->common_model->get_unit_id_name();
         })
     }
 </script>
-<script>
-    function get_emp_info_promotion() {
 
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            showMessage('error', 'Please select employee Id');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
-        unit_id = document.getElementById('unit_id').value;
-        if (unit_id == '') {
-            showMessage('error', 'Please select Unit');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
 
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/" + numbersArray[0] + "/" + unit_id,
-            success: function(d) {
-                console.log(d);
-                $("#loader").hide();
-                $("#promotion_entry").show();
-                $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
-                $('#emp_name').html(d.name_en);
-                $('#departments_ids').html(d.dept_name);
-                $('#sections_ids').html(d.sec_name_en);
-                $('#emps_ids').html(d.emp_id);
-                $('#lines_ids').html(d.line_name_en);
-                $('#desigs_id').html(d.desig_name);
-                $('#salary').val(d.gross_sal);
-                $('#com_salary').val(d.com_gross_sal);
-            },
-            error: function() {
-                $("#loader").hide();
-                alert('Something went wrong');
-            }
-        })
-    }
-
-    function get_emp_info_increment() {
-
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            showMessage('error', 'Please select employee Id');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
-        unit_id = document.getElementById('unit_id').value;
-        if (unit_id == '') {
-            showMessage('error', 'Please select Unit');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
-
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/" + numbersArray[0] + "/" + unit_id,
-            success: function(d) {
-                console.log(d);
-                $("#loader").hide();
-                $("#increment_entry").show();
-                $('#inc_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
-                $('#inc_emp_name').html(d.name_en);
-                $('#inc_departments_ids').html(d.dept_name);
-                $('#inc_sections_ids').html(d.sec_name_en);
-                $('#inc_emps_ids').html(d.emp_id);
-                $('#inc_lines_ids').html(d.line_name_en);
-                $('#inc_desigs_id').html(d.desig_name);
-                $('#inc_salary').val(d.gross_sal);
-                $('#inc_com_salary').val(d.com_gross_sal);
-            },
-            error: function() {
-                $("#loader").hide();
-                alert('Something went wrong');
-            }
-        })
-    }
-
-    function get_emp_info_line() {
-
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            showMessage('error', 'Please select employee Id');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
-        unit_id = document.getElementById('unit_id').value;
-        if (unit_id == '') {
-            showMessage('error', 'Please select Unit');
-            setTimeout(() => {
-                $("#loader").hide();
-                $("#increment_entry").hide();
-                $("#promotion_entry").hide();
-                $("#line_change").hide();
-            }, 500);
-            return false;
-        }
-
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/" + numbersArray[0] + "/" + unit_id,
-            success: function(d) {
-                console.log(d);
-                $("#loader").hide();
-                $("#line_change").show();
-                $('#line_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
-                $('#line_emp_name').html(d.name_en);
-                $('#line_departments_ids').html(d.dept_name);
-                $('#line_sections_ids').html(d.sec_name_en);
-                $('#line_emps_ids').html(d.emp_id);
-                $('#line_lines_ids').html(d.line_name_en);
-                $('#line_desigs_id').html(d.desig_name);
-            },
-            error: function() {
-                $("#loader").hide();
-                alert('Something went wrong');
-            }
-        })
-    }
-</script>
-<script>
-    //section dropdown
-    $('#line_change_department').change(function() {
-        $('.line_change_section').addClass('form-control input-sm');
-        $(".line_change_section > option").remove();
-        $(".line_change_line > option").remove();
-        $(".line_change_desig > option").remove();
-        var id = $('#line_change_department').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_section_by_dept_id/" + id,
-            success: function(func_data) {
-                $('.line_change_section').append("<option value=''>-- Select District --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.line_change_section').append(opt);
-                });
-            }
-        });
-    });
-    //Line dropdown
-    $('#line_change_section').change(function() {
-        $('.line_change_line').addClass('form-control input-sm');
-        $(".line_change_line > option").remove();
-        $(".line_change_desig > option").remove();
-        var id = $('#line_change_section').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_line_by_sec_id/" + id,
-            success: function(func_data) {
-                $('.line_change_line').append("<option value=''>-- Select District --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.line_change_line').append(opt);
-                });
-            }
-        });
-    });
-    //Designation dropdown
-    $('#line_change_line').change(function() {
-        $('.line_change_desig').addClass('form-control input-sm');
-        $(".line_change_desig > option").remove();
-        var id = $('#line_change_line').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_designation_by_line_id/" + id,
-            success: function(func_data) {
-                $('.line_change_desig').append("<option value=''>-- Select District --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.line_change_desig').append(opt);
-                });
-            }
-        });
-    });
-</script>
-<script>
-    //section dropdown
-    $('#pro_department').change(function() {
-        $('.pro_section').addClass('form-control input-sm');
-        $(".pro_section > option").remove();
-        $(".pro_line > option").remove();
-        $(".pro_designation > option").remove();
-        var id = $('#pro_department').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_section_by_dept_id/" + id,
-            success: function(func_data) {
-                $('.pro_section').append("<option value=''>-- Select District --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.pro_section').append(opt);
-                });
-            }
-        });
-    });
-    //Line dropdown
-    $('#pro_section').change(function() {
-        $('.pro_line').addClass('form-control input-sm');
-        $(".pro_line > option").remove();
-        $(".pro_designation > option").remove();
-        var id = $('#pro_section').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_line_by_sec_id/" + id,
-            success: function(func_data) {
-                $('.pro_line').append("<option value=''>-- Select District --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.pro_line').append(opt);
-                });
-            }
-        });
-    });
-    //Designation dropdown
-    $('#pro_line').change(function() {
-        $('.pro_designation').addClass('form-control input-sm');
-        $(".pro_designation > option").remove();
-        var id = $('#pro_line').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_designation_by_line_id/" + id,
-            success: function(func_data) {
-                $('.pro_designation').append("<option value=''>-- Select District --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.pro_designation').append(opt);
-                });
-            }
-        });
-    });
-</script>
 <script>
     $(document).ready(function() {
         $("#searchi").on("keyup", function() {
@@ -1269,21 +890,21 @@ $unit = $this->common_model->get_unit_id_name();
 </script>
 <script>
     function toggleSection(sectionId) {
-        if (sectionId == 'increment') {
-            $("#promotion_entry").hide();
-            $("#line_change").hide();
-            get_emp_info_increment();
-        } else if (sectionId == 'promotion') {
-            $("#increment_entry").hide();
-            $("#line_change").hide();
-            get_emp_info_promotion();
+        if (sectionId == 'present') {
+            $("#absent_entry").hide();
+            $("#eot_modify").hide();
+            $("#present_entry").hide();
+        } else if (sectionId == 'absent') {
+            $("#present_entry").hide();
+            $("#eot_modify").hide();
+            $("#absent_entry").hide();
         } else {
-            $("#promotion_entry").hide();
-            $("#increment_entry").hide();
-            get_emp_info_line();
+            $("#present_entry").hide();
+            $("#absent_entry").hide();
+            $("#eot_modify").show();
         }
         $("#" + sectionId).slideToggle();
     }
     // Initial hiding of all sections
-    $("#increment_entry, #promotion_entry, #line_change").hide();
+    $("#present_entry, #absent_entry, #eot_modify").hide();
 </script>
