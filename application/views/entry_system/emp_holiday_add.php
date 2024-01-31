@@ -17,7 +17,7 @@
             <?php $success = $this->session->flashdata('success');
 	        if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
 	         $error = $this->session->flashdata('error');
 	         if ($error) { ?>
             <div class="alert alert-failuer"><?php echo $error; ?></div>
@@ -34,13 +34,13 @@
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
-                        <?php 
+                        <?php
 							foreach ($dept as $row) {
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
 								$select_data='';
-								}  
+								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
 							}
@@ -53,13 +53,12 @@
                 <div class="form-group">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
-                        <?php if (!empty($user_data->unit_name)) { 
+                        <?php if (!empty($user_data->unit_name)) {
 										$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
                         <option value=''>Select Department</option>
                         <?php foreach ($dpts->result() as $key => $val) { ?>
                         <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
                         <?php } } ?>
-                        <option value=''>Select Department</option>
                     </select>
                 </div>
             </div>
@@ -117,7 +116,7 @@
             .input-group-btn .btn {
                 padding: 8px 10px !important;
             }
-        </style> 
+        </style>
 
         <div class="row nav_head">
             <div class="col-lg-4">
@@ -145,7 +144,7 @@
                     <th class="" style="background:#0177bcc2;color:white">Id</th>
                     <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                 </tr>
-                <?php if (!empty($employees)) { 
+                <?php if (!empty($employees)) {
 					  		foreach ($employees as $key => $emp) {
 					  	?>
                 <tr id="removeTr">
@@ -225,7 +224,7 @@ $(document).ready(function() {
             type: "POST",
             url: hostname + "common/ajax_designation_by_line_id/" + id,
             success: function(func_data) {
-                $('.desig').append("<option value=''>-- Select District --</option>");
+                $('.desig').append("<option value=''>-- Select Designation --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
                     opt.val(id);
@@ -248,7 +247,7 @@ $(document).ready(function() {
             type: "POST",
             url: hostname + "common/ajax_line_by_sec_id/" + id,
             success: function(func_data) {
-                $('.line').append("<option value=''>-- Select District --</option>");
+                $('.line').append("<option value=''>-- Select Line --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
                     opt.val(id);
@@ -272,7 +271,7 @@ $(document).ready(function() {
             type: "POST",
             url: hostname + "common/ajax_section_by_dept_id/" + id,
             success: function(func_data) {
-                $('.section').append("<option value=''>-- Select District --</option>");
+                $('.section').append("<option value=''>-- Select Section --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
                     opt.val(id);
@@ -357,7 +356,7 @@ $(document).ready(function() {
         // console.log(data);
           $("#loader").hide();
           if (data == 'success') {
-              showMessage('success', 'Holiday Added Successfully'); 
+              showMessage('success', 'Holiday Added Successfully');
           }else {
               showMessage('error', 'Holiday Not Added');
           }
@@ -400,7 +399,7 @@ $(document).ready(function() {
         // console.log(data);
           $("#loader").hide();
           if (data == 'success') {
-              showMessage('success', 'Holiday Deleted Successfully'); 
+              showMessage('success', 'Holiday Deleted Successfully');
           }else {
               showMessage('error', 'Holiday Not Deleted');
           }

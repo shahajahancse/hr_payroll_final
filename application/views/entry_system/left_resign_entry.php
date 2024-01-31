@@ -17,7 +17,7 @@
             <?php $success = $this->session->flashdata('success');
             if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
              $error = $this->session->flashdata('error');
              if ($error) { ?>
             <div class="alert alert-failuer"><?php echo $error; ?></div>
@@ -33,13 +33,13 @@
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
-                        <?php 
+                        <?php
                             foreach ($dept as $row) {
                                 if($row['unit_id'] == $user_data->unit_name){
                                 $select_data="selected";
                                 }else{
                                 $select_data='';
-                                }  
+                                }
                                 echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
                                 '</option>';
                             }
@@ -52,13 +52,12 @@
                 <div class="form-group">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
-                        <?php if (!empty($user_data->unit_name)) { 
+                        <?php if (!empty($user_data->unit_name)) {
                                         $dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
                         <option value=''>Select Department</option>
                         <?php foreach ($dpts->result() as $key => $val) { ?>
                         <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
                         <?php } } ?>
-                        <option value=''>Select Department</option>
                     </select>
                 </div>
             </div>
@@ -118,7 +117,7 @@
                     <input type="date" class="form-control" id="date" placeholder="select date">
                     <select name="types" id="types">
                         <option value="">Type</option>
-                        <option value="1">Repular</option>
+                        <option value="1">Regular</option>
                         <option value="3">Left</option>
                         <option value="4">Resign</option>
                     </select>
@@ -143,7 +142,7 @@
                     </tr>
                 </thead>
                 <tbody id="tbody">
-                    <?php if (!empty($employees)) { 
+                    <?php if (!empty($employees)) {
                                   foreach ($employees as $key => $emp) {
                               ?>
                     <tr class="removeTr">
@@ -240,7 +239,7 @@
                 type: "POST",
                 url: hostname + "common/ajax_designation_by_line_id/" + id,
                 success: function(func_data) {
-                    $('.desig').append("<option value=''>-- Select District --</option>");
+                    $('.desig').append("<option value=''>-- Select Designation --</option>");
                     $.each(func_data, function(id, name) {
                         var opt = $('<option />');
                         opt.val(id);
@@ -263,7 +262,7 @@
                 type: "POST",
                 url: hostname + "common/ajax_line_by_sec_id/" + id,
                 success: function(func_data) {
-                    $('.line').append("<option value=''>-- Select District --</option>");
+                    $('.line').append("<option value=''>-- Select Line --</option>");
                     $.each(func_data, function(id, name) {
                         var opt = $('<option />');
                         opt.val(id);
@@ -276,7 +275,7 @@
             grid_emp_list();
         });
 
-        //section dropdown
+        //Section dropdown
         $('#dept').change(function() {
             $('.section').addClass('form-control input-sm');
             $(".section > option").remove();
@@ -287,7 +286,7 @@
                 type: "POST",
                 url: hostname + "common/ajax_section_by_dept_id/" + id,
                 success: function(func_data) {
-                    $('.section').append("<option value=''>-- Select District --</option>");
+                    $('.section').append("<option value=''>-- Select Section --</option>");
                     $.each(func_data, function(id, name) {
                         var opt = $('<option />');
                         opt.val(id);
@@ -381,7 +380,7 @@
         // console.log(data);
           $("#loader").hide();
           if (data == 'success') {
-              showMessage('success', 'Updated Successfully'); 
+              showMessage('success', 'Updated Successfully');
           }else {
               showMessage('error', 'Sorry! Not Updated');
           }
