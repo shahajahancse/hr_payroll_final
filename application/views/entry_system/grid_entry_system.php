@@ -713,17 +713,4 @@ $unit = $this->common_model->get_unit_id_name();
         return vals;
     }
 </script>
-<script>
-    function toggleSection(sectionId) {
-        if (sectionId == 'present') {
-            $("#eot_modify").hide();
-            $("#present_entry").show();
-        } else {
-            $("#present_entry").hide();
-            $("#eot_modify").show();
-        }
-        $("#" + sectionId).slideToggle();
-    }
-    // Initial hiding of all sections
-    $("#present_entry, #eot_modify").hide();
-</script>
+
