@@ -27,7 +27,7 @@ $unit = $this->common_model->get_unit_id_name();
     <!-- <div class="container-fluid">	 -->
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
-            <!-- <h3 style="font-weight: 600;"><?= //$title ?></h3> -->
+            <!-- <h3 style="font-weight: 600;"><?= $title ?></h3> -->
             <div class="col-md-6">
                 <div class="form-group" style="margin-bottom: 10px !important;">
                     <label>Unit <span style="color: red;">*</span> </label>
