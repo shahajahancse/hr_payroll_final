@@ -129,42 +129,30 @@ $unit = $this->common_model->get_unit_id_name();
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="present_entry_form">
                         <div class="raw">
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="inc_salary" name="salary">
+                                    <label class="control-label">From Date</label>
+                                    <input class="form-control" type="date" id="first_date" name="first_date">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="gross_sal" name="gross_sal">
-
+                                    <label class="control-label">To Date</label>
+                                    <input class="form-control" type="date" id="second_date" name="second_date">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Com. Salary</label>
-                                    <input class="form-control" readonly id="inc_com_salary" name="com_salary">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                                    <label class="control-label">Time</label>
+                                    <input class="form-control" type="time" id="time" name="time">
                                 </div>
                             </div>
                         </div>
                         <div class="row" top='20px'>
                             <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="incr_date" placeholder="select date">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="incr_delete(event)" type="button" value="Delete">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button"  value='Save' />
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
