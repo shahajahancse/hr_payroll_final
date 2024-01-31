@@ -598,17 +598,13 @@ $unit = $this->common_model->get_unit_id_name();
     }
 </script>
 <script>
-    function increment_entry(e) {
+    function present_entry(e) {
         e.preventDefault();
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
+        let emp_id = sql.split(",");
+        if (emp_id == '') {
             showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
             return false;
         }
         unit_id = document.getElementById('unit_id').value;
@@ -617,86 +613,40 @@ $unit = $this->common_model->get_unit_id_name();
             return false;
         }
 
-        gross_sal = document.getElementById('gross_sal').value;
-        if (gross_sal == '') {
-            showMessage('error', 'Please input the New Salary');
+        first_date = document.getElementById('first_date').value;
+        if (first_date == '') {
+            showMessage('error', 'Please select First date');
+            return false;
+        }
+        second_date = document.getElementById('second_date').value;
+        if (second_date == '') {
+            showMessage('error', 'Please select Second date');
+            return false;
+        }
+        time = document.getElementById('time').value;
+        if (time == '') {
+            showMessage('error', 'Please select Time');
             return false;
         }
 
-        com_gross_sal = document.getElementById('com_gross_sal').value;
-        if (com_gross_sal == '') {
-            showMessage('error', 'Please input the New Com. Salary');
-            return false;
-        }
-
-        incr_date = document.getElementById('incr_date').value;
-        if (incr_date == '') {
-            showMessage('error', 'Please select Effective date');
-            return false;
-        }
-
-        var formdata = $("#increment_entry_form").serialize();
-        var data = "unit_id=" + unit_id + "&incr_date=" + incr_date + "&gross_sal=" + gross_sal + "&com_gross_sal=" + com_gross_sal + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
+        var formdata = $("#present_entry_form").serialize();
+        var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
-            url: hostname + "entry_system_con/increment_entry",
+            url: hostname + "entry_system_con/present_entry",
             data: data,
             success: function(data) {
                 $("#loader").hide();
                 if (data == 'success') {
-                    showMessage('success', 'Increment Added Successfully');
+                    showMessage('success', 'Record Inserted Successfully');
                 } else {
-                    showMessage('error', 'Increment Not Added');
+                    showMessage('error', 'Record Not Inserted');
                 }
             },
             error: function(data) {
                 $("#loader").hide();
-                showMessage('error', 'Increment Not Added');
-            }
-        })
-    }
-
-    function incr_delete(e) {
-        e.preventDefault();
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
-            return false;
-        }
-        unit_id = document.getElementById('unit_id').value;
-        if (unit_id == '') {
-            showMessage('error', 'Please select Unit');
-            return false;
-        }
-
-        incr_date = document.getElementById('incr_date').value;
-        if (incr_date == '') {
-            showMessage('error', 'Please select Effective date');
-            return false;
-        }
-
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/increment_delete_ajax",
-            data: {
-                sql: numbersArray[0],
-                date: incr_date,
-                unit_id: unit_id
-            },
-            success: function(data) {
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Increment Deleted Successfully');
-                } else {
-                    showMessage('error', 'Increment Not Deleted');
-                }
+                showMessage('error', 'Record Not Inserted');
             }
         })
     }
