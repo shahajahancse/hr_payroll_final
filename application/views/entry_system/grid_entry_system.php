@@ -893,11 +893,11 @@ $unit = $this->common_model->get_unit_id_name();
         if (sectionId == 'present') {
             $("#absent_entry").hide();
             $("#eot_modify").hide();
-            $("#present_entry").hide();
+            $("#present_entry").show();
         } else if (sectionId == 'absent') {
             $("#present_entry").hide();
             $("#eot_modify").hide();
-            $("#absent_entry").hide();
+            $("#absent_entry").show();
         } else {
             $("#present_entry").hide();
             $("#absent_entry").hide();
