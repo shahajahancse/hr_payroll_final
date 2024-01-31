@@ -1,26 +1,26 @@
 <script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
 <style>
-#fileDiv #removeTr td {
-    padding: 5px 10px !important;
-    font-size: 14px;
-}
+    #fileDiv #removeTr td {
+        padding: 5px 10px !important;
+        font-size: 14px;
+    }
 </style>
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
 <?php
-		$this->load->model('common_model');
-		$unit = $this->common_model->get_unit_id_name();
-	?>
+$this->load->model('common_model');
+$unit = $this->common_model->get_unit_id_name();
+?>
 <div class="content">
     <div class="row">
         <div class="col-md-8">
             <?php $success = $this->session->flashdata('success');
-	        if ($success != "") { ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            if ($success != "") { ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
             <?php }
-	         $error = $this->session->flashdata('error');
-	         if ($error) { ?>
-            <div class="alert alert-failuer"><?php echo $error; ?></div>
+            $error = $this->session->flashdata('error');
+            if ($error) { ?>
+                <div class="alert alert-failuer"><?php echo $error; ?></div>
             <?php } ?>
         </div>
     </div>
@@ -34,16 +34,16 @@
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
                         <?php
-							foreach ($dept as $row) {
-								if($row['unit_id'] == $user_data->unit_name){
-								$select_data="selected";
-								}else{
-								$select_data='';
-								}
-								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
-								'</option>';
-							}
-						?>
+                        foreach ($dept as $row) {
+                            if ($row['unit_id'] == $user_data->unit_name) {
+                                $select_data = "selected";
+                            } else {
+                                $select_data = '';
+                            }
+                            echo '<option ' . $select_data . '  value="' . $row['unit_id'] . '">' . $row['unit_name'] .
+                                '</option>';
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -53,11 +53,12 @@
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
                         <?php if (!empty($user_data->unit_name)) {
-										$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
-                        <option value=''>Select Department</option>
-                        <?php foreach ($dpts->result() as $key => $val) { ?>
-                        <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
-                        <?php } } ?>
+                            $dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
+                            <option value=''>Select Department</option>
+                            <?php foreach ($dpts->result() as $key => $val) { ?>
+                                <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
+                        <?php }
+                        } ?>
                     </select>
                 </div>
             </div>
@@ -96,8 +97,8 @@
                     <select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
                         <option value="">All Employee</option>
                         <?php foreach ($categorys as $key => $row) { ?>
-                        <option value="<?= $row->id ?>" <?= ($row->id==1)?'selected':'' ?>><?= $row->status_type; ?>
-                        </option>
+                            <option value="<?= $row->id ?>" <?= ($row->id == 1) ? 'selected' : '' ?>><?= $row->status_type; ?>
+                            </option>
                         <?php } ?>
                     </select>
                 </div>
@@ -105,7 +106,7 @@
         </div>
         <br>
         <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:5px;">
-            <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
+            <img src="<?php echo base_url('images/ajax-loader.gif'); ?>" />
         </div>
 
         <!-- Increment Promtion Line change -->
@@ -130,7 +131,7 @@
                         <div class="col-md-8">
                             <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
                                 <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="inc_profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
+                                    <img id="inc_profile_image" style="height: 90px;width: 110px;" class="img-responsive">
                                 </span>
                             </div>
                             <div class="col-md-9">
@@ -142,7 +143,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="inc_emps_ids"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="inc_lines_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line : <span id="inc_lines_ids"> </span></p>
                                 <p style="font-weight: bold;">Desig : <span id="inc_desigs_id"> </span></p>
                             </div>
                         </div>
@@ -204,7 +205,7 @@
                         <div class="col-md-8">
                             <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
                                 <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
+                                    <img id="profile_image" style="height: 90px;width: 110px;" class="img-responsive">
                                 </span>
                             </div>
                             <div class="col-md-9">
@@ -216,7 +217,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="emps_ids"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="lines_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line : <span id="lines_ids"> </span></p>
                                 <p style="font-weight: bold;">Desig : <span id="desigs_id"> </span></p>
                             </div>
                         </div>
@@ -231,7 +232,7 @@
                                     <select name="pro_department" id="pro_department" class="form-control input-sm">
                                         <option value="">Select Department</option>
                                         <?php foreach ($departments as $key => $r) { ?>
-                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name .' >> '. $r->unit_name ?></option>
+                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name . ' >> ' . $r->unit_name ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -330,7 +331,7 @@
                         <div class="col-md-8">
                             <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
                                 <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
-                                    <img id="line_profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
+                                    <img id="line_profile_image" style="height: 90px;width: 110px;" class="img-responsive">
                                 </span>
                             </div>
                             <div class="col-md-9">
@@ -342,7 +343,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="line_emps_ids"> </span></p>
-                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="line_lines_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line : <span id="line_lines_ids"> </span></p>
                                 <p style="font-weight: bold;">Desig : <span id="line_desigs_id"> </span></p>
                             </div>
                         </div>
@@ -357,7 +358,7 @@
                                     <select id="line_change_department" class="form-control input-sm line_change_department">
                                         <option value="">Select Department</option>
                                         <?php foreach ($departments as $key => $r) { ?>
-                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name .' >> '. $r->unit_name ?></option>
+                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name . ' >> ' . $r->unit_name ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -414,23 +415,23 @@
             <table class="table table-hover" id="fileDiv">
                 <thead>
                     <tr style="position: sticky;top: 0;z-index:1">
-                        <th class="active" style="width:10%"><input type="checkbox" id="select_all"
-                                class="select-all checkbox" name="select-all"></th>
+                        <th class="active" style="width:10%"><input type="checkbox" id="select_all" class="select-all checkbox" name="select-all"></th>
                         <th class="" style="background:#0177bcc2;color:white">Id</th>
                         <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
                     <?php if (!empty($employees)) {
-                                  foreach ($employees as $key => $emp) {
-                              ?>
-                    <tr class="removeTr">
-                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-                        </td>
-                        <td class="success"><?= $emp->emp_id ?></td>
-                        <td class="warning "><?= $emp->name_en ?></td>
-                    </tr>
-                    <?php } } ?>
+                        foreach ($employees as $key => $emp) {
+                    ?>
+                            <tr class="removeTr">
+                                <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+                                </td>
+                                <td class="success"><?= $emp->emp_id ?></td>
+                                <td class="warning "><?= $emp->name_en ?></td>
+                            </tr>
+                    <?php }
+                    } ?>
                     <tr class="removeTrno">
                         <td colspan="3" class="text-center"> No data found</td>
                     </tr>
@@ -488,7 +489,7 @@
         }
 
         var formdata = $("#line_change_entry_form").serialize();
-        var data = "unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation +"&line_date="+line_date +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+        var data = "unit_id=" + unit_id + "&department=" + department + "&section=" + section + "&line=" + line + "&designation=" + designation + "&line_date=" + line_date + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
@@ -546,7 +547,7 @@
                 $("#loader").hide();
                 if (data == 'success') {
                     showMessage('success', 'Line change Deleted Successfully');
-                }else {
+                } else {
                     showMessage('error', 'Line change Not Deleted');
                 }
             }
@@ -614,7 +615,7 @@
         grade_id = document.getElementById('grade_id').value;
 
         var formdata = $("#promotion_entry_form").serialize();
-        var data = "unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation +"&grade_id="+grade_id +"&prom_date="+prom_date +"&prom_gross_sal="+prom_gross_sal +"&prom_com_gross_sal="+prom_com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+        var data = "unit_id=" + unit_id + "&department=" + department + "&section=" + section + "&line=" + line + "&designation=" + designation + "&grade_id=" + grade_id + "&prom_date=" + prom_date + "&prom_gross_sal=" + prom_gross_sal + "&prom_com_gross_sal=" + prom_com_gross_sal + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
@@ -672,7 +673,7 @@
                 $("#loader").hide();
                 if (data == 'success') {
                     showMessage('success', 'Promotion Deleted Successfully');
-                }else {
+                } else {
                     showMessage('error', 'Promotion Not Deleted');
                 }
             }
@@ -718,7 +719,7 @@
         }
 
         var formdata = $("#increment_entry_form").serialize();
-        var data = "unit_id="+unit_id +"&incr_date="+incr_date +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+        var data = "unit_id=" + unit_id + "&incr_date=" + incr_date + "&gross_sal=" + gross_sal + "&com_gross_sal=" + com_gross_sal + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
@@ -776,7 +777,7 @@
                 $("#loader").hide();
                 if (data == 'success') {
                     showMessage('success', 'Increment Deleted Successfully');
-                }else {
+                } else {
                     showMessage('error', 'Increment Not Deleted');
                 }
             }
@@ -825,7 +826,7 @@
             type: "POST",
             contentType: "application/json",
             dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
+            url: hostname + "common/get_emp_info_by_id/" + numbersArray[0] + "/" + unit_id,
             success: function(d) {
                 console.log(d);
                 $("#loader").hide();
@@ -846,6 +847,7 @@
             }
         })
     }
+
     function get_emp_info_increment() {
 
         var checkboxes = document.getElementsByName('emp_id[]');
@@ -887,7 +889,7 @@
             type: "POST",
             contentType: "application/json",
             dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
+            url: hostname + "common/get_emp_info_by_id/" + numbersArray[0] + "/" + unit_id,
             success: function(d) {
                 console.log(d);
                 $("#loader").hide();
@@ -908,6 +910,7 @@
             }
         })
     }
+
     function get_emp_info_line() {
 
         var checkboxes = document.getElementsByName('emp_id[]');
@@ -949,7 +952,7 @@
             type: "POST",
             contentType: "application/json",
             dataType: "json",
-            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
+            url: hostname + "common/get_emp_info_by_id/" + numbersArray[0] + "/" + unit_id,
             success: function(d) {
                 console.log(d);
                 $("#loader").hide();
@@ -1270,7 +1273,7 @@
             $("#promotion_entry").hide();
             $("#line_change").hide();
             get_emp_info_increment();
-        } else if(sectionId == 'promotion') {
+        } else if (sectionId == 'promotion') {
             $("#increment_entry").hide();
             $("#line_change").hide();
             get_emp_info_promotion();
@@ -1284,7 +1287,3 @@
     // Initial hiding of all sections
     $("#increment_entry, #promotion_entry, #line_change").hide();
 </script>
-
-
-
-

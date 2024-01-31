@@ -17,7 +17,7 @@
             <?php $success = $this->session->flashdata('success');
 	        if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
 	         $error = $this->session->flashdata('error');
 	         if ($error) { ?>
             <div class="alert alert-failuer"><?php echo $error; ?></div>
@@ -34,13 +34,13 @@
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
-                        <?php 
+                        <?php
 							foreach ($dept as $row) {
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
 								$select_data='';
-								}  
+								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
 							}
@@ -53,13 +53,12 @@
                 <div class="form-group">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
-                        <?php if (!empty($user_data->unit_name)) { 
+                        <?php if (!empty($user_data->unit_name)) {
 										$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
                         <option value=''>Select Department</option>
                         <?php foreach ($dpts->result() as $key => $val) { ?>
                         <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
                         <?php } } ?>
-                        <option value=''>Select Department</option>
                     </select>
                 </div>
             </div>
@@ -117,7 +116,7 @@
             .input-group-btn .btn {
                 padding: 8px 10px !important;
             }
-        </style> 
+        </style>
 
         <!-- Button section -->
         <div class="row nav_head">
@@ -146,7 +145,7 @@
                     <th class="" style="background:#0177bcc2;color:white">Id</th>
                     <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                 </tr>
-                <?php if (!empty($employees)) { 
+                <?php if (!empty($employees)) {
 					  		foreach ($employees as $key => $emp) {
 					  	?>
                 <tr id="removeTr">
@@ -360,7 +359,7 @@
         // console.log(data);
           $("#loader").hide();
           if (data == 'success') {
-              showMessage('success', 'Weekend Added Successfully'); 
+              showMessage('success', 'Weekend Added Successfully');
           }else {
               showMessage('error', 'Weekend Not Added');
           }
@@ -403,7 +402,7 @@
         // console.log(data);
           $("#loader").hide();
           if (data == 'success') {
-              showMessage('success', 'Weekend Deleted Successfully'); 
+              showMessage('success', 'Weekend Deleted Successfully');
           }else {
               showMessage('error', 'Weekend Not Deleted');
           }
