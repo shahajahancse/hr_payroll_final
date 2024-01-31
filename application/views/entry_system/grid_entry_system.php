@@ -144,15 +144,13 @@ $unit = $this->common_model->get_unit_id_name();
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Time</label>
-                                    <input class="form-control" id="time" name="time" placeholder="HH:MM:SS" >
+                                    <input class="form-control" id="time" name="time" placeholder="HH:MM:SS">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" top='20px'>
                             <div class="col-md-3">
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button"  value='Save' />
+                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
