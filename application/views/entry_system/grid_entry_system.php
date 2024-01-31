@@ -110,7 +110,7 @@ $unit = $this->common_model->get_unit_id_name();
         </div>
 
         <!-- present absent eot  -->
-        <div class="row nav_head">
+        <?php /* <div class="row nav_head">
             <div class="col-lg-6">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
@@ -121,8 +121,9 @@ $unit = $this->common_model->get_unit_id_name();
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
+        */ ?>
 
-        <!-- present entry  -->
+        <!-- present entry form -->
         <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
@@ -155,7 +156,7 @@ $unit = $this->common_model->get_unit_id_name();
                             </div> -->
                         </div>
                         <div class="raw">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="padding: 10px 5px !important;">
                                 <div class="input-group">
                                     <span class="input-group-btn" style="display: flex; gap: 15px;">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
@@ -171,61 +172,41 @@ $unit = $this->common_model->get_unit_id_name();
             </div>
         </div>
 
-        <!-- eot modify section  -->
+        <style>
+            .hints {
+                color: #436D19;
+                font-weight: bold;
+            }
+        </style>
+        <!-- eot entry form   -->
         <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="eot_modify_form">
                         <div class="raw">
-                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Department</label>
-                                    <select id="line_change_department" class="form-control input-sm line_change_department">
-                                        <option value="">Select Department</option>
-                                        <?php foreach ($departments as $key => $r) { ?>
-                                            <option value="<?= $r->dept_id ?>"><?= $r->dept_name . ' >> ' . $r->unit_name ?></option>
-                                        <?php } ?>
-                                    </select>
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <div class="col-md-6" style="padding: 5px !important">
+                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                        <label class="control-label">Date</label>
+                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding: 5px !important">
+                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                        <label class="control-label">Date</label>
+                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Section</label>
-                                    <select id="line_change_section" class="form-control input-sm line_change_section">
-                                        <option value="">Select Section</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-6" style="padding: 5px !important">
+                                <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
                             </div>
-                            <div class="col-md-6" style="padding-left: 0px!important; padding-right: 5px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Line</label>
-                                    <select id="line_change_line" class="form-control input-sm line_change_line">
-                                        <option value="">Select Line</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
-                                <div class="form-group">
-                                    <label class="control-label">Designation</label>
-                                    <select id="line_change_desig" class="form-control input-sm line_change_desig">
-                                        <option value="">Select Designation</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" top='20px'>
                             <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="line_date" placeholder="select date">
-                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
-                                        <input class="btn btn-primary" onclick='line_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-danger" onclick="line_delete(event)" type="button" value="Delete">
+                                <div class="input-group pull-right">
+                                    <span class="input-group-btn pull-right" style="display: flex;">
+                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
                                     </span>
-                                </div><!-- /input-group -->
+                                </div>
                             </div>
                         </div>
                     </form>
