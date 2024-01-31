@@ -1169,7 +1169,7 @@
                 type: "POST",
                 url: hostname + "common/ajax_designation_by_line_id/" + id,
                 success: function(func_data) {
-                    $('.desig').append("<option value=''>-- Select District --</option>");
+                    $('.desig').append("<option value=''>-- Select Designation --</option>");
                     $.each(func_data, function(id, name) {
                         var opt = $('<option />');
                         opt.val(id);
@@ -1192,7 +1192,7 @@
                 type: "POST",
                 url: hostname + "common/ajax_line_by_sec_id/" + id,
                 success: function(func_data) {
-                    $('.line').append("<option value=''>-- Select District --</option>");
+                    $('.line').append("<option value=''>-- Select Line --</option>");
                     $.each(func_data, function(id, name) {
                         var opt = $('<option />');
                         opt.val(id);
@@ -1205,7 +1205,7 @@
             grid_emp_list();
         });
 
-        //section dropdown
+        //Section dropdown
         $('#dept').change(function() {
             $('.section').addClass('form-control input-sm');
             $(".section > option").remove();
@@ -1216,7 +1216,7 @@
                 type: "POST",
                 url: hostname + "common/ajax_section_by_dept_id/" + id,
                 success: function(func_data) {
-                    $('.section').append("<option value=''>-- Select District --</option>");
+                    $('.section').append("<option value=''>-- Select Section --</option>");
                     $.each(func_data, function(id, name) {
                         var opt = $('<option />');
                         opt.val(id);
