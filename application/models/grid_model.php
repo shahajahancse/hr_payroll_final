@@ -1383,9 +1383,6 @@ class Grid_model extends CI_Model{
 		foreach($query->result() as $rows){
 			$emp_id = $rows->emp_id;
 			$emp_shift = $rows->shift_name;
-			
-			
-			
 			$data["emp_id"][] 		= $rows->emp_id;
 			$data["proxi_id"][] 	= $rows->proxi_id;
 			$data["emp_name"][] 	= $rows->emp_full_name;
@@ -1397,12 +1394,9 @@ class Grid_model extends CI_Model{
 			$data["emp_shift"][] 	= $emp_shift;
 			$data["status"][] 		= $status;
 			$data["mobile"][] 		= $rows->mobile;
-			
 			$limit_days = $this->common_model->get_setup_attributes(9);
 			$emp_num_rows = $this->attendance_check_for_absent($emp_id,$status,$limit_days,$day);
 			$data["cont_absent"][] 		= $emp_num_rows;
-			
-			
 		}
 
 		dd($data);
@@ -1418,38 +1412,60 @@ class Grid_model extends CI_Model{
 	}
 
 
-	function attendance_check_for_absent($emp_id, $start_date){
-		// dd($emp_ids);
+	function attendance_check_for_absent($emp_id, $start_date,$letter_status){
+
+		if($letter_status == 1){
+			$day = 10;
+		}else if($letter_status == 2){
+			$day = 20;
+		}else{
+			$day = 30;
+		}
 		$count = 0;
 		$no_imp = 0;
-
-		for ($i = 1; $i <= 31; $i++) {
+		$first_absent_date = 0;
+		
+		for ($i = 1; $i <= $day; $i++) {
 			if ($i == 1) {
 				$get_date = $start_date;
 			} else {
 				$get_date = date('Y-m-d', strtotime('-1 day', strtotime($get_date)));
 			}
-
-				$id = $this->db->select('id')->where('emp_id', $emp_id)->get('pr_emp_com_info')->row()->id;
-				$this->db->select("*");
-				$this->db->where("emp_id", $id);
-				$this->db->where("shift_log_date", $get_date); 
-				$query = $this->db->get("pr_emp_shift_log");
-
-				foreach ($query->result() as $rows => $value) {
-					if ($value->present_status == "A") {
-						$count++;
-					} elseif ($value->present_status == "W" || $value->present_status == "H") {
-						$no_imp = 0;
-					}
-					else{
-						return $count;
-					}
+			
+			$id = $this->db->select('id')->where('emp_id', $emp_id)->get('pr_emp_com_info')->row()->id;
+			// dd($id);
+			$this->db->select("*");
+			$this->db->where("emp_id", $id);
+			$this->db->where("shift_log_date", $get_date); 
+			$value = $this->db->get("pr_emp_shift_log")->row();
+			if(!empty($value)){
+				if ($value->present_status == "A") {
+					$count++;
+					if ($count === 1) {
+                    $first_absent_date = $get_date;
+                }
+				} else if ($value->present_status == "W" || $value->present_status == "H") {
+					$day++;
 				}
-	
+			}else{
+				$count++;
+			}
+
+			// foreach ($query->result() as $rows => $value) {
+			// 	if ($value->present_status == "A") {
+			// 		$count++;
+			// 	} elseif ($value->present_status == "W" || $value->present_status == "H") {
+			// 		// $no_imp = 0;
+			// 		$day++;
+			// 	}
+			// 	else{
+			// 		return $count;
+			// 	}
+			// }
 
 		}
-
+		// dd($count);
+		dd($first_absent_date);
 		return $count;
 	}
 
@@ -1770,7 +1786,7 @@ class Grid_model extends CI_Model{
 		$select_column 	= "date_$day";
 		$status_absent = 'A';
 		
-		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, pr_designation.desig_name, pr_section.sec_name,pr_line_num.line_name,pr_attn_monthly.$select_column,pr_emp_shift_log.ot,pr_emp_shift_log.eot,pr_emp_shift_log.modify_eot,pr_emp_shift_log.deduction_hour");
+		$this->db->select("pr_emp_com_info.*,pr_emp_per_info.emp_id, pr_emp_per_info.name_en, pr_designation.desig_name, pr_section.sec_name_en,pr_line_num.line_name,pr_attn_monthly.$select_column,pr_emp_shift_log.ot,pr_emp_shift_log.eot,pr_emp_shift_log.modify_eot,pr_emp_shift_log.deduction_hour");
 	
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -1972,7 +1988,7 @@ class Grid_model extends CI_Model{
 		$i = 0;
 		foreach($days as $day)
 		{
-			$holiday_check = $this->db->where('emp_id',$emp_id)->where('holiday_date',$day)->get('attn_holiday')->num_rows();
+			$holiday_check = $this->db->where('emp_id',$emp_id)->where('holiday_date',$day)->get('pr_holiday')->num_rows();
 			if($holiday_check > 0)
 			{
 				continue;
@@ -2155,7 +2171,7 @@ class Grid_model extends CI_Model{
             }
             $schedule                    = $this->schedule_check($emp_shift);
             //print_r($schedule);
-            $shift_id                    = $schedule[0]["shift_id"];
+            $id                    = $schedule[0]["id"];
             $out_start                   = $schedule[0]["out_start"];
             $ot_start                    = $schedule[0]["ot_start"];
             $ot_minute                   = $schedule[0]["ot_minute_to_one_hour"];
@@ -2354,7 +2370,7 @@ class Grid_model extends CI_Model{
                     	}
 						else if($out_time < '12:59:59 AM')
 						{
-							if($shift_id==17){
+							if($id==17){
 								return $out_time = $this->time_am_pm_format($out_time);
 							}else
 							{
@@ -3004,7 +3020,7 @@ class Grid_model extends CI_Model{
 
 	function emp_shift_check($emp_id, $att_date)
 	{
-		$this->db->select("shift_id, shift_duty");
+		$this->db->select("id, schedule_id");
 		$this->db->from("pr_emp_shift_log");
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("shift_log_date", $att_date);
@@ -3014,12 +3030,12 @@ class Grid_model extends CI_Model{
 		{
 			foreach($query->result() as $row)
 			{
-				$shift_duty = $row->shift_duty;
+				$schedule_id = $row->schedule_id;
 			}
 
 			$this->db->select("sh_type");
 			$this->db->from("pr_emp_shift_schedule");
-			$this->db->where("shift_id", $shift_duty);
+			$this->db->where("id", $schedule_id);
 			$query1 = $this->db->get();
 			$row = $query1->row();
 			return $row->sh_type;
@@ -3032,7 +3048,7 @@ class Grid_model extends CI_Model{
 			$this->db->from("pr_emp_com_info");
 			$this->db->where("pr_emp_com_info.emp_id", $emp_id);
 			$this->db->where("pr_emp_shift.id = pr_emp_com_info.emp_shift");
-			$this->db->where("pr_emp_shift.shift_duty = pr_emp_shift_schedule.shift_id");
+			$this->db->where("pr_emp_shift.schedule_id = pr_emp_shift_schedule.id");
 			$query = $this->db->get();
 			//echo $this->db->last_query();
 			$row = $query->row();
@@ -4118,13 +4134,27 @@ class Grid_model extends CI_Model{
 	}
 
 	function grid_letter1_report($grid_emp_id, $firstdate){
-		$newDate = date("Y-m-d", strtotime($firstdate));
+		$current_date = date("Y-m-d", strtotime($firstdate));
+		$before_date= date("Y-m-d", strtotime('-10 days'.$firstdate));
+		$letter_status = 1;
 		$data = array();
 		foreach ($grid_emp_id as $key => $id) {
-			$get_absent = $this->attendance_check_for_absent($id,$newDate);
-				$this->db->select('
+			$get_absent = $this->attendance_check_for_absent($id,$current_date,$letter_status);
+				if($letter_status == 1){
+					$day = 10;
+				}else if($letter_status == 2){
+					$day = 20;
+				}else{
+					$day = 30;
+				}
+
+			if(!$get_absent >=$day){
+				continue;
+			}
+			$this->db->select('
 				pr_emp_per_info.*,
 				pr_emp_com_info.emp_join_date, 
+				pr_emp_com_info.id as id_emp, 
 				emp_designation.desig_name, 
 				emp_designation.desig_bangla,
 				emp_depertment.dept_name,
@@ -4141,7 +4171,6 @@ class Grid_model extends CI_Model{
 				pre_post.name_bn as post_bn,
 				pr_emp_com_info.emp_sal_gra_id as grade,
 				pr_emp_com_info.com_gross_sal as salary,
-				pr_emp_left_history.left_date
 			');
 			$this->db->from('pr_emp_per_info');
 			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -4155,21 +4184,23 @@ class Grid_model extends CI_Model{
 			$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
 			$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
 			$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
-			$this->db->join('pr_emp_left_history','pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
+			// $this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id');
+			// $this->db->where( 'pr_emp_shift_log.shift_log_date BETWEEN "'.$before_date.'" AND "'.$current_date.'"');
+			// $this->db->join('pr_emp_left_history','pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$this->db->where('pr_emp_left_history.left_date <=', $newDate);
+			// $this->db->where('pr_emp_left_history.left_date <=', $current_date);
 			$this->db->order_by("pr_emp_com_info.emp_id");
 			$query = $this->db->get();
+			dd($query->row());
 			if($query->num_rows() != 0){
 				$data[] = $query->row();		
 			}
-			
 		}
-			if(!empty($data)){
-				return $data;
-			}else{
-				return "Not Found Data";
-			}
+		if(!empty($data)){
+			return $data;
+		}else{
+			return "Not Found Data";
+		}
 	}
 
 	function get_absent_start_date($emp_id,$firstdate,$limit){
@@ -4728,7 +4759,14 @@ class Grid_model extends CI_Model{
 			//echo "$emp_id<br>";
 
 			$this->db->distinct();
-			$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name,emp_depertment.dept_name,emp_section.sec_name_en,emp_line_num.line_name_en,pr_emp_com_info.emp_join_date,pr_id_proxi.proxi_id');
+			$this->db->select('pr_emp_per_info.name_en,
+							   emp_designation.desig_name,
+							   emp_depertment.dept_name,
+							   emp_section.sec_name_en,
+							   emp_line_num.line_name_en,
+							   pr_emp_com_info.emp_join_date,
+							   pr_id_proxi.proxi_id
+							');
 			$this->db->from('pr_emp_com_info');
 
 			$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
@@ -4748,13 +4786,13 @@ class Grid_model extends CI_Model{
 				//echo $row->sec_name_en;
 				$data["emp_id"][] = $emp_id;
 
-				$data["emp_full_name"][] = $row->emp_full_name;
+				$data["emp_full_name"][] = $row->name_en;
 
 				$data["proxi_id"][] = $row->proxi_id;
 
 				$data["sec_name_en"][] = $row->sec_name_en;
 
-				$data["line_name"][] = $row->line_name;
+				$data["line_name_en"][] = $row->line_name_en;
 
 				$data["desig_name"][] = $row->desig_name;
 
@@ -4815,29 +4853,31 @@ class Grid_model extends CI_Model{
 				{
 					$holiday = $this->check_holiday($emp_id, $day);
 				}
-				$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot, pr_emp_shift_log.eot,pr_emp_shift_log.late_status');
+				$id = $this->db->select('id')->where('emp_id',$emp_id)->get('pr_emp_com_info')->row()->id;
+				// dd();
+				$this->db->select('pr_emp_shift_log.in_time , 
+								   pr_emp_shift_log.out_time, 
+								   pr_emp_shift_log.shift_log_date, 
+								   pr_emp_shift_log.ot, 
+								   pr_emp_shift_log.eot,
+								   pr_emp_shift_log.late_status');
 				$this->db->from('pr_emp_shift_log');
-				$this->db->where('pr_emp_shift_log.emp_id',$emp_id);
+				$this->db->where('pr_emp_shift_log.emp_id',$id);
 				$this->db->where("pr_emp_shift_log.shift_log_date", $day);
 				$this->db->order_by("pr_emp_shift_log.shift_log_date");
 				$this->db->limit(1);
 				$query = $this->db->get();
 				//echo $this->db->last_query();
-				foreach($query->result() as $row)
-				{
-
-
-
-					if(in_array($row->shift_log_date,$leave))
-					{
+				foreach($query->result() as $row){
+					// dd($row);
+					if(in_array($row->shift_log_date,$leave)){
 						$leave_type = $this->get_leave_type($row->shift_log_date,$emp_id);
 						$att_status_count = "Leave";
 						$att_status = $leave_type;
 						$row->in_time = "00:00:00";
 						$row->out_time = "00:00:00";
 					}
-					elseif(in_array($row->shift_log_date,$holiday))
-					{
+					elseif(in_array($row->shift_log_date,$holiday)){
 						$att_status = "Holiday";
 						$att_status_count = "Holiday";
 						$row->in_time = "00:00:00";
@@ -4845,8 +4885,7 @@ class Grid_model extends CI_Model{
 						$row->ot_hour ="";
 
 					}
-					elseif(in_array($row->shift_log_date,$weekend))
-					{
+					elseif(in_array($row->shift_log_date,$weekend)){
 						/*echo $sec_name_en = $this->get_sec_name_en($emp_id);
 
 						if($sec_name_en=='Security'){
@@ -4883,7 +4922,8 @@ class Grid_model extends CI_Model{
 
 					if($att_status !="Leave" and $att_status !="Holiday" and $att_status !="Weekend" and $att_status !="A" )
 					{
-						$table = "temp_$emp_id";
+						$yera_month  = date('Y_m',strtotime($grid_firstdate));
+						$table = "att_$yera_month";
 						$lunch_out_start = "12:55:00";
 						$lunch_out_end = "15:00:00";
 						$lunch_out = $this->time_check_in($day, $lunch_out_start , $lunch_out_end , $table);
@@ -4926,7 +4966,7 @@ class Grid_model extends CI_Model{
 					$emp_shift = $this->emp_shift_check($emp_id, $day);
 
 					$schedule = $this->schedule_check($emp_shift);
-					//print_r($schedule);
+					// dd($schedule);
 					$start_time		=  $schedule[0]["in_start"];
 					$late_time 		=  $schedule[0]["late_start"];
 					$end_time   	=  $schedule[0]["in_end"];
@@ -4973,12 +5013,12 @@ class Grid_model extends CI_Model{
 						$out_time = $this->get_formated_out_time($emp_id, $out_time, $emp_shift,$shift_log_date);
 					  }
 					}
-					else
-					{
+					else{
 						$out_time = "00:00:00";
 					}
+					// dd($row->ot_hour);
 
-					$total_ot_hour = $row->ot_hour; // + $row->extra_ot_hour; , This is for extra ot hour add to Job card.
+					$total_ot_hour = $row->ot; // + $row->extra_ot_hour; , This is for extra ot hour add to Job card.
 
 					$data[$emp_id]["shift_log_date"][] 	= $shift_log_date;
 					$data[$emp_id]["in_time"][] 		= $in_time;
@@ -4989,21 +5029,21 @@ class Grid_model extends CI_Model{
 					$data[$emp_id]["lunch_out"][] 		= $lunch_out;
 					$data[$emp_id]["lunch_in"][] 		= $lunch_in;
 					$data[$emp_id]["remark"][] 			= $remark;
-
+					// dd($
 					//echo "$emp_id=>$row->shift_log_date=>$row->in_time=>$row->out_time=>$row->ot_hour==>$att_status<==Lunch OUT=>$lunch_out==Lunch IN=>$lunch_in==Remark=>$remark<br>";
 
 
 				}
 			}
 		}
-		//print_r($data);
+		// dd($data);
 		return $data;
 
 	}
 	function check_holiday($id, $att_date)
 	{
 		$this->db->select("holiday_date");
-		$this->db->from("attn_holiday");
+		$this->db->from("pr_holiday");
 		$this->db->where("emp_id", $id);
 		$this->db->where("holiday_date", $att_date);
 		$query = $this->db->get();
@@ -5098,7 +5138,7 @@ class Grid_model extends CI_Model{
 	{
 		$this->db->select("holiday_date");
 		$this->db->where("holiday_date BETWEEN '$sStartDate' AND '$sEndDate'");
-		$query = $this->db->get("attn_holiday");
+		$query = $this->db->get("pr_holiday");
 		$holiday = array();
 		foreach ($query->result() as $row)
 		{
@@ -6109,7 +6149,7 @@ class Grid_model extends CI_Model{
 			 $this->db->select("*");
 			 $this->db->where('holiday_date',$year_month);
 			 $this->db->where('emp_id',$holiday_empid);
-			 $query = $this->db->get("attn_holiday");
+			 $query = $this->db->get("pr_holiday");
 			 $num_row = $query->num_rows();
 			 if($num_row == 0 )
 			 {
@@ -6121,7 +6161,7 @@ class Grid_model extends CI_Model{
 				'replace_val'	=> $holiday_val
 				);
 				//print_r($data);
-				$this->db->insert('attn_holiday', $data) ;
+				$this->db->insert('pr_holiday', $data) ;
 
 			 }
 		}
@@ -6140,7 +6180,7 @@ class Grid_model extends CI_Model{
 			 $year_month = $grid_firstdate ;
 			 $this->db->where('holiday_date',$year_month);
 			 $this->db->where('emp_id',$holiday_empid);
-			 $query = $this->db->delete("attn_holiday");
+			 $query = $this->db->delete("pr_holiday");
 
 		}
 		return "Delete Successfully.";
@@ -9645,7 +9685,7 @@ function grid_emp_job_application($grid_emp_id){
 	function get_holiday_allowance_rules($desig_id)
 	{
 		$this->db->select('rules_id');
-		$this->db->from('attn_holiday_allowance_level');
+		$this->db->from('pr_holiday_allowance_level');
 		$this->db->where("desig_id", $desig_id);
 		$query = $this->db->get();
 		if($query->num_rows()>0)
@@ -9919,7 +9959,7 @@ function grid_emp_job_application($grid_emp_id){
 
 			if($holiday_allowance_rules['msg'] == "OK")
 			{
-					$holiday_allowance_rate = $this->db->where("rules_id",$holiday_allowance_rules['rules_id'])->get('attn_holiday_allowance_rules')->row()->allowance_amount;
+					$holiday_allowance_rate = $this->db->where("rules_id",$holiday_allowance_rules['rules_id'])->get('pr_holiday_allowance_rules')->row()->allowance_amount;
 					$holiday_allowance = $holiday_allowance_rate;
 			}
 			else
@@ -10389,10 +10429,10 @@ function grid_emp_job_application($grid_emp_id){
 		return $leave_type;
    }
 
-    function get_shift_out_time($shift_id)
+    function get_shift_out_time($id)
 	{
 		$this->db->select('*');
-		$this->db->where("shift_id",$shift_id);
+		$this->db->where("id",$id);
 		$query = $this->db->get('pr_emp_shift_schedule');
 		$rows = $query->row();
 		$end_time = $rows->ot_start;
@@ -10429,11 +10469,11 @@ function grid_emp_job_application($grid_emp_id){
 
 			foreach ($query1->result() as $row)
 			{
-				$shift_id = $row->shift_id;
+				$id = $row->id;
 				$out_time = $row->out_time;
 				//$out_time = "21:01:26";
 				//echo "--------".$out_time;
-				$shift_out_time = $this->get_shift_out_time($shift_id);
+				$shift_out_time = $this->get_shift_out_time($id);
 			}
 
 
@@ -10787,7 +10827,7 @@ function grid_emp_job_application($grid_emp_id){
 		$where="holiday_date  BETWEEN '$from' and '$to'" ;
 		$this->db->select('*');
 		$this->db->where($where);
-		$query=$this->db->get('attn_holiday');
+		$query=$this->db->get('pr_holiday');
 
 		$num_holyday = $query->num_rows();
 		return $num_holyday;

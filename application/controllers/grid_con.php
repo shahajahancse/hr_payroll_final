@@ -1471,8 +1471,7 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_job_card()
-	{
+	function grid_job_card(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
 
@@ -1485,12 +1484,10 @@ class Grid_con extends CI_Controller {
 		$query['grid_seconddate'] = $grid_seconddate;
 		$query['unit_id'] = $this->input->post('unit_id');
 
-		if(is_string($query['values']))
-		{
+		if(is_string($query['values'])){
 			echo $query['values'];
 		}
-		else
-		{
+		else{
 			$this->load->view('job_card',$query);
 		}
 	}

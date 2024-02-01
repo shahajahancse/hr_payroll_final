@@ -1367,4 +1367,21 @@ class Entry_system_con extends CI_Controller
         return true;
 
     }
+
+
+
+
+
+    public function letter_notification(){
+
+        $this->data['title'] = 'Increment / Promotion';
+        // $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'letter_notification';
+        $this->load->view('layout/template', $this->data);
+       
+    }
+
+
+
+
 }

@@ -27,11 +27,11 @@
       </div>
     </div>
     <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-      <p class="text-center h5">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
+      <p class="text-center h6">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
     </div>
     <div class="d-flex">
-      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু ১৫৯১/১/২০২৪-এ</div>
-      <div class="col-md-6 text-right">তারিখঃ ২৫/০১/২০২৪</div>
+      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</div>
+      <div class="col-md-6 text-right">তারিখঃ <span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date. '+10 days'))?></span> ইং</div>
     </div>
 
     <div>
@@ -43,14 +43,14 @@
           <p class="mt-3"><b>অফিস বিবরনীঃ</b></p>
           <p>নামঃ <?php echo $value->name_bn?></p>
           <p>পদবীঃ <?php echo $value->desig_bangla?></p>
-          <p>কার্ডঃ <?php echo $value->emp_id?></p>
+          <p>কার্ডঃ <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?></span></p>
           <p>সেকশনঃ <?php echo $value->sec_name_bn?></p>
           <p>লাইনঃ <?php echo $value->line_name_bn?></p>
-          <p>যোগদানঃ <?php echo date('d/m/Y',strtotime($value->emp_join_date))?> ইং</p>
+          <p>যোগদানঃ <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo date('d/m/Y',strtotime($value->emp_join_date))?></span> ইং</p>
         </div>
         <div class="col-md-4 border" style="line-height: 10px;">
           <p class="mt-3"><b>বর্তমান ঠিকানাঃ</b></p>
-          <p>হোল্ডিং নংঃ <?php echo $value->holding_num?></p>
+          <p>হোল্ডিং নংঃ <span style="font-family: SutonnyMJ;font-size:19px">  <?php echo $value->holding_num?></sapn></p>
           <p>গ্রামঃ <?php echo $value->pre_village_bn?></p>
           <p>ডাকঘরঃ <?php echo $value->post_name_bn?></p>
           <p>থানাঃ <?php echo $value->upa_name_bn?></p>
@@ -71,7 +71,7 @@
     <div class="ml-3 mt-5">
       <p class="text-justify">
         <span>জনাব/জনাবা,</span><br> 
-        আপনি গত <span style=""><?php echo date('d/m/Y',strtotime($value->left_date))?></span> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। আপনার এরূপ
+        আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। আপনার এরূপ
         অনুপস্থিতি বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭(৩ক) ধারার আওতায় পড়ে। সুতরাং অত্র পত্র প্রাপ্তির ১০ (দশ) দিনের মধ্যে আপনার
         অনুপস্থিতির কারন ব্যাখ্যা সহ কাজে যোগদানের জন্য আপনাকে নির্দেশ দেওয়া হলো।
         আপনার লিখিত জবাব উক্ত সময়ের মধ্যে নিম্ন স্বাক্ষরকারীর নিকট অবশ্যই পৌছাতে হবে। অন্যথায় কর্তৃপক্ষ আপনার বিরুদ্ধে প্রয়োজনীয়
