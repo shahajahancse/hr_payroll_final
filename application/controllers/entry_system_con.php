@@ -8,6 +8,7 @@ class Entry_system_con extends CI_Controller
 
         $this->load->model('leave_model');
         $this->load->model('common_model');
+        $this->load->model('attn_process_model');
         $this->load->helper('url');
 
         if ($this->session->userdata('logged_in') == false) {
