@@ -4,7 +4,7 @@
 	/**
 	 * Index Page for this controller.
 	 * This controller used to only manual scripts command run
-	 * So not used/create any method this contrller to main app development 
+	 * So not used/create any method this contrller to main app development
 	 */
 
 class Command extends CI_Controller {
@@ -16,14 +16,35 @@ class Command extends CI_Controller {
 		ini_set('memory_limit', -1);
 		ini_set('max_execution_time', 0);
 	    set_time_limit(0);
-		
+
 		/* Standard Libraries */
 		// $this->load->library('grocery_CRUD');
 		// $this->load->model('acl_model');
 		$this->load->dbforge();
 	}
 
-	// Delete pr_emp_shift_log table data 2013-10-30 to 2021-10-01 
+	function dpt_sec_lin_pudate()
+	{
+		$file_name = "import/aj.txt";
+		if (file_exists($file_name)) {
+
+			$lines = file($file_name);
+			foreach (array_values($lines)  as $line) {
+				list($id, $dpt, $sec, $lin) = explode("\t", trim($line));
+				$data = array(
+					'emp_dept_id' 	=> trim($dpt),
+					'emp_sec_id' 	=> trim($sec),
+					'emp_line_id' 	=> trim($lin),
+				);
+				$this->db->where('emp_id', $id)->update('pr_emp_com_info', $data);
+				echo "<br> Updated Id = " . $id;
+			}
+			echo "Updated successfully done";
+		}
+		exit("wait");
+	}
+
+	// Delete pr_emp_shift_log table data 2013-10-30 to 2021-10-01
 	public function shift_log()
 	{
 		echo "hello, ci";
@@ -50,7 +71,7 @@ class Command extends CI_Controller {
 		// dd("hello, ci");
 		echo "hello, ci";
 		$this->db->select('
-				pay_emp_stop_salary.id as st_id,	
+				pay_emp_stop_salary.id as st_id,
 				pr_emp_com_info.id,
 				pr_emp_com_info.emp_id,
 			');
@@ -64,7 +85,7 @@ class Command extends CI_Controller {
 
 		foreach ($results as $key => $row) {
 			$data = array(
-				'emp_id' 	 => $row->id,	
+				'emp_id' 	 => $row->id,
 			);
 
 			$this->db->where('emp_id', $row->emp_id)->update('pay_emp_stop_salary', $data);
@@ -96,7 +117,7 @@ class Command extends CI_Controller {
 
 		foreach ($results as $key => $row) {
 			$data = array(
-				'prev_emp_id' 	 => $row->id,	
+				'prev_emp_id' 	 => $row->id,
 			);
 
 			$this->db->where('prev_emp_id', $row->prev_emp_id)->update('pr_incre_prom_pun', $data);
@@ -114,8 +135,8 @@ class Command extends CI_Controller {
 		dd("hello, ci");
 		echo "hello, ci";
 		$this->db->select('
-				pr_emp_left_history.left_id,	
-				pr_emp_left_history.unit_id,	
+				pr_emp_left_history.left_id,
+				pr_emp_left_history.unit_id,
 				pr_emp_left_history.emp_id,
 				pr_emp_com_info.id,
 			');
@@ -129,7 +150,7 @@ class Command extends CI_Controller {
 		foreach ($results as $key => $row) {
 
 			$data = array(
-				'emp_id' 	 => $row->id,	
+				'emp_id' 	 => $row->id,
 			);
 
 
@@ -148,8 +169,8 @@ class Command extends CI_Controller {
 		// dd("hello, ci");
 		echo "hello, ci";
 		$this->db->select('
-				pr_emp_resign_history.resign_id,	
-				pr_emp_resign_history.unit_id,	
+				pr_emp_resign_history.resign_id,
+				pr_emp_resign_history.unit_id,
 				pr_emp_resign_history.emp_id,
 				pr_emp_com_info.id,
 			');
@@ -163,7 +184,7 @@ class Command extends CI_Controller {
 		foreach ($results as $key => $row) {
 
 			$data = array(
-				'emp_id' 	 => $row->id,	
+				'emp_id' 	 => $row->id,
 			);
 
 
@@ -182,37 +203,37 @@ class Command extends CI_Controller {
 		dd("hello, ci");
 		echo "hello, ci";
 		$this->db->select('
-				id,	
-				unit_id,	
-				emp_id,		
-				gross_sal,	
+				id,
+				unit_id,
+				emp_id,
+				gross_sal,
 				salary_structure,
 
-				basic_sal,	
-				house_r,	
-				medical_a,	
-				food_allow,	
+				basic_sal,
+				house_r,
+				medical_a,
+				food_allow,
 				trans_allow,
 
 
-				total_days,	
-				num_of_workday,	
-				att_days,	
-				absent_days,	
-				before_after_absent,	
-				c_l,	
-				s_l,	
-				e_l,	
-				m_l,	
-				wp,	
-				total_leave,	
-				total_pay_leave,	
-				holiday,	
-				weekend,	
-				total_holiday,	
-				pay_days,	
+				total_days,
+				num_of_workday,
+				att_days,
+				absent_days,
+				before_after_absent,
+				c_l,
+				s_l,
+				e_l,
+				m_l,
+				wp,
+				total_leave,
+				total_pay_leave,
+				holiday,
+				weekend,
+				total_holiday,
+				pay_days,
 
-				day_info,	
+				day_info,
 				salary_month,
 
 			');
@@ -222,18 +243,18 @@ class Command extends CI_Controller {
 
 		foreach ($results as $key => $row) {
 			$obj = array(
-				'basic_sal' => $row->basic_sal,	
-				'house_r' => $row->house_r,	
-				'medical_a' => $row->medical_a,	
-				'food_allow' => $row->food_allow,	
+				'basic_sal' => $row->basic_sal,
+				'house_r' => $row->house_r,
+				'medical_a' => $row->medical_a,
+				'food_allow' => $row->food_allow,
 				'trans_allow' => $row->trans_allow,
 			);
 
 			$obj1 = array(
-				'total_days' 	 => $row->total_days,	
-				'num_of_workday' => $row->num_of_workday,	
-				'att_days' 		 => $row->att_days,	
-				'absent_days' 	 => $row->absent_days,	
+				'total_days' 	 => $row->total_days,
+				'num_of_workday' => $row->num_of_workday,
+				'att_days' 		 => $row->att_days,
+				'absent_days' 	 => $row->absent_days,
 				'ba_absent' 	 => $row->before_after_absent,
 				'c_l' 		 	 => $row->c_l,
 				's_l' 		 	 => $row->s_l,
@@ -249,8 +270,8 @@ class Command extends CI_Controller {
 			);
 
 			// dd($data);
-			$sdate = date('Y-m-01', strtotime($row->salary_month)); 
-			$edate = date('Y-m-t', strtotime($row->salary_month)); 
+			$sdate = date('Y-m-01', strtotime($row->salary_month));
+			$edate = date('Y-m-t', strtotime($row->salary_month));
 			$this->db->select('
 				    shift_log_date,
 		            in_time,
@@ -279,7 +300,7 @@ class Command extends CI_Controller {
 				'day_info'			=> json_encode($obj1),
 				'log_info'			=> json_encode($obj2),
 			);
-			
+
 			// dd($this->db->last_query());
 
 
@@ -350,7 +371,7 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	//  per_info address add gender, religion, marital_status, blood group  
+	//  per_info address add gender, religion, marital_status, blood group
 	// nor used
 	public function ot_eot()
 	{
@@ -440,7 +461,7 @@ class Command extends CI_Controller {
 			} else {
 				$gen = 'Common';
 			}
-			
+
 			if ($rs->emp_blood == 1) {
 				$blo = 'A+';
 			} elseif ($rs->emp_blood == 2) {
@@ -460,7 +481,7 @@ class Command extends CI_Controller {
 			} else {
 				$blo = 'None';
 			}
-			
+
 
 			$data = array(
 				'religion'			=> $rel,
@@ -631,10 +652,10 @@ class Command extends CI_Controller {
 	{
 		dd('not allow');
 			$this->db->select('
-				pr_emp_com_info.emp_id, 
+				pr_emp_com_info.emp_id,
 				pr_emp_skill2.emp_com_name mobile,
 				pr_emp_skill2.emp_skill,
-				pr_emp_skill2.emp_yr_skill 	
+				pr_emp_skill2.emp_yr_skill
 			');
 
 		$this->db->from('pr_emp_com_info');
@@ -642,7 +663,7 @@ class Command extends CI_Controller {
 		$this->db->where('pr_emp_com_info.emp_id = pr_emp_skill2.emp_id');
 		$this->db->where('pr_emp_com_info.unit_id', 4);
 		$this->db->group_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();	
+		$query = $this->db->get();
 
 		foreach ($query->result() as $key => $row) {
 			$this->db->where('emp_id', $row->emp_id)->delete('pr_emp_skill');
