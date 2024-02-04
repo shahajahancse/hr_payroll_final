@@ -201,7 +201,7 @@ $unit = $this->common_model->get_unit_id_name();
                             <div class="col-md-7" style="padding: 5px !important; display:flex; gap: 14px">
                                 <div class="col-md-3" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
-                                        <label class="control-label">Date</label>
+                                        <label class="control-label">EOT</label>
                                         <input class="form-control" id="eot" name="eot">
                                     </div>
                                 </div>
