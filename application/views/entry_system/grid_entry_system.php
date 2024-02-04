@@ -200,12 +200,12 @@ $unit = $this->common_model->get_unit_id_name();
                             </div>
                             <div class="col-md-7" style="padding: 5px !important; display:flex; gap: 14px">
                                 <div class="col-md-3" style="padding: 5px !important">
-                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <div class="form-group" style="padding: 2px 5px !important;">
                                         <label class="control-label">EOT</label>
                                         <input class="form-control" id="eot" name="eot">
                                     </div>
                                 </div>
-                                <div class="col-md-9" style="padding: 5px !important">
+                                <div class="col-md-9" style="padding: 0px !important; margin-top: 25px;">
                                     <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
                                 </div>
                             </div>
