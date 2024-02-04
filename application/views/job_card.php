@@ -277,3 +277,25 @@ for($i = 0; $i<$count;$i++)
 </div>
 </body>
 </html>
+
+
+<!-- Array
+(
+    [emp_id] =>  1000003
+    [emp_full_name] =>  Abdul Motin
+    [proxi_id] => 0013860573
+    [sec_name_en] => Production
+    [line_name_en] =>  Prod. Staff
+    [desig_name] =>Marker Man
+    [emp_join_date] => 01-Jul-96
+    [dept_name] => Production
+	[shift_log_date] => 03-Dec-23
+	[in_time] =>  07:48:52 AM
+	[out_time] => 07:11:27 PM
+	[ot_hour] =>  0
+	[att_status] => P
+	[att_status_count] =>  P
+	[lunch_out] => 01:01:34 PM
+	[lunch_in] => 01:08:33 PM
+
+) -->
