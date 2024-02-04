@@ -23,6 +23,10 @@ class Command extends CI_Controller {
 		$this->load->dbforge();
 	}
 
+	function index() {
+		echo 'test';
+	}
+
 	function dpt_sec_lin_pudate()
 	{
 		$file_name = "import/aj.txt";
