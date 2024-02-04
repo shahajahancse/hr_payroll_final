@@ -182,7 +182,7 @@ $unit = $this->common_model->get_unit_id_name();
         <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="eot_modify_form">
+                    <form method="post" id="eot_modify_form">
                         <div class="raw">
                             <div class="col-md-5" style="padding: 5px !important">
                                 <div class="col-md-6" style="padding: 5px !important">
