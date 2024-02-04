@@ -228,6 +228,7 @@ class Setting_con extends CI_Controller {
 			'name_bn' 	  => $this->input->post('name_bn'),
 			'unit_id' 	  => $this->input->post('unit_id'),
 			'status'  	  => $this->input->post('status'),
+			'serial'  	  => $this->input->post('serial'),
 			'updated_by'  => $this->data['user_data']->id,
 		);
 
