@@ -127,7 +127,7 @@ $unit = $this->common_model->get_unit_id_name();
         <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="present_entry_form">
+                    <form method="post" id="present_entry_form">
                         <div class="raw">
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
@@ -205,7 +205,7 @@ $unit = $this->common_model->get_unit_id_name();
                                         <input class="form-control" id="eot" name="eot">
                                     </div>
                                 </div>
-                                <div class="col-md-9" style="padding: 0px !important; margin-top: 25px;">
+                                <div class="col-md-9" style="padding: 0px !important; margin-top: 30px;">
                                     <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
                                 </div>
                             </div>
