@@ -187,14 +187,14 @@ $unit = $this->common_model->get_unit_id_name();
                             <div class="col-md-5" style="padding: 5px !important">
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
-                                        <label class="control-label">Date</label>
-                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                        <label class="control-label">First Date</label>
+                                        <input class="form-control input-sm" type="date" id="first_date" name="first_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
-                                        <label class="control-label">Date</label>
-                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                        <label class="control-label">Second Date</label>
+                                        <input class="form-control input-sm" type="date" id="second_date" name="second_date">
                                     </div>
                                 </div>
                             </div>
