@@ -209,7 +209,7 @@ $unit = $this->common_model->get_unit_id_name();
                                     <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
                                 </div>
                             </div>
-                            <div class="col-md-3" style="top--15px">
+                            <div class="col-md-3" style="top: -15px">
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
