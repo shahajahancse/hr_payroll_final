@@ -127,7 +127,7 @@ $unit = $this->common_model->get_unit_id_name();
         <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="present_entry_form">
+                    <form method="post" id="present_entry_form">
                         <div class="raw">
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
@@ -147,13 +147,6 @@ $unit = $this->common_model->get_unit_id_name();
                                     <input class="form-control" id="time" name="time" placeholder="hh:mm:ss">
                                 </div>
                             </div>
-                            <!-- <div class="col-md-3">
-                                <div class="input-group pull-right">
-                                    <span class="input-group-btn pull-right" style="display: flex;">
-                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
-                                    </span>
-                                </div>
-                            </div> -->
                         </div>
                         <div class="raw">
                             <div class="col-md-12" style="padding: 10px 5px !important;">
@@ -182,28 +175,36 @@ $unit = $this->common_model->get_unit_id_name();
         <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form class="col-md-12" method="post" id="eot_modify_form">
+                    <form method="post" id="eot_modify_form">
                         <div class="raw">
-                            <div class="col-md-6" style="padding: 5px !important">
+                            <div class="col-md-5" style="padding: 5px !important">
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
-                                        <label class="control-label">Date</label>
-                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                        <label class="control-label">First Date</label>
+                                        <input class="form-control input-sm" type="date" id="eot_f_date" name="eot_f_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
-                                        <label class="control-label">Date</label>
-                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                        <label class="control-label">Second Date</label>
+                                        <input class="form-control input-sm" type="date" id="eot_s_date" name="eot_s_date">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" style="padding: 5px !important">
-                                <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
+                            <div class="col-md-7">
+                                <div class="col-md-3" style="padding: 5px !important">
+                                    <div class="form-group" style="padding: 2px 5px !important;">
+                                        <label class="control-label">EOT</label>
+                                        <input class="form-control" id="eot" name="eot">
+                                    </div>
+                                </div>
+                                <div class="col-md-9" style="padding: 0px !important; margin-top: 30px;">
+                                    <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="input-group pull-right">
-                                    <span class="input-group-btn pull-right" style="display: flex;">
+                            <div class="col-md-3" style="top: -15px">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
                                     </span>
                                 </div>
@@ -713,4 +714,3 @@ $unit = $this->common_model->get_unit_id_name();
         return vals;
     }
 </script>
-

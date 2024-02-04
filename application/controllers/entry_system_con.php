@@ -49,8 +49,57 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/grid_entry_system';
         $this->load->view('layout/template', $this->data);
     }
+    public function present_entry()
+    {
+        $sql         = $_POST['emp_id'];
+        $unit_id     = $_POST['unit_id'];
+        $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
+        $second_date = date('Y-m-d', strtotime($_POST['second_date']));
+        $time        = date('H:i:s', strtotime($_POST['time']));
+        $emp_ids     = explode(',', $sql);
+        $mm = array();
+        while ($first_date <= $second_date) {
+            if (strtotime($time) < strtotime("06:00:00")) {
+                $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
+            } else {
+                $date = $first_date;
+            }
+            $data = array();
+            foreach ($emp_ids as $r) {
+                $data[] = array(
+                    'date_time'       => $date ." ".$time,
+                    'proxi_id'         => $r,
+                    'device_id'         => 0,
+                );
+            }
+            $mm = $this->insert_attn_process($data, $date, $unit_id, $emp_ids);
+            $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
+		}
+        if (!empty($mm) && $mm['massage'] == 1) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
 
-    
+    function insert_attn_process($data, $date, $unit_id, $emp_ids) {
+        $this->load->model('attn_process_model');
+        $att_table = "att_". date("Y_m", strtotime($date));
+        if (!$this->db->table_exists($att_table)){
+            $this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(
+                    `att_id` int(11) NOT NULL AUTO_INCREMENT,
+                    `device_id` int(11) NOT NULL,
+                    `proxi_id` varchar(30) NOT NULL,
+                    `date_time` datetime NOT NULL,
+                    PRIMARY KEY (`att_id`),
+                    KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
+            );
+        }
+        $this->db->insert_batch($att_table, $data);
+        $this->attn_process_model->attn_process($date, $unit_id, $emp_ids);
+        return array('massage' => 1);
+    }
+
 
 
     //-------------------------------------------------------------------------------
@@ -1378,7 +1427,7 @@ class Entry_system_con extends CI_Controller
         // $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'letter_notification';
         $this->load->view('layout/template', $this->data);
-       
+
     }
 
 
