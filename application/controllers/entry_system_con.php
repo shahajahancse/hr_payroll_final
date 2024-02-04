@@ -57,7 +57,7 @@ class Entry_system_con extends CI_Controller
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
-
+        $mm = array();
         while ($first_date <= $second_date) {
             if (strtotime($time) < strtotime("06:00:00")) {
                 $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
@@ -72,10 +72,14 @@ class Entry_system_con extends CI_Controller
                     'device_id'         => 0,
                 );
             }
-            $this->insert_attn_process($data, $date, $unit_id, $emp_ids);
+            $mm = $this->insert_attn_process($data, $date, $unit_id, $emp_ids);
             $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
 		}
-        echo 'success';
+        if (!empty($mm) && $mm['massage'] == 1) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
     }
 
     function insert_attn_process($data, $date, $unit_id, $emp_ids) {
@@ -92,7 +96,8 @@ class Entry_system_con extends CI_Controller
             );
         }
         $this->db->insert_batch($att_table, $data);
-        return $this->attn_process_model->attn_process($date, $unit_id, $emp_ids);
+        $this->attn_process_model->attn_process($date, $unit_id, $emp_ids);
+        return array('massage' => 1);
     }
 
 
