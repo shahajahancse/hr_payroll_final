@@ -51,47 +51,48 @@ class Entry_system_con extends CI_Controller
     }
     public function present_entry()
     {
-        dd($_POST);
-        $emp_id         = $_POST['emp_id'];
-        $unit_id        = $_POST['unit_id'];
-        $prom_date      = date('Y-m-01', strtotime($_POST['prom_date']));
-        $new_salary     = $_POST['prom_gross_sal'];
-        $new_com_salary = $_POST['prom_com_gross_sal'];
-        $department     = $_POST['department'];
-        $section        = $_POST['section'];
-        $line           = $_POST['line'];
-        $designation    = $_POST['designation'];
-        $grade_id       = $_POST['grade_id'];
+        $sql         = $_POST['emp_id'];
+        $unit_id     = $_POST['unit_id'];
+        $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
+        $second_date = date('Y-m-d', strtotime($_POST['second_date']));
+        $time        = date('H:i:s', strtotime($_POST['time']));
+        $emp_ids     = explode(',', $sql);
 
-        $data = array(
-            'prev_emp_id'       => $emp_id,
-            'prev_dept'         => $rr->prev_dept,
-            'prev_section'      => $rr->prev_section,
-            'prev_line'         => $rr->prev_line,
-            'prev_desig'        => $rr->prev_desig,
-            'prev_grade'        => $rr->prev_grade,
-            'prev_salary'       => $rr->prev_salary,
-            'prev_com_salary'   => $rr->prev_com_salary,
-            'new_emp_id'        =>  $emp_id,
-            'new_dept'          => $department,
-            'new_section'       => $section,
-            'new_line'          => $line,
-            'new_desig'         => $designation,
-            'new_grade'         => (!empty($grade_id)) ? $grade_id : $r->emp_sal_gra_id,
-            'new_salary'        => $new_salary,
-            'new_com_salary'    => $new_com_salary,
-            'effective_month'   => $prom_date,
-            'ref_id'            => $emp_id,
-            'status'            => 2,
-        );
+        while ($first_date <= $second_date) {
+            if (strtotime($time) < strtotime("06:00:00")) {
+                $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
+            } else {
+                $date = $first_date;
+            }
+            $data = array();
+            foreach ($emp_ids as $r) {
+                $data[] = array(
+                    'date_time'       => $date ." ".$time,
+                    'proxi_id'         => $r,
+                    'device_id'         => 0,
+                );
+            }
+            $this->insert_attn_process($data, $date, $unit_id, $emp_ids);
+            $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
+		}
+        echo 'success';
+    }
 
-        $this->db->where('ref_id', $emp_id)->where('effective_month', $prom_date);
-        if ($this->db->update('pr_incre_prom_pun', $data)) {
-            $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
-            echo 'success';
-        } else {
-            echo 'error';
+    function insert_attn_process($data, $date, $unit_id, $emp_ids) {
+        $this->load->model('attn_process_model');
+        $att_table = "att_". date("Y_m", strtotime($date));
+        if (!$this->db->table_exists($att_table)){
+            $this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(
+                    `att_id` int(11) NOT NULL AUTO_INCREMENT,
+                    `device_id` int(11) NOT NULL,
+                    `proxi_id` varchar(30) NOT NULL,
+                    `date_time` datetime NOT NULL,
+                    PRIMARY KEY (`att_id`),
+                    KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
+            );
         }
+        $this->db->insert_batch($att_table, $data);
+        return $this->attn_process_model->attn_process($date, $unit_id, $emp_ids);
     }
 
 
