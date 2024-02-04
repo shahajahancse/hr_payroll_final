@@ -198,10 +198,14 @@ $unit = $this->common_model->get_unit_id_name();
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" style="padding: 5px !important">
-                                <div class="form-group" style="margin-bottom: 3px !important; display:flex; gap: 14px">
-                                    <label class="control-label">Date</label>
-                                    <input class="form-control" type="date" id="first_date" name="first_date">
+                            <div class="col-md-6" style="padding: 5px !important; display:flex; gap: 14px">
+                                <div class="col-md-3" style="padding: 5px !important">
+                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                        <label class="control-label">Date</label>
+                                        <input class="form-control" type="date" id="first_date" name="first_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-9" style="padding: 5px !important">
                                     <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
                                 </div>
                             </div>
