@@ -28,7 +28,7 @@ class Attn_process_model extends CI_Model{
 
 	function attn_process($process_date,$unit,$grid_emp_id)
 	{
-		dd($unit);
+		// dd($unit);
 		//=========================== Get emplpoyee list ============================
 		$all_employee = $this->get_all_employee($grid_emp_id);
 
