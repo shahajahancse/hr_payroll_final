@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="col-md-1">
+            <div class="col-md-1" style="padding-left: 0px !important;">
                 <div class="form-group">
                     <label for="unit_id">Serial</label>
                     <input style="height: 5px !important;" type="text" name="serial" class="form-control input-lg" id="name_en" placeholder="0">
