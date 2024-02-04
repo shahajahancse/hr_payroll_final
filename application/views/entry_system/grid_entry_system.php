@@ -184,7 +184,7 @@ $unit = $this->common_model->get_unit_id_name();
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="eot_modify_form">
                         <div class="raw">
-                            <div class="col-md-6" style="padding: 5px !important">
+                            <div class="col-md-5" style="padding: 5px !important">
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">Date</label>
@@ -198,7 +198,7 @@ $unit = $this->common_model->get_unit_id_name();
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" style="padding: 5px !important; display:flex; gap: 14px">
+                            <div class="col-md-7" style="padding: 5px !important; display:flex; gap: 14px">
                                 <div class="col-md-3" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">Date</label>
