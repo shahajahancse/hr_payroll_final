@@ -97,7 +97,7 @@ class Entry_system_con extends CI_Controller
             );
         }
         $this->db->insert_batch($att_table, $data);
-        if ($this->attn_process_model->attn_process($date, $unit_id, $emp_ids)) {
+        if ($this->attn_process_model->attn_process($date, $unit_id, $emp_ids, 1)) {
             return array('massage' => 1);
         } else {
             return array('massage' => 0);
