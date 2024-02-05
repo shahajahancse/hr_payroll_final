@@ -317,12 +317,8 @@ $unit = $this->common_model->get_unit_id_name();
             showMessage('error', 'Please select Second date');
             return false;
         }
-        eot = document.getElementById('eot').value;
-        if (eot == '') {
-            showMessage('error', 'Please entry the eot');
-            return false;
-        }
-        window.location.href('<?= base_url('entry_system_con/test') ?>' + '/' + emp_id + '/' + eot + '/' + second_date + '/' + first_date)
+
+        window.location.href('<?= base_url('entry_system_con/test') ?>' + '/' + emp_id + '/' + second_date + '/' + first_date)
     }
 </script>
 
