@@ -97,33 +97,21 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Designation Name English</label>
                     <input type="text" name="desig_name" value="<?= $emp_designation->desig_name ?>" placeholder="Designation Name" class="form-control">
                     <?=(isset($failuer['desig_name'])) ? '<div class="alert alert-failuer">' . $failuer['desig_name'] . '</div>' : ''; ?>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Designation Name Bangla</label>
                     <input type="text" name="desig_bangla" value="<?= $emp_designation->desig_bangla ?>" placeholder="Designation Name Bangla" class="form-control">
                     <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
                 </div>
             </div>
-              <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Group Name</label>
-                        <select class="form-control" name="group_id">
-                            <?php $groups = $this->common_model->get_group_name(); ?>
-                            <option value="">Select</option>
-                            <?php foreach($groups as $group){?>
-                            <option value="<?= $group->id ?>" <?php echo ($emp_designation->group_id == $group->id) ? 'selected':''?> ><?php echo $group->name_en .' >> '. $group->unit_name ?></option>
-                        <?php }?>
-                        </select>
-                        </div>
-                    </div>
-        </div>  
+        </div>
         <br>
         <div class="form-group">
             <button type="submit" class="btn btn-primary ">Submit</button></button>
@@ -149,7 +137,7 @@
              var iftar = data.iftar;
              var night = data.night;
              var tiffin = data.tiffin;
-             
+
              var attnIdSelect = $("#attn_id");
              var holidayWeekendIdSelect = $("#holiday_weekend_id");
              var iftarIdSelect = $("#iftar_id");
@@ -171,9 +159,9 @@
                 }
                  attnIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.rule}</option>`);
                });
-             
+
              attnIdSelect.append("<option value='0'>None</option>");
-             
+
                holidayWeekendIdSelect.empty().append("<option value='0'>Select Holiday/Weekend</option>");
                holiday_weekend.forEach(function(item) {
                 if (item.id == <?= $emp_designation->holiday_weekend_id?>) {
@@ -183,10 +171,10 @@
                 }
                  holidayWeekendIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
-             
+
              holidayWeekendIdSelect.append("<option value='0'>None</option>");
 
-             
+
                iftarIdSelect.empty().append("<option value='0'>Select Iftar</option>");
                iftar.forEach(function(item) {
                 if (item.id == <?= $emp_designation->iftar_id?>) {
@@ -196,10 +184,10 @@
                 }
                  iftarIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
-             
+
              iftarIdSelect.append("<option value='0'>None</option>");
 
-             
+
                nightAlIdSelect.empty().append("<option value='0'>Select Night Allowance</option>");
                night.forEach(function(item) {
                 if (item.id == <?= $emp_designation->night_al_id?>) {
@@ -209,10 +197,10 @@
                 }
                  nightAlIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.night_allowance}</option>`);
                });
-             
+
              nightAlIdSelect.append("<option value='0'>None</option>");
 
-             
+
                tiffinIdSelect.empty().append("<option value='0'>Select Tiffin</option>");
                tiffin.forEach(function(item) {
                 if (item.id == <?= $emp_designation->tiffin_id?>) {
@@ -222,7 +210,7 @@
                 }
                  tiffinIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
-             
+
              tiffinIdSelect.append("<option value='0'>None</option>");
            },
             error: function(data) {
