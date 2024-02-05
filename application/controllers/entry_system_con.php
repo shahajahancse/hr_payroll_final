@@ -6,17 +6,9 @@ class Entry_system_con extends CI_Controller
     {
         parent::__construct();
 
-        /* Standard Libraries */
-        // $this->load->model('attn_process_model');
-        // $this->load->model('processdb');
-        // $this->load->model('grid_model');
-        // $this->load->model('log_model');
-        // $this->load->library('grocery_CRUD');
-        // $this->load->model('acl_model');
-        // $this->load->model('crud_model');
-        // $this->load->library('pagination_bootstrap');
         $this->load->model('leave_model');
         $this->load->model('common_model');
+        $this->load->model('attn_process_model');
         $this->load->helper('url');
 
         if ($this->session->userdata('logged_in') == false) {
@@ -30,14 +22,421 @@ class Entry_system_con extends CI_Controller
         }
     }
 
+    //-------------------------------------------------------------------------------------------------------
+    // GRID Display for Entry System
+    //-------------------------------------------------------------------------------------------------------
+    public function grid_entry_system()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
 
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for weekend 
-    //-------------------------------------------------------------------------------------------------------
+        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $this->db->from('emp_depertment');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['departments'] = $this->db->get()->result();
 
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for weekend 
-    //-------------------------------------------------------------------------------------------------------
+        $this->data['title'] = 'Entry System';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/grid_entry_system';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function present_entry()
+    {
+        $sql         = $_POST['emp_id'];
+        $unit_id     = $_POST['unit_id'];
+        $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
+        $second_date = date('Y-m-d', strtotime($_POST['second_date']));
+        $time        = date('H:i:s', strtotime($_POST['time']));
+        $emp_ids     = explode(',', $sql);
+        $mm = array();
+        while ($first_date <= $second_date) {
+            if (strtotime($time) < strtotime("06:00:00")) {
+                $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
+            } else {
+                $date = $first_date;
+            }
+            $data = array();
+            foreach ($emp_ids as $r) {
+                $data[] = array(
+                    'date_time'       => $date ." ".$time,
+                    'proxi_id'         => $r,
+                    'device_id'         => 0,
+                );
+            }
+            $mm = $this->insert_attn_process($data, $date, $unit_id, $emp_ids);
+            $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
+		}
+        if (!empty($mm) && $mm['massage'] == 1) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    function insert_attn_process($data, $date, $unit_id, $emp_ids) {
+        $this->load->model('attn_process_model');
+        $att_table = "att_". date("Y_m", strtotime($date));
+        if (!$this->db->table_exists($att_table)){
+            $this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(
+                    `att_id` int(11) NOT NULL AUTO_INCREMENT,
+                    `device_id` int(11) NOT NULL,
+                    `proxi_id` varchar(30) NOT NULL,
+                    `date_time` datetime NOT NULL,
+                    PRIMARY KEY (`att_id`),
+                    KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
+            );
+        }
+        $this->db->insert_batch($att_table, $data);
+        if ($this->attn_process_model->attn_process($date, $unit_id, $emp_ids, 1)) {
+            return array('massage' => 1);
+        } else {
+            return array('massage' => 0);
+        }
+    }
+
+
+
+    //-------------------------------------------------------------------------------
+    // Increment and Promotion entry to the Database
+    //-------------------------------------------------------------------------------
+    public function incre_prom_entry()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $this->db->from('emp_depertment');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['departments'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Increment / Promotion';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/incre_prom_entry';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function increment_entry()
+    {
+        $emp_id         = $_POST['emp_id'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['incr_date']));
+        $new_salary     = $_POST['gross_sal'];
+        $new_com_salary = $_POST['com_gross_sal'];
+        $old_salary     = $_POST['salary'];
+        $old_com_salary = $_POST['com_salary'];
+        $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
+        $data = array(
+            'prev_emp_id' => $emp_id,
+            'prev_dept' => $r->emp_dept_id,
+            'prev_section' => $r->emp_sec_id,
+            'prev_line' => $r->emp_line_id,
+            'prev_desig' => $r->emp_desi_id,
+            'prev_grade' => $r->emp_sal_gra_id,
+            'new_emp_id' => $r->emp_id,
+            'new_dept' => $r->emp_dept_id,
+            'new_section' => $r->emp_sec_id,
+            'new_line' => $r->emp_line_id,
+            'new_desig' => $r->emp_desi_id,
+            'new_grade' => $r->emp_sal_gra_id,
+            'new_salary' => $new_salary,
+            'new_com_salary' => $new_com_salary,
+            'effective_month' => $incr_date,
+            'ref_id' => $emp_id,
+            'status' => 1,
+        );
+
+        $dd = array(
+            'gross_sal' => $new_salary,
+            'com_gross_sal' => $new_com_salary,
+        );
+
+        $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->get('pr_incre_prom_pun');
+        if ($check->num_rows() > 0) {
+            $data['prev_salary']      = $check->row()->prev_salary;
+            $data['prev_com_salary']  = $check->row()->prev_com_salary;
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+            if ( $this->db->update('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            $data['prev_salary']      = $r->gross_sal;
+            $data['prev_com_salary']  = $r->com_gross_sal;
+            if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        }
+    }
+    public function increment_delete_ajax(){
+        $emp_id         = $_POST['sql'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['date']));
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+        $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
+        if (!empty($r)) {
+            $dd = array(
+                'gross_sal' => $r->prev_salary,
+                'com_gross_sal' => $r->prev_com_salary,
+            );
+            if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
+                $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            echo 'error';
+        }
+    }
+
+    public function promotion_entry()
+    {
+        $emp_id         = $_POST['emp_id'];
+        $unit_id        = $_POST['unit_id'];
+        $prom_date      = date('Y-m-01', strtotime($_POST['prom_date']));
+        $new_salary     = $_POST['prom_gross_sal'];
+        $new_com_salary = $_POST['prom_com_gross_sal'];
+        $department     = $_POST['department'];
+        $section        = $_POST['section'];
+        $line           = $_POST['line'];
+        $designation    = $_POST['designation'];
+        $grade_id       = $_POST['grade_id'];
+        $old_salary     = $_POST['salary'];
+        $old_com_salary = $_POST['com_salary'];
+
+        $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
+        $dd = array(
+            'gross_sal'         => $new_salary,
+            'com_gross_sal'     => $new_com_salary,
+            'emp_dept_id'       => $department,
+            'emp_sec_id'        => $section,
+            'emp_line_id'       => $line,
+            'emp_desi_id'       => $designation,
+            'emp_sal_gra_id'    => (!empty($grade_id))? $grade_id : $r->emp_sal_gra_id,
+        );
+
+        $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $prom_date)->get('pr_incre_prom_pun');
+        if ($check->num_rows() > 0) {
+            $rr = $check->row();
+            $data = array(
+                'prev_emp_id'       => $emp_id,
+                'prev_dept'         => $rr->prev_dept,
+                'prev_section'      => $rr->prev_section,
+                'prev_line'         => $rr->prev_line,
+                'prev_desig'        => $rr->prev_desig,
+                'prev_grade'        => $rr->prev_grade,
+                'prev_salary'       => $rr->prev_salary,
+                'prev_com_salary'   => $rr->prev_com_salary,
+                'new_emp_id'        =>  $emp_id,
+                'new_dept'          => $department,
+                'new_section'       => $section,
+                'new_line'          => $line,
+                'new_desig'         => $designation,
+                'new_grade'         => (!empty($grade_id))? $grade_id : $r->emp_sal_gra_id,
+                'new_salary'        => $new_salary,
+                'new_com_salary'    => $new_com_salary,
+                'effective_month'   => $prom_date,
+                'ref_id'            => $emp_id,
+                'status'            => 2,
+            );
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $prom_date);
+            if ( $this->db->update('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            $data = array(
+                'prev_emp_id'       => $emp_id,
+                'prev_dept'         => $r->emp_dept_id,
+                'prev_section'      => $r->emp_sec_id,
+                'prev_line'         => $r->emp_line_id,
+                'prev_desig'        => $r->emp_desi_id,
+                'prev_grade'        => $r->emp_sal_gra_id,
+                'prev_salary'       => $r->gross_sal,
+                'prev_com_salary'   => $r->com_gross_sal,
+                'new_emp_id'        =>  $emp_id,
+                'new_dept'          => $department,
+                'new_section'       => $section,
+                'new_line'          => $line,
+                'new_desig'         => $designation,
+                'new_grade'         => (!empty($grade_id))? $grade_id : $r->emp_sal_gra_id,
+                'new_salary'        => $new_salary,
+                'new_com_salary'    => $new_com_salary,
+                'effective_month'   => $prom_date,
+                'ref_id'            => $emp_id,
+                'status'            => 2,
+            );
+            if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        }
+    }
+    public function prom_delete_ajax(){
+        $emp_id         = $_POST['sql'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['date']));
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+        $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
+        if (!empty($r)) {
+            $dd = array(
+                'gross_sal'         => $r->prev_salary,
+                'com_gross_sal'     => $r->prev_com_salary,
+                'emp_dept_id'       => $r->prev_dept,
+                'emp_sec_id'        => $r->prev_section,
+                'emp_line_id'       => $r->prev_line,
+                'emp_desi_id'       => $r->prev_desig,
+                'emp_sal_gra_id'    => $r->prev_grade,
+            );
+            if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
+                $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            echo 'error';
+        }
+    }
+
+    public function line_entry()
+    {
+        $emp_id         = $_POST['emp_id'];
+        $unit_id        = $_POST['unit_id'];
+        $line_date      = date('Y-m-01', strtotime($_POST['line_date']));
+        $department     = $_POST['department'];
+        $section        = $_POST['section'];
+        $line           = $_POST['line'];
+        $designation    = $_POST['designation'];
+
+        $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
+            $dd = array(
+                'emp_dept_id'       => $department,
+                'emp_sec_id'        => $section,
+                'emp_line_id'       => $line,
+                'emp_desi_id'       => $designation,
+            );
+
+        $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $line_date)->get('pr_incre_prom_pun');
+        if ($check->num_rows() > 0) {
+            $rr = $check->row();
+            $data = array(
+                'prev_emp_id'       => $emp_id,
+                'prev_dept'         => $rr->prev_dept,
+                'prev_section'      => $rr->prev_section,
+                'prev_line'         => $rr->prev_line,
+                'prev_desig'        => $rr->prev_desig,
+                'prev_grade'        => $rr->prev_grade,
+                'prev_salary'       => $rr->prev_salary,
+                'prev_com_salary'   => $rr->prev_com_salary,
+                'new_emp_id'        => $emp_id,
+                'new_dept'          => $department,
+                'new_section'       => $section,
+                'new_line'          => $line,
+                'new_desig'         => $designation,
+                'new_grade'         => $rr->new_grade,
+                'new_salary'        => $rr->new_salary,
+                'new_com_salary'    => $rr->new_com_salary,
+                'effective_month'   => $line_date,
+                'ref_id'            => $emp_id,
+                'status'            => 3,
+            );
+
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+            if ( $this->db->update('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            $data = array(
+                'prev_emp_id'       => $emp_id,
+                'prev_dept'         => $r->emp_dept_id,
+                'prev_section'      => $r->emp_sec_id,
+                'prev_line'         => $r->emp_line_id,
+                'prev_desig'        => $r->emp_desi_id,
+                'prev_grade'        => $r->emp_sal_gra_id,
+                'prev_salary'       => $r->gross_sal,
+                'prev_com_salary'   => $r->com_gross_sal,
+                'new_emp_id'        => $emp_id,
+                'new_dept'          => $department,
+                'new_section'       => $section,
+                'new_line'          => $line,
+                'new_desig'         => $designation,
+                'new_grade'         => $r->emp_sal_gra_id,
+                'new_salary'        => $r->gross_sal,
+                'new_com_salary'    => $r->com_gross_sal,
+                'effective_month'   => $line_date,
+                'ref_id'            => $emp_id,
+                'status'            => 3,
+            );
+            if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        }
+    }
+    public function line_delete_ajax(){
+        $emp_id         = $_POST['sql'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['date']));
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+        $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
+        if (!empty($r)) {
+            $dd = array(
+                'emp_dept_id'       => $r->prev_dept,
+                'emp_sec_id'        => $r->prev_section,
+                'emp_line_id'       => $r->prev_line,
+                'emp_desi_id'       => $r->prev_desig,
+            );
+            if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
+                $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            echo 'error';
+        }
+    }
+    //---------------------------------------------------------------------------
+    // Increment and Promotion end
+    //---------------------------------------------------------------------------
+
+    //---------------------------------------------------------------------------------------
+    // CRUD for weekend
+    //---------------------------------------------------------------------------------------
     public function weekend_list()
     {
         $this->db->select('attn_work_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
@@ -47,7 +446,7 @@ class Entry_system_con extends CI_Controller
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Weekend List'; 
+        $this->data['title'] = 'Weekend List';
         $this->data['username'] = $this->data['user_data']->id_number;
         // dd($this->data);
         $this->data['subview'] = 'entry_system/weekend_list';
@@ -62,11 +461,11 @@ class Entry_system_con extends CI_Controller
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);  
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        
-        $this->data['title'] = 'Weekend Add'; 
+
+        $this->data['title'] = 'Weekend Add';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/emp_weekend_add';
         $this->load->view('layout/template', $this->data);
@@ -85,7 +484,7 @@ class Entry_system_con extends CI_Controller
         foreach ($emp_ids as $value) {
             $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
-        if ( $this->db->insert_batch('attn_work_off', $data)) {      
+        if ( $this->db->insert_batch('attn_work_off', $data)) {
             echo 'success';
         }else{
             echo 'error';
@@ -99,34 +498,26 @@ class Entry_system_con extends CI_Controller
 
     }
 
-    public function weekend_delete_all($id){
+    public function weekend_delete_all(){
         $date = $this->input->post('date');
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
-        $data = [];
 
-        $this->db->where('work_off_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
-        $this->db->delete('attn_work_off');
-
-        foreach ($emp_ids as $value) {
-            $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
-        }
-        if ( $this->db->insert_batch('attn_work_off', $data)) {      
+        $this->db->where('work_off_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_work_off') ) {
             echo 'success';
         }else{
             echo 'error';
         }
-
-
     }
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for weekend 
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
+    // CRUD for weekend
+    //-------------------------------------------------------------------------------------
 
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for holiday 
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
+    // CRUD for holiday
+    //-------------------------------------------------------------------------------------
     public function holiday_list(){
         $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
         $this->db->from('attn_holyday_off');
@@ -135,7 +526,7 @@ class Entry_system_con extends CI_Controller
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Holiday List'; 
+        $this->data['title'] = 'Holiday List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/holiday_list';
         $this->load->view('layout/template', $this->data);
@@ -148,11 +539,11 @@ class Entry_system_con extends CI_Controller
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        
-        $this->data['title'] = 'Holiday Add'; 
+
+        $this->data['title'] = 'Holiday Add';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/emp_holiday_add';
         $this->load->view('layout/template', $this->data);
@@ -170,7 +561,7 @@ class Entry_system_con extends CI_Controller
         foreach ($emp_ids as $value) {
             $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
-        if ( $this->db->insert_batch('attn_holyday_off', $data)) {      
+        if ( $this->db->insert_batch('attn_holyday_off', $data)) {
             echo 'success';
         }else{
             echo 'error';
@@ -182,13 +573,27 @@ class Entry_system_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url('entry_system_con/holiday_list'));
     }
-    //-------------------------------------------------------------------------------------------------------
-    // GRID for holiday
-    //-------------------------------------------------------------------------------------------------------
 
-    //-------------------------------------------------------------------------------------------------------
+    public function holiday_delete_all(){
+        $date = $this->input->post('date');
+        $sql = $this->input->post('sql');
+        $unit_id = $this->input->post('unit_id');
+        $emp_ids = explode(',', $sql);
+
+        $this->db->where('holiday_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_holyday_off') ) {
+            echo 'success';
+        }else{
+            echo 'error';
+        }
+    }
+    //------------------------------------------------------------------------------------------
+    // GRID for holiday
+    //------------------------------------------------------------------------------------------
+
+    //------------------------------------------------------------------------------------------
     // Leave entry to the Database
-    //------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     public function leave_transation()
     {
         if ($this->session->userdata('logged_in') == false) {
@@ -197,11 +602,10 @@ class Entry_system_con extends CI_Controller
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        
-        $this->data['title'] = 'Leave Transaction'; 
+        $this->data['title'] = 'Leave Transaction';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/leave_transation';
         $this->load->view('layout/template', $this->data);
@@ -209,12 +613,12 @@ class Entry_system_con extends CI_Controller
 
     public function leave_entry(){
         // dd($_POST);
-        $emp_id = $this->db->where('id', $_POST['emp_id'])->get('pr_emp_com_info')->row()->emp_id;
+        $emp_id = $_POST['emp_id'];
         $from_date = $_POST['from_date'];
         $to_date = $_POST['to_date'];
         $leave_type = $_POST['leave_type'];
         $reason = $_POST['reason'];
-        $unit_id = $_POST['unit_id'];  
+        $unit_id = $_POST['unit_id'];
         $leave_start = date("Y-m-d", strtotime($from_date));
         $leave_end = date("Y-m-d", strtotime($to_date));
         $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
@@ -236,17 +640,16 @@ class Entry_system_con extends CI_Controller
     }
 
     public function leave_balance_ajax(){
-        $emp_id = $this->db->where('id', $_POST['emp_id'])->get('pr_emp_com_info')->row()->emp_id;
         $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
-        $this->db->where('emp_id', $emp_id);
+        $this->db->where('emp_id', $_POST['emp_id']);
         $data['epm_info']=$this->db->get('pr_emp_per_info')->row();
 
-        $this->db->where('id', $_POST['emp_id']);
+        $this->db->where('emp_id', $_POST['emp_id']);
         $unit_id=$this->db->get('pr_emp_com_info')->row()->unit_id;
 
         $this->db->where('unit_id', $unit_id);
         $leave_entitle=$this->db->get('pr_leave')->row();
-       
+
         $data['leave_entitle_casual']= $leave_entitle->lv_cl;
         $data['leave_entitle_sick']= $leave_entitle->lv_sl;
         $data['leave_entitle_maternity']= $leave_entitle->lv_ml;
@@ -255,7 +658,7 @@ class Entry_system_con extends CI_Controller
         $year = date( $_POST['year']);
         $first_date = $year . "-01-01";
         $last_date = $year . "-12-31";
-        $this->db->where('emp_id', $emp_id);
+        $this->db->where('emp_id', $_POST['emp_id']);
         $this->db->where('leave_start >=', $first_date);
         $this->db->where('leave_end <=', $last_date);
         $leavei = $this->db->get('pr_leave_trans')->result();
@@ -280,12 +683,12 @@ class Entry_system_con extends CI_Controller
         $data['leave_taken_sick'] = $leave_taken_sick;
         $data['leave_taken_maternity'] = $leave_taken_maternity;
         $data['leave_taken_paternity'] = $leave_taken_paternity;
-        
+
         $data['leave_balance_casual'] = $data['leave_entitle_casual'] - $data['leave_taken_casual'];
         $data['leave_balance_sick'] = $data['leave_entitle_sick'] - $data['leave_taken_sick'];
         $data['leave_balance_maternity'] = $data['leave_entitle_maternity'] - $data['leave_taken_maternity'];
         $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
-        echo json_encode($data);   
+        echo json_encode($data);
     }
 
     public function leave_list(){
@@ -297,7 +700,7 @@ class Entry_system_con extends CI_Controller
         $this->db->order_by('pr_leave_trans.leave_start', 'DESC');
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Leave List'; 
+        $this->data['title'] = 'Leave List';
         $this->data['username'] = $this->data['user_data']->id_number;
         // dd($this->data);
         $this->data['subview'] = 'entry_system/leave_list';
@@ -310,13 +713,13 @@ class Entry_system_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url('entry_system_con/leave_list'));
     }
-    //-------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------
     // Leave end
-    //-------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------
 
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for // Left/Resign 
-    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
+    // CRUD for // Left/Resign
+    //-------------------------------------------------------------------------------------
     public function left_resign_entry()
     {
         if ($this->session->userdata('logged_in') == false) {
@@ -325,11 +728,11 @@ class Entry_system_con extends CI_Controller
         $this->data['employees'] = array();
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
         }
-        
-        $this->data['title'] = 'Left / Resign Entry'; 
+
+        $this->data['title'] = 'Left / Resign Entry';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/left_resign_entry';
         $this->load->view('layout/template', $this->data);
@@ -340,138 +743,126 @@ class Entry_system_con extends CI_Controller
         $sql = $_POST['sql'];
         $date = $_POST['date'];
         $type = $_POST['type'];
-        $unit_id = $_POST['unit_id'];  
+        $unit_id = $_POST['unit_id'];
         $emp_ids = explode(',', $sql);
 
-        $emp_id = $this->db->where_in('id', $emp_ids)->get('pr_emp_com_info')->result();
+        if ($type == 1) {
+            $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids)->delete('pr_emp_left_history');
+            $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids)->delete('pr_emp_resign_history');
 
-        $data = [];
-        foreach ($emp_ids as $value) {
-            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
-        }
-        if ( $this->db->insert_batch('attn_holyday_off', $data)) {      
-            echo 'success';
-        }else{
-            echo 'error';
-        }
-
-
-
-
-        $leave_start = date("Y-m-d", strtotime($from_date));
-        $leave_end = date("Y-m-d", strtotime($to_date));
-        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
-        $formArray = array(
-            'emp_id' => $emp_id,
-            'unit_id' => $unit_id,
-            'start_date' => $leave_start,
-            'leave_type' => $leave_type,
-            'leave_start' => $leave_start,
-            'leave_end' => $leave_end,
-            'total_leave' => $total_leave+1,
-            'leave_descrip' => $reason,
-        );
-        if ($this->db->insert('pr_leave_trans', $formArray)) {
-            echo "success";
-        }else{
-            echo "error";
-        };
-
-
-
-        $this->load->model('crud_model');
-        $this->data['user_data'] = $this->session->userdata('data');
-        $this->data['username'] =  $this->data['user_data']->id_number;
-        $this->data['subview'] = 'left_del_list';
-        $this->load->view('layout/template', $this->data);
-    }    
-
-    public function left_delete()
-    {
-        $this->load->model('crud_model');
-        $this->data['user_data'] = $this->session->userdata('data');
-        $this->data['username'] =  $this->data['user_data']->id_number;
-        $this->data['subview'] = 'left_del_list';
-        $this->load->view('layout/template', $this->data);
-    }
-
-    public function get_left_del_list(){
-        $limit=$this->input->get('limit');
-        $offset= $this->input->get('offset');
-        $searchQuery= $this->input->get('deptSearch');
-        $this->db->select('pr_emp_left_history.*,pr_emp_com_info.*,pr_units.unit_name,pr_emp_per_info.name_en');
-        $this->db->from('pr_emp_left_history');
-        $this->db->join('pr_emp_com_info', 'pr_emp_com_info.emp_id = pr_emp_left_history.emp_id', 'left');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id', 'left');
-        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id' , 'left');
-        $this->db->limit($limit, $offset);
-        if ($searchQuery != '') {
-            $this->db->like('pr_emp_per_info.name_en', $searchQuery);
-        }
-        $this->db->order_by('pr_emp_left_history.left_date', 'DESC');
-        echo json_encode($this->db->get()->result());
-    }
-    public function delete_left($id){
-        $this->db->where('emp_id', $id);
-        $this->db->delete('pr_emp_left_history');
-        echo json_encode($this->db->affected_rows());
-    }
-    public function add_left(){
-        if ($this->session->userdata('logged_in') == false) {
-            redirect("authentication");
-        }
-        $this->data['employees'] = array();
-        $this->db->select('pr_units.*');
-        $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name)) {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name);
-        }
-        
-        $this->data['title'] = 'Left Add Add'; 
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/left_add';
-        $this->load->view('layout/template', $this->data);
-    }
-    public function left_add_ajax(){
-        $date=$this->input->post('date');
-        $sql=$this->input->post('sql');
-        $unit_id=$this->input->post('unit_id');
-
-        $emp_ids=explode(',', $sql);
-        foreach($emp_ids as $emp_id){
-            $this->db->where('emp_id', $emp_id);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3,))) {
-                $this->db->insert('pr_emp_left_history', array('emp_id' => $emp_id, 'left_date' => $date, 'unit_id' => $unit_id));
+            $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 1))) {
+                echo 'success';
+            }else{
+                echo 'error';
             }
-        } 
-        echo 'success';
+        } else if ($type == 3 && !empty($date)) {
+            $data = [];
+            foreach ($emp_ids as $value) {
+                $data[] = array('unit_id' => $unit_id, 'emp_id' => $value, 'left_date' => $date);
+            }
+            $this->db->insert_batch('pr_emp_left_history', $data);
+
+            $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3))) {
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            $data = [];
+            foreach ($emp_ids as $value) {
+                $data[] = array('unit_id' => $unit_id, 'emp_id' => $value, 'resign_date' => $date);
+            }
+            $this->db->insert_batch('pr_emp_resign_history', $data);
+
+            $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 4))) {
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        }
     }
 
-    public function stop_salary($start = 0)
+    public function left_list()
     {
-        // exit('ali');
-        $this->load->library('pagination');
-        $param = array();
-        $limit = 25;
-        $config['base_url'] = base_url() . "index.php/entry_system_con/stop_salary/";
-        $config['per_page'] = $limit;
-        /*$config['num_links'] = 5;*/
-        $config['total_rows'] = $this->db->get('pr_emp_stop_salary')->num_rows();
-        $config["uri_segment"] = 3;
-        $this->load->library('pagination');
+        $this->db->select('lf.*, pr_units.unit_name, per.name_en as user_name');
+        $this->db->from('pr_emp_left_history as lf');
+        $this->db->join('pr_units', 'pr_units.unit_id = lf.unit_id', 'left');
+        $this->db->join('pr_emp_per_info as per', 'per.emp_id = lf.emp_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->db->group_by('lf.emp_id');
+        $this->data['results'] = $this->db->get()->result();
 
-        $this->pagination->initialize($config);
-        $param['links'] = $this->pagination->create_links();
-        $this->load->model('crud_model');
-        $pr_emp_stop_salary = $this->crud_model->salarystop_infos($limit, $start);
-        $param['pr_emp_stop_salary'] = $pr_emp_stop_salary;
-        //  echo count($pr_emp_stop_salary); die;
-        $this->load->view('salary_stop_list', $param);
-
+        $this->data['title'] = 'Left List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/left_list';
+        $this->load->view('layout/template', $this->data);
     }
-    //-------------------------------------------------------------------------------------------------------
+
+    public function resign_list()
+    {
+        $this->db->select('rs.*, pr_units.unit_name, per.name_en as user_name');
+        $this->db->from('pr_emp_resign_history as rs');
+        $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
+        $this->db->join('pr_emp_per_info as per', 'per.emp_id = rs.emp_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->db->group_by('rs.emp_id');
+        $this->data['results'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Left List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/resign_list';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function left_delete($id){
+        $this->db->where('emp_id', $id);
+        if ($this->db->delete('pr_emp_left_history')) {
+            $this->db->where('emp_id', $id)->update('pr_emp_com_info', array('emp_cat_id' => 1));
+        }
+
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url('entry_system_con/left_list'));
+    }
+
+    public function resign_delete($id){
+        $this->db->where('emp_id', $id);
+        if ($this->db->delete('pr_emp_resign_history')) {
+            $this->db->where('emp_id', $id)->update('pr_emp_com_info', array('emp_cat_id' => 1));
+        }
+
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url('entry_system_con/resign_list'));
+    }
+    //---------------------------------------------------------------------------
     // Left/Resign end
-    //-------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------
+    public function get_emp_by_unit($unit) {
+        $this->db->select('
+                    pr_emp_com_info.id,
+                    pr_emp_com_info.emp_id,
+                    pr_emp_com_info.unit_id,
+                    pr_emp_per_info.name_en,
+                    pr_emp_per_info.name_bn,
+                ');
+        $this->db->from('pr_emp_com_info');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id', 'left');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+        $this->db->where('pr_units.unit_id', $unit);
+        $this->db->where('pr_emp_com_info.emp_cat_id', 1);
+        return $this->db->get();
+    }
+
+
+
+
+
 
 
 
@@ -480,17 +871,8 @@ class Entry_system_con extends CI_Controller
 
 
     ///////////////////////////////////////////////////////////////////
-    // old code 
-    //-------------------------------------------------------------------------------------------------------
-    // GRID Display for Entry System
-    //-------------------------------------------------------------------------------------------------------
-    public function grid_entry_system()
-    {
-        // $this->load->view('grid_entry_system');
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'grid_entry_system';
-        $this->load->view('layout/template', $this->data);
-    }
+    // old code
+
     //-------------------------------------------------------------------------------------------------------
     // Form Display for Advance Loan
     //-------------------------------------------------------------------------------------------------------
@@ -557,47 +939,6 @@ class Entry_system_con extends CI_Controller
 
         $data = $this->processdb->due_amt_insert($emp_id, $due_amt, $due_pay_amt, $due_pay_date);
         echo $data;
-    }
-
-    //-------------------------------------------------------------------------------------------------------
-    // Form Display for Leave Transaction
-    //-------------------------------------------------------------------------------------------------------
-    // function get_emp_by_unit($id){
-    //     $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
-    //     $this->db->from('pr_emp_com_info as com');
-    //     $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.id', 'left');
-    //     $this->db->where('com.emp_cat_id', 1);
-    //     $this->db->group_by('com.id');
-    //     return $this->db->where('com.unit_id', $id)->get()->result();
-    // }
-
-        public function get_emp_by_unit($unit) {
-        $this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.unit_id,pr_emp_per_info.*');
-        $this->db->from('pr_emp_com_info');
-        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.id');
-        $this->db->where('pr_units.unit_id', $unit);
-        $this->db->where('pr_emp_com_info.emp_cat_id', 1);
-        $query = $this->db->get();
-        // dd($query->result_array());
-    }
-
-
-    public function get_leave_data($offset = 0, $limit = 10) {
-        $searchQuery = $this->input->get('search'); // Get the search query from the request
-        $data = $this->crud_model->leave_del_infos($limit, $offset,$searchQuery);
-        echo json_encode($data);
-    }
-
-    public function save_leave_co(){
-        $result = $this->leave_model->save_leave_db();
-        echo $result;
-    }
-
-    public function leave_transaction_co()
-    {
-        $result = $this->leave_model->leave_transaction_db();
-        echo $result;
     }
 
 
@@ -794,206 +1135,8 @@ class Entry_system_con extends CI_Controller
         exit;*/
         echo "Data Inserted Successfully!";
     }
-    //-------------------------------------------------------------------------------------------------------
-    // Workoff Entry
-    //-------------------------------------------------------------------------------------------------------
-    public function save_work_off()
-    {
-        $grid_firstdate = $this->input->post('firstdate');
 
-        $grid_data = $this->input->post('spl');
-        $grid_emp_id = explode('xxx', trim($grid_data));
-        $unit_id = $this->input->post('unit_id');
-        $friday_val = $this->input->post('F_rpl_val');
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
 
-        $data = $this->grid_model->save_work_off($grid_firstdate, $grid_emp_id, $unit_id, $friday_val);
-        echo $data;
-    }
-
-    public function delete_work_off()
-    {
-        $grid_firstdate = $this->input->post('firstdate');
-
-        $grid_data = $this->input->post('spl');
-        $grid_emp_id = explode('xxx', trim($grid_data));
-        $unit_id = $this->input->post('unit_id');
-        //print_r($grid_emp_id);
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $data = $this->grid_model->delete_work_off($grid_firstdate, $grid_emp_id, $unit_id);
-        echo $data;
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Holiday Entry
-    //-------------------------------------------------------------------------------------------------------
-    public function save_holiday()
-    {
-        $grid_firstdate = $this->input->post('firstdate');
-        $holiday_description = $this->input->post('holiday_description');
-        $grid_data = $this->input->post('spl');
-        $unit_id = $this->input->post('unit_id');
-        $holiday_val = $this->input->post('h_rpl_val');
-        $grid_emp_id = explode('xxx', trim($grid_data));
-
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $data = $this->grid_model->save_holiday($grid_firstdate, $holiday_description, $grid_emp_id, $unit_id, $holiday_val);
-        echo $data;
-    }
-
-    public function delete_holiday()
-    {
-        $grid_firstdate = $this->input->post('firstdate');
-        $grid_data = $this->input->post('spl');
-        $unit_id = $this->input->post('unit_id');
-        $grid_emp_id = explode('xxx', trim($grid_data));
-
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $data = $this->grid_model->delete_holiday($grid_firstdate, $grid_emp_id, $unit_id);
-        echo $data;
-    }
-
-    public function save_date()
-    {
-
-        $grid_firstdate = $this->input->post('firstdate');
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-        $data = array(
-            'date' => $grid_firstdate,
-        );
-
-        $this->db->select('*');
-        $this->db->from('setup_auto_date');
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            $this->db->update('setup_auto_date', $data);
-            echo "Date Updated Successfully";
-        } else {
-            $this->db->insert('setup_auto_date', $data);
-            echo "Date Inserted Successfully";
-        }
-
-    }
-
-    public function shift_log_delete()
-    {
-        $this->load->view('delete_shift_log');
-    }
-
-    public function delete_shift_log_info()
-    {
-        // echo "hi";exit;
-        $grid_firstdate = $this->input->post('firstdate');
-        $grid_emp_id = $this->input->post('spl');
-        $grid_emp_id = explode('xxx', trim($grid_emp_id));
-        // print_r($grid_emp_id);exit;
-        $grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-
-        $this->db->where_in('pr_emp_shift_log.emp_id', $grid_emp_id);
-        $this->db->where('pr_emp_shift_log.shift_log_date', $grid_firstdate);
-        $query = $this->db->delete('pr_emp_shift_log');
-        if ($query) {
-            echo "Delete Successfully";
-        } else {
-            echo "not";
-        }
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Resign Entry
-    //-------------------------------------------------------------------------------------------------------
-    public function resign_entry()
-    {
-        $crud = new grocery_CRUD();
-
-        $crud->set_table('pr_emp_resign_history');
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
-        if ($get_session_user_unit != 0) {
-            $crud->where('pr_emp_resign_history.unit_id', $get_session_user_unit);
-        }
-        $crud->set_subject('Resign Employee');
-        $crud->required_fields('emp_id', 'resign_date', 'unit_id');
-        if ($get_session_user_unit != 0) {
-            $crud->set_relation('unit_id', 'pr_units', 'unit_name', array('unit_id' => $get_session_user_unit));
-        } else {
-            $crud->set_relation('unit_id', 'pr_units', 'unit_name');
-        }
-        $crud->display_as('emp_id', 'Employee ID');
-        $crud->set_rules('emp_id', 'Employee ID', 'required|is_unique[pr_emp_resign_history.emp_id]|callback_employee_id_check');
-        $crud->set_rules('resign_date', 'Resign Date', 'required');
-        $crud->callback_after_insert(array($this, 'insert_resign_in_emp_table'));
-        //$crud->unset_delete();
-        $crud->unset_edit();
-        $crud->callback_before_delete(array($this, 'insert_join_in_emp_table_resign'));
-
-        $output = $crud->render();
-
-        $this->crud_output($output);
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Insert employee status regular to pr_emp_com_info table
-    //-------------------------------------------------------------------------------------------------------
-    public function insert_join_in_emp_table_resign($primary_key)
-    {
-        $this->db->select('emp_id');
-        $this->db->where('resign_id', $primary_key);
-        $query = $this->db->get('pr_emp_resign_history');
-        $rows = $query->row();
-        $emp_id = $rows->emp_id;
-        $data = array('emp_cat_id' => 1);
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_emp_com_info', $data);
-        // Log generate for left employee
-        $this->log_model->log_profile_resign($emp_id);
-        return true;
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Employee ID exist or not
-    //-------------------------------------------------------------------------------------------------------
-    public function username_check($emp_id)
-    {
-        $check_emp = $this->get_emp_id_existance($emp_id);
-        if ($check_emp == false) {
-            $this->form_validation->set_message('username_check', "%s $emp_id does't not exist!");
-            return false;
-        } else {
-            return true;
-        }
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Employee ID exist or not
-    //-------------------------------------------------------------------------------------------------------
-    public function get_emp_id_existance($emp_id)
-    {
-        $this->db->select("emp_id");
-        $this->db->where("emp_id", $emp_id);
-        $query = $this->db->get("pr_emp_com_info");
-        if ($query->num_rows() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    //-------------------------------------------------------------------------------------------------------
-    // Insert employee status resign to pr_emp_com_info table
-    //-------------------------------------------------------------------------------------------------------
-    public function insert_resign_in_emp_table($post_array)
-    {
-        $emp_id = $post_array['emp_id'];
-        $data = array('emp_cat_id' => 4);
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_emp_com_info', $data);
-
-        $data1 = array('proxi_id' => '');
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_id_proxi', $data1);
-
-        // Log generate for resign employee
-        $this->log_model->log_profile_resign($emp_id);
-        return $post_array;
-    }
     //-------------------------------------------------------------------------------------------------------
     // CRUD output method
     //-------------------------------------------------------------------------------------------------------
@@ -1058,70 +1201,8 @@ class Entry_system_con extends CI_Controller
         }
     }
 
-    //-------------------------------------------------------------------------------------------------------
-    // Left Entry
-    //-------------------------------------------------------------------------------------------------------
-    public function left_entry()
-    {
-        $crud = new grocery_CRUD();
 
-        $crud->set_table('pr_emp_left_history');
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
-        if ($get_session_user_unit != 0) {
-            $crud->where('pr_emp_left_history.unit_id', $get_session_user_unit);
-        }
-        $crud->set_subject('Left Employee');
-        $crud->required_fields('emp_id', 'left_date', 'unit_id');
-        if ($get_session_user_unit != 0) {
-            $crud->set_relation('unit_id', 'pr_units', 'unit_name', array('unit_id' => $get_session_user_unit));
-        } else {
-            $crud->set_relation('unit_id', 'pr_units', 'unit_name');
-        }
-        $crud->display_as('emp_id', 'Employee ID');
-        $crud->set_rules('emp_id', 'Employee ID', 'required|is_unique[pr_emp_left_history.emp_id]|callback_employee_id_check');
-        $crud->set_rules('left_date', 'Left Date', 'required');
-        $crud->callback_after_insert(array($this, 'insert_left_in_emp_table'));
-        $crud->unset_edit();
-        $crud->callback_before_delete(array($this, 'insert_join_in_emp_table'));
-        $output = $crud->render();
-        $this->crud_output($output);
-    }
 
-    //-------------------------------------------------------------------------------------------------------
-    // Insert employee status left to pr_emp_com_info table
-    //-------------------------------------------------------------------------------------------------------
-    public function insert_left_in_emp_table($post_array)
-    {
-        $emp_id = $post_array['emp_id'];
-        $data = array('emp_cat_id' => 3);
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_emp_com_info', $data);
-
-        $data1 = array('proxi_id' => '');
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_id_proxi', $data1);
-        // Log generate for left employee
-        $this->log_model->log_profile_resign($emp_id);
-        return $post_array;
-    }
-
-    //-------------------------------------------------------------------------------------------------------
-    // Insert employee status regular to pr_emp_com_info table
-    //-------------------------------------------------------------------------------------------------------
-    public function insert_join_in_emp_table($primary_key)
-    {
-        $this->db->select('emp_id');
-        $this->db->where('left_id', $primary_key);
-        $query = $this->db->get('pr_emp_left_history');
-        $rows = $query->row();
-        $emp_id = $rows->emp_id;
-        $data = array('emp_cat_id' => 1);
-        $this->db->where('emp_id', $emp_id);
-        $this->db->update('pr_emp_com_info', $data);
-        // Log generate for left employee
-        $this->log_model->log_profile_resign($emp_id);
-        return true;
-    }
 
     //-------------------------------------------------------------------------------------------------------
     // New to regular :Tofayel
@@ -1220,25 +1301,6 @@ class Entry_system_con extends CI_Controller
 
         // Config setup
 
-        // $num_rows=$this->db->count_all("users");
-        /* $config['base_url'] = base_url().'index.php/entry_system_con/proximity_card_edit/';
-        $config['total_rows'] = $num_rows;
-        $config['per_page'] = 5;
-        $config['num_links'] = $num_rows;
-        $config['use_page_numbers'] = TRUE;
-        $config['full_tag_open'] = '<ul class="pagination">'; $config['full_tag_close'] = '</ul>';
-        $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] = '<li>';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        $config['next_link'] = '&raquo;';
-         */
-
         // print_r($config);exit('ali');
         $this->pagination->initialize($config);
         $param['links'] = $this->pagination->create_links();
@@ -1269,34 +1331,6 @@ class Entry_system_con extends CI_Controller
             return true;
         }
     }
-
-    //-------------------------------------------------------------------------------------------------------
-    // CRUD for Leave Modification
-    //-------------------------------------------------------------------------------------------------------
- 
-
-    /* function leave_delete($start=0)
-    {
-    $this->load->library('pagination');
-    $param = array();
-    $limit = 25;
-    $config['base_url'] = base_url()."index.php/entry_system_con/leave_delete/";
-    $config['per_page'] = $limit;
-    $this->load->model('crud_model');
-    $pr_leave_trans = $this->crud_model->leave_del_infos($limit,$start);
-    $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
-    $config['total_rows'] = $total;
-    $config["uri_segment"] = 3;
-    // $this->load->library('pagination');
-
-    $this->pagination->initialize($config);
-    $param['links'] = $this->pagination->create_links();
-    $param['pr_leave_trans'] = $pr_leave_trans;
-
-    $this->load->view('leave_del_list',$param);
-    // exit('ali');
-    } */
-
 
     public function stop_salary_update($post_array, $primary_key)
     {
@@ -1386,4 +1420,21 @@ class Entry_system_con extends CI_Controller
         return true;
 
     }
+
+
+
+
+
+    public function letter_notification(){
+
+        $this->data['title'] = 'Increment / Promotion';
+        // $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'letter_notification';
+        $this->load->view('layout/template', $this->data);
+
+    }
+
+
+
+
 }

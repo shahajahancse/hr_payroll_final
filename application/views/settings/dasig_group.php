@@ -12,7 +12,7 @@
     .table td {
         padding: 0px 3px !important;
         font-size: 13px;
-      
+
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
@@ -28,13 +28,13 @@
 </style>
 
 <div class="content" style="display: flex;flex-direction: column;gap: 10px">
-  
+
   <div class="row">
     <div class="col-md-8">
       <?php $success = $this->session->flashdata('success');
       if ($success != "") { ?>
         <div class="alert alert-success"><?php echo $success; ?></div>
-        <?php } 
+        <?php }
         $failuer = $this->session->flashdata('failuer');
         if ($failuer) { ?>
         <div class="alert alert-failuer"><?php echo $failuer; ?></div>
@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="unit_id">Unit</label>
                     <select name="unit_id" class="form-control" >
@@ -79,6 +79,14 @@
                         <option value="1">Enable</option>
                         <option value="2">Disable</option>
                     </select>
+                </div>
+            </div>
+
+            <div class="col-md-1" style="padding-left: 0px !important;">
+                <div class="form-group">
+                    <label for="unit_id">Serial</label>
+                    <input style="height: 5px !important;" type="text" name="serial" class="form-control input-lg" id="name_en" placeholder="0">
+                    <?= (isset($failuer['serial'])) ? '<div class="alert alert-failuer">' . $failuer['serial'] . '</div>' : ''; ?>
                 </div>
             </div>
         </div>

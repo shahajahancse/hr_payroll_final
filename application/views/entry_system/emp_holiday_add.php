@@ -17,7 +17,7 @@
             <?php $success = $this->session->flashdata('success');
 	        if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
 	         $error = $this->session->flashdata('error');
 	         if ($error) { ?>
             <div class="alert alert-failuer"><?php echo $error; ?></div>
@@ -34,13 +34,13 @@
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
-                        <?php 
+                        <?php
 							foreach ($dept as $row) {
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
 								$select_data='';
-								}  
+								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
 							}
@@ -53,13 +53,12 @@
                 <div class="form-group">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
-                        <?php if (!empty($user_data->unit_name)) { 
+                        <?php if (!empty($user_data->unit_name)) {
 										$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
                         <option value=''>Select Department</option>
                         <?php foreach ($dpts->result() as $key => $val) { ?>
                         <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
                         <?php } } ?>
-                        <option value=''>Select Department</option>
                     </select>
                 </div>
             </div>
@@ -109,20 +108,33 @@
         <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
+
+        <style>
+            .input-group .form-control {
+                width: 90% !important;
+            }
+            .input-group-btn .btn {
+                padding: 8px 10px !important;
+            }
+        </style>
+
         <div class="row nav_head">
             <div class="col-lg-4">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6">
-                <div class="input-group" style="display:flex; gap: 14px">
+            <div class="col-lg-5">
+                <div class="input-group" style="gap: 14px; display: flex;">
                     <input type="date" class="form-control" id="date" placeholder="select date">
-                    <span class="input-group-btn">
+                    <span class="input-group-btn" style="display: flex; gap: 10px;">
                         <input class="btn btn-primary" onclick='add_Holiday()' type="button" value='Add Holiday' />
+                        <input class="btn btn-danger" onclick="delete_holiday()" type="button" value="Delete">
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
     </div>
+
+
     <div class="col-md-4 tablebox">
         <div style="height: 80vh; overflow-y: scroll;">
             <table class="table table-hover" id="fileDiv">
@@ -132,11 +144,11 @@
                     <th class="" style="background:#0177bcc2;color:white">Id</th>
                     <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                 </tr>
-                <?php if (!empty($employees)) { 
+                <?php if (!empty($employees)) {
 					  		foreach ($employees as $key => $emp) {
 					  	?>
                 <tr id="removeTr">
-                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
+                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
                     </td>
                     <td class="success"><?= $emp->emp_id ?></td>
                     <td class="warning "><?= $emp->name_en ?></td>
@@ -181,7 +193,7 @@ function grid_emp_list() {
                 $.each(response, function(index, value) {
                     items += '<tr id="removeTr">';
                     items +=
-                        '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
+                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
                         value.emp_id + '" ></td>';
                     items += '<td class="success">' + value.emp_id + '</td>';
                     items += '<td class="warning ">' + value.name_en + '</td>';
@@ -212,7 +224,7 @@ $(document).ready(function() {
             type: "POST",
             url: hostname + "common/ajax_designation_by_line_id/" + id,
             success: function(func_data) {
-                $('.desig').append("<option value=''>-- Select District --</option>");
+                $('.desig').append("<option value=''>-- Select Designation --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
                     opt.val(id);
@@ -235,7 +247,7 @@ $(document).ready(function() {
             type: "POST",
             url: hostname + "common/ajax_line_by_sec_id/" + id,
             success: function(func_data) {
-                $('.line').append("<option value=''>-- Select District --</option>");
+                $('.line').append("<option value=''>-- Select Line --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
                     opt.val(id);
@@ -259,7 +271,7 @@ $(document).ready(function() {
             type: "POST",
             url: hostname + "common/ajax_section_by_dept_id/" + id,
             success: function(func_data) {
-                $('.section').append("<option value=''>-- Select District --</option>");
+                $('.section').append("<option value=''>-- Select Section --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
                     opt.val(id);
@@ -313,24 +325,24 @@ $(document).ready(function() {
 <script>
   function add_Holiday() {
     $("#loader").show();
-    var checkboxes = document.getElementsByName('select_emp_id[]');
+    var checkboxes = document.getElementsByName('emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql =='') {
       alert('Please select employee Id');
       $("#loader").hide();
-      return ;
+      return false;
     }
     var date = $('#date').val();
     if (date =='') {
       alert('Please select Date');
       $("#loader").hide();
-      return ;
+      return false;
     }
     var unit_id = $('#unit_id').val();
     if (unit_id =='') {
       alert('Please select Unit');
       $("#loader").hide();
-      return ;
+      return false;
     }
     $.ajax({
       type: "POST",
@@ -344,9 +356,52 @@ $(document).ready(function() {
         // console.log(data);
           $("#loader").hide();
           if (data == 'success') {
-              showMessage('success', 'Holiday Added Successfully'); 
+              showMessage('success', 'Holiday Added Successfully');
           }else {
               showMessage('error', 'Holiday Not Added');
+          }
+      }
+    })
+  }
+</script>
+
+<script>
+  function delete_holiday() {
+    $("#loader").show();
+    var checkboxes = document.getElementsByName('emp_id[]');
+    var sql = get_checked_value(checkboxes);
+    if (sql =='') {
+      alert('Please select employee Id');
+      $("#loader").hide();
+      return false;
+    }
+    var date = $('#date').val();
+    if (date =='') {
+      alert('Please select Date');
+      $("#loader").hide();
+      return false;
+    }
+    var unit_id = $('#unit_id').val();
+    if (unit_id =='') {
+      alert('Please select Unit');
+      $("#loader").hide();
+      return false;
+    }
+    $.ajax({
+      type: "POST",
+      url: hostname + "entry_system_con/holiday_delete_all",
+      data: {
+        sql: sql,
+        date: date,
+        unit_id: unit_id
+      },
+      success: function(data) {
+        // console.log(data);
+          $("#loader").hide();
+          if (data == 'success') {
+              showMessage('success', 'Holiday Deleted Successfully');
+          }else {
+              showMessage('error', 'Holiday Not Deleted');
           }
       }
     })

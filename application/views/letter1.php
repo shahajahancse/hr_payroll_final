@@ -1,318 +1,99 @@
-<?php error_reporting(0); ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title> Letter 1</title>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/appointment_letter.css">		 
 
-<style type="text/css">
-#wrapper {
-          margin:0 auto;		  
-		  width:700px;
-		  height:2000px;;
-		  overflow:hidden;
-  		  margin-bottom:100px;
-		 }
-#header {
-          width:700px;
-		  height:auto;
-		  background-color: #CCCCCC;
+<!-- < ?php dd($values);?> -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Letter 1</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-        } 
-#h_left {
-         width:500px;
-		 height:auto;
-		 float:left;
-		 }
-#h_right {
-         width:200px;
-		 height:auto;
-		 float:right;
-		 }
-#nav {
-         float:left;
-		 width:700px;
-		 height:auto;
-		 padding:10px;
-     }
-#nav_inner {
-         width:190px;
-		 height:30px;
-		 font-size:16px;
-		 font-weight:bold;
-		 padding-top:5px;
-		 border:1px solid #333333;
-		 border-collapse:collapse;
-		 border-radius:14px;
-		 -moz-border-radius:14px;
-		 -webkit-border-radius:14px;
-		 background-color:#999999;
-		 }
-#nav_bottom {
-         float:left;
-         width:700px;
-		 height:auto;
-		 text-align:justify;
-		 } 
-#body {
-         float:left;
-         width:700px;
-		 height:auto;
-		 text-align:justify;
-		}
-#body_inner_left {
-         float:left;
-		 width:200px;
-		 height:auto;
-		 text-align:left;
-		 } 
-#body_inner_center {
-         float:left;
-		 width:100px;
-		 height:auto;
-		 }
-#body_inner_right {
-         float:left;
-		 width:200px;
-		 height:auto;
-		 text-align:left;
-		 } 
-#body_inner_left_ep {
-         float:left;
-		 width:200px;
-		 height:auto;
-		 text-align:right;
-		 } 
-#break { 
-         float:left;
-		 width:700px;
-		 height:auto;
-       } 
-#footer {
-         float:left;
-		 width:700px;
-		 height:auto;   
-         }  
-#footer_left {
-         float:left;
-		 width:300px;
-		 height:auto;   
-         } 
-#footer_right {
-     float:right;
-		 width:300px;
-		 height:auto;   
-    }
+  </head>
+  <body>
+<?php foreach($values as $value){?>
+  <div class="container w-75 mb-5">
+    <div class="d-flex flex-row justify-content-between">
+      <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
+      <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+      <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
+    </div>
+    <div class="d-flex">
+      <div class="col-md-2">
+        <?php  $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;?>
+        <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+      </div>
+      <div class="col-md-12">
+        <h1 class="text-center" style="margin-left: -420px;">হানিওয়েল গার্মেন্টস লিমিটেড</h1>
+      </div>
+    </div>
+    <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+      <p class="text-center h6">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
+    </div>
+    <div class="d-flex">
+      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</div>
+      <div class="col-md-6 text-right">তারিখঃ <span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date. '+10 days'))?></span> ইং</div>
+    </div>
 
-  .head1,.head2,.head3{
-    display: inline;
-    font-size: 15px;
-    font-weight: bold;
-  }
-  .head1{
-    width: 265px;
-    float: left;
-    margin-left:5px;
-  }
-  .head2{
-    width: 265px;
-    float: left;
-  }
-  .head3{
-    width: 265px;
-    float: right;
-  }
-  .colon{
-    display: inline;
-    margin-right:5px;
-    font-weight: bolder;
-  }
-  .border_div{
-    border-bottom: 1px dotted #000;
-    display: inline;
-  } 
-  table{
-    display: inline-block;
-  }
-  table.table-heading{
-    width:720px;
-  }
-  table.table-heading tr td{
-    width:33.33%;
-    font-size: 16px;
-    font-weight: bold;
-  }       
+    <div>
+      <h5 class="text-center mt-5">"রেজিষ্ট্রি ডাক যোগে প্রেরিত" প্রথম চিঠি</h5>
+    </div>
 
-</style>
-</head>
-  <!--<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/appointment_letter.css"> -->
-  <?php  //echo "<pre>"; print_r($values->result()); die();
-  foreach($values->result() as $row){
-    // echo $row->emp_pre_add; die();
-  	$emp_id = $row->emp_id;
-  	$absent_start_date = $this->grid_model->get_absent_start_date($emp_id,$firstdate,$limit=10); ?>
-    <div style="width:750px; margin:0 auto; text-align:justify; font-family:SolaimanLipi; font-size:16px; margin-bottom:120px;">
-      <table width="720" style="font-family:SolaimanLipi;">
-        <tr>
-            <?php $company_logo = $this->common_model->company_info()->company_logo; ?>
-            <td width="105"><img width="55" height="55" src="<?php  echo base_url();?>images/<?php echo $company_logo = $this->common_model->company_info()->company_logo; ?>" /></td>
-            <td width="491" style="font-size:15px;text-align:center;padding-left: 44px;">
-                <span style="text-align:center"><span style="font-size:18px; font-weight:bold;"><?php echo $company_logo = $this->common_model->company_info()->company_name_bangla; ?></span><br>
-                <?php echo $company_logo = $this->common_model->company_info()->company_add_bangla; ?>
-                </span>
-            </td>
-        </tr>
-      </table>
-
-      <div align="center" style="width:720px; border-bottom:2px solid #000;"></div>
-      <!-- <p style="text-align:center;">রেজিস্ট্রি ডাকযোগে প্রেরিত</p> -->
-      <table width="720px" cellpadding="3" style="">
-        <tr>
-          <td style="width: 450px;text-align: left;font-size: 17px;font-weight: normal;">সূত্রঃ <span>রেজিস্ট্রি ডাকযোগে প্রেরিত</span></td>
-          <td style="width: 250px;text-align: right;font-size: 15px;">১য় চিঠি</td>
-        </tr>
-      </table>
-      <table width="720px" cellpadding="3" style="">
-        <tr>
-          <td style="font-size: 17px;font-weight: normal;">তারিখ :  .........................</td>
-        </tr>
-      </table>
-      <?php
-       $emp_add_pre = explode(';',$row->emp_pre_add_ban);
-        $vill_pre = $emp_add_pre[0];
-        $post_pre = $emp_add_pre[1];
-        $thana_pre = $emp_add_pre[2];
-        $dist_pre = $emp_add_pre[3];
-        /*$vill_pre = split('ঃ', $vill_pre);
-        $post_pre = split('ঃ', $post_pre);
-        $thana_pre = split('ঃ', $thana_pre);
-        $dist_pre = split('ঃ', $dist_pre);
-        $vill_pre = $vill_pre[1];
-        $post_pre = $post_pre[1];
-        $thana_pre = $thana_pre[1];
-        $dist_pre = $dist_pre[1];*/
-
-
-        $emp_add_par = explode(';',$row->emp_par_add_ban);
-        $vill = $emp_add_par[0];
-        $post = $emp_add_par[1];
-        $thana = $emp_add_par[2];
-        $dist = $emp_add_par[3];
-        /*$vill = split('ঃ', $vill);
-        $post = split('ঃ', $post);
-        $thana = split('ঃ', $thana);
-        $dist = split('ঃ', $dist);
-        $vill = $vill[1];
-        $post = $post[1];
-        $thana = $thana[1];
-        $dist = $dist[1];*/
-
-       ?>
-      <!-- <div class="heading_contianer" style="width:720px;display: inline-block;">
-        <div class="head1">প্রাপক,</div>
-        <div class="head2">বর্তমান ঠিকানা</div>
-        <div class="head3">স্থায়ী ঠিকানা</div>
-      </div> -->
-      <table class="table-heading" style="display: table;font-size: 16px;">
-        <tr>
-          <td>প্রাপক,</td>
-        </tr>
-      </table>
-      <table width=300px cellpadding="3" style="vertical-align:top; font-size: 14px;">
-        <tr>
-          <td width=65px>নাম</td>
-          <td><span class="colon">:</span><div style="font-family:SutonnyMJ;" class="border_div"><?php echo $row->bangla_nam; ?></div></td>
-        </tr>
-        <tr>
-          <td width=70px>আইডি নং</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $row->emp_id; ?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>পদবী</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $row->desig_name; ?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>সেকশন</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $row->sec_name; ?></div></td>
-        </tr>
-        <tr><td width=65px></td><td></td></tr>
-      </table>
-
-      <table class="table-heading" style="display: table;font-size: 16px; width: 720px;">
-        <tr>
-          <td style="padding-left:6px;">বর্তমান ঠিকানা</td>
-        </tr>
-      </table>
-
-      <table width=370px cellpadding="3" style="font-family:SutonnyMJ;font-size: 14px;overflow: auto;">
-        <tr>
-          <td style="vertical-align: top;">ঠিকানা </td>
-          <!-- <td><span class="colon">:</span><div class="border_div"><?php echo $vill_pre;?></div></td> -->
-          <td><span class="colon">:</span><div class="border_div"><?php echo $row->emp_pre_add;?></div></td>
-        </tr>
-       <!--  <tr>
-          <td width=65px>ডাকঘর</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $post_pre;?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>থানা</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $thana_pre;?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>জেলা</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $dist_pre;?></div></td>
-        </tr> -->
-      </table>
-
-      <table class="table-heading" style="display: table;font-size: 16px; width: 720px;">
-         <tr>
-          <td style="padding-left:9px;text-align: left;">স্থায়ী ঠিকানা</td>
-        </tr>
-      </table>
-
-      <table width=720px cellpadding="3" style="font-family:SutonnyMJ;font-size: 14px;overflow: auto;">
-         <tr>
-          <td>পিতা/স্বামী </td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $row->emp_fname; ?></div></td>
-        </tr>
-       
-        <tr>
-          <td style="vertical-align: top;">ঠিকানা</td>
-          <!-- <td><span class="colon">:</span><?php echo $vill;?></td> -->
-          <td><span class="colon">:</span><?php echo $row->emp_par_add; ?></td>
-        </tr>
-        <!--<tr>
-          <td width=65px>ডাকঘর</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $post;?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>থানা</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $thana;?></div></td>
-        </tr>
-        <tr>
-          <td width=65px>জেলা</td>
-          <td><span class="colon">:</span><div class="border_div"><?php echo $dist;?></div></td>
-        </tr> -->
-      </table>
-
-
-      <div id="sub" style="width:720px;"><h5 style="text-align:left;font-size: 17px;">বিষয়ঃ বাংলাদেশ শ্রম  আইন ২০০৬ এর ২৭ (৩ক) ধারা মোতাবেক ব্যাখ্যা প্রদান সহ চাকুরীতে  যোগদানের জন্য নোটিশ।</h5></div>
-
-      <div style="float:left; width:720px;position:relative;font-size:17px;">
-        জনাব / জনাবা,<br>আপনি গত <!-- ...............................  --> <span style="padding: 0 10px;font-family:SutonnyMJ;"><?php echo $ld = date('d-m-Y',strtotime($row->left_date));?></span>  ইং তারিখ হতে অদ্যবধি বিনা নোটিশে এবং কর্তৃপক্ষের বিনা অনুমতিতে কারখানায় অনুপস্থিত রয়েছেন। আপনার এ ধরণের অনুপস্থিতির কারণে কারখানার স্বাভাবিক উৎপাদন ব্যহত হচেছ বিধায় বাংলাদেশ শ্রম আইন ২০০৬ ও সংশোধিত ২০১৩ এর ২৭(৩ক) ধারা মতে অনতিবিলম্বে আপনাকে অনুপস্থিতির কারণ ব্যাখ্যাসহ কাজে যোগদানের  নির্দেশ প্রদান করা হলো।
-        <br><br>
-        <p>আপনি যদি অদ্য হতে ১০(দশ) দিনের মধ্যে কারখানায় যোগদান করতে ব্যর্থ বা আপনার এ ধরনের অনুনমোদিত অনুপস্থিতির কারণ উক্ত সময়ের মধ্যে কর্তৃপক্ষের নিকট ব্যাখ্যা প্রদান করতে ব্যর্থ হন তবে কর্তৃপক্ষ আপনার বিরূদ্ধে পরবর্তী আইনানুগ ব্যবস্থা গ্রহণ করবে।</p>
+      <div class="d-flex ml-3 mt-5">
+        <div class="col-md-4 border" style="line-height: 10px;">
+          <p class="mt-3"><b>অফিস বিবরনীঃ</b></p>
+          <p>নামঃ <?php echo $value->name_bn?></p>
+          <p>পদবীঃ <?php echo $value->desig_bangla?></p>
+          <p>কার্ডঃ <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?></span></p>
+          <p>সেকশনঃ <?php echo $value->sec_name_bn?></p>
+          <p>লাইনঃ <?php echo $value->line_name_bn?></p>
+          <p>যোগদানঃ <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo date('d/m/Y',strtotime($value->emp_join_date))?></span> ইং</p>
+        </div>
+        <div class="col-md-4 border" style="line-height: 10px;">
+          <p class="mt-3"><b>বর্তমান ঠিকানাঃ</b></p>
+          <p>হোল্ডিং নংঃ <span style="font-family: SutonnyMJ;font-size:19px">  <?php echo $value->holding_num?></sapn></p>
+          <p>গ্রামঃ <?php echo $value->pre_village_bn?></p>
+          <p>ডাকঘরঃ <?php echo $value->post_name_bn?></p>
+          <p>থানাঃ <?php echo $value->upa_name_bn?></p>
+          <p>জেলাঃ <?php echo $value->dis_name_bn?></p>
+        </div>
+        <div class="col-md-4 border" style="line-height: 10px;">
+          <p class="mt-3"><b>স্থায়ী ঠিকানাঃ</b></p>
+          <p>পিতার নামঃ <?php echo $value->father_name?></p>
+          <p>মাতার নামঃ <?php echo $value->mother_name?></p>
+          <p>গ্রামঃ <?php echo $value->per_village_bn?></p>
+          <p>ডাকঘরঃ <?php echo $value->post_bn?></p>
+          <p>থানাঃ <?php echo $value->upa_bn?></p>
+          <p>জেলাঃ <?php echo $value->dis_bn?></p>
+        </div>
       </div>
 
-      <div style="clear:both;width:720px;position:relative; height:30px;"></div>
-      <p style="margin:0px;padding:0px;">ধন্যবাদান্তে</p> কর্তৃপক্ষ
-      <br><br>
-      অনুলিপি:<br>
-      ১। ব্যবস্থাপনা পরিচালক।<br>
-      ২। নোটিশ বোর্ড।<br>
-      ৩। ব্যক্তিগত নথি
+      <h6 class="ml-3 mt-5"><b>বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭(৩ক) ধারা মোতাবেক ব্যাখ্যা প্রদান সহ চাকুরীতে যোগদানের জন্য নোটিশ।</b></h6>
+    <div class="ml-3 mt-5">
+      <p class="text-justify">
+        <span>জনাব/জনাবা,</span><br> 
+        আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। আপনার এরূপ
+        অনুপস্থিতি বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭(৩ক) ধারার আওতায় পড়ে। সুতরাং অত্র পত্র প্রাপ্তির ১০ (দশ) দিনের মধ্যে আপনার
+        অনুপস্থিতির কারন ব্যাখ্যা সহ কাজে যোগদানের জন্য আপনাকে নির্দেশ দেওয়া হলো।
+        আপনার লিখিত জবাব উক্ত সময়ের মধ্যে নিম্ন স্বাক্ষরকারীর নিকট অবশ্যই পৌছাতে হবে। অন্যথায় কর্তৃপক্ষ আপনার বিরুদ্ধে প্রয়োজনীয়
+        আইনানুগ ব্যবস্থা নিতে বাধ্য হবে।
+      </p>
+
+      <div class="mt-5">
+        <p style="margin-bottom: 117px !important;">ধন্যবাদান্তে,</p>
+        <p class="mt-5" style="border-top:2px solid black;width:200px;padding-top: 5px;">বিভাগীয় প্রধান</p>
+        <p>এইচআর, এডমিন এন্ড কমপ্লায়েন্স</p>
+        <p>হানিওয়েল গার্মেন্টস লিমিটেড।</p>
+        <p class="mt-5">অনুলিপিঃ</p>
+        <p>১ . কোম্পানীর সংশ্লিষ্ট বিভাগ সমূহ</p>
+        <p>২. কারখানার নোটিশ বোর্ড</p>
+        <p>৩. শ্রমিকের ব্যক্তিগত নথি।</p>
+      </div>
     </div>
-    <div style="page-break-after: always;"></div>
-  <?php } ?>
+  </div>    
+<div style="page-break-after:always"></div>
+  <?php }?>
+  </body>
 </html>
+
+
+

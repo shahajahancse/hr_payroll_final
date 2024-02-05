@@ -17,7 +17,7 @@
             <?php $success = $this->session->flashdata('success');
 	        if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
 	         $error = $this->session->flashdata('error');
 	         if ($error) { ?>
             <div class="alert alert-failuer"><?php echo $error; ?></div>
@@ -33,13 +33,13 @@
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
-                        <?php 
+                        <?php
 							foreach ($dept as $row) {
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
 								$select_data='';
-								}  
+								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
 							}
@@ -52,13 +52,12 @@
                 <div class="form-group">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
-                        <?php if (!empty($user_data->unit_name)) { 
+                        <?php if (!empty($user_data->unit_name)) {
 										$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
                         <option value=''>Select Department</option>
                         <?php foreach ($dpts->result() as $key => $val) { ?>
                         <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
                         <?php } } ?>
-                        <option value=''>Select Department</option>
                     </select>
                 </div>
             </div>
@@ -260,11 +259,11 @@
                     </tr>
                 </thead>
                 <tbody id="tbody">
-                    <?php if (!empty($employees)) { 
+                    <?php if (!empty($employees)) {
                                   foreach ($employees as $key => $emp) {
                               ?>
                     <tr class="removeTr">
-                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
+                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
                         </td>
                         <td class="success"><?= $emp->emp_id ?></td>
                         <td class="warning "><?= $emp->name_en ?></td>
@@ -325,8 +324,8 @@
                     $.each(response, function(index, value) {
                         items += '<tr class="removeTr">';
                         items +=
-                            '<td><input type="checkbox" class="checkbox" id="select_emp_id" name="select_emp_id[]" value="' +
-                            value.id + '" ></td>';
+                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
+                            value.emp_id + '" ></td>';
                         items += '<td class="success">' + value.emp_id + '</td>';
                         items += '<td class="warning ">' + value.name_en + '</td>';
                         items += '</tr>';
@@ -457,25 +456,25 @@
 
 <script>
     function add_weekend() {
-        
-        var checkboxes = document.getElementsByName('select_emp_id[]');
+
+        var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         if (sql == '') {
             alert('Please select employee Id');
             $("#loader").hide();
-            return;
+            return false;
         }
         var date = $('#date').val();
         if (date == '') {
             alert('Please select Date');
             $("#loader").hide();
-            return;
+            return false;
         }
         var unit_id = $('#unit_id').val();
         if (unit_id == '') {
             alert('Please select Unit');
             $("#loader").hide();
-            return;
+            return false;
         }
         $.ajax({
             type: "POST",
@@ -499,8 +498,8 @@
 </script>
 <script>
     function get_leave_balance() {
-        
-        var checkboxes = document.getElementsByName('select_emp_id[]');
+
+        var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
         if (numbersArray == '') {
@@ -524,7 +523,7 @@
         }
         $.ajax({
             type: "POST",
-            url: hostname + "entry_system_con/leave_balance_ajax", 
+            url: hostname + "entry_system_con/leave_balance_ajax",
             data: {
                 emp_id: numbersArray[0],
                 year: bal_get_year
@@ -571,19 +570,22 @@
 <script>
     function leave_add(e) {
         e.preventDefault();
-        
-        var checkboxes = document.getElementsByName('select_emp_id[]');
+
+        var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
         if (numbersArray == '') {
             alert('Please select employee Id');
+            return false;
         }
         if (numbersArray.length > 1) {
             alert('Please select max one employee');
+            return false;
         }
         var unit_id = $('#unit_id').val();
         if (unit_id == '') {
             alert('Please select Unit');
+            return false;
         }
 
         var formdata = $("#leave_entry_form").serialize();

@@ -220,6 +220,36 @@ class Common extends CI_Controller {
         echo json_encode($data);
         exit;
     }
+    
+    function get_emp_info_by_id($id, $unit_id = null){
+
+        $this->db->select('
+                    com.*,
+                    per.name_en,
+                    per.name_bn,
+                    per.img_source,
+
+                    dept.dept_name,
+                    dept.dept_bangla,
+                    sec.sec_name_bn,
+                    sec.sec_name_en,
+                    line.line_name_en,
+                    line.line_name_bn,
+                    deg.desig_name,
+                    deg.desig_bangla,
+                ');
+        $this->db->from('pr_emp_com_info as com');
+        $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
+        $this->db->join('emp_depertment as dept', 'dept.dept_id = com.emp_dept_id', 'left');
+        $this->db->join('emp_section as sec', 'sec.id = com.emp_sec_id', 'left');
+        $this->db->join('emp_line_num as line', 'line.id = com.emp_line_id', 'left');
+        $this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
+        $r = $this->db->where('com.emp_id', $id)->get()->row();
+
+        header('Content-Type: application/x-json; charset=utf-8');
+        echo json_encode($r);
+         return;
+    }
 
 
 }

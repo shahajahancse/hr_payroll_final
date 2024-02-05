@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <title>A4 Page with Boxes</title>
+  <title>Id Card English</title>
   <style>
 body {
   margin: 0;
@@ -19,8 +19,8 @@ body {
 
 .box {
   width: 440px;
-  height: 250px;
-  margin: 20px;
+  height: 265px;
+  margin: 12px;
   float: left;
   background-color: #ffffff;
   border: 1px solid #000000;
@@ -40,7 +40,7 @@ body {
 p {
   margin: 0;
   padding: 0;
-  font-size: 18px;
+  font-size: 20.6px;
 }
 
 .box-top {
@@ -52,61 +52,69 @@ p {
   position: absolute;
   top: 38px;
   right: 10px;
-  width: 90px;
-  height: 100px;
-  /* border: 1px solid #000000; */
+  width: 106px;
+  height: 119px;
+
 }
 
+
+@media print {
+  .printt {
+    margin-left: -250px;
+  }
+
+  .container {
+    width: auto;
+  }
+}
   </style>
 </head>
 
-<!-- per_village,
-per_post
-per_thana
-per_district
-per_village_bn -->
-<body>
+
+<body style="line-height:1.4 !important">
   <!-- < ?php dd($values)?> -->
   <div class="container">
     <?php foreach($values as $value ){?>
     <div class="box">
       <div class="d-flex">
         <div class="col-md-3">
-          <img src="<?php echo base_url('/uploads/logo.png')?>" alt="logo" height="50px" width="80px">
+          <?php $image =$this->db->select('company_logo,company_signature')->get('company_infos')->row();?>
+          <img src="<?php echo base_url('/images'.'/'.$image->company_logo)?>" alt="logo" height="40px" width="60px" style="margin-top:5px">
         </div>
-        <div class="col-md-9 ">
-          <h3 class=""><b>nvwbI‡qj Mv‡g©›Um wjwg‡UW</b></h3>
-          <h4 style="margin-top: -10px;margin-left: 56px;"><b>cwiPq cÎ</b></h4>
+        <div class="col-md-9 printt" >
+          <h3 style="margin-top:1px"><b>nvwbI‡qj Mv‡g©›Um wjwg‡UW</b></h3>
         </div>
       </div>
-        <div class="ml-2">
-                  <img src="<?php echo base_url('/uploads'.'/'.$value->img_source)?>" alt="" class="box-img" style="border:1px solid black">
-                  <p class="box-top ">AvBwW KvW© bst <span style="font-size:16px"> <b><?php echo $value->emp_id?></b></span></p>
-                  <p class="box-top"> Bmyy¨i ZvwiL t <span style="font-size:16px"> <b><?php echo $value->emp_join_date?></b></span></p>
-                  <p class="box-top">bvg t <span style="font-size:12px"><b><?php echo $value->name_bn?></b></span></p>
-                  <p class="box-top">c`ex t <span style="font-size:12px"><b><?php echo $value->desig_bangla?></b></span></p>
-                  <p class="box-top"> wefvM/kvLvt <span style="font-size:12px"><b><?php echo $value->sec_name_bn?></b></span></p>
-                  <p class="box-top"> <span>Kv‡Ri aibt <span style="font-size:12px"><b><?php echo $value->emp_cat_id ==1 ? "স্থায়ী" : "SS"?></b></span></span></p>
-                  <p class="box-top">jvBbt <b><?php echo $value->line_name_bn?></b></p>
-                  <p class="box-top">‡hvM`v‡bi ZvwiLt <b style="font-size:16px"><?php echo $value->emp_join_date?></b></p>
-                  <div class="d-flex justify-content-between">
-                      <p class="box-top mt-2">MÖnbKvixi ¯^vÿi</p>
-                      <p class="box-top mt-2" style="margin-right: 22px;">Aby‡gv`bKvix</p>
-                  </div>
+      <h4 class="col-md-12 text-center" style="margin-top:-18px"><b>cwiPq cÎ</b></h4>
+        <div>
+          <img src="<?php echo base_url('/uploads'.'/photo/'.$value->img_source)?>" alt="" class="box-img" style="border:1px solid black">
+          <p class="box-top ">AvBwW KvW© bst <span style="font-size:19px"> <b><?php echo $value->emp_id?></b></span></p>
+          <p class="box-top"> Bmyy¨i ZvwiL t <span style="font-size:19px"> <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</b></span></p>
+          <p class="box-top">bvg t <span style="font-size:12px"><b><?php echo $value->name_bn?></b></span></p>
+          <p class="box-top">c`ex t <span style="font-size:12px"><b><?php echo $value->desig_bangla?></b></span></p>
+          <p class="box-top"> wefvM/kvLvt <span style="font-size:12px"><b><?php echo $value->sec_name_bn?></b></span></p>
+          <p class="box-top"> <span>Kv‡Ri aibt <span style="font-size:12px"><b><?php echo $value->emp_cat_id ==1 ? "স্থায়ী" : "SS"?></b></span></span></p>
+          <p class="box-top">jvBbt <span style="font-size:12px"><b><?php echo $value->line_name_bn?></b></span></p>
+          <p class="box-top">‡hvM`v‡bi ZvwiLt <b style="font-size:19px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</b></p>
+          <img src="<?php echo base_url('/images/'.$image->company_signature)?>" style="width: 18%;position: absolute;margin-top: -18px;right: 20px;">
+          <div class="d-flex justify-content-between" style="margin-top: 15px;">
+            <p class="box-top mt-2">MÖnbKvixi ¯^vÿi</p>
+            <p class="box-top mt-2" style="margin-right: 22px;">Aby‡gv`bKvix</p>
+          </div>
         </div>
     </div>
 
-    <div class="box text-center">
-      <p class="box-top mt-2">‡gqv`t PvKzwi _vKvKvjxb ch©šÍ|</p>
-      <p class="box-top">cÖwZôv‡bi wVKvbvt 799, (cyivZb cøU bs- 1010/1011), AvgevM,‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi -1700|</p>
-      <p class="box-top">‡dvb bst 09611677670, 01749087002</p>
-      <p class="box-top">D³ cwiPq cÎ nvivBqv †M‡j ZvrÿwbK e¨e¯’vcbv KZ…©cÿ‡K RvbvB‡Z n‡e|</p>
-      <p class="box-top">i‡³i MÖæct <spans style="font-family: Arial, Helvetica, sans-serif; font-size:14px"> <?php echo $value->blood_name?></spans></p>
-      <p class="box-top">¯’vqx wVKvbv :  MÖvg : <span style="font-size:12px;font-weight:bold"><?php echo $value->per_village_bn?></span>,WvKNi : <span style="font-size:12px;font-weight:bold"><?php echo $value->post_name_bn?></span><br>
-        _vbv :<span style="font-size:12px;font-weight:bold"><?php echo $value->upa_name_bn?></span>, ‡Rjv :<span style="font-size:12px;font-weight:bold"> <?php echo $value->dis_name_bn?></span>
-      </p>
-      <p class="box-top">Riyix ‡hvMv‡hv‡Mi ‡dvb bst <span style="font-size:16px"><b><?php echo $value->bank_bkash_no?></b></span></p>
-      <p class="box-top">RvZxq cwiPq cÎ bst <span style="font-size:16px"> <b><?php echo $value->nid_dob_id?></b></span></p>
+    <div class="box" style="line-height:">
+      <p class="box-top mt-2" style="font-family:the times roman;font-size:15px;text-align: center;margin-bottom:5px">Document Code : HGL/HRD/HR/03/051</p>
+      <p class="box-top text-center">‡gqv`t PvKzwi _vKvKvjxb ch©šÍ|</p>
+      <p class="box-top text-center">cÖwZôv‡bi wVKvbvt 799, (cyivZb cøU bs- 1010/1011), AvgevM,‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi -1700|</p>
+      <p class="box-top text-center">‡dvb bst 09611677670, 01749087002</p>
+      <p class="box-top text-center">D³ cwiPq cÎ nvivBqv †M‡j ZvrÿwbK e¨e¯’vcbv KZ…©cÿ‡K RvbvB‡Z n‡e|</p>
+      <p class="box-top text-center">i‡³i MÖæct <spans style="font-family: Arial, Helvetica, sans-serif; font-size:14px"> <b><?php echo $value->blood_name?></b></spans></p>
+      <p class="box-top text-center">¯’vqx wVKvbv :  MÖvg : <span style="font-size:12px;font-weight:bold"><?php echo $value->per_village_bn?></span>,WvKNi : <span style="font-size:12px;font-weight:bold"><?php echo $value->post_name_bn?></span></p>
+      <p class="box-top text-center"> _vbv :<span style="font-size:12px;font-weight:bold"><?php echo $value->upa_name_bn?></span>, ‡Rjv :<span style="font-size:12px;font-weight:bold"> <?php echo $value->dis_name_bn?></span></p>
+      <p class="box-top text-center">Riyix ‡hvMv‡hv‡Mi ‡dvb bst <span style="font-size:19px"><b><?php echo $value->bank_bkash_no?></b></span></p>
+      <p class="box-top text-center"> <?php echo $value->nid_dob_check == 1 ? 'RvZxq cwiPq cÎ bst' : 'Rb¥wbeÜb bst'?> <span style="font-size:19px"> <b><?php echo $value->nid_dob_id?></b></span></p>
     </div>
     <?php }?>
   </div>

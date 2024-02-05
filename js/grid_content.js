@@ -347,8 +347,8 @@ function daily_costing_summary()
 
 	var status = document.getElementById('status').value;
 	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&status="+status;
-   url =  hostname+"grid_con/daily_costing_summary/";
-
+    url =  hostname+"grid_con/daily_costing_summary/";
+	document.getElementById('loaader').style.display = 'flex';
 
 	ajaxRequest = new XMLHttpRequest();
    ajaxRequest.open("POST", url, true);
@@ -356,6 +356,7 @@ function daily_costing_summary()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -2351,7 +2352,7 @@ function grid_continuous_incre_report()
 		alert('Please select employee Id');
 		return false;
 	}
-
+		document.getElementById('loaader').style.display = 'flex';
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
 	
 	
@@ -2361,7 +2362,8 @@ function grid_continuous_incre_report()
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
 
-	ajaxRequest.onreadystatechange = function(){
+	ajaxRequest.onreadystatechange = function () {
+			document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			
@@ -2639,14 +2641,12 @@ function grid_letter1_report()
    }
  }
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
+	if(firstdate ==''){
 		alert("Please select First date");
 		return false;
 	}
 	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
+	if(unit_id =='Select'){
 		alert("Please select unit !");
 		return false;
 	}
@@ -2657,23 +2657,19 @@ function grid_letter1_report()
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	var s;
 	var queryString="spl="+sql+"&unit_id="+unit_id+"&firstdate="+firstdate;
-   url =  hostname+"index.php/grid_con/grid_letter1_report/";
-    
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-   ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			
-			letter_1 = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			letter_1.document.write(resp);
-			//letter_1.stop();
+	url =  hostname+"index.php/grid_con/grid_letter1_report/";
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+			if(ajaxRequest.readyState == 4){
+				var resp = ajaxRequest.responseText;
+				letter_1 = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+				letter_1.document.write(resp);
+			}
 		}
-	}
 }
 function grid_letter2_report()
 {
@@ -2734,8 +2730,7 @@ function grid_letter2_report()
 	}
 
 }
-function grid_letter3_report()
-{
+function grid_letter3_report(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
  try{
    // Opera 8.0+, Firefox, Safari
@@ -2756,14 +2751,12 @@ function grid_letter3_report()
  }
 
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
+	if(firstdate ==''){
 		alert("Please select First date");
 		return false;
 	}
 	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
+	if(unit_id =='Select'){
 		alert("Please select unit !");
 		return false;
 	}
@@ -3331,74 +3324,60 @@ var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	provident_fund.moveTo(0,0);
 }
 
-function grid_incre_prom_report()
-{
-
-
-	 var ajaxRequest;  // The variable that makes Ajax possible!
-
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-
+function grid_incre_prom_report(type){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
 	var firstdate = document.getElementById('firstdate').value;
 	var seconddate = document.getElementById('seconddate').value;
-	   if(firstdate =='')
-	   {
-		   alert("Please select First date");
-		   return false;
-	   }
-	   if(seconddate =='')
-	   {
-		   alert("Please select Second date");
-		   return false;
-	   }
-	   var unit_id = document.getElementById('unit_id').value;
-	   if(unit_id =='Select')
-	   {
-		   alert("Please select Category options");
-		   return false;
-	   }
-   
-   
+	if(firstdate ==''){
+		alert("Please select First date");
+		return false;
+	}
+	if(seconddate ==''){
+		alert("Please select Second date");
+		return false;
+	}
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){
+		alert("Please select Unit");
+		return false;
+	}
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
-
 	if (sql == '') {
 		alert('Please select employee Id');
 		return false;
 	}
-	   var queryString="firstdate="+firstdate+"&spl="+sql;
-	   
-	   
-	   url =  hostname+"index.php/grid_con/incre_prom_report/";
-		   
-		  ajaxRequest.open("POST", url, true);
-		  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-		  ajaxRequest.send(queryString);
-	   ajaxRequest.onreadystatechange = function(){
-		   if(ajaxRequest.readyState == 4){
-			   var resp = ajaxRequest.responseText;
-			   
-			   continuous_increment_promotion_proposal = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			   continuous_increment_promotion_proposal.document.write(resp);
-			   //continuous_increment_promotion_proposal.stop();
-		   }
-	   }
+		document.getElementById('loaader').style.display = 'flex';
+	var queryString="first_date="+firstdate+"&second_date="+seconddate+"&spl="+sql+"&type="+type;
+	url =  hostname+"index.php/grid_con/incre_prom_report/";
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function () {
+			document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			continuous_increment_promotion = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			continuous_increment_promotion.document.write(resp);
+		}
+	}
 
 
 
@@ -3617,7 +3596,7 @@ function id_card(status){
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1000,height=800');
 			daily_present_report.document.write(resp);
 		}
 	}
@@ -3712,6 +3691,8 @@ function grid_job_card()
 		alert('Please select employee Id');
 		return false;
 	}
+
+	document.getElementById('loaader').style.display = 'flex';
 	/*
 	
 
@@ -3729,7 +3710,8 @@ function grid_job_card()
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
 
-	ajaxRequest.onreadystatechange = function(){
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			

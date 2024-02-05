@@ -71,23 +71,14 @@ for($counter = 1; $counter <= $page,$counter <= $page2; $counter ++)
 			</span>
 		</td>
 		<td style="text-align:right;width: 30%">
-			<?php echo '<span style="font-family:SutonnyMJ;font-size:15px;">'."পাতা নং # $counter <br>".'</span>';?>
+			<?php echo '<span style="font-family:;font-size:15px;">'."Page No. # $counter <br>".'</span>';?>
 		</td>
 	</tr>
 </table>
 
 <table class="main_table" align="center" style="font-size:12px;width: 750px">
 
-	<th>SL</th>
-    <th style="background:#DDDDDD;">Emp ID</th>
-    <th>Name</th>
-    <th>Designation</th> 
-	<th>Line</th> 
-    <th>Grade</th> 
-    <th>Pre. Sal.</th>
-    <th>Increment</th>
-    <th>Cur. Sal.</th>
-    <th>Effective Date</th>
+
 
 <?php
 
@@ -111,13 +102,24 @@ $section=array();
 		echo "<tr bgcolor='#CCCCCC'>";
 		echo "<td colspan='10' style='font-size:16px'>Section :&nbsp".$values["new_section"][$k]."</td>";
 		echo "</tr>";
-	}
+	?>
+		<th>SL</th>
+    <th style="background:;">Emp ID</th>
+    <th>Name</th>
+    <th>Designation</th> 
+	<th>Line</th> 
+    <th>Grade</th> 
+    <th>Pre. Sal.</th>
+    <th>Increment</th>
+    <th>Cur. Sal.</th>
+    <th>Effective Date</th>
+	<?php }
 	echo "<tr>";
 	echo "<td style='padding:5px;'>";
 	echo $s = $k+1;
 	echo "</td>";
 	
-	echo "<td style='background:#DDDDDD; padding:5px;font-weight:bold;'> ";
+	echo "<td style='background:; padding:5px;font-weight:bold;'> ";
 	echo $emp_id = $values["ref_id"][$k];
 	echo "</td>";
 	
@@ -180,7 +182,7 @@ $section=array();
 	
 	}
 
-	echo "<tr bgcolor='#CCCCCC' style='font-weight:bold;text-align:center; padding:2px;' >";
+	echo "<tr bgcolor='#CCCCCC' style='font-weight:bold; padding:2px;' >";
 	echo "<td colspan='6' >";
 	echo "Subtotal";
 	echo "</td>";

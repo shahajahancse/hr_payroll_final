@@ -10,8 +10,7 @@
 <div align="center" style="height:100%; width:100%; overflow:hidden;" >
 
 <?php
-//print_r($values);
-
+// dd($values);
 $present_count = 0;
 $absent_count = 0;
 $leave_count = 0;
@@ -22,8 +21,7 @@ $holiday_count = 0;
 
 $count = count($values["emp_id"]);
 
-for($i = 0; $i<$count;$i++)
-{
+for($i = 0; $i<$count;$i++){
 	echo "<div style='min-height:1100px; overflow:hidden;'>";
 	$present_count = 0;
 	$absent_count = 0;
@@ -71,7 +69,7 @@ for($i = 0; $i<$count;$i++)
 	echo "<strong>Section :</strong>";
 	echo "</td>";
 	echo "<td >";
-	echo $values["sec_name"][$i];
+	echo $values["sec_name_en"][$i];
 	echo "</td>";
 	echo "</tr>";
 	echo "<tr>";
@@ -79,7 +77,7 @@ for($i = 0; $i<$count;$i++)
 	echo "<strong>Line :</strong>";
 	echo "</td>";
 	echo "<td>";
-	echo $values["line_name"][$i];
+	echo $values["line_name_en"][$i];
 	echo "</td>";
 	echo "<td>";
 	echo "<strong>Desig :</strong>";
@@ -106,10 +104,10 @@ for($i = 0; $i<$count;$i++)
 	echo "<table>";
 	
 	$count1 = count($values[$emp_id]["shift_log_date"]);
+	// dd($count1);
 	
 	echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0' style='text-align:center; font-size:13px; width:650px; '> <th>Date</th><th>Day</th><th>In Time</th><th>Out Time</th><th>Attn.Status</th><th>Overtime</th><th>Remarks</th>";
-	for($k = 0; $k<$count1;$k++)
-	{
+	for($k = 0; $k<$count1;$k++){
 		//echo $values[$emp_id]["shift_log_date"][$k];
 		//echo "<br>";
 		
@@ -131,55 +129,19 @@ for($i = 0; $i<$count;$i++)
 		echo "<td>&nbsp;";
 		$shift_date = $values[$emp_id]["shift_log_date"][$k];
 		$shift_date = date('Y-m-d',strtotime($shift_date));
-		if($values[$emp_id]["in_time"][$k] == "00:00:00")
-		{
+		if($values[$emp_id]["in_time"][$k] == "00:00:00"){
 			echo "&nbsp;";
 		}
-		else
-		{
-			// if($shift_date>='2018-04-26' && $shift_date<='2018-05-05')
-			// {
-			// 	/*if($values[$emp_id]["in_time"][$k] < '08:05:00')
-			// 	{*/
-			// 	if($values[$emp_id]["in_time"][$k] < '07:55:00')
-			// 	  {
-			// 		$set_time = '0'.$rand_hour.': 0'.$rand_min.':0'.$rand_sec.' AM';
-			// 		$time_slice = explode(':',$set_time);
-			// 		$time_slice = $time_slice[0];
-			// 		if($time_slice ==8)
-			// 		{
-			// 			echo $set_time_fi = '0'.$rand_hour.': 0'.$rand_min.':0'.$rand_sec.' AM';
-			// 		}
-			// 		else
-			// 		{
-			// 			echo $set_time_fi = '0'.$rand_hour.':'.'55'.':0'.$rand_sec.' AM';
-			// 		}
-			// 	  }
-			// 	  else
-			// 	  {
-			// 		echo $values[$emp_id]["in_time"][$k]; 
-			// 	  }
-			/*	}
-				else
-				{
-					echo $values[$emp_id]["in_time"][$k];
-				} */
-			// }
-			// else
-			// {
-				echo $values[$emp_id]["in_time"][$k];
-			// }
-			
+		else{
+			echo $values[$emp_id]["in_time"][$k];
 		}
 		echo "</td>";
 				
 		echo "<td>&nbsp;";
-		if($values[$emp_id]["out_time"][$k] =="00:00:00")
-		{
+		if($values[$emp_id]["out_time"][$k] =="00:00:00"){
 			echo "&nbsp;";
 		}
-		else
-		{
+		else{
 			echo $values[$emp_id]["out_time"][$k];
 		}
 		echo "</td>";
@@ -188,45 +150,32 @@ for($i = 0; $i<$count;$i++)
 		echo $values[$emp_id]["att_status"][$k];
 		echo "</td>";
 		
-		if($values[$emp_id]["att_status"][$k] == "P")
-		{
+		if($values[$emp_id]["att_status"][$k] == "P"){
 			$present_count++;
 		}
-		elseif($values[$emp_id]["att_status"][$k] == "A")
-		{
+		elseif($values[$emp_id]["att_status"][$k] == "A"){
 			$absent_count++;
 		}
-		elseif($values[$emp_id]["att_status_count"][$k] == "Leave")
-		{
+		elseif($values[$emp_id]["att_status_count"][$k] == "Leave"){
 			$leave_count++;
 		}
-		elseif($values[$emp_id]["att_status"][$k] == "P(Error)")
-		{
+		elseif($values[$emp_id]["att_status"][$k] == "P(Error)"){
 			$perror_count++;
 		}
-		elseif($values[$emp_id]["att_status"][$k] == "Weekend")
-		{
+		elseif($values[$emp_id]["att_status"][$k] == "Weekend"){
 			$wk_off_count++;
 		}
-		elseif($values[$emp_id]["att_status"][$k] == "Holiday")
-		{
+		elseif($values[$emp_id]["att_status"][$k] == "Holiday"){
 			$holiday_count++;
 		}
-		
-		
-		if($values[$emp_id]["remark"][$k] == "Late")
-		{
+		if($values[$emp_id]["remark"][$k] == "Late"){
 			$late_count++;
 		}
-		
-		
 		echo "<td>&nbsp;";
-		if($values[$emp_id]["ot_hour"][$k] == 0)
-		{
+		if($values[$emp_id]["ot_hour"][$k] == 0){
 			echo "&nbsp;";
 		}
-		else
-		{
+		else{
 			echo $values[$emp_id]["ot_hour"][$k];
 		}
 		echo "</td>";
@@ -327,3 +276,25 @@ for($i = 0; $i<$count;$i++)
 </div>
 </body>
 </html>
+
+
+<!-- Array
+(
+    [emp_id] =>  1000003
+    [emp_full_name] =>  Abdul Motin
+    [proxi_id] => 0013860573
+    [sec_name_en] => Production
+    [line_name_en] =>  Prod. Staff
+    [desig_name] =>Marker Man
+    [emp_join_date] => 01-Jul-96
+    [dept_name] => Production
+	[shift_log_date] => 03-Dec-23
+	[in_time] =>  07:48:52 AM
+	[out_time] => 07:11:27 PM
+	[ot_hour] =>  0
+	[att_status] => P
+	[att_status_count] =>  P
+	[lunch_out] => 01:01:34 PM
+	[lunch_in] => 01:08:33 PM
+
+) -->
