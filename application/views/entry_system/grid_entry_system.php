@@ -619,10 +619,6 @@ $unit = $this->common_model->get_unit_id_name();
             return false;
         }
         time = document.getElementById('time').value;
-        if (time == '') {
-            showMessage('error', 'Please select Time');
-            return false;
-        }
 
         var formdata = $("#present_entry_form").serialize();
         var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
