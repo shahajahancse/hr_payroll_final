@@ -321,10 +321,13 @@
 							<button class="btn input-sm sbtn" onclick="grid_nominee()">Nominee From</button>
 							<?php } ?>
 							<?php if(in_array(66,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_incre_prom_report()">Increment Letter</button>
+							<button class="btn input-sm sbtn" onclick="grid_incre_prom_report(1)">Increment Letter</button>
 							<?php } ?>
 							<?php if(in_array(67,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_prom_report()">Promotion Letter</button>
+							<button class="btn input-sm sbtn" onclick="grid_incre_prom_report(2)">Promotion Letter</button>
+							<?php } ?>
+							<?php if(in_array(67,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_incre_prom_report(3)">Line Letter</button>
 							<?php } ?>
 							<?php if(in_array(68,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_service_book()">Service Book</button>

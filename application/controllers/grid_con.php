@@ -152,7 +152,35 @@ class Grid_con extends CI_Controller {
 	}
 
 
-	// letter for continuous absent
+	// Increment Promotion Line Letter
+	
+	function incre_prom_report(){
+		$first_date = $this->input->post('first_date');
+		$second_date = $this->input->post('second_date');
+		$ids = $this->input->post('spl');
+		$type = $this->input->post('type');
+		$emp_id = explode(',', trim($ids));
+		// dd($first_date);
+		$data["values"] = $this->grid_model->incre_prom_report($first_date,$second_date,$emp_id,$type);
+        if($type == 1){
+			$this->load->view('increment_letter',$data);
+		}else if($type == 2){
+			$this->load->view('promotion_letter',$data);
+		}else{
+			$this->load->view('line_letter',$data);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -300,19 +328,6 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function incre_prom_report(){
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
-		$data["values"] = $this->grid_model->incre_prom_report_bn($grid_firstdate,$grid_emp_id);
-		if(is_string($data["values"])){
-			echo $data["values"];
-		}
-		else{
-			$this->load->view('monthly_incre_prom_report',$data);
-		}
-	  }
 
 	 function prom_report(){
 		$grid_firstdate = $this->input->post('firstdate');
