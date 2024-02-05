@@ -164,7 +164,7 @@ class Entry_system_con extends CI_Controller
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
-        $eot        = date('H:i:s', strtotime($_POST['eot']));
+        $eot         = $_POST['eot'];
         $emp_ids     = explode(',', $sql);
 
         $com_ids    = $this->get_com_emp_id($emp_ids);
