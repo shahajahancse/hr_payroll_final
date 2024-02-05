@@ -58,6 +58,7 @@ class Entry_system_con extends CI_Controller
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
+        $com_ids    = $this->get_com_emp_id($emp_ids);
         $mm = array();
         while ($first_date <= $second_date) {
             if (strtotime($time) < strtotime("06:00:00")) {
@@ -74,7 +75,7 @@ class Entry_system_con extends CI_Controller
                     'device_id'         => 0,
                 );
             }
-            $mm = $this->insert_attn_process($data, $date, $unit_id, $emp_ids);
+            $mm = $this->insert_attn_process($data, $date, $unit_id, $emp_ids, $com_ids);
             $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
 		}
         if (!empty($mm) && $mm['massage'] == 1) {
@@ -83,7 +84,7 @@ class Entry_system_con extends CI_Controller
             echo 'error';
         }
     }
-    function insert_attn_process($data, $date, $unit_id, $emp_ids) {
+    function insert_attn_process($data, $date, $unit_id, $emp_ids, $com_ids) {
         $this->load->model('attn_process_model');
         $att_table = "att_". date("Y_m", strtotime($date));
         if (!$this->db->table_exists($att_table)){
@@ -97,7 +98,7 @@ class Entry_system_con extends CI_Controller
             );
         }
         $this->db->insert_batch($att_table, $data);
-        if ($this->attn_process_model->attn_process($date, $unit_id, $emp_ids, 1)) {
+        if ($this->attn_process_model->attn_process($date, $unit_id, $com_ids)) {
             return array('massage' => 1);
         } else {
             return array('massage' => 0);
@@ -115,8 +116,8 @@ class Entry_system_con extends CI_Controller
 
         $com_ids    = $this->get_com_emp_id($emp_ids);
         $att_table  = "att_" . date("Y_m", strtotime($first_date));
-        $first      = $first_date .' '. $time;
-        $second     = $second_date .' '. $time;
+        $first      = $first_date .' '. '05:59:59';
+        $second     = $second_date .' '. '06:00:00';
 
         if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
             $new_md = date('Y-m-d', strtotime('+1 days' . $first_date));
