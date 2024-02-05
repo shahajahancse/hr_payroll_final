@@ -98,7 +98,7 @@ $k = 0;
 	for($i=0; $i<=$per_page_id;$i++)
 	{
 		
-		if($section!=$values["sec_name"][$k]){
+		if($section!=$values["sec_name_en"][$k]){
 			$i=$i+1;
 			$row_count = $row_count+1;
 			if($row_count >$per_page_id)
@@ -111,7 +111,7 @@ $k = 0;
 			}
 
 			echo "<tr bgcolor='#CCCCCC'>";
-			echo "<td colspan='10' style='font-size:14px'>Section :&nbsp".$values["sec_name"][$k]."</td>";
+			echo "<td colspan='10' style='font-size:14px'>Section :&nbsp".$values["sec_name_en"][$k]."</td>";
 			echo "</tr>";
    	 ?>
 <?php
@@ -174,7 +174,7 @@ $k = 0;
 	echo "</td>";
 	
 	echo "</tr>";
-		$section=$values["sec_name"][$k];
+		$section=$values["sec_name_en"][$k];
 		$k++;
 		if($max==$k){
 			break;
