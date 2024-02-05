@@ -130,7 +130,7 @@ class Entry_system_con extends CI_Controller
         }
         $this->db->where("date_time BETWEEN '$first' and '$second' ");
         $this->db->where_in('proxi_id', $emp_ids)->delete($att_table);
-        dd($this->db->last_query());
+        // dd($this->db->last_query());
 
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
