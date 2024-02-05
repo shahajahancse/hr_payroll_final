@@ -44,7 +44,7 @@
             <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi -1700|</p>
         </div>
         <div class="d-flex">
-            <div class="col-md-6">m~Ît GBPwRGj/GBPAviwWt-2023/3077</div>
+            <div class="col-md-6">m~Ît GBPwRGj/GBPAviwWt <?php echo date('Y')?>/ <?php echo $row->letter_id?></div>
             <div class="col-md-6 text-right">ZvwiLt <?php echo date('d/m/Y')?> Bs</div>
         </div>
 
@@ -66,7 +66,7 @@
         <br>
         <div class="ml-3">
             <p class="text-justify">
-                <span>জনাব/জনাবা,</span><br>
+                <span><?php echo $row->gender == "Male"? 'Rbve':'Rbvev'?>,</span><br>
                 Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q ‡h, ‡Kv¤úvbx KZ©…c¶ Avcbvi Kg©`¶Zvq mš‘ó n‡q Avcbv‡K <?php echo $row->prev_desig_name?> c`, ‡M«Wt <?php echo $row->prev_grade_name;?>  ‡_‡K
                 <?php echo $row->new_desig_name?> c‡`, jvBbt <?php echo $row->new_line_name?> , ‡M«Wt <?php echo $row->new_grade_name;?> G c‡`vbœwZ ‡`Iqvi wm×všÍ M…nxZ n‡q‡Q| Avcbvi c~‡e©i ‡eZb <?php echo $row->prev_salary?>
                 UvKvi mv‡_ AviI<?php echo ($row->new_salary - $row->prev_salary)?> UvKv e…w× K‡i ‡gvU ‡eZb <?php echo $row->new_salary?> UvKv avh© Kiv nBj| hv A`¨  <?php echo $row->effective_month?> Bs ZvwiL n‡Z Kvh©Ki Kiv n‡e|

@@ -21,8 +21,7 @@ $holiday_count = 0;
 
 $count = count($values["emp_id"]);
 
-for($i = 0; $i<$count;$i++)
-{
+for($i = 0; $i<$count;$i++){
 	echo "<div style='min-height:1100px; overflow:hidden;'>";
 	$present_count = 0;
 	$absent_count = 0;

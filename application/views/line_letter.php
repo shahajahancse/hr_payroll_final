@@ -11,11 +11,31 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family:SutonnyMJ;
+            
         }
         .table-bordered td, .table-bordered th {
             border: 1px solid #000000;
             padding:2px;
         }
+        p{
+            font-size:19px
+        }
+
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .image {
+        height: 500 !important;
+        width: 400 !important; 
+        margin-top: 10px !important;
+        position: absolute !important;
+    }
+
+}
     </style>
 </head>
 
@@ -30,59 +50,56 @@
         <div class="d-flex">
             <div class="col-md-2">
                 <?php $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo?>
-                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+                <img class="image" src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 60%;margin-top: 10px;position: absolute;">
             </div>
             <div class="col-md-12">
-                <h1 class="text-center" style="margin-left: -420px;">হানিওয়েল গার্মেন্টস লিমিটেড</h1>
+                <h1 class="text-center" style="margin-left: -420px;">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h1>
             </div>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-            <p class="text-center h5">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
+            <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi -1700|</p>
         </div>
         <div class="d-flex">
-            <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু ১৫৯১/১/২০২৪-এ</div>
-            <div class="col-md-6 text-right">তারিখঃ ২৫/০১/২০২৪</div>
+            <div class="col-md-6">m~Ît GBPwRGj/GBPAviwWt <?php echo date('Y')?>/ <?php echo $row->letter_id?></div>
+            <div class="col-md-6 text-right">ZvwiLt  <?php echo date('d/m/Y')?> Bs</div>
         </div>
 
         <div>
-            <h5 class="text-center" style="border-bottom: 2px solid black;width: 124px;margin: 0 auto;">অবগতি পত্র</h5>
+            <h3 class="text-center" style="border-bottom: 2px solid black;width: 124px;margin: 0 auto;line-height: 18px;">AeMwZ cÎ</h3>
         </div>
 
         <div class="ml-3" style="line-height: 10px;">
-            <p class="mt-3">প্রতি,</p>
-            <p>নামঃ <?php echo $row->name_bn?></p>
-            <p>পদবীঃ <?php echo $row->new_desig_name?></p>
-            <p>কার্ডঃ <?php echo $row->emp_id?></p>
-            <p>সেকশনঃ <?php echo $row->new_sec_name?></p>
-            <p>লাইনঃ <?php echo $row->new_line_name?></p>
-            <p>যোগদানঃ <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($row->emp_join_date))?></span> ইং</p>           
+                <p class="mt-3">cÖwZ,</p>
+                <p>bvgt <?php echo $row->name_bn?></p>
+                <p>c`ext <?php echo $row->new_desig_name?></p>
+                <p>KvWt <?php echo $row->emp_id?></p>
+                <p>‡mKkbt <?php echo $row->new_sec_name?></p>
+                <p>jvBbt <?php echo $row->new_line_name?></p>
+                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span>Bs</p>           
         </div>
         <br>
-        <h6 class="ml-3"><b>বিষয়: লাইন পরিবর্তন প্রসঙ্গে।</b></h6><br>
+        <h6 class="ml-3"><b>welq: jvBb cwieZ©b c«m‡½|</b></h6><br>
         <div class="ml-3">
             <p class="text-justify">
-                <span>জনাব/জনাবা,</span><br>
-                আপনার অবগতির জন্য জানানো যাচ্ছে যে, কোম্পানী কর্তৃপক্ষ কারখানার কাজের সুবিধার্থে এবং আপনার সর্ব সম্মতিক্রমে আপনাকে <b>সুইং
-                সেকশন</b> এর  <b>সাধাঃ অপারেটর </b> থেকে <b>লাইন ৪ </b> এ পরিবর্তন করার সিদ্ধান্ত গ্রহন করা হল। যা আগামী <b>০১/১১/২০২৩</b> ইং তারিখ হতে কার্যকর করা
-                হবে। আপনার যাবতীয় বেতন, ভাতা ও অন্যান্য পাওনাদি পূর্বের ন্যায় বহাল থাকবে।<br>
-                অতএব, কোম্পানী কর্তৃপক্ষ আশা করছে যে, আপনি আপনার বর্তমান সেকশনের নির্ধারিত লাইনে আপনার উপর অর্পিত দায়িত্ব ও কর্তৃব্য
-                পালনে আরও সচেতন হবেন এবং কোম্পানীর উত্তোরত্তর সমৃদ্ধিতে আরও সহায়ক ভূমিকা রাখবেন।
+                <span><?php echo $row->gender == "Male"? 'Rbve':'Rbvev'?>,</span><br>
+                Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q ‡h, ‡Kv¤úvbx KZ©…c¶ KviLvbvi Kv‡Ri myweav‡_© Ges Avcbvi me© m¤§wZµ‡g Avcbv‡K <?php echo $row->prev_sec_name?> Gi <?php echo $row->prev_desig_name?> Gi  ‡_‡K <?php echo $row->new_line_name?>  G cwieZ©b Kivi wm×vš— M«nb Kiv nj| hv AvMvgx <?php echo date('d/m/Y',strtotime($row->effective_month))?> Bs ZvwiL n‡Z Kvh©Ki Kiv n‡e| Avcbvi hveZxq ‡eZb, fvZv I Ab¨vb¨ cvIbvw` c~‡e©i b¨vq envj _vK‡e|<br>
+                AZGe, ‡Kv¤úvbx KZ©…c¶ Avkv Ki‡Q ‡h, Avcwb Avcbvi eZ©gvb ‡mKk‡bi wba©vwiZ jvB‡b Avcbvi Dci Awc©Z `vwqZ¡ I KZ©…e¨ cvj‡b AviI m‡PZb n‡eb Ges ‡Kv¤úvbxi D‡ËviËi mg…w×‡Z AviI mnvqK f~wgKv ivL‡eb|
             </p>
 
 
             <div style="line-height: 10px;">
-                <p style="margin-bottom: 117px !important;">ধন্যবাদান্তে,</p>
+                <p style="margin-bottom: 117px !important;">ab¨ev`v‡šÍ,</p>
                 <hr style="border: 1px solid black; width: 340px;float:left;display: block;"><br>
                 <br><br>
-                <p class="mt-2">বিভাগীয় প্রধান (এইচআর, এডমিন এন্ড কমপ্লায়েন্স)</p>
-                <p>হানিওয়েল গার্মেন্টস লিমিটেড।</p>
-                <p class="mt-5">অনুলিপিঃ</p>
-                <p>১। গ্রুপ জেনারেল ম্যানেজার (এইচআর, এডমিন এন্ড কমপ্লায়েন্স)</p>
-                <p>২। জেনারেল ম্যানেজার (প্রজেক্ট হেড)</p>
-                <p>৩। বিভাগীয় প্রধান</p>
-                <p>৪। ব্যক্তিগত নথি</p>
-                <p class="text-justify">প্রাপ্তি স্বীকারঃ আমি এই পত্রের সকল বিষয় সমূহ পড়ে, বুঝে এবং মেনে নিয়ে স্ব-জ্ঞানে নিম্নে এর অনুলিপিতে স্বাক্ষর করে ১ (এক) কপি<br><br>গ্রহন করি।</p>
-                <p class="text-right mt-5">গ্রহনকারীর স্বাক্ষর.......................................</p>
+                <p class="mt-2">wefvMxq cÖavb (GBPAvi, GWwgb GÛ Kgcøv‡qÝ)</p>
+                <p>nvwbI‡qj Mv‡g©›Um wjwg‡UW|</p>
+                <p class="mt-5">Abywjwct</p>
+                <p>1| MÖæc ‡Rbv‡ij g¨v‡bRvi (GBPAvi, GWwgb GÛ Kgcøv‡qÝ)</p>
+                <p>2| ‡Rbv‡ij g¨v‡bRvi (cÖ‡R± ‡nW)</p>
+                <p>3| wefvMxq c«avb</p>
+                <p>4| e¨w³MZ bw_</p>
+                <!-- <p class="text-justify">cÖvwß ¯^xKvit Avwg GB c‡Îi mKj welq mg~n c‡o, ey‡S Ges ‡g‡b wb‡q ¯^-Áv‡b wb‡¤œ Gi Abywjwc‡Z ¯^vÿi K‡i 1 (GK) Kwc MÖnb Kwi |</p> -->
+                <p class="text-right mt-5">MÖnbKvixi ¯^vÿi.......................................................................</p>
             </div>
         </div>
     </div>
