@@ -104,30 +104,18 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Designation Name English</label>
                             <input type="text" name="desig_name" value="" placeholder="Designation Name" class="form-control">
                             <?=(isset($failuer['desig_name'])) ? '<div class="alert alert-failuer">' . $failuer['desig_name'] . '</div>' : ''; ?>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                             <div class="form-group">
                             <label>Designation Name Bangla</label>
                             <input type="text" name="desig_bangla" value="" placeholder="Designation Name Bangla" class="form-control">
                             <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Group Name</label>
-                        <select class="form-control" name="group_id">
-                            <?php $groups = $this->common_model->get_group_name(); ?>
-                            <option value="">Select</option>
-                            <?php foreach($groups as $group){?>
-                            <option value="<?= $group->id ?>"><?php echo $group->name_en .' >> '. $group->unit_name ?></option>
-                        <?php }?>
-                        </select>
                         </div>
                     </div>
                 </div>
@@ -135,7 +123,7 @@
                     <button type="submit" class="btn btn-primary ">Submit</button></button>
                     <a href="<?= base_url('index.php/setup_con/designation') ?>" class="btn-warning btn">Cancel</a>
                 </div>
-            </div>    
+            </div>
     </form>
 </div>
 <script>
@@ -149,19 +137,19 @@
             },
            success: function(d) {
              var data = JSON.parse(d);
-             
+
              var attn_bonus = data.attn_bonus;
              var holiday_weekend = data.holiday_weekend;
              var iftar = data.iftar;
              var night = data.night;
              var tiffin = data.tiffin;
-             
+
              var attnIdSelect = $("#attn_id");
              var holidayWeekendIdSelect = $("#holiday_weekend_id");
              var iftarIdSelect = $("#iftar_id");
              var nightAlIdSelect = $("#night_al_id");
              var tiffinIdSelect = $("#tiffin_id");
-             
+
              if (attn_bonus.length > 0) {
                attnIdSelect.empty().append("<option value=''>Select Attendance Bonus</option>");
                attn_bonus.forEach(function(item) {
@@ -169,7 +157,7 @@
                });
              }
              attnIdSelect.append("<option value='0'>None</option>");
-             
+
              if (holiday_weekend.length > 0) {
                holidayWeekendIdSelect.empty().append("<option value=''>Select Holiday/Weekend</option>");
                holiday_weekend.forEach(function(item) {
@@ -178,7 +166,7 @@
              }
              holidayWeekendIdSelect.append("<option value='0'>None</option>");
 
-             
+
              if (iftar.length > 0) {
                iftarIdSelect.empty().append("<option value=''>Select Iftar</option>");
                iftar.forEach(function(item) {
@@ -187,7 +175,7 @@
              }
              iftarIdSelect.append("<option value='0'>None</option>");
 
-             
+
              if (night.length > 0) {
                nightAlIdSelect.empty().append("<option value=''>Select Night Allowance</option>");
                night.forEach(function(item) {
@@ -196,7 +184,7 @@
              }
              nightAlIdSelect.append("<option value='0'>None</option>");
 
-             
+
              if (tiffin.length > 0) {
                tiffinIdSelect.empty().append("<option value=''>Select Tiffin</option>");
                tiffin.forEach(function(item) {
@@ -206,7 +194,7 @@
              tiffinIdSelect.append("<option value='0'>None</option>");
            },
             error: function(data) {
-              
+
             }
         })
 

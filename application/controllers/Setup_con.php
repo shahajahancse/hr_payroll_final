@@ -1127,7 +1127,7 @@ class Setup_con extends CI_Controller
                 'iftar_id' => $this->input->post('iftar_id'),
                 'night_al_id' => $this->input->post('night_al_id'),
                 'tiffin_id' => $this->input->post('tiffin_id'),
-                'group_id' => $this->input->post('group_id'),
+                // 'group_id' => $this->input->post('group_id'),
             );
             // dd($formArray);
             if ($this->db->insert('emp_designation', $formArray)) {
@@ -1189,7 +1189,7 @@ class Setup_con extends CI_Controller
                 'iftar_id'           => $this->input->post('iftar_id'),
                 'night_al_id'        => $this->input->post('night_al_id'),
                 'tiffin_id'          => $this->input->post('tiffin_id'),
-                'group_id'           => $this->input->post('group_id'),
+                // 'group_id'           => $this->input->post('group_id'),
             );
 
             $this->db->where('id', $id);
