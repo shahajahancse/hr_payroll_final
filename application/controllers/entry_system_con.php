@@ -65,6 +65,7 @@ class Entry_system_con extends CI_Controller
             } else {
                 $date = $first_date;
             }
+            dd($date);
             $data = array();
             foreach ($emp_ids as $r) {
                 $data[] = array(
