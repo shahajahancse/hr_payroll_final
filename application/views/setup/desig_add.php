@@ -118,18 +118,6 @@
                             <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
                         </div>
                     </div>
-                    <!-- <div class="col-md-4">
-                        <div class="form-group">
-                        <label>Group Name</label>
-                        <select class="form-control" name="group_id">
-                            <?php //$groups = $this->common_model->get_group_name(); ?>
-                            <option value="">Select</option>
-                            <?php //foreach($groups as $group){?>
-                            <option value="<?= //$group->id ?>"><?php //echo $group->name_en .' >> '. $group->unit_name ?></option>
-                        <?php //}?>
-                        </select>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary ">Submit</button></button>
