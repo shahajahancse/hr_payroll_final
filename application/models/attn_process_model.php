@@ -26,11 +26,10 @@ class Attn_process_model extends CI_Model{
         return;
     }
 
-	function attn_process($process_date,$unit,$grid_emp_id)
+	function attn_process($process_date,$unit,$grid_emp_id, $type = null)
 	{
-		// dd($unit);
 		//=========================== Get emplpoyee list ============================
-		$all_employee = $this->get_all_employee($grid_emp_id);
+		$all_employee = $this->get_all_employee($grid_emp_id, $type);
 
 		foreach ($all_employee->result() as $rows){
 			$com_id			= $rows->id;
@@ -394,7 +393,7 @@ class Attn_process_model extends CI_Model{
 
 
 	// get employee list
-	function get_all_employee($grid_emp_id){
+	function get_all_employee($grid_emp_id, $type){
 		$this->db->select('
 				pr_emp_com_info.id,
 				pr_emp_com_info.emp_id,
@@ -408,7 +407,11 @@ class Attn_process_model extends CI_Model{
 		');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_emp_shift');
-		$this->db->where_in("pr_emp_com_info.id",$grid_emp_id);
+		if (!empty($type)) {
+			$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
+		} else {
+			$this->db->where_in("pr_emp_com_info.id",$grid_emp_id);
+		}
 		$this->db->where("pr_emp_com_info.emp_shift = pr_emp_shift.id");
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		return $query = $this->db->get();

@@ -367,7 +367,7 @@ class Entry_system_con extends CI_Controller
                 'new_com_salary'    => $rr->new_com_salary,
                 'effective_month'   => $line_date,
                 'ref_id'            => $emp_id,
-                'status'            => 4,
+                'status'            => 3,
             );
 
             $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
@@ -397,7 +397,7 @@ class Entry_system_con extends CI_Controller
                 'new_com_salary'    => $r->com_gross_sal,
                 'effective_month'   => $line_date,
                 'ref_id'            => $emp_id,
-                'status'            => 4,
+                'status'            => 3,
             );
             if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
                 $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
