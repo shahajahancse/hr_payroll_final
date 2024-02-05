@@ -157,6 +157,10 @@ class Entry_system_con extends CI_Controller
             echo 'error';
         }
     }
+    public function test($emp_id,$eot,$second_date,$first_date){
+        dd('hello');
+
+    }
 
     public function eot_modify_entry()
     {
