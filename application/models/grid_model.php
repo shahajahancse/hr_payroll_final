@@ -3362,24 +3362,10 @@ function grid_daily_report($date, $grid_emp_id,$type){
 			$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id');
 			$this->db->where("pr_leave_trans.emp_id", $emp_id);
 			$this->db->where("pr_leave_trans.leave_start Between '$grid_firstdate' and '$grid_seconddate'");
-			// $this->db->group_by('pr_emp_com_info.emp_id');
-			// $this->db->order_by('pr_emp_com_info.emp_sec_id','ASC' );
+
 			$query = $this->db->get()->result();
 			if (!empty($query)) {
-				foreach($query as $rows){					
-					// [id] => 18655
-					// [emp_id] => 1000004
-					// [unit_id] => 1
-					// [start_date] => 2018-01-27
-					// [leave_type] => cl
-					// [leave_start] => 2018-01-27
-					// [leave_end] => 2018-01-29
-					// [total_leave] => 0
-					// [leave_descrip] => 
-					// [emp_join_date] => 1996-05-26
-					// [name_en] => Shujata Pervin
-					// [line_name_en] => Prod. Staff
-
+				foreach($query as $rows){	
 					$data['emp_id'][]= $rows->emp_id;
 					$data['full_name'][]= $rows->name_en;
 					$data['jdate'][]=$rows->emp_join_date;
