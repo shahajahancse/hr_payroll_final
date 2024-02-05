@@ -25,6 +25,7 @@
 
 <body style="font-family: SutonnyMJ">
     <?php foreach($values as $row){?>
+        <!-- < ?php dd($row)?> -->
     <div class="container w-75">
         <div class="d-flex flex-row justify-content-between">
             <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
@@ -44,7 +45,7 @@
             <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi -1700|</p>
         </div>
         <div class="d-flex">
-            <div class="col-md-6">myÎt GBPwRGj/GBPAviwW ১৫৯১/<?php echo date('d/m',strtotime($row->effective_month))?></div>
+            <div class="col-md-6">myÎt GBPwRGj/GBPAviwW <?php echo date('Y')?>/ <?php echo $row->letter_id?></div>
             <div class="col-md-6 text-right">ZvwiLt <?php echo date('d/m/Y')?> Bs</div>
         </div>
 
@@ -61,24 +62,6 @@
                 <p>jvBbt <?php echo $row->new_line_name?></p>
                 <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span> ইং</p>           
         </div>
-
-            <!-- [name_bn] => আব্দুল মতিন
-            [emp_join_date] => 1996-07-01
-            [current_grade] => 1
-            [prev_dept_name] => 
-            [prev_sec_name] => প্রদ
-            [prev_line_name] => dd
-            [prev_desig_name] => 
-            [prev_grade_name] => None
-            [new_dept_name] => 
-            [new_sec_name] => প্রদ
-            [new_line_name] => dd
-            [new_desig_name] => 
-            [new_grade_name] => None
-            [emp_id] => 2023-10-01
-            [prev_salary] => 21000
-            [new_salary] => 22000 -->
-
 
         <span class="ml-3"><b style="font-fmaily : SutonnyMJ;font-size: 19px">welq t evrmwiK †eZb e„w× cÖm‡½|</b></span>
         <div class="ml-3">

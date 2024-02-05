@@ -707,6 +707,7 @@ class Grid_model extends CI_Model{
 	function incre_prom_report($first_date,$second_date,$emp_id,$type){
 		// dd($first_date.'===='.$second_date);
 		$this->db->select('
+			pr_emp_per_info.id as letter_id,
 			pr_emp_per_info.name_bn,
 			pr_emp_per_info.gender,
 			pr_emp_com_info.emp_join_date,
@@ -760,9 +761,7 @@ class Grid_model extends CI_Model{
 		}else{
 		$this->db->where_in('pr_incre_prom_pun.status', 3);
 		}
-
 		$query = $this->db->get()->result();
-		// dd($query);
 			if(!empty($query)){
 				return $query;
 			}

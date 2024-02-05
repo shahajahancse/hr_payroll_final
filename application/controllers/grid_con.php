@@ -160,7 +160,7 @@ class Grid_con extends CI_Controller {
 		$ids = $this->input->post('spl');
 		$type = $this->input->post('type');
 		$emp_id = explode(',', trim($ids));
-		// dd($first_date);
+		// dd($type);
 		$data["values"] = $this->grid_model->incre_prom_report($first_date,$second_date,$emp_id,$type);
         if($type == 1){
 			$this->load->view('increment_letter',$data);
