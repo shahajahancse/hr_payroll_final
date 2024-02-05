@@ -109,20 +109,6 @@ $unit = $this->common_model->get_unit_id_name();
             <img src="<?php echo base_url('images/ajax-loader.gif'); ?>" />
         </div>
 
-        <!-- present absent eot  -->
-        <?php /* <div class="row nav_head">
-            <div class="col-lg-6">
-                <span style="font-size: 20px;"><?= $title ?></span>
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6">
-                <div class="input-group" style="display:flex; gap: 14px">
-                    <input class="btn btn-primary" onclick='toggleSection("present")' type="button" value="Present" />
-                    <input class="btn btn-success" onclick='toggleSection("eot")' type="button" value="EOT Modify" />
-                </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-        */ ?>
-
         <!-- present entry form -->
         <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
@@ -623,12 +609,13 @@ $unit = $this->common_model->get_unit_id_name();
         var formdata = $("#present_entry_form").serialize();
         var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
 
+        loading_open();
         $.ajax({
             type: "POST",
             url: hostname + "entry_system_con/log_delete",
             data: data,
             success: function(data) {
-                $("#loader").hide();
+                loading_close();
                 if (data == 'success') {
                     showMessage('success', 'Shift Log Deleted Successfully');
                 } else {
@@ -636,7 +623,7 @@ $unit = $this->common_model->get_unit_id_name();
                 }
             },
             error: function(data) {
-                $("#loader").hide();
+                loading_close();
                 showMessage('error', 'Shift Log Not Deleted');
             }
         })
