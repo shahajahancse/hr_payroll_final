@@ -157,6 +157,24 @@ class Entry_system_con extends CI_Controller
             echo 'error';
         }
     }
+
+    public function eot_modify_entry()
+    {
+        $sql         = $_POST['emp_id'];
+        $unit_id     = $_POST['unit_id'];
+        $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
+        $second_date = date('Y-m-d', strtotime($_POST['second_date']));
+        $eot        = date('H:i:s', strtotime($_POST['eot']));
+        $emp_ids     = explode(',', $sql);
+
+        $com_ids    = $this->get_com_emp_id($emp_ids);
+        $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
+        if ($this->db->where('unit_id', $unit_id)->update('pr_emp_shift_log', array('modify_eot' => $eot))) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
     function get_com_emp_id($emp_ids) {
         $this->db->select('id')->where_in("emp_id", $emp_ids);
         $ids = $this->db->get("pr_emp_com_info")->result();
