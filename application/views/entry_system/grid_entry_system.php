@@ -487,6 +487,7 @@ $unit = $this->common_model->get_unit_id_name();
         })
     }
 </script>
+
 <script>
     function present_entry(e) {
         e.preventDefault();
@@ -540,6 +541,110 @@ $unit = $this->common_model->get_unit_id_name();
             }
         })
     }
+    function present_absent(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let emp_id = sql.split(",");
+        if (emp_id == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        first_date = document.getElementById('first_date').value;
+        if (first_date == '') {
+            showMessage('error', 'Please select First date');
+            return false;
+        }
+        second_date = document.getElementById('second_date').value;
+        if (second_date == '') {
+            showMessage('error', 'Please select Second date');
+            return false;
+        }
+        time = document.getElementById('time').value;
+        if (time == '') {
+            showMessage('error', 'Please select Time');
+            return false;
+        }
+
+        var formdata = $("#present_entry_form").serialize();
+        var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/present_absent",
+            data: data,
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Record Deleted Successfully');
+                } else {
+                    showMessage('error', 'Record Not Deleted');
+                }
+            },
+            error: function(data) {
+                $("#loader").hide();
+                showMessage('error', 'Record Not Deleted');
+            }
+        })
+    }
+    function log_delete(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let emp_id = sql.split(",");
+        if (emp_id == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        first_date = document.getElementById('first_date').value;
+        if (first_date == '') {
+            showMessage('error', 'Please select First date');
+            return false;
+        }
+        second_date = document.getElementById('second_date').value;
+        if (second_date == '') {
+            showMessage('error', 'Please select Second date');
+            return false;
+        }
+        time = document.getElementById('time').value;
+        if (time == '') {
+            showMessage('error', 'Please select Time');
+            return false;
+        }
+
+        var formdata = $("#present_entry_form").serialize();
+        var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/log_delete",
+            data: data,
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Shift Log Deleted Successfully');
+                } else {
+                    showMessage('error', 'Shift Log Not Deleted');
+                }
+            },
+            error: function(data) {
+                $("#loader").hide();
+                showMessage('error', 'Shift Log Not Deleted');
+            }
+        })
+    }
 </script>
 
 
@@ -586,13 +691,12 @@ $unit = $this->common_model->get_unit_id_name();
                     $('.removeTrno').hide();
                     var items = '';
                     $.each(response, function(index, value) {
-                        items += '<tr class="removeTr">';
-                        items +=
-                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                            value.emp_id + '" ></td>';
-                        items += '<td class="success">' + value.emp_id + '</td>';
-                        items += '<td class="warning ">' + value.name_en + '</td>';
-                        items += '</tr>';
+                        items += `
+                            <tr class="removeTr">
+                                <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+                                <td class="success">${value.emp_id}</td>
+                                <td class="warning ">${value.name_en}</td>
+                            </tr>`
                     });
                     // console.log(items);
                     $('#fileDiv tr:last').after(items);
