@@ -113,7 +113,7 @@ $unit = $this->common_model->get_unit_id_name();
         <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form method="post" id="present_entry_form">
+                    <form method="post" id="present_entry_form" action="<?= base_url('entry_system_con/log_sheet') ?>">
                         <div class="raw">
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
@@ -317,12 +317,6 @@ $unit = $this->common_model->get_unit_id_name();
             showMessage('error', 'Please select Second date');
             return false;
         }
-
-        var data = "first_date=" + first_date + "&second_date=" + second_date + '&emp_id=' + emp_id + '&unit_id=' + unit_id;
-        url = hostname + "entry_system_con/log_sheet";
-        page = window.open('POST', url);
-        page.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-        page.send(data);
     }
 </script>
 
