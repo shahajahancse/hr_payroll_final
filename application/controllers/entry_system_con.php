@@ -103,7 +103,10 @@ class Entry_system_con extends CI_Controller
             return array('massage' => 0);
         }
     }
-
+    public function log_sheet()
+    {
+        dd($_POST);
+    }
     public function present_absent()
     {
         $sql         = $_POST['emp_id'];
@@ -142,7 +145,6 @@ class Entry_system_con extends CI_Controller
     }
     public function log_delete()
     {
-        dd($_POST);
         $sql         = $_POST['emp_id'];
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
