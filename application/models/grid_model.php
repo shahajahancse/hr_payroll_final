@@ -8090,10 +8090,13 @@ class Grid_model extends CI_Model{
 
 	function grid_general_info($grid_emp_id){
 		// dd($grid_emp_id);
-		$data = array();
+		// $data = array();
 		
 		$this->db->select('
 				pr_emp_com_info.emp_id,
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.emp_sal_gra_id,
+				pr_emp_com_info.gross_sal,
 				pr_emp_per_info.name_en,
 				pr_emp_per_info.emp_dob,
 				pr_emp_per_info.father_name,
@@ -8112,14 +8115,13 @@ class Grid_model extends CI_Model{
 				emp_section.sec_name_en,
 				emp_line_num.line_name_en,
 				pr_religions.religion_id,
-				per_dis.name_bn as dis_name_bn,
-				per_upa.name_bn as upa_name_bn,
-				per_post.name_bn as post_name_bn,
-				per_dis.name_en as dis_name_en,
-				per_upa.name_en as upa_name_en,
-				per_post.name_en as post_name_en,
-
-			');
+				per_dis.name_en  as  per_dis_name_en,
+				per_upa.name_en  as  per_upa_name_en,
+				per_post.name_en as  per_post_name_en,
+				pre_dis.name_en  as  pre_dis_name_en,
+				pre_upa.name_en  as  pre_upa_name_en,
+				pre_post.name_en as  pre_post_name_en,
+			')
 			$this->db->from('pr_emp_per_info');
 			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
