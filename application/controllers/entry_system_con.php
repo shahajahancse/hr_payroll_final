@@ -142,6 +142,7 @@ class Entry_system_con extends CI_Controller
     }
     public function log_delete()
     {
+        dd($_POST);
         $sql         = $_POST['emp_id'];
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
@@ -156,10 +157,6 @@ class Entry_system_con extends CI_Controller
         } else {
             echo 'error';
         }
-    }
-    public function test($emp_id,$eot,$second_date,$first_date){
-        dd('hello');
-
     }
 
     public function eot_modify_entry()

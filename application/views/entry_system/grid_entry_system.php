@@ -318,7 +318,13 @@ $unit = $this->common_model->get_unit_id_name();
             return false;
         }
 
-        window.location.href('<?= base_url('entry_system_con/test') ?>' + '/' + emp_id + '/' + second_date + '/' + first_date)
+        // window.open("");
+        var data = "first_date="+first_date +"&second_date="+second_date +'&emp_id='+emp_id +'&unit_id='+unit_id;
+        var ajaxRequest = new XMLHttpRequest();
+        url = hostname + "entry_system_con/log_sheet";
+        ajaxRequest.open("POST", url);
+        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        ajaxRequest.send(data);
     }
 </script>
 
