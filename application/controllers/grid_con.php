@@ -173,9 +173,73 @@ class Grid_con extends CI_Controller {
 
 
 
+    // New Joining
+
+	function grid_new_join_report(){
+		$grid_firstdate 	= $this->input->post('firstdate');
+		$grid_seconddate	= $this->input->post('seconddate');
+		$grid_firstdate  	= date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate  	= date("Y-m-d", strtotime($grid_seconddate));
+		$data['values'] 	= $this->grid_model->grid_new_join_report($grid_firstdate, $grid_seconddate);
+		$data['start_date']	= $grid_firstdate;
+		$data['end_date'] 	= $grid_seconddate;
+		$data['unit_id'] 	= $this->input->post('unit_id');
+		if(is_string($data['values'])){
+			echo $data['values'];
+		}
+		else{
+			$this->load->view('new_join_emp_report',$data);
+		}
+	}
 
 
+	// resign report
 
+	function grid_resign_report(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
+		$data['values'] = $this->grid_model->grid_resign_report($grid_firstdate, $grid_seconddate);
+		$data['start_date'] = $grid_firstdate;
+		$data['end_date'] 	= $grid_seconddate;
+		$data['unit_id'] = $this->input->post('unit_id');
+		if(is_string($data['values'])){
+			echo $data['values'];
+		}
+		else{
+			$this->load->view('resign_emp_report',$data);
+		}
+	}
+    // left report
+	function grid_left_report(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
+		$data['values'] = $this->grid_model->grid_left_report($grid_firstdate, $grid_seconddate);
+		$data['start_date']= $grid_firstdate;
+		$data['end_date'] 	= $grid_seconddate;
+		$data['unit_id'] = $this->input->post('grid_start');
+		if(is_string($data['values'])){
+			echo $data['values'];
+		}
+		else{
+			$this->load->view('left_emp_report',$data);
+		}
+	}
+
+
+	// emp general report 
+
+	function grid_general_info(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->grid_model->grid_general_info($grid_emp_id);
+		$data['unit_id'] = $this->input->post('unit_id');
+		$data['grid_emp_id'] = $grid_emp_id;
+		$this->load->view('general_info',$data);
+	}
 
 
 
@@ -1942,18 +2006,7 @@ class Grid_con extends CI_Controller {
 		$this->load->view('current_info',$data);
 	}
 
-	function grid_general_info()
-	{
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		//print_r($grid_emp_id);exit;
 
-		$data["values"] = $this->grid_model->grid_general_info($grid_emp_id);
-		$data['unit_id'] = $this->input->post('unit_id');
-		$data['grid_emp_id'] = $grid_emp_id;
-
-		$this->load->view('general_info',$data);
-	}
 
 	function general_info_excel()
 	{
@@ -2045,31 +2098,6 @@ class Grid_con extends CI_Controller {
 		$this->load->view('salary_summary',$data);
 	}
 
-	function grid_new_join_report()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-
-		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
-		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
-
-		$data['values'] = $this->grid_model->grid_new_join_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
-
-		$data['start_date']= $grid_firstdate;
-		$data['end_date'] 	= $grid_seconddate;
-		$data['unit_id'] = $this->input->post('unit_id');
-
-		if(is_string($data['values']))
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('new_join_emp_report',$data);
-		}
-	}
 	function grid_bgm_new_join_report()
 	{
 		$grid_firstdate = $this->input->post('firstdate');
@@ -2096,30 +2124,7 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_resign_report()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-
-		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
-		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
-
-		$data['values'] = $this->grid_model->grid_resign_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
-		//echo count($data['values']);
-		$data['start_date'] = $grid_firstdate;
-		$data['end_date'] 	= $grid_seconddate;
-		$data['unit_id'] = $this->input->post('grid_start');
-		if(is_string($data['values']))
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('resign_emp_report',$data);
-		}
-	}
+	
 
 	function grid_resign_report_with_sal()
 	{
@@ -2196,31 +2201,7 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_left_report()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		//echo "$grid_firstdate, $grid_seconddate";
-		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
-		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
-		//echo "$grid_firstdate, $grid_seconddate";
-		$data['values'] = $this->grid_model->grid_left_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
-
-		$data['start_date']= $grid_firstdate;
-		$data['end_date'] 	= $grid_seconddate;
-		$data['unit_id'] = $this->input->post('grid_start');
-
-		if(is_string($data['values']))
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('left_emp_report',$data);
-		}
-	}
+	
 	function grid_bgm_left_report()
 	{
 		$grid_firstdate = $this->input->post('firstdate');
