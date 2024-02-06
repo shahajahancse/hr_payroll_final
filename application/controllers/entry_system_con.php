@@ -103,7 +103,33 @@ class Entry_system_con extends CI_Controller
             return array('massage' => 0);
         }
     }
+    public function log_sheet()
+    {
+         dd($_POST);
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
 
+        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $this->db->from('emp_depertment');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['departments'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Entry System';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/grid_entry_system';
+        $this->load->view('layout/template', $this->data);
+
+    }
     public function present_absent()
     {
         $sql         = $_POST['emp_id'];
@@ -152,6 +178,24 @@ class Entry_system_con extends CI_Controller
         $com_ids    = $this->get_com_emp_id($emp_ids);
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    public function eot_modify_entry()
+    {
+        $sql         = $_POST['emp_id'];
+        $unit_id     = $_POST['unit_id'];
+        $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
+        $second_date = date('Y-m-d', strtotime($_POST['second_date']));
+        $eot         = $_POST['eot'];
+        $emp_ids     = explode(',', $sql);
+
+        $com_ids    = $this->get_com_emp_id($emp_ids);
+        $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
+        if ($this->db->where('unit_id', $unit_id)->update('pr_emp_shift_log', array('modify_eot' => $eot))) {
             echo 'success';
         } else {
             echo 'error';
