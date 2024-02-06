@@ -1255,8 +1255,6 @@ class Grid_model extends CI_Model{
 	// Daily Report for Present, Absent, Leave
 	//-------------------------------------------------------------------------------------------------
   function grid_daily_report($date, $grid_emp_id,$type){
-	// dd($date);
-
     $this->db->select('
         pr_emp_com_info.emp_id,
 		pr_emp_com_info.gross_sal,

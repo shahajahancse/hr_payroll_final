@@ -70,7 +70,7 @@
 
               <div class="form-group">
                 <label>Date</label>
-                <input type="date" name="upload_date"value="" class="form-control" required>
+                <input type="text" name="upload_date"value="" class="form-control date" required>
                 <?php echo form_error('upload_date');?>
               </div>
 

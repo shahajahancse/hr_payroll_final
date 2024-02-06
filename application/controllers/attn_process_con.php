@@ -27,6 +27,7 @@ class Attn_process_con extends CI_Controller {
             exit;
         }
 	}
+	
 
 	//-------------------------------------------------------------------------------------------------------
 	// Form display for Attendance Process

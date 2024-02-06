@@ -36,13 +36,13 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label">First Date : </label>
-							<input class= "form-control input-sm" name="firstdate" id="firstdate" type="date" autocomplete="off">
+							<input class= "form-control input-sm date" name="firstdate" id="firstdate" type="text" autocomplete="off">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label">Second Date : </label>
-							<input class= "form-control input-sm" name="seconddate" id="seconddate" type="date" autocomplete="off">
+							<input class= "form-control input-sm date" name="seconddate" id="seconddate" type="text" autocomplete="off">
 						</div>
 					</div>
 				</div>

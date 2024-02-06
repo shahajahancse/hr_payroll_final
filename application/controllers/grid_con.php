@@ -25,7 +25,7 @@ class Grid_con extends CI_Controller {
 
 
 	function daily_report(){
-		$date = $this->input->post('firstdate');
+		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
 		$type = $this->input->post('report_type');
@@ -105,8 +105,8 @@ class Grid_con extends CI_Controller {
 
 
 	function grid_continuous_report(){
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
+		$grid_firstdate = date("Y-m-d",strtotime($this->input->post('firstdate')));
+		$grid_seconddate = date("Y-m-d",strtotime($this->input->post('seconddate')));
 		$status = $this->input->post('status');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));

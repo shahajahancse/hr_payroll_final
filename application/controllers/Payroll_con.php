@@ -1018,16 +1018,7 @@ class Payroll_con extends CI_Controller {
 		$col_section = $this->uri->segment(9);
 		$col_dept = $this->uri->segment(10);
 		$col_all = $this->uri->segment(11);
-
-		//$year = "2011";
-		//$month= "04";
-		//$date = "02";
-
-		//$year = "$year";
-		//$month= "$month";
-		//$date = "$date";
-
-
+		
 		$data["values"] = $this->processdb->daily_report($year, $month, $date, $status, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$data["year"]			= $year;

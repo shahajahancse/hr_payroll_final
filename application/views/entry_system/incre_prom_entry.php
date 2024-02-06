@@ -183,7 +183,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="incr_date" placeholder="select date">
+                                    <input type="text" class="form-control date" id="incr_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
                                         <input class="btn btn-danger" onclick="incr_delete(event)" type="button" value="Delete">
@@ -306,7 +306,7 @@
                                 <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
                             </div>
                             <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
-                                <input type="date" class="form-control" id="prom_date" placeholder="select date">
+                                <input type="text" class="form-control date" id="prom_date" placeholder="select date">
                             </div>
                             <div class="col-md-3">
                                 <div class="input-group" style="gap: 14px; display: flex;">
@@ -394,7 +394,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="date" class="form-control" id="line_date" placeholder="select date">
+                                    <input type="text" class="form-control date" id="line_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='line_entry(event)' type="button" value='Save' />
                                         <input class="btn btn-danger" onclick="line_delete(event)" type="button" value="Delete">

@@ -114,7 +114,7 @@
             <div class="col-lg-8">
                 <div class="input-group" style="display:flex; gap: 14px">
                     <span style="font-size: 16px !important; width: 220px !important; line-height: 35px;"><?= 'Effect Date'; ?></span>
-                    <input type="date" class="form-control" id="date" placeholder="select date">
+                    <input type="text" class="form-control" id="date" placeholder="select date">
                     <select name="types" id="types">
                         <option value="">Type</option>
                         <option value="1">Regular</option>

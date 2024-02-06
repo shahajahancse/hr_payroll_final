@@ -70,13 +70,12 @@
   </script>
 
   <script>
-      // Jquery Onload
       $(document).ready(function() {
-        //Datepicker
-        $('.datetime').datepicker({
+        $('.date').datepicker({
           format: "dd-mm-yyyy",
           autoclose: true
         });
+        $('.date').attr("placeholder", "dd-mm-yyyy");
       });
   </script>
 
@@ -235,5 +234,13 @@
       $('.select22').select2();
     });
   </script>
+<script>
+    $(document).ready(function(){
+        $(".date").datepicker({
+            dateFormat: 'dd-mm-yy' // Set the desired date format
+        });
+   });
+</script>
+
 </body>
 </html>
