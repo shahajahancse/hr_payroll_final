@@ -1164,8 +1164,6 @@ $(document).ready(function() {
                 });
             }
         });
-        // load employee
-        grid_emp_list();
     });
 
     //nominee Upazila dropdown
