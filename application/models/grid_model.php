@@ -8121,7 +8121,7 @@ class Grid_model extends CI_Model{
 				pre_dis.name_en  as  pre_dis_name_en,
 				pre_upa.name_en  as  pre_upa_name_en,
 				pre_post.name_en as  pre_post_name_en,
-			')
+			');
 			$this->db->from('pr_emp_per_info');
 			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
