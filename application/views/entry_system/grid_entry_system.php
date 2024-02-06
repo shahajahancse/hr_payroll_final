@@ -139,7 +139,7 @@ $unit = $this->common_model->get_unit_id_name();
                                 <div class="input-group">
                                     <span class="input-group-btn" style="display: flex; gap: 15px;">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='log_sheet(event)' type="button" value='Attn. Sheet' />
+                                        <a class="btn btn-info" target="_blank" onclick='log_sheet(event)'>Attn. Sheet</a>
                                         <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
                                         <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
                                     </span>
@@ -319,20 +319,10 @@ $unit = $this->common_model->get_unit_id_name();
         }
 
         var data = "first_date=" + first_date + "&second_date=" + second_date + '&emp_id=' + emp_id + '&unit_id=' + unit_id;
-        var ajaxRequest = new XMLHttpRequest();
         url = hostname + "entry_system_con/log_sheet";
-        ajaxRequest.open("GET", url);
-        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-        ajaxRequest.send(data);
-
-        ajaxRequest.onreadystatechange = function() {
-            if (ajaxRequest.readyState == 4) {
-                var resp = ajaxRequest.responseText;
-                link = hostname + "entry_system_con/grid_entry_system";
-                page = window.open(link, '', '');
-                page.document.write(resp);
-            }
-        }
+        page = window.open('POST', url);
+        page.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        page.send(data);
     }
 </script>
 
