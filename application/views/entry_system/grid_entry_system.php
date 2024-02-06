@@ -113,7 +113,7 @@ $unit = $this->common_model->get_unit_id_name();
         <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                    <form method="post" id="present_entry_form" action="<?= base_url('entry_system_con/log_sheet') ?>">
+                    <form method="post" id="present_entry_form">
                         <div class="raw">
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
@@ -139,7 +139,7 @@ $unit = $this->common_model->get_unit_id_name();
                                 <div class="input-group">
                                     <span class="input-group-btn" style="display: flex; gap: 15px;">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
-                                        <a class="btn btn-info" target="_blank" onclick='log_sheet(event)'>Attn. Sheet</a>
+                                        <a href="<?= base_url('entry_system_con/log_sheet') ?>" class="btn btn-info" target="_blank" onclick='log_sheet(event)'>Attn. Sheet</a>
                                         <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
                                         <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
                                     </span>
