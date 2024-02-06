@@ -17,11 +17,10 @@ class Acl_con extends CI_Controller {
         if (!check_acl_list($this->data['user_data']->id, 3)) {
             echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
             redirect("payroll_con");
-            exit;
+            exit();
         }
 	}
-
-
+	
 	function user_mode()
 	{
 		if ($this->session->userdata('logged_in') == false) {

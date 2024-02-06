@@ -105,31 +105,54 @@ class Entry_system_con extends CI_Controller
     }
     public function log_sheet()
     {
-         dd($_POST);
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-        $this->data['employees'] = array();
-        $this->db->select('pr_units.*');
-        $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
-        }
 
-        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $sql         = $_POST['emp_id'];
+        $unit_id     = $_POST['unit_id'];
+        $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
+        $second_date = date('Y-m-d', strtotime($_POST['second_date']));
+        $emp_id      = explode(',', $sql);
+
+        $this->db->select('
+                    pr_emp_com_info.id,
+                    pr_emp_com_info.emp_id,
+                    pr_emp_com_info.unit_id,
+                    pr_emp_com_info.proxi_id,
+                    pr_emp_com_info.emp_join_date,
+                    pr_emp_per_info.name_en,
+                    emp_depertment.dept_name,
+                    emp_section.sec_name_en,
+                    emp_line_num.line_name_en,
+                    emp_designation.desig_name,
+                ');
+        $this->db->from('pr_emp_com_info');
+        $this->db->from('pr_emp_per_info');
         $this->db->from('emp_depertment');
-        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
-        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
-        }
-        $this->data['departments'] = $this->db->get()->result();
+        $this->db->from('emp_section');
+        $this->db->from('emp_line_num');
+        $this->db->from('emp_designation');
 
-        $this->data['title'] = 'Entry System';
+        $this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+        $this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
+        $this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
+        $this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
+        $this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+        $this->db->where_in('pr_emp_com_info.emp_id', $emp_id);
+        $row = $this->db->get()->row();
+        $this->data['row'] = $row;
+
+        $this->db->select('pr_units.*')->where('unit_id', $row->unit_id);
+        $this->data['unit'] = $this->db->get('pr_units')->row();
+
+        $this->data['results'] = $this->common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
+        $this->data['first_date'] = date('d-m-Y', strtotime($first_date));
+        $this->data['second_date'] = date('d-m-Y', strtotime($second_date));
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/grid_entry_system';
-        $this->load->view('layout/template', $this->data);
-
+        $this->load->view('entry_system/log_sheet', $this->data);
     }
+		
     public function present_absent()
     {
         $sql         = $_POST['emp_id'];

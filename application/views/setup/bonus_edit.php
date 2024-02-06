@@ -97,8 +97,8 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label>Effective Date</label>
-                            <input required type="date" name="effective_date" value="<?= $pr_bonus_rules->effective_date ?>" placeholder="Effective Date"
-                                class="form-control">
+                            <input required type="text" name="effective_date" value="<?= $pr_bonus_rules->effective_date ?>" placeholder="Effective Date"
+                                class="form-control date">
                             <?=(isset($failuer['effective_date'])) ? '<div class="alert alert-failuer">' . $failuer['effective_date'] . '</div>' : ''; ?>
                         </div>
                     </div>

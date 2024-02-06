@@ -128,14 +128,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label">From Date</label>
-                                <input type="date" class="form-control input-sm" id="from_date" name="from_date"
+                                <input type="text" class="form-control input-sm date" id="from_date" name="from_date"
                                     value="<?= date('Y-m-d') ?>">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label">To Date</label>
-                                <input type="date" class="form-control input-sm" id="to_date" name="to_date"
+                                <input type="text" class="form-control input-sm date" id="to_date" name="to_date"
                                     value="<?= date('Y-m-d') ?>">
                             </div>
                         </div>

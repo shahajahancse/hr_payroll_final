@@ -134,7 +134,7 @@ input[type="number"] {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Date Of Birth <span style="color: red;">*</span> </label>
-                                <input type="date" name="emp_dob" id="emp_dob" class="form-control input-sm"
+                                <input type="text" name="emp_dob" id="emp_dob" class="date form-control input-sm"
                                     value="<?= isset($emp_info->emp_dob)?>" required>
                                 <?php echo form_error('emp_dob');?>
                             </div>
@@ -488,7 +488,7 @@ input[type="number"] {
                         <div class="col-md-3" style="padding-left: 0px !important;">
                             <div class="form-group">
                                 <label>Emp Joining Date <span style="color: red;">*</span> </label>
-                                <input type="date" name="emp_join_date" id="emp_join_date" class="form-control input-sm"
+                                <input type="text" name="emp_join_date" id="emp_join_date" class="date form-control input-sm"
                                     required>
                                 <?php echo form_error('emp_join_date');?>
                             </div>
@@ -738,7 +738,7 @@ input[type="number"] {
                             <div class="form-group">
                                 <label>Nominee DOB <span style="color: red;">*</span> </label>
                                 <?php echo form_error('nomi_age');?>
-                                <input type="date" name="nomi_age" id="nomi_age" class="form-control input-sm" required>
+                                <input type="text" name="nomi_age" id="nomi_age" class="date form-control input-sm" required>
                             </div>
                         </div>
                         <div class="col-md-3">

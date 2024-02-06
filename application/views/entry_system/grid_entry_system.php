@@ -118,13 +118,13 @@ $unit = $this->common_model->get_unit_id_name();
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">From Date</label>
-                                    <input class="form-control" type="date" id="first_date" name="first_date">
+                                    <input class="form-control date" type="text" id="first_date" name="first_date">
                                 </div>
                             </div>
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">To Date</label>
-                                    <input class="form-control" type="date" id="second_date" name="second_date">
+                                    <input class="form-control date" type="text" id="second_date" name="second_date">
                                 </div>
                             </div>
                             <div class="col-md-4" style="padding: 5px !important">
@@ -139,7 +139,7 @@ $unit = $this->common_model->get_unit_id_name();
                                 <div class="input-group">
                                     <span class="input-group-btn" style="display: flex; gap: 15px;">
                                         <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
-                                        <a href="<?= base_url('entry_system_con/log_sheet') ?>" class="btn btn-info" target="_blank" onclick='log_sheet(event)'>Attn. Sheet</a>
+                                        <input class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
                                         <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
                                         <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
                                     </span>
@@ -167,13 +167,13 @@ $unit = $this->common_model->get_unit_id_name();
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">First Date</label>
-                                        <input class="form-control input-sm" type="date" id="eot_f_date" name="eot_f_date">
+                                        <input class="form-control input-sm date" type="text" id="eot_f_date" name="eot_f_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">Second Date</label>
-                                        <input class="form-control input-sm" type="date" id="eot_s_date" name="eot_s_date">
+                                        <input class="form-control input-sm date" type="text" id="eot_s_date" name="eot_s_date">
                                     </div>
                                 </div>
                             </div>
@@ -316,6 +316,23 @@ $unit = $this->common_model->get_unit_id_name();
         if (second_date == '') {
             showMessage('error', 'Please select Second date');
             return false;
+        }
+
+
+        var formdata = $("#present_entry_form").serialize();
+        var data="emp_id="+emp_id+"&unit_id="+unit_id+"&first_date="+first_date+"&second_date="+second_date+ "&" + formdata;
+        url =  hostname + "entry_system_con/log_sheet/";
+        ajaxRequest = new XMLHttpRequest();
+        ajaxRequest.open("POST", url, true);
+        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        ajaxRequest.send(data);
+
+        ajaxRequest.onreadystatechange = function () {
+            if(ajaxRequest.readyState == 4){
+                var resp = ajaxRequest.responseText;
+                show = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                show.document.write(resp);
+            }
         }
     }
 </script>

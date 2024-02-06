@@ -198,6 +198,70 @@ class Common_model extends CI_Model{
 		return $d;
 	}
 
+	function get_shift_log($row, $emp_id, $first_date, $second_date){
+        // joining date  checking
+        if ($row->emp_join_date > $first_date) {
+            $first_date = $row->emp_join_date;
+        }
+        // left date checking
+		$this->db->select('left_date');
+		$this->db->where("left_date BETWEEN '$first_date' AND '$second_date'");
+		$this->db->where_in("emp_id", $emp_id);
+		$query = $this->db->get("pr_emp_left_history");
+		if($query->num_rows() > 0)
+		{
+			$second_date = $query->row()->left_date;
+		}
+        // resign date checking
+        $this->db->select('resign_date');
+		$this->db->where("resign_date BETWEEN '$first_date' AND '$second_date'");
+		$this->db->where_in("emp_id", $emp_id);
+		$rquery = $this->db->get("pr_emp_resign_history");
+		if($rquery->num_rows() > 0)
+		{
+			$second_date = $rquery->row()->resign_date;
+		}
+
+        $i = 0;
+        $logs = array();
+        while($first_date < $second_date)
+		{  
+            $logs[$i]['date'] = $first_date;
+            $this->db->select('
+                    pr_emp_shift_log.in_time, 
+                    pr_emp_shift_log.out_time, 
+                    pr_emp_shift_log.shift_log_date, 
+                    pr_emp_shift_log.ot, 
+                    pr_emp_shift_log.eot,
+                    pr_emp_shift.shift_name,
+                ');
+            $this->db->from('pr_emp_shift_log');
+            $this->db->from('pr_emp_shift');
+            $this->db->where('pr_emp_shift_log.emp_id', $row->id);
+            $this->db->where("pr_emp_shift_log.shift_log_date", $first_date);
+            $this->db->where('pr_emp_shift.id = pr_emp_shift_log.shift_id');
+            $shift = $this->db->get()->row();
+
+            if(!empty($shift)){
+                $logs[$i]["in_time"] 	= $shift->in_time;
+                $logs[$i]["out_time"] 	= $shift->out_time;
+                $logs[$i]["shift_name"] = $shift->shift_name;
+            }
+            else
+            {
+                $logs[$i]["in_time"] 	= '';
+                $logs[$i]["out_time"] 	= '';
+                $logs[$i]["shift_name"] = '';
+            }
+            $first_date = date("Y-m-d", strtotime("+1 day", strtotime($first_date)));  
+            $i = $i + 1;
+     	} 
+		return $logs;
+	}
+
+
+
+
 
 
 
