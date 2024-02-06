@@ -73,6 +73,24 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 
 function daily_report(s) {
 	// alert(s);
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	// Internet Explorer Browsers
+	try{
+		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch (e) {
+		try{
+			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch (e){
+			// Something went wrong
+			alert("Your browser broke!");
+			return false;
+		}
+	}
+	}
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate ==''){
 		alert("Please select First date");
@@ -95,15 +113,15 @@ function daily_report(s) {
 	document.getElementById('loaader').style.display = 'flex';
 	
 	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id+"&report_type="+s;
-  	url =  hostname + "grid_con/daily_report/";
-	ajaxRequest = new XMLHttpRequest();
+	url = hostname + "grid_con/daily_report/";
+	
+	
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function () {
 		document.getElementById('loaader').style.display = 'none';
-
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -4090,8 +4108,7 @@ function grid_yearly_leave_register()
 
 }
 
-function grid_extra_ot()
-{
+function grid_extra_ot(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
 	   // Opera 8.0+, Firefox, Safari
@@ -4143,16 +4160,15 @@ function grid_extra_ot()
 	
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"index.php/grid_con/grid_extra_ot/";
+    url =  hostname+"index.php/grid_con/grid_extra_ot/";
     
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
 			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			extra_ot.document.write(resp);
 			extra_ot.stop();

@@ -46,7 +46,7 @@
 					echo "<strong>Name :</strong>";
 					echo "</td>";
 					echo "<td width='150'>";
-					echo $value->emp_full_name;
+					echo $value->name_en;
 					echo "</td>";
 					echo "</tr>";
 					
@@ -62,7 +62,7 @@
 					echo "<strong>Section :</strong>";
 					echo "</td>";
 					echo "<td width='30px'>";
-					echo $value->sec_name;
+					echo $value->sec_name_en;
 					echo "</td>";
 					echo "</tr>";
 					echo "<tr>";
@@ -70,7 +70,7 @@
 					echo "<strong>Line :</strong>";
 					echo "</td>";
 					echo "<td>";
-					echo $value->line_name;
+					echo $value->line_name_en;
 					echo "</td>";
 					echo "<td>";
 					echo "<strong>Desig :</strong>";
@@ -102,12 +102,12 @@
 
 					foreach ($emp_data['emp_data'] as $key => $row) {
 
-						if ($row->extra_ot_hour > 2) {
+						if ($row->eot > 2) {
 							$extra_ot_hour = '2.0';
-						} else if('0.0' == $row->extra_ot_hour) {
+						} else if('0.0' == $row->eot) {
 							$extra_ot_hour = '';
 						} else {
-							$extra_ot_hour = $row->extra_ot_hour;
+							$extra_ot_hour = $row->eot;
 						}
 
 						if(in_array($row->shift_log_date,$emp_data['leave']))
@@ -125,7 +125,7 @@
 							$att_status_count = "Holiday";
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot_hour ="";
+							$row->ot ="";
 							$extra_ot_hour = '';
 						} 
 						elseif(in_array($row->shift_log_date,$emp_data['weekend'])) 
@@ -134,7 +134,7 @@
 							$att_status_count = "Work Off";
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot_hour ="";
+							$row->ot ="";
 							$extra_ot_hour = '';
 						}
 						elseif($row->in_time !='00:00:00' and $row->out_time !='00:00:00')
@@ -264,25 +264,25 @@
 						
 
 						echo "<td>&nbsp;";
-						if($row->ot_hour == 0)
+						if($row->ot == 0)
 						{
 							echo "&nbsp;";
 						}
 						else
 						{
-							echo $row->ot_hour;
+							echo $row->ot;
 						}
 						echo "</td>";
 						
-						$total_ot_hour = $total_ot_hour + $row->ot_hour + $extra_ot_hour;
-						$total_ot = $total_ot + $row->ot_hour;
+						$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
+						$total_ot = $total_ot + $row->ot;
 						
 						echo "<td>&nbsp;";
 						echo $extra_ot_hour;
 						echo "</td>";
 						
 						echo "<td>&nbsp;";
-						echo $extra_ot_hour + $row->ot_hour;
+						echo $extra_ot_hour + $row->ot;
 						echo "</td>";
 						
 						echo "<td>&nbsp;";

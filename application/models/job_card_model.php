@@ -38,9 +38,9 @@ class Job_card_model extends CI_Model{
 
 	function holiday_calculation($sStartDate, $sEndDate)
 	{
-		$this->db->select("holiday_date as start_date");
-		$this->db->where("holiday_date BETWEEN '$sStartDate' AND '$sEndDate'");
-		$query = $this->db->get("attn_holiday");
+		$this->db->select("work_off_date as start_date");
+		$this->db->where("work_off_date BETWEEN '$sStartDate' AND '$sEndDate'");
+		$query = $this->db->get("attn_work_off");
 		$holiday = array();
 		foreach ($query->result() as $row)
 		{
@@ -51,7 +51,7 @@ class Job_card_model extends CI_Model{
 
 	function emp_shift_check($emp_id, $att_date)
 	{
-		$this->db->select("shift_id, shift_duty");
+		$this->db->select("shift_id, schedule_id");
 		$this->db->from("pr_emp_shift_log");
 		$this->db->where("emp_id", $emp_id);
 		$this->db->where("shift_log_date", $att_date);
@@ -59,7 +59,7 @@ class Job_card_model extends CI_Model{
 
 		if($query->num_rows() > 0 )
 		{
-			$shift_duty = $query->row()->shift_duty;
+			$shift_duty = $query->row()->schedule_id;
 
 			$this->db->select("sh_type");
 			$this->db->from("pr_emp_shift_schedule");
@@ -75,8 +75,8 @@ class Job_card_model extends CI_Model{
 			$this->db->from("pr_emp_shift");
 			$this->db->from("pr_emp_com_info");
 			$this->db->where("pr_emp_com_info.emp_id", $emp_id);
-			$this->db->where("pr_emp_shift.shift_id = pr_emp_com_info.emp_shift");
-			$this->db->where("pr_emp_shift.shift_duty = pr_emp_shift_schedule.shift_id");
+			$this->db->where("pr_emp_shift.id = pr_emp_com_info.emp_shift");
+			$this->db->where("pr_emp_shift.schedule_id = pr_emp_shift_schedule.id");
 			$query = $this->db->get();
 			$row = $query->row();
 			return $row->sh_type;
@@ -322,10 +322,11 @@ class Job_card_model extends CI_Model{
 
 		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
 		
-			
-		$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot_hour, pr_emp_shift_log.extra_ot_hour, pr_emp_shift_log.late_status,pr_emp_shift_log.deduction_hour');
+		$id = $this->db->select('id')->where('emp_id',$emp_id)->get('pr_emp_com_info')->row()->id;
+		// dd($id);
+		$this->db->select('pr_emp_shift_log.in_time , pr_emp_shift_log.out_time, pr_emp_shift_log.shift_log_date, pr_emp_shift_log.ot, pr_emp_shift_log.eot, pr_emp_shift_log.late_status,pr_emp_shift_log.deduction_hour');
 		$this->db->from('pr_emp_shift_log');
-		$this->db->where('pr_emp_shift_log.emp_id', $emp_id);
+		$this->db->where('pr_emp_shift_log.emp_id', $id);
 		$this->db->where("pr_emp_shift_log.shift_log_date >=", $start_date);
 		$this->db->where("pr_emp_shift_log.shift_log_date <=", $end_date);
 		$this->db->order_by("pr_emp_shift_log.shift_log_date");				

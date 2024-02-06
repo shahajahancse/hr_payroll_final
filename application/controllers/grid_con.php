@@ -33,7 +33,9 @@ class Grid_con extends CI_Controller {
 		$month=date("m",strtotime($date)); 
 		$day=date("d",strtotime($date));
 		$grid_emp_id = explode(',', trim($grid_data));
+		// dd($grid_emp_id);
 		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
+		// dd($data);
 		if($type == 9){
 		    $data['values'] =	$this->grid_model->grid_daily_costing_report($date,$unit_id);
 			$data['unit_id']= $unit_id;
@@ -1841,24 +1843,17 @@ class Grid_con extends CI_Controller {
 
 
 	}
-	function grid_extra_ot()
-	{
+	function grid_extra_ot(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data['unit_id'] = $this->input->post('unit_id');
-
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
-
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
-
 		$data['values'] = $this->grid_model->grid_extra_ot($grid_firstdate, $grid_seconddate, $grid_emp_id);
-
-
-
 		$this->load->view('ot_job_card',$data);
 
 	}

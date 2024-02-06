@@ -11,7 +11,7 @@
 <body>
 
 <?php 
-//print_r($values);
+// echo "<pre>";print_r($values);exit;
 $present_count = 0;
 $absent_count = 0;
 $leave_count = 0;
@@ -38,7 +38,6 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 	$emp_id  = $values["emp_id"][$i];
 	
 	?>
-
 	<div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif; min-height:1000px; margin-bottom:100px;">
 		<div >
 		<?php
@@ -123,12 +122,15 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 		<th>Date</th><th>Day</th>
 		<th>IN Time</th>
 		<th>OUT Time</th>
+		<?php if($unit_id == 4){?>
+		<th>Shift</th>
+		<?php }?>
 		<th>Attn.Status</th>
 		<th>OT Hour</th>
 		<th>Extra OT</th>
-		<!-- <th>Modify EOT</th> -->
-		<th>OT Hour</th>
-		<th>Remarks</th>
+		<th>Modify EOT</th>
+		<th>EOT Ded.</th>
+		<th>Final EOT</th>
 	<?php
 	$shift_log_count = count($values[$emp_id]["shift_log_date"]);
 	$ot_hour = 0;
@@ -138,9 +140,7 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 	$total_final_eot = 0;
 	
 	
-	for($k = 0 ; $k < $shift_log_count; $k++)
-	{
-		?>
+	for($k = 0 ; $k < $shift_log_count; $k++){?>
 		<tr>
 		<td align="center"> 
 		<?php 
@@ -160,80 +160,79 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 		
 		<td align="center"> 
 		<?php 
-		//$this->load->model('common_model'); 
-		//$unit = $this->common_model->get_unit_id_name();
+
 		$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
 		$acl     = $this->acl_model->get_acl_list($user_id);
-		
 		$eot_hour   	= $values[$emp_id]["extra_ot_hour"][$k];
 		$eot_modify 	= $values[$emp_id]["modify_eot"][$k];
 		$eot_deduct 	= $values[$emp_id]["deduction_hour"][$k];
-		
-		
-		if($values[$emp_id]["in_time"][$k] =='00:00:00')
-		{
+		if(in_array(14,$acl)){
+			if($values[$emp_id]["present_status"][$k] == 'H' or $values[$emp_id]["present_status"][$k] == 'W')	{
+				$values[$emp_id]["in_time"][$k]  = '00:00:00';	
+				$values[$emp_id]["out_time"][$k] = '00:00:00';
+				$eot_hour 		= 0;
+				$eot_modify 	= 0;
+				$eot_deduct 	= 0; 
+			}
+		}
+		if($values[$emp_id]["in_time"][$k] =='00:00:00' || empty($values[$emp_id]["in_time"][$k])){
 			echo "&nbsp;"; 
 		}
-		else 
-		{
-			$in_time =  $values[$emp_id]["in_time"][$k];
-			$hour = trim(substr($in_time,0,2));
-			$minute = trim(substr($in_time,3,2));
-			$sec = trim(substr($in_time,6,2));
-			echo $time_format = date("h:i:s A", mktime($hour, $minute, $sec, 0, 0, 0));  
+		else {
+			$in_time =  $values[$emp_id]["in_time"][$k]; 
+			echo date('h:i:s A',strtotime($in_time));
 		}	
+
+			if (empty($values[$emp_id]["in_time"][$k]) && empty($values[$emp_id]["out_time"][$k])) {
+				$values[$emp_id]["att_status"][$k] = "A";
+			}
+
 		?> 
 		</td>
 		<td align="center"> 
 		<?php 
-
-			if($values[$emp_id]["out_time"][$k] =='00:00:00')
-			{
-				echo "&nbsp;"; 
-			}
-			else{
-					$out_time =  $values[$emp_id]["out_time"][$k];
-					$hour = trim(substr($out_time,0,2));
-					$minute = trim(substr($out_time,3,2));
-					$sec = trim(substr($out_time,6,2));
-					echo $time_format = date("h:i:s A", mktime($hour, $minute, $sec, 0, 0, 0)); 
-				}
-	
+		if($values[$emp_id]["out_time"][$k] =='00:00:00' ||  empty($values[$emp_id]["out_time"][$k])){
+			echo "&nbsp;"; 
+		}
+		else {
+			$out_time =  $values[$emp_id]["out_time"][$k];
+			echo date('h:i:s A',strtotime($out_time));
+		}	
 		?> 
 		</td>
-		<?php echo "<td style='text-transform:uppercase;text-align:center'>";
+		<?php if($unit_id ==4){?>
+		<td><?php echo $values[$emp_id]['shift_name'][$k]?></td>
+		<?php }?>
+		<?php echo "<td style='text-align:center'>";
 		echo $values[$emp_id]["att_status"][$k];
 		echo "</td>"; ?>
 		<td align="center"> 
 		<?php 
-		echo $values[$emp_id]["ot_hour"][$k]; 
-		$ot_hour = $ot_hour + $values[$emp_id]["ot_hour"][$k];
+				echo $ot_hour = $values[$emp_id]["ot_hour"][$k]; 
+				$ot_hour =  $ot_hour++;
 		?> 
 		</td>
 		<td align="center"> 
+			<?php 
+					echo $eot_hour; 
+					$eot_hour = $eot_hour++;
+			?> 
+		</td>
 		
-		<?php 
-		echo $eot_hour;
-		$extra_ot_hour = $extra_ot_hour + $eot_hour; 
-		?> 
-
-		
-		<!-- <td align="center"> <?php echo $eot_modify; $modify_eot = $modify_eot + $eot_modify; ?> </td>
-		<td align="center"> <?php echo $eot_deduct; $deduction_hour = $deduction_hour + $eot_deduct; ?> </td> -->
+		<td align="center"> <?php echo $eot_modify; $eot_modify = $eot_modify++; ?> </td>
+		<td align="center"> <?php echo $eot_deduct; $eot_deduct = $eot_deduct++; ?> </td>
 		
 		<?php
 		
-		$final_eot = $eot_hour + $values[$emp_id]["ot_hour"][$k];
+		$final_eot = $eot_hour + $eot_modify +$ot_hour  - $eot_deduct;
 		//$final_eot = $eot_hour;
 		
 		?>
-		<td align="center"> <?php echo $final_eot; $total_final_eot = $total_final_eot + $final_eot;?> </td>
-		</td>
-        <td><?php echo $values[$emp_id]["remark"][$k];?></td>
+		<td align="center"> <?php echo $final_eot; $final_eot = $final_eot++?> </td>
 		</tr>
 		<?php
-	/////////////////////New Add////////
-	if($values[$emp_id]["att_status"][$k] == "P")
+		/////////////////////New Add////////
+		if($values[$emp_id]["att_status"][$k] == "P")
 		{
 			$present_count++;
 		}
@@ -249,7 +248,7 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 		{
 			$perror_count++;
 		}
-		elseif($values[$emp_id]["att_status"][$k] == "Weekend")
+		elseif($values[$emp_id]["att_status"][$k] == "Work Off")
 		{
 			$wk_off_count++;
 		}
@@ -263,17 +262,21 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 		{
 			$late_count++;
 		}
-
 		
+		
+/////////////////////	
 	}
 	?>
+	<?php if($unit_id ==  4){?>
+	<td style="font-weight:bold; text-align:center;" colspan="6"> Total </td>
+	<?php }else{?>
 	<td style="font-weight:bold; text-align:center;" colspan="5"> Total </td>
-	<td style="font-weight:bold; text-align:center;" align="center"><?php  echo  $ot_hour;?></td>
-	<td style="font-weight:bold; text-align:center;" align="center"><?php echo  $extra_ot_hour;?></td>
-	<!-- <td style="font-weight:bold; text-align:center;" align="center"><?php echo  $modify_eot;?></td> -->
-	<td style="font-weight:bold; text-align:center;" align="center"><?php echo  $total_final_eot;?></td>
-	<td style="font-weight:bold; text-align:center;" align="center"></td>
-	
+	<?php }?>
+	<td style="font-weight:bold; text-align:center;" align="center"><?php echo  $ot_hour;?></td>
+	<td style="font-weight:bold; text-align:center;" align="center"><?php echo  $eot_modify ;?></td>
+	<td style="font-weight:bold; text-align:center;" align="center"><?php echo  $modify_eot;?></td>
+	<td style="font-weight:bold; text-align:center;" align="center"><?php echo  $eot_deduct;?></td>
+	<td style="font-weight:bold; text-align:center;" align="center"><?php echo  $final_eot;?></td>
 	</table>
 <br/>
 	<?php 
@@ -318,6 +321,8 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 			
 	echo "<tr align='center'>";
 		
+
+
 	echo "<td>";
 	echo $present_count;
 	echo "</td>";
@@ -348,10 +353,7 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 
 	
 	echo "<td>";
-	//echo $total_ot_hour;
-	//$over_time=$ot_hour + $total_final_eot;
-	$over_time = $total_final_eot;
-	echo $over_time;
+	echo $final_eot;
 	echo "</td>";
 	
 	echo "</tr>";
