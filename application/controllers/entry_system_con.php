@@ -127,7 +127,7 @@ class Entry_system_con extends CI_Controller
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/grid_entry_system';
         $this->load->view('layout/template', $this->data);
-        dd($_POST);
+        // dd($_POST);
     }
     public function present_absent()
     {
