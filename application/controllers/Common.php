@@ -83,7 +83,7 @@ class Common extends CI_Controller {
         $query = $this->db->get()->result();
 
         foreach ($query as $row) {
-            $data[$row->dept_id] = $row->dept_name;
+            $data[$row->dept_id] = $row->dept_name.' ('.$row->dept_bangla.')';
         }
 
         header('Content-Type: application/x-json; charset=utf-8');
