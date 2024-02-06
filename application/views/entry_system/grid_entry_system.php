@@ -322,7 +322,7 @@ $unit = $this->common_model->get_unit_id_name();
         var data = "first_date="+first_date +"&second_date="+second_date +'&emp_id='+emp_id +'&unit_id='+unit_id;
         var ajaxRequest = new XMLHttpRequest();
         url = hostname + "entry_system_con/log_sheet";
-        ajaxRequest.open("POST", url);
+        ajaxRequest.open("GET", url);
         ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
         ajaxRequest.send(data);
     }
