@@ -781,12 +781,12 @@ ajaxRequest.onreadystatechange = function(){
 		status_id = status_idname[0].split("***");
 		status_name = status_idname[1].split("***");
 
-		document.grid.grid_status.options.length=0;
-		//document.grid.grid_status.options[0]=new Option("Select","Select", true, false);
+		document.grid.status.options.length=0;
+		//document.grid.status.options[0]=new Option("Select","Select", true, false);
 		for (i=0; i<status_id.length; i++){
-			document.grid.grid_status.options[i]=new Option(status_name[i],status_id[i], false, false);
+			document.grid.status.options[i]=new Option(status_name[i],status_id[i], false, false);
 		}
-		document.grid.grid_status.options[i]=new Option("ALL","ALL", true, true);
+		document.grid.status.options[i]=new Option("ALL","ALL", true, true);
 
 
 		var w_type_id = ["1","2"];
@@ -929,12 +929,12 @@ ajaxRequest.onreadystatechange = function(){
 		status_id = status_idname[0].split("***");
 		status_name = status_idname[1].split("***");
 
-		document.grid.grid_status.options.length=0;
-		//document.grid.grid_status.options[0]=new Option("Select","Select", true, false);
+		document.grid.status.options.length=0;
+		//document.grid.status.options[0]=new Option("Select","Select", true, false);
 		for (i=0; i<status_id.length; i++){
-			document.grid.grid_status.options[i]=new Option(status_name[i],status_id[i], false, false);
+			document.grid.status.options[i]=new Option(status_name[i],status_id[i], false, false);
 		}
-		document.grid.grid_status.options[i]=new Option("ALL","ALL", true, true);
+		document.grid.status.options[i]=new Option("ALL","ALL", true, true);
 
 		$('#list1').jqGrid('GridUnload');
 
@@ -1062,12 +1062,12 @@ function grid_get_all_data_for_entry(){
 			status_id = status_idname[0].split("***");
 			status_name = status_idname[1].split("***");
 
-			document.grid.grid_status.options.length=0;
-			//document.grid.grid_status.options[0]=new Option("Select","Select", true, false);
+			document.grid.status.options.length=0;
+			//document.grid.status.options[0]=new Option("Select","Select", true, false);
 			for (i=0; i<status_id.length; i++){
-				document.grid.grid_status.options[i]=new Option(status_name[i],status_id[i], false, false);
+				document.grid.status.options[i]=new Option(status_name[i],status_id[i], false, false);
 			}
-			document.grid.grid_status.options[i]=new Option("ALL","ALL", true, true);
+			document.grid.status.options[i]=new Option("ALL","ALL", true, true);
 
 		$('#list1').jqGrid('GridUnload');
 
@@ -1161,7 +1161,7 @@ function grid_all_search_for_salary(){
 	var line 		= document.getElementById('grid_line').value;
 	var designation = document.getElementById('grid_desig').value;
 	var sex 		= document.getElementById('grid_sex').value;
-	var status 		= document.getElementById('grid_status').value;
+	var status 		= document.getElementById('status').value;
 	var w_type 		= document.getElementById('grid_w_type').value;
 	var position 	= document.getElementById('grid_position').value;
 	// alert(start+','+dept+','+section+','+line+','+designation+','+sex+','+status+','+w_type+','+position);
@@ -1180,7 +1180,7 @@ function grid_all_search(){
 	var line 		= document.getElementById('grid_line').value;
 	var designation = document.getElementById('grid_desig').value;
 	var sex 		= document.getElementById('grid_sex').value;
-	var status 		= document.getElementById('grid_status').value;
+	var status 		= document.getElementById('status').value;
 	var start 		= document.getElementById('unit_id').value;
 	var position 	= document.getElementById('grid_position').value;
 
@@ -1199,7 +1199,7 @@ function grid_all_search_out_miss(){
 	var line 		= document.getElementById('grid_line').value;
 	var designation = document.getElementById('grid_desig').value;
 	var sex 		= document.getElementById('grid_sex').value;
-	var status 		= document.getElementById('grid_status').value;
+	var status 		= document.getElementById('status').value;
 	var start 		= document.getElementById('unit_id').value;
 	var position 	= document.getElementById('grid_position').value;
 	var out_miss 	= document.getElementById('grid_out_miss').value;
@@ -3516,9 +3516,9 @@ function grid_pension_report()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
-	if(grid_status != 4)
+	if(status != 4)
 
 	{
 		alert("Please select category status to Resign");
@@ -5110,7 +5110,7 @@ function grid_monthly_salary_sheet()
 		alert("Please select Section options");
 		return false;
 	}
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
 
@@ -5128,7 +5128,7 @@ var unit_id = document.getElementById('unit_id').value;
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_monthly_salary_sheet/";
     
    ajaxRequest.open("POST", url, true);
@@ -5201,7 +5201,7 @@ function grid_actual_monthly_salary_sheet(){
 		}
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -5220,7 +5220,7 @@ function grid_actual_monthly_salary_sheet(){
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw+"&custom_salarydate="+custom_salarydate;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet/";
     
    ajaxRequest.open("POST", url, true);
@@ -5296,7 +5296,7 @@ function grid_actual_monthly_salary_sheet_not_sec()
 		}
 	}*/
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -5315,7 +5315,7 @@ function grid_actual_monthly_salary_sheet_not_sec()
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw+"&custom_salarydate="+custom_salarydate;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet_not_sec/";
     
    ajaxRequest.open("POST", url, true);
@@ -5386,7 +5386,7 @@ function grid_mix_salary_sheet()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -5405,7 +5405,7 @@ function grid_mix_salary_sheet()
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id+"&custom_salarydate="+custom_salarydate;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_mix_salary_sheet/";
     
    ajaxRequest.open("POST", url, true);
@@ -5464,7 +5464,7 @@ function grid_actual_monthly_salary_sheet_with_eot()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -5487,7 +5487,7 @@ function grid_actual_monthly_salary_sheet_with_eot()
 
 
 
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet_with_eot/";
     
    ajaxRequest.open("POST", url, true);
@@ -5546,7 +5546,7 @@ function grid_monthly_allowance_with_eot()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -5559,7 +5559,7 @@ function grid_monthly_allowance_with_eot()
 
 	// 
 	// 
-	url =  hostname + "index.php/salary_report_con/grid_monthly_allowance_with_eot/"+sal_year_month+"/"+grid_status+"/"+sql;
+	url =  hostname + "index.php/salary_report_con/grid_monthly_allowance_with_eot/"+sal_year_month+"/"+status+"/"+sql;
 
 	monthly_allowance_with_eot = window.open(url,'monthly_allowance_with_eot',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	monthly_allowance_with_eot.moveTo(0,0);
@@ -5613,7 +5613,7 @@ function grid_festival_bonus()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -5626,14 +5626,14 @@ function grid_festival_bonus()
 	/*
 	
 
-	url =  hostname + "index.php/salary_report_con/grid_festival_bonus/"+sal_year_month+"/"+grid_status+"/"+sql;
+	url =  hostname + "index.php/salary_report_con/grid_festival_bonus/"+sal_year_month+"/"+status+"/"+sql;
 
 	festival_bonus = window.open(url,'festival_bonus',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	festival_bonus.moveTo(0,0);
 	*/
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus/";
     
    ajaxRequest.open("POST", url, true);
@@ -5701,7 +5701,7 @@ function grid_advance_salary_sheet()
 	}
 
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -5714,14 +5714,14 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	/*
 	
 
-	url =  hostname + "index.php/salary_report_con/grid_advance_salary_sheet/"+sal_year_month+"/"+grid_status+"/"+sql;
+	url =  hostname + "index.php/salary_report_con/grid_advance_salary_sheet/"+sal_year_month+"/"+status+"/"+sql;
 
 	advance_salary_sheet = window.open(url,'advance_salary_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	advance_salary_sheet.moveTo(0,0); */
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql+"&grid_section="+grid_section;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql+"&grid_section="+grid_section;
    url =  hostname+"index.php/salary_report_con/grid_advance_salary_sheet/";
     
    ajaxRequest.open("POST", url, true);
@@ -5781,7 +5781,7 @@ function sec_sal_summary_report()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 	//var stop_salary = document.getElementById('grid_stop_salary').value;
 	var stop_salary = 1;
 
@@ -5789,7 +5789,7 @@ function sec_sal_summary_report()
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/sec_salary_summary/";
     
    ajaxRequest.open("POST", url, true);
@@ -5830,7 +5830,7 @@ function salary_summary_test(){
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 	//var stop_salary = document.getElementById('grid_stop_salary').value;
 	var stop_salary = 1;
 
@@ -5838,7 +5838,7 @@ function salary_summary_test(){
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/salary_summary_test/";
     
    ajaxRequest.open("POST", url, true);
@@ -5879,7 +5879,7 @@ function salary_summary_compliance(){
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 	//var stop_salary = document.getElementById('grid_stop_salary').value;
 	var stop_salary = 1;
 
@@ -5887,7 +5887,7 @@ function salary_summary_compliance(){
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/salary_summary_compliance/";
     
    ajaxRequest.open("POST", url, true);
@@ -5974,13 +5974,13 @@ function grid_festival_bonus_summary()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus_summary/";
     
    ajaxRequest.open("POST", url, true);
@@ -6039,13 +6039,13 @@ function grid_festival_bonus_summary_sec_wise()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus_summary_sec_wise/";
     
    ajaxRequest.open("POST", url, true);
@@ -6121,14 +6121,14 @@ function grid_comprative_salary_statement()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 	var stop_salary = document.getElementById('grid_stop_salary').value;
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	var sal_year_month2  = report_year_sal_second+"-"+report_month_sal_second+"-"+"01";
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&sal_year_month2="+sal_year_month2+"&grid_status="+grid_status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
+	var queryString="sal_year_month="+sal_year_month+"&sal_year_month2="+sal_year_month2+"&status="+status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/grid_comprative_salary_statement/";
     
    ajaxRequest.open("POST", url, true);
@@ -6187,13 +6187,13 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
-	//alert(grid_status);
+	var status = document.getElementById('status').value;
+	//alert(status);
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	// var stop_salary = document.getElementById('grid_stop_salary').value;
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id/*+"&stop_salary="+stop_salary*/;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id/*+"&stop_salary="+stop_salary*/;
    url =  hostname+"index.php/salary_report_con/eot_summary_report_sec/";
     
    ajaxRequest.open("POST", url, true);
@@ -7168,81 +7168,59 @@ function grid_job_description()
 	age_estimation_form = window.open(url,'age_estimation_form',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	age_estimation_form.moveTo(0,0);
 }
-function grid_new_join_report()
-{
-
-
-	 var ajaxRequest;  // The variable that makes Ajax possible!
-
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-
+function grid_new_join_report(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		 //Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
+	if(firstdate ==''){
 		alert("Please select First date");
 		return false;
 	}
 
 	var seconddate = document.getElementById('seconddate').value;
-	if(seconddate =='')
-	{
+	if(seconddate ==''){
 		alert("Please select Second date");
 		return false;
 	}
-
 	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
+	if(unit_id =='Select'){
 		alert("Please select Category options");
 		return false;
 	}
-	var unit_id = unit_id;
-	//var grid_status = document.getElementById('grid_status').value;
-	//if(grid_status != 1)
-	//{
-	//	alert("Please select category status to Regular");
-	//	return false;
-	//}
 
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
+	// var checkboxes = document.getElementsByName('emp_id[]');
+	// var sql = get_checked_value(checkboxes);
 
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
-	// 
-	// 
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
-   url =  hostname+"index.php/grid_con/grid_new_join_report/";
-    
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-
+	// if (sql == '') {
+	// 	alert('Please select employee Id');
+	// 	return false;
+	// }
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
+	url =  hostname+"index.php/grid_con/grid_new_join_report/";
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
 			new_join_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			new_join_report.document.write(resp);
-			//new_join_report.stop();
 		}
 	}
 
@@ -7293,8 +7271,8 @@ function grid_bgm_new_join_report()
 		return false;
 	}
 	var unit_id = unit_id;
-	//var grid_status = document.getElementById('grid_status').value;
-	//if(grid_status != 1)
+	//var status = document.getElementById('status').value;
+	//if(status != 1)
 	//{
 	//	alert("Please select category status to Regular");
 	//	return false;
@@ -7369,7 +7347,7 @@ function grid_bank_note_req()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -7383,7 +7361,7 @@ function grid_bank_note_req()
 
 	// 
 	// 
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_bank_note_requisition/";
     
    ajaxRequest.open("POST", url, true);
@@ -7445,20 +7423,20 @@ function grid_resign_report()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
-	if(grid_status != 4)
+	var status = document.getElementById('status').value;
+	if(status != 4)
 	{
 		alert("Please select category status to Resign");
 		return false;
 	}
 
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
+	// var checkboxes = document.getElementsByName('emp_id[]');
+	// var sql = get_checked_value(checkboxes);
 
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
+	// if (sql == '') {
+	// 	alert('Please select employee Id');
+	// 	return false;
+	// }
 /*
 	
 
@@ -7469,8 +7447,8 @@ function grid_resign_report()
 */
 
 	
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"index.php/grid_con/grid_resign_report/";
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
+    url =  hostname+"index.php/grid_con/grid_resign_report/";
     
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -7532,8 +7510,8 @@ function grid_resign_report_with_sal()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
-	if(grid_status != 4)
+	var status = document.getElementById('status').value;
+	if(status != 4)
 	{
 		alert("Please select category status to Resign");
 		return false;
@@ -7619,8 +7597,8 @@ function grid_left_report_with_sal()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
-	if(grid_status != 3)
+	var status = document.getElementById('status').value;
+	if(status != 3)
 	{
 		alert("Please select category status to Left");
 		return false;
@@ -7706,8 +7684,8 @@ function grid_bgm_resign_report()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
-	if(grid_status != 4)
+	var status = document.getElementById('status').value;
+	if(status != 4)
 	{
 		alert("Please select category status to Resign");
 		return false;
@@ -7748,10 +7726,7 @@ function grid_bgm_resign_report()
 	}
 
 }
-function grid_left_report()
-{
-
-
+function grid_left_report(){
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
  try{
@@ -7792,25 +7767,25 @@ function grid_left_report()
 		alert("Please select Category options");
 		return false;
 	}
-	var grid_status = document.getElementById('grid_status').value;
+	// var status = document.getElementById('status').value;
 
-	var grid_status = document.getElementById('grid_status').value;
-	if(grid_status != 3)
+	var status = document.getElementById('status').value;
+	if(status != 3)
 	{
 		alert("Please select category status to Left");
 		return false;
 	}
 
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
+	// var checkboxes = document.getElementsByName('emp_id[]');
+	// var sql = get_checked_value(checkboxes);
 
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
+	// if (sql == '') {
+	// 	alert('Please select employee Id');
+	// 	return false;
+	// }
 	// 
 	// 
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_left_report/";
     
    ajaxRequest.open("POST", url, true);
@@ -7873,10 +7848,10 @@ function grid_bgm_left_report()
 		alert("Please select Category options");
 		return false;
 	}
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
-	var grid_status = document.getElementById('grid_status').value;
-	if(grid_status != 3)
+	var status = document.getElementById('status').value;
+	if(status != 3)
 	{
 		alert("Please select category status to Left");
 		return false;
@@ -7953,7 +7928,7 @@ function grid_bgm_left_resign_report()
 		alert("Please select Category options");
 		return false;
 	}
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	
 	
@@ -8571,7 +8546,7 @@ function grid_monthly_weekend_allowance_sheet()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -8583,7 +8558,7 @@ function grid_monthly_weekend_allowance_sheet()
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	// 
 	// 
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_monthly_weekend_allowance_sheet/";
     
    ajaxRequest.open("POST", url, true);
@@ -8642,7 +8617,7 @@ function grid_monthly_allowance_sheet()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -8654,7 +8629,7 @@ function grid_monthly_allowance_sheet()
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	// 
 	// 
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_monthly_allowance_sheet/";
     
    ajaxRequest.open("POST", url, true);
@@ -8720,7 +8695,7 @@ function grid_monthly_stop_sheet()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 	// var stop_salary = document.getElementById('grid_stop_salary').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
@@ -8732,7 +8707,7 @@ function grid_monthly_stop_sheet()
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&unit_id="+unit_id+"&spl="+sql/*+"&stop_salary="+stop_salary*/;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql/*+"&stop_salary="+stop_salary*/;
    url =  hostname+"index.php/salary_report_con/grid_monthly_stop_sheet/";
     
    ajaxRequest.open("POST", url, true);
@@ -8791,7 +8766,7 @@ function grid_monthly_night_allowance_sheet()
 		return false;
 	}
 
-	var grid_status = document.getElementById('grid_status').value;
+	var status = document.getElementById('status').value;
 
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
@@ -8804,7 +8779,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
 // 	
 // 
-	url =  hostname + "index.php/salary_report_con/grid_monthly_night_allowance_sheet/"+sal_year_month+"/"+grid_status+"/"+sql;
+	url =  hostname + "index.php/salary_report_con/grid_monthly_night_allowance_sheet/"+sal_year_month+"/"+status+"/"+sql;
 
 	night_allowance_sheet = window.open(url,'holiday_allowance_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	night_allowance_sheet.moveTo(0,0);

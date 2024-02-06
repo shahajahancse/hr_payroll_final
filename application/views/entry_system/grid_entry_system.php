@@ -109,20 +109,6 @@ $unit = $this->common_model->get_unit_id_name();
             <img src="<?php echo base_url('images/ajax-loader.gif'); ?>" />
         </div>
 
-        <!-- present absent eot  -->
-        <?php /* <div class="row nav_head">
-            <div class="col-lg-6">
-                <span style="font-size: 20px;"><?= $title ?></span>
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6">
-                <div class="input-group" style="display:flex; gap: 14px">
-                    <input class="btn btn-primary" onclick='toggleSection("present")' type="button" value="Present" />
-                    <input class="btn btn-success" onclick='toggleSection("eot")' type="button" value="EOT Modify" />
-                </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-        */ ?>
-
         <!-- present entry form -->
         <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
@@ -205,7 +191,7 @@ $unit = $this->common_model->get_unit_id_name();
                             <div class="col-md-3" style="top: -15px">
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                        <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-primary" onclick='eot_modify_entry(event)' type="button" value='Save' />
                                     </span>
                                 </div>
                             </div>
@@ -250,18 +236,15 @@ $unit = $this->common_model->get_unit_id_name();
     <!-- </div> -->
 </div>
 
+
 <script>
-    function line_entry(e) {
+    function eot_modify_entry(e) {
         e.preventDefault();
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
+        let emp_id = sql.split(",");
+        if (emp_id == '') {
             showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
             return false;
         }
         unit_id = document.getElementById('unit_id').value;
@@ -270,65 +253,52 @@ $unit = $this->common_model->get_unit_id_name();
             return false;
         }
 
-        line_date = document.getElementById('line_date').value;
-        if (line_date == '') {
-            showMessage('error', 'Please select Effective date');
+        first_date = document.getElementById('eot_f_date').value;
+        if (first_date == '') {
+            showMessage('error', 'Please select First date');
             return false;
         }
-        department = document.getElementById('line_change_department').value;
-        if (department == '') {
-            showMessage('error', 'Please select Department');
+        second_date = document.getElementById('eot_s_date').value;
+        if (second_date == '') {
+            showMessage('error', 'Please select Second date');
             return false;
         }
-        section = document.getElementById('line_change_section').value;
-        if (section == '') {
-            showMessage('error', 'Please select Section');
-            return false;
-        }
-        line = document.getElementById('line_change_line').value;
-        if (line == '') {
-            showMessage('error', 'Please select Line');
-            return false;
-        }
-        designation = document.getElementById('line_change_desig').value;
-        if (designation == '') {
-            showMessage('error', 'Please select Designation');
+        eot = document.getElementById('eot').value;
+        if (eot == '') {
+            showMessage('error', 'Please entry the eot');
             return false;
         }
 
-        var formdata = $("#line_change_entry_form").serialize();
-        var data = "unit_id=" + unit_id + "&department=" + department + "&section=" + section + "&line=" + line + "&designation=" + designation + "&line_date=" + line_date + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
+        var formdata = $("#eot_modify_form").serialize();
+        var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&eot=" + eot + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
 
+        loading_open();
         $.ajax({
             type: "POST",
-            url: hostname + "entry_system_con/line_entry",
+            url: hostname + "entry_system_con/eot_modify_entry",
             data: data,
             success: function(data) {
-                $("#loader").hide();
+                loading_close();
                 if (data == 'success') {
-                    showMessage('success', 'Line changed Successfully');
+                    showMessage('success', 'EOT updated Successfully');
                 } else {
-                    showMessage('error', 'Line Not changed');
+                    showMessage('error', 'EOT not updated');
                 }
             },
             error: function(data) {
-                $("#loader").hide();
-                showMessage('error', 'Line Not changed');
+                loading_close();
+                showMessage('error', 'EOT not updated');
             }
         })
     }
 
-    function line_delete(e) {
+    function log_sheet(e) {
         e.preventDefault();
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
+        let emp_id = sql.split(",");
+        if (emp_id == '') {
             showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
             return false;
         }
         unit_id = document.getElementById('unit_id').value;
@@ -337,154 +307,24 @@ $unit = $this->common_model->get_unit_id_name();
             return false;
         }
 
-        line_date = document.getElementById('line_date').value;
-        if (line_date == '') {
-            showMessage('error', 'Please select Effective date');
+        first_date = document.getElementById('first_date').value;
+        if (first_date == '') {
+            showMessage('error', 'Please select First date');
+            return false;
+        }
+        second_date = document.getElementById('second_date').value;
+        if (second_date == '') {
+            showMessage('error', 'Please select Second date');
             return false;
         }
 
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/line_delete_ajax",
-            data: {
-                sql: numbersArray[0],
-                date: line_date,
-                unit_id: unit_id
-            },
-            success: function(data) {
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Line change Deleted Successfully');
-                } else {
-                    showMessage('error', 'Line change Not Deleted');
-                }
-            }
-        })
-    }
-</script>
-<script>
-    function promotion_entry(e) {
-        e.preventDefault();
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
-            return false;
-        }
-        unit_id = document.getElementById('unit_id').value;
-        if (unit_id == '') {
-            showMessage('error', 'Please select Unit');
-            return false;
-        }
-
-        prom_gross_sal = document.getElementById('prom_gross_sal').value;
-        if (prom_gross_sal == '') {
-            showMessage('error', 'Please input the New Salary');
-            return false;
-        }
-
-        prom_com_gross_sal = document.getElementById('prom_com_gross_sal').value;
-        if (prom_com_gross_sal == '') {
-            showMessage('error', 'Please input the New Com. Salary');
-            return false;
-        }
-
-        prom_date = document.getElementById('prom_date').value;
-        if (prom_date == '') {
-            showMessage('error', 'Please select Effective date');
-            return false;
-        }
-        department = document.getElementById('pro_department').value;
-        if (department == '') {
-            showMessage('error', 'Please select Department');
-            return false;
-        }
-        section = document.getElementById('pro_section').value;
-        if (section == '') {
-            showMessage('error', 'Please select Section');
-            return false;
-        }
-        line = document.getElementById('pro_line').value;
-        if (line == '') {
-            showMessage('error', 'Please select Line');
-            return false;
-        }
-        designation = document.getElementById('pro_designation').value;
-        if (designation == '') {
-            showMessage('error', 'Please select Designation');
-            return false;
-        }
-        grade_id = document.getElementById('grade_id').value;
-
-        var formdata = $("#promotion_entry_form").serialize();
-        var data = "unit_id=" + unit_id + "&department=" + department + "&section=" + section + "&line=" + line + "&designation=" + designation + "&grade_id=" + grade_id + "&prom_date=" + prom_date + "&prom_gross_sal=" + prom_gross_sal + "&prom_com_gross_sal=" + prom_com_gross_sal + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
-
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/promotion_entry",
-            data: data,
-            success: function(data) {
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Promotion Added Successfully');
-                } else {
-                    showMessage('error', 'Promotion Not Added');
-                }
-            },
-            error: function(data) {
-                $("#loader").hide();
-                showMessage('error', 'Promotion Not Added');
-            }
-        })
-    }
-
-    function prom_delete(e) {
-        e.preventDefault();
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            showMessage('error', 'Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            showMessage('error', 'Please select max one employee Id');
-            return false;
-        }
-        unit_id = document.getElementById('unit_id').value;
-        if (unit_id == '') {
-            showMessage('error', 'Please select Unit');
-            return false;
-        }
-
-        prom_date = document.getElementById('prom_date').value;
-        if (prom_date == '') {
-            showMessage('error', 'Please select Effective date');
-            return false;
-        }
-
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/prom_delete_ajax",
-            data: {
-                sql: numbersArray[0],
-                date: prom_date,
-                unit_id: unit_id
-            },
-            success: function(data) {
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Promotion Deleted Successfully');
-                } else {
-                    showMessage('error', 'Promotion Not Deleted');
-                }
-            }
-        })
+        // window.open("");
+        var data = "first_date="+first_date +"&second_date="+second_date +'&emp_id='+emp_id +'&unit_id='+unit_id;
+        var ajaxRequest = new XMLHttpRequest();
+        url = hostname + "entry_system_con/log_sheet";
+        ajaxRequest.open("POST", url);
+        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        ajaxRequest.send(data);
     }
 </script>
 
@@ -541,6 +381,7 @@ $unit = $this->common_model->get_unit_id_name();
             }
         })
     }
+
     function present_absent(e) {
         e.preventDefault();
         var checkboxes = document.getElementsByName('emp_id[]');
@@ -567,10 +408,6 @@ $unit = $this->common_model->get_unit_id_name();
             return false;
         }
         time = document.getElementById('time').value;
-        if (time == '') {
-            showMessage('error', 'Please select Time');
-            return false;
-        }
 
         var formdata = $("#present_entry_form").serialize();
         var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
@@ -593,6 +430,7 @@ $unit = $this->common_model->get_unit_id_name();
             }
         })
     }
+
     function log_delete(e) {
         e.preventDefault();
         var checkboxes = document.getElementsByName('emp_id[]');
@@ -619,20 +457,17 @@ $unit = $this->common_model->get_unit_id_name();
             return false;
         }
         time = document.getElementById('time').value;
-        if (time == '') {
-            showMessage('error', 'Please select Time');
-            return false;
-        }
 
         var formdata = $("#present_entry_form").serialize();
         var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
 
+        loading_open();
         $.ajax({
             type: "POST",
             url: hostname + "entry_system_con/log_delete",
             data: data,
             success: function(data) {
-                $("#loader").hide();
+                loading_close();
                 if (data == 'success') {
                     showMessage('success', 'Shift Log Deleted Successfully');
                 } else {
@@ -640,13 +475,12 @@ $unit = $this->common_model->get_unit_id_name();
                 }
             },
             error: function(data) {
-                $("#loader").hide();
+                loading_close();
                 showMessage('error', 'Shift Log Not Deleted');
             }
         })
     }
 </script>
-
 
 <script>
     $(document).ready(function() {

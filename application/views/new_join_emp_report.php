@@ -108,7 +108,7 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 	for($i=0; $i<=$per_page_id; $i++)
 	{
 
-	if($prev_sec != $values["sec_name"][$k]){
+	if($prev_sec != $values["sec_name_en"][$k]){
 
 		$i=$i+1;
 		$row_count = $row_count+1;
@@ -122,7 +122,7 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 		 }	
 
 		echo "<tr bgcolor='#CCCCCC'>";
-		echo "<td colspan='11' style='font-size:16px'>Section :".$values["sec_name"][$k]."</td>";
+		echo "<td colspan='11' style='font-size:16px'>Section :".$values["sec_name_en"][$k]."</td>";
 		echo "</tr>";
 	}	
 	
@@ -146,7 +146,7 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 	//echo $values["sec_name"][$k];
 	//echo "</td>";
 	
-	$prev_sec = $values["sec_name"][$k];
+	$prev_sec = $values["sec_name_en"][$k];
 		
 	echo "<td style='text-align:center; width:100px;'>";
 	echo $values["desig_name"][$k];
@@ -203,7 +203,7 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 	
 	echo "</tr>";
 		
-		$section=$values["sec_name"][$k];
+		$section=$values["sec_name_en"][$k];
 		$k++;
 
 	if($max==$k){
