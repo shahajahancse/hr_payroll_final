@@ -327,7 +327,10 @@ $unit = $this->common_model->get_unit_id_name();
 
         ajaxRequest.onreadystatechange = function() {
             if (ajaxRequest.readyState == 4) {
-                window.open(hostname + "entry_system_con/grid_entry_system");
+                var resp = ajaxRequest.responseText;
+                link = hostname + "entry_system_con/grid_entry_system";
+                page = window.open(link, '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                page.document.write(resp);
             }
         }
     }
