@@ -89,24 +89,34 @@ class Entry_system_con extends CI_Controller
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
         $mm = array();
+        $emp_data = $this->attn_process_model->get_all_employee($emp_ids, 1);
         while ($first_date <= $second_date) {
-            if (strtotime($time) <= strtotime("06:00:00")) {
-                $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
-            } else {
-                $date = $first_date;
-            }
-            // dd($date);
             $data = array();
-            foreach ($emp_ids as $r) {
+            foreach ($emp_data->result() as $rows) {
+                $com_id         = $rows->id;
+                $proxi_id       = $rows->proxi_id;
+                $shift_id       = $rows->shift_id;
+                $schedule_id    = $rows->schedule_id;
+
+                $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id,$shift_id,$schedule_id,$first_date);
+                $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
+                $out_end   = $schedule[0]["out_end"];
+
+                if (strtotime($time) <= strtotime($out_end)) {
+                    $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
+                } else {
+                    $date = $first_date;
+                }
                 $data[] = array(
                     'date_time'       => $date ." ".$time,
-                    'proxi_id'         => $r,
+                    'proxi_id'         => $proxi_id,
                     'device_id'         => 0,
                 );
             }
             $mm = $this->insert_attn_process($data, $first_date, $unit_id, $emp_ids);
             $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
 		}
+
         if (!empty($mm) && $mm['massage'] == 1) {
             echo 'success';
         } else {
@@ -203,19 +213,19 @@ class Entry_system_con extends CI_Controller
 
         $data = array();
         $data1 = array();
-        foreach ($date as $key => $d)
+        foreach ($date as $key => $d) {
             //GET CURRENT SHIFT INFORMATION
             $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
             $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
-            dd($schedule);
-{
+            $out_end 	= $schedule[0]["out_end"];
+
             $data = array(
                 'date_time'  => $d ." ".$in_time[$key],
                 'proxi_id'   => $proxi,
                 'device_id'  => 0,
             );
 
-            if (strtotime($out_time[$key]) <= strtotime("06:00:00")) {
+            if (strtotime($out_time[$key]) <= strtotime($out_end) && strtotime($out_time[$key]) <= strtotime('12:00:00')) {
                 $dd = date('Y-m-d', strtotime($d . ' + 1 days'));
             } else {
                 $dd = $d;
@@ -227,6 +237,7 @@ class Entry_system_con extends CI_Controller
             );
             $mm = $this->update_attn_log($data, $data1, $d, $proxi, $emp_id, $unit_id);
         }
+
         if (!empty($mm) && $mm['massage'] == 1) {
             echo 'success';
         } else {
@@ -268,28 +279,39 @@ class Entry_system_con extends CI_Controller
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
-        $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
-
-        $com_ids    = $this->get_com_emp_id($emp_ids);
         $att_table  = "att_" . date("Y_m", strtotime($first_date));
-        $first      = $first_date .' '. '05:59:59';
-        $second     = $second_date .' '. '06:00:00';
+        $com_ids = array();
+        $proxi_ids = array();
+        $emp_data = $this->attn_process_model->get_all_employee(array($emp_ids), 1);
+        foreach ($emp_data->result() as $rows) {
+            $com_ids[]      = $rows->id;
+            $proxi_ids[]    = $rows->proxi_id;
+            $com_id         = $rows->id;
+            $proxi_id       = $rows->proxi_id;
+            $shift_id       = $rows->shift_id;
+            $schedule_id    = $rows->schedule_id;
 
-        if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
-            $new_md = date('Y-m-d', strtotime('+1 days' . $first_date));
-            $new_table = "att_" . date("Y_m", strtotime($new_md));
-            $this->db->where("date_time BETWEEN '$first' and '$second' ");
-            $this->db->where_in('proxi_id', $emp_ids)->delete($new_table);
-        } else if (date('m', strtotime($first_date)) != date('m', strtotime($second_date))) {
-            $new_md = date('Y-m-d', strtotime('+1 days' . $first_date));
-            $new_table = "att_" . date("Y_m", strtotime($new_md));
-            $this->db->where("date_time BETWEEN '$first' and '$second' ");
-            $this->db->where_in('proxi_id', $emp_ids)->delete($new_table);
+            $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
+            $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
+            $in_start  = $schedule[0]["in_start"];
+            $out_end   = $schedule[0]["out_end"];
+            $first     = $first_date .' '. $in_start;
+            $second    = $second_date .' '. $out_end;
+
+            if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
+                $new_table = "att_" . date("Y_m", strtotime($second_date));
+                $this->db->where("date_time BETWEEN '$first' and '$second' ");
+                $this->db->where('proxi_id', $proxi_id)->delete($new_table);
+            } else if (date('m', strtotime($first_date)) != date('m', strtotime($second_date))) {
+                $new_table = "att_" . date("Y_m", strtotime($second_date));
+                $this->db->where("date_time BETWEEN '$first' and '$second' ");
+                $this->db->where('proxi_id', $proxi_id)->delete($new_table);
+            }
         }
+
         $this->db->where("date_time BETWEEN '$first' and '$second' ");
-        $this->db->where_in('proxi_id', $emp_ids)->delete($att_table);
-        // dd($this->db->last_query());
+        $this->db->where_in('proxi_id', $proxi_ids)->delete($att_table);
 
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
@@ -304,11 +326,8 @@ class Entry_system_con extends CI_Controller
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
-        $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
-
         $com_ids    = $this->get_com_emp_id($emp_ids);
-
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
             echo 'success';
