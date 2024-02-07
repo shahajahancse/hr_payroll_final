@@ -60,7 +60,7 @@
 
           <div class="form-group">
             <label>Month</label>
-            <input type="text" class="form-control" name="date_out" value="<?php echo isset($itemOutData->date_out) ? set_value('date_out', date('Y-m-d', strtotime($itemOutData->date_out))) : set_value('date_out'); ?>">
+            <input type="text" class="form-control date" name="date_out" value="<?php echo isset($itemOutData->date_out) ? set_value('date_out', date('Y-m-d', strtotime($itemOutData->date_out))) : set_value('date_out'); ?>">
           </div>
           <br>
           <div class="form-group">

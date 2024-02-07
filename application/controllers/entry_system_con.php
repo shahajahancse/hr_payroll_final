@@ -146,13 +146,71 @@ class Entry_system_con extends CI_Controller
         $this->db->select('pr_units.*')->where('unit_id', $row->unit_id);
         $this->data['unit'] = $this->db->get('pr_units')->row();
 
-        $this->data['results'] = $this->common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
-        $this->data['first_date'] = date('d-m-Y', strtotime($first_date));
+        $this->data['results']     = $this->common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
+        $this->data['first_date']  = date('d-m-Y', strtotime($first_date));
         $this->data['second_date'] = date('d-m-Y', strtotime($second_date));
-        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['unit_id']     = date('d-m-Y', strtotime($unit_id));
+        $this->data['username']    = $this->data['user_data']->id_number;
         $this->load->view('entry_system/log_sheet', $this->data);
     }
-		
+    public function log_update()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+
+        $proxi       = $_POST['proxi'];
+        $emp_id      = $_POST['emp_id'];
+        $unit_id      = $_POST['unit_id'];
+        $date        = $_POST['date'];
+        $in_time     = $_POST['in_time'];
+        $out_time    = $_POST['out_time'];
+
+        $data = array();
+        $data1 = array();
+        foreach ($date as $key => $d) {
+            $data = array(
+                'date_time'  => $d ." ".$in_time[$key],
+                'proxi_id'   => $proxi,
+                'device_id'  => 0,
+            );
+
+            if (strtotime($out_time[$key]) < strtotime("06:00:00")) {
+                $dd = date('Y-m-d', strtotime($d . ' + 1 days'));
+            } else {
+                $dd = $d;
+            }
+            $data1 = array(
+                'date_time'  => $dd ." ". $out_time[$key],
+                'proxi_id'   => $proxi,
+                'device_id'  => 0,
+            );
+            $mm = $this->update_attn_log($data, $data1, $d, $emp_id, $unit_id);
+        }
+    }
+
+    function update_attn_log($data, $data1, $date, $emp_id, $unit_id) {
+        $this->load->model('attn_process_model');
+        $att_table = "att_". date("Y_m", strtotime($date));
+        if (!$this->db->table_exists($att_table)){
+            $this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(
+                    `att_id` int(11) NOT NULL AUTO_INCREMENT,
+                    `device_id` int(11) NOT NULL,
+                    `proxi_id` varchar(30) NOT NULL,
+                    `date_time` datetime NOT NULL,
+                    PRIMARY KEY (`att_id`),
+                    KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
+            );
+        }
+        $this->db->insert($att_table, $data);
+        $this->db->insert($att_table, $data1);
+        if ($this->attn_process_model->attn_process($date, $unit_id, array(emp_id))) {
+            return array('massage' => 1);
+        } else {
+            return array('massage' => 0);
+        }
+    }
+
     public function present_absent()
     {
         $sql         = $_POST['emp_id'];
