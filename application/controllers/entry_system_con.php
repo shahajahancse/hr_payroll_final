@@ -196,17 +196,17 @@ class Entry_system_con extends CI_Controller
         $out_time    = $_POST['out_time'];
 
         $emp_data = $this->attn_process_model->get_all_employee(array($emp_id), null)->row();
-        $com_id			= $rows->id;
-        $emp_id			= $rows->emp_id;
-        $shift_id		= $rows->shift_id;
-        $schedule_id	= $rows->schedule_id;;
+        $com_id			= $emp_data->id;
+        $emp_id			= $emp_data->emp_id;
+        $shift_id		= $emp_data->shift_id;
+        $schedule_id	= $emp_data->schedule_id;;
 
         $data = array();
         $data1 = array();
-        foreach ($date as $key => $d) 
+        foreach ($date as $key => $d)
             //GET CURRENT SHIFT INFORMATION
-            $emp_shift = $this->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
-            $schedule  = $this->get_emp_schedule($emp_shift->schedule_id);
+            $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
+            $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
             dd($schedule);
 {
             $data = array(
@@ -306,7 +306,7 @@ class Entry_system_con extends CI_Controller
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
-        
+
         $com_ids    = $this->get_com_emp_id($emp_ids);
 
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
