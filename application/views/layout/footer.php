@@ -73,7 +73,10 @@
       $(document).ready(function() {
         $('.date').datepicker({
           format: "dd-mm-yyyy",
-          autoclose: true
+          autoclose: true,
+          autocomplete: false,
+          todayHighlight: true,
+          fridayHighlight: true
         });
         $('.date').attr("placeholder", "dd-mm-yyyy");
       });

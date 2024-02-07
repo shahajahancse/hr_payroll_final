@@ -23,6 +23,36 @@ class Entry_system_con extends CI_Controller
     }
 
     //-------------------------------------------------------------------------------------------------------
+    // GRID Display for advance System
+    //-------------------------------------------------------------------------------------------------------
+    public function advance_loan()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $this->db->from('emp_depertment');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['departments'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Advance Loan';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/advance_loan';
+        $this->load->view('layout/template', $this->data);
+
+    }
+
+    //-------------------------------------------------------------------------------------------------------
     // GRID Display for Entry System
     //-------------------------------------------------------------------------------------------------------
     public function grid_entry_system()
@@ -60,7 +90,7 @@ class Entry_system_con extends CI_Controller
         $emp_ids     = explode(',', $sql);
         $mm = array();
         while ($first_date <= $second_date) {
-            if (strtotime($time) < strtotime("06:00:00")) {
+            if (strtotime($time) <= strtotime("06:00:00")) {
                 $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
             } else {
                 $date = $first_date;
@@ -149,7 +179,7 @@ class Entry_system_con extends CI_Controller
         $this->data['results']     = $this->common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
         $this->data['first_date']  = date('d-m-Y', strtotime($first_date));
         $this->data['second_date'] = date('d-m-Y', strtotime($second_date));
-        $this->data['unit_id']     = date('d-m-Y', strtotime($unit_id));
+        $this->data['unit_id']     = $unit_id;
         $this->data['username']    = $this->data['user_data']->id_number;
         $this->load->view('entry_system/log_sheet', $this->data);
     }
@@ -158,7 +188,6 @@ class Entry_system_con extends CI_Controller
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-
         $proxi       = $_POST['proxi'];
         $emp_id      = $_POST['emp_id'];
         $unit_id      = $_POST['unit_id'];
@@ -166,16 +195,27 @@ class Entry_system_con extends CI_Controller
         $in_time     = $_POST['in_time'];
         $out_time    = $_POST['out_time'];
 
+        $emp_data = $this->attn_process_model->get_all_employee(array($emp_id), null)->row();
+        $com_id			= $rows->id;
+        $emp_id			= $rows->emp_id;
+        $shift_id		= $rows->shift_id;
+        $schedule_id	= $rows->schedule_id;;
+
         $data = array();
         $data1 = array();
-        foreach ($date as $key => $d) {
+        foreach ($date as $key => $d) 
+            //GET CURRENT SHIFT INFORMATION
+            $emp_shift = $this->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
+            $schedule  = $this->get_emp_schedule($emp_shift->schedule_id);
+            dd($schedule);
+{
             $data = array(
                 'date_time'  => $d ." ".$in_time[$key],
                 'proxi_id'   => $proxi,
                 'device_id'  => 0,
             );
 
-            if (strtotime($out_time[$key]) < strtotime("06:00:00")) {
+            if (strtotime($out_time[$key]) <= strtotime("06:00:00")) {
                 $dd = date('Y-m-d', strtotime($d . ' + 1 days'));
             } else {
                 $dd = $d;
@@ -185,11 +225,16 @@ class Entry_system_con extends CI_Controller
                 'proxi_id'   => $proxi,
                 'device_id'  => 0,
             );
-            $mm = $this->update_attn_log($data, $data1, $d, $emp_id, $unit_id);
+            $mm = $this->update_attn_log($data, $data1, $d, $proxi, $emp_id, $unit_id);
+        }
+        if (!empty($mm) && $mm['massage'] == 1) {
+            echo 'success';
+        } else {
+            echo 'error';
         }
     }
 
-    function update_attn_log($data, $data1, $date, $emp_id, $unit_id) {
+    function update_attn_log($data, $data1, $date, $proxi, $emp_id, $unit_id) {
         $this->load->model('attn_process_model');
         $att_table = "att_". date("Y_m", strtotime($date));
         if (!$this->db->table_exists($att_table)){
@@ -202,9 +247,15 @@ class Entry_system_con extends CI_Controller
                     KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
             );
         }
-        $this->db->insert($att_table, $data);
-        $this->db->insert($att_table, $data1);
-        if ($this->attn_process_model->attn_process($date, $unit_id, array(emp_id))) {
+        $check = $this->db->where('proxi_id', $proxi)->where('date_time', $data['date_time'])->get($att_table)->row();
+        if (empty($check)) {
+            $this->db->insert($att_table, $data);
+        }
+        $check1 = $this->db->where('proxi_id', $proxi)->where('date_time', $data1['date_time'])->get($att_table)->row();
+        if (empty($check1)) {
+            $this->db->insert($att_table, $data1);
+        }
+        if ($this->attn_process_model->attn_process($date, $unit_id, array($emp_id))) {
             return array('massage' => 1);
         } else {
             return array('massage' => 0);
@@ -255,8 +306,9 @@ class Entry_system_con extends CI_Controller
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
-
+        
         $com_ids    = $this->get_com_emp_id($emp_ids);
+
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
             echo 'success';
@@ -1062,19 +1114,7 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // Form Display for Advance Loan
     //-------------------------------------------------------------------------------------------------------
-    public function advance_loan()
-    {
-        if ($this->session->userdata('logged_in') == false) {
-            $this->load->view('login_message');
-        } else {
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'form/advance_loan';
-            $this->load->view('layout/template', $this->data);
 
-            // $this->load->view('form/advance_loan');
-        }
-
-    }
     // Form Display for Due Amt. Entry
     public function due_amt_entry()
     {
@@ -1614,7 +1654,7 @@ class Entry_system_con extends CI_Controller
     public function letter_notification(){
 
         $this->data['title'] = 'Increment / Promotion';
-        // $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'letter_notification';
         $this->load->view('layout/template', $this->data);
 

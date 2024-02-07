@@ -8,7 +8,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/table.css" />
 </head>
 <script src="<?=base_url()?>awedget/assets/plugins/jquery-3.2.1.min.js" type="text/javascript"></script>
-
+<!--/.data table-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 <body>
     <div align="center" style="height:100%; width:100%; overflow:hidden;">
         <?php $this->load->view('head_english'); ?>
@@ -98,25 +100,41 @@
 
 
 <script>
-function log_update(e) {
-    e.preventDefault();
-    emp_id = document.getElementById('emp_id').value;
-    proxi = document.getElementById('proxi').value;
+    function log_update(e) {
+        e.preventDefault();
+        emp_id = document.getElementById('emp_id').value;
+        proxi = document.getElementById('proxi').value;
 
-    var formdata = $("#log_form").serialize();
-    var data = "emp_id=" + emp_id + "&proxi=" + proxi + "&" + formdata;
-    url = "<?= base_url('entry_system_con/log_update/') ?>";
-    ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.open("POST", url, true);
-    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-    ajaxRequest.send(data);
-    
-    ajaxRequest.onreadystatechange = function() {
-        console.log(ajaxRequest.responseText);
-
-      // after finnish coding enable this 
-        // window.close();
-
+        var formdata = $("#log_form").serialize();
+        var data = "emp_id=" + emp_id + "&proxi=" + proxi + "&" + formdata;
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('entry_system_con/log_update/') ?>",
+            data: data,
+            success: function(data) {
+                Swal.fire({
+                    toast: true,
+                    position: "top",
+                    icon: "success",
+                    title: "Shift Log Updated Successfully",
+                    showConfirmButton: false,
+                    timer: 3000
+                }).then((result) => {
+                    // window.close();
+                });
+            },
+            error: function(data) {
+                Swal.fire({
+                    toast: true,
+                    position: "top",
+                    icon: "error",
+                    title: "Shift Log Not Updated Successfully",
+                    showConfirmButton: false,
+                    timer: 3000
+                }).then((result) => {
+                    // window.close();
+                });
+            }
+        })
     }
-}
 </script>
