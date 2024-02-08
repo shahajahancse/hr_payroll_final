@@ -1275,7 +1275,6 @@ class Grid_model extends CI_Model{
         pr_emp_shift_log.eot,
         pr_emp_shift_log.deduction_hour,
         pr_emp_shift_log.modify_eot,
-		pr_leave_trans.leave_type,
 		'
     );
 
@@ -1286,21 +1285,24 @@ class Grid_model extends CI_Model{
     $this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id', 'LEFT');
     $this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
     $this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id', 'LEFT');
-    $this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
     $this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'LEFT');
     $this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
     $this->db->where('pr_emp_shift_log.shift_log_date', $date);
-
+	
 	if($type == 1){
  		$this->db->where('pr_emp_shift_log.present_status', "P");
 	}
 
 	if($type == 2){
- 		$this->db->where('pr_emp_shift_log.present_status', "A");
+		$this->db->select('pr_leave_trans.leave_type');
+		$this->db->where('pr_emp_shift_log.present_status', "A");
+		$this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
 	}
-
+	
 	if($type == 3){
-    	$this->db->where('pr_leave_trans.start_date',$date);
+		$this->db->select('pr_leave_trans.leave_type');
+		$this->db->where('pr_leave_trans.start_date',$date);
+		$this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
 		$this->db->where('pr_emp_shift_log.present_status', "L");
 	}
 
