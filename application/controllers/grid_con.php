@@ -29,24 +29,21 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
 		$type = $this->input->post('report_type');
+		// dd($type);
 		$year=date("Y",strtotime($date)); 
 		$month=date("m",strtotime($date)); 
 		$day=date("d",strtotime($date));
 		$grid_emp_id = explode(',', trim($grid_data));
-		// dd($grid_emp_id);
 		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
-		// dd($data);
-		if($type == 9){
-		    $data['values'] =	$this->grid_model->grid_daily_costing_report($date,$unit_id);
-			$data['unit_id']= $unit_id;
-			$data['date']= $date;
-			$this->load->view('others_report/daily_costing_summary',$data);
-		}
-
+		// if($type == 9){
+		//     $data['values'] =	$this->grid_model->grid_daily_costing_report($date,$unit_id);
+		// 	$data['unit_id']= $unit_id;
+		// 	$data['date']= $date;
+		// 	$this->load->view('others_report/daily_costing_summary',$data);
+		// }
 		$data["unit_id"] 		= $unit_id;
 		$data['daily_status']   = $type;
 		$data['date']   		= $date;
-		$data['status']   		= $type;
 		$this->load->view('grid_con/daily_report',$data);
 	}
 
@@ -55,13 +52,10 @@ class Grid_con extends CI_Controller {
 		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
-
 		$data["values"] 	= $this->grid_model->daily_costing_summary($date,$unit_id);	
 		dd($data["values"]);
-		
 		$data["grid_date"]	= $date;
 		$data["unit_id"]	= $unit_id;
-
 		$this->load->view('attn_report/daily_costing_summary',$data);
 		// $this->load->view('others_report/daily_costing_summary',$data);
 	}
@@ -157,8 +151,10 @@ class Grid_con extends CI_Controller {
 	// Increment Promotion Line Letter
 	
 	function incre_prom_report(){
-		$first_date = $this->input->post('first_date');
-		$second_date = $this->input->post('second_date');
+		$first_date = date('Y-m-d',strtotime($this->input->post('first_date')));
+		$second_date = date('Y-m-d',strtotime($this->input->post('second_date')));
+
+		// dd($second_date);
 		$ids = $this->input->post('spl');
 		$type = $this->input->post('type');
 		$emp_id = explode(',', trim($ids));
@@ -231,6 +227,71 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
+	
+	function id_card(){
+		$emp_ids = $this->input->post('emp_id');
+		$unit_id = $this->input->post('unit_id');
+		$status    = $this->input->post('status');
+		$firstdate = 	"2023-12-14";
+		// dd($status);
+		$emp_id = explode(',', trim($emp_ids));
+		$query['unit_id'] = 	$unit_id;
+		$query['firstdate'] = 	"2023-12-14";
+		$validity = date("Y-m-d",strtotime("+3 year",strtotime($firstdate)));
+		$query['validity']= date("d-m-Y",strtotime($validity));
+		$query['values'] = $this->grid_model->id_card($emp_id,$status);
+		if(is_string($query['values'])){
+			echo $query['values'];
+		}
+		else{
+			// $this->load->view('id_card',$query);
+			if($status == 1){
+				$this->load->view('id_card_bangla',$query);
+			}else{
+				$this->load->view('id_card_eng',$query);
+			}
+		}
+	}
+
+	function grid_id_card_english()
+	{
+		$grid_data = $this->uri->segment(3);
+		$grid_unit = $this->uri->segment(4);
+		$grid_emp_id = explode(',', trim($grid_data));
+		$query['unit_id'] = 	$grid_unit;
+		// $query['values'] = $this->grid_model->grid_id_card_english($grid_emp_id);
+		$query['values'] = $this->grid_model->grid_id_card($grid_emp_id);
+		if(is_string($query['values']))
+		{
+			echo $query['values'];
+		}
+		else
+		{
+			$this->load->view('id_card_english',$query);
+		}
+	}
+
+	function grid_job_card(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+
+		$query['values'] = $this->grid_model->grid_job_card($grid_firstdate, $grid_seconddate, $grid_emp_id);
+
+		$query['grid_firstdate'] = $grid_firstdate;
+		$query['grid_seconddate'] = $grid_seconddate;
+		$query['unit_id'] = $this->input->post('unit_id');
+
+		if(is_string($query['values'])){
+			echo $query['values'];
+		}
+		else{
+			$this->load->view('job_card',$query);
+		}
+	}
+
 
 	// emp general report 
 
@@ -241,6 +302,70 @@ class Grid_con extends CI_Controller {
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['grid_emp_id'] = $grid_emp_id;
 		$this->load->view('general_info',$data);
+	}
+
+
+
+
+	function grid_extra_ot(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$data['grid_firstdate'] = $grid_firstdate;
+		$data['grid_seconddate'] = $grid_seconddate;
+		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
+		$data['values'] = $this->grid_model->grid_extra_ot($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$this->load->view('ot_job_card',$data);
+
+	}
+
+	function grid_extra_ot_9pm(){
+		$grid_firstdate  = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$grid_data       = $this->input->post('spl');
+
+		$grid_emp_id = explode(',', trim($grid_data));
+		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate)); 
+		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate)); 
+		
+		$data['values'] = $this->grid_model->grid_extra_ot_9pm($grid_emp_id);
+		$data['grid_firstdate'] = $grid_firstdate;
+		$data['grid_seconddate'] = $grid_seconddate;
+		
+		if(is_string($data['values']))
+		{
+			echo $data['values'];
+		}
+		else
+		{
+			$this->load->view('grid_extra_ot_9pm',$data);
+		}
+	}
+
+	function grid_extra_ot_4pm(){
+		$grid_firstdate  = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$grid_data       = $this->input->post('spl');
+
+		$grid_emp_id = explode(',', trim($grid_data));
+		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate)); 
+		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate)); 
+		
+		$data['values'] = $this->grid_model->grid_extra_ot_4pm($grid_emp_id);
+		$data['grid_firstdate'] = $grid_firstdate;
+		$data['grid_seconddate'] = $grid_seconddate;
+		
+		if(is_string($data['values']))
+		{
+			echo $data['values'];
+		}
+		else
+		{
+			$this->load->view('grid_extra_ot_4pm',$data);
+		}
 	}
 
 
@@ -716,7 +841,7 @@ class Grid_con extends CI_Controller {
 		$unit	= $this->uri->segment(9);
 		$position	= $this->uri->segment(10);
 		$out_miss	= $this->uri->segment(11);
-		$f_date	= date('Y-m-d',strtotime($this->uri->segment(12)));
+		$f_date	= date('d-m-Y',strtotime($this->uri->segment(12)));
 
 		$this->db->select('pr_emp_per_info.*');
 		$this->db->from('pr_emp_per_info');
@@ -1098,34 +1223,27 @@ class Grid_con extends CI_Controller {
 	}
 
 
-	function grid_daily_holiday_weekend_present_report()
-	{
-
+	function grid_daily_holiday_weekend_present_report(){
 		$grid_date = $this->input->post('firstdate');
 		list($date, $month, $year) = explode('-', trim($grid_date));
 		$status = $this->input->post('status');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-
 		$unit_id = $this->input->post('grid_start');
-
 		//echo "$date, $month, $year";
 		$status = 'P';
 		//print_r($grid_emp_id);
 		$data["values"] = $this->grid_model->grid_daily_holiday_weekend_present_report($year, $month, $date, $status, $grid_emp_id);
-
 		$data["year"]			= $year;
 		$data["month"]			= $month;
 		$data["date"]			= $date;
 		$data["daily_status"]	= $status;
-		$data["unit_id"]			= $unit_id;
+		$data["unit_id"]		= $unit_id;
 
-		if(is_string($data["values"]))
-		{
+		if(is_string($data["values"])){
 			echo $data["values"];
 		}
-		else
-		{
+		else{
 			$this->load->view('daily_holiday_weekend_present_report',$data);
 		}
 	}
@@ -1509,69 +1627,6 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function id_card(){
-		$emp_ids = $this->input->post('emp_id');
-		$unit_id = $this->input->post('unit_id');
-		$status    = $this->input->post('status');
-		$firstdate = 	"2023-12-14";
-		// dd($status);
-		$emp_id = explode(',', trim($emp_ids));
-		$query['unit_id'] = 	$unit_id;
-		$query['firstdate'] = 	"2023-12-14";
-		$validity = date("Y-m-d",strtotime("+3 year",strtotime($firstdate)));
-		$query['validity']= date("d-m-Y",strtotime($validity));
-		$query['values'] = $this->grid_model->id_card($emp_id,$status);
-		if(is_string($query['values'])){
-			echo $query['values'];
-		}
-		else{
-			// $this->load->view('id_card',$query);
-			if($status == 1){
-				$this->load->view('id_card_bangla',$query);
-			}else{
-				$this->load->view('id_card_eng',$query);
-			}
-		}
-	}
-
-	function grid_id_card_english()
-	{
-		$grid_data = $this->uri->segment(3);
-		$grid_unit = $this->uri->segment(4);
-		$grid_emp_id = explode(',', trim($grid_data));
-		$query['unit_id'] = 	$grid_unit;
-		// $query['values'] = $this->grid_model->grid_id_card_english($grid_emp_id);
-		$query['values'] = $this->grid_model->grid_id_card($grid_emp_id);
-		if(is_string($query['values']))
-		{
-			echo $query['values'];
-		}
-		else
-		{
-			$this->load->view('id_card_english',$query);
-		}
-	}
-
-	function grid_job_card(){
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-
-		$query['values'] = $this->grid_model->grid_job_card($grid_firstdate, $grid_seconddate, $grid_emp_id);
-
-		$query['grid_firstdate'] = $grid_firstdate;
-		$query['grid_seconddate'] = $grid_seconddate;
-		$query['unit_id'] = $this->input->post('unit_id');
-
-		if(is_string($query['values'])){
-			echo $query['values'];
-		}
-		else{
-			$this->load->view('job_card',$query);
-		}
-	}
 
 	function grid_auto_notify_FW()
 	{
@@ -1843,44 +1898,7 @@ class Grid_con extends CI_Controller {
 
 
 	}
-	function grid_extra_ot(){
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$data['unit_id'] = $this->input->post('unit_id');
-		$data['grid_firstdate'] = $grid_firstdate;
-		$data['grid_seconddate'] = $grid_seconddate;
-		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
-		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
-		$data['values'] = $this->grid_model->grid_extra_ot($grid_firstdate, $grid_seconddate, $grid_emp_id);
-		$this->load->view('ot_job_card',$data);
-
-	}
-
-	function grid_extra_ot_9pm()
-	{
-		$grid_firstdate  = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data       = $this->input->post('spl');
-
-		$grid_emp_id = explode(',', trim($grid_data));
-		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate)); 
-		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate)); 
-		
-		$data['values'] = $this->grid_model->grid_extra_ot_9pm($grid_emp_id);
-		$data['grid_firstdate'] = $grid_firstdate;
-		$data['grid_seconddate'] = $grid_seconddate;
-		
-		if(is_string($data['values']))
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('grid_extra_ot_9pm',$data);
-		}
-	}
+	
 
 	function grid_extra_ot_mix()
 	{

@@ -4157,6 +4157,7 @@ function grid_extra_ot(){
 		return false;
 	}
 
+	document.getElementById('loaader').style.display = 'flex';
 	
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
@@ -4166,7 +4167,8 @@ function grid_extra_ot(){
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 
-	ajaxRequest.onreadystatechange = function(){
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -4176,11 +4178,8 @@ function grid_extra_ot(){
 	}
 }
 
-function grid_extra_ot_9pm()
-{
-
+function grid_extra_ot_9pm(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
-
 	try{
 	   // Opera 8.0+, Firefox, Safari
 	   ajaxRequest = new XMLHttpRequest();
@@ -4198,16 +4197,13 @@ function grid_extra_ot_9pm()
 	        }
 	    }
 	}
-
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
+	if(firstdate ==''){
 		alert("Please select First date");
 		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
-	if(seconddate =='')
-	{
+	if(seconddate ==''){
 		alert("Please select Second date");
 		return false;
 	}
@@ -4218,28 +4214,81 @@ function grid_extra_ot_9pm()
 		alert("Please select Category options");
 		return false;
 	}
-
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
-
 	if (sql == '') {
 		alert('Please select employee Id');
 		return false;
 	}
-
-	 
+	document.getElementById('loaader').style.display = 'flex';
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
     url =  hostname+"index.php/grid_con/grid_extra_ot_9pm/";
-
-     
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			daily_present_report.document.write(resp);
+			daily_present_report.stop();
+		}
+	}
+}
+
+function grid_extra_ot_4pm(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+	   // Opera 8.0+, Firefox, Safari
+	   ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	    // Internet Explorer Browsers
+	    try{
+	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	    }catch (e) {
+	        try{
+	           ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+	        }catch (e){
+	           // Something went wrong
+	           alert("Your browser broke!");
+	           return false;
+	        }
+	    }
+	}
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate ==''){
+		alert("Please select First date");
+		return false;
+	}
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate ==''){
+		alert("Please select Second date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Category options");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	document.getElementById('loaader').style.display = 'flex';
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
+    url =  hostname+"index.php/grid_con/grid_extra_ot_4pm/";
+    ajaxRequest.open("POST", url, true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+    ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			daily_present_report.stop();
