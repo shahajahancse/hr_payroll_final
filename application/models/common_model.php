@@ -224,7 +224,7 @@ class Common_model extends CI_Model{
 
         $i = 0;
         $logs = array();
-        while($first_date < $second_date)
+        while($first_date <= $second_date)
 		{  
             $logs[$i]['date'] = $first_date;
             $this->db->select('

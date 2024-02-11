@@ -114,7 +114,7 @@
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <input type="" class="form-control date" id="process_date" >
+                    <input type="text" class="form-control date" id="process_date" >
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='attendance_process()' type="button" value='Process' />
                     </span>

@@ -23,6 +23,36 @@ class Entry_system_con extends CI_Controller
     }
 
     //-------------------------------------------------------------------------------------------------------
+    // GRID Display for advance System
+    //-------------------------------------------------------------------------------------------------------
+    public function advance_loan()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $this->db->from('emp_depertment');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['departments'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Advance Loan';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/advance_loan';
+        $this->load->view('layout/template', $this->data);
+
+    }
+
+    //-------------------------------------------------------------------------------------------------------
     // GRID Display for Entry System
     //-------------------------------------------------------------------------------------------------------
     public function grid_entry_system()
@@ -59,24 +89,34 @@ class Entry_system_con extends CI_Controller
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
         $mm = array();
+        $emp_data = $this->attn_process_model->get_all_employee($emp_ids, 1);
         while ($first_date <= $second_date) {
-            if (strtotime($time) < strtotime("06:00:00")) {
-                $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
-            } else {
-                $date = $first_date;
-            }
-            // dd($date);
             $data = array();
-            foreach ($emp_ids as $r) {
+            foreach ($emp_data->result() as $rows) {
+                $com_id         = $rows->id;
+                $proxi_id       = $rows->proxi_id;
+                $shift_id       = $rows->shift_id;
+                $schedule_id    = $rows->schedule_id;
+
+                $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id,$shift_id,$schedule_id,$first_date);
+                $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
+                $out_end   = $schedule[0]["out_end"];
+
+                if (strtotime($time) <= strtotime($out_end)) {
+                    $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
+                } else {
+                    $date = $first_date;
+                }
                 $data[] = array(
                     'date_time'       => $date ." ".$time,
-                    'proxi_id'         => $r,
+                    'proxi_id'         => $proxi_id,
                     'device_id'         => 0,
                 );
             }
             $mm = $this->insert_attn_process($data, $first_date, $unit_id, $emp_ids);
             $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
 		}
+
         if (!empty($mm) && $mm['massage'] == 1) {
             echo 'success';
         } else {
@@ -146,41 +186,132 @@ class Entry_system_con extends CI_Controller
         $this->db->select('pr_units.*')->where('unit_id', $row->unit_id);
         $this->data['unit'] = $this->db->get('pr_units')->row();
 
-        $this->data['results'] = $this->common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
-        $this->data['first_date'] = date('d-m-Y', strtotime($first_date));
+        $this->data['results']     = $this->common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
+        $this->data['first_date']  = date('d-m-Y', strtotime($first_date));
         $this->data['second_date'] = date('d-m-Y', strtotime($second_date));
-        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['unit_id']     = $unit_id;
+        $this->data['username']    = $this->data['user_data']->id_number;
         $this->load->view('entry_system/log_sheet', $this->data);
     }
-		
+    public function log_update()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $proxi       = $_POST['proxi'];
+        $emp_id      = $_POST['emp_id'];
+        $unit_id      = $_POST['unit_id'];
+        $date        = $_POST['date'];
+        $in_time     = $_POST['in_time'];
+        $out_time    = $_POST['out_time'];
+
+        $emp_data = $this->attn_process_model->get_all_employee(array($emp_id), null)->row();
+        $com_id			= $emp_data->id;
+        $emp_id			= $emp_data->emp_id;
+        $shift_id		= $emp_data->shift_id;
+        $schedule_id	= $emp_data->schedule_id;;
+
+        $data = array();
+        $data1 = array();
+        foreach ($date as $key => $d) {
+            //GET CURRENT SHIFT INFORMATION
+            $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
+            $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
+            $out_end 	= $schedule[0]["out_end"];
+
+            $data = array(
+                'date_time'  => $d ." ".$in_time[$key],
+                'proxi_id'   => $proxi,
+                'device_id'  => 0,
+            );
+
+            if (strtotime($out_time[$key]) <= strtotime($out_end) && strtotime($out_time[$key]) <= strtotime('12:00:00')) {
+                $dd = date('Y-m-d', strtotime($d . ' + 1 days'));
+            } else {
+                $dd = $d;
+            }
+            $data1 = array(
+                'date_time'  => $dd ." ". $out_time[$key],
+                'proxi_id'   => $proxi,
+                'device_id'  => 0,
+            );
+            $mm = $this->update_attn_log($data, $data1, $d, $proxi, $emp_id, $unit_id);
+        }
+
+        if (!empty($mm) && $mm['massage'] == 1) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    function update_attn_log($data, $data1, $date, $proxi, $emp_id, $unit_id) {
+        $this->load->model('attn_process_model');
+        $att_table = "att_". date("Y_m", strtotime($date));
+        if (!$this->db->table_exists($att_table)){
+            $this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(
+                    `att_id` int(11) NOT NULL AUTO_INCREMENT,
+                    `device_id` int(11) NOT NULL,
+                    `proxi_id` varchar(30) NOT NULL,
+                    `date_time` datetime NOT NULL,
+                    PRIMARY KEY (`att_id`),
+                    KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
+            );
+        }
+        $check = $this->db->where('proxi_id', $proxi)->where('date_time', $data['date_time'])->get($att_table)->row();
+        if (empty($check)) {
+            $this->db->insert($att_table, $data);
+        }
+        $check1 = $this->db->where('proxi_id', $proxi)->where('date_time', $data1['date_time'])->get($att_table)->row();
+        if (empty($check1)) {
+            $this->db->insert($att_table, $data1);
+        }
+        if ($this->attn_process_model->attn_process($date, $unit_id, array($emp_id))) {
+            return array('massage' => 1);
+        } else {
+            return array('massage' => 0);
+        }
+    }
+
     public function present_absent()
     {
         $sql         = $_POST['emp_id'];
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
-        $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
-
-        $com_ids    = $this->get_com_emp_id($emp_ids);
         $att_table  = "att_" . date("Y_m", strtotime($first_date));
-        $first      = $first_date .' '. '05:59:59';
-        $second     = $second_date .' '. '06:00:00';
+        $com_ids = array();
+        $proxi_ids = array();
+        $emp_data = $this->attn_process_model->get_all_employee(array($emp_ids), 1);
+        foreach ($emp_data->result() as $rows) {
+            $com_ids[]      = $rows->id;
+            $proxi_ids[]    = $rows->proxi_id;
+            $com_id         = $rows->id;
+            $proxi_id       = $rows->proxi_id;
+            $shift_id       = $rows->shift_id;
+            $schedule_id    = $rows->schedule_id;
 
-        if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
-            $new_md = date('Y-m-d', strtotime('+1 days' . $first_date));
-            $new_table = "att_" . date("Y_m", strtotime($new_md));
-            $this->db->where("date_time BETWEEN '$first' and '$second' ");
-            $this->db->where_in('proxi_id', $emp_ids)->delete($new_table);
-        } else if (date('m', strtotime($first_date)) != date('m', strtotime($second_date))) {
-            $new_md = date('Y-m-d', strtotime('+1 days' . $first_date));
-            $new_table = "att_" . date("Y_m", strtotime($new_md));
-            $this->db->where("date_time BETWEEN '$first' and '$second' ");
-            $this->db->where_in('proxi_id', $emp_ids)->delete($new_table);
+            $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
+            $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
+            $in_start  = $schedule[0]["in_start"];
+            $out_end   = $schedule[0]["out_end"];
+            $first     = $first_date .' '. $in_start;
+            $second    = $second_date .' '. $out_end;
+
+            if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
+                $new_table = "att_" . date("Y_m", strtotime($second_date));
+                $this->db->where("date_time BETWEEN '$first' and '$second' ");
+                $this->db->where('proxi_id', $proxi_id)->delete($new_table);
+            } else if (date('m', strtotime($first_date)) != date('m', strtotime($second_date))) {
+                $new_table = "att_" . date("Y_m", strtotime($second_date));
+                $this->db->where("date_time BETWEEN '$first' and '$second' ");
+                $this->db->where('proxi_id', $proxi_id)->delete($new_table);
+            }
         }
+
         $this->db->where("date_time BETWEEN '$first' and '$second' ");
-        $this->db->where_in('proxi_id', $emp_ids)->delete($att_table);
-        // dd($this->db->last_query());
+        $this->db->where_in('proxi_id', $proxi_ids)->delete($att_table);
 
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
@@ -195,9 +326,7 @@ class Entry_system_con extends CI_Controller
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
-        $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
-
         $com_ids    = $this->get_com_emp_id($emp_ids);
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
@@ -1004,19 +1133,7 @@ class Entry_system_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     // Form Display for Advance Loan
     //-------------------------------------------------------------------------------------------------------
-    public function advance_loan()
-    {
-        if ($this->session->userdata('logged_in') == false) {
-            $this->load->view('login_message');
-        } else {
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'form/advance_loan';
-            $this->load->view('layout/template', $this->data);
 
-            // $this->load->view('form/advance_loan');
-        }
-
-    }
     // Form Display for Due Amt. Entry
     public function due_amt_entry()
     {
@@ -1556,7 +1673,7 @@ class Entry_system_con extends CI_Controller
     public function letter_notification(){
 
         $this->data['title'] = 'Increment / Promotion';
-        // $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'letter_notification';
         $this->load->view('layout/template', $this->data);
 
