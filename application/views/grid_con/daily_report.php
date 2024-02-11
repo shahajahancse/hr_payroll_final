@@ -45,7 +45,6 @@ elseif($daily_status == 8)
  Report</title>
 <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/print.css" media="print" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" /> -->
-
 <style>
 	@media print{
 		table {
@@ -53,9 +52,7 @@ elseif($daily_status == 8)
 		}
 	}
 </style>
-
 </head>
-
 <body style="margin: 0px;">
 
 <?php 
@@ -68,12 +65,6 @@ elseif($daily_status == 8)
 
 // foreach (array_chunk($values, $pageSize) as $pageData) {
     // echo "Page " . $pageNumber . ":\n";
-
-   
-
-
-
-
 
 $this->load->view("head_english");
 ?>
@@ -114,7 +105,7 @@ elseif($daily_status == 7)
 }
 elseif($daily_status == 8)
 {
-	echo "Daily Punch Miss";
+	echo "Punch Miss";
 }
 
 ?> Report , Date <?php echo date("d/m/Y",strtotime($date)); ?></span><br><br>
@@ -187,16 +178,16 @@ elseif($daily_status == 8)
 		<td style="text-align:center;padding:0 4px"><?php echo $employee['line_name_en']?></td>
 		<td style="text-align:center;"><?php echo $employee['shift_name']?></td>
 		<?php if($daily_status == 1){?>
-			<td style="text-align:center; padding:0 4px"><?php echo date('h:i:s A',strtotime($employee['in_time']))?></td>
-			<td style="text-align:center; padding:0 4px"><?php echo date('h:i:s A',strtotime($employee['out_time']))?></td>
+			<td style="text-align:center; padding:0 4px"><?php echo $employee['in_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['in_time'])) : "P(ERROR)"?></td>
+			<td style="text-align:center; padding:0 4px"><?php echo $employee['out_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['out_time'])) : "P(ERROR)"?></td>
 		<?php }?>
 		<?php if($daily_status == 4){?>
 			<td style="text-align:center; padding:0 4px"><?php echo date('h:i:s A',strtotime($employee['in_time']))?></td>
 		<?php }?>
 		
 		<?php if($daily_status == 5 || $daily_status == 6 || $daily_status==7){?>
-			<td style="text-align:center; padding:0 4px"><?php echo date('h:i:s A',strtotime($employee['in_time']))?></td>
-			<td style="text-align:center; padding:0 4px"><?php echo date('h:i:s A',strtotime($employee['out_time']))?></td>
+			<td style="text-align:center; padding:0 4px"><?php echo $employee['in_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['in_time'])) : "P(ERROR)"?></td>
+			<td style="text-align:center; padding:0 4px"><?php echo $employee['out_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['out_time'])) : "P(ERROR)"?></td>
 		
 		<?php }?>
 		<?php if($daily_status == 8){?>
