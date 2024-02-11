@@ -38,13 +38,13 @@ $count = count($values["emp_id"]);
 for($i=0; $i<$count; $i++ )
 {
 	
-	if($section!=$values["sec_name"][$i]){
+	if($section!=$values["sec_name_en"][$i]){
 	echo "<tr bgcolor='#CCCCCC'>";
-	echo "<td colspan='10' style='font-size:16px;font-wieght:bold;'>Section :&nbsp".$values["sec_name"][$i]."</td>";
+	echo "<td colspan='10' style='font-size:16px;font-wieght:bold;'>Section :&nbsp".$values["sec_name_en"][$i]."</td>";
 	echo "</tr>";
 	
 	 ?>
-	<th>SL</th><th>Emp ID</th><th>Punch Card No.</th><th>Employee Name</th><th>Line No. </th> <th>Designation</th><th>Status</th><th>Remarks</th> <th>Sign.</th> 
+	<th>SL</th><th>Emp ID</th><th>Employee Name</th><th>Line No. </th> <th>Designation</th><th>Status</th><th>Remarks</th> <th>Sign.</th> 
 
 <?php
 	
@@ -62,10 +62,10 @@ for($i=0; $i<$count; $i++ )
 	echo $values["emp_id"][$i];
 	echo "</td>";
 	
-	echo "<td>";
-	echo "&nbsp;";
-	echo $values["proxi_id"][$i];
-	echo "</td>";
+	// echo "<td>";
+	// echo "&nbsp;";
+	// echo $values["proxi_id"][$i];
+	// echo "</td>";
 	
 	echo "<td >";
 	echo $values["emp_name"][$i];
@@ -92,7 +92,7 @@ for($i=0; $i<$count; $i++ )
 	echo "</td>";	
 	
 	echo "</tr>";
-	$section=$values["sec_name"][$i];
+	$section=$values["sec_name_en"][$i];
 }
 
 ?>

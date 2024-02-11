@@ -1326,7 +1326,7 @@ class Grid_model extends CI_Model{
 	if($type == 7){
 		// dd($type);
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-		$this->db->where('pr_emp_shift_log.present_status', "P");
+		$this->db->where("(in_time = '00:00:00' OR out_time = '00:00:00') AND present_status = 'P'");
 	}
 	
 	if($type == 8){
@@ -1662,11 +1662,13 @@ class Grid_model extends CI_Model{
 	// Daily Holiday / Weekend Present Report
 	//=======================================
 
-	function grid_daily_holiday_weekend_present_report($year,$month,$date,$status,$grid_emp_id)
-	{
-		$day = $year."-".$month."-".$date;
+	function grid_daily_holiday_weekend_present_report($year,$month,$date,$status,$grid_emp_id){
 		// dd($day);
-		$this->db->select('pr_emp_com_info.emp_id,
+		$data =array();
+		$day = $year."-".$month."-".$date;
+		$ids = $this->db->select('id')->where_in('emp_id',$grid_emp_id)->get('pr_emp_com_info')->result();
+		foreach($ids as $row){
+			$this->db->select('pr_emp_com_info.emp_id,
 						   pr_emp_per_info.name_en, 
 						   emp_designation.desig_name, 
 						   pr_emp_com_info.emp_join_date, 
@@ -1678,49 +1680,44 @@ class Grid_model extends CI_Model{
 						   pr_emp_shift_log.in_time,
 						   pr_emp_shift_log.out_time'
 						);
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('emp_line_num');
-		$this->db->from('pr_emp_shift');
-		$this->db->from('pr_emp_shift_log');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
-		$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
-		$this->db->where("pr_emp_shift_log.shift_log_date = '$day'");
-		$this->db->where("pr_emp_shift_log.in_time != '00:00:00'");
-		$this->db->order_by("emp_section.sec_name_en");
-		$this->db->order_by("emp_line_num.line_name_en");
-		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
-		dd($query->result());
-
-		foreach($query->result() as $rows)
-		{
-			$data["emp_id"][] 		= $rows->emp_id;
-			$data["proxi_id"][] 	= $rows->proxi_id;
-			$data["emp_name"][] 	= $rows->emp_full_name;
-			$data["desig_name"][] 	= $rows->desig_name;
-			$data["doj"][] 			= $rows->emp_join_date;
-			$data["dept_name"][] 	= $rows->dept_name;
-			$data["sec_name_en"][] 	= $rows->sec_name_en;
-			$data["line_name"][] 	= $rows->line_name;
-			$data["in_time"][] 		= $rows->in_time;
-
-			$out_time = $rows->out_time;
-			if($out_time == "00:00:00")
-			{
-				$out_time = "P(Error)";
+			$this->db->from('pr_emp_per_info');
+			$this->db->from('pr_emp_com_info');
+			$this->db->from('emp_designation');
+			$this->db->from('emp_depertment');
+			$this->db->from('emp_section');
+			$this->db->from('emp_line_num');
+			$this->db->from('pr_emp_shift');
+			$this->db->from('pr_emp_shift_log');
+			$this->db->where('pr_emp_per_info.emp_id      = pr_emp_com_info.emp_id');
+			$this->db->where('pr_emp_shift_log.emp_id     = pr_emp_com_info.id');
+			$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
+			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+			$this->db->where('pr_emp_com_info.emp_sec_id  = emp_section.id');
+			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
+			$this->db->where('pr_emp_shift.id             = pr_emp_com_info.emp_shift');
+			$this->db->where_in("pr_emp_shift_log.emp_id",$row->id);
+			$this->db->where("pr_emp_shift_log.shift_log_date = '$day'");
+			$this->db->where("pr_emp_com_info.emp_cat_id", 1);
+			$this->db->where("pr_emp_shift_log.in_time != '00:00:00'");
+			$this->db->order_by("emp_section.sec_name_en");
+			$this->db->order_by("emp_line_num.line_name_en");
+			$this->db->order_by("pr_emp_com_info.emp_id");
+			$query = $this->db->get();
+			foreach($query->result() as $rows){
+				$data["emp_id"][] 		= $rows->emp_id;
+				$data["emp_name"][] 	= $rows->name_en;
+				$data["desig_name"][] 	= $rows->desig_name;
+				$data["doj"][] 			= $rows->emp_join_date;
+				$data["dept_name"][] 	= $rows->dept_name;
+				$data["sec_name"][] 	= $rows->sec_name_en;
+				$data["line_name"][] 	= $rows->line_name_en;
+				$data["in_time"][] 		= $rows->in_time;
+				$out_time = $rows->out_time;
+				if($out_time == "00:00:00"){
+					$out_time = "P(Error)";
+				}
+				$data["out_time"][] 	= $out_time;
 			}
-
-			$data["out_time"][] 	= $out_time;
 		}
 
 		if($data)
@@ -1732,66 +1729,68 @@ class Grid_model extends CI_Model{
 		{
 			return "Requested list is empty";
 		}
-
 	}
 
 
-	function grid_daily_holiday_weekend_absent_report($year,$month,$date,$status,$grid_emp_id)
-	{
-		$day = $year."-".$month."-".$date;
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en, emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id,pr_emp_shift_log.in_time,pr_emp_shift_log.out_time');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('emp_line_num');
-		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_emp_shift');
-		$this->db->from('pr_emp_shift_log');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
-		$this->db->where_in("pr_emp_shift_log.emp_id",$grid_emp_id);
-		$this->db->where("pr_emp_shift_log.shift_log_date = '$day'");
-		$this->db->where("pr_emp_shift_log.in_time = '00:00:00'");
-		$this->db->order_by("emp_section.sec_name_en");
-		$this->db->order_by("emp_line_num.line_name_en");
-		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
-
-		foreach($query->result() as $rows)
-		{
-			$emp_id = $rows->emp_id;
-			$data["emp_id"][] 		= $rows->emp_id;
-			$data["proxi_id"][] 	= $rows->proxi_id;
-			$data["emp_name"][] 	= $rows->emp_full_name;
-			$data["desig_name"][] 	= $rows->desig_name;
-			$data["doj"][] 			= $rows->emp_join_date;
-			$data["dept_name"][] 	= $rows->dept_name;
-			$data["sec_name_en"][] 	= $rows->sec_name_en;
-			$data["line_name"][] 	= $rows->line_name;
-
-			$status = "A";
-
-			$limit_days = $this->common_model->get_setup_attributes(9);
-			$emp_num_rows = $this->attendance_check_for_absent($emp_id,$status,$limit_days,$day);
-			$data["cont_absent"][] 		= $emp_num_rows;
-
+	function grid_daily_holiday_weekend_absent_report($year,$month,$date,$status,$grid_emp_id){
+		$data = array();
+		$day = $year . "-" . $month . "-" . $date;
+		$ids = $this->db->select('id')->where_in('emp_id', $grid_emp_id)->get('pr_emp_com_info')->result();
+		
+		foreach ($ids as $row) {
+			$query = $this->db
+				->select('pr_emp_com_info.emp_id,
+						pr_emp_per_info.name_en, 
+						emp_designation.desig_name, 
+						pr_emp_com_info.emp_join_date, 
+						emp_depertment.dept_name, 
+						emp_section.sec_name_en, 
+						emp_line_num.line_name_en, 
+						pr_emp_shift.shift_name,
+						pr_emp_com_info.emp_cat_id,
+						pr_emp_shift_log.in_time,
+						pr_emp_shift_log.out_time')
+				->from('pr_emp_per_info')
+				->from('pr_emp_com_info')
+				->from('emp_designation')
+				->from('emp_depertment')
+				->from('emp_section')
+				->from('emp_line_num')
+				->from('pr_emp_shift')
+				->from('pr_emp_shift_log')
+				->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id')
+				->where('pr_emp_shift_log.emp_id = pr_emp_com_info.id')
+				->where('pr_emp_com_info.emp_desi_id = emp_designation.id')
+				->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id')
+				->where('pr_emp_com_info.emp_sec_id = emp_section.id')
+				->where('pr_emp_com_info.emp_line_id = emp_line_num.id')
+				->where('pr_emp_shift.id = pr_emp_com_info.emp_shift')
+				->where_in("pr_emp_shift_log.emp_id", $row->id)
+				->where("pr_emp_shift_log.shift_log_date", $day)
+				->where("pr_emp_com_info.emp_cat_id", 1)
+				->where("pr_emp_shift_log.in_time", '00:00:00')
+				->order_by("pr_emp_com_info.emp_id")
+				->get();
+		
+			foreach ($query->result() as $rows) {
+				$emp_id = $rows->emp_id;
+				$data["emp_id"][] = $rows->emp_id;
+				$data["emp_name"][] = $rows->name_en;
+				$data["desig_name"][] = $rows->desig_name;
+				$data["doj"][] = $rows->emp_join_date;
+				$data["dept_name"][] = $rows->dept_name;
+				$data["sec_name_en"][] = $rows->sec_name_en;
+				$data["line_name"][] = $rows->line_name_en;
+				$status = "A";
+				$limit_days = $this->common_model->get_setup_attributes(9);
+				$emp_num_rows = $this->attendance_check_for_absent($emp_id, $status, $limit_days, $day);
+				$data["cont_absent"][] = $emp_num_rows;
+			}
 		}
-
-		if($data)
-		{
-
+		
+		if ($data) {
 			return $data;
-		}
-		else
-		{
+		} else {
 			return "Requested list is empty";
 		}
 
@@ -11420,3 +11419,4 @@ function grid_emp_job_application($grid_emp_id){
 
   }
   ?>
+

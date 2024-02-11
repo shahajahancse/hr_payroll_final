@@ -1230,9 +1230,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('grid_start');
-		//echo "$date, $month, $year";
 		$status = 'P';
-		//print_r($grid_emp_id);
 		$data["values"] = $this->grid_model->grid_daily_holiday_weekend_present_report($year, $month, $date, $status, $grid_emp_id);
 		$data["year"]			= $year;
 		$data["month"]			= $month;
@@ -1244,38 +1242,30 @@ class Grid_con extends CI_Controller {
 			echo $data["values"];
 		}
 		else{
+			// exit;
 			$this->load->view('daily_holiday_weekend_present_report',$data);
 		}
 	}
 
-	function grid_daily_holiday_weekend_absent_report()
-	{
-
+	function grid_daily_holiday_weekend_absent_report(){
 		$grid_date = $this->input->post('firstdate');
 		list($date, $month, $year) = explode('-', trim($grid_date));
 		$status = $this->input->post('status');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-
 		$unit_id = $this->input->post('grid_start');
-
-		//echo "$date, $month, $year";
-		$status = 'P';
-		//print_r($grid_emp_id);
+		$status = 'A';
 		$data["values"] = $this->grid_model->grid_daily_holiday_weekend_absent_report($year, $month, $date, $status, $grid_emp_id);
-
 		$data["year"]			= $year;
 		$data["month"]			= $month;
 		$data["date"]			= $date;
 		$data["daily_status"]	= $status;
 		$data["unit_id"]		= $unit_id;
 
-		if(is_string($data["values"]))
-		{
+		if(is_string($data["values"])){
 			echo $data["values"];
 		}
-		else
-		{
+		else{
 			$this->load->view('daily_holiday_weekend_absent_report',$data);
 		}
 	}
