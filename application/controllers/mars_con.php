@@ -127,8 +127,7 @@ class Mars_con extends CI_Controller {
 	}
 	
 	/////////////////////daily_logout_report/////////////////
-	function daily_logout_report()
-	{
+	function daily_logout_report(){
 		$grid_date = $this->uri->segment(3);
 		list($date, $month, $year) = explode('-', trim($grid_date));
 		$report_date = date("Y-m-d", mktime(0, 0, 0, $month, $date, $year));

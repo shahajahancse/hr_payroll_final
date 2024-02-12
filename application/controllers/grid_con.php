@@ -81,20 +81,16 @@ class Grid_con extends CI_Controller {
 		// $this->load->view('others_report/attendance_summary', $data);
 	}
 
-	function daily_logout_report()
-	{
+	function daily_logout_report(){
 		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
-
 		$data['values'] = $this->grid_model->daily_logout_report($date, $unit_id);
-
 		$data['title'] 		 = 'Daily Logout Summary';
 		$data['report_date'] = $date;
 		$data['category']    = 'Line';
 		$data['unit_id']    = $unit_id;
 		// dd($data);
-		
 		$this->load->view('attn_report/daily_logout_report', $data);
 		// $this->load->view('others_report/daily_logout', $data);
 	}
@@ -1017,24 +1013,18 @@ class Grid_con extends CI_Controller {
 	}
 
 
-	function grid_daily_costing_report()
-	{
+	function grid_daily_costing_report(){
 		$grid_date = $this->input->post('firstdate');
-		//list($date, $month, $year) = explode('-', trim($grid_date));
 		$grid_unit = $this->input->post('unit_id');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-
 		$data["values"] = $this->grid_model->grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id);
 		$data["grid_date"]	= date("d-M-Y",strtotime($grid_date));
 		$data["unit_id"]	= $grid_unit;
-
-		if(is_string($data["values"]))
-		{
+		if(is_string($data["values"])){
 			echo $data["values"];
 		}
-		else
-		{
+		else{
 			$this->load->view('daily_costing_report',$data);
 		}
 	}
