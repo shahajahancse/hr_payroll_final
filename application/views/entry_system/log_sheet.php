@@ -120,7 +120,7 @@
                     showConfirmButton: false,
                     timer: 3000
                 }).then((result) => {
-                    // window.close();
+                    window.close();
                 });
             },
             error: function(data) {
@@ -132,7 +132,7 @@
                     showConfirmButton: false,
                     timer: 3000
                 }).then((result) => {
-                    // window.close();
+                    window.close();
                 });
             }
         })

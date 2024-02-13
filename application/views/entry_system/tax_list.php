@@ -12,7 +12,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('entry_system_con/advance_loan_form') ?>">Add Loan / Tax</a>
-                    <a class="btn btn-success" href="<?php echo base_url('entry_system_con/tax_list') ?>">Go => Tax List</a>
+                    <a class="btn btn-success" href="<?php echo base_url('entry_system_con/advance_loan') ?>">Go => Loan List</a>
                     <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
@@ -59,10 +59,8 @@
                         <th>SL</th>
                         <th>Emp name </th>
                         <th>Emp Id</th>
-                        <th>Loan Amount</th>
-                        <th>Loan Month</th>
-                        <th>Pay Month</th>
-                        <th>Pay Amount</th>
+                        <th>Amount</th>
+                        <th>Date</th>
                         <th>Unit name</th>
                         <th>Status</th>
                     </tr>
@@ -73,12 +71,10 @@
                         <td><?php echo $key + 1  ?></td>
                         <td><?php echo $r->name_en ?></td>
                         <td><?php echo $r->emp_id ?></td>
-                        <td><?php echo $r->loan_amount ?></td>
-                        <td><?php echo date('d-m-Y', strtotime($r->loan_month)) ?></td>
-                        <td><?php echo ($r->effect_month)?date('d-m-Y', strtotime($r->effect_month)):'' ?></td>
-                        <td><?php echo $r->pay_amount ?></td>
+                        <td><?php echo $r->amount ?></td>
+                        <td><?php echo date('d-m-Y', strtotime($r->effect_date)) ?></td>
                         <td><?php echo $r->unit_name ?></td>
-                        <td><?php echo ($r->status == 1)? "Not pay":(($r->status == 2)? "Full Pay":'Partial Pay'); ?></td>
+                        <td><?php echo ($r->status == 1)? "Active":'Inactive'; ?></td>
                     </tr>
                     <?php }} else {?>
                     <tr>
