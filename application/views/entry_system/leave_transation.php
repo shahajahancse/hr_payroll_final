@@ -108,14 +108,14 @@
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
         <div class="row nav_head">
-            <div class="col-lg-4">
-                <span style="font-size: 20px;"><?= $title ?></span>
-            </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
-                <div class="input-group" style="display:flex; gap: 14px">
-                    <input class="btn btn-primary" onclick='toggleSection("leave_entry")' type="button"
+                <span style="font-size: 20px;"><?= $title ?></span>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group" style="display:flex;justify-content:space-between; gap: 20px">
+                    <input class="btn btn-primary btn-sm" onclick='toggleSection("leave_entry")' type="button"
                         value='Leave Entry' />
-                    <input class="btn btn-info" onclick='toggleSection("leave_balance_check")' type="button"
+                    <input class="btn btn-info btn-sm" onclick='toggleSection("leave_balance_check")' type="button"
                         value='Leave Balance Check' />
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
@@ -129,14 +129,14 @@
                             <div class="form-group">
                                 <label class="control-label">From Date</label>
                                 <input type="text" class="form-control input-sm date" id="from_date" name="from_date"
-                                    value="<?= date('Y-m-d') ?>">
+                                    >
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label">To Date</label>
                                 <input type="text" class="form-control input-sm date" id="to_date" name="to_date"
-                                    value="<?= date('Y-m-d') ?>">
+                                   >
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -162,7 +162,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="margin: 8px -16px; display: flex; justify-content: flex-end;">
-                            <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary">
+                            <input type="button" onclick="leave_applications(event)" value="Application Form" class="btn btn-info">
+                            <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary" style="margin-left:15px">
                         </div>
                     </div>
                 </div>
@@ -184,7 +185,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="year">Select Year:</label>
-                                <select id="bal_get_year" name="year" style="width: 98px;"></select>
+                                <select id="bal_get_year" name="year" style="width: 70px;"></select>
                                 <script>
                                 const currentYear = new Date().getFullYear();
                                 const yearSelect = document.getElementById('bal_get_year');
@@ -244,7 +245,6 @@
 
         </div>
 
-
     </div>
     <div class="col-md-4 tablebox">
         <input type="text" id="searchi" class="form-control" placeholder="Search">
@@ -289,6 +289,7 @@
             $(".removeTrno").toggle($(".removeTr").length === 0);
         });
     });
+
 </script>
 <script>
     function loading_open() {
@@ -556,6 +557,7 @@
 </script>
 <script>
     function toggleSection(sectionId) {
+        console.log(sectionId);
         if (sectionId == 'leave_entry') {
             $("#leave_balance_check").hide();
         } else {
@@ -563,9 +565,11 @@
             get_leave_balance();
         }
         $("#" + sectionId).slideToggle();
+        $('#from_date').val('');
+        $('#to_date').val('');
     }
     // Initial hiding of both sections
-    $("#leave_entry, #leave_balance_check").hide();
+    $("#leave_entry, #leave_balance_check, #leave_application").hide();
 </script>
 <script>
     function leave_add(e) {
@@ -599,6 +603,9 @@
             success: function(data) {
                 $("#loader").hide();
                 if (data == 'success') {
+                    $('#from_date').val('');
+                    $('#to_date').val('');
+                    $('#reason').val('');
                     showMessage('success', 'Leave Added Successfully');
                 } else {
                     showMessage('error', 'Leave Not Added');
@@ -609,6 +616,70 @@
                 showMessage('error', 'Leave Not Added');
             }
         })
+    }
+
+
+    function leave_applications(e) {
+        var ajaxRequest;  // The variable that makes Ajax possible!
+        try{
+            // Opera 8.0+, Firefox, Safari
+        ajaxRequest = new XMLHttpRequest();
+        }catch (e){
+            // Internet Explorer Browsers
+            try{
+                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+            }catch (e) {
+                try{
+                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }catch (e){
+                    // Something went wrong
+                    alert("Your browser broke!");
+                    return false;
+                }
+            }
+        }
+        var type = document.getElementById('leave_type').value;
+        // alert(type);
+        var reason = document.getElementById('reason').value;
+        var firstdate = document.getElementById('from_date').value;
+        if(firstdate ==''){
+            alert("Please select first date");
+            return false;
+        }
+        var seconddate = document.getElementById('to_date').value;
+        if(seconddate ==''){
+            alert("Please select second date");
+            return false;
+        }
+        var unit_id = document.getElementById('unit_id').value;
+        if(unit_id ==''){
+            alert("Please select unit !");
+            return false;
+        }
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (sql == '') {
+            alert('Please select employee Id');
+            return false;
+        }
+
+        if (numbersArray.length > 1) {
+            alert('Please select max one employee');
+            return false;
+        }
+        var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&emp_id="+sql+"&unit_id="+unit_id+"&type="+type+"&reason="+reason;
+        url = hostname + "grid_con/leave_application/";
+        ajaxRequest.open("POST", url, true);
+        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        ajaxRequest.send(queryString);
+        ajaxRequest.onreadystatechange = function () {
+            if(ajaxRequest.readyState == 4){
+                var resp = ajaxRequest.responseText;
+                daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                daily_present_report.document.write(resp);
+            }
+        }
     }
 </script>
 

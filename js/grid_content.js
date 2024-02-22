@@ -130,6 +130,13 @@ function daily_report(s) {
 	}
 }
 
+
+
+
+
+
+
+
 function actual_monthly_salary_sheet()
 {
 	var salary_month = document.getElementById('salary_month').value;
@@ -6341,6 +6348,46 @@ function grid_general_info()
 			general_info = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			general_info.document.write(resp);
 			//general_info.stop();
+		}
+	}
+}
+function worker_register(){
+	var ajaxRequest;
+	try{
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try {
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){
+		alert("Please select unit !");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	var queryString="spl="+sql+"&unit_id="+unit_id;
+	url =  hostname+"index.php/grid_con/worker_register/";
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			general_info = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			general_info.document.write(resp);
 		}
 	}
 }

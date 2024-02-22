@@ -924,7 +924,12 @@ function set_desi_item() {
     var ref_district = localStorage.getItem('ref_district');
     var ref_thana = localStorage.getItem('ref_thana');
     var ref_post = localStorage.getItem('ref_post');
-
+    var emp_dob = localStorage.getItem('emp_dob');
+    var nomi_age = localStorage.getItem('nomi_age');
+    var emp_join_date = localStorage.getItem('emp_join_date');
+    $("#emp_dob").datepicker("setDate", new Date(emp_dob));
+    $("#nomi_age").datepicker("setDate", new Date(nomi_age));
+    $("#emp_join_date").datepicker("setDate", new Date(emp_join_date));
 
     $('#nomi_district').val(nomi_district).trigger('change');
     setTimeout(function() {
@@ -1040,7 +1045,7 @@ function emp_id_search(id = null) {
                             key == 'pre_district' || key == 'pre_thana' || key == 'per_district' ||
                             key == 'per_thana' || key == 'per_post' || key == 'pre_post' || key ==
                             'nomi_post' || key == 'ref_thana' || key == 'ref_post' || key ==
-                            'ref_district'
+                            'ref_district' || key== 'emp_dob' || key == 'nomi_age' || key== 'emp_join_date'
                         ) {
                             localStorage.setItem(key, data[key]);
                         } else if (key == 'img_source') {
@@ -1061,6 +1066,7 @@ function emp_id_search(id = null) {
                     }
                 });
             }
+           
             salary_structure_cal()
             set_desi_item();
             get_last_id();

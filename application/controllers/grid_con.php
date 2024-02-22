@@ -47,17 +47,15 @@ class Grid_con extends CI_Controller {
 		$this->load->view('grid_con/daily_report',$data);
 	}
 
-	function daily_costing_summary()
-	{
+	function daily_costing_summary(){
 		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
 		$data["values"] 	= $this->grid_model->daily_costing_summary($date,$unit_id);	
-		dd($data["values"]);
+		// dd($data["values"]);
 		$data["grid_date"]	= $date;
 		$data["unit_id"]	= $unit_id;
 		$this->load->view('attn_report/daily_costing_summary',$data);
-		// $this->load->view('others_report/daily_costing_summary',$data);
 	}
 
 	function daily_attendance_summary()
@@ -299,6 +297,14 @@ class Grid_con extends CI_Controller {
 		$data['grid_emp_id'] = $grid_emp_id;
 		$this->load->view('general_info',$data);
 	}
+	function worker_register(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->grid_model->grid_general_info($grid_emp_id);
+		$data['unit_id'] = $this->input->post('unit_id');
+		$data['grid_emp_id'] = $grid_emp_id;
+		$this->load->view('worker_register',$data);
+	}
 
 
 
@@ -365,7 +371,23 @@ class Grid_con extends CI_Controller {
 	}
 
 
+	function leave_application(){
+		$first_date 		 = $this->input->post('firstdate');
+		$second_date		 = $this->input->post('seconddate');
+		$unit_id    		 = $this->input->post('unit_id');
+		$emp_id     		 = $this->input->post('emp_id');
+		$data['type']    	 = $this->input->post('type');
+		$data['reason']    	 = $this->input->post('reason');
+		$data['first_date']  = $first_date;
+		$data['second_date'] = $second_date;
+		$data['values']      = $this->grid_model->leave_application($first_date,$second_date,$emp_id,$unit_id);
+		// dd($data);
+		$this->load->view('leave_application_report',$data);
 
+
+
+
+	}
 
 
 
@@ -1011,7 +1033,6 @@ class Grid_con extends CI_Controller {
 			$this->load->view('daily_report',$data);
 		}
 	}
-
 
 	function grid_daily_costing_report(){
 		$grid_date = $this->input->post('firstdate');

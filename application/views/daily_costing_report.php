@@ -10,7 +10,7 @@
 
 <body>
 
-<div style=" margin:0 auto;  width:850px;">
+<div style=" margin:0 auto; wi ">
 <?php 
 $emp_id = $values["emp_id"][1];
 $data['unit_id'] = $unit_id;//$this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
@@ -31,21 +31,24 @@ $num_of_days=cal_days_in_month(CAL_GREGORIAN,$month,$year);
 
 ?>
 
-<table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:12px;">
-<th>SL</th>
-<th>Emp ID</th>
-<th>Employee Name</th>
-<th>Section</th>
-<th>Designation</th>
-<th>Status</th> 
-<th>Gross Sal</th>
-<th>Per Day Salary</th>
-<th>OT Hour</th>
-<th>EOT Hour</th>   
-<th>OT Rate</th>  
-<th>OT Amount</th> 
-<th>EOT Amount</th> 
-<th>Total Salary</th> 
+<table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:14px;width:60%">
+<th style="padding:4px;white-space:nowrap">SL</th>
+<th style="padding:4px;white-space:nowrap">Emp ID</th>
+<th style="padding:4px;white-space:nowrap">Employee Name</th>
+<th style="padding:4px;white-space:nowrap">Section</th>
+<th style="padding:4px;white-space:nowrap">Designation</th>
+<th style="padding:4px;white-space:nowrap">Status</th> 
+<th style="padding:4px;white-space:nowrap">Gross Sal</th>
+<th style="padding:4px;white-space:nowrap">Per Day Salary</th>
+<th style="padding:4px;white-space:nowrap">OT Hour</th>
+<th style="padding:4px;white-space:nowrap">EOT Hour</th>   
+<th style="padding:4px;white-space:nowrap">OT Rate</th>  
+<th style="padding:4px;white-space:nowrap">OT Amount</th> 
+<th style="padding:4px;white-space:nowrap">EOT Amount</th>       
+<th style="padding:4px;white-space:nowrap">Night Allowence</th> 
+<th style="padding:4px;white-space:nowrap">Holiday Allowence</th> 
+<th style="padding:4px;white-space:nowrap">Ifter Allowence</th> 
+<th style="padding:4px;white-space:nowrap">Total Salary</th> 
 
 
 <?php
@@ -59,11 +62,10 @@ $total_salary = 0;
 
 $line_name=array();
 $count = count($values["emp_id"]);
-for($i=0; $i<$count; $i++ )
-{
+for($i=0; $i<$count; $i++ ){
 	if($line_name !=$values["line_name"][$i]){
 	echo "<tr bgcolor='#CCCCCC'>";
-	echo "<td colspan='15' style='font-size:16px; font-weight : bold;'>Line :".$values["line_name"][$i]."</td>";
+	echo "<td colspan='17' style='font-size:16px; font-weight : bold;'>Line :".$values["line_name"][$i]."</td>";
 	echo "</tr>";
 	}
 	
@@ -77,27 +79,18 @@ for($i=0; $i<$count; $i++ )
 	echo $values["emp_id"][$i];
 	echo "</td>";
 
-
 	echo "<td   style='text-align:left;padding-left:5px;' >";
 	echo $values["emp_full_name"][$i];
 	echo "</td>";
 	
-
-	
 	echo "<td style='text-align:left;padding-left:5px;'>";
 	echo $values["sec_name"][$i];
 	echo "</td>";
-
-	
-	/*echo "<td  style='text-align:left;padding-left:5px;'>";
-	echo $values["line_name"][$i];
-	echo "</td>";*/
 	
 	echo "<td  style='text-align:left;padding-left:5px;'>";
 	echo $values["desig_name"][$i];
 	echo "</td>";
 	
-		
 	echo "<td style='text-align:center;'>";
 	echo $values["present_status"][$i];
 	echo "</td>";
@@ -140,9 +133,26 @@ for($i=0; $i<$count; $i++ )
 	echo $eot_amount;
 	echo "</td>";
 	$total_eot_amount = $total_eot_amount + $eot_amount;
-	
+
+
+	echo "<td  style='text-align:right;padding-right:5px' >";
+	echo $values['night_allo'][$i];
+	echo "</td>";
+
+
+		
+	echo "<td  style='text-align:right;padding-right:5px' >";
+	echo $values['holiday_allo'][$i];
+	echo "</td>";
+
+
+		
+	echo "<td  style='text-align:right;padding-right:5px' >";
+	echo $values['tiffin_allo'][$i];
+	echo "</td>";
+
 	$total_amount = $ot_amount + $eot_amount + $per_day_salary;
-	
+
 	echo "<td  style='text-align:right;padding-right:5px' >";
 	echo $total_amount;
 	echo "</td>";
@@ -159,7 +169,7 @@ for($i=0; $i<$count; $i++ )
 
 ?>
 <tr>
-<td  colspan="13" style="text-align:center; font-weight:bold;" >
+<td  colspan="16" style="text-align:center; font-weight:bold;" >
 Grand Total
 </td>
 <!--<td colspan="12" style="text-align:center; font-weight:bold;" ><?php echo $total_per_day_salary; ?></td>
