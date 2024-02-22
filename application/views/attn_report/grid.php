@@ -295,7 +295,7 @@
 							<?php if(in_array(58,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_yearly_leave_register()">Leave Register</button>
 							<?php } ?>
-							<?php if(in_array(100,$acl)) { ?>
+							<?php if(in_array(96,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="worker_register()">Worker Register</button>
 							<?php } ?>
 							<?php if(in_array(59,$acl)) { ?>
