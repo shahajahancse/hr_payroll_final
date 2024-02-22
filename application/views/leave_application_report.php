@@ -82,7 +82,11 @@
                <br>
                <br>
                <br>
-                <p class="text-justify">আবেদনকারীকে <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$data->leave_start."</span>"?> তারিখ হতে <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$data->leave_end."</span>"?> পর্যন্ত মোট <?php echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$data->total_leave."</span>"?> দিন আমাকে নৈমিত্তিক ছুটি মঞ্জুরের জন্য আবেদন জানাচ্ছি।</p> দিন নৈমিত্তিক ছুটি মঞ্জুর করা যেতে পারে।
+                <p class="text-justify">আবেদনকারীকে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হতে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> পর্যন্ত মোট <?php  $date1 = new DateTime($first_date); 
+                                $date2 = new DateTime($second_date);
+                                $interval = $date2->diff($date1); 
+                                echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%a ')."</span>";
+                        ?>  দিন আমাকে নৈমিত্তিক ছুটি মঞ্জুরের জন্য আবেদন জানাচ্ছি।</p> দিন নৈমিত্তিক ছুটি মঞ্জুর করা যেতে পারে।
                 উক্ত সুপারিশ মোতাবেক ছুটি মঞ্জুর করা হইল।</p>
             </div>
             <br>
