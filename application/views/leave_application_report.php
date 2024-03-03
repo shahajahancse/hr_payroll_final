@@ -49,13 +49,15 @@
                 <p>বরাবর,</p>
                 <p>ব্যবস্থাপনা পরিচালক সাহেব/ মহাব্যবস্থাপক,</p>
                 
-                <p>বিনীত নিবেদন এই যে, অনুগ্রহ পূর্বক <?php echo $reason?>  কারনে 
+                <p>বিনীত নিবেদন এই যে, অনুগ্রহ পূর্বক <span style="border-bottom: 2px dotted black"><?php echo $reason?></span>  কারনে 
                     <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হইতে <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> তারিখ পর্যন্ত 
                     মোট <?php  $date1 = new DateTime($first_date); 
-                                $date2 = new DateTime($second_date);
-                                $interval = $date2->diff($date1); 
-                                echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%a ')."</span>";
-                        ?>  দিন আমাকে <?php echo $reason == 'cl' ? ' নৈমিত্তিক': 'অসুস্থতা' ?> ছুটি মঞ্জুরের জন্য আবেদন জানাচ্ছি।
+                    $date2 = new DateTime($second_date);
+                    $interval = $date2->diff($date1);
+                    $interval->d += 1;
+                    // dd($interval);
+                                echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%d ')."</span>";
+                        ?>  দিন আমাকে <?php echo $type == 'cl' ? ' নৈমিত্তিক': 'অসুস্থতা' ?> ছুটি মঞ্জুরের জন্য আবেদন জানাচ্ছি।
                 </p><br>
                 <p>আবেদন কারীর স্বাক্ষর .............................................................................</p>
                 <br>
@@ -85,9 +87,10 @@
                 <p class="text-justify">আবেদনকারীকে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হতে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> পর্যন্ত মোট <?php  $date1 = new DateTime($first_date); 
                                 $date2 = new DateTime($second_date);
                                 $interval = $date2->diff($date1); 
-                                echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%a ')."</span>";
-                        ?>  দিন আমাকে নৈমিত্তিক ছুটি মঞ্জুরের জন্য আবেদন জানাচ্ছি।</p> দিন নৈমিত্তিক ছুটি মঞ্জুর করা যেতে পারে।
-                উক্ত সুপারিশ মোতাবেক ছুটি মঞ্জুর করা হইল।</p>
+                                $interval->d += 1; 
+                                echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%d ')."</span>";
+                        ?>   দিন  <?php echo $type == 'cl' ? ' নৈমিত্তিক': 'অসুস্থতা' ?> ছুটি মঞ্জুর করা যেতে পারে।</p>
+                <p>উক্ত সুপারিশ মোতাবেক ছুটি মঞ্জুর করা হইল।</p>
             </div>
             <br>
             <br>

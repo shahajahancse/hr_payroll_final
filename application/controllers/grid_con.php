@@ -306,43 +306,34 @@ class Grid_con extends CI_Controller {
 		$this->load->view('worker_register',$data);
 	}
 
-
-
-
 	function grid_extra_ot(){
-		$grid_firstdate = $this->input->post('firstdate');
+		$grid_firstdate  = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
+		$grid_data       = $this->input->post('spl');
+		$grid_emp_id     = explode(',', trim($grid_data));
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
-		$data['values'] = $this->grid_model->grid_extra_ot($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values']  = $this->grid_model->grid_extra_ot($grid_firstdate, $grid_seconddate, $grid_emp_id);
 		$this->load->view('ot_job_card',$data);
-
 	}
 
 	function grid_extra_ot_9pm(){
 		$grid_firstdate  = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
 		$grid_data       = $this->input->post('spl');
-
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate)); 
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate)); 
-		
 		$data['values'] = $this->grid_model->grid_extra_ot_9pm($grid_emp_id);
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
-		
-		if(is_string($data['values']))
-		{
+		if(is_string($data['values'])){
 			echo $data['values'];
 		}
-		else
-		{
+		else{
 			$this->load->view('grid_extra_ot_9pm',$data);
 		}
 	}
@@ -351,25 +342,19 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
 		$grid_data       = $this->input->post('spl');
-
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate)); 
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate)); 
-		
 		$data['values'] = $this->grid_model->grid_extra_ot_4pm($grid_emp_id);
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
-		
-		if(is_string($data['values']))
-		{
+		if(is_string($data['values'])){
 			echo $data['values'];
 		}
-		else
-		{
+		else{
 			$this->load->view('grid_extra_ot_4pm',$data);
 		}
 	}
-
 
 	function leave_application(){
 		$first_date 		 = $this->input->post('firstdate');
@@ -381,12 +366,15 @@ class Grid_con extends CI_Controller {
 		$data['first_date']  = $first_date;
 		$data['second_date'] = $second_date;
 		$data['values']      = $this->grid_model->leave_application($first_date,$second_date,$emp_id,$unit_id);
-		// dd($data);
-		$this->load->view('leave_application_report',$data);
-
-
-
-
+		$date1 = new DateTime($first_date);
+		$date2 = new DateTime($second_date);
+		$interval = $date2->diff($date1);
+		$interval->d += 1;
+		if($data['values']['leave_entitle_casual'] > $interval->format('%d')){
+			$this->load->view('leave_application_report',$data);
+		}else{
+			echo "Sorry! You are not eligible to apply for this leave";
+		}
 	}
 
 
@@ -1783,27 +1771,22 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_yearly_leave_register()
-	{
+	function grid_yearly_leave_register(){
 		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-		$year = date("Y", strtotime($grid_firstdate));
-
-		$query=$this->grid_model->grid_yearly_leave_register($year, $grid_emp_id);
-		if(is_string($query))
-		{
+		$query=$this->grid_model->grid_yearly_leave_register($grid_firstdate, $grid_seconddate,$grid_emp_id);
+		if(is_string($query)){
 			echo $query;
 		}
-		else
-		{
-			//$year_month = date("M-Y", strtotime($grid_firstdate));
-			$data["values"]=$query;
-			$data['unit_id'] = $unit_id ;
-
-			//$data2["value2"]=$query->num_fields();
-			$data["year"] = $year;
+		else{
+			$data["values"]		 = $query;
+			$data['unit_id']	 = $unit_id ;
+			$data["first_date"]  = $grid_firstdate;
+			$data["second_date"] = $grid_seconddate;
+			//  dd($this->input->post('seconddate'));
 			$this->load->view('yearly_leave_register',$data);
 		}
 	}

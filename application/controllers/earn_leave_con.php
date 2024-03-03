@@ -46,14 +46,12 @@ class Earn_leave_con extends CI_Controller {
 		$this->load->view('form/earn_leave_process',$output);
 	}
 	
-	function earn_leave_process()
-	{
-		$month = $this->input->post('month');
-		$year = $this->input->post('year');
-		$grid_id = explode('xxx', trim($this->input->post('spl')));
-		$process_check = $this->input->post('process_check');
-		// echo "<pre>"; print_r($grid_id);exit;
-		$result = $this->earn_leave_model->earn_leave_process_db($grid_id,$process_check,$year,$month);
+	function earn_leave_process(){
+		$month_year = $this->input->post('month_year');
+		$ids = explode(',', trim($this->input->post('emp_ids')));
+		$type = $this->input->post('type');
+		// dd($this->input->post('emp_ids'));
+		$result = $this->earn_leave_model->earn_leave_process_db($ids,$type,$month_year);
 		echo $result;
 	}
 	function grid_earn_report()

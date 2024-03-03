@@ -63,10 +63,8 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
 			continuous_costing_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_costing_report.document.write(resp);
-			//continuous_costing_report.stop();
 		}
 	}
 }
@@ -4051,8 +4049,7 @@ function grid_monthly_att_register(i)
 	}
 }
 
-function grid_yearly_leave_register()
-{
+function grid_yearly_leave_register(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
  try{
    // Opera 8.0+, Firefox, Safari
@@ -4073,11 +4070,12 @@ function grid_yearly_leave_register()
  }
 
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
-		alert("Please select First date for  year selection");
-		return false;
-	}
+	var seconddate = document.getElementById('seconddate').value;
+	// if(firstdate =='')
+	// {
+	// 	alert("Please select First date for  year selection");
+	// 	return false;
+	// }
 
 
 	var unit_id = document.getElementById('unit_id').value;
@@ -4094,9 +4092,10 @@ function grid_yearly_leave_register()
 		alert('Please select employee Id');
 		return false;
 	}
+
 	
 	
-	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_yearly_leave_register/";
     
    ajaxRequest.open("POST", url, true);

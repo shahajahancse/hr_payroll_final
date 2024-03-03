@@ -8541,118 +8541,96 @@ function grid_emp_job_application($grid_emp_id){
 		// dd($query->result());
 	}
 
-	function grid_yearly_leave_register($years, $grid_emp_id)
-	{
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.name_en, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, emp_designation.desig_name,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type,pr_emp_com_info.emp_cat_id');
+	function grid_yearly_leave_register($first_date, $second_date, $grid_emp_id){
+		$this->db->select('
+			pr_emp_com_info.emp_id, 
+			pr_emp_com_info.id, 
+			pr_emp_per_info.name_en, 
+			pr_emp_per_info.name_bn, 
+			emp_depertment.dept_name, 
+			emp_depertment.dept_bangla, 
+			emp_section.sec_name_en, 
+			emp_line_num.line_name_en, 
+			emp_designation.desig_name,
+			emp_designation.desig_bangla,
+			pr_emp_com_info.emp_join_date
+		');
 		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('pr_grade');
-			$this->db->from('emp_depertment');
-			$this->db->from('emp_section');
-			$this->db->from('emp_line_num');
-			$this->db->from('emp_designation');
-
-			$this->db->from('pr_emp_blood_groups');
-
-			$this->db->from('pr_religions');
-			$this->db->from('pr_marrital_status');
-			$this->db->from('pr_emp_sex');
-			$this->db->from('pr_emp_add');
-			$this->db->from('pr_emp_status');
-
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-			$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id');
-		$this->db->where('pr_emp_per_info.emp_religion = pr_religions.religion_id');
-		$this->db->where('pr_marrital_status.marrital_status_id = pr_emp_per_info.emp_marital_status');
-		$this->db->where('pr_emp_sex.sex_id = pr_emp_per_info.emp_sex');
-		$this->db->where('pr_emp_com_info.emp_cat_id = pr_emp_status.stat_id');
-
-
-
+		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
-		// echo $this->db->last_query(); exit;
-		//return $query->result();
-		foreach($query->result() as $rows)
-		{
-			$data["emp_id"][] 		= $rows->emp_id;
-			$data["emp_name"][] 	= $rows->emp_full_name;
-			$data["emp_fname"][] 	= $rows->emp_fname;
-			$data["emp_mname"][] 	= $rows->emp_mname;
-			$data["img_source"][] 	= $rows->img_source;
-			$data["emp_dob"][] 		= $rows->emp_dob;
-			$data["blood_name"][] 	= $rows->blood_name;
-			$data["religion_name"][]= $rows->religion_name;
-			$data["marrital_status"][]= $rows->marrital_status_name;
-			$data["emp_sex"][]		= $rows->sex_name;
+		$query = $this->db->get()->row();
+		$data['emp_info']= $query;
+		$id = $query->id;
+		$emp_id = $query->emp_id;
+		// $data["leaves"]    = $this->db->select("
+		// 						SUM( CASE WHEN leave_type = 'cl' THEN 1 ELSE 0 END ) AS casual,
+		// 						SUM( CASE WHEN leave_type = 'sl' THEN 1 ELSE 0 END ) AS sick,
+		// 						SUM( CASE WHEN leave_type = 'el' THEN 1 ELSE 0 END ) AS earn
+		// 					")->where('emp_id',$emp_id)->like('start_date',$years)->get('pr_leave_trans')->row();
+										
+		$data["leave_balance"]  = $this->db->select('lv_sl,lv_cl')->get('pr_leave')->row();
+		$this->db->select("present_status,shift_log_date")->where('emp_id',$id);
 
-			$data["stat_type"][]	= $rows->stat_type;
-			$data["emp_pre_add"][]	= $rows->emp_pre_add;
-			$data["emp_par_add"][]	= $rows->emp_par_add;
+		
 
-
-			$data["desig_name"][]	= $rows->desig_name;
-			$data["dept_name"][] 	= $rows->dept_name;
-			$data["sec_name_en"][] 	= $rows->sec_name_en;
-			$data["line_name"][] 	= $rows->line_name;
-
-			$data["doj"][] 			= $rows->emp_join_date;
-
-			$data["gross_sal"][] 	= $rows->gross_sal;
-			$data["gr_name"][]		= $rows->gr_name;
-
-
-
-
-			$total_casual_leave = $this->get_yearly_leave_type($rows->emp_id,$years,'cl');
-			$total_sick_leave = $this->get_yearly_leave_type($rows->emp_id,$years,'sl');
-			$total_earn_leave = $this->get_yearly_leave_type($rows->emp_id,$years,'el');
-
-			$casual_leave_balance = $this->get_yearly_leave_balance('lv_cl');
-			$sick_leave_balance = $this->get_yearly_leave_balance('lv_sl');
-
-			$present_days	= $this->get_yearly_attendance_information($rows->emp_id,$years,'P');
-			$absent_days 	= $this->get_yearly_attendance_information($rows->emp_id,$years,'A');
-			$weekend_days 	= $this->get_yearly_attendance_information($rows->emp_id,$years,'W');
-			$holiday 		= $this->get_yearly_attendance_information($rows->emp_id,$years,'H');
-
-
-			$data["casual_leave"][]		= $total_casual_leave;
-			$data["sick_leave"][]		= $total_sick_leave;
-			$data["earn_leave"][]		= $total_earn_leave;
-
-			$data["casual_balance"][]	= $casual_leave_balance;
-			$data["sick_balance"][]		= $sick_leave_balance;
-
-			$data["present_days"][]		= $present_days;
-			$data["absent_days"][]		= $absent_days;
-			$data["weekend_days"][]		= $weekend_days;
-			$data["holiday"][]			= $holiday;
-
+		if( $first_date == '' && $second_date == ''){
+			// dd('ok');
+			$this->db->where('shift_log_date >',$query->emp_join_date);
+		}else if( !$first_date == '' && $second_date == ''){
+			// dd('ok2');
+			$this->db->where('shift_log_date >',date('Y-01-01',strtotime($first_date)));
+			$this->db->where('shift_log_date <',date('Y-12-31',strtotime($first_date)));
+		}else{
+			// dd('ok3');
+			$this->db->where('shift_log_date >',date('Y-01-01',strtotime($first_date)));
+			$this->db->where('shift_log_date <',date('Y-m-d',strtotime($second_date)));
 		}
-
-		//print_r($data);
-		if($data)
-		{
-
+		$office_days = $this->db->get('pr_emp_shift_log')->result();
+		// dd($office_days);
+		// $data["office_days"]   = $this->db->select(" 
+		// 							SUM( CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+		// 							SUM( CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+		// 							SUM( CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS weekend,
+		// 							SUM( CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+		// 						")->where('emp_id',$id)->where('shift_log_date >',$query->emp_join_date)->get('pr_emp_shift_log')->row();
+		// $data = array_map(function($value) {
+		// 	if (is_array($value)) {
+		// 		return reset($value);
+		// 	} else {
+		// 		return $value; 
+		// 	}
+		// }, $data);
+		$yearlyStatus = array();
+		foreach ($office_days as $entry) {
+		$year = date('Y', strtotime($entry->shift_log_date));
+		$status = $entry->present_status;
+		if (!isset($yearlyStatus[$year])) {
+			$yearlyStatus[$year] = array(
+				'P' => 0,
+				'A' => 0,
+				'W' => 0,
+				'H' => 0,
+			);
+		}
+		if (isset($yearlyStatus[$year][$status])) {
+			$yearlyStatus[$year][$status]++;
+		}
+	}
+		$data['yearly_total_info'] = $yearlyStatus;
+		if($data){
 			return $data;
 		}
-		else
-		{
+		else{
 			return "Requested list is empty";
 		}
-
 	}
 
-	function get_yearly_attendance_information($emp_id,$years,$attendance_status)
-	{
+	function get_yearly_attendance_information($emp_id,$years,$attendance_status){
 		$this->db->select('*');
 	    $this->db->where('emp_id',$emp_id);
 	    $this->db->where('present_status',$attendance_status);

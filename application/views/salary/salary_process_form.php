@@ -1,4 +1,5 @@
 <script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/earn_leave.js" type="text/javascript"></script>
 <style>
 	#fileDiv #removeTr td {
 	    padding: 5px 10px !important;
@@ -131,6 +132,30 @@
                         <input class="btn btn-primary" onclick='salary_process()' type="button" value='Process' />
                         <input class="btn btn-success" onclick='salary_process_block()' type="button" value='Final Process' style="margin: 0px 3px !important;" />
                         <input class="btn btn-danger" onclick='salary_block_delete()' type="button" value='Final Delete' />
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-4 -->
+
+        </div><!-- /.row -->
+        <div class="row nav_head" style="margin-top:20px">
+            <div class="col-lg-4" style="padding-lef: 0px !important; padding-right: 0px !important;">
+                <span style="font-size: 20px;">Earn Leave Process </span>
+            </div><!-- /.col-lg-4 -->
+
+            <style>
+            	.input-group .form-control {
+				    width: 90% !important;
+				}
+            	.input-group-btn .btn {
+				    padding: 8px 10px !important;
+				}
+            </style>	
+            <div class="col-lg-6" style="padding-left: 0px !important;">
+                <div class="input-group" style="gap: 14px">
+                    <input type="month" class="form-control" id="earn_leave_process_month" >
+                    <span class="input-group-btn">
+                        <input class="btn btn-primary" onclick='earn_leave_process(1)' type="button" value='Process' />
+                        <input class="btn btn-success" onclick='earn_leave_process(2)' type="button" value='Final Process' style="margin: 0px 3px !important;" />
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-4 -->

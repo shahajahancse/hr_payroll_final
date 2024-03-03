@@ -651,10 +651,10 @@
             alert("Please select second date");
             return false;
         }
-        const firstDate = new Date('2022-01-01');
-        const secondDate = new Date('2022-01-10');
-        const differenceInTime = secondDate.getTime() - firstDate.getTime();
-        const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+        // const firstDate = new Date('2022-01-01');
+        // const secondDate = new Date('2022-01-10');
+        // const differenceInTime = secondDate.getTime() - firstDate.getTime();
+        // const differenceInDays = differenceInTime / (1000 * 3600 * 24);
         // alert(differenceInDays);
         var unit_id = document.getElementById('unit_id').value;
         if(unit_id ==''){
