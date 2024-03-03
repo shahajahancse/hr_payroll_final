@@ -475,19 +475,21 @@ class Earn_leave_model extends CI_Model{
 		return $data;
 	}
 	
-	function grid_earn_leave_payment_buyer($fdate, $sdate, $year, $grid_status, $grid_emp_id)
+	function grid_earn_leave_payment_buyer($year, $status, $grid_emp_id)
 	{
-		$table_name = "pr_earn_$year";
+		$table_name = "pr_earn_leave";
 		if (!$this->db->table_exists($table_name)){ return "Not Process";}
-
-		$frmdate = date("Y-m-d", strtotime("first day of -12 month", strtotime($fdate)));
-		$todate = date("Y-m-d", strtotime("first day of -12 month", strtotime($sdate)));
-		$csd = substr($sdate,0,2);
+		
+		$frmdate = date("Y-m", strtotime("first day of -12 month", strtotime($year)));
+		$todate = date("Y-12", strtotime("first day of -12 month", strtotime($year)));
+		
+		$csd = substr($todate,0,2);
 		$cy = substr($todate,0,4);
 		$cm = substr($todate,5,2);
 		$cd = substr($todate,8,2);
 		$c_todate = date("Y-m-d", mktime(0, 0, 0, $cm, $csd, $cy));
-
+		
+		// dd($c_todate);
 		// exit;
 		$this->db->select("pr_emp_per_info.emp_full_name,pr_designation.desig_name, pr_section.sec_name, pr_line_num.line_name, pr_emp_com_info.emp_join_date, pr_grade.gr_name,$table_name.*");
 		$this->db->from('pr_emp_per_info');
@@ -495,9 +497,9 @@ class Earn_leave_model extends CI_Model{
 		$this->db->from('pr_grade');
 		$this->db->from("$table_name");
 		$this->db->from('emp_depertment');
-		$this->db->from('pr_section');
-		$this->db->from('pr_line_num');
-		$this->db->from('pr_designation');
+		$this->db->from('emp_section');
+		$this->db->from('emp_line_num');
+		$this->db->from('emp_designation');
 		
 		$this->db->where_in("$table_name.emp_id", $grid_emp_id);
 		$this->db->where('pr_emp_com_info.emp_desi_id = pr_designation.desig_id');
@@ -511,7 +513,7 @@ class Earn_leave_model extends CI_Model{
 		$this->db->where("pr_emp_com_info.emp_join_date <= '$c_todate'");
 
 		$this->db->where("pr_emp_per_info.emp_id = $table_name.emp_id");
-		$this->db->order_by("pr_section.sec_name");
+		$this->db->order_by("pr_section.sec_name_en");
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$this->db->group_by("$table_name.emp_id");
 		$query = $this->db->get();	
@@ -521,10 +523,10 @@ class Earn_leave_model extends CI_Model{
 		foreach($query->result() as $rows)
 		{
 			$data['emp_id'][] 			= $rows->emp_id;
-			$data['emp_name'][] 		= $rows->emp_full_name;
+			$data['emp_name'][] 		= $rows->name_en;
 			$data['desig_name'][] 		= $rows->desig_name;
-			$data['sec_name'][] 		= $rows->sec_name;
-			$data['line_name'][]		= $rows->line_name;
+			$data['sec_name'][] 		= $rows->sec_name_en;
+			$data['line_name'][]		= $rows->line_name_en;
 			$data['emp_join_date'][] 	= $rows->emp_join_date;
 			$data['gr_name'][]			= $rows->gr_name;
 			$data['gross_sal'][]		= $rows->gross_sal;
@@ -546,6 +548,7 @@ class Earn_leave_model extends CI_Model{
 			$data['net_pay'][]			= $rows->net_pay;
 			$data['net_pay_com'][]		= $rows->net_pay_com;		
 		}
+		dd($data);
 		return $data;
 	}
 	function grid_earn_leave_summery($unit_id,$year)

@@ -269,7 +269,7 @@
         </div>
     </div>
 
-    <script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>js/earn_leave.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
     <script type="text/javascript">
         // on load employee

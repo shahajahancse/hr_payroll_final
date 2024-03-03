@@ -90,17 +90,14 @@ class Earn_leave_con extends CI_Controller {
 	function grid_earn_leave_payment_buyer()
 	{
 		$year 			= $this->input->post('year');
-		$firstdate 		= $this->input->post('firstdate');
-		$seconddate 	= $this->input->post('seconddate');
-		$grid_status 	= $this->input->post('grid_status');
+		$status 	= $this->input->post('status');
 		$unit_id		= $this->input->post('unit_id');	
 		$grid_data 		= $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-		//exit;
-		$data["values"] = $this->earn_leave_model->grid_earn_leave_payment_buyer($firstdate,$seconddate, $year, $grid_status, $grid_emp_id);
+		$data["values"] = $this->earn_leave_model->grid_earn_leave_payment_buyer($year, $status, $grid_emp_id);
 		$data["unit_id"] = $unit_id;
 		$data["year"] = $year;
+		// dd($data);
 		if($data["values"] == "empty")
 		{
 			echo "Requested List Is Empty.";
