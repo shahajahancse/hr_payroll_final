@@ -125,7 +125,7 @@ $k = 0;
 	$total_att_bonus 			= $total_att_bonus + $att_bonus;
 	$grand_total_att_bonus	 	= $grand_total_att_bonus + $att_bonus;
 
-	$staff = $this->grid_model->staff_id_collect($values['emp_id'][$k]);
+	$staff = $this->Grid_model->staff_id_collect($values['emp_id'][$k]);
 
 	if($values['ot_entitle'][$k]==1 && $staff==1){
 

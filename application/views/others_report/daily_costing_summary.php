@@ -25,9 +25,7 @@ $this->load->view("head_english",$unit_id);
 <br />
 <?php
 
-$month 	= date("m",strtotime($date));
-$year 	= date("Y",strtotime($date));
-$num_of_days=cal_days_in_month(CAL_GREGORIAN,$month,$year);
+$num_of_days 	= date("t",strtotime($date));
 
 
 ?>

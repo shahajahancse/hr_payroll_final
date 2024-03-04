@@ -1489,9 +1489,9 @@ class Grid_model extends CI_Model{
 
 		for ($i = 1; $i <= $day; $i++) {
 			if ($i == 1) {
-				$get_date = $start_date;
+				$get_date =  date('Y-m-d', strtotime($start_date));
 			} else {
-				$get_date = date('d-m-Y', strtotime('-1 day', strtotime($get_date)));
+				$get_date = date('Y-m-d', strtotime('-1 day', strtotime($start_date)));
 			}
 
 			$id = $this->db->select('id')->where('emp_id', $emp_id)->get('pr_emp_com_info')->row()->id;

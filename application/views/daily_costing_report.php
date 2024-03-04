@@ -23,9 +23,8 @@ Daily Cost Report <?php echo "$grid_date"; ?></span>
 <br />
 <?php
 
-$month 	= date("m",strtotime($grid_date));
-$year 	= date("Y",strtotime($grid_date));
-$num_of_days=cal_days_in_month(CAL_GREGORIAN,$month,$year);
+$num_of_days = date("t",strtotime($grid_date));
+
 
 
 
