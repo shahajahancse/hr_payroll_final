@@ -7,11 +7,11 @@ class Setup_con extends CI_Controller
         parent::__construct();
 
         /* Standard Libraries */
-        $this->load->library('grocery_CRUD');
-        $this->load->model('acl_model');
-        $this->load->model('common_model');
+        $this->load->library('Grocery_crud');
+        $this->load->model('Acl_model');
+        $this->load->model('Common_model');
         $this->load->helper('url');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
 
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -41,8 +41,8 @@ class Setup_con extends CI_Controller
             $condition = "(pr_units.unit_name LIKE '" . $query . "%' OR emp_depertment.dept_name LIKE '%" . $query . "%' OR emp_depertment.dept_bangla LIKE '%" . $query . "%')";
         }
 
-        $this->load->model('crud_model');
-        $pr_dept = $this->crud_model->dept_infos($limit, $start, $condition);
+        $this->load->model('Crud_model');
+        $pr_dept = $this->Crud_model->dept_infos($limit, $start, $condition);
         $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
         $config['total_rows'] = $total;
         $config["uri_segment"] = 3;
@@ -160,8 +160,8 @@ class Setup_con extends CI_Controller
             $condition = "(pr_units.unit_name LIKE '" . $query . "%' OR emp_depertment.dept_name LIKE '%" . $query . "%' OR emp_depertment.dept_bangla LIKE '%" . $query . "%')";
         }
 
-        $this->load->model('crud_model');
-        $pr_dept = $this->crud_model->get_post_office($limit, $start, $condition);
+        $this->load->model('Crud_model');
+        $pr_dept = $this->Crud_model->get_post_office($limit, $start, $condition);
         $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
         $config['total_rows'] = $total;
         $config["uri_segment"] = 3;
@@ -327,7 +327,7 @@ class Setup_con extends CI_Controller
     {
 
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('sec_name_en', 'Section Name', 'trim|required');
         $this->form_validation->set_rules('sec_name_bn', 'Section Bangla Name', 'trim|required');
         $this->form_validation->set_rules('depertment_id', 'Department', 'required');
@@ -365,7 +365,7 @@ class Setup_con extends CI_Controller
 
     public function sec_edit($secId)
     {
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('sec_name_en', 'Section Name', 'trim|required');
         $this->form_validation->set_rules('sec_name_bn', 'Section Bangla Name', 'trim|required');
@@ -380,7 +380,7 @@ class Setup_con extends CI_Controller
             $this->db->select('pr_units.*');
             $this->data['unit'] = $this->db->get('pr_units')->result();
 
-            $this->data['sec'] = $this->crud_model->getsec($secId);
+            $this->data['sec'] = $this->Crud_model->getsec($secId);
             $this->data['title'] = 'Edit Section';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/sec_edit';
@@ -406,13 +406,13 @@ class Setup_con extends CI_Controller
 
     public function sec_delete($secId)
     {
-        $this->load->model('crud_model');
-        $sec = $this->crud_model->getsec($secId);
+        $this->load->model('Crud_model');
+        $sec = $this->Crud_model->getsec($secId);
         if (empty($sec)) {
             $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
             redirect(base_url() . 'setup_con/section');
         }
-        $this->crud_model->sec_delete($secId);
+        $this->Crud_model->sec_delete($secId);
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url() . 'setup_con/section');
     }
@@ -453,7 +453,7 @@ class Setup_con extends CI_Controller
     {
 
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('line_name_en', 'Line English Name', 'trim|required');
         $this->form_validation->set_rules('line_name_bn', 'Line Bangla Name', 'trim|required');
         $this->form_validation->set_rules('section_id', 'Section', 'required');
@@ -494,7 +494,7 @@ class Setup_con extends CI_Controller
     public function line_edit($line_id)
     {
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('line_name_en', 'Line English Name', 'trim|required');
         $this->form_validation->set_rules('line_name_bn', 'Line Bangla Name', 'trim|required');
         $this->form_validation->set_rules('section_id', 'Section', 'required');
@@ -509,7 +509,7 @@ class Setup_con extends CI_Controller
             $this->db->select('pr_units.*');
             $this->data['unit'] = $this->db->get('pr_units')->result();
 
-            $this->data['line'] = $this->crud_model->getline($line_id);
+            $this->data['line'] = $this->Crud_model->getline($line_id);
             $this->data['title'] = 'Edit Section';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/line_edit';
@@ -565,7 +565,7 @@ class Setup_con extends CI_Controller
     {
 
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Rule', 'required');
@@ -601,7 +601,7 @@ class Setup_con extends CI_Controller
     public function attn_bonus_edit($rule_id)
     {
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Rule', 'required');
@@ -613,7 +613,7 @@ class Setup_con extends CI_Controller
             $this->db->select('pr_units.*');
             $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
-            $this->data['attbn'] = $this->crud_model->getattbn($rule_id);
+            $this->data['attbn'] = $this->Crud_model->getattbn($rule_id);
             $this->data['title'] = 'Edit Attendance Bonus';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/attbn_edit';
@@ -667,7 +667,7 @@ class Setup_con extends CI_Controller
     {
 
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
@@ -701,7 +701,7 @@ class Setup_con extends CI_Controller
     public function weekend_allowance_edit($id)
     {
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
@@ -768,7 +768,7 @@ class Setup_con extends CI_Controller
     {
 
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
@@ -802,7 +802,7 @@ class Setup_con extends CI_Controller
     public function tiffin_bill_edit($id)
     {
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
@@ -865,7 +865,7 @@ class Setup_con extends CI_Controller
     public function iftar_bill_add(){
 
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
@@ -898,7 +898,7 @@ class Setup_con extends CI_Controller
 
     public function iftar_bill_edit($id){
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
@@ -962,7 +962,7 @@ class Setup_con extends CI_Controller
 
     public function night_allowance_add(){
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
@@ -997,7 +997,7 @@ class Setup_con extends CI_Controller
 
     public function night_allowance_edit($id){
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('rule_name', 'Rule Name', 'trim|required');
         $this->form_validation->set_rules('rule', 'Amount', 'required');
@@ -1103,7 +1103,7 @@ class Setup_con extends CI_Controller
 
     public function designation_add(){
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('desig_name', 'Designation Name English', 'required');
         $this->form_validation->set_rules('desig_bangla', 'Designation Bangla', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
@@ -1306,7 +1306,7 @@ class Setup_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     public function shift_schedule()
     {
-        $pr_emp_shift_schedule = $this->crud_model->shiftschedule_infos();
+        $pr_emp_shift_schedule = $this->Crud_model->shiftschedule_infos();
         $this->data['pr_emp_shift_schedule'] = $pr_emp_shift_schedule;
         $this->data['title'] = 'Shift Schedule List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1316,8 +1316,8 @@ class Setup_con extends CI_Controller
     public function shiftschedule_add()
     {
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
-        $data['shiftscheduleinfo'] = $this->crud_model->shiftschedule_fetch();
+        $this->load->model('Crud_model');
+        $data['shiftscheduleinfo'] = $this->Crud_model->shiftschedule_fetch();
         // print_r($data);exit();
         $this->form_validation->set_rules('stype', 'shiftschedule Shift Type', 'trim|required');
         $this->form_validation->set_rules('instrt', 'shiftschedule In Start', 'trim|required');
@@ -1334,7 +1334,7 @@ class Setup_con extends CI_Controller
         if ($this->form_validation->run() == false) {
 
             $this->data['title'] = 'Shift Schedule Add';
-            $this->data['allUnit'] = $this->crud_model->getallUnit();
+            $this->data['allUnit'] = $this->Crud_model->getallUnit();
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/shiftschedule_add';
             $this->load->view('layout/template', $this->data);
@@ -1355,7 +1355,7 @@ class Setup_con extends CI_Controller
             $formArray['one_hour_ot_out_time'] = $this->input->post('onehrottime');
             $formArray['two_hour_ot_out_time'] = $this->input->post('twohrottime');
 
-            $this->crud_model->shiftschedule_add($formArray);
+            $this->Crud_model->shiftschedule_add($formArray);
             $this->session->set_flashdata('success', 'Record add successfully!');
             redirect(base_url() . 'setup_con/shift_schedule');
         }
@@ -1364,9 +1364,9 @@ class Setup_con extends CI_Controller
 
     public function shiftschedule_edit($shiftscheduleId){
         $data = array();
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->load->library('form_validation');
-        $data['shiftschedule'] = $this->crud_model->shiftschedule_fetch();
+        $data['shiftschedule'] = $this->Crud_model->shiftschedule_fetch();
 
         $this->form_validation->set_rules('uname', 'shiftschedule Unit Name', 'trim|required');
         $this->form_validation->set_rules('stype', 'shiftschedule Shift Type', 'trim|required');
@@ -1381,18 +1381,18 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('onehrottime', 'shiftschedule One Hour Ot Time', 'trim|required');
         $this->form_validation->set_rules('twohrottime', 'shiftschedule Two Hour Ot Time', 'trim|required');
 
-        $data['shiftschedule'] = $this->crud_model->shiftschedule_fetch();
+        $data['shiftschedule'] = $this->Crud_model->shiftschedule_fetch();
 
         if ($this->form_validation->run() == false) {
-            $this->data['allUnit'] = $this->crud_model->getallUnit();
+            $this->data['allUnit'] = $this->Crud_model->getallUnit();
 
-            $this->data['pr_emp_shift_schedule'] = $this->crud_model->getshiftschedule($shiftscheduleId);
+            $this->data['pr_emp_shift_schedule'] = $this->Crud_model->getshiftschedule($shiftscheduleId);
             $this->data['title'] = 'Shift Schedule Edit';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/shiftschedule_edit';
             $this->load->view('layout/template', $this->data);
         } else {
-            $this->crud_model->shiftschedule_edit($shiftscheduleId);
+            $this->Crud_model->shiftschedule_edit($shiftscheduleId);
             $this->session->set_flashdata('success', 'Record Updated successfully!');
 
             redirect('/setup_con/shift_schedule');
@@ -1403,13 +1403,13 @@ class Setup_con extends CI_Controller
 
     public function shiftschedule_delete($shiftscheduleId)
     {
-        $this->load->model('crud_model');
-        $shiftschedule = $this->crud_model->getshiftschedule($shiftscheduleId);
+        $this->load->model('Crud_model');
+        $shiftschedule = $this->Crud_model->getshiftschedule($shiftscheduleId);
         if (empty($shiftschedule)) {
             $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
             redirect('/setup_con/shift_schedule');
         }
-        $this->crud_model->shiftschedule_delete($shiftscheduleId);
+        $this->Crud_model->shiftschedule_delete($shiftscheduleId);
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect('/setup_con/shift_schedule');
     }
@@ -1439,8 +1439,8 @@ class Setup_con extends CI_Controller
     }
     public function shiftmanagement_add(){
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
-        $data['shiftmanagementinfo'] = $this->crud_model->shiftmanagement_fetch();
+        $this->load->model('Crud_model');
+        $data['shiftmanagementinfo'] = $this->Crud_model->shiftmanagement_fetch();
         $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
@@ -1468,7 +1468,7 @@ class Setup_con extends CI_Controller
 
     public function shiftmanagement_edit($shiftmanagementId){
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
@@ -1511,13 +1511,13 @@ class Setup_con extends CI_Controller
 
     public function shiftmanagement_delete($shiftmanagementId)
     {
-        $this->load->model('crud_model');
-        $shiftmanagement = $this->crud_model->getshiftmanagement($shiftmanagementId);
+        $this->load->model('Crud_model');
+        $shiftmanagement = $this->Crud_model->getshiftmanagement($shiftmanagementId);
         if (empty($shiftmanagement)) {
             $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
             redirect('/setup_con/shift_management');
         }
-        $this->crud_model->shiftmanagement_delete($shiftmanagementId);
+        $this->Crud_model->shiftmanagement_delete($shiftmanagementId);
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect('/setup_con/shift_management');
     }
@@ -1531,7 +1531,7 @@ class Setup_con extends CI_Controller
 
     public function company_info_setup()
     {
-        $company_infos = $this->common_model->company_information();
+        $company_infos = $this->Common_model->company_information();
         $this->data['company_infos'] = $company_infos;
         $this->data['title'] = 'Company Info';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1541,7 +1541,7 @@ class Setup_con extends CI_Controller
     public function company_add()
     {
         $this->load->library('form_validation');
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
         $this->form_validation->set_rules('en_add', 'Company Address English ', 'trim|required');
         if ($this->form_validation->run() == false) {
@@ -1558,7 +1558,7 @@ class Setup_con extends CI_Controller
             $formArray['phn'] = $this->input->post('phn');
             $formArray['comlogo'] = $this->input->post('comlogo');
             $formArray['comsign'] = $this->input->post('comsign');
-            $this->crud_model->company_add($formArray);
+            $this->Crud_model->company_add($formArray);
             $this->session->set_flashdata('success', 'Record add successfully!');
             redirect(base_url() . 'setup_con/company_info_setup');
         }
@@ -1567,20 +1567,20 @@ class Setup_con extends CI_Controller
 
     public function company_edit($comId)
     {
-        $this->load->model('crud_model');
+        $this->load->model('Crud_model');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
         $this->form_validation->set_rules('bname', 'Company Bangla Name', 'trim|required');
         $this->form_validation->set_rules('en_add', 'Company Address English ', 'trim|required');
         $this->form_validation->set_rules('bn_add', 'Company Address Bangla', 'trim|required');
         if ($this->form_validation->run() == false) {
-            $this->data['company_infos'] = $this->crud_model->getUnit($comId);
+            $this->data['company_infos'] = $this->Crud_model->getUnit($comId);
             $this->data['title'] = 'Company Info';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/company_edit';
             $this->load->view('layout/template', $this->data);
         } else {
-            $this->crud_model->company_edit($comId);
+            $this->Crud_model->company_edit($comId);
             $this->session->set_flashdata('success', 'Record Updated successfully!');
             redirect('/setup_con/company_info_setup');
         }
@@ -1588,13 +1588,13 @@ class Setup_con extends CI_Controller
 
     public function company_delete($comId)
     {
-        $this->load->model('crud_model');
-        $company = $this->crud_model->getUnit($comId);
+        $this->load->model('Crud_model');
+        $company = $this->Crud_model->getUnit($comId);
         if (empty($company)) {
             $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
             redirect('/setup_con/company_info_setup');
         }
-        $this->crud_model->company_delete($comId);
+        $this->Crud_model->company_delete($comId);
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect('/setup_con/company_info_setup');
     }
@@ -1706,7 +1706,7 @@ class Setup_con extends CI_Controller
 
     public function leave_delete($shiftmanagementId)
     {
-        $this->crud_model->shiftmanagement_delete($shiftmanagementId);
+        $this->Crud_model->shiftmanagement_delete($shiftmanagementId);
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect('/setup_con/leave_setup');
     }
@@ -2130,8 +2130,8 @@ return TRUE;
         $limit = 10;
         $config['base_url'] = base_url() . "setup_con/holiday_allowance_setup/";
         $config['per_page'] = $limit;
-        $this->load->model('crud_model');
-        $attn_holiday_allowance_rules = $this->crud_model->holidayallowence_infos($limit, $start);
+        $this->load->model('Crud_model');
+        $attn_holiday_allowance_rules = $this->Crud_model->holidayallowence_infos($limit, $start);
         $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
         $config['total_rows'] = $total;
         $config["uri_segment"] = 3;
@@ -2211,8 +2211,8 @@ return TRUE;
 
         // $this->crud_output($output);
 
-        $this->load->model('common_model');
-        $company_infos = $this->common_model->company_information();
+        $this->load->model('Common_model');
+        $company_infos = $this->Common_model->company_information();
         $data = array();
         $data['company_infos'] = $company_infos;
         $this->load->view('output2', $data);
@@ -2237,7 +2237,7 @@ return TRUE;
     {
 
         $crud = new grocery_CRUD();
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
+        $get_session_user_unit = $this->Common_model->get_session_unit_id_name();
         if ($get_session_user_unit != 0) {
             $crud->where('pr_attn_summary_list.unit_id', $get_session_user_unit);
         }

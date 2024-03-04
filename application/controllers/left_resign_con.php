@@ -4,8 +4,8 @@ class Left_resign_con extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('left_resign_model');
-		$this->load->model('common_model');
+		$this->load->model('Left_resign_model');
+		$this->load->model('Common_model');
 		$this->data['user_data'] = $this->session->userdata('data');
 		
 	}
@@ -22,7 +22,7 @@ class Left_resign_con extends CI_Controller {
 	}
 	function search_empid_for_resign_left()
 	{
-		$query = $this->left_resign_model->search_empid_for_resign_left();
+		$query = $this->Left_resign_model->search_empid_for_resign_left();
 		$return_arr = array();
 		$row_array = array();
 		foreach($query->result() as $row)
@@ -38,7 +38,7 @@ class Left_resign_con extends CI_Controller {
 	
 	function get_left_resign_info()
 	{
-		$result = $this->left_resign_model->get_left_resign_info();
+		$result = $this->Left_resign_model->get_left_resign_info();
 		echo $result;
 	}
 	
@@ -50,7 +50,7 @@ class Left_resign_con extends CI_Controller {
 	
 	function left_resign_and_regular_action()
 	{
-		$result = $this->left_resign_model->left_resign_and_regular_action();
+		$result = $this->Left_resign_model->left_resign_and_regular_action();
 		echo $result;
 	}
 	

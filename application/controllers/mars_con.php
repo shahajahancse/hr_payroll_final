@@ -6,11 +6,11 @@ class Mars_con extends CI_Controller {
 		parent::__construct();
 		
 		/* Standard Libraries */
-		$this->load->model('mars_model');
-		$this->load->model('grid_model');
-		$this->load->model('acl_model');
+		$this->load->model('Mars_model');
+		$this->load->model('Grid_model');
+		$this->load->model('Acl_model');
 		$access_level = 6;
-		$acl = $this->acl_model->acl_check($access_level);
+		$acl = $this->Acl_model->acl_check($access_level);
 		
 	}
 
@@ -51,7 +51,7 @@ class Mars_con extends CI_Controller {
 		$category = $this->uri->segment(4);
 		$unit_id = $this->uri->segment(5);
 		
-		$data['values'] = $this->mars_model->section_attendance_summary_test($report_date, $unit_id);
+		$data['values'] = $this->Mars_model->section_attendance_summary_test($report_date, $unit_id);
 		
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $report_date;
@@ -66,7 +66,7 @@ class Mars_con extends CI_Controller {
 		$category = $this->uri->segment(4);
 		$unit_id = $this->uri->segment(5);
 		
-		$data['values'] = $this->mars_model->section_attendance_summary_test($report_date, $unit_id);
+		$data['values'] = $this->Mars_model->section_attendance_summary_test($report_date, $unit_id);
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $report_date;
 		$data['category']    = $category;
@@ -83,7 +83,7 @@ class Mars_con extends CI_Controller {
 		$category = $this->uri->segment(4);
 		$unit_id = $this->uri->segment(5);
 		
-		$data['values'] = $this->mars_model->section_ot_summary($report_date, $unit_id);
+		$data['values'] = $this->Mars_model->section_ot_summary($report_date, $unit_id);
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $report_date;
 		$data['category']    = $category;
@@ -98,7 +98,7 @@ class Mars_con extends CI_Controller {
 	{
 		$grid_date = $this->uri->segment(3);
 		$grid_unit = $this->uri->segment(4);
-		$data["values"] 	= $this->grid_model->grid_daily_costing_report($grid_date,$grid_unit);	
+		$data["values"] 	= $this->Grid_model->grid_daily_costing_report($grid_date,$grid_unit);	
 		
 		$data["grid_date"]	= $grid_date;
 		$data["unit_id"]	= $grid_unit;
@@ -123,7 +123,7 @@ class Mars_con extends CI_Controller {
 		list($year, $month, $date) = explode('-', trim($grid_date));
 		
 		$report_date = date("Y-m-d", mktime(0, 0, 0, $month, $date, $year));
-		$this->mars_model->department_attendance_summary($report_date);
+		$this->Mars_model->department_attendance_summary($report_date);
 	}
 	
 	/////////////////////daily_logout_report/////////////////
@@ -145,7 +145,7 @@ class Mars_con extends CI_Controller {
 		}
 		if($category =='Line')
 		{
-			data['values'] = $this->mars_model->line_logout_summary($report_date, $unit_id);
+			data['values'] = $this->Mars_model->line_logout_summary($report_date, $unit_id);
 		} 
 		*/
 		$data['title'] 		 = 'Daily Logout';

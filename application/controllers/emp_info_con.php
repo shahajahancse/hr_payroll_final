@@ -6,10 +6,8 @@ class Emp_info_con extends CI_Controller {
 		parent::__construct();
 
 		/* Standard Libraries */
-		$this->load->model('processdb');
-		$this->load->model('acl_model');
-		$this->load->model('common_model');
-		$this->load->model('mars_model');
+		$this->load->model('Processdb');
+		$this->load->model('Common_model');
 
 		if($this->session->userdata('logged_in')==FALSE)
 		{
@@ -127,9 +125,9 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_error_delimiters("","");
 		if ($this->form_validation->run() == TRUE) {
 			if($this->input->post('submit_type') == 'save') {
-				$this->processdb->insert_emp_info();
+				$this->Processdb->insert_emp_info();
 			} elseif($this->input->post('submit_type') == 'edit'){
-				if($this->processdb->updatedb1()) {
+				if($this->Processdb->updatedb1()) {
 					echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info';</SCRIPT>";
 				}
 			} else {
@@ -145,7 +143,7 @@ class Emp_info_con extends CI_Controller {
 	function get_employees_info(){
 
 		$emp_id = $_POST['id'];
-		$data = $this->processdb->get_emp_info($emp_id);
+		$data = $this->Processdb->get_emp_info($emp_id);
 		$this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($data));
@@ -174,12 +172,12 @@ class Emp_info_con extends CI_Controller {
 	// old code
 	function per_info1()
 	{
-		$data = $this->processdb->insertdb1();
+		$data = $this->Processdb->insertdb1();
 	}
 
 	function check_id()
 	{
-		$result = $this->processdb->check_id_db();
+		$result = $this->Processdb->check_id_db();
 		echo $result;
 	}
 
@@ -259,7 +257,7 @@ class Emp_info_con extends CI_Controller {
 			}
 			elseif($this->input->post('pi_delete') != '')
 			{
-				$result = $this->processdb->deletedb();
+				$result = $this->Processdb->deletedb();
 				//print_r($result);exit;
 				if($result == "Delete all data successfully")
 				{
@@ -283,7 +281,7 @@ class Emp_info_con extends CI_Controller {
 
 	function emp_id_existance_check($emp_id)
 	{
-		$check = $this->processdb->emp_id_existance_check($emp_id);
+		$check = $this->Processdb->emp_id_existance_check($emp_id);
 		if ($check == false)
 		{
 			$this->form_validation->set_message('emp_id_existance_check', 'Sorry! Change your employee ID.');
@@ -311,7 +309,7 @@ class Emp_info_con extends CI_Controller {
 	function proxi_id_check_for_save($proxi_id)
 	{
 		$emp_id = $this->input->post('empid');
-		$check = $this->processdb->proxi_id_check_for_save($emp_id, $proxi_id);
+		$check = $this->Processdb->proxi_id_check_for_save($emp_id, $proxi_id);
 		if ($check == false)
 		{
 			$this->form_validation->set_message('proxi_id_check_for_save', 'Sorry! Punch Card No. already Exist.');
@@ -348,7 +346,7 @@ class Emp_info_con extends CI_Controller {
 	function proxi_id_check_for_edit($proxi_id)
 	{
 		$emp_id = $this->input->post('empid');
-		$check = $this->processdb->proxi_id_check_for_edit($emp_id, $proxi_id);
+		$check = $this->Processdb->proxi_id_check_for_edit($emp_id, $proxi_id);
 		if ($check == false)
 		{
 			$this->form_validation->set_message('proxi_id_check_for_edit', 'Sorry! Punch Card No. already Exist.');
@@ -386,7 +384,7 @@ class Emp_info_con extends CI_Controller {
 		$emp_id = $this->input->post('empid');
 		// echo $emp_id; die;
 		// $emp_id = '11000440';
-		$result = $this->processdb->com_info_search1($emp_id);
+		$result = $this->Processdb->com_info_search1($emp_id);
 		// echo "<pre>"; print_r($result); die;
 		echo $result;
 	}
@@ -397,7 +395,7 @@ class Emp_info_con extends CI_Controller {
 		$id_skill = $this->input->post('id_skill');
 		$next_id_skill = $this->next_id_skill($id_skill);
 		$emp_id = $this->db->where("id",$next_id_skill)->get('pr_emp_skill')->row()->emp_id;
-		$result = $this->processdb->com_info_search1($emp_id);
+		$result = $this->Processdb->com_info_search1($emp_id);
 		echo $result;
 	}
 
@@ -406,13 +404,13 @@ class Emp_info_con extends CI_Controller {
 		$id_skill = $this->input->post('id_skill');
 		$prev_id_skill = $this->prev_id_skill($id_skill);
 		$emp_id = $this->db->where("id",$prev_id_skill)->get('pr_emp_skill')->row()->emp_id;
-		$result = $this->processdb->com_info_search1($emp_id);
+		$result = $this->Processdb->com_info_search1($emp_id);
 		echo $result;
 	}
 
 	function next_id_skill($id_skill)
 	{
-		$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+		$get_session_user_unit = $this->Common_model->get_session_unit_id_name();
 		$this->db->select('id');
 		$this->db->from('pr_emp_skill');
 		if($get_session_user_unit != 0)
@@ -448,7 +446,7 @@ class Emp_info_con extends CI_Controller {
 
 	function prev_id_skill($id_skill)
 	{
-		$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+		$get_session_user_unit = $this->Common_model->get_session_unit_id_name();
 		$this->db->select('id');
 		$this->db->from('pr_emp_skill');
 		if($get_session_user_unit != 0)
@@ -487,13 +485,13 @@ class Emp_info_con extends CI_Controller {
 
 	function per_update1()
 	{
-		$result = $this->processdb->updatedb1();
+		$result = $this->Processdb->updatedb1();
 		return $result;
 	}
 
 	function dept()
 	{
-		$result = $this->processdb->com_all_info();
+		$result = $this->Processdb->com_all_info();
 		echo $result;
 	}
 

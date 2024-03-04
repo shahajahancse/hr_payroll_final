@@ -11,7 +11,7 @@ class Examples extends CI_Controller {
 		$this->load->helper('url');
 		/* ------------------ */	
 		
-		$this->load->library('grocery_CRUD');	
+		$this->load->library('Grocery_crud');	
 	}
 	
 	function _example_output($output = null)
@@ -21,7 +21,7 @@ class Examples extends CI_Controller {
 	
 	function offices()
 	{
-		$output = $this->grocery_crud->render();
+		$output = $this->Grocery_crud->render();
 
 		$this->_example_output($output);
 	}
@@ -35,7 +35,7 @@ class Examples extends CI_Controller {
 	{
 		try{
 			/* This is only for the autocompletion */
-			$crud = new grocery_CRUD();
+			$crud = new Grocery_crud();
 
 			$crud->set_theme('datatables');
 			$crud->set_table('offices');
@@ -54,7 +54,7 @@ class Examples extends CI_Controller {
 	
 	function employees_management()
 	{
-			$crud = new grocery_CRUD();
+			$crud = new Grocery_crud();
 
 			$crud->set_theme('datatables');
 			$crud->set_table('employees');
@@ -73,7 +73,7 @@ class Examples extends CI_Controller {
 	
 	function customers_management()
 	{
-			$crud = new grocery_CRUD();
+			$crud = new Grocery_crud();
 
 			$crud->set_table('customers');
 			$crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
@@ -90,7 +90,7 @@ class Examples extends CI_Controller {
 	
 	function orders_management()
 	{
-			$crud = new grocery_CRUD();
+			$crud = new Grocery_crud();
 
 			$crud->set_relation('customerNumber','customers','{contactLastName} {contactFirstName}');
 			$crud->display_as('customerNumber','Customer');
@@ -106,7 +106,7 @@ class Examples extends CI_Controller {
 	
 	function products_management()
 	{
-			$crud = new grocery_CRUD();
+			$crud = new Grocery_crud();
 
 			$crud->set_table('products');
 			$crud->set_subject('Product');
@@ -125,7 +125,7 @@ class Examples extends CI_Controller {
 	
 	function film_management()
 	{
-		$crud = new grocery_CRUD();
+		$crud = new Grocery_crud();
 		
 		$crud->set_table('film');
 		$crud->set_relation_n_n('actors', 'film_actor', 'actor', 'film_id', 'actor_id', 'fullname','priority');

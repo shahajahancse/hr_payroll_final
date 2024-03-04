@@ -6,9 +6,8 @@ class Entry_system_con extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model('leave_model');
-        $this->load->model('common_model');
-        $this->load->model('attn_process_model');
+        $this->load->model('Common_model');
+        $this->load->model('Attn_process_model');
         $this->load->helper('url');
 
         if ($this->session->userdata('logged_in') == false) {
@@ -207,7 +206,7 @@ class Entry_system_con extends CI_Controller
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
         $mm = array();
-        $emp_data = $this->attn_process_model->get_all_employee($emp_ids, 1);
+        $emp_data = $this->Attn_process_model->get_all_employee($emp_ids, 1);
         while ($first_date <= $second_date) {
             $data = array();
             foreach ($emp_data->result() as $rows) {
@@ -216,8 +215,8 @@ class Entry_system_con extends CI_Controller
                 $shift_id       = $rows->shift_id;
                 $schedule_id    = $rows->schedule_id;
 
-                $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id,$shift_id,$schedule_id,$first_date);
-                $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
+                $emp_shift = $this->Attn_process_model->emp_shift_check_process($com_id,$shift_id,$schedule_id,$first_date);
+                $schedule  = $this->Attn_process_model->get_emp_schedule($emp_shift->schedule_id);
                 $out_end   = $schedule[0]["out_end"];
 
                 if (strtotime($time) <= strtotime($out_end)) {
@@ -242,7 +241,7 @@ class Entry_system_con extends CI_Controller
         }
     }
     function insert_attn_process($data, $date, $unit_id, $emp_ids) {
-        $this->load->model('attn_process_model');
+        $this->load->model('Attn_process_model');
         $att_table = "att_". date("Y_m", strtotime($date));
         if (!$this->db->table_exists($att_table)){
             $this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(
@@ -255,7 +254,7 @@ class Entry_system_con extends CI_Controller
             );
         }
         $this->db->insert_batch($att_table, $data);
-        if ($this->attn_process_model->attn_process($date, $unit_id, $emp_ids, 1)) {
+        if ($this->Attn_process_model->attn_process($date, $unit_id, $emp_ids, 1)) {
             return array('massage' => 1);
         } else {
             return array('massage' => 0);
@@ -304,7 +303,7 @@ class Entry_system_con extends CI_Controller
         $this->db->select('pr_units.*')->where('unit_id', $row->unit_id);
         $this->data['unit'] = $this->db->get('pr_units')->row();
 
-        $this->data['results']     = $this->common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
+        $this->data['results']     = $this->Common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
         $this->data['first_date']  = date('d-m-Y', strtotime($first_date));
         $this->data['second_date'] = date('d-m-Y', strtotime($second_date));
         $this->data['unit_id']     = $unit_id;
@@ -323,7 +322,7 @@ class Entry_system_con extends CI_Controller
         $in_time     = $_POST['in_time'];
         $out_time    = $_POST['out_time'];
 
-        $emp_data = $this->attn_process_model->get_all_employee(array($emp_id), null)->row();
+        $emp_data = $this->Attn_process_model->get_all_employee(array($emp_id), null)->row();
 
         $com_id			= $emp_data->id;
         $emp_id			= $emp_data->emp_id;
@@ -334,8 +333,8 @@ class Entry_system_con extends CI_Controller
         $data1 = array();
         foreach ($date as $key => $d) {
             //GET CURRENT SHIFT INFORMATION
-            $emp_shift = $this->attn_process_model->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
-            $schedule  = $this->attn_process_model->get_emp_schedule($emp_shift->schedule_id);
+            $emp_shift = $this->Attn_process_model->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
+            $schedule  = $this->Attn_process_model->get_emp_schedule($emp_shift->schedule_id);
             $out_end 	= $schedule[0]["out_end"];
 
             $data = array(
@@ -365,7 +364,7 @@ class Entry_system_con extends CI_Controller
     }
 
     function update_attn_log($data, $data1, $date, $proxi, $emp_id, $unit_id) {
-        $this->load->model('attn_process_model');
+        $this->load->model('Attn_process_model');
         $att_table = "att_". date("Y_m", strtotime($date));
         if (!$this->db->table_exists($att_table)){
             $this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(
@@ -385,7 +384,7 @@ class Entry_system_con extends CI_Controller
         if (empty($check1)) {
             $this->db->insert($att_table, $data1);
         }
-        if ($this->attn_process_model->attn_process($date, $unit_id, array($emp_id))) {
+        if ($this->Attn_process_model->attn_process($date, $unit_id, array($emp_id))) {
             return array('massage' => 1);
         } else {
             return array('massage' => 0);
@@ -1337,7 +1336,7 @@ class Entry_system_con extends CI_Controller
         $grid_firstdate = $this->uri->segment(3);
         $grid_seconddate = $this->uri->segment(4);
         $grid_emp_id = $this->uri->segment(5);
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
+        $get_session_user_unit = $this->Common_model->get_session_unit_id_name();
         $unit_id = $this->db->where("emp_id", $grid_emp_id)->get('pr_emp_com_info')->row()->unit_id;
 
         if ($get_session_user_unit != $unit_id) {
@@ -1363,7 +1362,7 @@ class Entry_system_con extends CI_Controller
         $grid_firstdate = $this->uri->segment(3);
         $grid_seconddate = $this->uri->segment(4);
         $grid_emp_id = $this->uri->segment(5);
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
+        $get_session_user_unit = $this->Common_model->get_session_unit_id_name();
         $unit_id = $this->db->where("emp_id", $grid_emp_id)->get('pr_emp_com_info')->row()->unit_id;
 
         /*if($get_session_user_unit != $unit_id)
@@ -1410,8 +1409,8 @@ class Entry_system_con extends CI_Controller
         $eot_hour_id = $_POST['eot_hour_id'];
         $present_status = $_POST['present_status'];
 
-        $weekend = $this->attn_process_model->check_weekend($emp_id, $manual_date);
-        $holiday = $this->attn_process_model->check_holiday($emp_id, $manual_date);
+        $weekend = $this->Attn_process_model->check_weekend($emp_id, $manual_date);
+        $holiday = $this->Attn_process_model->check_holiday($emp_id, $manual_date);
 
         if ($manual_date == $weekend || $manual_date == $holiday) {
             // echo "hi";
@@ -1423,8 +1422,8 @@ class Entry_system_con extends CI_Controller
             }
 
             //=======Extra OT Calculation==========
-            $weekend_eot_calculation = $this->attn_process_model->weekend_holday_eot_calculation_auto($emp_id, $manual_date, $in_time, $out_time, $status, $present_status);
-            $this->attn_process_model->deduction_hour_process($emp_id, $manual_date);
+            $weekend_eot_calculation = $this->Attn_process_model->weekend_holday_eot_calculation_auto($emp_id, $manual_date, $in_time, $out_time, $status, $present_status);
+            $this->Attn_process_model->deduction_hour_process($emp_id, $manual_date);
             // print_r($weekend_eot_calculation);
 
             $over_hour = $weekend_eot_calculation['ot_hour'];
@@ -1436,7 +1435,7 @@ class Entry_system_con extends CI_Controller
         } else {
             // echo "nai";
             //=================OT CALCULATION============================
-            $ot_hour_calcultation = $this->attn_process_model->ot_hour_auto_calcultation($emp_id, $in_time, $out_time, $manual_date);
+            $ot_hour_calcultation = $this->Attn_process_model->ot_hour_auto_calcultation($emp_id, $in_time, $out_time, $manual_date);
 
             if ($ot_hour_calcultation["ot_hour"] != '') {
                 if ($ot_hour_calcultation["ot_hour"] > 2) {
@@ -1452,8 +1451,8 @@ class Entry_system_con extends CI_Controller
                 $extra_ot_hour = 0;
             }
 
-            $this->attn_process_model->modify_ot_eot_update($emp_id, $in_time, $out_time, $ot_hour, $extra_ot_hour, $manual_date);
-            $this->attn_process_model->deduction_hour_process($emp_id, $manual_date);
+            $this->Attn_process_model->modify_ot_eot_update($emp_id, $in_time, $out_time, $ot_hour, $extra_ot_hour, $manual_date);
+            $this->Attn_process_model->deduction_hour_process($emp_id, $manual_date);
 
             /*if($extra_ot_hour >= 0){
             $insert_extra_ot_hour = $this->insert_extra_ot_hour($emp_id, $att_date, $extra_ot_hour);
@@ -1667,7 +1666,7 @@ class Entry_system_con extends CI_Controller
         $id = $this->uri->segment(4);
         $emp_id = $_POST['emp_id'];
 
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
+        $get_session_user_unit = $this->Common_model->get_session_unit_id_name();
         $unit_id = $this->db->where("emp_id", $emp_id)->get('pr_emp_com_info')->row()->unit_id;
 
         if ($get_session_user_unit == 0) {
@@ -1739,7 +1738,7 @@ class Entry_system_con extends CI_Controller
 
         $emp_id = $_POST['emp_id'];
 
-        $get_session_user_unit = $this->common_model->get_session_unit_id_name();
+        $get_session_user_unit = $this->Common_model->get_session_unit_id_name();
         $unit_id = $this->db->where("emp_id", $emp_id)->get('pr_emp_com_info')->row()->unit_id;
 
         if ($unit_id != $get_session_user_unit) {

@@ -6,9 +6,9 @@ class Maintainance_con extends CI_Controller {
 		parent::__construct();
 		
 		/* Standard Libraries */
-		$this->load->model('acl_model');
+		$this->load->model('Acl_model');
 		$access_level = 9;
-		$acl = $this->acl_model->acl_check($access_level);
+		$acl = $this->Acl_model->acl_check($access_level);
 	}
 	//-------------------------------------------------------------------------------------------------------
 	// Display Database Backup Form

@@ -5,10 +5,10 @@ class Payroll_con extends CI_Controller {
 		parent::__construct();
 
 		/* Standard Libraries */
-		$this->load->model('processdb');
+		$this->load->model('Processdb');
 		$this->load->helper('form');
-		$this->load->model('common_model');
-		$this->load->model('mars_model');
+		$this->load->model('Common_model');
+		$this->load->model('Mars_model');
 		set_time_limit(0);
 		ini_set("memory_limit","512M");
 
@@ -23,7 +23,7 @@ class Payroll_con extends CI_Controller {
 
 		$report_date = date("Y-m-d");
 
-		$this->data['values'] = $this->mars_model->dashboard_summary($report_date, $this->data['user_data']->unit_name);
+		$this->data['values'] = $this->Mars_model->dashboard_summary($report_date, $this->data['user_data']->unit_name);
 
 		$this->data['title'] = 'Daily Attendance Summary';
 		$this->data['report_date'] = $report_date;
@@ -79,7 +79,7 @@ class Payroll_con extends CI_Controller {
 
 	function per_info()
 	{
-		$result = $this->processdb->insertdb();
+		$result = $this->Processdb->insertdb();
 		echo $result;
 	}
 
@@ -247,198 +247,198 @@ class Payroll_con extends CI_Controller {
 
 	function per_info1()
 	{
-		$data = $this->processdb->insertdb1();
+		$data = $this->Processdb->insertdb1();
 
 	}
 	function save_deptname()
 	{
-		$result = $this->processdb->save_deptname();
+		$result = $this->Processdb->save_deptname();
 		echo $result;
 	}
 
 	function check_id()
 	{
-		$result = $this->processdb->check_id_db();
+		$result = $this->Processdb->check_id_db();
 		echo $result;
 	}
 	function save_sectionname()
 	{
-		$result = $this->processdb->save_sectionname();
+		$result = $this->Processdb->save_sectionname();
 		echo $result;
 	}
 
 	function per_update()
 	{
-		$result = $this->processdb->updatedb();
+		$result = $this->Processdb->updatedb();
 		echo $result;
 	}
 	function per_update1()
 	{
-		$result = $this->processdb->updatedb1();
+		$result = $this->Processdb->updatedb1();
 		echo $result;
 	}
 	function update_deptname()
 	{
-		$result = $this->processdb->update_deptname();
+		$result = $this->Processdb->update_deptname();
 		//echo $result;
 	}
 
 	function update_sectionname()
 	{
-		$result = $this->processdb->update_sectionname();
+		$result = $this->Processdb->update_sectionname();
 		echo $result;
 	}
 
 	function per_delete()
 	{
-		$result = $this->processdb->deletedb();
+		$result = $this->Processdb->deletedb();
 		echo $result;
 	}
 
 	function rename_empid()
 	{
-		$result = $this->processdb->rename_empid();
+		$result = $this->Processdb->rename_empid();
 		echo $result;
 	}
 
 	function delete_deptname()
 	{
-		$result = $this->processdb->delete_deptname();
+		$result = $this->Processdb->delete_deptname();
 		echo $result;
 	}
 
 	function delete_sectionname()
 	{
-		$result = $this->processdb->delete_sectionname();
+		$result = $this->Processdb->delete_sectionname();
 		echo $result;
 	}
 	function search()
 	{
-		$result = $this->processdb->search();
+		$result = $this->Processdb->search();
 		//echo $result;
 	}
 
 	function search_dept_name()
 	{
-		$result = $this->processdb->search_dept_name();
+		$result = $this->Processdb->search_dept_name();
 		echo $result;
 	}
 
 	function search_section_name()
 	{
-		$result = $this->processdb->search_section_name();
+		$result = $this->Processdb->search_section_name();
 		echo $result;
 	}
 
 	//==========================================================================
 	function com_info_insert()
 	{
-		$result = $this->processdb->com_info_insert();
+		$result = $this->Processdb->com_info_insert();
 		echo $result;
 	}
 
 	function com_info_edit()
 	{
-		$result = $this->processdb->com_info_edit();
+		$result = $this->Processdb->com_info_edit();
 		echo $result;
 	}
 
 	function com_info_delete()
 	{
-		$result = $this->processdb->com_info_delete();
+		$result = $this->Processdb->com_info_delete();
 		echo $result;
 	}
 
 	function com_info_search()
 	{
-		$result = $this->processdb->com_info_search();
+		$result = $this->Processdb->com_info_search();
 		echo $result;
 	}
 
 	function com_info_search1()
 	{
-		$result = $this->processdb->com_info_search1();
+		$result = $this->Processdb->com_info_search1();
 		echo $result;
 	}
 
 	function dept_search()
 	{
-		$result = $this->processdb->dept_search($this->input->post('dept'));
+		$result = $this->Processdb->dept_search($this->input->post('dept'));
 		echo $result;
 	}
 
 	function section_search()
 	{
-		$result = $this->processdb->section_search();
+		$result = $this->Processdb->section_search();
 		echo $result;
 	}
 
 	function desig_search()
 	{
-		$result = $this->processdb->desig_search($this->input->post('dept'));
+		$result = $this->Processdb->desig_search($this->input->post('dept'));
 		echo $result;
 	}
 
 	function grade_search()
 	{
-		$result = $this->processdb->grade_search();
+		$result = $this->Processdb->grade_search();
 		echo $result;
 	}
 
 	function empstat_search()
 	{
-		$result = $this->processdb->empstat_search();
+		$result = $this->Processdb->empstat_search();
 		echo $result;
 	}
 
 	function empshift_search()
 	{
-		$result = $this->processdb->empshift_search();
+		$result = $this->Processdb->empshift_search();
 		echo $result;
 	}
 
 	function attbonus_search()
 	{
-		$result = $this->processdb->attbonus_search();
+		$result = $this->Processdb->attbonus_search();
 		echo $result;
 	}
 
 	function dept()
 	{
-		$result = $this->processdb->com_all_info();
+		$result = $this->Processdb->com_all_info();
 		echo $result;
 	}
 
 
 	function manual_atten_co()
 	{
-		$result = $this->processdb->manual_atten_db();
+		$result = $this->Processdb->manual_atten_db();
 		echo $result;
 	}
 
 	function get_all_data_for_unit()
 	{
-		$result = $this->processdb->manual_atten_db();
+		$result = $this->Processdb->manual_atten_db();
 		echo $result;
 	}
 	//===============================sayed start========================
 	function com_info()
 	{
-		$result = $this->processdb->com_insertdb();
+		$result = $this->Processdb->com_insertdb();
 		echo $result;
 	}
 
 	//--------------------edu + skill table insert----------------Start
 	function edu_skill_insert()
 	{
-		$result = $this->processdb->edu_skill_insert();
+		$result = $this->Processdb->edu_skill_insert();
 		echo $result;
 	}
 	//------------------------------end--------------------------------
 	//------------------edu and skill search--------------------------
 	function ajaxSearch_edu_skill()
 	{
-		$result = $this->processdb->search_edu_sk();
+		$result = $this->Processdb->search_edu_sk();
 		//echo $result;
 	}
 
@@ -449,7 +449,7 @@ class Payroll_con extends CI_Controller {
 	//------------------------start education update--------------------
 	function edu_update()
 	{
-		$result = $this->processdb->update_edu_db();
+		$result = $this->Processdb->update_edu_db();
 	}
 
 	//-----------------------end eduvationupdate---------------------
@@ -457,7 +457,7 @@ class Payroll_con extends CI_Controller {
 	//-------------------------------start edu delete----------------------
 	function ajax_edu_delete()
 	{
-		$result = $this->processdb->edu_deletedb();
+		$result = $this->Processdb->edu_deletedb();
 		echo $result;
 	}
 	//----------------------------------end---------------------------------
@@ -468,31 +468,31 @@ class Payroll_con extends CI_Controller {
 	//------------------------insert-----------------------------------------
 	function grade_insert()
 	{
-		$result = $this->processdb->grade_dbinsert();
+		$result = $this->Processdb->grade_dbinsert();
 		echo $result;
 	}
 
 	function grade_update()
 	{
-		$result = $this->processdb->update_grade_db();
+		$result = $this->Processdb->update_grade_db();
 	}
 
 	function ajaxSearch_con_grade()
 	{
 
-		$result = $this->processdb->grade_db_search();
+		$result = $this->Processdb->grade_db_search();
 	}
 
 	function ajax_grade_delete()
 	{
-		$result = $this->processdb->grade_deletedb();
+		$result = $this->Processdb->grade_deletedb();
 		echo $result;
 	}
 
 	//---------------------insert department-------------------
 	function department_insert()
 	{
-		$result = $this->processdb->department_dbinsert();
+		$result = $this->Processdb->department_dbinsert();
 		echo $result;
 	}
 
@@ -509,7 +509,7 @@ class Payroll_con extends CI_Controller {
 		//$month = "12";
 		//$year = "2011";
 		//$input_date = "$year-$month";
-		$result = $this->processdb->pay_sheet($year, $month);
+		$result = $this->Processdb->pay_sheet($year, $month);
 		if($result == "Process completed successfully")
 		{
 			echo $result;
@@ -528,7 +528,7 @@ class Payroll_con extends CI_Controller {
 	function salary_summary()
 	{
 		$salary_month = $this->uri->segment(3);
-		$data["values"] = $this->processdb->salary_summary($salary_month);
+		$data["values"] = $this->Processdb->salary_summary($salary_month);
 		$data["salary_month"] = $salary_month;
 		//print_r($data);
 		$this->load->view('salary_summary',$data);
@@ -541,7 +541,7 @@ class Payroll_con extends CI_Controller {
 		$start_date = $this->uri->segment(3);
 		$end_date = $this->uri->segment(4);
 		//echo "<br>".$this->uri->segment(5);
-		$data["late"]= $this->processdb->late_db_find($start_date,$end_date);
+		$data["late"]= $this->Processdb->late_db_find($start_date,$end_date);
 
 
 		$this->load->view('display',$data);
@@ -549,7 +549,7 @@ class Payroll_con extends CI_Controller {
 
 	function find_leave()
 	{
-		$data["late"]= $this->processdb->leave_db();
+		$data["late"]= $this->Processdb->leave_db();
 		//$this->load->view('display',$data);
 	}
 	function show_project()
@@ -561,7 +561,7 @@ class Payroll_con extends CI_Controller {
 		$start_date = $this->uri->segment(3);
 		$end_date = $this->uri->segment(4);
 		//echo "<br>".$this->uri->segment(5);
-		$data["late"]= $this->processdb->late_commer_report_db($start_date,$end_date);
+		$data["late"]= $this->Processdb->late_commer_report_db($start_date,$end_date);
 
 		$this->load->view('display',$data);
 	}
@@ -570,7 +570,7 @@ class Payroll_con extends CI_Controller {
 		$year = $this->uri->segment(3);
 		$month = $this->uri->segment(4);
 		//echo "<br>".$this->uri->segment(5);
-		$data["late"]= $this->processdb->absent_report_db($start_date,$end_date);
+		$data["late"]= $this->Processdb->absent_report_db($start_date,$end_date);
 
 		$this->load->view('display',$data);
 	}
@@ -593,7 +593,7 @@ class Payroll_con extends CI_Controller {
 
 		//$input_date = "$year-$month-$date";
 		$this->db->trans_start();
-		$data = $this->processdb->daily_absent_db($input_date);
+		$data = $this->Processdb->daily_absent_db($input_date);
 		$this->db->trans_complete();
 
 		if ($this->db->trans_status() === FALSE)
@@ -629,7 +629,7 @@ class Payroll_con extends CI_Controller {
 
 		$status="Present Report from date $start_date to date  $end_date";
 
-		$data["values"] = $this->processdb->continuous_report($present_status,$status, $year_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data["values"] = $this->Processdb->continuous_report($present_status,$status, $year_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		if($present_status =="A")
 		{
@@ -675,7 +675,7 @@ class Payroll_con extends CI_Controller {
 		$col_dept = $this->uri->segment(9);
 		$col_all = $this->uri->segment(10);
 
-		$data["values"] = $this->processdb->continuous_late_report($start_date, $end_date, $year_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data["values"] = $this->Processdb->continuous_late_report($start_date, $end_date, $year_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 		//print_r($data);
 		$start_date = $year_month."-".$start_date;
 		$end_date = $year_month."-".$end_date;
@@ -707,7 +707,7 @@ class Payroll_con extends CI_Controller {
 		$col_all = $this->uri->segment(9);
 
 		$salary_month = $year."-".$month;
-		$query=$this->processdb->monthly_att__report_db($salary_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$query=$this->Processdb->monthly_att__report_db($salary_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 		if(is_string($query))
 		{
 			$data2["query"] = $query;
@@ -734,7 +734,7 @@ class Payroll_con extends CI_Controller {
 		$emp_status = $this->uri->segment(10);
 
 		$salary_month = $year."-".$month."-01";
-		$data["value"] = $this->processdb->monthly_salary_sheet($salary_month, $col_desig, $col_line, $col_section, $col_dept, $col_all, $emp_status);
+		$data["value"] = $this->Processdb->monthly_salary_sheet($salary_month, $col_desig, $col_line, $col_section, $col_dept, $col_all, $emp_status);
 		$data["salary_month"] = $salary_month;
 		$data["col_desig"] = $col_desig;
 		$data["col_line"] = $col_line;
@@ -755,7 +755,7 @@ class Payroll_con extends CI_Controller {
 		$col_all = $this->uri->segment(9);
 
 		$salary_month = $year."-".$month."-01";
-		$data = $this->processdb->monthly_salary_sheet($salary_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data = $this->Processdb->monthly_salary_sheet($salary_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 		//print_r($data);
 		$this->load->plugin('to_excel');
 		array_to_excel($data, "monthly_salary_sheet");
@@ -773,7 +773,7 @@ class Payroll_con extends CI_Controller {
 		$emp_status = $this->uri->segment(10);
 
 		$salary_month = $year."-".$month."-01";
-		$data["values"] = $this->processdb->salary_summary_report($salary_month, $col_desig, $col_line, $col_section, $col_dept, $col_all, $emp_status);
+		$data["values"] = $this->Processdb->salary_summary_report($salary_month, $col_desig, $col_line, $col_section, $col_dept, $col_all, $emp_status);
 		//print_r($data);
 		$data["salary_month"] = $salary_month;
 		$data["col_desig"] = $col_desig;
@@ -793,7 +793,7 @@ class Payroll_con extends CI_Controller {
 
 	function salary_summary_report_export()
 	{
-		$data = $this->processdb->salary_summary_report();
+		$data = $this->Processdb->salary_summary_report();
 
 		$this->load->plugin('to_excel');
 		array_to_excel($data,"Salary_Summary_Report");
@@ -804,16 +804,16 @@ class Payroll_con extends CI_Controller {
 		$start_date = $this->uri->segment(3);
 		$end_date = $this->uri->segment(4);
 		$emp_id = $this->uri->segment(5);
-		$this->processdb->job_card($start_date, $end_date, $emp_id);
+		$this->Processdb->job_card($start_date, $end_date, $emp_id);
 	}
 
 	function dump()
 	{
-		$data = $this->processdb->dump();
+		$data = $this->Processdb->dump();
 	}
 	function daily_present()
 	{
-		$data = $this->processdb->daily_presentdb();
+		$data = $this->Processdb->daily_presentdb();
 	}
 
 
@@ -825,7 +825,7 @@ class Payroll_con extends CI_Controller {
 		$year_month = $this->uri->segment(5);
 		$present_status="A";
 		$status="Absent Report from date $start_date to date  $end_date";
-		$data = $this->processdb->daily_presentdb($present_status,$status, $year_month);
+		$data = $this->Processdb->daily_presentdb($present_status,$status, $year_month);
 	}
 
 	function leave_report()
@@ -835,7 +835,7 @@ class Payroll_con extends CI_Controller {
 		$year_month = $this->uri->segment(5);
 		$present_status="L";
 		$status="Leave Report from date $start_date to date  $end_date";
-		$data = $this->processdb->daily_presentdb($present_status,$status, $year_month);
+		$data = $this->Processdb->daily_presentdb($present_status,$status, $year_month);
 
 	}
 
@@ -847,7 +847,7 @@ class Payroll_con extends CI_Controller {
 		$present_status="P";
 		$status="Present Report from date $start_date to date  $end_date";
 
-		$data = $this->processdb->daily_presentdb($present_status,$status, $year_month);
+		$data = $this->Processdb->daily_presentdb($present_status,$status, $year_month);
 
 	}
 
@@ -860,90 +860,90 @@ class Payroll_con extends CI_Controller {
 
 	//	$start_date='2011-02-15';
 	//	$end_date='2011-02-17';
-		//$data["late"]= $this->processdb->late_commer_report_db($start_date,$end_date);
+		//$data["late"]= $this->Processdb->late_commer_report_db($start_date,$end_date);
 
 		$start=$year."-".$month."-".$sdate;
 		$end=$year."-".$month."-".$edate;
 		//$start_date = $this->uri->segment(3);
 	//	$end_date = $this->uri->segment(4);
 
-		$data["late"]= $this->processdb->late_commer_report_db($start,$end);
+		$data["late"]= $this->Processdb->late_commer_report_db($start,$end);
 		$this->load->view('display',$data);
 	}
 
 	function att_process()
 	{
-		$this->processdb->att_process();
+		$this->Processdb->att_process();
 	}
 
 	//   23-03-2011  sayed start //
 	function search_line_name()
 	{
-		$result = $this->processdb->search_line_name_db();
+		$result = $this->Processdb->search_line_name_db();
 		echo $result;
 	}
 
 	function update_linename()
 	{
-		$result = $this->processdb->update_linename_db();
+		$result = $this->Processdb->update_linename_db();
 		//echo $result;
 	}
 
 
 	function save_linename()
 	{
-		$result = $this->processdb->save_linename();
+		$result = $this->Processdb->save_linename();
 		echo $result;
 	}
 	function delete_linename()
 	{
-		$result = $this->processdb->delete_linename();
+		$result = $this->Processdb->delete_linename();
 		echo $result;
 	}
 
 	function delete_designationname()
 	{
-		$result = $this->processdb->delete_designationname();
+		$result = $this->Processdb->delete_designationname();
 		echo $result;
 	}
 
 	function update_designationname()
 	{
-		$result = $this->processdb->update_designation();
+		$result = $this->Processdb->update_designation();
 		//echo $result;
 	}
 
 	function save_designationname()
 	{
-		$result = $this->processdb->save_designationname();
+		$result = $this->Processdb->save_designationname();
 		echo $result;
 	}
 
 	function search_designation_name()
 	{
-		$result = $this->processdb->search_designation_name();
+		$result = $this->Processdb->search_designation_name();
 		echo $result;
 	}
 
 	function search_attenb_name()
 	{
-		$result = $this->processdb->search_attenb_name_db();
+		$result = $this->Processdb->search_attenb_name_db();
 		echo $result;
 		//echo $check_attn_name = $this->input->post('check_attn_name');
 	}
 
 	function save_atttbname_con()
 	{
-		$result = $this->processdb->save_atttbname_db();
+		$result = $this->Processdb->save_atttbname_db();
 		echo $result;
 	}
 	function update_attnbname_con()
 	{
-		$result = $this->processdb->update_attnbname_db();
+		$result = $this->Processdb->update_attnbname_db();
 	}
 	function delete_attnbname_co()
 	{
-		$result = $this->processdb->delete_attnbname_db();
+		$result = $this->Processdb->delete_attnbname_db();
 		echo $result;
 	}
 	//   23-03-2011  sayed end //
@@ -953,7 +953,7 @@ class Payroll_con extends CI_Controller {
 		$start = $this->uri->segment(3);
 		$end   = $this->uri->segment(4);
 
-		$query['values'] = $this->processdb->id_card($start, $end);
+		$query['values'] = $this->Processdb->id_card($start, $end);
 		if(is_string($query['values']))
 		{
 			echo $query['values'];
@@ -969,7 +969,7 @@ class Payroll_con extends CI_Controller {
 		$start = $this->uri->segment(3);
 		$end   = $this->uri->segment(4);
 
-		$query['values'] = $this->processdb->appointment_letter($start, $end);
+		$query['values'] = $this->Processdb->appointment_letter($start, $end);
 		if(is_string($query['values']))
 		{
 			echo $query['values'];
@@ -995,7 +995,7 @@ class Payroll_con extends CI_Controller {
 		//$start = "100009";
 		//$end   = "100009";
 		//$sal_month = "2011-04-01";
-		$query['values'] = $this->processdb->payslip_report($start, $end, $sal_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$query['values'] = $this->Processdb->payslip_report($start, $end, $sal_month, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 		//print_r($query);
 		if(is_string($query['values']))
 		{
@@ -1019,7 +1019,7 @@ class Payroll_con extends CI_Controller {
 		$col_dept = $this->uri->segment(10);
 		$col_all = $this->uri->segment(11);
 		
-		$data["values"] = $this->processdb->daily_report($year, $month, $date, $status, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data["values"] = $this->Processdb->daily_report($year, $month, $date, $status, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$data["year"]			= $year;
 		$data["month"]			= $month;
@@ -1055,7 +1055,7 @@ class Payroll_con extends CI_Controller {
 		$grid_data = $this->uri->segment(5);
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		//print_r($grid_emp_id);
-		$data["values"] = $this->processdb->grid_daily_report($year, $month, $date, $status, $grid_emp_id);
+		$data["values"] = $this->Processdb->grid_daily_report($year, $month, $date, $status, $grid_emp_id);
 
 		$data["year"]			= $year;
 		$data["month"]			= $month;
@@ -1095,7 +1095,7 @@ class Payroll_con extends CI_Controller {
 		//$date = "$date";
 
 
-		$data["values"] = $this->processdb->left_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data["values"] = $this->Processdb->left_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$data["start_date"]		= $start_date;
 		$data["end_date"]		= $end_date;
@@ -1135,7 +1135,7 @@ class Payroll_con extends CI_Controller {
 		//$date = "$date";
 
 
-		$data = $this->processdb->left_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data = $this->Processdb->left_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$this->load->plugin('to_excel');
 		array_to_excel($data,"Separation_report");
@@ -1160,7 +1160,7 @@ class Payroll_con extends CI_Controller {
 		//$date = "$date";
 
 
-		$data["values"] = $this->processdb->resign_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data["values"] = $this->Processdb->resign_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$data["start_date"]		= $start_date;
 		$data["end_date"]		= $end_date;
@@ -1200,7 +1200,7 @@ class Payroll_con extends CI_Controller {
 		//$date = "$date";
 
 
-		$data = $this->processdb->resign_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data = $this->Processdb->resign_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$this->load->plugin('to_excel');
 		array_to_excel($data,"Resign_report");
@@ -1225,7 +1225,7 @@ class Payroll_con extends CI_Controller {
 		//$date = "$date";
 
 
-		$data["values"] = $this->processdb->new_join_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data["values"] = $this->Processdb->new_join_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$data["start_date"]		= $start_date;
 		$data["end_date"]		= $end_date;
@@ -1265,7 +1265,7 @@ class Payroll_con extends CI_Controller {
 		//$date = "$date";
 
 
-		$data = $this->processdb->new_join_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data = $this->Processdb->new_join_emp_report($start_date, $end_date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$this->load->plugin('to_excel');
 		array_to_excel($data,"New_join_report");
@@ -1284,7 +1284,7 @@ class Payroll_con extends CI_Controller {
 		$col_all = $this->uri->segment(11);
 
 		$status = $this->uri->segment(6);
-		$data = $this->processdb->daily_report($year, $month, $date, $status, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data = $this->Processdb->daily_report($year, $month, $date, $status, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$this->load->plugin('to_excel');
 		array_to_excel($data);
@@ -1301,7 +1301,7 @@ class Payroll_con extends CI_Controller {
 		$col_dept = $this->uri->segment(9);
 		$col_all = $this->uri->segment(10);
 
-		$data = $this->processdb->daily_late_report($year, $month, $date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data = $this->Processdb->daily_late_report($year, $month, $date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$this->load->plugin('to_excel');
 		array_to_excel($data, "Daily_late_report");
@@ -1318,7 +1318,7 @@ class Payroll_con extends CI_Controller {
 		$col_dept = $this->uri->segment(9);
 		$col_all = $this->uri->segment(10);
 
-		$data["values"] = $this->processdb->daily_late_report($year, $month, $date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data["values"] = $this->Processdb->daily_late_report($year, $month, $date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 		$data["year"]= $year;
 		$data["month"]= $month;
 		$data["date"]= $date;
@@ -1353,7 +1353,7 @@ class Payroll_con extends CI_Controller {
 		$month= "04";
 		$date = "05";*/
 
-		$data["values"] = $this->processdb->out_punch_miss($year, $month, $date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data["values"] = $this->Processdb->out_punch_miss($year, $month, $date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 		$data["year"]= $year;
 		$data["month"]= $month;
 		$data["date"]= $date;
@@ -1385,7 +1385,7 @@ class Payroll_con extends CI_Controller {
 		$col_dept = $this->uri->segment(9);
 		$col_all = $this->uri->segment(10);
 
-		$data = $this->processdb->out_punch_miss($year, $month, $date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
+		$data = $this->Processdb->out_punch_miss($year, $month, $date, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$this->load->plugin('to_excel');
 		array_to_excel($data, "Out_punch_miss_report");
@@ -1394,7 +1394,7 @@ class Payroll_con extends CI_Controller {
 
 	function section_manual()
 	{
- 	$result = $this->processdb->section_manual_db();
+ 	$result = $this->Processdb->section_manual_db();
 	echo $result;
 	}
 
@@ -1403,7 +1403,7 @@ class Payroll_con extends CI_Controller {
 		$shift_name = $this->input->post('sh_name');
 		//$shift_name = "Shift A";
 
-		$data = $this->processdb->shift_change_search($shift_name);
+		$data = $this->Processdb->shift_change_search($shift_name);
 		echo $data;
 	}
 
@@ -1421,106 +1421,106 @@ class Payroll_con extends CI_Controller {
 
 		if ($empid !="")
 		{
-			$result = $this->processdb->emp_id_db($empid,$sStartDate,$sEndDate,$time);
+			$result = $this->Processdb->emp_id_db($empid,$sStartDate,$sEndDate,$time);
 			echo $result;
 		}
 		elseif ($column=="emp_dept_id")
 		{
-			$result = $this->processdb->emp_dept_id_db($emp_department_no,$sStartDate,$sEndDate,$time);
+			$result = $this->Processdb->emp_dept_id_db($emp_department_no,$sStartDate,$sEndDate,$time);
 		}
 		elseif ($column=="emp_sec_id")
 		{
-			$result = $this->processdb->emp_sec_id_db($emp_department_no,$sStartDate,$sEndDate,$time);
+			$result = $this->Processdb->emp_sec_id_db($emp_department_no,$sStartDate,$sEndDate,$time);
 		}
 		elseif ($column=="emp_line_id")
 		{
-			$result = $this->processdb->emp_line_id_db($emp_department_no,$sStartDate,$sEndDate,$time);
+			$result = $this->Processdb->emp_line_id_db($emp_department_no,$sStartDate,$sEndDate,$time);
 		}
 		elseif ($column=="emp_desi_id")
 		{
-			$result = $this->processdb->emp_desi_id_db($emp_department_no,$sStartDate,$sEndDate,$time);
+			$result = $this->Processdb->emp_desi_id_db($emp_department_no,$sStartDate,$sEndDate,$time);
 		}else
 		{
 			echo "not set";
 		}
-	//$result = $this->processdb->manual_att_entry_db($emp_department_no,$column,$sStartDate,$sEndDate,$intime_1st,$intime_2nd,$outtime_1st,$outtime_2nd,$flag);
+	//$result = $this->Processdb->manual_att_entry_db($emp_department_no,$column,$sStartDate,$sEndDate,$intime_1st,$intime_2nd,$outtime_1st,$outtime_2nd,$flag);
 
 	}
 	/*function leave_transaction_co()
 	{
-	$result = $this->processdb->leave_transaction_db();
+	$result = $this->Processdb->leave_transaction_db();
 	echo $result;
 	}*/
 
 
 	/*function save_leave_co()
 	{
-	$result = $this->processdb->save_leave_db();
+	$result = $this->Processdb->save_leave_db();
 	echo $result;
 	}*/
 
 
 	function search_position_name()
 	{
-		$result = $this->processdb->search_position_name_db();
+		$result = $this->Processdb->search_position_name_db();
 		echo $result;
 	}
 
 
 	function save_positionname_co()
 	{
-		$result = $this->processdb->save_positionname_db();
+		$result = $this->Processdb->save_positionname_db();
 		echo $result;
 	}
 
 
 	function update_positionname_co()
 	{
-		$result = $this->processdb->update_positionname_db();
+		$result = $this->Processdb->update_positionname_db();
 		//echo $result;
 	}
 	function delete_positionname_co()
 	{
-		$result = $this->processdb->delete_positionname_db();
+		$result = $this->Processdb->delete_positionname_db();
 		echo $result;
 	}
 
 	function search_operation_name()
 	{
-		$result = $this->processdb->search_operation_name();
+		$result = $this->Processdb->search_operation_name();
 		echo $result;
 	}
 
 
 	function save_operationname_co()
 	{
-		$result = $this->processdb->save_operationname_db();
+		$result = $this->Processdb->save_operationname_db();
 		echo $result;
 	}
 
 
 	function update_operationname_co()
 	{
-		$result = $this->processdb->update_operationname_db();
+		$result = $this->Processdb->update_operationname_db();
 		//echo $result;
 	}
 
 
 	function delete_operationname_co()
 	{
-		$result = $this->processdb->delete_operationname_db();
+		$result = $this->Processdb->delete_operationname_db();
 		echo $result;
 	}
 
 	function shift_change_co()
 	{
-			$result = $this->processdb->shift_change_db();
+			$result = $this->Processdb->shift_change_db();
 			echo $result;
 	}
 
 	function save_schange_co()
 	{
-		$result = $this->processdb->save_schange_db();
+		$result = $this->Processdb->save_schange_db();
 		echo $result;
 	}
 
@@ -1529,7 +1529,7 @@ class Payroll_con extends CI_Controller {
 		$shift_name = $this->input->post('shift_name');
 		$shift_id = $this->input->post('shift_id');
 
-		$result = $this->processdb->update_shift_time($shift_name, $shift_id);
+		$result = $this->Processdb->update_shift_time($shift_name, $shift_id);
 	}
 
 	//===============MANPOWER REPORT=========================
@@ -1539,7 +1539,7 @@ class Payroll_con extends CI_Controller {
 		$month = $this->uri->segment(4);
 		$date = $this->uri->segment(5);
 
-		$data["values"] = $this->processdb->manpower_report($year, $month, $date);
+		$data["values"] = $this->Processdb->manpower_report($year, $month, $date);
 		//print_r($data);
 		$this->load->view('manpower_report',$data);
 
@@ -1548,24 +1548,24 @@ class Payroll_con extends CI_Controller {
 
 	function work_off_delete_function_co()
 	{
-		$result = $this->processdb->work_off_delete_function_db();
+		$result = $this->Processdb->work_off_delete_function_db();
 		echo $result;
 	}
 	function work_off_save_function_co()
 	{
-		$result = $this->processdb->work_off_save_function_db();
+		$result = $this->Processdb->work_off_save_function_db();
 		echo $result;
 	}
 
 	function holiday_co()
 	{
-		$result = $this->processdb->holiday_db();
+		$result = $this->Processdb->holiday_db();
 		echo $result;
 	}
 
 	function manual_entry_Delete_co()
 	{
-		$result = $this->processdb->manual_entry_Delete_db();
+		$result = $this->Processdb->manual_entry_Delete_db();
 		echo $result;
 	}
 
@@ -1583,7 +1583,7 @@ class Payroll_con extends CI_Controller {
 
 		$loan_date = date("Y-m-d", strtotime($loan_date));
 
-		$data = $this->processdb->advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date);
+		$data = $this->Processdb->advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date);
 		echo $data;
 
 
@@ -1633,7 +1633,7 @@ class Payroll_con extends CI_Controller {
 	function test()
 	{
 		$emp_id = '004237';
-		echo $check = $this->processdb->resign_check($emp_id);
+		echo $check = $this->Processdb->resign_check($emp_id);
 	}
 	function delete_emp_id()
 	{
