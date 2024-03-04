@@ -6,9 +6,8 @@ class Emp_increment_con extends CI_Controller {
 		parent::__construct();
 		
 		/* Standard Libraries */
-		$this->load->model('processdb');
-		$this->load->model('inc_prom_pun_model');
-		$this->load->model('acl_model');
+		$this->load->model('Processdb');
+		$this->load->model('Inc_prom_pun_model');
 		   $this->data['user_data'] = $this->session->userdata('data');
 		//$access_level = 1;
 		//$acl = $this->acl_model->acl_check($access_level);
@@ -16,7 +15,7 @@ class Emp_increment_con extends CI_Controller {
 	
 	function check_id()
 	{
-		$result = $this->processdb->check_id_db();
+		$result = $this->Processdb->check_id_db();
 		echo $result;
 	}	
 	
@@ -71,7 +70,7 @@ class Emp_increment_con extends CI_Controller {
 	function effective_date_check_for_add($entdate)
 	{
 		$empid 				= $this->input->post('empid');
-		$check = $this->inc_prom_pun_model->get_old_entry_date($empid, $entdate);
+		$check = $this->Inc_prom_pun_model->get_old_entry_date($empid, $entdate);
 		if ($check == false)
 		{
 			$this->form_validation->set_message('effective_date_check_for_add', 'Sorry!This Employee Already get Increment or Promotion On This Month.');
@@ -100,7 +99,7 @@ class Emp_increment_con extends CI_Controller {
 	function gross_salary_check_for_add($gross_salary)
 	{
 		$empid 				= $this->input->post('empid');
-		$check = $this->inc_prom_pun_model->get_gross_salary_check_incre($empid, $gross_salary);
+		$check = $this->Inc_prom_pun_model->get_gross_salary_check_incre($empid, $gross_salary);
 		if ($check == false)
 		{
 			$this->form_validation->set_message('gross_salary_check_for_add', 'Failed! New Gross salary Always Greater Than Old Gross Salary.');
@@ -115,7 +114,7 @@ class Emp_increment_con extends CI_Controller {
 	function gross_salary_check_for_promotion($gross_salary)
 	{
 		$empid 				= $this->input->post('empid');
-		$check = $this->inc_prom_pun_model->get_gross_salary_check_prom($empid, $gross_salary);
+		$check = $this->Inc_prom_pun_model->get_gross_salary_check_prom($empid, $gross_salary);
 		if ($check == false)
 		{
 			$this->form_validation->set_message('gross_salary_check_for_promotion', 'Failed! New Gross salary Always Greater Than or Equal To Old Gross Salary.');
@@ -131,7 +130,7 @@ class Emp_increment_con extends CI_Controller {
 	function any_change_check_for_promotion($dept)
 	{
 		$empid 				= $this->input->post('empid');
-		$check = $this->inc_prom_pun_model->get_any_change_check_prom($empid, $dept);
+		$check = $this->Inc_prom_pun_model->get_any_change_check_prom($empid, $dept);
 		if ($check == false)
 		{
 			$this->form_validation->set_message('any_change_check_for_promotion', 'Please Fill Up Promotion Information.');
@@ -145,7 +144,7 @@ class Emp_increment_con extends CI_Controller {
 	
 	function emp_id_existance_check($emp_id)
 	{
-		$check = $this->processdb->emp_id_existance_check($emp_id);
+		$check = $this->Processdb->emp_id_existance_check($emp_id);
 		if ($check == true)
 		{
 			$this->form_validation->set_message('emp_id_existance_check', 'Sorry! Change your employee ID.');
@@ -159,7 +158,7 @@ class Emp_increment_con extends CI_Controller {
 	
 	function newemp_id_existance_check($emp_id)
 	{
-		$check = $this->processdb->emp_id_existance_check($emp_id);
+		$check = $this->Processdb->emp_id_existance_check($emp_id);
 		if ($check == false)
 		{
 			$this->form_validation->set_message('newemp_id_existance_check', 'Sorry! Change your new employee ID.');
@@ -176,25 +175,25 @@ class Emp_increment_con extends CI_Controller {
 	
 	function com_incre_prom_search()
 	{
-		$result = $this->processdb->com_incre_prom_search();
+		$result = $this->Processdb->com_incre_prom_search();
 		echo $result;
 	}
 
 	function increment_entry_brows()
 	{
-		$result = $this->inc_prom_pun_model->increment_entry_brows();
+		$result = $this->Inc_prom_pun_model->increment_entry_brows();
 		return $result;
 	}
 	
 	function increment_entry()
 	{
-		$result = $this->inc_prom_pun_model->increment_entry();
+		$result = $this->Inc_prom_pun_model->increment_entry();
 		return $result;
 	}
 	
 	function dept()
 	{
-		$result = $this->processdb->com_all_info();
+		$result = $this->Processdb->com_all_info();
 		echo $result;
 	}
 	
@@ -258,7 +257,7 @@ class Emp_increment_con extends CI_Controller {
 	
 	function promotion_entry()
 	{
-		$result = $this->inc_prom_pun_model->promotion_entry();
+		$result = $this->Inc_prom_pun_model->promotion_entry();
 		return $result;
 	}
 	

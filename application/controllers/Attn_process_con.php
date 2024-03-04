@@ -11,7 +11,7 @@ class Attn_process_con extends CI_Controller {
 		ini_set('max_execution_time', 0);
 	    set_time_limit(0);
 		/* Standard Libraries */
-		$this->load->library('Grocery_crud');
+		// $this->load->library('Grocery_crud');
 		$this->load->model('Attn_process_model');
 		$this->load->model('Log_model');
 		$this->load->model('Acl_model');

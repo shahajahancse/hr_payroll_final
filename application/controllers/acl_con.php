@@ -6,9 +6,9 @@ class Acl_con extends CI_Controller {
 
 		/* Standard Libraries */
 		$this->data['user_data'] = $this->session->userdata('data');
-		$this->load->library('grocery_CRUD');
-		$this->load->model('acl_model');
-		$this->load->model('common_model');
+		// $this->load->library('grocery_CRUD');
+		$this->load->model('Acl_model');
+		$this->load->model('Common_model');
 
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -250,12 +250,12 @@ class Acl_con extends CI_Controller {
 
 	function acl_copy_08_09_21(){
 		$username = $this->session->userdata('username');
-		$get_user_id = $this->acl_model->get_user_id($username);
+		$get_user_id = $this->Acl_model->get_user_id($username);
 		$acl_check = $this->acl_check($get_user_id );
 
 
 		$crud = new grocery_CRUD();
-	 	$get_session_user_pr_units = $this->common_model->get_session_unit_id_name();
+	 	$get_session_user_pr_units = $this->Common_model->get_session_unit_id_name();
 		 /*if($get_session_user_pr_units != 0)
 		 {
 			 $crud->where('members.pr_units_name',$get_session_user_pr_units);

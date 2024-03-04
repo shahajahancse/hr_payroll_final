@@ -6,9 +6,9 @@ class Autocomplete extends CI_Controller {
 
 		/* Standard Libraries */
 		$this->data['user_data'] = $this->session->userdata('data');
-		$this->load->library('grocery_CRUD');
-		$this->load->model('acl_model');
-		$this->load->model('common_model');
+		// $this->load->library('grocery_CRUD');
+		// $this->load->model('acl_model');
+		// $this->load->model('common_model');
 
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");

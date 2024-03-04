@@ -18,9 +18,8 @@ class Grid_con extends CI_Controller {
             exit;
         }
 
-		$this->load->model('grid_model');
-		$this->load->model('acl_model');
-		$this->load->model('common_model');
+		$this->load->model('Grid_model');
+		$this->load->model('Common_model');
 	}
 
 
@@ -34,9 +33,9 @@ class Grid_con extends CI_Controller {
 		$month=date("m",strtotime($date)); 
 		$day=date("d",strtotime($date));
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->grid_model->grid_daily_report($date,$grid_emp_id,$type);
+		$data["values"] = $this->Grid_model->grid_daily_report($date,$grid_emp_id,$type);
 		// if($type == 9){
-		//     $data['values'] =	$this->grid_model->grid_daily_costing_report($date,$unit_id);
+		//     $data['values'] =	$this->Grid_model->grid_daily_costing_report($date,$unit_id);
 		// 	$data['unit_id']= $unit_id;
 		// 	$data['date']= $date;
 		// 	$this->load->view('others_report/daily_costing_summary',$data);
@@ -51,7 +50,7 @@ class Grid_con extends CI_Controller {
 		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
-		$data["values"] 	= $this->grid_model->daily_costing_summary($date,$unit_id);	
+		$data["values"] 	= $this->Grid_model->daily_costing_summary($date,$unit_id);	
 		// dd($data["values"]);
 		$data["grid_date"]	= $date;
 		$data["unit_id"]	= $unit_id;
@@ -64,7 +63,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
 
-		$data['values'] = $this->grid_model->daily_attendance_summary($date, $unit_id);
+		$data['values'] = $this->Grid_model->daily_attendance_summary($date, $unit_id);
 		// $data['values'] = $this->mars_model->line_attendance_summary($date, $unit_id);
 
 		$data['title'] 		 = 'Daily Attendance Summary';
@@ -83,7 +82,7 @@ class Grid_con extends CI_Controller {
 		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
-		$data['values'] = $this->grid_model->daily_logout_report($date, $unit_id);
+		$data['values'] = $this->Grid_model->daily_logout_report($date, $unit_id);
 		$data['title'] 		 = 'Daily Logout Summary';
 		$data['report_date'] = $date;
 		$data['category']    = 'Line';
@@ -102,7 +101,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 		
-		$data["values"] = $this->grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
+		$data["values"] = $this->Grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
 
 		if($status =="A")
 		{
@@ -153,7 +152,7 @@ class Grid_con extends CI_Controller {
 		$type = $this->input->post('type');
 		$emp_id = explode(',', trim($ids));
 		// dd($type);
-		$data["values"] = $this->grid_model->incre_prom_report($first_date,$second_date,$emp_id,$type);
+		$data["values"] = $this->Grid_model->incre_prom_report($first_date,$second_date,$emp_id,$type);
         if($type == 1){
 			$this->load->view('increment_letter',$data);
 		}else if($type == 2){
@@ -172,7 +171,7 @@ class Grid_con extends CI_Controller {
 		$grid_seconddate	= $this->input->post('seconddate');
 		$grid_firstdate  	= date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  	= date("Y-m-d", strtotime($grid_seconddate));
-		$data['values'] 	= $this->grid_model->grid_new_join_report($grid_firstdate, $grid_seconddate);
+		$data['values'] 	= $this->Grid_model->grid_new_join_report($grid_firstdate, $grid_seconddate);
 		$data['start_date']	= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
 		$data['unit_id'] 	= $this->input->post('unit_id');
@@ -192,7 +191,7 @@ class Grid_con extends CI_Controller {
 		$grid_seconddate = $this->input->post('seconddate');
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
-		$data['values'] = $this->grid_model->grid_resign_report($grid_firstdate, $grid_seconddate);
+		$data['values'] = $this->Grid_model->grid_resign_report($grid_firstdate, $grid_seconddate);
 		$data['start_date'] = $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -209,7 +208,7 @@ class Grid_con extends CI_Controller {
 		$grid_seconddate = $this->input->post('seconddate');
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
-		$data['values'] = $this->grid_model->grid_left_report($grid_firstdate, $grid_seconddate);
+		$data['values'] = $this->Grid_model->grid_left_report($grid_firstdate, $grid_seconddate);
 		$data['start_date']= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
 		$data['unit_id'] = $this->input->post('grid_start');
@@ -233,7 +232,7 @@ class Grid_con extends CI_Controller {
 		$query['firstdate'] = 	"2023-12-14";
 		$validity = date("Y-m-d",strtotime("+3 year",strtotime($firstdate)));
 		$query['validity']= date("d-m-Y",strtotime($validity));
-		$query['values'] = $this->grid_model->id_card($emp_id,$status);
+		$query['values'] = $this->Grid_model->id_card($emp_id,$status);
 		if(is_string($query['values'])){
 			echo $query['values'];
 		}
@@ -253,8 +252,8 @@ class Grid_con extends CI_Controller {
 		$grid_unit = $this->uri->segment(4);
 		$grid_emp_id = explode(',', trim($grid_data));
 		$query['unit_id'] = 	$grid_unit;
-		// $query['values'] = $this->grid_model->grid_id_card_english($grid_emp_id);
-		$query['values'] = $this->grid_model->grid_id_card($grid_emp_id);
+		// $query['values'] = $this->Grid_model->grid_id_card_english($grid_emp_id);
+		$query['values'] = $this->Grid_model->grid_id_card($grid_emp_id);
 		if(is_string($query['values']))
 		{
 			echo $query['values'];
@@ -272,7 +271,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 
-		$query['values'] = $this->grid_model->grid_job_card($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$query['values'] = $this->Grid_model->grid_job_card($grid_firstdate, $grid_seconddate, $grid_emp_id);
 
 		$query['grid_firstdate'] = $grid_firstdate;
 		$query['grid_seconddate'] = $grid_seconddate;
@@ -292,7 +291,7 @@ class Grid_con extends CI_Controller {
 	function grid_general_info(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->grid_model->grid_general_info($grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_general_info($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['grid_emp_id'] = $grid_emp_id;
 		$this->load->view('general_info',$data);
@@ -300,7 +299,7 @@ class Grid_con extends CI_Controller {
 	function worker_register(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->grid_model->grid_general_info($grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_general_info($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['grid_emp_id'] = $grid_emp_id;
 		$this->load->view('worker_register',$data);
@@ -316,7 +315,7 @@ class Grid_con extends CI_Controller {
 		$data['grid_seconddate'] = $grid_seconddate;
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
-		$data['values']  = $this->grid_model->grid_extra_ot($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values']  = $this->Grid_model->grid_extra_ot($grid_firstdate, $grid_seconddate, $grid_emp_id);
 		$this->load->view('ot_job_card',$data);
 	}
 
@@ -327,7 +326,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate)); 
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate)); 
-		$data['values'] = $this->grid_model->grid_extra_ot_9pm($grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_extra_ot_9pm($grid_emp_id);
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
 		if(is_string($data['values'])){
@@ -345,7 +344,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate)); 
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate)); 
-		$data['values'] = $this->grid_model->grid_extra_ot_4pm($grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_extra_ot_4pm($grid_emp_id);
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
 		if(is_string($data['values'])){
@@ -365,7 +364,7 @@ class Grid_con extends CI_Controller {
 		$data['reason']    	 = $this->input->post('reason');
 		$data['first_date']  = $first_date;
 		$data['second_date'] = $second_date;
-		$data['values']      = $this->grid_model->leave_application($first_date,$second_date,$emp_id,$unit_id);
+		$data['values']      = $this->Grid_model->leave_application($first_date,$second_date,$emp_id,$unit_id);
 		$date1 = new DateTime($first_date);
 		$date2 = new DateTime($second_date);
 		$interval = $date2->diff($date1);
@@ -422,14 +421,14 @@ class Grid_con extends CI_Controller {
 	function grid_age_estimation(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["value"] = $this->grid_model->grid_age_estimation($grid_emp_id);
+		$data["value"] = $this->Grid_model->grid_age_estimation($grid_emp_id);
 		$this->load->view('age_estimation_bn',$data);
 	}
 
 	function bando_certificate_report(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["value"] = $this->grid_model->bando_certificate_report($grid_emp_id);
+		$data["value"] = $this->Grid_model->bando_certificate_report($grid_emp_id);
 		$this->load->view('certificate',$data);
 	}
 
@@ -438,7 +437,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate = $this->uri->segment(4);
 		$year_month = date('Y-m',strtotime($grid_firstdate));
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->grid_model->one_month_settel_paid_report($grid_emp_id,$year_month);
+		$data["values"] = $this->Grid_model->one_month_settel_paid_report($grid_emp_id,$year_month);
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}
@@ -450,21 +449,21 @@ class Grid_con extends CI_Controller {
 	function grid_drugscreening_report(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["value"] = $this->grid_model->grid_drugscreening_report($grid_emp_id);
+		$data["value"] = $this->Grid_model->grid_drugscreening_report($grid_emp_id);
 		$this->load->view('drugscreeningform',$data);
 	}
 
 	function ackknowledgement_report(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["value"] = $this->grid_model->ackknowledgement_report($grid_emp_id);
+		$data["value"] = $this->Grid_model->ackknowledgement_report($grid_emp_id);
 		$this->load->view('ackknowledgement_letter',$data);
 	}
 
 	function earnl_payment(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["value"] = $this->grid_model->earnl_payment($grid_emp_id);
+		$data["value"] = $this->Grid_model->earnl_payment($grid_emp_id);
 		$this->load->view('earnl_payment',$data);
 	}
 
@@ -476,7 +475,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
-		$data['values'] = $this->grid_model->grid_pension_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_pension_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
 		$data['start_date']= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
 
@@ -491,19 +490,19 @@ class Grid_con extends CI_Controller {
 	function grid_nominee(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["value"] = $this->grid_model->grid_nominee($grid_emp_id);
+		$data["value"] = $this->Grid_model->grid_nominee($grid_emp_id);
 		$this->load->view('nominee_form',$data);
 	}
 	function grid_requitement_form(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["value"] = $this->grid_model->grid_requitement_form($grid_emp_id);
+		$data["value"] = $this->Grid_model->grid_requitement_form($grid_emp_id);
 		$this->load->view('requitement_form',$data);
 	}
 	function grid_per_file(){
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$query['values'] = $this->grid_model->grid_per_file($grid_emp_id);
+		$query['values'] = $this->Grid_model->grid_per_file($grid_emp_id);
 		if(is_string($query['values'])){
 			echo $query['values'];
 		}else{
@@ -516,7 +515,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 		$query['unit_id'] = $this->input->post('unit_id');
-		$query['values'] = $this->grid_model->grid_ctpat($grid_emp_id);
+		$query['values'] = $this->Grid_model->grid_ctpat($grid_emp_id);
 		if(is_string($query['values'])){
 			echo $query['values'];
 		}
@@ -531,7 +530,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
-		$data["values"] = $this->grid_model->prom_report_db($grid_firstdate,$grid_emp_id);
+		$data["values"] = $this->Grid_model->prom_report_db($grid_firstdate,$grid_emp_id);
 		if(is_string($data["values"])){
 			echo $data["values"];
 		}
@@ -629,7 +628,7 @@ class Grid_con extends CI_Controller {
 		$status = $this->input->post('status');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->grid_model->shorts_emp_summery($year, $month, $date, $status, $grid_emp_id);
+		$data["values"] = $this->Grid_model->shorts_emp_summery($year, $month, $date, $status, $grid_emp_id);
 		// print_r($data["values"]);
 		// exit('H');
 
@@ -662,7 +661,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
 		//print_r($grid_emp_id);
 
-		$data["values"] = $this->grid_model->first_letter_of_maternity_leave($grid_firstdate,$grid_emp_id);
+		$data["values"] = $this->Grid_model->first_letter_of_maternity_leave($grid_firstdate,$grid_emp_id);
 		if(is_string($data["values"]))
 		{
 			echo $data["values"];
@@ -679,7 +678,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
-		$data["value"] = $this->grid_model->grid_verification_report($grid_emp_id);
+		$data["value"] = $this->Grid_model->grid_verification_report($grid_emp_id);
 
 		$this->load->view('verification_report_new',$data);
 	}
@@ -690,7 +689,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
-		$data["value"] = $this->grid_model->grid_job_description($grid_emp_id);
+		$data["value"] = $this->Grid_model->grid_job_description($grid_emp_id);
 
 		if($data["value"] != NULL)
 		{
@@ -744,7 +743,7 @@ class Grid_con extends CI_Controller {
 
 	function grid_get_all_data(){
 
-			//$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+			//$get_session_user_unit = $this->Common_model->get_session_unit_id_name();
 			$unit 	= $this->uri->segment(3);
 
 			$emp_cat_id = array ('0' => 1, '1' => 2, '2' => 5);
@@ -896,7 +895,7 @@ class Grid_con extends CI_Controller {
 		$units	= $this->uri->segment(4);
 		$i = 0;
 		//$salary_month = "2013-05";
-		$data = $this->common_model->get_all_employee($salary_month,$units);
+		$data = $this->Common_model->get_all_employee($salary_month,$units);
 		foreach($data->result_array() as $row)
 		{
 			$responce->rows[$i]['id']=$row['emp_id'];
@@ -921,31 +920,31 @@ class Grid_con extends CI_Controller {
 		$position		= $this->uri->segment(12);
 		// exit($position);
 		//echo "$dept==$section==$line==$desig==$sex==$status===$salary_month";
-		$data = $this->common_model->get_all_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit,$w_type,$position);
+		$data = $this->Common_model->get_all_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit,$w_type,$position);
 
 		/*if($status == 1 )
 		{
-			$data = $this->common_model->get_regular_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
+			$data = $this->Common_model->get_regular_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
 		}
 
 		if($status == 2)
 		{
-			$data = $this->common_model->get_new_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
+			$data = $this->Common_model->get_new_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
 		}
 
 		if($status == 3)
 		{
-			$data = $this->common_model->get_left_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
+			$data = $this->Common_model->get_left_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
 		}
 
 		if($status == 4)
 		{
-			$data = $this->common_model->get_resign_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
+			$data = $this->Common_model->get_resign_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
 		}
 
 		if($status == "ALL")
 		{
-			$data = $this->common_model->get_all_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
+			$data = $this->Common_model->get_all_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
 		}*/
 		$i = 0;
 		foreach($data->result_array() as $row)
@@ -970,7 +969,7 @@ class Grid_con extends CI_Controller {
 		$status = $this->input->post('status');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->grid_model->grid_daily_absent_report($year, $month, $date, $status, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_daily_absent_report($year, $month, $date, $status, $grid_emp_id);
 		// print_r($data["values"]);
 		// exit;
 
@@ -999,7 +998,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
-		$data["values"] = $this->grid_model->grid_actual_present_report($year, $month, $date, $status, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_actual_present_report($year, $month, $date, $status, $grid_emp_id);
 
 		$data["year"]			= $year;
 		$data["month"]			= $month;
@@ -1027,7 +1026,7 @@ class Grid_con extends CI_Controller {
 		$grid_unit = $this->input->post('unit_id');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->grid_model->grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id);
 		$data["grid_date"]	= date("d-M-Y",strtotime($grid_date));
 		$data["unit_id"]	= $grid_unit;
 		if(is_string($data["values"])){
@@ -1047,7 +1046,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 
-		$data["values"] 	= $this->grid_model->grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id);
+		$data["values"] 	= $this->Grid_model->grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id);
 		$data["firstdate"]	= date("d-M-Y",strtotime($firstdate));
 		$data["seconddate"]	= date("d-M-Y",strtotime($seconddate));
 		$data["unit_id"]	= $grid_unit;
@@ -1072,7 +1071,7 @@ class Grid_con extends CI_Controller {
 		//$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id= $this->db->where("unit_id",1)->get('pr_emp_com_info')->row()->unit_id;
 
-		$data["values"] 	= $this->grid_model->grid_leave_application_form($firstdate,$seconddate,$leave_type,$emp_id);
+		$data["values"] 	= $this->Grid_model->grid_leave_application_form($firstdate,$seconddate,$leave_type,$emp_id);
 		$data["firstdate"]	= date("d-m-Y",strtotime($firstdate));
 		$data["seconddate"]	= date("d-m-Y",strtotime($seconddate));
 		$data["leave_type"]	= $leave_type;
@@ -1098,7 +1097,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 
-		$data["values"] = $this->grid_model->grid_daily_late_report($year, $month, $date, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_daily_late_report($year, $month, $date, $grid_emp_id);
 		$data["year"]			= $year;
 		$data["month"]			= $month;
 		$data["date"]			= $date;
@@ -1129,7 +1128,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 
 
-		$data["values"] = $this->grid_model->grid_daily_out_punch_miss_report($year, $month, $date, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_daily_out_punch_miss_report($year, $month, $date, $grid_emp_id);
 		$data["year"]			= $year;
 		$data["month"]			= $month;
 		$data["date"]			= $date;
@@ -1161,7 +1160,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
-		$data["values"] = $this->grid_model->grid_daily_out_in_report($year, $month, $date, $status, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_daily_out_in_report($year, $month, $date, $status, $grid_emp_id);
 
 		$data["year"]			= $year;
 		$data["month"]			= $month;
@@ -1199,7 +1198,7 @@ class Grid_con extends CI_Controller {
 		//echo "$date, $month, $year";
 		$status = 'P';
 		//print_r($grid_emp_id);
-		$data["values"] = $this->grid_model->grid_daily_actual_out_in_report($year, $month, $date, $status, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_daily_actual_out_in_report($year, $month, $date, $status, $grid_emp_id);
 
 		$data["unit_id"]			= $unit_id;
 		$data["year"]			= $year;
@@ -1230,7 +1229,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('grid_start');
 		$status = 'P';
-		$data["values"] = $this->grid_model->grid_daily_holiday_weekend_present_report($year, $month, $date, $status, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_daily_holiday_weekend_present_report($year, $month, $date, $status, $grid_emp_id);
 		$data["year"]			= $year;
 		$data["month"]			= $month;
 		$data["date"]			= $date;
@@ -1254,7 +1253,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('grid_start');
 		$status = 'A';
-		$data["values"] = $this->grid_model->grid_daily_holiday_weekend_absent_report($year, $month, $date, $status, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_daily_holiday_weekend_absent_report($year, $month, $date, $status, $grid_emp_id);
 		$data["year"]			= $year;
 		$data["month"]			= $month;
 		$data["date"]			= $date;
@@ -1282,7 +1281,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$limit = $this->input->post('limit');
 
-		$data["values"] = $this->grid_model->continuous_report_limit($grid_firstdate, $grid_seconddate, $status, $grid_emp_id, $limit);
+		$data["values"] = $this->Grid_model->continuous_report_limit($grid_firstdate, $grid_seconddate, $status, $grid_emp_id, $limit);
 
 		if($status =="A")
 		{
@@ -1329,7 +1328,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 
 		
-		$data_2["values_2"] = $this->grid_model->continuous_leave_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
+		$data_2["values_2"] = $this->Grid_model->continuous_leave_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
 			$status = "Leave";
 
 			$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
@@ -1364,7 +1363,7 @@ class Grid_con extends CI_Controller {
 
 		//$status="Present Report from date $start_date to date  $end_date";
 
-		$data["values"] = $this->grid_model->continuous_late_report($sStartDate, $sEndDate, $grid_emp_id);
+		$data["values"] = $this->Grid_model->continuous_late_report($sStartDate, $sEndDate, $grid_emp_id);
 
 
 
@@ -1396,7 +1395,7 @@ class Grid_con extends CI_Controller {
 		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
 		//$status="Present Report from date $start_date to date  $end_date";
 
-		$data["values"] = $this->grid_model->grid_continuous_leave_report($sStartDate, $sEndDate, $grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_continuous_leave_report($sStartDate, $sEndDate, $grid_emp_id);
 
 
 
@@ -1426,7 +1425,7 @@ class Grid_con extends CI_Controller {
 
 		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
 		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
-		$data["values"] = $this->grid_model->continuous_incre_report($sStartDate,$sEndDate,$grid_emp_id);
+		$data["values"] = $this->Grid_model->continuous_incre_report($sStartDate,$sEndDate,$grid_emp_id);
 		$data["start_date"] = $sStartDate;
 		$data["end_date"] = $sEndDate;
 		$data["unit_id"] = $unit_id;
@@ -1453,7 +1452,7 @@ class Grid_con extends CI_Controller {
 		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
 		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
 
-		$data["values"] = $this->grid_model->continuous_prom_report($sStartDate,$sEndDate,$grid_emp_id);
+		$data["values"] = $this->Grid_model->continuous_prom_report($sStartDate,$sEndDate,$grid_emp_id);
 
 		$data["start_date"] = $sStartDate;
 		$data["end_date"] = $sEndDate;
@@ -1481,7 +1480,7 @@ class Grid_con extends CI_Controller {
 		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
 		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
 
-		$data["values"] = $this->grid_model->continuous_increment_promotion_proposal($sStartDate,$sEndDate,$grid_emp_id);
+		$data["values"] = $this->Grid_model->continuous_increment_promotion_proposal($sStartDate,$sEndDate,$grid_emp_id);
 
 		$data["start_date"] = $sStartDate;
 		$data["end_date"] = $sEndDate;
@@ -1502,7 +1501,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('emp_ids');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-		$data['values'] 	= $this->grid_model->grid_app_letter($grid_emp_id);
+		$data['values'] 	= $this->Grid_model->grid_app_letter($grid_emp_id);
 		$data['unit_id']	= $unit_id;
 
 		if(is_string($data['values'])){
@@ -1518,7 +1517,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 		$query['unit_id'] = $this->input->post('unit_id');
-		$query['values'] = $this->grid_model->grid_emp_job_application($grid_emp_id);
+		$query['values'] = $this->Grid_model->grid_emp_job_application($grid_emp_id);
 		if(is_string($query['values'])){
 			echo $query['values'];
 		}
@@ -1532,7 +1531,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 		$query['unit_id'] = $this->input->post('unit_id');
-		$query['values'] = $this->grid_model->grid_emp_job_application($grid_emp_id);
+		$query['values'] = $this->Grid_model->grid_emp_job_application($grid_emp_id);
 		$query['unit_id'] = $this->input->post('unit_id');
 		if(is_string($query['values'])){
 			echo $query['values'];
@@ -1547,7 +1546,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$firstdate = $this->input->post('firstdate');
 
-		$data['values'] 	= $this->grid_model->grid_letter1_report($grid_emp_id,$firstdate);
+		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id,$firstdate);
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
@@ -1566,7 +1565,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 		$firstdate = $this->input->post('firstdate');
-		$data['values'] 	= $this->grid_model->grid_letter1_report($grid_emp_id,$firstdate);
+		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id,$firstdate);
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
@@ -1583,7 +1582,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$firstdate = $this->input->post('firstdate');
 
-		$data['values'] 	= $this->grid_model->grid_letter1_report($grid_emp_id, $firstdate);
+		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id, $firstdate);
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
@@ -1604,7 +1603,7 @@ class Grid_con extends CI_Controller {
 
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 
-		$query['values'] = $this->grid_model->grid_pay_slip($year_month, $grid_emp_id);
+		$query['values'] = $this->Grid_model->grid_pay_slip($year_month, $grid_emp_id);
 		$query['values'] = $unit_id;
 		if(is_string($query['values']))
 		{
@@ -1628,7 +1627,7 @@ class Grid_con extends CI_Controller {
 		exit;*/
 		$year_month = date("Y-m", strtotime($firstdate));
 
-		$query = $this->grid_model->grid_monthly_att_register_auto($year_month, $grid_emp_id);
+		$query = $this->Grid_model->grid_monthly_att_register_auto($year_month, $grid_emp_id);
 
 		if(is_string($query))
 		{
@@ -1655,7 +1654,7 @@ class Grid_con extends CI_Controller {
 		exit;*/
 		$year_month = date("Y-m", strtotime($firstdate));
 
-		$query = $this->grid_model->grid_monthly_att_register_auto($year_month, $grid_emp_id);
+		$query = $this->Grid_model->grid_monthly_att_register_auto($year_month, $grid_emp_id);
 
 		if(is_string($query))
 		{
@@ -1681,7 +1680,7 @@ class Grid_con extends CI_Controller {
 		exit;*/
 		$year_month = date("Y-m", strtotime($firstdate));
 
-		$query = $this->grid_model->grid_monthly_att_register_auto($year_month, $grid_emp_id);
+		$query = $this->Grid_model->grid_monthly_att_register_auto($year_month, $grid_emp_id);
 
 		if(is_string($query))
 		{
@@ -1707,7 +1706,7 @@ class Grid_con extends CI_Controller {
 		exit;*/
 		$year_month = date("Y-m", strtotime($firstdate));
 
-		$query = $this->grid_model->grid_monthly_att_register_auto($year_month, $grid_emp_id);
+		$query = $this->Grid_model->grid_monthly_att_register_auto($year_month, $grid_emp_id);
 
 		if(is_string($query))
 		{
@@ -1730,7 +1729,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->uri->segment(5);
 		$grid_emp_id = explode(',', trim($grid_data));
 
-		$query['values'] = $this->grid_model->grid_pf_statement($year, $month, $grid_emp_id);
+		$query['values'] = $this->Grid_model->grid_pf_statement($year, $month, $grid_emp_id);
 
 		$query['year'] = $year;
 		$query['month'] = $month;
@@ -1754,7 +1753,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 
-		$query=$this->grid_model->grid_monthly_att_register($year_month, $grid_emp_id);
+		$query=$this->Grid_model->grid_monthly_att_register($year_month, $grid_emp_id);
 		if(is_string($query))
 		{
 			echo $query;
@@ -1777,7 +1776,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-		$query=$this->grid_model->grid_yearly_leave_register($grid_firstdate, $grid_seconddate,$grid_emp_id);
+		$query=$this->Grid_model->grid_yearly_leave_register($grid_firstdate, $grid_seconddate,$grid_emp_id);
 		if(is_string($query)){
 			echo $query;
 		}
@@ -1802,7 +1801,7 @@ class Grid_con extends CI_Controller {
 
 		//$status="Present Report from date $start_date to date  $end_date";
 
-		$data["values"] = $this->grid_model->continuous_ot_eot_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data["values"] = $this->Grid_model->continuous_ot_eot_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
 
 		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
 		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
@@ -1832,7 +1831,7 @@ class Grid_con extends CI_Controller {
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 
 		if($status==1){
-			$query=$this->grid_model->grid_monthly_att_register($year_month, $grid_emp_id);
+			$query=$this->Grid_model->grid_monthly_att_register($year_month, $grid_emp_id);
 			if(is_string($query))
 			{
 				echo $query;
@@ -1847,7 +1846,7 @@ class Grid_con extends CI_Controller {
 			}
 				$this->load->view('monthly_report',$data);
 			}elseif($status==2){
-				$query=$this->grid_model->grid_monthly_att_register_blank($year_month, $grid_emp_id);
+				$query=$this->Grid_model->grid_monthly_att_register_blank($year_month, $grid_emp_id);
 				if(is_string($query))
 				{
 					echo $query;
@@ -1863,7 +1862,7 @@ class Grid_con extends CI_Controller {
 				$this->load->view('monthly_report_blank',$data);
 			}else{
 
-				$query=$this->grid_model->grid_monthly_att_register_blank($year_month, $grid_emp_id);
+				$query=$this->Grid_model->grid_monthly_att_register_blank($year_month, $grid_emp_id);
 				if(is_string($query))
 				{
 					echo $query;
@@ -1898,7 +1897,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
 
-		$data['values'] = $this->grid_model->grid_extra_ot_mix($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_extra_ot_mix($grid_firstdate, $grid_seconddate, $grid_emp_id);
 
 
 
@@ -1927,7 +1926,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = "100005,100009,440004";
 		$grid_emp_id = explode(',', trim($grid_data));*/
 
-		$data = $this->grid_model->manual_attendance_entry($grid_firstdate, $grid_seconddate, $manual_time, $grid_emp_id);
+		$data = $this->Grid_model->manual_attendance_entry($grid_firstdate, $grid_seconddate, $manual_time, $grid_emp_id);
 		echo $data;
 
 	}
@@ -1943,7 +1942,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
 
-		$data = $this->grid_model->manual_entry_Delete($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data = $this->Grid_model->manual_entry_Delete($grid_firstdate, $grid_seconddate, $grid_emp_id);
 		echo $data;
 
 	}
@@ -1957,7 +1956,7 @@ class Grid_con extends CI_Controller {
 		//print_r($grid_emp_id);
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data = $this->grid_model->save_work_off($grid_firstdate, $grid_emp_id);
+		$data = $this->Grid_model->save_work_off($grid_firstdate, $grid_emp_id);
 		echo $data;
 
 	}
@@ -1969,7 +1968,7 @@ class Grid_con extends CI_Controller {
 
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data = $this->grid_model->save_holiday($grid_firstdate, $holiday_description);
+		$data = $this->Grid_model->save_holiday($grid_firstdate, $holiday_description);
 		echo $data;
 
 	}
@@ -1982,7 +1981,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
-		$data["value"] = $this->grid_model->grid_monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id);
+		$data["value"] = $this->Grid_model->grid_monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id);
 		$data["salary_month"] = $sal_year_month;
 		$data["grid_status"]  = $grid_status;
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -1996,7 +1995,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
-		$data["values"] = $this->grid_model->grid_current_info($grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_current_info($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['grid_emp_id'] = $grid_emp_id;
 
@@ -2011,7 +2010,7 @@ class Grid_con extends CI_Controller {
 		$grid_data 		= $this->input->post('grid_emp_id');
 		$grid_emp_id = explode(',', trim($grid_data));
 
-		$data["values"] = $this->grid_model->grid_general_info($grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_general_info($grid_emp_id);
 		$this->load->view('general_info_excel',$data);
 	}
 
@@ -2024,7 +2023,7 @@ class Grid_con extends CI_Controller {
 
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data["values"]  = $this->grid_model->ot_hour_search($grid_firstdate,$search_ot_hour,$grid_emp_id);
+		$data["values"]  = $this->Grid_model->ot_hour_search($grid_firstdate,$search_ot_hour,$grid_emp_id);
 		$data["search_ot_hour"] = $search_ot_hour;
 		$data["grid_emp_id"] = $grid_emp_id;
 		$data["grid_firstdate"] = $grid_firstdate;
@@ -2045,7 +2044,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
-		$data["values"] = $this->grid_model->grid_employee_information($grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 
 		$this->load->view('employee_information',$data);
@@ -2057,7 +2056,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
-		$data["values"] = $this->grid_model->grid_employee_information($grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 
 		$this->load->view('service_book',$data);
@@ -2069,7 +2068,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
-		$data["value"] = $this->grid_model->grid_service_book2($grid_emp_id);
+		$data["value"] = $this->Grid_model->grid_service_book2($grid_emp_id);
 
 		$this->load->view('service_book_full',$data);
 	}
@@ -2080,7 +2079,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
-		$data["values"] = $this->grid_model->grid_service_benifit($grid_emp_id);
+		$data["values"] = $this->Grid_model->grid_service_benifit($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 
 		$this->load->view('service_benifit',$data);
@@ -2089,7 +2088,7 @@ class Grid_con extends CI_Controller {
 	function salary_summary()
 	{
 		$salary_month = $this->uri->segment(3);
-		$data["values"] = $this->grid_model->salary_summary($salary_month);
+		$data["values"] = $this->Grid_model->salary_summary($salary_month);
 		$data["salary_month"] = $salary_month;
 		//print_r($data);
 		$this->load->view('salary_summary',$data);
@@ -2105,7 +2104,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
 
-		$data['values'] = $this->grid_model->grid_bgm_new_join_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_bgm_new_join_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
 
 		$data['start_date']= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
@@ -2133,7 +2132,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
 
-		$data['values'] = $this->grid_model->grid_resign_report_with_sal($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_resign_report_with_sal($grid_firstdate, $grid_seconddate, $grid_emp_id);
 		// echo print_r($data['values']);exit;
 		$data['start_date'] = $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
@@ -2158,7 +2157,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
 
-		$data['values'] = $this->grid_model->grid_left_report_with_sal($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_left_report_with_sal($grid_firstdate, $grid_seconddate, $grid_emp_id);
 		// echo print_r($data['values']);exit;
 		$data['start_date'] = $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
@@ -2183,7 +2182,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
 
-		$data['values'] = $this->grid_model->grid_bgm_resign_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_bgm_resign_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
 
 		$data['start_date']= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
@@ -2209,7 +2208,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
 		//echo "$grid_firstdate, $grid_seconddate";
-		$data['values'] = $this->grid_model->grid_bgm_left_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_bgm_left_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
 
 		$data['start_date']= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
@@ -2237,7 +2236,7 @@ class Grid_con extends CI_Controller {
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
 		$unit_id = $this->input->post('grid_start');
 		//echo "$grid_firstdate, $grid_seconddate";
-		$data['values'] = $this->grid_model->grid_bgm_left_resign_report($grid_firstdate, $grid_seconddate, $unit_id);
+		$data['values'] = $this->Grid_model->grid_bgm_left_resign_report($grid_firstdate, $grid_seconddate, $unit_id);
 
 		$data['start_date']= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
@@ -2257,13 +2256,13 @@ class Grid_con extends CI_Controller {
 
 	function grid_daily_eot()
 	{
-		$this->load->model('common_model');
+		$this->load->model('Common_model');
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_daily_eot($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_daily_eot($grid_firstdate, $grid_emp_id);
 
 		$data['start_date']= $this->input->post('firstdate');
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -2280,13 +2279,13 @@ class Grid_con extends CI_Controller {
 
 	function grid_daily_ot()
 	{
-		$this->load->model('common_model');
+		$this->load->model('Common_model');
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_daily_ot($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_daily_ot($grid_firstdate, $grid_emp_id);
 
 		$data['start_date']= $this->input->post('firstdate');
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -2302,13 +2301,13 @@ class Grid_con extends CI_Controller {
 	}
 	function grid_daily_night_allowance_report()
 	{
-		$this->load->model('common_model');
+		$this->load->model('Common_model');
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_daily_night_allowance_report($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_daily_night_allowance_report($grid_firstdate, $grid_emp_id);
 
 		$data['start_date']= $this->input->post('firstdate');
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -2324,13 +2323,13 @@ class Grid_con extends CI_Controller {
 	}
 	function grid_daily_allowance_bills()
 	{
-		$this->load->model('common_model');
+		$this->load->model('Common_model');
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_daily_allowance_bills($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_daily_allowance_bills($grid_firstdate, $grid_emp_id);
 
 		$data['start_date']= $this->input->post('firstdate');
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -2348,13 +2347,13 @@ class Grid_con extends CI_Controller {
 	function grid_daily_weekend_allowance_sheet()
 	{
 		// echo "hi";
-		$this->load->model('common_model');
+		$this->load->model('Common_model');
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_daily_weekend_allowance_sheet($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_daily_weekend_allowance_sheet($grid_firstdate, $grid_emp_id);
 
 		$data['start_date']= $this->input->post('firstdate');
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -2372,13 +2371,13 @@ class Grid_con extends CI_Controller {
 	function grid_daily_holiday_allowance_sheet()
 	{
 		// echo "hi";
-		$this->load->model('common_model');
+		$this->load->model('Common_model');
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_daily_holiday_allowance_sheet($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_daily_holiday_allowance_sheet($grid_firstdate, $grid_emp_id);
 
 		$data['start_date']= $this->input->post('firstdate');
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -2400,7 +2399,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_monthly_ot_register($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_monthly_ot_register($grid_firstdate, $grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 
 		$data['start_date']= $grid_firstdate;
@@ -2423,7 +2422,7 @@ class Grid_con extends CI_Controller {
 
 		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_monthly_eot_register($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_monthly_eot_register($grid_firstdate, $grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['start_date']= $grid_firstdate;
 
@@ -2445,7 +2444,7 @@ class Grid_con extends CI_Controller {
 
 		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_monthly_allowance_register($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_monthly_allowance_register($grid_firstdate, $grid_emp_id);
 
 		$data['start_date']= $grid_firstdate;
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -2466,7 +2465,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 
-		$query['values'] = $this->grid_model->daily_move_report($grid_firstdate, $grid_emp_id);
+		$query['values'] = $this->Grid_model->daily_move_report($grid_firstdate, $grid_emp_id);
 
 		$query['grid_firstdate'] = $grid_firstdate;
 		$query['unit_id'] = $unit_id;
@@ -2490,7 +2489,7 @@ class Grid_con extends CI_Controller {
 
 		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
 
-		$data['values'] = $this->grid_model->grid_time_search_report($grid_firstdate, $grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_time_search_report($grid_firstdate, $grid_emp_id);
 
 		$data['start_date']= $grid_firstdate;
 		$data['unit_id'] = $this->input->post('unit_id');
@@ -2509,7 +2508,7 @@ class Grid_con extends CI_Controller {
 		$s_time = '20:00:00';
 		$grid_emp_id = array('001414','001635','001744','001750','001773','002070','002090','002110','002113','002178');
 
-		$this->grid_model->grid_time_search_report();
+		$this->Grid_model->grid_time_search_report();
 
 	}
 
@@ -2518,14 +2517,14 @@ class Grid_con extends CI_Controller {
 		$sStartDate = '2012-04-01';
 		$emp_id = '003915';
 		$sEndDate = '2012-04-30';
-		echo $this->grid_model->get_resign_date($emp_id, $sStartDate, $sEndDate);
+		echo $this->Grid_model->get_resign_date($emp_id, $sStartDate, $sEndDate);
 	}
 
 	function grid_earn_leave_report()
 	{
 		$grid_data = $this->uri->segment(3);
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data['values'] = $this->grid_model->grid_earn_leave_report($grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_earn_leave_report($grid_emp_id);
 		if(is_string($data['values']))
 		{
 			echo $data['values'];

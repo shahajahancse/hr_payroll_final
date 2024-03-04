@@ -6,11 +6,11 @@ class Salary_process_con extends CI_Controller {
 		parent::__construct();
 		
 		/* Standard Libraries */
-		$this->load->model('salary_process_model');
-		$this->load->model('festival_bonus_model');
-		$this->load->model('log_model');
-		$this->load->model('acl_model');
-		$this->load->model('common_model');
+		$this->load->model('Salary_process_model');
+		$this->load->model('Festival_bonus_model');
+		$this->load->model('Log_model');
+		$this->load->model('Acl_model');
+		$this->load->model('Common_model');
 
 		set_time_limit(0);
 		ini_set("memory_limit","512M");
@@ -37,7 +37,7 @@ class Salary_process_con extends CI_Controller {
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
 
         if (!empty($this->data['user_data']->unit_name)) {
-	        $this->data['employees'] = $this->common_model->get_emp_by_unit($this->data['user_data']->unit_name);
+	        $this->data['employees'] = $this->Common_model->get_emp_by_unit($this->data['user_data']->unit_name);
         }
 
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -60,11 +60,11 @@ class Salary_process_con extends CI_Controller {
 
 		if(empty($unit_id)){return "Please Login As an Unit User.";}
 
-		$result = $this->salary_process_model->salary_process($unit_id,$process_month,$grid_emp_id);
+		$result = $this->Salary_process_model->salary_process($unit_id,$process_month,$grid_emp_id);
 		if($result == "Process completed successfully")
 		{
 			// SALARY PROCESS LOG Generate
-			$this->log_model->log_salary_process($process_month);
+			$this->Log_model->log_salary_process($process_month);
 			echo $result;
 		}
 		else
@@ -91,7 +91,7 @@ class Salary_process_con extends CI_Controller {
 			echo "Sorry! block already exixt";
 		} else if ($check->num_rows() == 0) {
 			$this->db->insert('pay_salary_block', $d);
-			$this->log_model->log_salary_process($d['block_month']);
+			$this->Log_model->log_salary_process($d['block_month']);
 			echo "Process completed successfully";
 		}
 		else
@@ -168,7 +168,7 @@ class Salary_process_con extends CI_Controller {
 		else
 		//$this->load->view('form/salary_process');
 		$crud = new grocery_CRUD();
-		$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+		$get_session_user_unit = $this->Common_model->get_session_unit_id_name();
 		if($get_session_user_unit != 0)
 		{
 			$crud->where('pr_salary_block.unit_id',$get_session_user_unit);
@@ -209,7 +209,7 @@ class Salary_process_con extends CI_Controller {
 		$this->load->view('login_message');
 		else
 		$crud = new grocery_CRUD();
-		$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+		$get_session_user_unit = $this->Common_model->get_session_unit_id_name();
 		if($get_session_user_unit != 0)
 		{
 			$crud->where('pr_salary_festival_block.unit_id',$get_session_user_unit);
@@ -253,11 +253,11 @@ class Salary_process_con extends CI_Controller {
 		}
 		else{
 	
-			$result = $this->festival_bonus_model->festival_bonus_process($year, $month, $process_check);
+			$result = $this->Festival_bonus_model->festival_bonus_process($year, $month, $process_check);
 			if($result == "Process completed successfully")
 			{
 				// SALARY PROCESS LOG Generate
-				$this->log_model->log_salary_process($year, $month);
+				$this->Log_model->log_salary_process($year, $month);
 				echo $result;
 			}
 			else
@@ -275,14 +275,14 @@ class Salary_process_con extends CI_Controller {
 		$gross_sal = 10000;
 		$basic_sal = 7000;
 		for($i=0; $i<=25; $i++){
-		 $result = $this->salary_process_model->get_festival_bonus_rule($i);
+		 $result = $this->Salary_process_model->get_festival_bonus_rule($i);
 		 echo "$i -> ";
 		 print_r($result);
-		 echo "== BONUS : ".$bonus = $this->salary_process_model->get_festival_bonus($result,$gross_sal,$basic_sal);
+		 echo "== BONUS : ".$bonus = $this->Salary_process_model->get_festival_bonus($result,$gross_sal,$basic_sal);
 		 echo '<br>';
 		 }*/
 		 $doj = '2012-10-08';
-		 $dates = $this->salary_process_model->get_join_month_dates($doj);
+		 $dates = $this->Salary_process_model->get_join_month_dates($doj);
 		 print_r($dates);
 	}
 	

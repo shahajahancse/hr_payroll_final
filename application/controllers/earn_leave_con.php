@@ -6,10 +6,9 @@ class Earn_leave_con extends CI_Controller {
 		parent::__construct();
 		
 		/* Standard Libraries */
-		$this->load->library('grocery_CRUD');
-		$this->load->model('earn_leave_model');
-		$this->load->model('common_model');
-		$this->load->model('log_model');
+		$this->load->library('Grocery_crud');
+		$this->load->model('Earn_leave_model');
+		$this->load->model('Common_model');
 		set_time_limit(0);
 		ini_set("memory_limit","512M");
 		$this->load->model('acl_model');
@@ -20,8 +19,8 @@ class Earn_leave_con extends CI_Controller {
 	function earn_process_form()
 	{
 
-		$crud = new grocery_CRUD();
-		$get_session_user_unit = $this->common_model->get_session_unit_id_name();
+		$crud = new Grocery_crud();
+		$get_session_user_unit = $this->Common_model->get_session_unit_id_name();
 		if($get_session_user_unit != 0)
 		{
 			$crud->where('pr_earn_leave_block.unit_id',$get_session_user_unit);
@@ -51,7 +50,7 @@ class Earn_leave_con extends CI_Controller {
 		$ids = explode(',', trim($this->input->post('emp_ids')));
 		$type = $this->input->post('type');
 		// dd($this->input->post('emp_ids'));
-		$result = $this->earn_leave_model->earn_leave_process_db($ids,$type,$month_year);
+		$result = $this->Earn_leave_model->earn_leave_process_db($ids,$type,$month_year);
 		echo $result;
 	}
 	function grid_earn_report()
@@ -69,7 +68,7 @@ class Earn_leave_con extends CI_Controller {
 		$grid_data 		= $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		//print_r($grid_emp_id);
-		$data["values"] = $this->earn_leave_model->grid_earn_leave_general_info($firstdate,$seconddate, $year, $grid_status, $grid_emp_id);
+		$data["values"] = $this->Earn_leave_model->grid_earn_leave_general_info($firstdate,$seconddate, $year, $grid_status, $grid_emp_id);
 		$data["unit_id"] = $unit_id;
 		$data["year"] = $year;
 		if($data["values"] == "empty")
@@ -94,7 +93,7 @@ class Earn_leave_con extends CI_Controller {
 		$unit_id		= $this->input->post('unit_id');	
 		$grid_data 		= $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		$data["values"] = $this->earn_leave_model->grid_earn_leave_payment_buyer($year, $status, $grid_emp_id);
+		$data["values"] = $this->Earn_leave_model->grid_earn_leave_payment_buyer($year, $status, $grid_emp_id);
 		$data["unit_id"] = $unit_id;
 		$data["year"] = $year;
 		// dd($data);
@@ -120,7 +119,7 @@ class Earn_leave_con extends CI_Controller {
 		$grid_data 		= $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		//print_r($grid_emp_id);
-		$data["values"] = $this->earn_leave_model->grid_earn_leave_summery($unit_id,$year);
+		$data["values"] = $this->Earn_leave_model->grid_earn_leave_summery($unit_id,$year);
 		$data["unit_id"] = $unit_id;
 		$data["year"] = $year;
 		if($data["values"] == "empty")
@@ -144,7 +143,7 @@ class Earn_leave_con extends CI_Controller {
 		$grid_data 		= $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
 		
-		$data["values"] = $this->earn_leave_model->grid_earn_leave_general_info($sal_year_month, $grid_status, $grid_emp_id);
+		$data["values"] = $this->Earn_leave_model->grid_earn_leave_general_info($sal_year_month, $grid_status, $grid_emp_id);
 		//print_r($data);
 		$data["unit_id"] = $unit_id;
 		$data["year_month"] = $sal_year_month;
@@ -163,7 +162,7 @@ class Earn_leave_con extends CI_Controller {
 	function earn_leave_payment()
 	{
 		
-		$data["values"] = $this->earn_leave_model->earn_leave_payment_db();
+		$data["values"] = $this->Earn_leave_model->earn_leave_payment_db();
 		echo "Data Inserted Successfully!";
 	}
 	
@@ -175,7 +174,7 @@ class Earn_leave_con extends CI_Controller {
 		$unit_id		= $this->input->post('unit_id');	
 		$grid_data 		= $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
-		$data["values"] = $this->earn_leave_model->grid_earn_leave_general_info($sal_year_month, $grid_status, $grid_emp_id);
+		$data["values"] = $this->Earn_leave_model->grid_earn_leave_general_info($sal_year_month, $grid_status, $grid_emp_id);
 		$data["unit_id"] = $unit_id;
 		$data["year_month"] = $sal_year_month;
 		if($data["values"] == "empty")
