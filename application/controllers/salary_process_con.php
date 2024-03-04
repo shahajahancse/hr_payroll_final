@@ -27,8 +27,7 @@ class Salary_process_con extends CI_Controller {
 
 	}
 	
-	function salary_process_form()
-	{
+	function salary_process_form(){
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }

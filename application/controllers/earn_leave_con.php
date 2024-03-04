@@ -46,6 +46,7 @@ class Earn_leave_con extends CI_Controller {
 	}
 	
 	function earn_leave_process(){
+		// dd($_POST);
 		$month_year = $this->input->post('month_year');
 		$ids = explode(',', trim($this->input->post('emp_ids')));
 		$type = $this->input->post('type');
@@ -97,17 +98,14 @@ class Earn_leave_con extends CI_Controller {
 		$data["unit_id"] = $unit_id;
 		$data["year"] = $year;
 		// dd($data);
-		if($data["values"] == "empty")
-		{
+		if($data["values"] == "empty"){
 			echo "Requested List Is Empty.";
 			
 		}
-		elseif($data["values"] =="Not Process")
-		{
+		elseif($data["values"] =="Not Process"){
 			echo "Please Process Earn Leave for $year";
 		}
-		else
-		{
+		else{
 			$this->load->view('earn_leave_general_info_report_buyer',$data);
 		}
 	}
