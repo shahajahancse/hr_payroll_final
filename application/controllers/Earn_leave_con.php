@@ -28,45 +28,37 @@ class Earn_leave_con extends CI_Controller {
 		$this->load->view('grid_earn_report');
 	}
 	
-	function grid_earn_leave_general_info()
-	{
-		$year 			= $this->input->post('year');
-		$firstdate 		= $this->input->post('firstdate');
-		$seconddate 	= $this->input->post('seconddate');
-		$grid_status 	= $this->input->post('grid_status');
-		$unit_id		= $this->input->post('unit_id');	
-		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
-		$data["values"] = $this->Earn_leave_model->grid_earn_leave_general_info($firstdate,$seconddate, $year, $grid_status, $grid_emp_id);
+	function grid_earn_leave_general_info(){
+
+		$year 		 = $this->input->post('year');
+		$status 	 = $this->input->post('status');
+		$unit_id	 = $this->input->post('unit_id');	
+		$grid_data 	 = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->Earn_leave_model->grid_earn_leave_general_info($year,$grid_emp_id);
 		$data["unit_id"] = $unit_id;
 		$data["year"] = $year;
-		if($data["values"] == "empty")
-		{
+		if($data["values"] == "empty"){
 			echo "Requested List Is Empty.";
 			
 		}
-		elseif($data["values"] =="Not Process")
-		{
+		elseif($data["values"] =="Not Process"){
 			echo "Please Process Earn Leave for $year";
 		}
-		else
-		{
+		else{
 			$this->load->view('earn_leave_general_info_report',$data);
 		}
 	}
 	
-	function grid_earn_leave_payment_buyer()
-	{
+	function grid_earn_leave_payment_buyer(){
 		$year 			= $this->input->post('year');
-		$status 	= $this->input->post('status');
+		$status 	    = $this->input->post('status');
 		$unit_id		= $this->input->post('unit_id');	
 		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		$data["values"] = $this->Earn_leave_model->grid_earn_leave_payment_buyer($year, $status, $grid_emp_id);
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->Earn_leave_model->grid_earn_leave_payment_buyer($year, $grid_emp_id);
 		$data["unit_id"] = $unit_id;
 		$data["year"] = $year;
-		// dd($data);
 		if($data["values"] == "empty"){
 			echo "Requested List Is Empty.";
 			
@@ -78,27 +70,19 @@ class Earn_leave_con extends CI_Controller {
 			$this->load->view('earn_leave_general_info_report_buyer',$data);
 		}
 	}
-	function grid_earn_leave_summery()
-	{
+	function grid_earn_leave_summery(){
 		$year			= $this->input->post('year');
-		$grid_status 	= $this->input->post('grid_status');
-		$unit_id		= $this->input->post('unit_id');	
-		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
-		//print_r($grid_emp_id);
+		$unit_id		= $this->input->post('unit_id');
 		$data["values"] = $this->Earn_leave_model->grid_earn_leave_summery($unit_id,$year);
 		$data["unit_id"] = $unit_id;
-		$data["year"] = $year;
-		if($data["values"] == "empty")
-		{
+		$data["year"] = date('Y',strtotime($year));
+		if($data["values"] == "empty"){
 			echo "Requested List Is Empty.";
 		}
-		elseif($data["values"] =="Not Process")
-		{
+		elseif($data["values"] =="Not Process"){
 			echo "Please Process Earn Leave for $year";
 		}
-		else
-		{
+		else{
 			$this->load->view('earn_leave_summery_report',$data);
 		}
 	}

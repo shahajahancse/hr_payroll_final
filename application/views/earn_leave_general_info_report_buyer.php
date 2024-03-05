@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Earn Leave Payment Sheet of <?php echo $year;?></title>
+<title>Earn Leave Payment Sheet of <?php echo date('Y',strtotime($year)) ?></title>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/table.css" />
 
 </head>
@@ -46,7 +46,6 @@
 <body>
 	<?php 
 		$row_count = count($values["emp_id"]);
-		//print_r($values);
 		if($row_count >6){
 			$page=ceil($row_count/6);
 		}
@@ -59,19 +58,20 @@
 		$grand_total_gross    		=0;
 		$grand_total_basic    		=0;
 		$grand_total_working_day  	=0;
-		$grand_total_payable_day		=0;
+		$grand_total_payable_day	=0;
 		$grand_total_el_days  		=0;
 		$grand_total_absent_day   	=0;
-		$grand_total_net_el  			=0;
-		$grand_total_net_amount  		=0;
+		$grand_total_net_el  		=0;
+		$grand_total_net_amount  	=0;
 		$grand_total_net_amount_b_d	=0;
 		$grand_total_stamp			=0;
+		$grand_total_payable_amount  		=0;
 		
 	for ( $counter = 1; $counter <= $page; $counter ++){?>
 	<div style=" margin:0 auto;">
 		<?php $this->load->view("head_english"); ?>
 		<div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif; width:1000px; margin-bottom:80px;">
-			<span style="font-size:13px; font-weight:bold;">Earn Leave Payment Sheet of <?php echo $year;?></span>
+			<span style="font-size:13px; font-weight:bold;">Earn Leave Payment Sheet of <?php echo date('Y',strtotime($year));?></span>
 			<br />
 			<div style="width:950px;">
 				<div style="text-align:right; right:120px; position:relative;">Disbursement Date:</div>
@@ -88,6 +88,7 @@
 					$total_net_amount  	=0;
 					$total_net_amount_b_d=0;
 					$total_stamp 		=0;
+					$total_payable_amount  	=0;
 
 					$section=array();
 					if($counter == $page)
@@ -235,8 +236,8 @@
 					$net_amount = $net_amount - $stamp;
 					echo number_format($net_amount,0);
 					echo "</td>";
-					$total_net_amount = $total_net_amount + $net_amount;
-					$grand_total_net_amount = $grand_total_net_amount + $net_amount;
+					$total_payable_amount = $total_payable_amount + $net_amount;
+					$grand_total_payable_amount = $grand_total_payable_amount + $net_amount;
 					
 					echo "<td style='height:77px'>";
 					echo "";
@@ -288,7 +289,7 @@
 					echo "</td>";	
 					
 					echo "<td align='right' style='padding-right:5px;'>";
-					echo round($total_net_amount);
+					echo round($grand_total_payable_amount);
 					echo "</td>";		
 				
 					echo "</tr>";
@@ -306,7 +307,7 @@
 								<td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_net_el);?></strong></td>
 								<td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_net_amount_b_d);?></strong></td>
 								<td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_stamp);?></strong></td>
-								<td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_net_amount);?></strong></td>
+								<td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_payable_amount);?></strong></td>
 							</tr>
 					<?php } ?>
 						
