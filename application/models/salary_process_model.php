@@ -682,12 +682,11 @@ class Salary_process_model extends CI_Model{
 
 	function advance_loan_deduction($emp_id, $salary_month)
 	{
-	
 		$this->db->select("*");
 		$this->db->from("pr_advance_loan_pay_history alp");
 
 		$this->db->where("alp.emp_id", $emp_id);
-		$this->db->where("alp.pay_month", $salary_month);
+		$this->db->like("alp.pay_month", $salary_month);
 
 		$query = $this->db->get()->row();
 		return isset($query->pay_amount) ? $query->pay_amount : 0;

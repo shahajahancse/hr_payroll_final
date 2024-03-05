@@ -37,7 +37,7 @@ function earn_leave_process(i) {
 	$("#loader").show();
 	
 	var queryString='month_year='+month_year+'&unit_id='+unit_id+'&emp_ids='+sql+"&type="+i;
-	url =  hostname + "index.php/earn_leave_con/earn_leave_process/";
+	url =  hostname + "earn_leave_con/earn_leave_process/";
     
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -113,10 +113,9 @@ function grid_earn_leave_general_info(){
 		alert("Please select Employee ID");
 		return;
 	}
-    hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&year="+year+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
-	url =  hostname+"index.php/earn_leave_con/grid_earn_leave_general_info/";
+	url =  hostname+"earn_leave_con/grid_earn_leave_general_info/";
 	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -234,10 +233,8 @@ function grid_earn_leave_summery(){
 	var selected_id_list = new Array();
 	var spl = (id_array.join('xxx'));
 	
-    hostname = window.location.href;
-	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="year="+year+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
-	url =  hostname+"index.php/earn_leave_con/grid_earn_leave_summery/";
+	url =  hostname+"earn_leave_con/grid_earn_leave_summery/";
 	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
