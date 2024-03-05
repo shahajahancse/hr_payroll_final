@@ -3104,34 +3104,6 @@ class Salary_process_model extends CI_Model{
 	{
 
 		return $num_of_days = $this->get_days($FS_on_date, $join_date);
-
-		/*echo $first_day_of_month."\n";
-		//$prev_year_month =  date('Y-m', strtotime($first_day_of_month . ' - 1 month'));
-		//$first_day_of_month = $prev_year_month."-26";
-		//$first_day_of_month = date('Y-m-d',strtotime($first_day_of_month));
-		$days  = date('d',strtotime($first_day_of_month));
-		$month = date('m',strtotime($first_day_of_month. '-1 month'));
-		$year  = date('Y',strtotime($first_day_of_month));
-		$days_of_month = cal_days_in_month($days,$month,$year);
-		echo $month."\n";
-
-		$first_day_of_month = date('d', strtotime($first_day_of_month));
-
-			if($days_of_month == 31)
-		{
-			$first_day_of_month = $first_day_of_month - 6;
-
-		}
-		else
-		{
-			$first_day_of_month = $first_day_of_month - 5;
-		}
-
-		$join_date = date('d', strtotime($join_date));
-
-		//echo $resign_day_count = $join_date - $first_day_of_month ;
-
-		return $resign_day_count = $join_date - $first_day_of_month;*/
 	}
 
 	function deduction_hour_count($emp_id,$year,$month)

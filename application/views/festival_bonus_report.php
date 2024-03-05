@@ -156,7 +156,7 @@ echo '</span>';
 		echo '<br>';
 		if($grid_status == 4)
 		{
-			$resign_date = $this->grid_model->get_resign_date_by_empid($value[$k]->emp_id);
+			$resign_date = $this->Grid_model->get_resign_date_by_empid($value[$k]->emp_id);
 			if($resign_date != false){
 			echo $resign_date = date('d-M-y', strtotime($resign_date));}
 		}

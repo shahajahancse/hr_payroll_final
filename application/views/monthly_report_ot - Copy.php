@@ -81,8 +81,8 @@ foreach ($value->result_array() as $rows => $row)
 				echo $row[$date];
 				$ot_date = date("Y-m-d", mktime(0, 0, 0, $first_m, $k, $first_y));
 				echo "<br>";
-				$daily_total_ot = $this->grid_model->get_daily_total_ot_hour($row['emp_id'], $ot_date);
-				//$daily_total_eot = $this->grid_model->get_daily_total_eot_hour($row['emp_id'], $ot_date);
+				$daily_total_ot = $this->Grid_model->get_daily_total_ot_hour($row['emp_id'], $ot_date);
+				//$daily_total_eot = $this->Grid_model->get_daily_total_eot_hour($row['emp_id'], $ot_date);
 				echo $daily_total_ot;
 				//echo "+$daily_total_eot";
 				$total_ot = $total_ot + $daily_total_ot;

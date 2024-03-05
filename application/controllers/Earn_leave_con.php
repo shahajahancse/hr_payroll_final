@@ -6,7 +6,6 @@ class Earn_leave_con extends CI_Controller {
 		parent::__construct();
 		
 		/* Standard Libraries */
-		$this->load->library('Grocery_crud');
 		$this->load->model('Earn_leave_model');
 		$this->load->model('Common_model');
 		set_time_limit(0);
@@ -14,35 +13,6 @@ class Earn_leave_con extends CI_Controller {
 		$this->load->model('acl_model');
 		$access_level = 7;
 		$acl = $this->acl_model->acl_check($access_level);
-	}
-	
-	function earn_process_form()
-	{
-
-		$crud = new Grocery_crud();
-		$get_session_user_unit = $this->Common_model->get_session_unit_id_name();
-		if($get_session_user_unit != 0)
-		{
-			$crud->where('pr_earn_leave_block.unit_id',$get_session_user_unit);
-		}
-		$crud->set_table('pr_earn_leave_block');
-		$crud->set_subject('Salary Block');
-		$crud->display_as('block_year','Final Year');
-		$crud->order_by('block_year','desc');
-			if($get_session_user_unit != 0)
-			{
-				$crud->set_relation( 'unit_id' , 'pr_units','unit_name',array('unit_id' => $get_session_user_unit));
-			}
-			else
-			{
-				$crud->set_relation( 'unit_id' , 'pr_units','unit_name' );
-			}
-		$crud->unset_columns('status');
-		$crud->unset_delete();
-		$crud->unset_add();
-		$crud->unset_edit();
-		$output = $crud->render();
-		$this->load->view('form/earn_leave_process',$output);
 	}
 	
 	function earn_leave_process(){

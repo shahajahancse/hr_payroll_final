@@ -137,7 +137,7 @@ foreach($values as $rows)
 			<td width="75">
 			<font style="font-family: SutonnyMJ; font-size:14px;">: 
 				<?php 
-				 $staff = $this->grid_model->staff_id_collect($rows["emp_id"]);
+				 $staff = $this->Grid_model->staff_id_collect($rows["emp_id"]);
 
 					if($rows['ot_entitle']==1 && $staff==1){
 						//echo "hi";
@@ -423,7 +423,7 @@ foreach($values as $rows)
 			<td width="75">
 			<font style="font-family: SutonnyMJ; font-size:14px;">: 
 				<?php 
-				$staff = $this->grid_model->staff_id_collect($rows["emp_id"]);
+				$staff = $this->Grid_model->staff_id_collect($rows["emp_id"]);
 
 					if($rows['ot_entitle']==1 && $staff==1){
 						//echo "hi";

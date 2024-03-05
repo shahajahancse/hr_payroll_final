@@ -112,7 +112,7 @@ elseif($daily_status == 8)
 <table  border="1" cellpadding="0" cellspacing="0" style="font-size:12px; width:600px; margin-bottom:20px;">
 
 	<?php 
-		$this->load->model('grid_model');
+		$this->load->model('Grid_model');
 		$i=1;
 		$groupedData = array();
 		foreach ($values as $employee) {
@@ -167,7 +167,7 @@ elseif($daily_status == 8)
 	</tr>
 		
 	<?php 	foreach ($employees as $key=>$employee) {
-		$emp_num_rows = $this->grid_model->attendance_check_for_absent($employee['emp_id'],$date);
+		$emp_num_rows = $this->Grid_model->attendance_check_for_absent($employee['emp_id'],$date);
 		// dd($emp_num_rows);
 	?>
 	<tr>

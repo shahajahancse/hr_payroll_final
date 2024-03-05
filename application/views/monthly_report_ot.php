@@ -116,7 +116,7 @@
 				echo $value[$i]->$date;
 				$ot_date = date("Y-m-d", mktime(0, 0, 0, $first_m, $k, $first_y));
 				echo "<br>";
-				$daily_total_ot = $this->grid_model->get_daily_total_ot_hour($value[$i]->emp_id, $ot_date);
+				$daily_total_ot = $this->Grid_model->get_daily_total_ot_hour($value[$i]->emp_id, $ot_date);
 				echo $daily_total_ot;
 				$total_ot = $total_ot + $daily_total_ot;
 			}

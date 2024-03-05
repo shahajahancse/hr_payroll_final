@@ -302,7 +302,7 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 		echo '<br>';
 		if($grid_status == 4)
 		{
-			$resign_date = $this->grid_model->get_resign_date_by_empid($value[$k]->emp_id);
+			$resign_date = $this->Grid_model->get_resign_date_by_empid($value[$k]->emp_id);
 			if($resign_date != false){
 			echo "Resign : ".$resign_date = date('d-M-y', strtotime($resign_date));
 			}
@@ -457,7 +457,7 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 		
 		/*echo "<td>";*/
 
-		$staff = $this->grid_model->staff_id_collect($value[$k]->emp_id);
+		$staff = $this->Grid_model->staff_id_collect($value[$k]->emp_id);
 
 		if($value[$k]->ot_entitle==1 && $staff==1){
 
