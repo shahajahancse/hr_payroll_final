@@ -50,7 +50,6 @@ class Earn_leave_con extends CI_Controller {
 		$month_year = $this->input->post('month_year');
 		$ids = explode(',', trim($this->input->post('emp_ids')));
 		$type = $this->input->post('type');
-		// dd($this->input->post('emp_ids'));
 		$result = $this->Earn_leave_model->earn_leave_process_db($ids,$type,$month_year);
 		echo $result;
 	}
