@@ -534,20 +534,20 @@ input[type="number"] {
                                 </select>
                             </div>
                         </div>
-
+<!-- 
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>OT Entitle <span style="color: red;">*</span> </label>
-                                <?php echo form_error('ot_entitle');?>
+                                < ?php echo form_error('ot_entitle');?>
                                 <select name="ot_entitle" id="ot_entitle" class="form-control input-sm" required>
                                     <option>Select</option>
                                     <option value="0">Yes</option>
                                     <option value="1">No</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Lunch <span style="color: red;">*</span> </label>
                                 <?php echo form_error('lunch');?>
@@ -558,7 +558,7 @@ input[type="number"] {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Transport <span style="color: red;">*</span> </label>
                                 <?php echo form_error('transport');?>
@@ -572,7 +572,6 @@ input[type="number"] {
                     </div>
 
                     <div class="row">
-
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Gross Salary <span style="color: red;">*</span> </label>
@@ -598,7 +597,7 @@ input[type="number"] {
                             </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <label>Medical </label>
                                 <?php echo form_error('medical');?>
@@ -606,7 +605,7 @@ input[type="number"] {
                                     required>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <label>Transport </label>
                                 <?php echo form_error('trans_allow');?>
@@ -618,9 +617,14 @@ input[type="number"] {
                             <div class="form-group">
                                 <label> Food </label>
                                 <?php echo form_error('food');?>
-                                <input type="text" name="food" id="food" disabled class="form-control input-sm"
-                                    required>
+                                <input type="text" name="food" id="food" disabled class="form-control input-sm" required>
                             </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label style="white-space: nowrap">Ot Entitle </label>
+                            <?php echo form_error('ot_entitle');?>
+                            <input type="radio" name="ot_entitle" id="ot_entitle" value="0" class="form-check-input" style="display: inline; margin-right: 10px;" required>Yes
+                            <input type="radio" name="ot_entitle" id="ot_entitle" value="1" class="form-check-input" style="display: inline; margin-right: 10px;" required>No
                         </div>
                     </div>
 
@@ -651,7 +655,7 @@ input[type="number"] {
                             </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <label>Medical </label>
                                 <?php echo form_error('medicall');?>
@@ -659,7 +663,7 @@ input[type="number"] {
                                     required>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <label>Transport </label>
                                 <?php echo form_error('trans_alloww');?>
@@ -674,6 +678,12 @@ input[type="number"] {
                                 <input type="text" name="foodd" id="foodd" disabled class="form-control input-sm"
                                     required>
                             </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label style="white-space: nowrap">Ot Entitle </label>
+                            <?php echo form_error('ot_entitle');?>
+                            <input type="radio" name="com_ot_entitle" id="com_ot_entitle" value="0" class="form-check-input" style="display: inline; margin-right: 10px;" required>Yes
+                            <input type="radio" name="com_ot_entitle" id="com_ot_entitle" value="1" class="form-check-input" style="display: inline; margin-right: 10px;" required>No
                         </div>
                     </div>
                 </div>
@@ -1031,7 +1041,7 @@ function emp_id_search(id = null) {
                     "bank_bkash_no", "unit_id", "emp_dept_id", "refer_village",
                     "emp_sec_id", "emp_line_id", "emp_desi_id", "emp_sal_gra_id",
                     "emp_cat_id", "proxi_id", "emp_shift", "gross_sal",
-                    "com_gross_sal", "ot_entitle", "transport", "img_source",
+                    "com_gross_sal", "ot_entitle","com_ot_entitle", "transport", "img_source",
                     "lunch", "att_bonus", "salary_draw", "salary_type", "emp_join_date",
                     "ref_district", "refer_village", "ref_thana", "ref_post"
                 ];
@@ -1053,7 +1063,7 @@ function emp_id_search(id = null) {
                                 '<?php echo base_url("/uploads/photo/")?>' + data[key] : '');
                             $("#img_source").attr("src", data[key] != null ?
                                 '<?php echo base_url("/uploads/photo/")?>' + data[key] : '');
-                        } else if (key == 'nid_dob_check') {
+                        } else if (key == 'nid_dob_check' || key == 'ot_entitle'|| key == 'com_ot_entitle') {
                             var radioBtn = $('#' + key);
                             if (data[key] != null) {
                                 radioBtn.prop('checked', true);

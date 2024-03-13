@@ -92,7 +92,6 @@
 					echo "</td>";
 					echo "</tr>";
 
-										
 					echo "<td >";
 					echo "<strong>Dept :</strong>";
 					echo "</td>";
@@ -105,13 +104,13 @@
 					// dd($emp_data);
 					echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0' style='text-align:center; font-size:13px; '> <th>Date</th><th>In Time</th><th>Out Time</th><th>Attn.Status</th><th>OT Hour</th><th>Extra OT Hour</th><th>Total OT Hour</th><th>Remarks</th>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
-						if ($row->eot > 2) {
-							$extra_ot_hour = 2.0;
-						} else if(0.0 == $row->eot) {
-							$extra_ot_hour = 0;
-						} else {
-							$extra_ot_hour = $row->eot;
-						}
+						// if ($row->eot > 2) {
+						// 	$extra_ot_hour = 2.0;
+						// } else if(0.0 == $row->eot) {
+						// 	$extra_ot_hour = 0;
+						// } else {
+							$extra_ot_hour = $row->ot_eot_12am;
+						// }
 						if(in_array($row->shift_log_date,$emp_data['leave'])){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
@@ -151,6 +150,7 @@
 						}
 						$emp_shift = $this->job_card_model->emp_shift_check($value->emp_id, $row->shift_log_date);
 						$schedule = $this->job_card_model->schedule_check($emp_shift);
+                        // dd($schedule);
 						$start_time		=  $schedule[0]["in_start"]; 
 						$late_time 		=  $schedule[0]["late_start"]; 
 						$end_time   	=  $schedule[0]["in_end"];
@@ -159,15 +159,12 @@
 						$out_end_time	=  $schedule[0]["out_end"];	
 						$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
 						$ot_start	    =  $schedule[0]["ot_start"];
-						$shift_log_date = $row->shift_log_date;
-						$year=trim(substr($shift_log_date,0,4));
-						$month=trim(substr($shift_log_date,5,2));
-						$date=trim(substr($shift_log_date,8,2));
-						$shift_log_date = date("d-M-y", mktime(0, 0, 0, $month, $date, $year));
+
+						$shift_log_date = date("d-M-y", strtotime($row->shift_log_date));
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
-							$in_time = $row->in_time;
-							$in_time = $this->job_card_model->time_am_pm_format($in_time);	
+							$in_time = date('h:i:s A',strtotime($row->in_time));
+							// $in_time = $this->job_card_model->time_am_pm_format($in_time);	
 						}
 						else{
 							$in_time = "00:00:00";
@@ -175,8 +172,33 @@
 
 
 						if($row->out_time != "00:00:00"){
-							$out_time = $row->out_time;
-							$out_time = $this->job_card_model->get_formated_out_time_5pm($value->emp_id, $out_time, $emp_shift);
+                            //  $out_time = date('H:i:s A', strtotime($row->out_time));
+                            // $a = date('H:i:s A',strtotime("00:14:14"));
+							$current_date = date('Y-m-d', strtotime($shift_log_date));
+							$new_current_date_time = $current_date.' '.date('H:i:s', strtotime($row->out_time));
+							$new_next_date_time = date('Y-m-d', strtotime("+1 day", strtotime($current_date))).' 00:14:14';
+							// dd($new_next_date_time);
+
+							if (strtotime($new_current_date_time) < strtotime($new_next_date_time)) {
+								// dd("A");
+							$out_time =  date('h:i:s A', strtotime($row->out_time));
+							} else {
+								// dd("B");
+								$minutes = date("i", strtotime($row->out_time)); // Extract minutes part
+								$sum = (int)$minutes[0] + (int)$minutes[1]; 
+								$min = $sum==0 ? "00":($sum < 10 ? "0".$sum : $sum);
+								$out_time  ="12:".$min.date(':s A', strtotime($row->out_time));
+							}
+							// $hour = date('h',strtotime( $new_date_time));
+							// $minute = date('i',strtotime( $new_date_time));
+							// $second = date('s',strtotime( $new_date_time));
+							// $out_time = date('H:i:s A',strtotime("+".$hour." hours".$minute." minutes".$second." seconds"));
+							// }
+
+							// dd($out_time);
+
+      
+							// $out_time = $this->job_card_model->get_formated_out_time_5pm($value->emp_id, $out_time, $emp_shift);
 						}
 						else{
 							$out_time = "00:00:00";

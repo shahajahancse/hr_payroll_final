@@ -11,6 +11,7 @@
 <body>
 
 <?php 
+// dd($this->session->userdata('username'));
 // echo "<pre>";print_r($values);exit;
 $present_count = 0;
 $absent_count = 0;
@@ -115,6 +116,16 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 				echo $values["dept_name"][$i];
 				echo "</td>";
 			echo "</tr>";
+
+			echo "<tr>";
+				echo "<td>";
+				echo "<strong>DOJ :</strong>";
+				echo "</td>";
+				echo "<td>";
+				echo $values["emp_join_date"][$i];
+				echo "</td>";
+			echo "</tr>";	
+
 		echo "<table>";
 		?>
 		<br />
@@ -160,9 +171,20 @@ for($i = 0 ; $i < $emp_id_count; $i++)
 		
 		<td align="center"> 
 		<?php 
-
-		$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
-		$acl     = $this->acl_model->get_acl_list($user_id);
+		
+		$user_id = $this->session->userdata('data')->id;
+			// dd($user_id);
+			$data = array();
+			$this->db->select("acl_id");
+			$this->db->where('username_id',$user_id);
+			$query = $this->db->get('member_acl_level');
+			// dd($query->result());
+			foreach($query->result() as $rows){
+				$data[] = $rows->acl_id;
+			}
+			// dd($data);
+			// return $data;
+		$acl     = $data;
 		$eot_hour   	= $values[$emp_id]["extra_ot_hour"][$k];
 		$eot_modify 	= $values[$emp_id]["modify_eot"][$k];
 		$eot_deduct 	= $values[$emp_id]["deduction_hour"][$k];

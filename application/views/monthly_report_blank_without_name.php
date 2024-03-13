@@ -19,8 +19,9 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 <div align="center" style=" margin:5px auto 0;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
 
 <?php 
+	// dd($value);
 	foreach($value as $row){
-		$att_month = $row->att_month;
+		$att_month = $year_month;
 	}
 
 	$att_month = $att_month;
@@ -67,60 +68,43 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 	<?php
 		$first_y=trim(substr($att_month,0,4));
 		$first_m=trim(substr($att_month,5,2));
-		$last_date = date("t", mktime(0, 0, 0, $first_m, 1, $first_y));
+		$last_date = date("t", mktime(0, 0, 0, $first_m, 1, (int)$first_y));
 
-		for ($k=1 ; $k <= $last_date ; $k++ )
-		{
+		for ($k=1 ; $k <= $last_date ; $k++ ){
 			echo "<th style='width:20px;font-family: SutonnyMj'>$k</th>";
 		}
 		echo "<th style='font-size:14px;'>মোট দিন</th>";
 		echo "<th style='font-size:14px;'>ওভার ঘন্টা</th>";
 
-		if($counter == $page)
-	  	{
+		if($counter == $page){
 	   		$modulus = ($row_count-1) % $per_page_id;
 	    	$per_page_row = $modulus;
 		}
-	   	else
-	   	{
+	   	else{
 	    	$per_page_row = $per_page_id - 1;
 	   	}
 	   	
-		for($j=0; $j<=$per_page_row; $j++)
-		{ 
-		
-	    //foreach($value->result_array() as $rows => $row){
-	   // $serial = $i + 1;
+		for($j=0; $j<=$per_page_row; $j++){ 
 		echo "<tr><td>";
-		 echo $i + 1;
+		echo $i + 1;
 		echo "</td>";
 		echo "<td style='font-family: SutonnyMj;width:70px;'>";
-		//echo $value[$i]->emp_id;
 		echo "</td><td style='font-family: SutonnyMj;font-size:14px;'>";
-		//echo $value[$i]->bangla_nam;
 		echo "</td><td style='font-family: SutonnyMj;font-size:14px;'>";
-		//echo $value[$i]->desig_bangla;
 		echo "</td>";
-
 		echo "<td style='font-family: SutonnyMj;font-size:14px;'>";
-		//$doj = date('d-m-Y',strtotime($value[$i]->emp_join_date));
-		//echo $doj;
 		echo "</td>";
-
-		
 		for($k=1; $k <= $last_date ; $k++){
 			echo "<td style='text-align:center;'>";
 			echo "<input type='text' name='fname' style='width:15px;height:15px;border:1px solid #000;margin:1px;'>";
 			echo "<input type='text' name='fname' style='width:15px;height:15px;border:1px solid #000;margin:1px;'>";
 			echo "</td>";
 		}
-
 		echo "<td style='text-align: center;'> </td>";
 		echo "<td style='text-align: center;'>";
 		echo " ";
 		echo "</td>";
 		echo "</tr>";
-		
 		$i++;
   }
  ?>

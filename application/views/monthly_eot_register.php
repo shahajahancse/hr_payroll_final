@@ -46,6 +46,8 @@ $section=array();
 
 	for($i=0; $i<=$per_page_id; $i++)
 	{
+		$total_eot_hour=0;
+		$total_eot_amount=0;
 		if($section!=$values["sec_name"][$k]){
 
 		$i=$i+1;

@@ -133,9 +133,8 @@ class Earn_leave_model extends CI_Model{
 	}
 
 
-	function all_leave_cal($first_year, $last_year, $emp_id)
-	{
-	// echo "<pre>"; print_r($emp_id.' '.$last_year.' '.$first_year); exit; 
+	function all_leave_cal($first_year, $last_year, $emp_id){
+	 // echo "<pre>"; print_r($emp_id.' '.$last_year.' '.$first_year); exit; 
 
 		$this->db->select("
 				SUM(CASE WHEN leave_type = 'cl' THEN 1 ELSE 0 END ) AS cl,
@@ -165,244 +164,7 @@ class Earn_leave_model extends CI_Model{
 	}
 
 
-
-
-
-	// old code 01/11/2022
-
-		//UPDATED ON 23-04-2015 BY MD. KAMRUL HASAN TAREQ
-	//========================Earn Leave Model (2014-01-17)=================================
-	//======================================================================================
-	function earn_leave_process_db_old_01_11_2022($year,$process_check)
-	{
-		$process_year = $year;
-		$system_year = date("Y");
-		if($process_year > $system_year)
-		{
-			return "Failed ! You Are In $system_year";
-		}
-		//Earn Leave Lock Service
-		$unit_id = $this->common_model->get_session_unit_id_name();
-		$next_year = date("Y",strtotime("-1 year",strtotime($process_year)));
-		$num_row_year = $this->db->like('block_year',$next_year)->where('unit_id',$unit_id)->get('pr_earn_leave_block')->num_rows();
-		if($num_row_year < 1)
-		{
-			return "Previous Month is not finally Process";
-		}
-
-		if($unit_id == 0){return "Please Login As an Unit User.";}
-		$num_row 	= $this->db->like('block_year',$process_year)->where('unit_id',$unit_id)->get('pr_earn_leave_block')->num_rows();
-		if($num_row > 0)
-		{
-			return "This Month Already Finally Processed.";
-		}
-		
-		//INSERT BLOCK RECORD
-		if($process_check == "2")
-		{
-		  $block_year 		= "$process_year";
-		  $data_1['block_year'] 	= $block_year;
-		  $data_1['unit_id'] 		= $unit_id;
-		  $data_1['username'] 		= $this->session->userdata('username');
-		  $data_1['date_time'] 		= date("Y-m-d H:i:s");
-		  $this->db->insert('pr_earn_leave_block', $data_1); 
-		  //echo $this->db->last_query();
-		}
-		
-		$process_start_date = $process_year."-01-01";
-		$process_end_date 	= $process_year."-12-31";
-		
-		//================================Table Manuppulation========================
-		$table_name = "pr_earn_$process_year";
-		$table_maupulation = $this->yearly_earn_leave_table_maupulation($table_name);
-		
-		$earn_leave_text = $this->get_earn_leave_text();
-		
-		
-		$this->db->select('*');
-		$this->db->from('pr_emp_shift_log');
-		$this->db->from('pr_emp_com_info');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id');
-		$this->db->where('pr_emp_com_info.unit_id',$unit_id);
-		$this->db->like('shift_log_date',$process_year);
-		//$this->db->where('pr_emp_com_info.emp_id',"2000926");
-		// $this->db->group_by('pr_emp_shift_log.emp_id');
-		$query_earn_emp = $this->db->get();
-		$query_earn_emp_no = $query_earn_emp->num_rows();
-		if($query_earn_emp_no == 0)
-		{
-			return "There are no employee to have earn leave!";
-		}
-		
-		foreach($query_earn_emp->result() as $rows)
-		{
-			$earn_data = array();
-			$emp_id 				= $rows->emp_id;
-			$salary_process_eligibility = $this->salary_process_eligibility($emp_id, $process_year);
-				
-			if($salary_process_eligibility == true)
-			{
-				$earn_data['unit_id'] 	= $unit_id;
-				$earn_data['emp_id'] 	= $emp_id;
-				$earn_data['dept_id']	= $rows->emp_dept_id;
-				$earn_data['sec_id'] 	= $rows->emp_sec_id;
-				$earn_data['line_id'] 	= $rows->emp_line_id;
-				$earn_data['desig_id']	= $rows->emp_desi_id;
-				
-				$gross_sal = $rows->gross_sal;
-				$salary_structure = $this->common_model->salary_structure($gross_sal);
-				$basic_sal = $salary_structure['basic_sal'];
-				
-				$earn_data['gross_sal'] 	= $gross_sal;
-				$earn_data['basic_sal'] 	= $basic_sal;
-				$earn_data['ttl_wk_days'] 	= date("z", mktime(0,0,0,12,31,$process_year)) + 1;
-				
-				$doj = $this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->emp_join_date;
-	
-				$earn_data = $this->get_leave_record($emp_id, $process_year, $earn_data);
-				
-				$total_earn_leave_count = 0;
-				foreach($earn_leave_text as $earn_status)
-				{
-					$earn_leave_count = $this->earn_leave_count($emp_id,$process_year,$earn_status);
-					$total_earn_leave_count = $total_earn_leave_count + $earn_leave_count ;
-					$earn_data[$earn_status] = $earn_leave_count;
-				}
-				$earn_leave_day_count = $this->db->where("id",2)->get('pr_earn_setup')->row()->value;
-				$total_earn_leave = floor($total_earn_leave_count / $earn_leave_day_count);
-				
-				$insert_update_earn_leave = $this->insert_update_earn_leave($emp_id,$earn_data,$table_name);
-		}
-		}
-		return "Earn Leave Process Completed Succesfully !";
-	}
-	
-	function get_earn_leave_start_date($emp_id,$doj,$process_start_date,$process_end_date)
-	{
-		$dateOneYearAdded = strtotime(date("Y-m-d", strtotime($doj)) . " +1 year");
-		$doj_one_year = date('Y-m-d', $dateOneYearAdded);
-		
-		if($doj_one_year < $process_start_date)
-		{
-			return $process_start_date;
-		}
-		else if($doj_one_year > $process_end_date)
-		{
-			return "False";
-		}
-		else
-		{
-			return $doj_one_year;
-		}
-		//return $doj_one_year;
-	}
-	
-	function insert_update_earn_leave($emp_id,$earn_data,$table_name)
-	{
-		$num_row = $this->db->where('emp_id',$emp_id)->get($table_name)->num_rows();
-		$earn_data['pay_days'] 		= $earn_data['P'] + $earn_data['W'] - $earn_data['el'];
-		$earn_data['pay_days_com']	= $earn_data['P'] + $earn_data['W'] + $earn_data['H'] + $earn_data['L'] - $earn_data['el'];
-		
-		$earn_data['earn_leave'] 	=  round(($earn_data['pay_days']/18),2);
-		$earn_data['earn_leave_com']=  round(($earn_data['pay_days_com']/18),2);
-		
-		$earn_data['net_pay'] 		=  round($earn_data['earn_leave']* ($earn_data['basic_sal']/30));
-		$earn_data['net_pay_com']	=  round($earn_data['earn_leave_com']* ($earn_data['gross_sal']/30));
-		if($num_row == 0)
-		{
-		print_r($earn_data);exit('alis');
-			$this->db->insert($table_name, $earn_data);
-		}
-		else
-		{			
-			$this->db->where('emp_id', $emp_id);
-			$this->db->update($table_name, $earn_data);
-		}
-		return;
-	}
-	
-	function earn_leave_count($emp_id,$process_year,$earn_status)
-	{
-		//$num_row = $this->db->like('shift_log_date',$process_year)->where('emp_id',$emp_id)->where('present_status',$earn_status)->get('pr_emp_shift_log')->num_rows();
-		$query = $this->db->like('shift_log_date',$process_year)->where('emp_id',$emp_id)->where('present_status',$earn_status)->get('pr_emp_shift_log');
-		if($query->num_rows() == 0)
-		{
-			return $num_row = 0;
-		}
-		else{ return $query->num_rows();}
-	}
-	
-	function get_present_status($emp_id,$shift_log_date)
-	{
-		$year_month 	= date("Y-m",strtotime($shift_log_date));
-		$day 			= date("d",strtotime($shift_log_date));
-		$select_column 	= "date_$day";
-		$present_status = $this->db->like("att_month",$year_month)->where("emp_id",$emp_id)->get('pr_attn_monthly')->row()->$select_column;
-		return $present_status;
-	}
-	
-	function update_shift_log($emp_id,$shift_log_date,$present_status)
-	{
-		$data = array(
-               'present_status' 		=> $present_status
-            );
-		$this->db->where('emp_id', $emp_id);
-		$this->db->where('shift_log_date', $shift_log_date);
-		$this->db->update('pr_emp_shift_log', $data); 
-		return;
-		
-	}
-	
-	function get_earn_leave_text()
-	{
-		$earn_leave = $this->db->where("id",1)->get('pr_earn_setup')->row()->value;
-		$earn_leave_text = str_split($earn_leave);
-		return $earn_leave_text;
-		
-	}
-	
-	function yearly_earn_leave_table_maupulation($table_name)
-	{
-		if (!$this->db->table_exists($table_name))
-		{
-		   	$this->load->dbforge();	
-			$fields = array(
-			'id' 				=> array( 'type' => 'INT','constraint'=>'11','auto_increment'=>TRUE),
-			'unit_id' 			=> array( 'type' => 'INT'),
-			'emp_id' 			=> array( 'type' => 'VARCHAR','constraint' => '200'),
-			'dept_id' 			=> array( 'type' => 'INT','constraint' => '11'),
-			'sec_id' 			=> array( 'type' => 'INT','constraint' => '11'),
-			'line_id' 			=> array( 'type' => 'INT','constraint' => '11'),
-			'desig_id' 			=> array( 'type' => 'INT','constraint' => '11'),
-			'gross_sal' 		=> array( 'type' => 'INT','constraint' => '11'),
-			'basic_sal' 		=> array( 'type' => 'INT','constraint' => '11'),
-			'P' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'A' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'W' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'H' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'L' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'el' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'cl' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'sl' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'ml' 				=> array( 'type' => 'INT','constraint' => '11'),
-			'ttl_wk_days' 		=> array( 'type' => 'INT','constraint' => '11'),
-			'pay_days' 			=> array( 'type' => 'INT','constraint' => '11'),
-			'pay_days_com' 		=> array( 'type' => 'INT','constraint' => '11'),
-			'earn_leave'  		=> array( 'type' => 'double','constraint' => '10,2'),
-			'earn_leave_com'  	=> array( 'type' => 'double','constraint' => '10,2'),
-			'net_pay'  			=> array( 'type' => 'float'),
-			'net_pay_com'  		=> array( 'type' => 'float'),
-
- 								);
-				$this->dbforge->add_field($fields);
-				$this->dbforge->add_key('id', TRUE);
-				$this->dbforge->create_table($table_name);		
-		}
-		return;
-	}
-	
 	//===================Earn Leave Report============================
-	//================================================================
 	function grid_earn_leave_general_info($year, $grid_emp_id){
 
 		$first_date = date("Y-01-01",  strtotime($year));
@@ -522,8 +284,7 @@ class Earn_leave_model extends CI_Model{
 		}
 		return $data;
 	}
-	function grid_earn_leave_summery($unit_id,$year)
-	{
+	function grid_earn_leave_summery($unit_id,$year){
 		$table_name = "pr_earn_leave";
 		$all_data = array();
 		$this->db->select("id,line_name_en");
@@ -551,6 +312,236 @@ class Earn_leave_model extends CI_Model{
 		return $all_data;
 		//print_r($all_data);
 	}
+
+	// old code 01/11/2022
+
+		//UPDATED ON 23-04-2015 BY MD. KAMRUL HASAN TAREQ
+	//========================Earn Leave Model (2014-01-17)=================================
+	//======================================================================================
+	function earn_leave_process_db_old_01_11_2022($year,$process_check){
+		$process_year = $year;
+		$system_year = date("Y");
+		if($process_year > $system_year)
+		{
+			return "Failed ! You Are In $system_year";
+		}
+		//Earn Leave Lock Service
+		$unit_id = $this->common_model->get_session_unit_id_name();
+		$next_year = date("Y",strtotime("-1 year",strtotime($process_year)));
+		$num_row_year = $this->db->like('block_year',$next_year)->where('unit_id',$unit_id)->get('pr_earn_leave_block')->num_rows();
+		if($num_row_year < 1)
+		{
+			return "Previous Month is not finally Process";
+		}
+
+		if($unit_id == 0){return "Please Login As an Unit User.";}
+		$num_row 	= $this->db->like('block_year',$process_year)->where('unit_id',$unit_id)->get('pr_earn_leave_block')->num_rows();
+		if($num_row > 0)
+		{
+			return "This Month Already Finally Processed.";
+		}
+		
+		//INSERT BLOCK RECORD
+		if($process_check == "2")
+		{
+		  $block_year 		= "$process_year";
+		  $data_1['block_year'] 	= $block_year;
+		  $data_1['unit_id'] 		= $unit_id;
+		  $data_1['username'] 		= $this->session->userdata('username');
+		  $data_1['date_time'] 		= date("Y-m-d H:i:s");
+		  $this->db->insert('pr_earn_leave_block', $data_1); 
+		  //echo $this->db->last_query();
+		}
+		
+		$process_start_date = $process_year."-01-01";
+		$process_end_date 	= $process_year."-12-31";
+		
+		//================================Table Manuppulation========================
+		$table_name = "pr_earn_$process_year";
+		$table_maupulation = $this->yearly_earn_leave_table_maupulation($table_name);
+		
+		$earn_leave_text = $this->get_earn_leave_text();
+		
+		
+		$this->db->select('*');
+		$this->db->from('pr_emp_shift_log');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where('pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id');
+		$this->db->where('pr_emp_com_info.unit_id',$unit_id);
+		$this->db->like('shift_log_date',$process_year);
+		//$this->db->where('pr_emp_com_info.emp_id',"2000926");
+		// $this->db->group_by('pr_emp_shift_log.emp_id');
+		$query_earn_emp = $this->db->get();
+		$query_earn_emp_no = $query_earn_emp->num_rows();
+		if($query_earn_emp_no == 0)
+		{
+			return "There are no employee to have earn leave!";
+		}
+		
+		foreach($query_earn_emp->result() as $rows)
+		{
+			$earn_data = array();
+			$emp_id 				= $rows->emp_id;
+			$salary_process_eligibility = $this->salary_process_eligibility($emp_id, $process_year);
+				
+			if($salary_process_eligibility == true)
+			{
+				$earn_data['unit_id'] 	= $unit_id;
+				$earn_data['emp_id'] 	= $emp_id;
+				$earn_data['dept_id']	= $rows->emp_dept_id;
+				$earn_data['sec_id'] 	= $rows->emp_sec_id;
+				$earn_data['line_id'] 	= $rows->emp_line_id;
+				$earn_data['desig_id']	= $rows->emp_desi_id;
+				
+				$gross_sal = $rows->gross_sal;
+				$salary_structure = $this->common_model->salary_structure($gross_sal);
+				$basic_sal = $salary_structure['basic_sal'];
+				
+				$earn_data['gross_sal'] 	= $gross_sal;
+				$earn_data['basic_sal'] 	= $basic_sal;
+				$earn_data['ttl_wk_days'] 	= date("z", mktime(0,0,0,12,31,$process_year)) + 1;
+				
+				$doj = $this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->emp_join_date;
+	
+				$earn_data = $this->get_leave_record($emp_id, $process_year, $earn_data);
+				
+				$total_earn_leave_count = 0;
+				foreach($earn_leave_text as $earn_status)
+				{
+					$earn_leave_count = $this->earn_leave_count($emp_id,$process_year,$earn_status);
+					$total_earn_leave_count = $total_earn_leave_count + $earn_leave_count ;
+					$earn_data[$earn_status] = $earn_leave_count;
+				}
+				$earn_leave_day_count = $this->db->where("id",2)->get('pr_earn_setup')->row()->value;
+				$total_earn_leave = floor($total_earn_leave_count / $earn_leave_day_count);
+				
+				$insert_update_earn_leave = $this->insert_update_earn_leave($emp_id,$earn_data,$table_name);
+		}
+		}
+		return "Earn Leave Process Completed Succesfully !";
+	}
+	
+	function get_earn_leave_start_date($emp_id,$doj,$process_start_date,$process_end_date){
+		$dateOneYearAdded = strtotime(date("Y-m-d", strtotime($doj)) . " +1 year");
+		$doj_one_year = date('Y-m-d', $dateOneYearAdded);
+		
+		if($doj_one_year < $process_start_date)
+		{
+			return $process_start_date;
+		}
+		else if($doj_one_year > $process_end_date)
+		{
+			return "False";
+		}
+		else
+		{
+			return $doj_one_year;
+		}
+		//return $doj_one_year;
+	}
+	
+	function insert_update_earn_leave($emp_id,$earn_data,$table_name){
+		$num_row = $this->db->where('emp_id',$emp_id)->get($table_name)->num_rows();
+		$earn_data['pay_days'] 		= $earn_data['P'] + $earn_data['W'] - $earn_data['el'];
+		$earn_data['pay_days_com']	= $earn_data['P'] + $earn_data['W'] + $earn_data['H'] + $earn_data['L'] - $earn_data['el'];
+		
+		$earn_data['earn_leave'] 	=  round(($earn_data['pay_days']/18),2);
+		$earn_data['earn_leave_com']=  round(($earn_data['pay_days_com']/18),2);
+		
+		$earn_data['net_pay'] 		=  round($earn_data['earn_leave']* ($earn_data['basic_sal']/30));
+		$earn_data['net_pay_com']	=  round($earn_data['earn_leave_com']* ($earn_data['gross_sal']/30));
+		if($num_row == 0)
+		{
+		print_r($earn_data);exit('alis');
+			$this->db->insert($table_name, $earn_data);
+		}
+		else
+		{			
+			$this->db->where('emp_id', $emp_id);
+			$this->db->update($table_name, $earn_data);
+		}
+		return;
+	}
+	
+	function earn_leave_count($emp_id,$process_year,$earn_status){
+		//$num_row = $this->db->like('shift_log_date',$process_year)->where('emp_id',$emp_id)->where('present_status',$earn_status)->get('pr_emp_shift_log')->num_rows();
+		$query = $this->db->like('shift_log_date',$process_year)->where('emp_id',$emp_id)->where('present_status',$earn_status)->get('pr_emp_shift_log');
+		if($query->num_rows() == 0)
+		{
+			return $num_row = 0;
+		}
+		else{ return $query->num_rows();}
+	}
+	
+	function get_present_status($emp_id,$shift_log_date){
+		$year_month 	= date("Y-m",strtotime($shift_log_date));
+		$day 			= date("d",strtotime($shift_log_date));
+		$select_column 	= "date_$day";
+		$present_status = $this->db->like("att_month",$year_month)->where("emp_id",$emp_id)->get('pr_attn_monthly')->row()->$select_column;
+		return $present_status;
+	}
+	
+	function update_shift_log($emp_id,$shift_log_date,$present_status)
+	{
+		$data = array(
+               'present_status' 		=> $present_status
+            );
+		$this->db->where('emp_id', $emp_id);
+		$this->db->where('shift_log_date', $shift_log_date);
+		$this->db->update('pr_emp_shift_log', $data); 
+		return;
+		
+	}
+	
+	function get_earn_leave_text()
+	{
+		$earn_leave = $this->db->where("id",1)->get('pr_earn_setup')->row()->value;
+		$earn_leave_text = str_split($earn_leave);
+		return $earn_leave_text;
+		
+	}
+	
+	function yearly_earn_leave_table_maupulation($table_name)
+	{
+		if (!$this->db->table_exists($table_name))
+		{
+		   	$this->load->dbforge();	
+			$fields = array(
+			'id' 				=> array( 'type' => 'INT','constraint'=>'11','auto_increment'=>TRUE),
+			'unit_id' 			=> array( 'type' => 'INT'),
+			'emp_id' 			=> array( 'type' => 'VARCHAR','constraint' => '200'),
+			'dept_id' 			=> array( 'type' => 'INT','constraint' => '11'),
+			'sec_id' 			=> array( 'type' => 'INT','constraint' => '11'),
+			'line_id' 			=> array( 'type' => 'INT','constraint' => '11'),
+			'desig_id' 			=> array( 'type' => 'INT','constraint' => '11'),
+			'gross_sal' 		=> array( 'type' => 'INT','constraint' => '11'),
+			'basic_sal' 		=> array( 'type' => 'INT','constraint' => '11'),
+			'P' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'A' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'W' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'H' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'L' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'el' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'cl' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'sl' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'ml' 				=> array( 'type' => 'INT','constraint' => '11'),
+			'ttl_wk_days' 		=> array( 'type' => 'INT','constraint' => '11'),
+			'pay_days' 			=> array( 'type' => 'INT','constraint' => '11'),
+			'pay_days_com' 		=> array( 'type' => 'INT','constraint' => '11'),
+			'earn_leave'  		=> array( 'type' => 'double','constraint' => '10,2'),
+			'earn_leave_com'  	=> array( 'type' => 'double','constraint' => '10,2'),
+			'net_pay'  			=> array( 'type' => 'float'),
+			'net_pay_com'  		=> array( 'type' => 'float'),
+
+ 								);
+				$this->dbforge->add_field($fields);
+				$this->dbforge->add_key('id', TRUE);
+				$this->dbforge->create_table($table_name);		
+		}
+		return;
+	}
+	
+
 	function get_sum_column($column_name,$line_id,$unit_id,$table_name){
 		$this->db->select_sum($column_name);
 		$this->db->from("$table_name");

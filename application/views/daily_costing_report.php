@@ -10,7 +10,7 @@
 
 <body>
 
-<div style=" margin:0 auto; wi ">
+<div style=" margin:0 auto; ">
 <?php 
 $emp_id = $values["emp_id"][1];
 $data['unit_id'] = $unit_id;//$this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
@@ -31,23 +31,23 @@ $num_of_days = date("t",strtotime($grid_date));
 ?>
 
 <table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:14px;width:60%">
-<th style="padding:4px;white-space:nowrap">SL</th>
-<th style="padding:4px;white-space:nowrap">Emp ID</th>
-<th style="padding:4px;white-space:nowrap">Employee Name</th>
-<th style="padding:4px;white-space:nowrap">Section</th>
-<th style="padding:4px;white-space:nowrap">Designation</th>
-<th style="padding:4px;white-space:nowrap">Status</th> 
-<th style="padding:4px;white-space:nowrap">Gross Sal</th>
-<th style="padding:4px;white-space:nowrap">Per Day Salary</th>
-<th style="padding:4px;white-space:nowrap">OT Hour</th>
-<th style="padding:4px;white-space:nowrap">EOT Hour</th>   
-<th style="padding:4px;white-space:nowrap">OT Rate</th>  
-<th style="padding:4px;white-space:nowrap">OT Amount</th> 
-<th style="padding:4px;white-space:nowrap">EOT Amount</th>       
-<th style="padding:4px;white-space:nowrap">Night Allowence</th> 
-<th style="padding:4px;white-space:nowrap">Holiday Allowence</th> 
-<th style="padding:4px;white-space:nowrap">Ifter Allowence</th> 
-<th style="padding:4px;white-space:nowrap">Total Salary</th> 
+<th style="padding:4px;">SL</th>
+<th style="padding:4px;">Emp ID</th>
+<th style="padding:4px;">Employee Name</th>
+<th style="padding:4px;">Section</th>
+<th style="padding:4px;">Designation</th>
+<th style="padding:4px;">Status</th> 
+<th style="padding:4px;">Gross Sal</th>
+<th style="padding:4px;">Per Day Salary</th>
+<th style="padding:4px;">OT Hour</th>
+<th style="padding:4px;">EOT Hour</th>   
+<th style="padding:4px;">OT Rate</th>  
+<th style="padding:4px;">OT Amount</th> 
+<th style="padding:4px;">EOT Amount</th>       
+<th style="padding:4px;">Night Allowence</th> 
+<th style="padding:4px;">Holiday Allowence</th> 
+<th style="padding:4px;">Ifter Allowence</th> 
+<th style="padding:4px;">Total Salary</th> 
 
 
 <?php

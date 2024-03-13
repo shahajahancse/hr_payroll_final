@@ -101,6 +101,15 @@ for($i = 0; $i<$count;$i++){
 	echo $values["dept_name"][$i];
 	echo "</td>";
 	echo "</tr>";
+	
+	echo "<td >";
+	echo "<strong>Emp Shift :</strong>";
+	echo "</td>";
+	echo "<td >";
+	$emp_shift_id =  $values["emp_shift"][$i];
+	echo $this->db->select('shift_name')->where('unit_id',$unit_id)->where('schedule_id',$emp_shift_id)->get('pr_emp_shift')->row()->shift_name;
+	echo "</td>";
+	echo "</tr>";
 	echo "<table>";
 	
 	$count1 = count($values[$emp_id]["shift_log_date"]);
@@ -276,25 +285,3 @@ for($i = 0; $i<$count;$i++){
 </div>
 </body>
 </html>
-
-
-<!-- Array
-(
-    [emp_id] =>  1000003
-    [emp_full_name] =>  Abdul Motin
-    [proxi_id] => 0013860573
-    [sec_name_en] => Production
-    [line_name_en] =>  Prod. Staff
-    [desig_name] =>Marker Man
-    [emp_join_date] => 01-Jul-96
-    [dept_name] => Production
-	[shift_log_date] => 03-Dec-23
-	[in_time] =>  07:48:52 AM
-	[out_time] => 07:11:27 PM
-	[ot_hour] =>  0
-	[att_status] => P
-	[att_status_count] =>  P
-	[lunch_out] => 01:01:34 PM
-	[lunch_in] => 01:08:33 PM
-
-) -->

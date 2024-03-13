@@ -33,7 +33,6 @@ class Acl_model extends CI_Model{
 		$this->db->select("acl_id");
 		$this->db->where('username_id',$user_id);
 		$query = $this->db->get('member_acl_level');
-		// dd($query->result());
 		foreach($query->result() as $rows)
 		{
 			$data[] = $rows->acl_id;
@@ -51,6 +50,7 @@ class Acl_model extends CI_Model{
 
 	 //  old code
 	function get_user_id($username){
+		// dd($username);
 		$this->db->select("id");
 		$this->db->where('id_number', $username);
 		$query = $this->db->get('members');
