@@ -4434,26 +4434,25 @@ function grid_extra_ot_mix()
 	}
 }
 
-function grid_earn_leave()
-{
+function grid_earn_leave(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	// Internet Explorer Browsers
+	try{
+		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch (e) {
+		try{
+			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch (e){
+			// Something went wrong
+			alert("Your browser broke!");
+			return false;
+		}
+	}
+	}
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -4471,10 +4470,26 @@ function grid_earn_leave()
 	}
 	// hostname = window. location.href;
 // 
-	url =  hostname + "index.php/grid_con/grid_earn_leave_report/"+sql;
+	// url =  hostname + "index.php/grid_con/grid_earn_leave_report/"+sql;
 
-	grid_earn_leave_report = window.open(url,'grid_earn_leave_report',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	grid_earn_leave_report.moveTo(0,0);
+	// grid_earn_leave_report = window.open(url,'grid_earn_leave_report',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
+	// grid_earn_leave_report.moveTo(0,0);
+
+
+	var queryString="spl="+sql+"&unit_id="+unit_id;
+   	url =  hostname+"index.php/grid_con/grid_earn_leave_report/";
+    
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			extra_ot.document.write(resp);
+		}
+	}
 }
 
 

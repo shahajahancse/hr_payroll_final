@@ -27,6 +27,7 @@ class Earn_leave_model extends CI_Model{
 			unit_id,
 			emp_desi_id,
 			gross_sal,
+			com_gross_sal,
 		')
 		->where_in('id',$grid_emp_id)
 		->where('emp_join_date <=',$past_year_date)
@@ -38,6 +39,7 @@ class Earn_leave_model extends CI_Model{
 				$emp_id = $row->emp_id;
 				$emp_join_date = $row->emp_join_date;
 				$gross_sal = $row->gross_sal;
+				$com_gross_sal = $row->com_gross_sal;
 				$d1=new DateTime($current_date); 
 				$d2=new DateTime($emp_join_date);                                  
 				$working_month = $d2->diff($d1); 
@@ -73,6 +75,7 @@ class Earn_leave_model extends CI_Model{
 						$data = array(
 							'emp_id'     => $emp_id,
 							'gross_sal'  => $gross_sal,
+							'com_gross_sal'  => $com_gross_sal,
 							'basic_sal'  => round(($gross_sal-2450)/1.5,2),
 							'unit_id'    => $row->unit_id,
 							'line_id'    => $row->emp_line_id,
@@ -819,6 +822,11 @@ class Earn_leave_model extends CI_Model{
 				return false;	
 			}
 		}
+	}
+
+
+	function earn_leave_pay($year,$emp_ids){
+
 	}
 }
 ?>

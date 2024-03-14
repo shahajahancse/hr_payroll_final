@@ -10690,33 +10690,36 @@ function grid_emp_job_application($grid_emp_id){
 
 	function grid_earn_leave_report($grid_emp_id){
 		$data = array();
-		$this->db->select('pr_emp_com_info.emp_id,
-						   pr_emp_per_info.name_en,
-						   emp_designation.desig_name,
+		$this->db->select('pr_emp_com_info.emp_id, 
+						   pr_emp_per_info.name_en, 
+						   emp_designation.desig_name, 
 						   pr_emp_com_info.emp_join_date, 
 						   emp_depertment.dept_name, 
 						   emp_section.sec_name_en, 
 						   emp_line_num.line_name_en, 
 						   pr_id_proxi.proxi_id, 
-						   pr_emp_shift.shift_name,
+						   pr_emp_shift.shift_name, 
 						   pr_emp_com_info.emp_cat_id, 
-						   pr_emp_com_info.gross_sal,
-						   pr_leave_earn.old_earn_balance,
-						   pr_leave_earn.current_earn_balance,
-						   pr_leave_earn.last_update');
-		$this->db->join('pr_emp_per_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','LEFT');
-		$this->db->join('emp_designation','pr_emp_com_info.emp_desi_id = emp_designation.id','LEFT');
-		$this->db->join('emp_depertment','pr_emp_com_info.emp_dept_id = emp_depertment.dept_id','LEFT');
-		$this->db->join('emp_section','pr_emp_com_info.emp_sec_id = emp_section.id','LEFT');
-		$this->db->join('emp_line_num','pr_emp_com_info.emp_line_id = emp_line_num.id','LEFT');
-		$this->db->join('pr_id_proxi','pr_emp_com_info.emp_id = pr_id_proxi.emp_id','LEFT');
-		$this->db->join('pr_emp_shift','pr_emp_shift.id = pr_emp_com_info.emp_shift','LEFT');
-		$this->db->join('pr_leave_earn','pr_emp_com_info.emp_id = pr_leave_earn.emp_id','LEFT');
-		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
-		$query = $this->db->get('pr_emp_com_info');
+						   pr_emp_com_info.gross_sal, 
+						   pr_earn_leave.el as old_earn_balance, 
+						   pr_earn_leave.earn_leave as current_earn_balance, 
+						   pr_earn_leave.earn_month as last_update');
+		$this->db->from('pr_emp_com_info');
+		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id', 'left');
+		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id', 'left');
+		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id', 'left');
+		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id', 'left');
+		$this->db->join('pr_id_proxi', 'pr_emp_com_info.emp_id = pr_id_proxi.emp_id', 'left');
+		$this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'left');
+		$this->db->join('pr_earn_leave', 'pr_emp_com_info.emp_id = pr_earn_leave.emp_id', 'left');
+		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+		$this->db->order_by('pr_emp_com_info.emp_id', 'ASC');
 
-		// dd($query->result());
+		$query = $this->db->get();
+
+
+		dd($query->result());
 
 		foreach($query->result() as $rows){
 			$emp_id = $rows->emp_id;
@@ -10726,7 +10729,7 @@ function grid_emp_job_application($grid_emp_id){
 			$data["emp_name"][] 			= $rows->name_en;
 			$data["doj"][] 					= $rows->emp_join_date;
 			$data["dept_name"][] 			= $rows->dept_name;
-			$data["sec_name_en"][] 			= $rows->sec_name_en;
+			$data["sec_name"][] 			= $rows->sec_name_en;
 			$data["desig_name"][] 			= $rows->desig_name;
 			$data["line_name"][]			= $rows->line_name_en;
 			$data["gross_sal"][] 			= $rows->gross_sal;
@@ -10737,9 +10740,10 @@ function grid_emp_job_application($grid_emp_id){
 
 			
 			$prev_month_info 		  = $this->get_prev_month_info($emp_id);
+			// dd($emp_id);
 			foreach($prev_month_info->result() as $rows){
 				$data["total_days"][] = $rows->total_days;
-				$data["pay_wages"][]  = $rows->pay_wages;
+				$data["pay_wages"][]  = $rows->net_pay;
 				$data["pay_days"][]   = $rows->pay_days;
 			}
 
@@ -10853,8 +10857,7 @@ function grid_emp_job_application($grid_emp_id){
 
 	}
 
-	function get_prev_month_info($emp_id)
-	{
+	function get_prev_month_info($emp_id){
 		$prev_month = date("Y-m", strtotime("-1 months"));
 		$this->db->select("total_days,net_pay,pay_days");
 		$this->db->where('emp_id',$emp_id);
@@ -11476,6 +11479,42 @@ function grid_emp_job_application($grid_emp_id){
 			$this->db->where("shift_log_date",$att_date);
 			$this->db->update('pr_emp_shift_log', $data);
 		}
+
+	}
+
+	function earn_leave_pay($year,$pay_date,$emp_ids,$unit_id){
+		$query = $this->db->select('pr_earn_leave.emp_id, pr_earn_leave.gross_sal, pr_earn_leave.basic_sal, pr_earn_leave.unit_id, pr_earn_leave.earn_leave')
+			->from('pr_earn_leave')
+			->join('pr_emp_com_info','pr_emp_com_info.emp_id = pr_earn_leave.emp_id','left')
+			->where_in('pr_emp_com_info.id',$emp_ids)
+			->where('pr_earn_leave.unit_id',$unit_id)
+			->like('pr_earn_leave.earn_month', '2023', 'both')
+			->get()->result();
+			
+		dd($query);
+
+			// [id] => 153
+            // [emp_id] => 1000015
+            // [gross_sal] => 25000
+            // [basic_sal] => 15033.33
+            // [line_id] => 1
+            // [unit_id] => 1
+            // [P] => 247
+            // [A] => 0
+            // [W] => 37
+            // [H] => 17
+            // [el] => 0
+            // [cl] => 7
+            // [sl] => 0
+            // [ml] => 0
+            // [t_days] => 365
+            // [w_days] => 247
+            // [earn_leave] => 14.00
+            // [net_pay] => 11666.6
+            // [pay_leave] => 0
+            // [jod] => 2000-06-02
+            // [earn_month] => 2023-07-01
+            // [emp_cat_id] => 1
 
 	}
 

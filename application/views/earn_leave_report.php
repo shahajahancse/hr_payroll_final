@@ -38,12 +38,13 @@ Earn Leave Payment Sheet <?php echo date("F-Y"); ?></span>
 <th>Worker Signature</th> 
 
 <?php
+// dd($values);
 /*$total_first_tiffin_allo_amount = 0;
 $total_second_tiffin_allo_amount = 0;
 $total_night_allo_amount = 0;
 $all_total = 0;*/
 $total_net_pay = 0;
-$count = count($values["emp_name"]);
+$count = $values["emp_name"] !== null ? count($values["emp_name"]) : 0;
 for($i=0; $i<$count; $i++ )
 {
 	echo "<tr>";
@@ -88,13 +89,12 @@ for($i=0; $i<$count; $i++ )
 	echo "<td style='text-align:center'>";
 	echo $values["old_earn_balance"][$i];
 	echo "</td>";
-	if($values["pay_days"][$i] == 0)
-	{
+	if($values["pay_days"][$i] == 0){
 		$per_day_wages = 0;
 	}
 	else
 	{
-		$per_day_wages = round($values["pay_wages"][$i]/$values["total_days"][$i],2);
+		$per_day_wages = round($values["net_pay"][$i]/$values["total_days"][$i],2);
 		//echo $per_day_wages;
 	}
 	//echo $values["total_days"][$i];

@@ -2549,13 +2549,31 @@ class Grid_con extends CI_Controller {
 
 	function grid_earn_leave_report(){
 		$grid_data = $this->uri->segment(3);
-		$grid_emp_id = explode(',', trim($grid_data));
+		$grid_emp_id = explode(',', trim( (string) $grid_data ) );
 		$data['values'] = $this->Grid_model->grid_earn_leave_report($grid_emp_id);
+		// dd($data);
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}
 		else{
 			$this->load->view('earn_leave_report',$data);
+		}
+	}
+
+	function earn_leave_pay(){
+		$year = $this->input->post('year');
+		$pay_date = $this->input->post('pay_date');
+		$unit_id = $this->input->post('unit_id');
+		$ids  = $this->input->post('spl');
+		$emp_ids = explode(',',trim( $ids ));
+		// dd($unit_id);
+		$data['values'] = $this->Grid_model->earn_leave_pay($year,$pay_date,$emp_ids,$unit_id);
+		// dd($data);
+		if(is_string($data['values'])){
+			echo $data['values'];
+		}
+		else{
+			$this->load->view('pay_earn_leave_report',$data);
 		}
 	}
 
