@@ -97,6 +97,7 @@ class Earn_leave_model extends CI_Model{
 						$this->db->insert('pr_earn_leave', $data);
 					}else{			
 						$data = array(
+							'com_gross_sal'  => $com_gross_sal,
 							'basic_sal'  => round(($gross_sal-2450)/1.5,2),
 							'unit_id'    => $row->unit_id,
 							'line_id'    => $row->emp_line_id,

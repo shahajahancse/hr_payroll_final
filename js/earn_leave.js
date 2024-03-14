@@ -318,6 +318,67 @@ function earn_leave_pay(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			// $(".clearfix").dialog("close");		
+			if(resp != "")
+				alert(resp);
+			// earn_leave_payment_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			// earn_leave_payment_report.document.write(resp);		
+		}
+	}
+	
+}
+function earn_leave_list(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+	var year = document.getElementById('earn_leave_pay_year').value;
+	if(year ==''){
+		alert("Please select year");
+		return;
+	}
+	var pay_date = document.getElementById('pay_date').value;
+	if(pay_date ==''){
+		alert("Please select pay date");
+		return;
+	}
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){
+		alert("Please select unit !");
+		return;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	if(sql ==''){
+		alert("Please select Employee ID");
+		return;
+	}
+	// var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var queryString="year="+year+"&pay_date="+pay_date+"&spl="+sql+"&unit_id="+unit_id;
+	url =  hostname+"index.php/grid_con/earn_leave_list/";
+	 
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			// $(".clearfix").dialog("close");		
+			// if(resp != "")
+				// alert(resp);
 			earn_leave_payment_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			earn_leave_payment_report.document.write(resp);		
 		}

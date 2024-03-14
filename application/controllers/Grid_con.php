@@ -2566,15 +2566,17 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$ids  = $this->input->post('spl');
 		$emp_ids = explode(',',trim( $ids ));
-		// dd($unit_id);
-		$data['values'] = $this->Grid_model->earn_leave_pay($year,$pay_date,$emp_ids,$unit_id);
-		// dd($data);
-		if(is_string($data['values'])){
-			echo $data['values'];
-		}
-		else{
-			$this->load->view('pay_earn_leave_report',$data);
-		}
+		$pay_leave = $this->Grid_model->earn_leave_pay($year,$pay_date,$emp_ids,$unit_id);
+		echo $pay_leave;
+	}
+	function earn_leave_list(){
+		$year = $this->input->post('year');
+		$pay_date = $this->input->post('pay_date');
+		$unit_id = $this->input->post('unit_id');
+		$ids  = $this->input->post('spl');
+		$emp_ids = explode(',',trim( $ids ));
+		$pay_leave = $this->Grid_model->earn_leave_list($year,$pay_date,$emp_ids,$unit_id);
+		echo $pay_leave;
 	}
 
 

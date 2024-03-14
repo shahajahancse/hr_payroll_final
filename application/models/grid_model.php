@@ -11483,40 +11483,57 @@ function grid_emp_job_application($grid_emp_id){
 	}
 
 	function earn_leave_pay($year,$pay_date,$emp_ids,$unit_id){
-		$query = $this->db->select('pr_earn_leave.emp_id, pr_earn_leave.gross_sal, pr_earn_leave.basic_sal, pr_earn_leave.unit_id, pr_earn_leave.earn_leave')
+		$query = $this->db->select('pr_earn_leave.emp_id,pr_earn_leave.earn_month,pr_earn_leave.gross_sal,pr_earn_leave.com_gross_sal, pr_earn_leave.basic_sal, pr_earn_leave.unit_id, pr_earn_leave.earn_leave')
 			->from('pr_earn_leave')
 			->join('pr_emp_com_info','pr_emp_com_info.emp_id = pr_earn_leave.emp_id','left')
 			->where_in('pr_emp_com_info.id',$emp_ids)
 			->where('pr_earn_leave.unit_id',$unit_id)
-			->like('pr_earn_leave.earn_month', '2023', 'both')
+			->like('pr_earn_leave.earn_month', $year, 'both')
 			->get()->result();
-			
-		dd($query);
 
-			// [id] => 153
-            // [emp_id] => 1000015
-            // [gross_sal] => 25000
-            // [basic_sal] => 15033.33
-            // [line_id] => 1
-            // [unit_id] => 1
-            // [P] => 247
-            // [A] => 0
-            // [W] => 37
-            // [H] => 17
-            // [el] => 0
-            // [cl] => 7
-            // [sl] => 0
-            // [ml] => 0
-            // [t_days] => 365
-            // [w_days] => 247
-            // [earn_leave] => 14.00
-            // [net_pay] => 11666.6
-            // [pay_leave] => 0
-            // [jod] => 2000-06-02
-            // [earn_month] => 2023-07-01
-            // [emp_cat_id] => 1
-
+		if(empty($query)){
+			return "Earn leave process not done";
+		}else{
+			$data_temp = [];
+			foreach($query as $row) {
+				$data_temp[$row->emp_id][$year][] = [
+					'unit_id' => $row->unit_id,
+					'emp_id' => $row->emp_id,
+					'actual_gross_sal' => $row->gross_sal,
+					'com_gross_sal' => $row->com_gross_sal,
+					'actual_paid' => round(($row->gross_sal/30)*$row->earn_leave),
+					'com_paid' => round(($row->com_gross_sal/30)*$row->earn_leave),
+					'paid_leave' => $row->earn_leave,
+					'year' => $year,
+					'paid_date' => date('Y-m-d', strtotime($pay_date)),
+				];
+			}
+			foreach($data_temp as $emp_id => $year_data) {
+				foreach($year_data as $year => $data) {
+					$this->db->where('emp_id', $emp_id)->where('year', $year)->from('pr_earn_leave_paid');
+					$count = $this->db->count_all_results();
+					if($count == 0) {
+						$this->db->insert_batch('pr_earn_leave_paid', $data);
+					} else {
+						$this->db->where('emp_id', $emp_id)->where('year', $year);
+						$this->db->update_batch('pr_earn_leave_paid', $data, 'year');
+					}
+				}
+			}
+			return $this->db->affected_rows() > 0 ? 'Updated earn leave pay successfully' : 'Already Paid '.$year;
+		}
 	}
+	function earn_leave_list($year,$pay_date,$emp_ids,$unit_id){
+		$this->db->select('pr_earn_leave_paid.*, pr_emp_com_info.emp_name')
+			->from('pr_earn_leave_paid')
+			->join('pr_emp_com_info','pr_emp_com_info.id = pr_earn_leave_paid.emp_id')
+			->get()->result();
+		$query = $this->db->select('pr_earn_leave_paid.*')->from('pr_earn_leave_paid')->get()->result();
+	}
+
+
+
+		
 
   }
   ?>
