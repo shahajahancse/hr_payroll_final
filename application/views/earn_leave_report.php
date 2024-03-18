@@ -27,7 +27,7 @@ Earn Leave Payment Sheet <?php echo date("F-Y"); ?></span>
 <th>Designation</th> 
 <th>Card No.</th>
 <th>Section</th> 
-<th>Join Date</th> 
+<th style="white-space:nowrap">Join Date</th> 
 <th>Previous Month of Payble Wages</th> 
 <th>Actual Working Days <?php echo date("Y"); ?></th> 
 <th>E/L Earn in <?php echo date("Y"); ?> </th> 
@@ -39,10 +39,7 @@ Earn Leave Payment Sheet <?php echo date("F-Y"); ?></span>
 
 <?php
 // dd($values);
-/*$total_first_tiffin_allo_amount = 0;
-$total_second_tiffin_allo_amount = 0;
-$total_night_allo_amount = 0;
-$all_total = 0;*/
+
 $total_net_pay = 0;
 $count = $values["emp_name"] !== null ? count($values["emp_name"]) : 0;
 for($i=0; $i<$count; $i++ )

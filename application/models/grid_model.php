@@ -8628,44 +8628,18 @@ function grid_emp_job_application($grid_emp_id){
 		$data['emp_info']= $query;
 		$id = $query->id;
 		$emp_id = $query->emp_id;
-		// $data["leaves"]    = $this->db->select("
-		// 						SUM( CASE WHEN leave_type = 'cl' THEN 1 ELSE 0 END ) AS casual,
-		// 						SUM( CASE WHEN leave_type = 'sl' THEN 1 ELSE 0 END ) AS sick,
-		// 						SUM( CASE WHEN leave_type = 'el' THEN 1 ELSE 0 END ) AS earn
-		// 					")->where('emp_id',$emp_id)->like('start_date',$years)->get('pr_leave_trans')->row();
-										
 		$data["leave_balance"]  = $this->db->select('lv_sl,lv_cl')->get('pr_leave')->row();
 		$this->db->select("present_status,shift_log_date")->where('emp_id',$id);
-
-		
-
 		if( $first_date == '' && $second_date == ''){
-			// dd('ok');
 			$this->db->where('shift_log_date >',$query->emp_join_date);
 		}else if( !$first_date == '' && $second_date == ''){
-			// dd('ok2');
 			$this->db->where('shift_log_date >',date('Y-01-01',strtotime($first_date)));
 			$this->db->where('shift_log_date <',date('Y-12-31',strtotime($first_date)));
 		}else{
-			// dd('ok3');
 			$this->db->where('shift_log_date >',date('Y-01-01',strtotime($first_date)));
 			$this->db->where('shift_log_date <',date('Y-m-d',strtotime($second_date)));
 		}
 		$office_days = $this->db->get('pr_emp_shift_log')->result();
-		// dd($office_days);
-		// $data["office_days"]   = $this->db->select(" 
-		// 							SUM( CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
-		// 							SUM( CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
-		// 							SUM( CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS weekend,
-		// 							SUM( CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
-		// 						")->where('emp_id',$id)->where('shift_log_date >',$query->emp_join_date)->get('pr_emp_shift_log')->row();
-		// $data = array_map(function($value) {
-		// 	if (is_array($value)) {
-		// 		return reset($value);
-		// 	} else {
-		// 		return $value; 
-		// 	}
-		// }, $data);
 		$yearlyStatus = array();
 		foreach ($office_days as $entry) {
 		$year = date('Y', strtotime($entry->shift_log_date));
@@ -8683,6 +8657,7 @@ function grid_emp_job_application($grid_emp_id){
 		}
 	}
 		$data['yearly_total_info'] = $yearlyStatus;
+		// dd($data);
 		if($data){
 			return $data;
 		}
@@ -10689,6 +10664,7 @@ function grid_emp_job_application($grid_emp_id){
 	}
 
 	function grid_earn_leave_report($grid_emp_id){
+		// dd($grid_emp_id);
 		$data = array();
 		$this->db->select('pr_emp_com_info.emp_id, 
 						   pr_emp_per_info.name_en, 
@@ -10714,12 +10690,13 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'left');
 		$this->db->join('pr_earn_leave', 'pr_emp_com_info.emp_id = pr_earn_leave.emp_id', 'left');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+		$this->db->group_by('pr_emp_com_info.emp_id');
 		$this->db->order_by('pr_emp_com_info.emp_id', 'ASC');
 
 		$query = $this->db->get();
 
 
-		dd($query->result());
+		// dd($query->result());
 
 		foreach($query->result() as $rows){
 			$emp_id = $rows->emp_id;
@@ -10740,10 +10717,12 @@ function grid_emp_job_application($grid_emp_id){
 
 			
 			$prev_month_info 		  = $this->get_prev_month_info($emp_id);
-			// dd($emp_id);
+			// dd($prev_month_info->result());
 			foreach($prev_month_info->result() as $rows){
+				// dd($row);
 				$data["total_days"][] = $rows->total_days;
-				$data["pay_wages"][]  = $rows->net_pay;
+				$data["net_pay"][]  = $rows->net_pay;
+				$data["pay_wages"][]   = $rows->net_pay;
 				$data["pay_days"][]   = $rows->pay_days;
 			}
 
@@ -10751,27 +10730,19 @@ function grid_emp_job_application($grid_emp_id){
 		$current_year = date("Y");
 		$start_date = "$current_year-01-01";
 		$end_date = date("Y-m-d");
-
 		// caculate number of days between dates
 		$days = $this->get_days($start_date, $end_date);
-
 		// calculate number of weekends
 		$weekend = $this->common_model->get_setup_attributes(5);
 		//echo $weekend;
 		//$weekend = "Fri";
 		$weekend_days = $this->get_weekend_days($weekend,$days,$start_date);
-
 		// calculate number of holyday between dates
 		$holy_day = $this->get_holyday($start_date,$end_date);
 		$actual_working_days = $days - $weekend_days - $holy_day;
-
 		$data["actual_working_days"] = $actual_working_days;
-
-
 		//print_r($data);
-		if($data)
-		{
-
+		if($data){
 			return $data;
 		}
 		else
@@ -10858,7 +10829,7 @@ function grid_emp_job_application($grid_emp_id){
 	}
 
 	function get_prev_month_info($emp_id){
-		$prev_month = date("Y-m", strtotime("-1 months"));
+		$prev_month = date("2023-m", strtotime("-1 months"));
 		$this->db->select("total_days,net_pay,pay_days");
 		$this->db->where('emp_id',$emp_id);
 		$this->db->like('salary_month',$prev_month);
@@ -11524,12 +11495,43 @@ function grid_emp_job_application($grid_emp_id){
 		}
 	}
 	function earn_leave_list($year,$pay_date,$emp_ids,$unit_id){
-		$this->db->select('pr_earn_leave_paid.*, pr_emp_com_info.emp_name')
+		$query=$this->db->select('  
+				pr_earn_leave_paid.id,
+				pr_earn_leave_paid.emp_id,
+				pr_earn_leave_paid.actual_gross_sal,
+				pr_earn_leave_paid.com_gross_sal,
+				pr_earn_leave_paid.actual_paid,
+				pr_earn_leave_paid.com_paid,
+				pr_earn_leave_paid.paid_leave,
+				pr_earn_leave_paid.year,
+				pr_earn_leave_paid.paid_date,
+				pr_emp_per_info.name_en,
+				pr_emp_com_info.emp_join_date,
+				pr_emp_per_info.name_en,
+				emp_designation.desig_name,
+				emp_depertment.dept_name,
+				emp_section.sec_name_en,
+				emp_line_num.line_name_en,
+			')
 			->from('pr_earn_leave_paid')
-			->join('pr_emp_com_info','pr_emp_com_info.id = pr_earn_leave_paid.emp_id')
+			->join('pr_emp_com_info','pr_emp_com_info.emp_id      = pr_earn_leave_paid.emp_id')
+			->join('pr_emp_per_info','pr_emp_com_info.emp_id      = pr_emp_per_info.emp_id')
+			->join('emp_designation','pr_emp_com_info.emp_desi_id = emp_designation.id')
+			->join('emp_depertment' ,'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id')
+			->join('emp_section'    ,'pr_emp_com_info.emp_sec_id  = emp_section.id')
+			->join('emp_line_num'   ,'pr_emp_com_info.emp_line_id = emp_line_num.id')
+			->where_in('pr_emp_com_info.id',$emp_ids)
+			->where_in('pr_earn_leave_paid.year',$year)
 			->get()->result();
-		$query = $this->db->select('pr_earn_leave_paid.*')->from('pr_earn_leave_paid')->get()->result();
+			return $query;
+		// $query = $this->db->select('pr_earn_leave_paid.*')->from('pr_earn_leave_paid')->get()->result();
 	}
+
+	
+
+	
+	  
+
 
 
 

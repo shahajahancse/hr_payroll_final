@@ -2548,7 +2548,7 @@ class Grid_con extends CI_Controller {
 	}
 
 	function grid_earn_leave_report(){
-		$grid_data = $this->uri->segment(3);
+		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim( (string) $grid_data ) );
 		$data['values'] = $this->Grid_model->grid_earn_leave_report($grid_emp_id);
 		// dd($data);
@@ -2575,8 +2575,26 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$ids  = $this->input->post('spl');
 		$emp_ids = explode(',',trim( $ids ));
-		$pay_leave = $this->Grid_model->earn_leave_list($year,$pay_date,$emp_ids,$unit_id);
-		echo $pay_leave;
+		$data['values'] = $this->Grid_model->earn_leave_list($year,$pay_date,$emp_ids,$unit_id);
+		// dd($data);
+		
+		$this->load->view('earn_leave_list_report',$data);
+	
+		// echo $pay_leave;
+	}
+
+
+	function delete(){
+		$id = $this->input->get('id');
+		$query = $this->db->where('id', $id)->delete('pr_earn_leave_paid');
+
+		if($query){
+			echo "Deleted";
+		}
+		else{
+			echo "Failed";
+		}
+
 	}
 
 

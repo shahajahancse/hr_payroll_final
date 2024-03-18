@@ -178,6 +178,7 @@
                        if($count == $key){ ?>
                             <tr>
                                 <td class="text-center">
+                                    <!-- < ?php dd($array[$year]["P"]) ?> -->
                                     <?php echo isset($array[$year]) ? round($array[$year]["P"]/18) : ''?>
                                 </td>
                                 <td><?php echo ""?></td>
@@ -186,7 +187,10 @@
                                 <td><?php echo ""?></td>
                                 <td><?php echo ""?></td>
                                 <td><?php echo ""?></td>
-                                <td><?php echo ""?></td>
+                                <?php 
+                                    @$paid_date = $this->db->select('paid_date')->where('year',$year)->where('emp_id',$object->emp_id)->get('pr_earn_leave_paid')->row()->paid_date;
+                                ?>
+                                <td style="text-align:center;"><?php echo isset($paid_date)? $paid_date:''?></td>
                                 <td><?php echo ""?></td>
                                 <td><?php echo ""?></td>
                                 <td><?php echo ""?></td>

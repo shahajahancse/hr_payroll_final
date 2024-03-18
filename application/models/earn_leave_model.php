@@ -59,13 +59,13 @@ class Earn_leave_model extends CI_Model{
 					}
 					$present = $this->count_earn_leave($first_year, $last_year, $row->id); 
 					$total_earn_leave = round($present->present/18);
+					// dd($total_earn_leave);
 					if ($year > 1) {
 						$last_leave = $this->db->select('el, earn_leave, pay_leave')
 											->where('emp_id',$emp_id)
 											->where('earn_month <',$current_date)
 											->order_by('earn_month', 'DESC')
-											->get('pr_earn_leave')->row();
-						// dd($last_leave);							
+											->get('pr_earn_leave')->row();	
 						if (!empty($last_leave)) {
 							$total_earn_leave = $total_earn_leave + ($last_leave->earn_leave - $last_leave->el); 
 						}
