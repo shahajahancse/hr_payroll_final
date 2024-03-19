@@ -88,6 +88,7 @@ class Grid_model extends CI_Model{
 
 				pr_emp_com_info.emp_join_date,
 				pr_emp_com_info.ot_entitle,
+				pr_emp_com_info.com_ot_entitle,
 
 				emp_depertment.dept_name,
 				emp_depertment.dept_bangla,
@@ -173,9 +174,8 @@ class Grid_model extends CI_Model{
 	}
 
 	// actual eot report generate
-	function grid_monthly_eot_sheet($salary_month = null, $status = null, $emp_id = null, $unit_id = null)
-	{
-
+	function grid_monthly_eot_sheet($salary_month = null, $status = null, $emp_id = null, $unit_id = null){
+		// dd($emp_id);
 		$lastday = date("t", strtotime($salary_month));
 
 		$this->db->select('
@@ -183,10 +183,8 @@ class Grid_model extends CI_Model{
 				pr_emp_per_info.name_bn,
 				pr_emp_per_info.bank_bkash_no,
 				pr_emp_per_info.personal_mobile,
-
 				pr_emp_com_info.emp_join_date,
 				pr_emp_com_info.ot_entitle,
-
 				emp_depertment.dept_name,
 				emp_depertment.dept_bangla,
 				emp_designation.desig_name,
@@ -198,31 +196,22 @@ class Grid_model extends CI_Model{
 				pr_grade.gr_name,
 				pay_salary_sheet.*,
 			');
-
-		$this->db->from('pay_salary_sheet');
 		$this->db->from('pr_emp_com_info');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_section');
-		$this->db->from('emp_line_num');
-		$this->db->from('pr_grade');
-
+		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+		$this->db->join('pr_grade', 'pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
+		$this->db->join('pay_salary_sheet', 'pay_salary_sheet.emp_id = pr_emp_com_info.id');
 		$this->db->where_in('pay_salary_sheet.emp_id', $emp_id);
-		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_per_info.emp_id');
-		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_dept_id    = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id    = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_sec_id     = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_line_id    = emp_line_num.id');
-		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 		$this->db->where("pay_salary_sheet.salary_month  = '$salary_month'");
 		$this->db->where("pay_salary_sheet.eot_amount   != ",0);
 		$this->db->where("pay_salary_sheet.eot_hour     > ",0);
 		$this->db->order_by("pay_salary_sheet.emp_id","ASC");
-		$this->db->order_by("pr_emp_com_info.emp_id");
-		$this->db->order_by("emp_designation.desig_name");
+		// $this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
+		// dd($query->result());
 		return $query->result();
 
 	}
@@ -230,14 +219,33 @@ class Grid_model extends CI_Model{
 	// actual eot summary report generate
 	function summary_report($salary_month = null, $status = null, $grid_emp_id = null, $unit_id = null)
 	{
-
+		// dd($unit_id);
 		$this->db->select("
-				num.id as line_id, num.line_name_en, num.line_name_bn,
+				num.id as line_id, num.line_name_en, num.line_name_bn,emp_section.sec_name_en,
+				
                 SUM( CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END ) AS emp_cash,
                 SUM( CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END ) AS emp_bank,
 
                 SUM( CASE WHEN com.salary_draw = 1 THEN ss.gross_sal ELSE 0 END ) AS cash_sum,
                 SUM( CASE WHEN com.salary_draw = 2 THEN ss.gross_sal ELSE 0 END ) AS bank_sum,
+
+				
+               
+				SUM( CASE WHEN com.salary_draw = 1 THEN ss.basic_sal ELSE 0 END ) AS cash_sum_basic_sal,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.basic_sal ELSE 0 END ) AS bank_sum_basic_sal,
+				
+				SUM( CASE WHEN com.salary_draw = 1 THEN ss.house_r ELSE 0 END ) AS cash_sum_house_r,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.house_r ELSE 0 END ) AS bank_sum_house_r,
+
+				SUM( CASE WHEN com.salary_draw = 1 THEN ss.medical_a ELSE 0 END ) AS cash_sum_medical_a,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.medical_a ELSE 0 END ) AS bank_sum_medical_a,
+
+				SUM( CASE WHEN com.salary_draw = 1 THEN ss.food_allow ELSE 0 END ) AS cash_sum_food_allow,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.food_allow ELSE 0 END ) AS bank_sum_food_allow,
+
+
+				SUM( CASE WHEN com.salary_draw = 1 THEN ss.trans_allow ELSE 0 END ) AS cash_sum_trans_allow,
+                SUM( CASE WHEN com.salary_draw = 2 THEN ss.trans_allow ELSE 0 END ) AS bank_sum_trans_allow,
 
                 SUM( CASE WHEN com.salary_draw = 1 THEN ss.ot_hour ELSE 0 END ) AS cash_sum_ot_hour,
                 SUM( CASE WHEN com.salary_draw = 2 THEN ss.ot_hour ELSE 0 END ) AS bank_sum_ot_hour,
@@ -279,12 +287,12 @@ class Grid_model extends CI_Model{
 		$this->db->from('pay_salary_sheet as ss');
 		$this->db->from('pr_emp_com_info as com');
 		$this->db->from('emp_line_num as num');
+		$this->db->from('emp_section as emp_section');
 
 		$this->db->where("ss.emp_id = com.emp_id");
 		$this->db->where("num.id = com.emp_line_id");
 		$this->db->where("ss.salary_month", $salary_month);
 		$this->db->where("ss.unit_id", $unit_id);
-		// $this->db->where("line_id !=",2);
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
 		return $this->db->get()->result();
@@ -1101,7 +1109,7 @@ class Grid_model extends CI_Model{
 
 
 	function one_month_settel_paid_report($grid_emp_id,$year_month){
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, emp_line_num.line_name_en ,emp_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet_com.* ,pr_emp_per_info.bangla_nam');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, emp_line_num.line_name_en ,emp_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pay_salary_sheet_com.* ,pr_emp_per_info.bangla_nam');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_designation');
@@ -1112,9 +1120,9 @@ class Grid_model extends CI_Model{
 			$this->db->from('pr_emp_add');
 			$this->db->from('pr_grade');
 			$this->db->from('pr_emp_position');
-			$this->db->from('pr_pay_scale_sheet_com');
+			$this->db->from('pay_salary_sheet_com');
 			$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-			$this->db->like('pr_pay_scale_sheet_com.salary_month', $year_month);
+			$this->db->like('pay_salary_sheet_com.salary_month', $year_month);
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
@@ -1124,7 +1132,7 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 			$this->db->where('pr_emp_com_info.emp_position_id = pr_emp_position.posi_id');
-			$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet_com.emp_id');
+			$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet_com.emp_id');
 			$this->db->order_by("pr_emp_com_info.emp_id");
 			$query = $this->db->get();
 
@@ -1262,22 +1270,22 @@ class Grid_model extends CI_Model{
 		$fromdate = $y . '-' . $m . '-01';
 		$todate = date("Y-m-t", strtotime($resign_date));
 
-		$this->db->select("pr_emp_com_info.emp_join_date,pr_pay_scale_sheet.*,
-			SUM(pr_pay_scale_sheet.total_days) as tDays,
-			SUM(pr_pay_scale_sheet.num_of_workday) as tWDays,
-			SUM(pr_pay_scale_sheet.att_days) as tAttDays,
-			SUM(pr_pay_scale_sheet.absent_days) as tAbsDays,
-			SUM(pr_pay_scale_sheet.e_l) as tEL,
-			SUM(pr_pay_scale_sheet.holiday) as tHoliday,
-			SUM(pr_pay_scale_sheet.weekend) as tWeekend");
+		$this->db->select("pr_emp_com_info.emp_join_date,pay_salary_sheet.*,
+			SUM(pay_salary_sheet.total_days) as tDays,
+			SUM(pay_salary_sheet.num_of_workday) as tWDays,
+			SUM(pay_salary_sheet.att_days) as tAttDays,
+			SUM(pay_salary_sheet.absent_days) as tAbsDays,
+			SUM(pay_salary_sheet.e_l) as tEL,
+			SUM(pay_salary_sheet.holiday) as tHoliday,
+			SUM(pay_salary_sheet.weekend) as tWeekend");
 
 		$this->db->from('pr_emp_com_info');
-		$this->db->from("pr_pay_scale_sheet");
+		$this->db->from("pay_salary_sheet");
 
-		$this->db->where("pr_pay_scale_sheet.emp_id", $emp_id);
-		$this->db->where("pr_pay_scale_sheet.salary_month >= '$fromdate'");
-		$this->db->where("pr_pay_scale_sheet.salary_month <= '$todate'");
-		$this->db->where("pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id");
+		$this->db->where("pay_salary_sheet.emp_id", $emp_id);
+		$this->db->where("pay_salary_sheet.salary_month >= '$fromdate'");
+		$this->db->where("pay_salary_sheet.salary_month <= '$todate'");
+		$this->db->where("pr_emp_com_info.emp_id = pay_salary_sheet.emp_id");
 
 		$query = $this->db->get();
 		$num_rows = $query->num_rows();
@@ -4445,35 +4453,31 @@ class Grid_model extends CI_Model{
 		//print_r($query->result_array());
 
 	}
-
 	function grid_pay_slip($year_month, $grid_emp_id)
 	{
 		$this->db->select('
 				pr_emp_com_info.emp_id,
 				pr_emp_com_info.gross_sal,
 				pr_emp_per_info.name_en,
-				pr_emp_per_info.emp_fname,
-				pr_emp_per_info.emp_mname,
+				pr_emp_per_info.name_en,
+				pr_emp_per_info.mother_name,
 				emp_designation.desig_name,
 				emp_designation.desig_bangla,
 				pr_emp_com_info.emp_join_date,
 				emp_depertment.dept_name,
 				emp_depertment.dept_bangla,
 				emp_section.sec_name_en,
-				emp_section.sec_name_en_bn,
+				emp_section.sec_name_bn,
 				emp_line_num.line_name_en,
-				emp_line_num.line_bangla,
+				emp_line_num.line_name_bn,
 				pr_emp_com_info.emp_sal_gra_id,
 				pr_emp_com_info.ot_entitle,
-				pr_emp_com_info.ot_show_in,
+				pr_emp_com_info.com_ot_entitle,	
 				pr_id_proxi.proxi_id,
-				pr_emp_add.emp_pre_add,
-				pr_emp_add.emp_par_add,
-				pr_emp_position.posi_name,
 				pr_grade.gr_name,
-				pr_pay_scale_sheet.*,
-				pr_emp_per_info.bangla_nam,
-				pr_emp_per_info.bank_ac_no,
+				pay_salary_sheet.*,
+				pr_emp_per_info.name_bn,
+				pr_emp_per_info.bank_bkash_no,
 			');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
@@ -4482,27 +4486,22 @@ class Grid_model extends CI_Model{
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
 		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_emp_add');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_emp_position');
-		$this->db->from('pr_pay_scale_sheet');
-		$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->like('pr_pay_scale_sheet.salary_month', $year_month);
+		$this->db->from('pay_salary_sheet');
+		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
+		$this->db->like('pay_salary_sheet.salary_month', $year_month);
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
 		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->where('pr_emp_com_info.emp_position_id = pr_emp_position.posi_id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
+		$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
 
-		if($query->num_rows() == 0)
-		{
+		if($query->num_rows() == 0){
 			return "Employee ID range does not exist!";
 		}
 		else
@@ -4514,7 +4513,7 @@ class Grid_model extends CI_Model{
 
 	function grid_pay_slip_non_compliance($year_month, $grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, emp_line_num.line_name_en ,emp_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_emp_com_info.ot_show_in, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet.* ,pr_emp_per_info.bangla_nam');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, emp_line_num.line_name_en ,emp_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_emp_com_info.ot_show_in, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pay_salary_sheet.* ,pr_emp_per_info.bangla_nam');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_designation');
@@ -4525,9 +4524,9 @@ class Grid_model extends CI_Model{
 			$this->db->from('pr_emp_add');
 			$this->db->from('pr_grade');
 			$this->db->from('pr_emp_position');
-			$this->db->from('pr_pay_scale_sheet');
+			$this->db->from('pay_salary_sheet');
 			$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-			$this->db->like('pr_pay_scale_sheet.salary_month', $year_month);
+			$this->db->like('pay_salary_sheet.salary_month', $year_month);
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
@@ -4537,7 +4536,7 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 			$this->db->where('pr_emp_com_info.emp_position_id = pr_emp_position.posi_id');
-			$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
+			$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
 			$this->db->order_by("pr_emp_com_info.emp_id");
 			$query = $this->db->get();
 
@@ -4555,7 +4554,7 @@ class Grid_model extends CI_Model{
 
 	function grid_pay_slip_com_non_com_mix($year_month, $grid_emp_id)
 	{
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, emp_line_num.line_name_en ,emp_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pr_pay_scale_sheet_com.* ,pr_emp_per_info.bangla_nam');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, emp_line_num.line_name_en ,emp_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pay_salary_sheet_com.* ,pr_emp_per_info.bangla_nam');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_designation');
@@ -4566,9 +4565,9 @@ class Grid_model extends CI_Model{
 			$this->db->from('pr_emp_add');
 			$this->db->from('pr_grade');
 			$this->db->from('pr_emp_position');
-			$this->db->from('pr_pay_scale_sheet_com');
+			$this->db->from('pay_salary_sheet_com');
 			$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-			$this->db->like('pr_pay_scale_sheet_com.salary_month', $year_month);
+			$this->db->like('pay_salary_sheet_com.salary_month', $year_month);
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
@@ -4578,7 +4577,7 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
 			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 			$this->db->where('pr_emp_com_info.emp_position_id = pr_emp_position.posi_id');
-			$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet_com.emp_id');
+			$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet_com.emp_id');
 			$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
 
@@ -4601,7 +4600,7 @@ class Grid_model extends CI_Model{
 		if($pf_status == "Yes")
 		{
 			$data = array();
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_pay_scale_sheet.basic_sal, pr_pay_scale_sheet.gross_sal, pr_pay_scale_sheet.provident_fund, pr_pay_scale_sheet.pf_bank_interest, pr_pay_scale_sheet.company_pf, pr_pay_scale_sheet.update_pf');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pay_salary_sheet.basic_sal, pay_salary_sheet.gross_sal, pay_salary_sheet.provident_fund, pay_salary_sheet.pf_bank_interest, pay_salary_sheet.company_pf, pay_salary_sheet.update_pf');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_designation');
@@ -4610,11 +4609,11 @@ class Grid_model extends CI_Model{
 			$this->db->from('emp_line_num');
 			$this->db->from('pr_id_proxi');
 			$this->db->from('pr_emp_shift');
-			$this->db->from('pr_pay_scale_sheet');
-			$this->db->where_in("pr_pay_scale_sheet.emp_id", $grid_emp_id);
-			$this->db->like('pr_pay_scale_sheet.salary_month', $year_month);
-			$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-			$this->db->where('pr_pay_scale_sheet.emp_id = pr_emp_com_info.emp_id');
+			$this->db->from('pay_salary_sheet');
+			$this->db->where_in("pay_salary_sheet.emp_id", $grid_emp_id);
+			$this->db->like('pay_salary_sheet.salary_month', $year_month);
+			$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
+			$this->db->where('pay_salary_sheet.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where("pr_emp_com_info.ot_entitle","1");
 			$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
 			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
@@ -4622,9 +4621,9 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
-			$this->db->where("pr_pay_scale_sheet.provident_fund != 0");
+			$this->db->where("pay_salary_sheet.provident_fund != 0");
 			$this->db->order_by("pr_emp_com_info.emp_id","ASC");
-			$this->db->group_by("pr_pay_scale_sheet.emp_id");
+			$this->db->group_by("pay_salary_sheet.emp_id");
 			$query = $this->db->get();
 
 			if($query->num_rows() > 0)
@@ -4656,8 +4655,8 @@ class Grid_model extends CI_Model{
 						$this->db->where('emp_id',$emp_id);
 						$this->db->where('salary_month <=',$search_date);
 						$this->db->group_by("salary_month");
-						$query = $this->db->get('pr_pay_scale_sheet');*/
-						//$query = $this->db->query("select SUM(`provident_fund`) AS provident_fund, COUNT(`provident_fund`) AS deduction_month FROM  (SELECT * FROM  pr_pay_scale_sheet WHERE `emp_id`='$emp_id' GROUP BY `salary_month`) AS pay_sheet WHERE pay_sheet.salary_month <= '$search_date'");
+						$query = $this->db->get('pay_salary_sheet');*/
+						//$query = $this->db->query("select SUM(`provident_fund`) AS provident_fund, COUNT(`provident_fund`) AS deduction_month FROM  (SELECT * FROM  pay_salary_sheet WHERE `emp_id`='$emp_id' GROUP BY `salary_month`) AS pay_sheet WHERE pay_sheet.salary_month <= '$search_date'");
 						//$row = $query->row();
 						//$sum_pf =  $row->provident_fund;
 						//$deduction_month =  $row->deduction_month;
@@ -6258,11 +6257,11 @@ class Grid_model extends CI_Model{
 		$lastday = date("t", mktime(0, 0, 0, $month, 1, $year));
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
 
-		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,emp_designation.*, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_entitle,pr_emp_com_info.ot_show_in,pr_grade.gr_name,pr_grade.gr_name_bn,pr_pay_scale_sheet_com.*');
+		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,emp_designation.*, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_entitle,pr_emp_com_info.ot_show_in,pr_grade.gr_name,pr_grade.gr_name_bn,pay_salary_sheet_com.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet_com');
+		$this->db->from('pay_salary_sheet_com');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -6275,13 +6274,13 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet_com.emp_id');
-		$this->db->where('pr_pay_scale_sheet_com.stop_salary !=',2);
-		$this->db->where("pr_pay_scale_sheet_com.salary_month = '$sal_year_month'");
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet_com.emp_id');
+		$this->db->where('pay_salary_sheet_com.stop_salary !=',2);
+		$this->db->where("pay_salary_sheet_com.salary_month = '$sal_year_month'");
 		// $this->db->order_by("pr_emp_com_info.emp_id","ASC");
 		$this->db->order_by("emp_designation.desig_name","ASC");
 
-		// $this->db->group_by("pr_pay_scale_sheet_com.emp_id");
+		// $this->db->group_by("pay_salary_sheet_com.emp_id");
 		$query = $this->db->get();
 		/*echo "<pre>";
 		print_r($query->result_array());
@@ -6292,38 +6291,37 @@ class Grid_model extends CI_Model{
 
 	function grid_monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id)
 	{
+		// dd($grid_emp_id);
 		$year  = substr($sal_year_month,0,4);
 		$month = substr($sal_year_month,5,2);
 		$lastday = date("t", mktime(0, 0, 0, $month, 1, $year));
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
-
-		$this->db->select('emp_line_num.*,pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,pr_emp_per_info.bank_ac_no,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,pr_grade.gr_name,pr_grade.gr_name_bn,pr_pay_scale_sheet.*,emp_line_num.line_name_en, pr_emp_add.mobile');
+		$this->db->select('emp_line_num.*,
+		pr_emp_per_info.name_en,
+		pr_emp_per_info.bank_bkash_no,
+		emp_designation.desig_name,
+		emp_designation.desig_bangla, 
+		emp_section.*,
+		pr_emp_com_info.ot_entitle,
+		pr_emp_com_info.emp_join_date,
+		 pr_grade.gr_name,
+		 pr_grade.gr_name,
+		 pay_salary_sheet.*,
+		 emp_line_num.line_name_en');
 		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('emp_line_num');
-		$this->db->from('emp_designation');
-		$this->db->from('pr_emp_add');
-
+		$this->db->join('pr_emp_com_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','left');
+		$this->db->join('pr_grade','pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id','left');
+		$this->db->join('pay_salary_sheet','pr_emp_per_info.emp_id = pay_salary_sheet.emp_id','left');
+		$this->db->join('emp_depertment','pr_emp_com_info.emp_dept_id = emp_depertment.dept_id','left');
+		$this->db->join('emp_section','pr_emp_com_info.emp_sec_id = emp_section.id','left');
+		$this->db->join('emp_line_num','pr_emp_com_info.emp_line_id = emp_line_num.id','left');
+		$this->db->join('emp_designation','pr_emp_com_info.emp_desi_id = emp_designation.id','left');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		// $this->db->where('pr_pay_scale_sheet.stop_salary !=',2);
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
 		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
-		// $this->db->order_by("emp_designation.desig_name");
-		// $this->db->group_by("pr_pay_scale_sheet.emp_id");
 		$query = $this->db->get();
+		// dd($query->result());
 		return $query->result();
 	}
 
@@ -6335,11 +6333,11 @@ class Grid_model extends CI_Model{
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
 
-		$this->db->select('emp_line_num.*,pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,pr_emp_per_info.bank_ac_no,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,pr_grade.gr_name,pr_grade.gr_name_bn,pr_pay_scale_sheet.*,emp_line_num.line_name_en');
+		$this->db->select('emp_line_num.*,pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,pr_emp_per_info.bank_ac_no,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,pr_grade.gr_name,pr_grade.gr_name_bn,pay_salary_sheet.*,emp_line_num.line_name_en');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -6352,13 +6350,13 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		// $this->db->where('pr_pay_scale_sheet.stop_salary !=',2);
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
+		// $this->db->where('pay_salary_sheet.stop_salary !=',2);
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
 		// $this->db->order_by("pr_emp_com_info.emp_id");
 		// $this->db->order_by("emp_designation.desig_name");
 		$this->db->order_by("emp_section.id","ASC");
-		$this->db->group_by("pr_pay_scale_sheet.emp_id");
+		$this->db->group_by("pay_salary_sheet.emp_id");
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -6372,11 +6370,11 @@ class Grid_model extends CI_Model{
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
 
-		$this->db->select('emp_line_num.*,pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_grade.gr_name_bn,pr_pay_scale_sheet_com.*,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,emp_line_num.line_name_en');
+		$this->db->select('emp_line_num.*,pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_grade.gr_name_bn,pay_salary_sheet_com.*,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,emp_line_num.line_name_en');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet_com');
+		$this->db->from('pay_salary_sheet_com');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -6389,12 +6387,12 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet_com.emp_id');
-		$this->db->where('pr_pay_scale_sheet_com.stop_salary !=',2);
-		$this->db->where("pr_pay_scale_sheet_com.salary_month = '$sal_year_month'");
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet_com.emp_id');
+		$this->db->where('pay_salary_sheet_com.stop_salary !=',2);
+		$this->db->where("pay_salary_sheet_com.salary_month = '$sal_year_month'");
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$this->db->order_by("emp_designation.desig_name","ASC");
-		// $this->db->group_by("pr_pay_scale_sheet_com.emp_id");
+		// $this->db->group_by("pay_salary_sheet_com.emp_id");
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -6407,11 +6405,11 @@ class Grid_model extends CI_Model{
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
 
-		$this->db->select('emp_line_num.*,pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,pr_emp_per_info.bank_ac_no,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,pr_grade.gr_name,pr_grade.gr_name_bn,pr_pay_scale_sheet.*,emp_line_num.line_name_en');
+		$this->db->select('emp_line_num.*,pr_emp_per_info.name_en,pr_emp_per_info.bangla_nam,pr_emp_per_info.bank_ac_no,emp_designation.desig_name,emp_designation.desig_bangla, emp_section.*, pr_emp_com_info.emp_join_date,pr_emp_com_info.ot_show_in,pr_emp_com_info.ot_entitle,pr_grade.gr_name,pr_grade.gr_name_bn,pay_salary_sheet.*,emp_line_num.line_name_en');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -6424,13 +6422,13 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		// $this->db->where('pr_pay_scale_sheet.stop_salary !=',2);
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
+		// $this->db->where('pay_salary_sheet.stop_salary !=',2);
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
 		// $this->db->order_by("pr_emp_com_info.emp_id");
 		// $this->db->order_by("emp_designation.desig_name");
 		$this->db->order_by("emp_section.id","ASC");
-		// $this->db->group_by("pr_pay_scale_sheet.emp_id");
+		// $this->db->group_by("pay_salary_sheet.emp_id");
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -6440,11 +6438,11 @@ class Grid_model extends CI_Model{
 	{
 		$yearmonth = date('Y-m', strtotime($sal_year_month));
 
-		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_pay_scale_sheet.*,pr_emp_com_info.emp_join_date,emp_line_num.line_name_en, sum(pr_emp_shift_log.eot) as eot_hour');
+		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pay_salary_sheet.*,pr_emp_com_info.emp_join_date,emp_line_num.line_name_en, sum(pr_emp_shift_log.eot) as eot_hour');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -6459,15 +6457,15 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
 		$this->db->where('pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_shift_log.present_status !=','W');
 		$this->db->where('pr_emp_shift_log.present_status !=','H');
 		$this->db->like('pr_emp_shift_log.shift_log_date',$yearmonth);
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$this->db->order_by("emp_designation.desig_name");
-		$this->db->group_by("pr_pay_scale_sheet.emp_id");
+		$this->db->group_by("pay_salary_sheet.emp_id");
 		$this->db->group_by("pr_emp_shift_log.emp_id");
 		$query = $this->db->get();
 		//echo $this->db->last_query();
@@ -6484,11 +6482,11 @@ class Grid_model extends CI_Model{
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
 
-		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_pay_scale_sheet.*,pr_emp_com_info.emp_join_date');
+		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pay_salary_sheet.*,pr_emp_com_info.emp_join_date');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -6502,12 +6500,12 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
-		$this->db->where("pr_pay_scale_sheet.total_allaw !=", 0);
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
+		$this->db->where("pay_salary_sheet.total_allaw !=", 0);
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$this->db->order_by("emp_designation.desig_name");
-		$this->db->group_by("pr_pay_scale_sheet.emp_id");
+		$this->db->group_by("pay_salary_sheet.emp_id");
 		$query = $this->db->get();
 		return $query->result();
 
@@ -6523,11 +6521,11 @@ class Grid_model extends CI_Model{
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
 
-		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_pay_scale_sheet.*,pr_emp_com_info.emp_join_date');
+		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pay_salary_sheet.*,pr_emp_com_info.emp_join_date');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -6541,11 +6539,11 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$this->db->order_by("emp_designation.desig_name");
-		$this->db->group_by("pr_pay_scale_sheet.emp_id");
+		$this->db->group_by("pay_salary_sheet.emp_id");
 		$query = $this->db->get();
 		return $query->result();
 
@@ -6604,11 +6602,11 @@ class Grid_model extends CI_Model{
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
 
-		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_pay_scale_sheet.*');
+		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pay_salary_sheet.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 			$this->db->from('emp_depertment');
 			$this->db->from('emp_section');
 			$this->db->from('emp_line_num');
@@ -6626,8 +6624,8 @@ class Grid_model extends CI_Model{
 			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
 		if($grid_status == 4)
 		{
 			$salary_month = substr($sal_year_month,0,7);
@@ -6638,7 +6636,7 @@ class Grid_model extends CI_Model{
 
 
 		$this->db->order_by("pr_emp_com_info.emp_id");
-		$this->db->group_by("pr_pay_scale_sheet.emp_id");
+		$this->db->group_by("pay_salary_sheet.emp_id");
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		return $query->result();
@@ -6683,14 +6681,13 @@ class Grid_model extends CI_Model{
 	}
 
 
-	function sec_salary_summary($salary_month,$emp_stat,$grid_unit,$stop_salary)
-	{
+	function sec_salary_summary($salary_month,$emp_stat,$grid_unit,$stop_salary){
 		// echo "hi";exit;
 		$all_data = array();
 
 		$salary_month = $salary_month;
 
-		$this->db->select("sec_id,sec_name_en");
+		$this->db->select("id as sec_id,sec_name_en");
 		$this->db->where("unit_id",$grid_unit);
 		$this->db->order_by("sec_name_en");
 		$query = $this->db->get("emp_section");
@@ -6794,14 +6791,14 @@ class Grid_model extends CI_Model{
 			$all_data["bank_sum_ot_amount"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
 
 			//For Cash ot_amount
-			$column_name = "w_h_ot" ;
+			$column_name = "ot_hour" ;
 			$cash_sum_w_h_ot_hour = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
 			$all_data["cash_sum_w_h_ot_hour"][] = $cash_sum_w_h_ot_hour;
 
 			$bank_sum_w_h_ot_hour = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
 			$all_data["bank_sum_w_h_ot_hour"][] = $bank_sum_w_h_ot_hour;
 
-			$column_name = "w_h_ot_amt" ;
+			$column_name = "ot_amount" ;
 			$cash_sum_w_h_ot_amt = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
 			$all_data["cash_sum_w_h_ot_amt"][] = $cash_sum_w_h_ot_amt;
 
@@ -6823,9 +6820,9 @@ class Grid_model extends CI_Model{
 
 			//================================================
 			$this->db->select("COUNT(att_bonus) as att_bonus_man");
-			$this->db->from("pr_pay_scale_sheet");
-			$this->db->where_in('pr_pay_scale_sheet.emp_id', $emp_id_bank);
-			$this->db->where('pr_pay_scale_sheet.att_bonus !=', 0);
+			$this->db->from("pay_salary_sheet");
+			$this->db->where_in('pay_salary_sheet.emp_id', $emp_id_bank);
+			$this->db->where('pay_salary_sheet.att_bonus !=', 0);
 			$this->db->like("salary_month", $salary_month);
 			$query = $this->db->get();
 			//echo $this->db->last_query();
@@ -6834,9 +6831,9 @@ class Grid_model extends CI_Model{
 			if($att_bonus_man_bank ==''){$att_bonus_man_bank = 0;}
 
 			$this->db->select("COUNT(att_bonus) as att_bonus_man");
-			$this->db->from("pr_pay_scale_sheet");
-			$this->db->where_in('pr_pay_scale_sheet.emp_id', $emp_id_cash);
-			$this->db->where('pr_pay_scale_sheet.att_bonus !=', 0);
+			$this->db->from("pay_salary_sheet");
+			$this->db->where_in('pay_salary_sheet.emp_id', $emp_id_cash);
+			$this->db->where('pay_salary_sheet.att_bonus !=', 0);
 			$this->db->like("salary_month", $salary_month);
 			$query = $this->db->get();
 			//echo $this->db->last_query();
@@ -7019,6 +7016,7 @@ class Grid_model extends CI_Model{
 
 			$all_data["sub_total"][] = $sub_total;
 		}
+		// dd($all_data);
 		return $all_data;
 	}
 
@@ -7074,13 +7072,13 @@ class Grid_model extends CI_Model{
 		$this->db->select('pr_emp_per_info.*');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->where('pr_emp_com_info.emp_id = pr_emp_per_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$salary_month'");
-		$this->db->where('pr_pay_scale_sheet.floor_id',$floor_id);
-		$this->db->where('pr_pay_scale_sheet.sec_id',$sec_id);
-		$this->db->where('pr_pay_scale_sheet.line_id',$line_id);
+		$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
+		$this->db->where("pay_salary_sheet.salary_month = '$salary_month'");
+		$this->db->where('pay_salary_sheet.floor_id',$floor_id);
+		$this->db->where('pay_salary_sheet.sec_id',$sec_id);
+		$this->db->where('pay_salary_sheet.line_id',$line_id);
 
 		$data = array();
 		$query = $this->db->get();
@@ -7259,9 +7257,9 @@ class Grid_model extends CI_Model{
 
 			//================================================
 			$this->db->select("COUNT(att_bonus) as att_bonus_man");
-			$this->db->from("pr_pay_scale_sheet");
-			$this->db->where_in('pr_pay_scale_sheet.emp_id', $emp_id_bank);
-			$this->db->where('pr_pay_scale_sheet.att_bonus !=', 0);
+			$this->db->from("pay_salary_sheet");
+			$this->db->where_in('pay_salary_sheet.emp_id', $emp_id_bank);
+			$this->db->where('pay_salary_sheet.att_bonus !=', 0);
 			$this->db->like("salary_month", $salary_month);
 			$query = $this->db->get();
 			//echo $this->db->last_query();
@@ -7270,9 +7268,9 @@ class Grid_model extends CI_Model{
 			if($att_bonus_man_bank ==''){$att_bonus_man_bank = 0;}
 
 			$this->db->select("COUNT(att_bonus) as att_bonus_man");
-			$this->db->from("pr_pay_scale_sheet");
-			$this->db->where_in('pr_pay_scale_sheet.emp_id', $emp_id_cash);
-			$this->db->where('pr_pay_scale_sheet.att_bonus !=', 0);
+			$this->db->from("pay_salary_sheet");
+			$this->db->where_in('pay_salary_sheet.emp_id', $emp_id_cash);
+			$this->db->where('pay_salary_sheet.att_bonus !=', 0);
 			$this->db->like("salary_month", $salary_month);
 			$query = $this->db->get();
 			//echo $this->db->last_query();
@@ -7506,20 +7504,20 @@ class Grid_model extends CI_Model{
 
 	function count_empid_for_salary_floor_wise($all_emp_FSL,$status,$salary_draw,$stop_salary,$salary_month,$check)
 	 {
-		$this->db->select('pr_pay_scale_sheet.*');
-		$this->db->from('pr_pay_scale_sheet');
-		$this->db->where_in('pr_pay_scale_sheet.emp_id',$all_emp_FSL);
-		$this->db->where('pr_pay_scale_sheet.salary_draw',$salary_draw);
-		$this->db->where('pr_pay_scale_sheet.salary_month',$salary_month);
-		$this->db->where('pr_pay_scale_sheet.emp_status !=',6);
+		$this->db->select('pay_salary_sheet.*');
+		$this->db->from('pay_salary_sheet');
+		$this->db->where_in('pay_salary_sheet.emp_id',$all_emp_FSL);
+		$this->db->where('pay_salary_sheet.salary_draw',$salary_draw);
+		$this->db->where('pay_salary_sheet.salary_month',$salary_month);
+		$this->db->where('pay_salary_sheet.emp_status !=',6);
 
 		if($status !="ALL")
 		{
-			$this->db->where("pr_pay_scale_sheet.emp_status", $status);
+			$this->db->where("pay_salary_sheet.emp_status", $status);
 		}
 		/*if($stop_salary !="Select")
 		{
-			$this->db->where("pr_pay_scale_sheet.stop_salary", $stop_salary);
+			$this->db->where("pay_salary_sheet.stop_salary", $stop_salary);
 		}*/
 
 		$query = $this->db->get();
@@ -7551,8 +7549,8 @@ class Grid_model extends CI_Model{
 	 function get_sum_column_for_salary($column_name,$emp_id,$salary_month)
 	 {
 	 	$this->db->select_sum($column_name);
-		$this->db->from("pr_pay_scale_sheet");
-		$this->db->where_in('pr_pay_scale_sheet.emp_id', $emp_id);
+		$this->db->from("pay_salary_sheet");
+		$this->db->where_in('pay_salary_sheet.emp_id', $emp_id);
 		$this->db->like("salary_month", $salary_month);
 		$query = $this->db->get();
 		// echo $this->db->last_query();
@@ -7699,23 +7697,23 @@ class Grid_model extends CI_Model{
 		$this->db->select('pr_emp_per_info.*');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->where('pr_emp_com_info.emp_id = pr_emp_per_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
+		$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
 		$this->db->where('pr_emp_com_info.salary_draw',$salary_draw);
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$salary_month'");
+		$this->db->where("pay_salary_sheet.salary_month = '$salary_month'");
 		//if($section_id !="Select")
 		//{
-			$this->db->where("pr_pay_scale_sheet.line_id", $section_id);
+			$this->db->where("pay_salary_sheet.line_id", $section_id);
 		//}
 
 		if($status !="ALL" )
 		{
-			$this->db->where("pr_pay_scale_sheet.emp_status", $status);
+			$this->db->where("pay_salary_sheet.emp_status", $status);
 		}
 		if($stop_salary !="Select" )
 		{
-			$this->db->where("pr_pay_scale_sheet.stop_salary", $stop_salary);
+			$this->db->where("pay_salary_sheet.stop_salary", $stop_salary);
 		}
 
 		$query = $this->db->get();
@@ -7733,23 +7731,23 @@ class Grid_model extends CI_Model{
 		$this->db->select('pr_emp_per_info.*');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->where('pr_emp_com_info.emp_id = pr_emp_per_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
+		$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
 		$this->db->where('pr_emp_com_info.salary_draw',$salary_draw);
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$salary_month'");
+		$this->db->where("pay_salary_sheet.salary_month = '$salary_month'");
 		//if($section_id !="Select")
 		//{
-			$this->db->where("pr_pay_scale_sheet.sec_id", $line_id);//HERE $line Id veriable Is actually section id
+			$this->db->where("pay_salary_sheet.sec_id", $line_id);//HERE $line Id veriable Is actually section id
 		//}
 
 		if($status !="ALL" )
 		{
-			$this->db->where("pr_pay_scale_sheet.emp_status", $status);
+			$this->db->where("pay_salary_sheet.emp_status", $status);
 		}
 		if($stop_salary !="Select" )
 		{
-			$this->db->where("pr_pay_scale_sheet.stop_salary", $stop_salary);
+			$this->db->where("pay_salary_sheet.stop_salary", $stop_salary);
 		}
 
 		$query = $this->db->get();
@@ -7765,8 +7763,8 @@ class Grid_model extends CI_Model{
 	{
 
 		$this->db->select_sum($column_name);
-		$this->db->from("pr_pay_scale_sheet");
-		$this->db->where_in('pr_pay_scale_sheet.emp_id', $emp_id);
+		$this->db->from("pay_salary_sheet");
+		$this->db->where_in('pay_salary_sheet.emp_id', $emp_id);
 		$this->db->like("salary_month", $salary_month);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
@@ -8968,7 +8966,7 @@ function grid_emp_job_application($grid_emp_id){
 			$month = substr($resign_date,5,2);
 			$resign_sal_month = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
 
-			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_pay_scale_sheet.*');
+			$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en,  emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_resign_history.resign_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pay_salary_sheet.*');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
 			$this->db->from('emp_designation');
@@ -8979,11 +8977,11 @@ function grid_emp_job_application($grid_emp_id){
 			$this->db->from('pr_emp_shift');
 			$this->db->from("pr_emp_resign_history");
 			$this->db->from("pr_emp_add");
-			$this->db->from('pr_pay_scale_sheet');
+			$this->db->from('pay_salary_sheet');
 			$this->db->where("pr_emp_com_info.emp_id", $emp_id);
 			$this->db->where("pr_emp_add.emp_id = pr_emp_com_info.emp_id");
 			$this->db->where("pr_emp_resign_history.emp_id = pr_emp_com_info.emp_id");
-			$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
+			$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
 			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
@@ -8991,8 +8989,8 @@ function grid_emp_job_application($grid_emp_id){
 			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 			$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 			$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
-			$this->db->where('pr_pay_scale_sheet.emp_status =',4);
-			$this->db->where("pr_pay_scale_sheet.salary_month = '$resign_sal_month'");
+			$this->db->where('pay_salary_sheet.emp_status =',4);
+			$this->db->where("pay_salary_sheet.salary_month = '$resign_sal_month'");
 			// $this->db->order_by("emp_section.sec_name_en","ASC");
 			$this->db->order_by("pr_emp_com_info.emp_sec_id","ASC");
 			$query = $this->db->get();
@@ -9065,7 +9063,7 @@ function grid_emp_job_application($grid_emp_id){
 			$month = substr($left_date,5,2);
 			$left_sal_month = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en, emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_left_history.left_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pr_pay_scale_sheet.*');
+		$this->db->select('pr_emp_com_info.emp_id,pr_emp_per_info.name_en, emp_designation.desig_name, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_id_proxi.proxi_id, pr_emp_shift.shift_name,pr_emp_com_info.emp_cat_id, pr_emp_com_info.gross_sal, pr_emp_left_history.left_date as e_date, pr_emp_add.emp_pre_add,pr_emp_per_info.emp_dob,pay_salary_sheet.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -9076,11 +9074,11 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->from('pr_emp_shift');
 		$this->db->from("pr_emp_left_history");
 		$this->db->from("pr_emp_add");
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->where("pr_emp_com_info.emp_id", $emp_id);
 		$this->db->where("pr_emp_add.emp_id = pr_emp_com_info.emp_id");
 		$this->db->where("pr_emp_left_history.emp_id = pr_emp_com_info.emp_id");
-		$this->db->where('pr_emp_com_info.emp_id = pr_pay_scale_sheet.emp_id');
+		$this->db->where('pr_emp_com_info.emp_id = pay_salary_sheet.emp_id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
 		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
@@ -9088,8 +9086,8 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_com_info.emp_id = pr_id_proxi.emp_id');
 		$this->db->where('pr_emp_shift.id = pr_emp_com_info.emp_shift');
-		$this->db->where('pr_pay_scale_sheet.emp_status =',3);
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$left_sal_month'");
+		$this->db->where('pay_salary_sheet.emp_status =',3);
+		$this->db->where("pay_salary_sheet.salary_month = '$left_sal_month'");
 		// $this->db->order_by("emp_section.absent_report_index");
 		$this->db->order_by("pr_emp_com_info.emp_sec_id","ASC");
 		$query = $this->db->get();
@@ -11363,11 +11361,11 @@ function grid_emp_job_application($grid_emp_id){
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
 
-		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_pay_scale_sheet.*,pr_emp_com_info.emp_join_date,emp_line_num.line_name_en');
+		$this->db->select('pr_emp_per_info.name_en,emp_designation.desig_name, emp_section.sec_name_en, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pay_salary_sheet.*,pr_emp_com_info.emp_join_date,emp_line_num.line_name_en');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
-		$this->db->from('pr_pay_scale_sheet');
+		$this->db->from('pay_salary_sheet');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -11382,12 +11380,12 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_stop_salary.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_pay_scale_sheet.emp_id');
+		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
 		$this->db->where("pr_emp_stop_salary.salary_month = '$sal_year_month'");
-		$this->db->where("pr_pay_scale_sheet.salary_month = '$sal_year_month'");
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$this->db->order_by("emp_designation.desig_name");
-		$this->db->group_by("pr_pay_scale_sheet.emp_id");
+		$this->db->group_by("pay_salary_sheet.emp_id");
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		if($query->num_rows()>0)

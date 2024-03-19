@@ -148,8 +148,9 @@ $this->load->view("head_english",$data);
 			echo "</td>";
 			
 			$total_gross_cash_bank = $total_gross_cash_bank + $tt;
-			
+			dd($this->session->userdata('username'));
 			$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
+
 			$acl     = $this->acl_model->get_acl_list($user_id);
 			if(in_array(14,$acl)){
 				$eot_cash_bank_hour 	= $values["eot_hr_for_sa_cash_bank"][$i];

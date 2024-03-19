@@ -162,7 +162,7 @@ function actual_monthly_salary_sheet()
 	}
 
 	
-	document.getElementById('loaader').style.display = 'flex';
+	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/actual_monthly_salary_sheet/";
 
@@ -173,7 +173,7 @@ function actual_monthly_salary_sheet()
 	ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
-	document.getElementById('loaader').style.display = 'none';
+	//document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -182,8 +182,7 @@ function actual_monthly_salary_sheet()
 	}
 }
 
-function monthly_salary_sheet()
-{
+function monthly_salary_sheet(){
 	var salary_month = document.getElementById('salary_month').value;
 	if(salary_month =='')
 	{
@@ -208,7 +207,10 @@ function monthly_salary_sheet()
 		return false;
 	}
 
-	document.getElementById('loaader').style.display = 'flex';
+	// var loader = document.getElementById('loaader');
+	// if (loader) {
+	// 	loader.style.display = 'flex';
+	// }
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/monthly_salary_sheet/";
 
@@ -219,7 +221,7 @@ function monthly_salary_sheet()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
-	document.getElementById('loaader').style.display = 'none';
+	// document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -228,8 +230,7 @@ function monthly_salary_sheet()
 	}
 }
 
-function grid_monthly_eot_sheet()
-{
+function grid_monthly_eot_sheet(){
 	var salary_month = document.getElementById('salary_month').value;
 	if(salary_month =='')
 	{
@@ -254,7 +255,7 @@ function grid_monthly_eot_sheet()
 		return false;
 	}
 	
-	document.getElementById('loaader').style.display = 'flex';
+	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/grid_monthly_eot_sheet/";
 
@@ -264,7 +265,7 @@ function grid_monthly_eot_sheet()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
-	document.getElementById('loaader').style.display = 'none';
+	// document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -273,8 +274,7 @@ function grid_monthly_eot_sheet()
 	}
 }
 
-function eot_summary_report()
-{
+function eot_summary_report(){
 	var salary_month = document.getElementById('salary_month').value;
 	if(salary_month =='')
 	{
@@ -299,7 +299,7 @@ function eot_summary_report()
 		return false;
 	}
 	
-	document.getElementById('loaader').style.display = 'flex';
+	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/eot_summary_report/";
 
@@ -309,7 +309,7 @@ function eot_summary_report()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
-	document.getElementById('loaader').style.display = 'none';
+	// document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -337,14 +337,14 @@ function salary_summary()
 	var status = document.getElementById('status').value;
 	var stop_salary = document.getElementById('stop_salary').value;
 
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
+	// var checkboxes = document.getElementsByName('emp_id[]');
+	// var sql = get_checked_value(checkboxes);
+	// if (sql == '') {
+	// 	alert('Please select employee Id');
+	// 	return false;
+	// }
 	
-	document.getElementById('loaader').style.display = 'flex';
+	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/salary_summary/";
 
@@ -354,7 +354,7 @@ function salary_summary()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
-	document.getElementById('loaader').style.display = 'none';
+	// document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -3047,8 +3047,7 @@ function grid_pay_slip_non_compliance()
 
 }
 
-function grid_pay_slip_actual()
-{
+function grid_pay_slip_actual(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 
 	try{
@@ -3076,14 +3075,14 @@ function grid_pay_slip_actual()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('salary_month').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
-	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var year_month = report_month_sal+"-"+"01";
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5213,8 +5212,7 @@ function delete_shift_log_info(){
 }
 
 
-function grid_monthly_salary_sheet()
-{
+function grid_monthly_salary_sheet(){
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
  try{
@@ -5889,8 +5887,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
 }
 
-function sec_sal_summary_report()
-{
+function sec_sal_summary_report(){
 
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
@@ -5918,12 +5915,12 @@ function sec_sal_summary_report()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -5935,7 +5932,7 @@ function sec_sal_summary_report()
 	//var stop_salary = document.getElementById('grid_stop_salary').value;
 	var stop_salary = 1;
 
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var sal_year_month = report_month_sal+"-"+"01";
 
 	
 	
@@ -7495,8 +7492,7 @@ function grid_bgm_new_join_report()
 	}
 
 }
-function grid_bank_note_req()
-{
+function grid_bank_note_req(){
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
  try{
@@ -7523,12 +7519,12 @@ function grid_bank_note_req()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -7546,7 +7542,7 @@ function grid_bank_note_req()
 		alert('Please select employee Id');
 		return false;
 	}
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var sal_year_month = report_month_sal+"-"+"01";
 
 
 	// 

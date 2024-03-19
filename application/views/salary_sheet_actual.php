@@ -51,6 +51,7 @@ echo $date_format;
 <body style="margin:0 2px;">
 
 <?php
+// dd($value);
 $row_count=count($value);
 if($row_count >7)
 {
@@ -91,7 +92,7 @@ for ($counter = 1; $counter <= $page; $counter ++)
 {
 ?>
 
-<table height="auto"  class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:12px; width:13.6in; font-family:SutonnyMJ, SolaimanLipi;">
+<table height="auto"  class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:12px; width:13.6in; , SolaimanLipi;">
 
 <tr height="75px">
 
@@ -106,11 +107,11 @@ for ($counter = 1; $counter <= $page; $counter ++)
 <?php
 $date = date('d-m-Y');
 //$unit_name['unit_name'] = $this->db->where("unit_id",$grid_unit)->get('pr_units')->row()->unit_name;
-$section_name = $value[0]->sec_bangla;
+$section_name = $value[0]->sec_name_en;
 $dom = $value[0]->total_days;
 //echo "Section : $section_name<br>";
 echo "বিভাগ : $section_name<br>";
-echo "মাসের তারিখ :".'<span style="font-family:SutonnyMJ">'." $dom<br>".'</span>';
+echo "মাসের তারিখ :".'<span style="">'." $dom<br>".'</span>';
 
 //echo "Payment Date : $date"; ?>
 </table>
@@ -133,6 +134,11 @@ $this->load->view("head_bangla");?>
 echo '<span style="font-weight:bold;">';
 //echo "Salary/Wages & OT Wages Payment Sheet for the month of  ";
 echo "বেতন ও মজুরী প্রদান পত্র ";
+$date1 = $salary_month;
+$date2 = date('Y-m-t', strtotime($salary_month));
+$from_date = date('Y-m-d', strtotime($date1));
+$to_date = date('Y-m-t', strtotime($date1));
+// $date = "$first_date to $last_date";
 $date = $salary_month;
 $year=trim(substr($date,0,4));
 $month=trim(substr($date,5,2));
@@ -145,7 +151,7 @@ $year2=trim(substr($date2,6,9));
 
 $salary_month_check = date("M-Y", mktime(0, 0, 0, $month, $day, $year));
 
-$date_format = date("d-m-Y", mktime(0, 0, 0, $month2, $day2, $year2));
+$date_format = date("d-m-Y", strtotime("$year2-$month2-$day2"));
 echo '<span style="">'. $salary_month_check .'</span>';
 echo '</span>';
 ?>
@@ -153,8 +159,8 @@ echo '</span>';
 <div style="text-align:left; position:relative;padding-left:10px;width:20%; overflow:hidden; float:right; display:block; font-weight:bold">
 
 <?php
-echo '<span style="font-family:SutonnyMJ">'."পাতা নং # $counter এর $page<br>".'</span>';
-echo "টাকা প্রদানের তারিখ : "."<span style='font-family:SutonnyMJ'>".$date_format."</span>";
+echo '<span style="">'."পাতা নং # $counter এর $page<br>".'</span>';
+echo "টাকা প্রদানের তারিখ : "."<span style=''>".date('d-m-Y')."</span>";
 ?>
 
 </div>
@@ -278,7 +284,7 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 
 		echo "<td colspan='6' style='text-align:left; padding-left:5px;'>";
 		echo "<span  style='font-weight:bold;'>";
-		print_r($value[$k]->bangla_nam);
+		print_r($value[$k]->name_en);
 		echo "</span>";
 		echo '<br>';
 
@@ -287,43 +293,27 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 		$date = $value[$k]->emp_join_date;
 		$doj		= date('d-m-y', strtotime($date));
 		$doj_check	= date('Y-m', strtotime($date));
-		echo 'যোগদানের তারিখ :'.'<span style="font-family:SutonnyMJ">'.$doj.'</span>';
+		echo 'যোগদানের তারিখ :'.'<span style="">'.$doj.'</span>';
 		echo '<br>';
-		if($value[$k]->gr_name_bn=='নাই'){
-			echo "গ্রেড: ";print_r ($value[$k]->gr_name_bn);
+		if($value[$k]->gr_name=='নাই'){
+			echo "গ্রেড: ";print_r ($value[$k]->gr_name);
 		}else{
-			print_r($value[$k]->gr_name_bn);
+			print_r($value[$k]->gr_name);
 		}
 		echo '<br>';
 		if($grid_status == 4)
 		{
 			$resign_date = $this->Grid_model->get_resign_date_by_empid($value[$k]->emp_id);
 			if($resign_date != false){
-			echo "পদত্যাগ : <span style='font-family:SutonnyMJ'>".$resign_date = date('d-m-Y', strtotime($resign_date))."</span>";
+			echo "পদত্যাগ : <span style=''>".$resign_date = date('d-m-Y', strtotime($resign_date))."</span>";
 			}
 		}
 		echo "</td>";
 
 
-		/*
-		echo "<td>";
-		print_r($value[$k]->desig_name);
-		echo "</td>";
-
-		/*echo "<td>";
-		print_r($value[$k]->sec_name);
-		echo "</td>";*/
-
-		/*
-		echo "<td>";
-		$date = $value[$k]->emp_join_date;
-		$date_format		= date('d-M-y', strtotime($date));
-		echo $date_format;
-		echo "</td>";*/
-
 		echo "<td style='font-family:arial; font-size:10px;'>";
 		$line_id = $value[$k]->line_id;
-		echo $line_name = $this->db->select('line_bangla')->where('line_id',$line_id)->get('pr_line_num')->row()->line_bangla;
+		echo $line_name = $this->db->select('line_name_en')->where('id',$line_id)->get('pr_line_num')->row()->line_name_en;
 		echo "</td>";
 
 		$basic_salary 				= $value[$k]->basic_sal;
@@ -444,17 +434,22 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 
 		echo "<td>";
 
-		$staff = $this->Grid_model->staff_id_collect($value[$k]->emp_id);
+		// $staff = $this->Grid_model->staff_id_collect($value[$k]->emp_id);
 
-		if($value[$k]->ot_entitle==1 && $staff==1){
+
+		if($value[$k]->ot_entitle==1 && $value[$k]->com_ot_entitle ==1){
 
 			$eot_hour = 0;
 			$ot_hour  = 0;
 
-		}elseif($value[$k]->ot_entitle==0 && $staff==0){
+		}elseif($value[$k]->ot_entitle==0 && $value[$k]->com_ot_entitle ==0){
 
-			$ot_hour = $value[$k]->ot_hour;
-			$eot_hour = $value[$k]->eot_hour;
+			$ot = $this->db->select("
+				SUM('ot') as ot_hour, SUM('eot') as eot_hour,
+			")->where('emp_id', $value[$k]->emp_id)->where('shift_log_date BETWEEN "'.$from_date.'" AND "'.$to_date.'"')->get('pr_emp_shift_log')->row();
+
+			$ot_hour = $ot->ot_hour;
+			$eot_hour = $ot->eot_hour;
 		}
 		else{
 			$eot_hour = 0;
@@ -474,11 +469,11 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 		echo "</td>";
 
 
-		if($value[$k]->ot_entitle==1 && $staff==1){
+		if($value[$k]->ot_entitle==1 && $value[$k]->com_ot_entitle==1){
 
 			$ot_amount = 0;
 
-		}elseif($value[$k]->ot_entitle==0 && $staff==0){
+		}elseif($value[$k]->ot_entitle==0 && $value[$k]->com_ot_entitle==0){
 
 			$ot_amount =  $value[$k]->ot_amount + $value[$k]->eot_amount;
 		}
@@ -494,7 +489,7 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 		$grand_total_ot_eot_amount 	= $grand_total_ot_eot_amount + $ot_amount;
 
 
-		$total_sum =  $net_wages + $att_bonus + $ot_amount + $value[$k]->due_pay_add;
+		$total_sum =  $net_wages + $att_bonus + $ot_amount + @$value[$k]->due_pay_add;
 		$in_total_sum = $in_total_sum  + $total_sum;
 		$grand_total_sum = $grand_total_sum + $total_sum;
 		echo "<td>";
@@ -503,7 +498,7 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 
 
 		$adv_deduct 			= $value[$k]->adv_deduct;
-		$due_pay_add 			= $value[$k]->due_pay_add;
+		$due_pay_add 			= @$value[$k]->due_pay_add;
 		$total_adv_deduct 		= $total_adv_deduct + $adv_deduct;
 		$grand_total_adv_deduct = $grand_total_adv_deduct + $adv_deduct;
 		echo "<td>";
@@ -515,42 +510,7 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 		echo "</td>";
 
 
-		/*if($deduct_status == "Yes")
-		{
-			$hd_deduct_amount 				= $value[$k]->hd_decuct_amount;
-			$hd_hour 						= $value[$k]->count_hd_decuct;
-			$total_hd_deduct_amount 		= $total_hd_deduct_amount + $hd_deduct_amount;
-			$grand_total_hd_deduct_amount	= $grand_total_hd_deduct_amount + $hd_deduct_amount;
-			echo "<td>";
-			echo $hd_deduct_amount;
-			echo "<br>($hd_hour)";
-			echo "</td>";
-		}*/
-
-
-
-//		$late_count 				= $value[$k]->late_count;
-//		$late_deduction 			= $value[$k]->late_deduct;
-//		$total_late_deduction 		= $total_late_deduction + $late_deduction;
-//		$grand_total_late_deduction = $grand_total_late_deduction + $late_deduction;
-//		echo "<td>";
-//		echo $late_deduction."<br>($late_count)";
-//		echo "</td>";
-//
-//		$others_deduct 				= $value[$k]->others_deduct;
-//		$total_others_deduct 		= $total_others_deduct + $others_deduct;
-//		$grand_total_others_deduct 	= $grand_total_others_deduct + $others_deduct;
-//		echo "<td>";
-//		echo $others_deduct;
-//		echo "</td>";
-
-	/*	$tax_deduct 				= $value[$k]->tax_deduct;
-		$total_tax_deduct 			= $total_tax_deduct + $tax_deduct;
-		$grand_total_tax_deduct 	= $grand_total_tax_deduct + $tax_deduct;*/
-		/*echo "<td>";
-		echo $tax_deduct;
-		echo "</td>";*/
-
+	
 
 		$stamp_deduct 				= $value[$k]->stamp;
 		$total_stamp_deduct 		= $total_stamp_deduct + $stamp_deduct;
@@ -563,29 +523,9 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 
 
 
-		/*$holiday_alo_count 				= $value[$k]->holiday_alo_count;
-		$holiday_allowance 				= $value[$k]->holiday_allowance;
-		$total_holiday_allowance		= $total_holiday_allowance + $holiday_allowance;
-		$grand_total_holiday_allowance	= $grand_total_holiday_allowance + $holiday_allowance;
-		echo "<td>";
-		echo $holiday_allowance;
-		echo "<br>($holiday_alo_count)";
-		echo "</td>";
-
-		$night_alo_count  				= $value[$k]->night_alo_count;
-		$night_allowance 				= $value[$k]->night_allowance;
-		$total_night_allowance			= $total_night_allowance + $night_allowance;
-		$grand_total_night_allowance	= $grand_total_night_allowance + $night_allowance;
-		echo "<td>";
-		echo $night_allowance;
-		echo "<br>($night_alo_count)";
-		//echo "<br>($first_tiffin_count + $second_tiffin_count)";
-		echo "</td>";*/
-
-
 
 		//$net_pay 				= $value[$k]->net_pay ;//+ $eot_amount;
-		$adv_deduct 				= $value[$k]->adv_deduct;
+		$adv_deduct 			= $value[$k]->adv_deduct;
 		$total_sum              = $total_sum - $adv_deduct;
 		$net_pay				= $total_sum-$stamp_deduct;
 		$total_net_pay 			= $total_net_pay + $net_pay;
@@ -596,8 +536,7 @@ echo "টাকা প্রদানের তারিখ : "."<span style='fo
 
 		echo "<td style='font-family:arial;font-weight:bold; font-size: 28px;height:60px;'>";
 		if($salary_month_check == $doj_check){echo '';}
-		// echo "&nbsp;|&nbsp;";
-		//echo "<span style='border:'>&nbsp;|&nbsp;</span>";
+
 		echo "</td>";
 
 		$total_wages_with_stamp = $total_net_pay  + $total_stamp_deduct ;

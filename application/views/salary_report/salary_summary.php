@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Monthly Salary Summary Report Section Wise</title>
+<title>Monthly Salary Summary Report</title>
 <link rel="stylesheet" type="text/css" href="../../../../../../css/print.css" media="print" />
 
 <style type="text/css">
@@ -69,7 +69,7 @@ $this->load->view("head_english");
 	elseif($grid_status == 6)
 	{ echo 'Promoted Employee '; }
 	?>
-	Monthly Section Wise Salary Summary of 
+	Monthly Salary Summary of 
 	<?php 
 	$date = $salary_month;
 	$year=trim(substr($date,0,4));
@@ -83,7 +83,7 @@ $this->load->view("head_english");
 	<table class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:15px; margin:0 auto;">
 
   <tr height="20" align="center" style="font-weight:bold; background-color:#CCC;">
-    <td height="60"  width="200">Section</td>
+    <td height="60"  width="200">Line</td>
     <td   width="150">Total MP</td>
     <td   width="150">Cash MP</td>
     <td   width="150">Bank MP</td>
@@ -93,13 +93,13 @@ $this->load->view("head_english");
     <td   width="150">Medical Allowance</td>
     <td   width="150">Food Allowance</td>
     <td   width="150">Conveyance Allowance </td>
-    <td   width="150">Payable Salary Amount</td>
+    <td   width="150">Salary Amount</td>
     <td   width="150">OT Hour</td>
     <td   width="150">OT Amount</td>
     <td   width="150">Attn Bonus</td>
-    <td   width="150">TTl Payable Amount<br>(Without Stamp)</td>
+    <td   width="150">Cash TTl Amount</td>
     <td   width="150">Bank TTl Amount</td>
-    <td   width="150">TTl Payable Amount<br>(With Stamp)</td>
+    <td   width="150">Cash & Bank TTL Amount</td>
   </tr>
   	
 		<?php
@@ -116,132 +116,140 @@ $this->load->view("head_english");
 		$gt_ot_hour 	= 0;
 		$gt_ot_amount 	= 0;
 		$gt_attn_bonus 	= 0;
-		$gt_attn_bonus_man 	= 0;
 		$gt_cash_salary = 0;
 		$gt_bank_salary = 0;
 		$gt_net_salary	= 0;
-		
-		$count = count($values["sec_name_en"]);
-		
-		for($i=0; $i < $count; $i++)
+        $total_gross_salary = 0;
+        // dd($values);
+        // foreach ($values as $item) {
+        //     $sec_name_en = $item->sec_name_en;
+        //     if (isset($counts[$sec_name_en])) {
+        //         $counts[$sec_name_en]++;
+        //     } else {
+        //         $counts[$sec_name_en] = 1;
+        //     }
+        // }
+		// $count = count($counts);
+		foreach($values as $row)
 		{
 			echo "<tr>";
 			
 			echo "<td  style='text-align:left; padding-left:5px;'>";
-			echo $values["sec_name_en"][$i];
+			echo $row->line_name_en;
 			echo "</td>";
 			
-			$total_emp = $values["emp_cash"][$i] + $values["emp_bank"][$i];
+			$total_emp = $row->emp_cash; 
+            // + $row->emp_bank;
 			echo "<td align='center'>";
 			echo $total_emp;
 			echo "</td>";
 			$gt_mp = $gt_mp + $total_emp;
 			 
 			echo "<td align='center'>";
-			echo $values["emp_cash"][$i];
+			echo $row->emp_cash;
 			echo "</td>";
-			$gt_cash_mp = $gt_cash_mp + $values["emp_cash"][$i];
+			$gt_cash_mp = $gt_cash_mp + $row->emp_cash;
 			
 			echo "<td align='center'>";
-			echo $values["emp_bank"][$i];
+			echo $row->emp_bank;
 			echo "</td>";
-			$gt_bank_mp = $gt_bank_mp + $values["emp_bank"][$i];
-						
-			$total_gross_salary = $values["cash_sum"][$i] + $values["bank_sum"][$i];
+			$gt_bank_mp = $gt_bank_mp ;
+            // + $row->emp_bank;
+			// $total_gross_salary = 0;			
+			$total_gross_salary = $row->cash_sum ;
+            // + $row->bank_sum;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_gross_salary);
 			echo "</td>";
 			$gt_gross = $gt_gross + $total_gross_salary;
 			
 			//BASIC SALARY		
-			$total_basic_salary = $values["cash_sum_basic"][$i] + $values["bank_sum_basic"][$i];			
+			$total_basic_salary = $row->cash_sum_basic_sal ;
+            // + $row->bank_sum_basic_sal;			
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_basic_salary);
 			echo "</td>";
 			$gt_basic = $gt_basic + $total_basic_salary;
 			
 			//HOUSE RENT		
-			$total_house_rent = $values["cash_sum_house_r"][$i] + $values["bank_sum_house_r"][$i];		
+			$total_house_rent = $row->cash_sum_house_r ;
+            // + $row->bank_sum_house_r;		
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_house_rent);
 			echo "</td>";
 			$gt_house_r = $gt_house_r + $total_house_rent;
 			
 			//MEDICAL ALLOWANCE	
-			$total_medical_a = $values["cash_sum_medical_a"][$i] + $values["bank_sum_medical_a"][$i];
+			$total_medical_a = $row->cash_sum_medical_a ;
+            // + $row->bank_sum_medical_a;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_medical_a);
 			echo "</td>";
 			$gt_medical = $gt_medical + $total_medical_a;
 			
 			//FOOD ALLOWANCE	
-			$total_food_allow = $values["cash_sum_food_allow"][$i] + $values["bank_sum_food_allow"][$i];
+			$total_food_allow = $row->cash_sum_food_allow ;
+            // + $row->bank_sum_food_allow;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_food_allow);
 			echo "</td>";
 			$gt_food = $gt_food + $total_food_allow;
 			
 			//TRANSPORT ALLOWANCE	
-			$total_trans_allow = $values["cash_sum_trans_allow"][$i] + $values["bank_sum_trans_allow"][$i];
+			$total_trans_allow = $row->cash_sum_trans_allow ;
+            // + $row->bank_sum_trans_allow;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_trans_allow);
 			echo "</td>";
 			$gt_transport = $gt_transport + $total_trans_allow;
 	
-			$total_net_pay = $values["cash_sum_net_pay"][$i]+ $values["bank_sum_net_pay"][$i] ;							 	
-			$total_ot_amount = $values["cash_sum_ot_amount"][$i] + $values["bank_sum_ot_amount"][$i];
-			$total_w_h_ot_hour_amt = $values["cash_sum_w_h_ot_amt"][$i]+$values["bank_sum_w_h_ot_amt"][$i];
-			$total_ot_amt_sum = $total_ot_amount - $total_w_h_ot_hour_amt;
-			$total_attn_bonus = $values["cash_att_bonus"][$i] + $values["bank_att_bonus"][$i];
-			$att_bonus_man_total = $values["att_bonus_man_total"][$i];		
-			$total_salary_amount = $total_net_pay - ($total_ot_amt_sum + $total_attn_bonus); 
+	$total_net_pay = $row->cash_sum_net_pay+ $row->bank_sum_net_pay ;							 	
+	$total_ot_amount = $row->cash_ot_amount + $row->bank_ot_amount;
+	$total_attn_bonus = $row->cash_att_bonus + $row->bank_att_bonus;
+			
+	// $total_salary_amount = $total_net_pay - ($total_ot_amount + $total_attn_bonus); 
+	$total_salary_amount = $total_net_pay + ($total_emp * 0) - ($total_ot_amount + $total_attn_bonus); 
+	//$gross_salary - $total_deduction + $value[$k]->stamp + $value[$k]->adv_deduct;
 			
 			echo "<td align='right' style='padding-right:5px;'>";
-			echo number_format($total_salary_amount+ $values["stam_deduct_cash"][$i] +$values["stam_deduct_bank"][$i]);
+			echo number_format($total_salary_amount);
 			echo "</td>";
-			$gt_salary_amt = $gt_salary_amt + $total_salary_amount+$values["stam_deduct_cash"][$i] +$values["stam_deduct_bank"][$i];
+			$gt_salary_amt = $gt_salary_amt + $total_salary_amount;
 			
 			//TOTAL OT HOUR
-			$total_ot_hour = $values["cash_sum_ot_hour"][$i]+ $values["bank_sum_ot_hour"][$i];
-			$total_w_h_ot_hour = $values["cash_sum_w_h_ot_hour"][$i] + $values["bank_sum_w_h_ot_hour"][$i];
-			
+			$total_ot_hour = $row->cash_sum_ot_hour;
+            // + $row->bank_sum_ot_hour;
 			echo "<td align='right' style='padding-right:5px;'>";
-			$total_ot_sum = $total_ot_hour - $total_w_h_ot_hour;
-			// echo number_format($total_ot_hour);
-			echo number_format($total_ot_sum);
+			echo number_format($total_ot_hour);
 			echo "</td>";
-			// $gt_ot_hour = $gt_ot_hour + $total_ot_hour;
-			$gt_ot_hour = $gt_ot_hour + $total_ot_sum;
+			$gt_ot_hour = $gt_ot_hour + $total_ot_hour;
 			
 			//TOTAL OT AMOUNT 
 			echo "<td align='right' style='padding-right:5px;'>";
-			//echo $total_w_h_ot_hour_amt.'=';
-			echo number_format($total_ot_amt_sum);
+			echo number_format($total_ot_amount);
 			echo "</td>";
-			$gt_ot_amount = $gt_ot_amount + $total_ot_amt_sum;
+			$gt_ot_amount = $gt_ot_amount + $total_ot_amount;
 						
 			//TOTAL ATTENDANCE BONUS
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_attn_bonus);
-			echo "<br>($att_bonus_man_total)";
 			echo "</td>";
 			$gt_attn_bonus = $gt_attn_bonus + $total_attn_bonus;
-			$gt_attn_bonus_man = $gt_attn_bonus_man + $att_bonus_man_total;
 			
 			//CASH TOTAL NET WAGES
 			echo "<td align='right' style='padding-right:5px;'>";
-			echo number_format($values["cash_sum_net_pay"][$i] - $total_w_h_ot_hour_amt);
+			echo number_format($row->cash_sum_net_pay +$row->stam_deduct_cash);
 			echo "</td>";
-			$gt_cash_salary = $gt_cash_salary + $values["cash_sum_net_pay"][$i] - $total_w_h_ot_hour_amt;
+			$gt_cash_salary = $gt_cash_salary + $row->cash_sum_net_pay+$row->stam_deduct_cash;
 			
 			//BANK TOTAL NET WAGES
 			echo "<td align='right' style='padding-right:5px;'>";
-			echo number_format($values["bank_sum_net_pay"][$i]);
+			echo number_format($row->bank_sum_net_pay + $row->stam_deduct_bank);
 			echo "</td>";
-			$gt_bank_salary = $gt_bank_salary + $values["bank_sum_net_pay"][$i];
+			$gt_bank_salary = $gt_bank_salary + $row->bank_sum_net_pay + $row->stam_deduct_bank;
 			
 			//CASH & BANK TOTAL NET WAGES
-				$total_net_pay_with_stamp = $values["cash_sum_net_pay"][$i]+ $values["bank_sum_net_pay"][$i] + $values["stam_deduct_cash"][$i] +$values["stam_deduct_bank"][$i]-$total_w_h_ot_hour_amt;							 	
+			$total_net_pay_with_stamp = $row->cash_sum_net_pay+ $row->bank_sum_net_pay + $row->stam_deduct_cash +$row->stam_deduct_bank;							 	
 
 			
 			echo "<td align='right' style='padding-right:5px;'>";
@@ -307,7 +315,6 @@ $this->load->view("head_english");
 
 		echo "<td align='right' style='padding-right:5px;'>";
 		echo number_format($gt_attn_bonus);
-		echo "<br>($gt_attn_bonus_man)";
 		echo "</td>";
 		echo "<td align='right' style='padding-right:5px;'>";
 		echo number_format($gt_cash_salary);
@@ -322,20 +329,13 @@ $this->load->view("head_english");
 				
 		echo "</tr>";
 	?>
+		<tr>
+			<td colspan="17">
+				<?php $this->load->view("authorised_signature");?>
+			</td>
+		</tr>
 	</table>
-	<table width="100%" height="80px" border="0" align="center" style="margin-bottom:85px; font-family:Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold;">
-			<tr height="80%" >
-			<td colspan="28"></td>
-			</tr>
-			<tr height="20%">
-			
-            <td align="center"  style="width:25%" ><dt class="bottom_txt_design" >Admin & HR Dept.</dt></td>
-			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Accounts</dt></td>
-            <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Director</dt></td>
-            <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Managing Director</dt></td>
-			</tr>
-			
-			</table>
+
 	
 </body>
 </html>

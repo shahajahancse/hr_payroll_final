@@ -62,7 +62,7 @@ foreach($values as $rows)
 					<table width="300" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="76" style="font-size: 10px;">&#2472;&#2494;&#2478; </td>
-							<td width="100"><font style="font-family:SutonnyMJ; font-size: 8px;">: <strong><?php echo $rows["bangla_nam"];?></strong> </font></td>
+							<td width="100"><font style="font-family:SutonnyMJ; font-size: 8px;">: <strong><?php echo $rows["name_bn"];?></strong> </font></td>
 							<td width="72">গ্রেড</td>
 							<td width="75"><font style="font-family: SutonnyMJ;font-size: 11px;">: <?php echo $rows["gr_name"];   ?> </font></td>
 						</tr>
@@ -77,7 +77,7 @@ foreach($values as $rows)
 							<td width="76" style="font-size: 10px;">&#2453;&#2494;&#2480;&#2509;&#2465;</td>
 							<td width="100"><font style="font-family:SutonnyMJ;font-size: 11px; font-weight: bold;">: <?php echo $rows["emp_id"];   ?></font></td>
 							<td width="72" style="font-size: 10px;">&#2488;&#2503;&#2453;&#2486;&#2472; </td>
-							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["sec_bangla"];   ?></font></td>
+							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["sec_name_bn"];   ?></font></td>
 						</tr>
 						<tr>
 							<td width="76" style="font-size: 10px;">&#2479;&#2507;&#2455;&#2470;&#2494;&#2472;&#2503;&#2480; &#2468;&#2494;&#2480;&#2495;&#2454; </td>
@@ -92,14 +92,14 @@ foreach($values as $rows)
 							?>
 							</font></td>
 							<td width="72" style="font-size: 10px;">&#2482;&#2494;&#2439;&#2472; </td>
-							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["line_bangla"];   ?> </font></td>
+							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["line_name_en"];   ?> </font></td>
 						</tr>
 						<tr>
 							<td width="76" style="font-size: 10px;">&#2478;&#2507;&#2463; &#2470;&#2495;&#2472; </td>
 							<td width="100"><font style="font-family: SutonnyMJ; font-size:14px;font-size: 11px;">: <?php echo $total_days = $rows["total_days"];   ?> </font></td>
 
 							<td width="72" style="font-size: 10px;">ব্যাংক নং</td>
-							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["bank_ac_no"];   ?> </font></td>
+							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["bank_bkash_no"];   ?> </font></td>
 						</tr>
 						<tr>
 							<td width="76" style="font-size: 10px;">&#2478;&#2507;&#2463; &#2453;&#2480;&#2509;&#2478; &#2470;&#2495;&#2476;&#2488; </td>
@@ -149,7 +149,7 @@ foreach($values as $rows)
 							<td width="76" height="14" style="font-size: 10px;">মোট লেট</td>
 							<td width="100" style="font-size: 10px;"><font style="font-family: SutonnyMJ; font-size:14px;">: <?php echo $total_days = $rows["late_count"];   ?> </font> </td>
 							<td width="72" style="font-size: 10px;">পাঞ্চ মিস</td>
-							<td width="75"><font style="font-family: SutonnyMJ; font-size:14px;">: <?php echo $total_days = $rows["total_pError"];   ?> </font></td>
+							<td width="75"><font style="font-family: SutonnyMJ; font-size:14px;">: <?php echo @$total_days = $rows["total_pError"];   ?> </font></td>
 						</tr>
 
 					</table>
@@ -202,22 +202,22 @@ foreach($values as $rows)
 							<tr>
 								<td width="152"> বাস </td>
 								<td >:</td>
-								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo $total_days = $rows["transport_deduct"];   ?> </font></td>
+								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo @$total_days = $rows["transport_deduct"];   ?> </font></td>
 							</tr>
 							<tr>
 								<td width="152"> অগ্রীম </td>
 								<td >:</td>
-								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo $total_days = $rows["adv_deduct"];   ?> </font></td>
+								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo @$total_days = $rows["adv_deduct"];   ?> </font></td>
 							</tr>
 							<tr>
 								<td width="152">অনুপস্থিত</td>
 								<td >:</td>
-								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo $total_days = $rows["abs_deduction"];    ?> </font></td>
+								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo @$total_days = $rows["abs_deduction"];    ?> </font></td>
 							</tr>
 							<!--<tr>
 								<td width="152">লেট </td>
 								<td >:</td>
-								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo $total_days = $rows["late_deduct"];    ?> </font></td>
+								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo @$total_days = $rows["late_deduct"];    ?> </font></td>
 							</tr>-->
 							<!-- <tr>
 								<td width="152">ষ্ট্যাম্প</td>
@@ -303,12 +303,12 @@ foreach($values as $rows)
 				</span>(শ্রমিক কপি)
 			</div>
 
-			<div style="width:320px; margin-top:12px; line-height: 14px; height:auto; overflow:hidden; border-top:1px solid #000000;border-bottom:1px solid #000000;">
+			<div style="width:330px; margin-top:12px; line-height: 14px; height:auto; overflow:hidden; border-bottom:1px solid #000000; border-top:1px solid #000000;">
 				<div style="width:100%; border-bottom:1px solid #000000; height:auto; overflow:hidden; line-height:11px;">
 					<table width="300" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="76" style="font-size: 10px;">&#2472;&#2494;&#2478; </td>
-							<td width="100"><font style="font-family:SutonnyMJ; font-size: 8px;">: <strong><?php echo $rows["bangla_nam"];?></strong> </font></td>
+							<td width="100"><font style="font-family:SutonnyMJ; font-size: 8px;">: <strong><?php echo $rows["name_bn"];?></strong> </font></td>
 							<td width="72">গ্রেড</td>
 							<td width="75"><font style="font-family: SutonnyMJ;font-size: 11px;">: <?php echo $rows["gr_name"];   ?> </font></td>
 						</tr>
@@ -323,7 +323,7 @@ foreach($values as $rows)
 							<td width="76" style="font-size: 10px;">&#2453;&#2494;&#2480;&#2509;&#2465;</td>
 							<td width="100"><font style="font-family:SutonnyMJ;font-size: 11px; font-weight: bold;">: <?php echo $rows["emp_id"];   ?></font></td>
 							<td width="72" style="font-size: 10px;">&#2488;&#2503;&#2453;&#2486;&#2472; </td>
-							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["sec_bangla"];   ?></font></td>
+							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["sec_name_bn"];   ?></font></td>
 						</tr>
 						<tr>
 							<td width="76" style="font-size: 10px;">&#2479;&#2507;&#2455;&#2470;&#2494;&#2472;&#2503;&#2480; &#2468;&#2494;&#2480;&#2495;&#2454; </td>
@@ -338,13 +338,14 @@ foreach($values as $rows)
 							?>
 							</font></td>
 							<td width="72" style="font-size: 10px;">&#2482;&#2494;&#2439;&#2472; </td>
-							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["line_bangla"];   ?> </font></td>
+							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["line_name_en"];   ?> </font></td>
 						</tr>
 						<tr>
 							<td width="76" style="font-size: 10px;">&#2478;&#2507;&#2463; &#2470;&#2495;&#2472; </td>
 							<td width="100"><font style="font-family: SutonnyMJ; font-size:14px;font-size: 11px;">: <?php echo $total_days = $rows["total_days"];   ?> </font></td>
+
 							<td width="72" style="font-size: 10px;">ব্যাংক নং</td>
-							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["bank_ac_no"];   ?> </font></td>
+							<td width="75"><font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">: <?php echo $rows["bank_bkash_no"];   ?> </font></td>
 						</tr>
 						<tr>
 							<td width="76" style="font-size: 10px;">&#2478;&#2507;&#2463; &#2453;&#2480;&#2509;&#2478; &#2470;&#2495;&#2476;&#2488; </td>
@@ -394,14 +395,15 @@ foreach($values as $rows)
 							<td width="76" height="14" style="font-size: 10px;">মোট লেট</td>
 							<td width="100" style="font-size: 10px;"><font style="font-family: SutonnyMJ; font-size:14px;">: <?php echo $total_days = $rows["late_count"];   ?> </font> </td>
 							<td width="72" style="font-size: 10px;">পাঞ্চ মিস</td>
-							<td width="75"><font style="font-family: SutonnyMJ; font-size:14px;">: <?php echo $total_days = $rows["total_pError"];   ?> </font></td>
+							<td width="75"><font style="font-family: SutonnyMJ; font-size:14px;">: <?php echo @$total_days = $rows["total_pError"];   ?> </font></td>
 						</tr>
+
 					</table>
 				</div>
 				<div style="width:100%; border-bottom:1px solid #000000; height:auto; overflow:hidden;">
 					<div style="float:left; width:55px; height: auto; position:relative; margin-left:5px; top:18px; font-weight:bold;">
 					</div>
-					<div style="float: left; width:240px;line-height:11px;" >
+					<div style="float: left; width:240px;  line-height:11px;" >
 						<table width="230" cellspacing="0" cellpadding="0" style="font-size: 11px;">
 							<tr>
 								<td width="160" >মূল বেতন  </td>
@@ -446,22 +448,22 @@ foreach($values as $rows)
 							<tr>
 								<td width="152"> বাস </td>
 								<td >:</td>
-								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo $total_days = $rows["transport_deduct"];   ?> </font></td>
+								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo @$total_days = $rows["transport_deduct"];   ?> </font></td>
 							</tr>
 							<tr>
 								<td width="152"> অগ্রীম </td>
 								<td >:</td>
-								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo $total_days = $rows["adv_deduct"];   ?> </font></td>
+								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo @$total_days = $rows["adv_deduct"];   ?> </font></td>
 							</tr>
 							<tr>
 								<td width="152">অনুপস্থিত</td>
 								<td >:</td>
-								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo $total_days = $rows["abs_deduction"];    ?> </font></td>
+								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo @$total_days = $rows["abs_deduction"];    ?> </font></td>
 							</tr>
 							<!--<tr>
 								<td width="152">লেট </td>
 								<td >:</td>
-								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo $total_days = $rows["late_deduct"];    ?> </font></td>
+								<td width="59" align="right"> <font style="font-family: SutonnyMJ; font-size:14px;"> <?php echo @$total_days = $rows["late_deduct"];    ?> </font></td>
 							</tr>-->
 							<!-- <tr>
 								<td width="152">ষ্ট্যাম্প</td>
@@ -476,16 +478,6 @@ foreach($values as $rows)
 						</table>
 					</div>
 				</div>
-				<?php /*
-				<div style="border-bottom:1px solid #000000; line-height: 25px;">
-				<table width="295" cellspacing="0" cellpadding="0">
-						<tr>
-						<td width="210" ><span style="position:relative; margin-left:5px; font-weight:bold;"> অগ্রীম দণ্ড </span></td>
-						<td >:</td>
-						<td width="45" style="padding-right: 10px;" align="right"><font style="font-family: SutonnyMJ; font-size:14px;"><?php echo $due_pay_add = $rows["due_pay_add"];   ?> </font></td>
-						</tr>
-					</table>
-				</div> */?>
 
 				<div style="border-bottom:1px solid #000000; line-height: 25px;">
 				<table width="295" cellspacing="0" cellpadding="0">
@@ -524,6 +516,8 @@ foreach($values as $rows)
 					</table>
 				</div>
 			</div>
+
+
 			<div style=" width:320px; font-size:12px; padding-top:20px; margin-left: 10px; margin-bottom: 1px; margin-right: 10px;">
 				<span style=" width:150px; float:left;">কর্তৃপক্ষের স্বাক্ষর</span>
 				<span style=" width:150px; margin-left: 70px;">কর্মচারীর স্বাক্ষর</span>
