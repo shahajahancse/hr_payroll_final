@@ -115,7 +115,8 @@ $this->load->view("head_english",$data);
 		// $count = count($values["dept"]);
 		// for($i=0; $i < $count; $i++)
         foreach($values as $key => $value)
-		{
+		{  
+			// dd($value);
 			echo "<tr>";
 			
 			echo "<td align='center'>";
@@ -148,15 +149,21 @@ $this->load->view("head_english",$data);
 			echo "</td>";
 			
 			$total_gross_cash_bank = $total_gross_cash_bank + $tt;
-			dd($this->session->userdata('username'));
-			$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
-
-			$acl     = $this->acl_model->get_acl_list($user_id);
+			
+			$user_id = $this->session->userdata('data')->id;
+		 	$acl = array();
+							$this->db->select("acl_id");
+							$this->db->where('username_id',$user_id);
+							$query = $this->db->get('member_acl_level');
+							foreach($query->result() as $rows)
+							{
+								$acl[] = $rows->acl_id;
+							}
 			if(in_array(14,$acl)){
-				$eot_cash_bank_hour 	= $values["eot_hr_for_sa_cash_bank"][$i];
-				$eot_cash_bank_amount 	= $values["eot_amt_for_sa_cash_bank"][$i];
-				$eot_amount_cash_sum	= $values["eot_amt_for_sa_cash_sum"][$i];
-				$eot_amount_bank_sum 	= $values["eot_amt_for_sa_bank_sum"][$i];	
+				$eot_cash_bank_hour 	= $value->eot_hr_for_sa_cash_sum +$value->eot_hr_for_sa_bank_sum;
+				$eot_cash_bank_amount 	= $value->eot_amt_for_sa_cash_sum+$value->eot_amt_for_sa_bank_sum;
+				$eot_amount_cash_sum	= $value->eot_amt_for_sa_cash_sum;
+				$eot_amount_bank_sum 	= $value->eot_amt_for_sa_bank_sum;	
 			}
 			else
 			{

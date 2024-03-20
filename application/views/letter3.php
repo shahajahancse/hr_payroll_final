@@ -79,7 +79,7 @@
       <p class="text-justify">
         <span>জনাব/জনাবা,</span><br> 
         আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ হতে অদ্যবদি পর্যন্ত কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত থাকার কারনে আপনাকে গত
-        <b>২৫/০১/২০২৪</b> ইং তারিখে যার সূত্র নংঃ- <b>এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</b> এর একটি পত্রের মাধ্যেমে ১০ (দশ) দিনের সময় দিয়ে চাকুরীতে
+        <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y', strtotime($value->left_date . ' +10 days'));?></span></b> ইং তারিখে যার সূত্র নংঃ- <b>এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</b> এর একটি পত্রের মাধ্যেমে ১০ (দশ) দিনের সময় দিয়ে চাকুরীতে
         যোগদান সহ ব্যাখ্যা প্রদান করতে বলা হয়েছিল। কিন্তু আপনি নির্ধারিত সময়ের মধ্যে কর্মস্থলে উপস্থিত হননি এবং কোন ব্যাখ্যা
         প্রদান করেন নি। তথাপিও কর্তৃপক্ষ গত <b>১১/০২/২০২৪</b> ইং তারিখে যার সূত্র নংঃ-<b> এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-বি </b>এর আরও একটি পত্রর
         মাধ্যেমে আপনাকে আরো ০৭ (সাত) কর্মদিবসের সময় দিয়ে আত্মপক্ষ সমর্থন সহ চাকুরীতে যোগদানের জন্য পূণরায় নির্দেশ প্রদান করেন।

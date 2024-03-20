@@ -1600,7 +1600,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 		$firstdate = $this->input->post('firstdate');
-		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id,$firstdate);
+		$data['values'] 	= $this->Grid_model->grid_letter2_report($grid_emp_id,$firstdate);
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
@@ -1617,7 +1617,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$firstdate = $this->input->post('firstdate');
 
-		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id, $firstdate);
+		$data['values'] 	= $this->Grid_model->grid_letter3_report($grid_emp_id, $firstdate);
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
@@ -2077,14 +2077,14 @@ class Grid_con extends CI_Controller {
 		$this->load->view('employee_information',$data);
 	}
 
-	function grid_service_book()
-	{
+	function grid_service_book(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
 
 		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
+		// dd($data);
 
 		$this->load->view('service_book',$data);
 	}

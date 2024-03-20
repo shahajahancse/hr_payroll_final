@@ -108,13 +108,13 @@ $this->load->view("head_english",$data);
 		$total_cash_bank_bonus_amount = 0;
 		
 		
-		$count = count($values["sec_name"]);
+		$count = count($values["sec_name_en"]);
 		for($i=0; $i < $count; $i++)
 		{
 			echo "<tr>";
 			
 			echo "<td align='center'>";
-			echo $values["sec_name"][$i];
+			echo $values["sec_name_en"][$i];
 			echo "</td>";
 			
 				

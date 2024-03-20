@@ -45,7 +45,7 @@ class Salary_report_con extends CI_Controller {
 	// 	$sal_year_month = $this->input->post('sal_year_month');
 	// 	$grid_status 	= $this->input->post('grid_status');//$this->uri->segment(4);		
 	// 	$grid_data 		= $this->input->post('spl');//$this->uri->segment(5);
-	// 	$grid_emp_id = explode('xxx', trim($grid_data));
+	// 	$grid_emp_id = explode(',', trim($grid_data));
 	// 	$grid_unit		= $this->input->post('unit_id');
 	// 	$this->load->model('common_model');
 
@@ -196,7 +196,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_data 		= $this->input->post('spl');
 		$salary_draw 	= $this->input->post('salary_draw');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('Common_model');
 
@@ -218,7 +218,7 @@ class Salary_report_con extends CI_Controller {
 		$sal_year_month = $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');//$this->uri->segment(4);
 		$grid_data 		= $this->input->post('spl');//$this->uri->segment(5);
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);
@@ -258,7 +258,7 @@ class Salary_report_con extends CI_Controller {
 		$custom_salarydate = $this->input->post('custom_salarydate');
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);
@@ -282,7 +282,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_data 		= $this->input->post('spl');
 		$salary_draw 	= $this->input->post('salary_draw');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);
@@ -326,7 +326,7 @@ class Salary_report_con extends CI_Controller {
 		$sal_year_month = $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');//$this->uri->segment(4);
 		$grid_data 		= $this->input->post('spl');//$this->uri->segment(5);
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);
@@ -345,7 +345,7 @@ class Salary_report_con extends CI_Controller {
 		$sal_year_month = $this->uri->segment(3);
 		$grid_status 	= $this->uri->segment(4);
 		$grid_data 		= $this->uri->segment(5);
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
@@ -374,13 +374,12 @@ class Salary_report_con extends CI_Controller {
 
 		$this->load->view('bank_note_requisition',$data);
 	}
-	function grid_festival_bonus()
-	{
+	function grid_festival_bonus(){
 		$sal_year_month 	= $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_unit 		= $this->input->post('unit_id');
 		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$this->load->model('Common_model');
 		$data["deduct_status"]	= $this->Common_model->get_setup_attributes(1);
 		$data["value"] 			= $this->Grid_model->grid_festival_bonus($sal_year_month, $grid_status, $grid_emp_id);
@@ -391,24 +390,22 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('festival_bonus_report',$data);
 	}
 
-	function grid_advance_salary_sheet()
-	{
-		//$sal_year_month = $this->uri->segment(3);
-		//$grid_status 	= $this->uri->segment(4);
-		//$grid_data 		= $this->uri->segment(5);
-		$sal_year_month 	= $this->input->post('sal_year_month');
+	function grid_advance_salary_sheet(){
+		$sal_year_month = $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_unit 		= $this->input->post('unit_id');
 		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id 	= explode(',', trim($grid_data));
 		$this->load->model('Common_model');
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
-		$data["value"] = $this->Grid_model->grid_general_info_another_format($grid_emp_id);
-		$data["salary_date1"] = "2014-09-01";
-		$data["salary_date2"] = "2014-09-30";
-		$data["grid_status"]  = $grid_status;
+		$data["value"]        = $this->Grid_model->grid_general_info_another_format($grid_emp_id);
+		$firstDate = date('Y-m-01', strtotime($sal_year_month));
+		$lastDate = date('Y-m-t', strtotime($sal_year_month));
+		$data["first_date"] = $firstDate;
+		$data["last_date"] = $lastDate;
 		//$data["grid_section"]  = $grid_section;
 		$data["unit_id"]  	= $grid_unit;
+		$data['grid_status'] = $grid_status;
 
 		$this->load->view('advance_salary_sheet_report_compliance',$data);
 	}
@@ -471,13 +468,10 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('salary_summary_report_actual', $data);
 	}
 
-	function grid_festival_bonus_summary()
-	{
-
+	function grid_festival_bonus_summary(){
 		$salary_month 	= $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_unit 	= $this->input->post('unit_id');
-
 		$data["values"] = $this->Grid_model->festival_bonus_summary($salary_month,$grid_status,$grid_unit);
 		$data["salary_month"] = $salary_month;
 		$data["unit_id"] = $grid_unit;
@@ -485,8 +479,7 @@ class Salary_report_con extends CI_Controller {
 		//print_r($data);
 		$this->load->view('festival_bonus_summary',$data);
 	}
-	function grid_festival_bonus_summary_sec_wise()
-	{
+	function grid_festival_bonus_summary_sec_wise(){
 
 		$salary_month 	= $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');
@@ -500,25 +493,53 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('festival_bonus_summary_sec_wise',$data);
 	}
 
-	function grid_comprative_salary_statement()
-	{
+	function grid_comprative_salary_statement(){
 
 		$salary_month 	= $this->input->post('sal_year_month');
-		$salary_month2 	= $this->input->post('sal_year_month2');
+		$first_year     = date('Y-m-d', strtotime($salary_month));
+		$next_year		= date('Y-m-d', strtotime("+1 year", strtotime($first_year)));
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_unit 	= $this->input->post('unit_id');
-		$stop_salary 	= $this->input->post('stop_salary');
+		$stop_salary 	= null;
 
-		$data["values"] = $this->Grid_model->grid_comprative_salary_statement($salary_month,$salary_month2,$grid_status,$grid_unit,$stop_salary);
+		// dd($first_year.'==='.$next_year);
 
-		$salary_month = date('F-Y', strtotime($salary_month));
-		$salary_month2 = date('F-Y', strtotime($salary_month2));
+		$data["values"] = $this->Grid_model->grid_comprative_salary_statement($first_year,$next_year,$grid_status,$grid_unit,$stop_salary);
+		// dd($data);
+		$salary_month = date('F-Y', strtotime($first_year));
+		$salary_month2 = date('F-Y', strtotime($next_year));
 		$data["unit_id"] = $grid_unit;
 		$data["first_month"] = $salary_month;
 		$data["second_month"] = $salary_month2;
 		$data["grid_status"] = $grid_status;
 		//print_r($data);
 		$this->load->view('comprative_salary_statement_summary',$data);
+	}
+
+	function act_advance_salary_sheet(){
+		$sal_year_month = $this->input->post('sal_year_month');
+		$grid_status 	= $this->input->post('unit_id');//$this->uri->segment(4);		
+		$grid_data 		= $this->input->post('sql');//$this->uri->segment(5);
+		$grid_emp_id    = explode(',', trim($grid_data));
+		$grid_unit		= $this->input->post('unit_id');
+		$this->load->model('common_model');
+		//print_r($grid_emp_id);
+		$name = $this->session->userdata('username');
+		$user_check = $this->db->where('id_number', $name)->get('members')->row();
+		// if ($user_check->id_number == 'honey' && $user_check->unit_name == 4 && strtotime(date('2023-11-30')) >= strtotime($sal_year_month)) {
+		// 	echo 'Sorry!, data not found';
+		// 	return;
+		// }
+
+		$data["deduct_status"]= $this->common_model->get_setup_attributes(1);
+						
+		$data["value"] = $this->Grid_model->act_advance_salary_sheet($sal_year_month, $grid_status, $grid_emp_id);
+		$data["salary_month"] = $sal_year_month;
+		$data["grid_status"]  = $grid_status;
+		$data["unit_id"]  = $grid_unit;
+		// dd($data);
+		
+		$this->load->view('act_advance_salary_sheet',$data);
 	}
 
 
@@ -574,7 +595,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_firstdate = $this->input->post('year_month');
 		$grid_data = $this->input->post('spl');
 		$grid_unit = $this->input->post('unit_id');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 		$query['unit_id'] = $grid_unit;
@@ -593,7 +614,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_firstdate = $this->input->post('year_month');
 		$grid_data = $this->input->post('spl');
 		$grid_unit = $this->input->post('unit_id');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 		$query['unit_id'] = $grid_unit;
@@ -615,7 +636,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_firstdate = $this->input->post('year_month');//$this->uri->segment(3);
 		$grid_data = $this->input->post('spl');
 		$grid_unit = $this->input->post('unit_id');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 		$query['unit_id'] = $grid_unit;
@@ -635,7 +656,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_firstdate = $this->input->post('year_month');//$this->uri->segment(3);
 		$grid_data = $this->input->post('spl');
 		$grid_unit = $this->input->post('unit_id');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 		$query['unit_id'] = $grid_unit;
@@ -656,7 +677,7 @@ class Salary_report_con extends CI_Controller {
 		$this->load->model('Salary_process_model');
 		$grid_firstdate = $this->uri->segment(3);
 		$grid_data = $this->uri->segment(4);
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 		$query["salary_month"] = $grid_firstdate;
@@ -674,7 +695,7 @@ class Salary_report_con extends CI_Controller {
 	function grid_maternity_benefit(){
 		$grid_year = $this->uri->segment(3);
 		$grid_data = $this->uri->segment(4);
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);
 		$this->load->view('maternity_benefit',$data);
 	}
@@ -684,7 +705,7 @@ class Salary_report_con extends CI_Controller {
 		$sal_year_month = $this->uri->segment(3);
 		$grid_status 	= $this->uri->segment(4);
 		$grid_data 		= $this->uri->segment(5);
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
@@ -702,7 +723,7 @@ class Salary_report_con extends CI_Controller {
 		$sal_year_month = $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);
@@ -722,7 +743,7 @@ class Salary_report_con extends CI_Controller {
 		$sal_year_month = $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id = explode('xxx', trim($grid_data));
+		$grid_emp_id = explode(',', trim($grid_data));
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);
@@ -736,13 +757,12 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('salary_sheet_for_weekend_allowance',$data);
 	}
 
-	function grid_monthly_stop_sheet()
-	{
+	function grid_monthly_stop_sheet(){
 
 		$sal_year_month = $this->input->post('sal_year_month');
 		$grid_status 	= $this->input->post('grid_status');
 		$grid_data 		= $this->input->post('spl');
-		$grid_emp_id 	= explode('xxx', trim($grid_data));
+		$grid_emp_id 	= explode(',', trim($grid_data));
 		$grid_unit		= $this->input->post('unit_id');
 		$this->load->model('Common_model');
 		//print_r($grid_emp_id);

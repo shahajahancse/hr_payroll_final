@@ -4232,6 +4232,7 @@ class Grid_model extends CI_Model{
 				pre_post.name_bn as post_bn,
 				pr_emp_com_info.emp_sal_gra_id as grade,
 				pr_emp_com_info.com_gross_sal as salary,
+				pr_emp_left_history.left_date
 			');
 			$this->db->from('pr_emp_per_info');
 			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
@@ -4239,20 +4240,17 @@ class Grid_model extends CI_Model{
 			$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 			$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
 			$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+			$this->db->join('pr_emp_left_history', 'pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
 			$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
 			$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
 			$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
 			$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
 			$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
 			$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
-			// $this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id');
-			// $this->db->where( 'pr_emp_shift_log.shift_log_date BETWEEN "'.$before_date.'" AND "'.$current_date.'"');
-			// $this->db->join('pr_emp_left_history','pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			// $this->db->where('pr_emp_left_history.left_date <=', $current_date);
 			$this->db->order_by("pr_emp_com_info.emp_id");
 			$query = $this->db->get();
-			dd($query->row());
+			// dd($query->row());
 			if($query->num_rows() != 0){
 				$data[] = $query->row();
 			}
@@ -4341,114 +4339,155 @@ class Grid_model extends CI_Model{
 		//echo $firstdate;
 		$newDate = date("Y-m-d", strtotime('-20 days', strtotime($firstdate)));
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en, pr_emp_per_info.name_bn , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, emp_section.sec_name_en, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add,pr_emp_left_history.left_date');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_emp_add');
-		$this->db->from('pr_emp_left_history');
-		//$this->db->from('pr_district');
-		//$this->db->from('pr_upazila');
-		$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
-		$this->db->where('pr_emp_left_history.left_date', $newDate);
+			$this->db->select('
+				pr_emp_per_info.*,
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.id as id_emp,
+				emp_designation.desig_name,
+				emp_designation.desig_bangla,
+				emp_depertment.dept_name,
+				emp_depertment.dept_bangla,
+				emp_section.sec_name_en,
+				emp_section.sec_name_bn,
+				emp_line_num.line_name_bn,
+				emp_line_num.line_name_en,
+				per_dis.name_bn as dis_name_bn,
+				per_upa.name_bn as upa_name_bn,
+				per_post.name_bn as post_name_bn,
+				pre_dis.name_bn as dis_bn,
+				pre_upa.name_bn as upa_bn,
+				pre_post.name_bn as post_bn,
+				pr_emp_com_info.emp_sal_gra_id as grade,
+				pr_emp_com_info.com_gross_sal as salary,
+				pr_emp_left_history.left_date
+			');
+		
+			$this->db->from('pr_emp_per_info');
+			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+			$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+			$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+			$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+			$this->db->join('pr_emp_left_history', 'pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
+			$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+			$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
+			$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
+			$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
+			$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
+			$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
+			$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
+			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+			$this->db->order_by("pr_emp_com_info.emp_id");
+			$query = $this->db->get();
 
-		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
-
-		if($query->num_rows() == 0)
-		{
+		if($query->num_rows() == 0){
 			return "Employee ID range does not exist!";
-
 		}
-		else
-		{
+		else{
 			return $query;
 		}
-		//print_r($query->result_array());
-
 	}
 
-	function grid_letter3_report_old($grid_emp_id)
-	{
+	function grid_letter3_report_old($grid_emp_id,$firstdate){
+		$newDate = date("Y-m-d", strtotime('-20 days', strtotime($firstdate)));
+			$this->db->select('
+				pr_emp_per_info.*,
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.id as id_emp,
+				emp_designation.desig_name,
+				emp_designation.desig_bangla,
+				emp_depertment.dept_name,
+				emp_depertment.dept_bangla,
+				emp_section.sec_name_en,
+				emp_section.sec_name_bn,
+				emp_line_num.line_name_bn,
+				emp_line_num.line_name_en,
+				per_dis.name_bn as dis_name_bn,
+				per_upa.name_bn as upa_name_bn,
+				per_post.name_bn as post_name_bn,
+				pre_dis.name_bn as dis_bn,
+				pre_upa.name_bn as upa_bn,
+				pre_post.name_bn as post_bn,
+				pr_emp_com_info.emp_sal_gra_id as grade,
+				pr_emp_com_info.com_gross_sal as salary,
+				pr_emp_left_history.left_date
+			');
+			$this->db->from('pr_emp_per_info');
+			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+			$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+			$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+			$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+			$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+			$this->db->join('pr_emp_left_history', 'pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
+			$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
+			$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
+			$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
+			$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
+			$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
+			$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
+			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+			$this->db->order_by("pr_emp_com_info.emp_id");
+			$query = $this->db->get();
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id , emp_depertment.dept_name, emp_section.sec_name_en, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_emp_add');
-		$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-
-		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
-
-		if($query->num_rows() == 0)
-		{
+		if($query->num_rows() == 0){
 			return "Employee ID range does not exist!";
-
 		}
-		else
-		{
+		else{
 			return $query;
 		}
-		//print_r($query->result_array());
-
 	}
 
-	function grid_letter3_report($grid_emp_id, $firstdate)
-	{
+	function grid_letter3_report($grid_emp_id, $firstdate){
 
 		//echo $firstdate;
 		$newDate = date("Y-m-d", strtotime('-27 days', strtotime($firstdate)));
 
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, emp_section.sec_name_en, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add,pr_emp_left_history.left_date');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_emp_add');
-		$this->db->from('pr_emp_left_history');
-		$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
-		$this->db->where('pr_emp_left_history.left_date', $newDate);
+		$this->db->select('
+				pr_emp_per_info.*,
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.id as id_emp,
+				emp_designation.desig_name,
+				emp_designation.desig_bangla,
+				emp_depertment.dept_name,
+				emp_depertment.dept_bangla,
+				emp_section.sec_name_en,
+				emp_section.sec_name_bn,
+				emp_line_num.line_name_bn,
+				emp_line_num.line_name_en,
+				per_dis.name_bn as dis_name_bn,
+				per_upa.name_bn as upa_name_bn,
+				per_post.name_bn as post_name_bn,
+				pre_dis.name_bn as dis_bn,
+				pre_upa.name_bn as upa_bn,
+				pre_post.name_bn as post_bn,
+				pr_emp_com_info.emp_sal_gra_id as grade,
+				pr_emp_com_info.com_gross_sal as salary,
+				pr_emp_left_history.left_date
+			');
+			$this->db->from('pr_emp_per_info');
+			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+			$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
+			$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+			$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
+			$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
+			$this->db->join('pr_emp_left_history', 'pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
+			$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
+			$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
+			$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
+			$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
+			$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
+			$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
+			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get();
 
-		if($query->num_rows() == 0)
-		{
+		if($query->num_rows() == 0){
 			return "Employee ID range does not exist!";
 
 		}
 		else
 		{
-			return $query;
+			return $query->result();
 		}
 		//print_r($query->result_array());
 
@@ -6549,15 +6588,23 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function grid_festival_bonus($sal_year_month, $grid_status, $grid_emp_id)
-	{
+	function grid_festival_bonus($sal_year_month, $grid_status, $grid_emp_id){
+		// dd($grid_emp_id);
 		$year  = substr($sal_year_month,0,4);
 		$month = substr($sal_year_month,5,2);
 		$lastday = date("t", mktime(0, 0, 0, $month, 1, $year));
 
 		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));
+		// dd($lastday);
 
-		$this->db->select('pr_emp_per_info.*,emp_designation.*, emp_section.*, pr_emp_com_info.emp_join_date,pr_grade.gr_name,pr_festival_bonus_sheet.*,pr_emp_com_info.emp_join_date,emp_line_num.*');
+		$this->db->select('pr_emp_per_info.*,
+						   emp_designation.*, 
+						   emp_section.*, 
+						   pr_emp_com_info.emp_join_date,
+						   pr_grade.gr_name,
+						   pr_festival_bonus_sheet.*,
+						   pr_emp_com_info.emp_join_date,
+						   emp_line_num.*');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
@@ -6582,6 +6629,7 @@ class Grid_model extends CI_Model{
 		// $this->db->order_by("emp_designation.desig_name");
 		// $this->db->group_by("pr_festival_bonus_sheet.emp_id");
 		$query = $this->db->get();
+		// dd($query->result());
 		return $query->result();
 
 	}
@@ -6680,6 +6728,294 @@ class Grid_model extends CI_Model{
 		return $data;
 	}
 
+	function salary_summary($salary_month,$emp_stat,$grid_unit,$stop_salary){
+		$all_data = array();
+	
+		$this->db->select("id,line_name_en");
+		$this->db->where("unit_id",$grid_unit);
+		$this->db->order_by("line_name_en");
+		$query = $this->db->get("pr_line_num");
+
+		foreach($query->result() as $rows){
+			//echo "nai";exit;
+			$data = array();
+			$data1 = array();
+						
+			$line_id = $rows->id;
+			$all_data["sec_name_en"][] = $rows->line_name_en;//$this->get_line_name($line_id);
+			
+			// For Cash Man Power
+			$salary_draw_cash = 1;
+			$emp_cash = $this->count_empid_for_salary($line_id,$emp_stat,$salary_month,$salary_draw_cash,$stop_salary,"count");
+			$all_data["emp_cash"][] = $emp_cash;
+
+			
+			// For Bank Man Power
+			$salary_draw_bank = 2;
+			$emp_bank = $this->count_empid_for_salary($line_id,$emp_stat,$salary_month,$salary_draw_bank,$stop_salary,"count");
+			$all_data["emp_bank"][] = $emp_bank;
+
+			$all_data["emp_cash_bank"][] =$emp_cash + $emp_bank;
+				
+			// For Cash Emp ID
+			$cash_emp_id = $this->count_empid_for_salary($line_id,$emp_stat,$salary_month,$salary_draw_cash,$stop_salary,"emp_id");
+			foreach($cash_emp_id as $rows)
+			{
+				 $data[] = $rows->emp_id;
+			}
+			$data = implode("xxx",$data);
+			$emp_id_cash = explode('xxx', trim($data));
+
+			
+			// For Bank Emp ID
+			$bank_emp_id = $this->count_empid_for_salary($line_id,$emp_stat,$salary_month,$salary_draw_bank,$stop_salary,"emp_id");
+			foreach($bank_emp_id as $rows)
+			{
+				$data1[] = $rows->emp_id;
+			}
+
+			$data1 = implode("xxx",$data1);
+			$emp_id_bank = explode('xxx', trim($data1));
+			
+			//For Cash gross_sal
+			$column_name = "gross_sal" ;
+			$gross_sal_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$cash_total = $gross_sal_cash;
+			$all_data["cash_sum"][] = $gross_sal_cash;
+			
+		
+			//For Bank gross_sal
+			//print_r($emp_id_bank);
+			$gross_sal_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$bank_total = $gross_sal_bank;
+			$all_data["bank_sum"][] = $gross_sal_bank;
+			
+			//For Cash basic_sal
+			$column_name = "basic_sal" ;
+			$basic_sal_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);			$all_data["cash_sum_basic"][] = $basic_sal_cash;
+		
+			//For Bank basic_sal
+			$basic_sal_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);			$all_data["bank_sum_basic"][] = $basic_sal_bank;
+			
+			//For Cash house_r
+			$column_name = "house_r" ;
+			$all_data["cash_sum_house_r"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+		
+			//For Bank house_r
+			$all_data["bank_sum_house_r"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);			
+			
+			//For Cash medical_a
+			$column_name = "medical_a" ;
+			$all_data["cash_sum_medical_a"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+		
+			//For Bank medical_a
+			$all_data["bank_sum_medical_a"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			
+			//For Cash food_allow
+			$column_name = "food_allow" ;
+			$all_data["cash_sum_food_allow"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+		
+			//For Bank food_allow
+			$all_data["bank_sum_food_allow"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			
+			//For Cash trans_allow
+			$column_name = "trans_allow" ;
+			$all_data["cash_sum_trans_allow"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+		
+			//For Bank trans_allow
+			$all_data["bank_sum_trans_allow"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			
+			//For Cash ot_hour
+			$column_name = "ot_hour" ;
+			$all_data["cash_sum_ot_hour"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+		
+			//For Bank ot_hour
+			$all_data["bank_sum_ot_hour"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);	
+			
+			//For Cash ot_amount
+			$column_name = "ot_amount" ;
+			$all_data["cash_sum_ot_amount"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+		
+			//For Bank ot_amount
+			$all_data["bank_sum_ot_amount"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			
+			
+			//For Cash att_bonus
+			$column_name = "att_bonus" ;
+			$att_bonus_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$cash_total = $cash_total + $att_bonus_cash;
+			$all_data["cash_att_bonus"][] = $att_bonus_cash;	
+			
+			//For Bank att_bonus
+			$column_name = "att_bonus" ;
+			$att_bonus_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$bank_total = $bank_total + $att_bonus_bank;
+			$all_data["bank_att_bonus"][] = $att_bonus_bank;
+			
+			//For Cash net_pay
+			$column_name = "net_pay" ;
+			$all_data["cash_sum_net_pay"][]=$this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+		
+			//For Bank net_pay
+			$all_data["bank_sum_net_pay"][]=$this->get_sum_column($column_name,$emp_id_bank,$salary_month);	
+			
+
+			//For Cash ot_amount
+			$column_name = "ot_amount" ;
+			$ot_amount_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$cash_total = $cash_total + $ot_amount_cash;
+			$all_data["cash_ot_amount"][] = $ot_amount_cash;	
+			
+			//For Bank ot_amount
+			$ot_amount_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$bank_total = $bank_total + $ot_amount_bank;
+			$all_data["bank_ot_amount"][] = $ot_amount_bank;	
+			
+			//==============This is for Festival Bonus=====================
+			//==============================================================
+			
+			//For Cash ot_amount
+			$column_name = "festival_bonus" ;
+			$festival_bonus_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$all_data["festival_bonus_cash"][] = $festival_bonus_cash;	
+			
+			//For Bank ot_amount
+			$festival_bonus_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$all_data["festival_bonus_bank"][] = $festival_bonus_bank;
+			
+			
+			
+			//======================End of festival Bonus==================
+			
+			//For Cash eot_hour
+			$column_name = "eot_hour" ;
+			$eot_hour_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$all_data["cash_eot_hour"][] = $eot_hour_cash;	
+			
+			//For Bank eot_amount
+			$eot_hour_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$all_data["bank_eot_hour"][] = $eot_hour_bank;
+			
+			$total_cash_bank_eot_hour = $eot_hour_cash + $eot_hour_bank;
+			$all_data["total_cash_bank_eot_hour"][] = $total_cash_bank_eot_hour;
+			
+			//For Cash eot_amount
+			$column_name = "eot_amount" ;
+			$eot_amount_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$all_data["cash_eot_amount"][] = $eot_amount_cash;	
+			
+			//For Bank eot_amount
+			$eot_amount_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$all_data["bank_eot_amount"][] = $eot_amount_bank;
+			
+			$total_cash_bank_eot_amount = $eot_amount_cash + $eot_amount_cash;
+			$all_data["total_cash_bank_eot_amount"][] = $total_cash_bank_eot_amount;
+			
+			//=================Total Cash Salary calculation===============
+			$all_data["cash_total"][] = $cash_total;
+			//=================Total Bank Salary calculation===============
+			$all_data["bank_total"][] = $bank_total;
+			//=================Total Cash & Bank Salary calculation=========
+			$total_cash_and_bank = $cash_total + $bank_total;
+			$all_data["total_cash_and_bank"][] = $total_cash_and_bank;
+			
+			//For Cash adv_deduct
+			$column_name = "adv_deduct" ;
+			$adv_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $adv_deduct_cash;
+			$all_data["adv_deduct_cash"][] = $adv_deduct_cash;
+			
+			//For Bank adv_deduct
+			$adv_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $adv_deduct_bank;
+			$all_data["adv_deduct_bank"][] = $adv_deduct_bank;
+			
+			//For Cash abs_deduction
+			$column_name = "abs_deduction" ;
+			$abs_deduction_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $total_cash_deduction + $abs_deduction_cash;
+			$all_data["abs_deduction_cash"][] = $abs_deduction_cash;
+			
+			//For Bank abs_deduction
+			$abs_deduction_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $abs_deduction_bank;
+			$all_data["abs_deduction_bank"][] = $abs_deduction_bank;
+			
+			//For Cash late_deduct
+			$column_name = "late_deduct" ;
+			$late_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $total_cash_deduction + $late_deduct_cash;
+			$all_data["late_deduct_cash"][] = $late_deduct_cash;
+			
+			//For Bank abs_deduction
+			$late_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $late_deduct_bank;
+			$all_data["late_deduct_bank"][] = $late_deduct_bank;
+			
+			//For Cash late_deduct
+			$column_name = "others_deduct" ;
+			$others_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $total_cash_deduction + $others_deduct_cash;
+			$all_data["others_deduct_cash"][] = $others_deduct_cash;
+			
+			//For Bank late_deduct
+			$others_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $others_deduct_bank;
+			$all_data["others_deduct_bank"][] = $others_deduct_bank;
+			
+			
+			//For Cash late_deduct
+			$column_name = "tax_deduct" ;
+			$tax_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);
+			$total_cash_deduction = $total_cash_deduction + $tax_deduct_cash;
+			$all_data["tax_deduct_cash"][] = $tax_deduct_cash;
+			
+			//For Bank late_deduct
+			$tax_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $tax_deduct_bank;
+			$all_data["tax_deduct_bank"][] = $tax_deduct_bank;
+			
+			//For Cash stamp
+			$column_name = "stamp" ;
+			$stam_deduct_cash = $this->get_sum_column($column_name,$emp_id_cash,$salary_month);			
+			$total_cash_deduction = $total_cash_deduction + $stam_deduct_cash;
+			$all_data["stam_deduct_cash"][] = $stam_deduct_cash;
+			
+			//For Bank stamp
+			$stam_deduct_bank = $this->get_sum_column($column_name,$emp_id_bank,$salary_month);
+			$total_bank_deduction = $total_bank_deduction + $stam_deduct_bank;
+			$all_data["stam_deduct_bank"][] = $stam_deduct_bank;
+			
+			
+			$all_data["sub_total_cash_deduction"][]= $total_cash_deduction;
+			$all_data["sub_total_bank_deduction"][] = $total_bank_deduction;
+			$all_data["sub_total_cash_bank_deduction"][] = $total_cash_deduction + $total_bank_deduction;
+		
+		
+			//=================Total Bank Others Deduct calculation===============<<
+			//echo $total_cash_deduction."===";
+			//=================Total Cash after deduction calculation===============>>
+			$total_cash_after_deduct = $cash_total - $total_cash_deduction;
+
+			$all_data["total_cash_after_deduct"][] = $total_cash_after_deduct;
+			//=================Total Cash after deduction calculation===============<<
+			
+			//=================Total Cash after deduction calculation===============>>
+			$total_bank_after_deduct = $bank_total - $total_bank_deduction;
+
+			$all_data["total_bank_after_deduct"][] = $total_bank_after_deduct;
+			//=================Total Cash after deduction calculation===============<<
+			
+			//=================Total Cash+Bank calculation===============>>
+			$sub_total = $total_cash_after_deduct + $total_bank_after_deduct;
+
+			$all_data["sub_total"][] = $sub_total;
+			//=================Total Cash+Bank calculation===============<<
+
+		}
+
+		return $all_data;
+	}
 
 	function sec_salary_summary($salary_month,$emp_stat,$grid_unit,$stop_salary){
 		// echo "hi";exit;
@@ -7780,28 +8116,23 @@ class Grid_model extends CI_Model{
 	}
 
 
-	function festival_bonus_summary($salary_month,$emp_stat,$grid_unit)
-	{
+	function festival_bonus_summary($salary_month,$emp_stat,$grid_unit){
 		$all_data = array();
 
 		$salary_month = $salary_month;
 
 		$salary_month = $salary_month;
-		$this->db->select("line_id,line_name");
+		$this->db->select("id,line_name_en,line_name_bn");
 		$this->db->where("unit_id",$grid_unit);
-		$this->db->where("line_id !=",2);
-		$this->db->order_by("line_name");
+		$this->db->where("id !=",2);
+		$this->db->order_by("line_name_bn");
 		$query = $this->db->get("emp_line_num");
 
-		foreach($query->result() as $rows)
-		{
-
+		foreach($query->result() as $rows){
 			$data = array();
 			$data1 = array();
-
-			$all_data["line_name"][] = $rows->line_name;
-			$line_id = $rows->line_id;
-
+			$all_data["line_name_en"][] = $rows->line_name_en;
+			$line_id = $rows->id;
 			// For Cash Man Power
 			$salary_draw_cash = 1;
 			$emp_cash = $this->count_empid_for_festival($line_id,$emp_stat,$salary_month,$salary_draw_cash,"count");
@@ -7863,14 +8194,11 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function festival_bonus_summary_sec_wise($salary_month,$emp_stat,$grid_unit)
-	{
+	function festival_bonus_summary_sec_wise($salary_month,$emp_stat,$grid_unit){
 		$all_data = array();
-
 		$salary_month = $salary_month;
-
 		$salary_month = $salary_month;
-		$this->db->select("sec_id,sec_name_en");
+		$this->db->select("id,sec_name_en");
 		$this->db->where("unit_id",$grid_unit);
 		$this->db->order_by("sec_name_en");
 		$query = $this->db->get("emp_section");
@@ -7882,7 +8210,7 @@ class Grid_model extends CI_Model{
 			$data1 = array();
 
 			$all_data["sec_name_en"][] = $rows->sec_name_en;
-			$sec_id = $rows->sec_id;
+			$sec_id = $rows->id;
 
 			// For Cash Man Power
 			$salary_draw_cash = 1;
@@ -8223,9 +8551,17 @@ class Grid_model extends CI_Model{
 	 }
 
 
-	function grid_general_info_another_format($grid_emp_id)
-	{
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.name_en, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, emp_designation.desig_name,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob');
+	function grid_general_info_another_format($grid_emp_id){
+		$this->db->select('pr_emp_com_info.emp_id, 
+						   pr_emp_per_info.name_en, 
+						   emp_depertment.dept_name, 
+						   emp_section.sec_name_en, 
+						   emp_line_num.line_name_en, 
+						   emp_designation.desig_name,  
+						   pr_emp_com_info.emp_join_date,
+						   pr_grade.gr_name, 
+						   pr_emp_com_info.gross_sal,
+						   pr_emp_per_info.emp_dob');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
@@ -8247,88 +8583,59 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function grid_employee_information($grid_emp_id)
-	{
-		$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.name_en, pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname,pr_religions.religion_name,pr_emp_sex.sex_name,pr_emp_blood_groups.blood_name,pr_emp_per_info.img_source,emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, emp_designation.desig_name,pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal,pr_emp_per_info.emp_dob,pr_marrital_status.marrital_status_name,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add,pr_emp_status.stat_type');
+	function grid_employee_information($grid_emp_id){
+		$this->db->select('pr_emp_com_info.emp_id, 
+							pr_emp_per_info.*, 
+							emp_depertment.dept_name, 
+							emp_section.sec_name_en, 
+							emp_line_num.line_name_en, 
+							emp_designation.desig_name,
+							pr_emp_com_info.emp_join_date,
+							pr_grade.gr_name, 
+							pr_emp_com_info.gross_sal,
+							pr_emp_status.stat_type,
+							
+							
+							pr_emp_per_info.per_village,
+							per_dis.name_bn as dis_name_bn,
+							per_upa.name_bn as upa_name_bn,
+							per_post.name_bn as post_name_bn,
+							
+							pr_emp_per_info.per_village,
+							pre_dis.name_bn as dis_name_en,
+							pre_upa.name_bn as upa_name_en,
+							pre_post.name_bn as post_name_en,
+							
+							pr_emp_left_history.left_date
+
+							');
 		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('pr_grade');
-			$this->db->from('emp_depertment');
-			$this->db->from('emp_section');
-			$this->db->from('emp_line_num');
-			$this->db->from('emp_designation');
+		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+		$this->db->join('pr_emp_left_history', 'pr_emp_per_info.emp_id = pr_emp_left_history.emp_id', 'left');
+		$this->db->join('pr_grade', 'pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id', 'left');
+		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id', 'left');
+		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id', 'left');
+		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id', 'left');
+		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id', 'left');
+		$this->db->join('pr_emp_status', 'pr_emp_com_info.emp_cat_id = pr_emp_status.stat_id', 'left');
 
-			$this->db->from('pr_emp_blood_groups');
-
-			$this->db->from('pr_religions');
-			$this->db->from('pr_marrital_status');
-			$this->db->from('pr_emp_sex');
-			$this->db->from('pr_emp_add');
-			$this->db->from('pr_emp_status');
-
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-			$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-			$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-			$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_blood = pr_emp_blood_groups.blood_id');
-		$this->db->where('pr_emp_per_info.emp_religion = pr_religions.religion_id');
-		$this->db->where('pr_marrital_status.marrital_status_id = pr_emp_per_info.emp_marital_status');
-		$this->db->where('pr_emp_sex.sex_id = pr_emp_per_info.emp_sex');
-		$this->db->where('pr_emp_com_info.emp_cat_id = pr_emp_status.stat_id');
+		$this->db->join('emp_districts as per_dis', 	'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
+		$this->db->join('emp_upazilas as per_upa', 		'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
+		$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
+		$this->db->join('emp_districts as pre_dis', 	'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
+		$this->db->join('emp_upazilas as pre_upa', 		'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
+		$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
 
 
 
+
+		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
-		//echo $this->db->last_query();
-		//return $query->result();
-		foreach($query->result() as $rows)
-		{
-			$data["emp_id"][] 		= $rows->emp_id;
-			$data["emp_name"][] 	= $rows->emp_full_name;
-			$data["emp_fname"][] 	= $rows->emp_fname;
-			$data["emp_mname"][] 	= $rows->emp_mname;
-			$data["img_source"][] 	= $rows->img_source;
-			$data["emp_dob"][] 		= $rows->emp_dob;
-			$data["blood_name"][] 	= $rows->blood_name;
-			$data["religion_name"][]= $rows->religion_name;
-			$data["marrital_status"][]= $rows->marrital_status_name;
-			$data["emp_sex"][]		= $rows->sex_name;
-
-			$data["stat_type"][]	= $rows->stat_type;
-			$data["emp_pre_add"][]	= $rows->emp_pre_add;
-			$data["emp_par_add"][]	= $rows->emp_par_add;
-
-
-			$data["desig_name"][]	= $rows->desig_name;
-			$data["dept_name"][] 	= $rows->dept_name;
-			$data["sec_name_en"][] 	= $rows->sec_name_en;
-			$data["line_name"][] 	= $rows->line_name;
-
-			$data["doj"][] 			= $rows->emp_join_date;
-
-			$data["gross_sal"][] 	= $rows->gross_sal;
-			$data["gr_name"][]		= $rows->gr_name;
-		}
-
-		//print_r($data);
-		if($data)
-		{
-
-			return $data;
-		}
-		else
-		{
-			return "Requested list is empty";
-		}
+		$query = $this->db->get()->result();
+		return $query;
 
 	}
-	function grid_service_book2($grid_emp_id)
-	{
+	function grid_service_book2($grid_emp_id){
 		/*$this->db->select('pr_emp_com_info.emp_id, pr_emp_per_info.name_en, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, emp_designation.desig_name,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.identificatiion_marks, pr_emp_per_info.national_brn_id, pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child, pr_emp_per_info. 	emp_dob');*/
 		$this->db->select('pr_emp_edu.*,pr_emp_skill.*,pr_id_proxi.proxi_id,pr_emp_com_info.emp_id, pr_emp_per_info.name_en, emp_depertment.dept_name,emp_depertment.dept_bangla, emp_section.*, emp_line_num.line_name_en, emp_line_num.line_bangla,emp_designation.desig_name,emp_designation.desig_bangla,  pr_emp_com_info.emp_join_date,pr_grade.gr_name, pr_emp_com_info.gross_sal, pr_emp_per_info.spouse_name, pr_emp_per_info.no_child,pr_emp_per_info.bangla_nam,pr_emp_per_info.emp_fname, pr_emp_per_info.emp_mname,pr_emp_per_info.emp_dob,pr_emp_per_info.identificatiion_marks,pr_emp_per_info.national_brn_id,pr_emp_per_info.img_source,pr_emp_add.emp_pre_add,pr_emp_add.emp_par_add');
 		$this->db->from('pr_emp_per_info');
@@ -11523,6 +11830,45 @@ function grid_emp_job_application($grid_emp_id){
 			->get()->result();
 			return $query;
 		// $query = $this->db->select('pr_earn_leave_paid.*')->from('pr_earn_leave_paid')->get()->result();
+	}
+
+
+
+	function act_advance_salary_sheet($sal_year_month, $grid_status, $grid_emp_id){
+		$year  = substr($sal_year_month,0,4);
+		$month = substr($sal_year_month,5,2);
+		$lastday = date("t", mktime(0, 0, 0, $month, 1, $year));	
+		$lastday = date("Y-m-d", mktime(0, 0, 0, $month, $lastday, $year));		
+		$query = $this->db->select('
+				pr_emp_per_info.name_en,
+				pr_emp_per_info.bank_bkash_no as mobile,
+				emp_designation.desig_name, 
+				pr_emp_com_info.emp_join_date,
+				pr_advance_loan.pay_amt,
+				pr_advance_loan.emp_id,
+				pr_emp_com_info.emp_join_date,
+				emp_line_num.line_name_en,
+				emp_section.sec_name_en,
+			')
+			->from('pr_emp_per_info')
+			->join('pr_emp_com_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id')
+			->join('pr_advance_loan' ,'pr_advance_loan.emp_id    = pr_emp_com_info.emp_id')
+			->join('emp_line_num'    ,'pr_emp_com_info.emp_line_id = emp_line_num.id')
+			->join('emp_designation' ,'pr_emp_com_info.emp_desi_id = emp_designation.id')
+			->join('emp_section'     ,'pr_emp_com_info.emp_sec_id = emp_section.id')
+			
+			->where_in('pr_emp_com_info.emp_id', $grid_emp_id)
+			->where_in('pr_advance_loan.loan_status',array('1','2'))
+			->where("pr_advance_loan.loan_date = '$sal_year_month'")
+			->order_by("pr_emp_com_info.emp_id")
+			->order_by("emp_designation.desig_name")
+			->group_by("pr_advance_loan.emp_id")
+			->get();
+			if($query->num_rows() == 0){
+				return "No Data Found";
+			}
+			// dd($query->result());
+			return $query->result();
 	}
 
 	

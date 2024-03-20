@@ -1,486 +1,388 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>
-	Employee Information
-</title>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style>
+            @media print {
+                @page {
+                    size: A4 landscape;
+                }
+            }
+            p{
+                font-size: 14px;
+                line-height: 8px;
+                
+            }
+        </style>
+    </head>
+        <body class="container">
+            <br>
+			<?php foreach($values as $value){ ?>
+            <div class="d-flex">
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 3px solid black;">
+                        <div class="text-center" >
+                            <br><br><br><br><br><br>
+                            <h5>Document Code-HGL/HRD(HR)/03/010</h5>
+                            <br><br>
+                            <h1>সার্ভিসবহি </h1>
+                            <br>
+                            <h4>ফরম-৭ </h4>
+                            <p>[ধারা ৭ এবং বিধি ২০ (১) ও (২) দ্রষ্টব্য]</p>
+                        </div>
+                </div>
+                <div style="width:10% !important"></div>
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <div style="padding: 10px 0px 0px 5px;position: relative;">
 
-<style>
-		.bordered {
-    border: 2px solid black;
-    border-collapse: collapse;
-	font-size:12px;
-	border-radius:3px;
-	
-}
-.bordered td, .bordered th {
-    border: 1px solid #ffff;
-	
-}
-.bordered th {
-   background: #C9C9C9;
-}
-.bordered tr:nth-of-type(odd) {
-    background-color: #F7F7F7;
-}
- 
-.bordered tr:hover {
-    background: #C9C9C9;
-    -o-transition: all 0.1s ease-in-out;
-    -webkit-transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
-    -ms-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;     
-}
-	.emp_info{
-		background:#DFDFFF;
-	}
-.service tr:nth-child(even) {background: #BFBF7F}
-.service tr:nth-child(odd) {background: #BFDF7F}	
+                        <p>ফরম নং - ৭(ক)</p>
+                        <p>প্রথম ভাগ</p>
+                        <p>শ্রমিককে সনাক্তকরণের তথ্য:</p>
+                        <p>১। শ্রমিকের নাম: <?php echo $value->name_bn?></p>
+                        <p>২। পিতার নাম: <?php echo $value->father_name?></p>
+                        <p>৩। মাতার নাম: <?php echo $value->mother_name?></p>
+                        <p>৪। স্বামী/স্ত্রীর নাম (প্রযোজ্য ক্ষেত্রে): <?php echo $value->spouse_name?></p>
+                        <p>৫। স্থায়ী ঠিকানা গ্রামঃ <?php echo $value->per_village?>, রাস্তা ..................</p>
+                        <p>   &nbsp;&nbsp;&nbsp;&nbsp; ডাকঘরঃ<?php echo $value->per_post?>, থানা ঃ <?php echo $value->per_upa?></p>
+                        <p>   &nbsp;&nbsp;&nbsp;&nbsp; জেলা ঃ<?php echo $value->per_dis?></p>
+                        <p>৬। বর্তমান ঠিকানা: <?php echo $value->pre_village.' '.$value->upa_name_bn.' '.$value->?></p>
+                        <p>৭। জন্ম তারিখ/বয়স: <?php echo $value->emp_dob?></p>
+                        <p>৮। জাতীয় পরিচয় পত্র নং (যদি থাকে): <?php echo $value->nid_dob_id?></p>
+                        <p>৯।  শিক্ষাগত যোগ্যতা: <?php echo $value->education==''? 'নাই' : $value->education?></p>
+                        <p>১০। প্রশিক্ষণ বা বিশেষ দক্ষতা (যদি থাকে): <?php echo $value->exp_factory_name.','. $value->exp_duration.','.$value->exp_dasignation ?></p>
+                        <p>১১। উচ্চতা: </p> 
+						<p>১২। রক্তের গ্রুপ (যদি থাকে): <?php echo $value->blood == 'None'? 'নাই' : $value->blood?></p>
+                        <p>১৩। সনাক্ত করিবার জন্য বিশেষ কোনচিহ্ন (যদি থাকে): নাই</p>
+                        <p>১৪। সার্ভিস বহি খুলিবার তারিখ: ২৯-১২-২০২০ ইং</p>
+                        <p>১৫। বাম হাতের বৃদ্ধাঙ্গুলীর ছাপ: </p>
+                        <div style="position: absolute; top: 10px;right: 10px;">
+                            <img style="border: 3px solid black;" src="<?php echo base_url('uploads/photo/'.$value->img_source.'')?>" alt="" width="100px" height="130px">
+                        </div>
+                        <br>
+                        <br> 
+                        <p><span>শ্রমিকের স্বাক্ষর:</span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <span>মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর:</span></p>
+                    </div>
+                
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;page-break-after: always;"></div>
+           
+            <div class="d-flex">
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px;"> ফরম নং - ৭(খ)</p>
+                    <h6 class="text-center"> দ্বিতীয়ভাগ</h6>
+                    <p style="padding: 5px 0px 0px 5px;"> মালিকের ও চাকুরীর তথ্যসমূহঃ</p>
+                    <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+                        <thead>
+                            <tr class="text-center">
+                                <th>কারখানা/প্রতিষ্ঠানেরনাম ও ঠিকানা </th>
+                                <th>মালিক/ব্যবস্থাপনা কর্তৃপক্ষেরনাম</th>
+                            </tr>
+                            <tr class="text-center">
+                                <th>১</th>
+                                <th>২</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td>হানিওয়েলগার্মেন্টস লিঃ<br>
+                                    ৭৯৯ (১০১০/১০১১) আমবাগ, কোনাবাড়ী, গাজীপুর-১৭০০।</td>
+                                    <td>মোঃআবদুররহিম<br>
+                                    সহঃম্যানেজার (এইচ.আর.ডি)<br>
+                                    হানিওয়েলগার্মেন্টস লিঃ</td>
+                                </tr>
+
+                            </tbody>
+                    </table>
+                    
+                </div>
+                <div style="width:1% !important"></div>
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px">ফরম নং - ৭(খ)</p>
+                    <h6 class="text-center"> দ্বিতীয়ভাগ</h6>
+                    <p style="padding: 5px 0px 0px 5px">মালিকের ও চাকুরীর তথ্যসমূহঃ</p>
+                    <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+                        <thead>
+                            <tr class="text-center">
+                                <th>যোগদানের তারিখ</th>
+                                <th>চাকরিত্যাগ/ অবসানেরতারিখ</th>
+                                <th>ত্যগ/অবসানেরধরন/কারন </th>
+                                <th>মালিক/প্রাধিকারপ্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                                <th>শ্রমিকের স্বাক্ষর/টিপসই </th>
 
 
-</style>
-
-</head>
-
-<body style="width:750px;">
-<?php $row_count=count($values["emp_name"]); 
-for($i=0;$i < $row_count;$i++)
-{
-
-?>
-<div style="height: 980px;margin-bottom: 50px; ">
-<table align="left" border='0' bordercolor='#000000' cellspacing='0' cellpadding='0' style="text-align:center; width: 100%;">
-<tr style=" font-size:22px; font-weight: bold;">
-	<td width="600px;">
-		<?php echo $unit_name = $this->db->where("unit_id",$unit_id)->get('pr_units')->row()->unit_name;?>
-	</td>
-	
-	
-	<td  rowspan="4" width="55px;">
-		<img border="1" src="<?php echo base_url();?>uploads/photo/<?php echo $values["img_source"][$i];?>" height="120px;" />
-	</td>
-	
-</tr>
-<tr>
-	<td style=" font-size:18px; text-decoration: underline; font-style: italic;letter-spacing: 2px; font-weight: bold;">Service Book Information</td>
-</tr>
-<tr>
-	<td>&nbsp;</td>
-</tr>
-<tr>
-	<td>&nbsp;</td>
-</tr>
-</table>
+                                  
+                            </tr>
+                            <tr class="text-center">
+                                <th>৩</th>
+                                <th>৪</th>
+                                <th>৫</th>
+                                <th>৬</th>
+                                <th>৭</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center">
+                                <td style="white-space: nowrap;"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> ইং</td>
+                                <td><?php echo $value->left_date=='' ? '':date('d-m-Y',strtotime($value->left_date))?> </td>
+                                <td>সেচ্ছায়</td>
+                                <td>    </td>
+                                <td>    </td>
+                            </tr>
+                    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;page-break-after: always;"></div>
 
 
-<table  align="left" border='0' cellspacing='2' cellpadding='4' style="text-align:left; border-collapse:collapse;border: 1px solid;width: 100%; padding: 10px;">
-<tr style=" font-size:15px; font-weight: bold; margin: 3px;">
-	<td colspan="4" >
-	
-	</td>
-	</tr>
-<tr style=" font-size:15px; font-weight: bold; margin: 3px;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		ID NO.:
-	</td>
-	
-	<td width="7px;">
-		
-	</td>
-	
-	<td style="background: #DFDFFF">
-		<?php echo $values["emp_id"][$i];?>
-	</td>
-	<td width="7px;">
-		
-	</td>
-</tr>
-<tr height="12px"></tr>
+            <div class="d-flex">
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <h6 class="text-center" style="font-weight:700;"> তৃতীয়ভাগ</h6>
+                    <p style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্য</p>
+                    <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+                        <thead>
+                            <tr class="text-center">
+                                <th>বর্তমান পদে চাকুরী আরম্ভের তারিখ</th>
+                                <th>চাকুরীর পদ ও কার্ড নম্বর</th>
+                                <th colspan="4">মাসিক মজুরির হার</th>
+                            </tr>
+                            <tr class="text-center">
+                                <th>১</th>
+                                <th>২</th>
+                                <th colspan="4" >৩</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center">
+                                <td></td>
+                                <td></td>
+                                <td>মূল মজুরী</td>
+                                <td>বাড়ী ভাড়া ভাতা</td>
+                                <td>চিকিৎসা ভাতা</td>
+                                <td>বোনাস (যদি থাকে)</td>
+                            </tr>
+                            <tr class="text-center">
+                                <td></td>
+                                <td></td>
+                                <td>টাকা</td>
+                                <td>টাকা</td>
+                                <td>টাকা</td>
+                                <td>টাকা</td>
+                               
+                            </tr>
+                            <tr class="text-center">
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            
+                </div>
 
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Employee Name
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["emp_name"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Father Name
-	</td>
-		<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["emp_fname"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Mother Name
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["emp_mname"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Section
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["sec_name"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Line
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["line_name"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Date of Birth
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php 
-		
-		$dob = $values["emp_dob"][$i];
-		$date_of_birth = date("d-M-Y", strtotime($values["emp_dob"][$i]));
-		
-		$curent_date = date("Y-m-d");
-		
-		$date_diff 		= abs(strtotime($curent_date)-strtotime($dob));
-		//DATE TO DATE RULE
-		//return $month 	= floor(($date_diff)/2592000);
-		
-		//MONTH TO MONTH RULE
-		$age_of_month 	= ceil(($date_diff)/2628000);
-		
-		$year = floor($age_of_month/12);
-		$month = $age_of_month - ($year*12);
-		echo $date_of_birth;
-		
-		?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Date of Join
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $doj = date("d-M-Y", strtotime($values["doj"][$i]));?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Age
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php 
-		$years = floor($date_diff / (365*60*60*24));
-		$months = floor(($date_diff - $years * 365*60*60*24) / (30*60*60*24));
-		$days = floor(($date_diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-		echo $years.' Years '.$months.' Months and '.$days.' Days';
-		?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Job Duration
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php 
-		$doj = date("d-M-Y", strtotime($values["doj"][$i]));
-		$current_date = date("Y-m-d");
-		$service=round(abs(strtotime($current_date)-strtotime($doj))/86400);
-		
-		$years = ($service / 365) ; // days / 365 days
-		$years = floor($years); // Remove all decimals
-		$service = $service - ($years*365);
-		
-		$month = ($service  / 30); // I choose 30.5 for Month (30,31) ;)
-		$month = floor($month); // Remove all decimals
-		$days = $service - ($month*30);
-		echo $total_days = "$years Years $month Months and $days Days";
-		?>
-	</td>
-</tr>
-<tr height="12px"></tr>
+                <div style="width:1% !important"></div>
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <h6 class="text-center" style="font-weight:700;"> তৃতীয়ভাগ</h6>
+                    <p style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্য</p>
+                    <table class="table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+                        <thead>
+                            <tr class="text-center"> 
+                                <th>অন্যান্য ভাতা</th>
+                                <th>মোট, প্রভিডেন্ট ফান্ড (যদি থাকে)</th>
+                                <th>শ্রমিকের প্রদেয় চাঁদা</th>
+                                <th>মালিকের প্রদেয় চাঁদা</th>
+                                <th>ত্যগ/অবসানের ধরন/কারন </th>
+                                <th>মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                                <th>শ্রমিকের স্বাক্ষর/টিপসই </th>
+                            </tr>
+                            <tr class="text-center">
+                                <th>৩</th>
+                                <th>৪</th>
+                                <th>৫</th>
+                                <th>৬</th>
+                                <th>৭</th>
+                                <th>৮</th>
+                                <th>৯</th>
+                            </tr>
+                            <tr class="text-center">
+                                <th>টাকা</th>
+                                <th>টাকা</th>
+                                <th>টাকা</th>
+                                <th>টাকা</th>
+                                <th>টাকা</th>
+                                <th>টাকা</th>
+                                <th>টাকা</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center">
+                                <td>২৯-১২-২০২০ ইং</td>
+                                <td>২৯-১২-২০২০ ইং</td>
+                                <td>সেচ্ছায়</td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;page-break-after: always;"></div>
+            
+            <div class="d-flex">
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <h6 class="text-center" style="font-weight:700;"> চতুর্থ ভাগ</h6>
+                    <p style="padding: 5px 0px 0px 5px;font-weight:600;"> ছুটির রেকর্ডঃ </p>
+                    <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+                        <thead>
+                            <tr class="text-center">
+                                <th colspan="4">ভোগকৃত বার্ষিক ছুটির বিবরণ</th>
+                            </tr>
+                            <tr  class="text-center" >
+                                <th>হইতে</th>
+                                <th>পর্যন্ত</th>
+                                <th>মোট</th>
+                                <th>অভোগকৃত পাওনা ছুটি</th>
+                            </tr>
+                            <tr  class="text-center" >
+                                <th>১</th>
+                                <th>২</th>
+                                <th>৩</th>
+                                <th>৪</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
 
-<tr style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Religion
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["religion_name"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Sex
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["emp_sex"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Marital Status
-	</td>
-	<td>
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["marrital_status"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr style=" font-size:15px; font-weight: bold;">
-<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Blood Group
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["blood_name"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Permanent Address
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["emp_par_add"][$i];?>
-	</td>
-</tr>
-<tr height="12px"></tr>
-<tr  style=" font-size:15px; font-weight: bold;">
-	<td width="7px;">
-		
-	</td>
-	<td width="170px;" style="background: #BFBFFF">
-		Present Address
-	</td>
-	<td >
-		
-	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $values["emp_pre_add"][$i];?>
-	</td>
-</tr>
-<tr height="20px;">
-	<td colspan="3"></td>
-</tr>
-</table>
-<?php
-$emp_id = $values["emp_id"][$i];
-$query = $this->db->select()->where('ref_id', $emp_id)->get('pr_incre_prom_pun');
-$num_rows = $query->num_rows();
-?>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+            
+                </div>
+                <div style="width:1% !important"></div>
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <h6 class="text-center" style="font-weight:700;"> চতুর্থ ভাগ</h6>
+                    <p style="padding: 5px 0px 0px 5px;font-weight:600;"> ছুটির রেকর্ডঃ </p>
+                    <table class="table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+                        <thead>
+                            <tr class="text-center"> 
+                                <th colspan="3">নগদায়নকৃত ছুটির বিবরণ</th>
+                                <th rowspan="2">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                                <th rowspan="2">শ্রমিকের স্বাক্ষর/টিপসই </th>
+                            </tr>
+                            <tr class="text-center">
+                                <th>মোট</th>
+                                <th>তারিখ</th>
+                                <th>অবশিষ্ট পাওনা ছুটি</th>
+                            </tr>
+                            <tr class="text-center">
+                                <th>৫</th>
+                                <th>৬</th>
+                                <th>৭</th>
+                                <th>৮</th>
+                                <th>৯</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center">
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-<table class="service" align="left" border='0' bordercolor='#000000' cellspacing='5' cellpadding='2' style="text-align:center; width: 100%; margin-top:20px;">
-<tr  style="font-size:15px; font-weight: bold; text-align: center;">
-	<td colspan="9" style="background: #FF7F7F">
-		Service Book
-	</td>
-</tr>
-<tr  style=" font-size:15px; font-weight: bold; background:#BFBFFF;">
-	<th> SI </th>
-    <th> Service Status </th>
-    <th> Effective Date</th>
-    <th> Dept </th>
-    <th> Section </th>
-    <th> Line </th>
-    <th> Designation </th>
-    <th> Inc. Amt. </th>
-    <th> Salary </th>
-    
-</tr>
-<?php if($num_rows == 0 ){ ?>
-<tr> 
-	<td> 1 </td>
-    <td> Joinning </td>
-    <td> <?php echo date("d-M-Y",strtotime($values["doj"][$i]));?> </td>
-    <td> <?php echo $values["dept_name"][$i];?> </td>
-    <td> <?php echo $values["sec_name"][$i];?> </td>
-    <td> <?php echo $values["line_name"][$i];?> </td>
-    <td> <?php echo $values["desig_name"][$i];?> </td>
-    <td> <?php echo "0";?> </td>
-    <td> <?php echo $values["gross_sal"][$i];?> </td>
-</tr>
-<?php }else{ ?>
+            </div>
+            <div style="margin-bottom: 20px;page-break-after: always;"></div>
+            <div class="d-flex">
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <h6 class="text-center" style="font-weight:700;"> পঞ্চম ভাগ</h6>
+                    <p style="padding: 5px 0px 0px 5px;font-weight:600;"> আচরণের রেকর্ডঃ </p>
+                    <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+                        <thead>
+                            <tr  class="text-center" >
+                                <th>তারিখ</th>
+                                <th>আচরণ বিষয়ক বিবরণ</th>
+                                <th>মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                                <th>শ্রমিকের স্বাক্ষর/টিপসই</th>
+                            </tr>
+                            <tr  class="text-center" >
+                                <th>১</th>
+                                <th>২</th>
+                                <th>৩</th>
+                                <th>৪</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
 
-<?php $k = 1; foreach($query->result() as $rows){ ?>
-<?php if($k==1){ ?>
-<tr> 
-	<td> <?php echo $k; ?> </td>
-    <td> Joinning </td>
-    <td> <?php echo date("d-M-Y",strtotime($values["doj"][$i]));?> </td>
-    <td> <?php echo $this->common_model->get_dept_name($rows->prev_dept);?> </td>
-    <td> <?php echo $this->common_model->get_section_name($rows->prev_section);?> </td>
-    <td> <?php echo $this->common_model->get_line_name($rows->prev_line);?> </td>
-    <td> <?php echo $this->common_model->get_desig_name($rows->prev_desig);?> </td>
-    <td> <?php echo "0";//$this->common_model->get_grade_name($rows->prev_grade);?> </td>
-    <td> <?php echo $rows->prev_salary;?> </td>
-</tr>
-<?php }$k++; ?>
-<tr> 
-	<td> <?php echo $k; ?> </td>
-    <td> <?php if($rows->status==1){echo 'Increment';}else{echo 'Promotion';}?> </td>
-    <td> <?php echo date("d-M-Y",strtotime($rows->effective_month));?> </td>
-    <td> <?php echo $this->common_model->get_dept_name($rows->new_dept);?> </td>
-    <td> <?php echo $this->common_model->get_section_name($rows->new_section);?> </td>
-    <td> <?php echo $this->common_model->get_line_name($rows->new_line);?> </td>
-    <td> <?php echo $this->common_model->get_desig_name($rows->new_desig);?> </td>
-    <td> <?php echo $rows->new_salary-$rows->prev_salary;//$this->common_model->get_grade_name($rows->new_grade);?> </td>
-    <td> <?php echo $rows->new_salary;?> </td>
-</tr>
-<?php } } ?>
-</table>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+            
+                </div> 
+                <div style="width:1% !important"></div>
+                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <h6 class="text-center" style="font-weight:700;"> পঞ্চম ভাগ</h6>
+                    <p style="padding: 5px 0px 0px 5px;font-weight:600;"> আচরণের রেকর্ডঃ </p>
+                    <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+                        <thead>
+                            <tr  class="text-center" >
+                                <th>তারিখ</th>
+                                <th>আচরণ বিষয়ক বিবরণ</th>
+                                <th>মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                                <th>শ্রমিকের স্বাক্ষর/টিপসই</th>
+                            </tr>
+                            <tr  class="text-center" >
+                                <th>১</th>
+                                <th>২</th>
+                                <th>৩</th>
+                                <th>৪</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
 
-<div style="border: 1px solid #000;">
-<table align="center" border="1" style=" width:740px; border-collapse:collapse; height:150px; margin-bottom:20px;">
-<tr>
-<td colspan="10" align="center" style="font-weight:bold; background:#DFDFFF;">Attendance Status</td>
-  </tr>
-  <tr style="text-align:center;">
-    <td colspan="4" style="font-weight:bold;background:#B6B6B6;">Leave Status</td>
-    <td colspan="4" style="font-weight:bold;background:#B6B6B6;">Present Status</td>
-    <td colspan="1" style="font-weight:bold;background:#B6B6B6;">Total</td>
-  </tr>
-  <tr>
-  <td style="text-align:center; font-weight:bold;background:#BFBFFF;">CL</td>
-  <td style="text-align:center; font-weight:bold;background:#BFBFFF;">SL</td>
-  <td style="text-align:center; font-weight:bold;background:#BFBFFF;">EL</td>
-  <td style="text-align:center; font-weight:bold;background:#BFBFFF;">ML</td>
-  <td style="text-align:center; font-weight:bold;background:#BFBFFF;">P</td>
-  <td style="text-align:center; font-weight:bold;background:#BFBFFF;">A</td>
-  <td style="text-align:center; font-weight:bold;background:#BFBFFF;">H</td>
-  <td style="text-align:center; font-weight:bold;background:#BFBFFF;">W</td>
-  </tr>
-  <tr>
-  <?php 
-$emp_id = $values["emp_id"][$i];
-$start_date = date("Y-m-d",strtotime($values["doj"][$i]));
-$end_date = $current_date;
-$days_count1 = $this->common_model->days_count($emp_id,$start_date,$end_date, $present_status='P');
-$days_count2 = $this->common_model->days_count($emp_id,$start_date,$end_date, $present_status='A');
-$days_count3 = $this->common_model->days_count($emp_id,$start_date,$end_date, $present_status='H');
-$days_count4 = $this->common_model->days_count($emp_id,$start_date,$end_date, $present_status='W');
-$leave_count1 = $this->common_model->leave_count($emp_id,$start_date,$end_date, $leave_type='cl');
-$leave_count2 = $this->common_model->leave_count($emp_id,$start_date,$end_date, $leave_type='sl');
-$leave_count3 = $this->common_model->leave_count($emp_id,$start_date,$end_date, $leave_type='el');
-$leave_count4 = $this->common_model->leave_count($emp_id,$start_date,$end_date, $leave_type='ml');
-$total_days = $days_count1 + $days_count2 + $days_count3 + $days_count4 + $leave_count1 +  $leave_count2 + $leave_count3 + $leave_count4;?>
-  <td style="text-align:center;"><?php echo $leave_count1;?></td>
-  <td style="text-align:center;"><?php echo $leave_count2;?></td>
-  <td style="text-align:center;"><?php echo $leave_count3;?></td>
-  <td style="text-align:center;"><?php echo $leave_count4;?></td>
-  <td style="text-align:center;"><?php echo $days_count1; ?></td>
-  <td style="text-align:center;"><?php echo $days_count2; ?></td>
-  <td style="text-align:center;"><?php echo $days_count3; ?></td>
-  <td style="text-align:center;"><?php echo $days_count4; ?></td>
-  <td style="text-align:center;"><?php echo $total_days;?></td>
-  </tr>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+            
+                </div> 
+            </div>
 
-</table></div>
-</div>
-
-<?php } ?>
-</body>
+			<?php }?>
+            <!-- <div style="page-break-after: always;"></div> -->
+        </body>
+    </body>
 </html>

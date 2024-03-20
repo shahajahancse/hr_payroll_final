@@ -16,7 +16,7 @@
   </head>
   <body>
 
-<?php foreach($values as $value){?>
+<?php foreach($values->result() as $value){?>
   <div class="container w-75 mb-5">
     <div class="d-flex flex-row justify-content-between">
       <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
@@ -36,7 +36,7 @@
       <p class="text-center h6">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
     </div>
     <div class="d-flex">
-      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-বি</div>
+      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?>/<?php echo date('m/Y')?></span>-বি</div>
       <div class="col-md-6 text-right">তারিখঃ ২৫/০১/২০২৪</div>
     </div>
 
@@ -80,7 +80,7 @@
         <span>জনাব/জনাবা,</span><br> 
 
         আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। এ প্রেক্ষিতে কারখানার
-        কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <b>২৫/০১/২০২৪</b> ইং তারিখে যার সূত্র নংঃ-
+        কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y', strtotime($value->left_date . ' +10 days'));?></span></b> ইং তারিখে যার সূত্র নংঃ-
         এইচজিএল/অনু <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</b> এর বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে।
         কিন্তু অদ্যবদি আপনি উপরোক্ত বিষয়ে লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।
         <br><br>
