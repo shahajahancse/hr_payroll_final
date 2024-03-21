@@ -44,7 +44,7 @@
 </head>
 
 <body style="width:750px;">
-<?php $row_count=count($values["emp_name"]); 
+<?php $row_count=count($values["name_en"]); 
 for($i=0;$i < $row_count;$i++)
 {
 

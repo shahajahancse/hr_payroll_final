@@ -2065,8 +2065,7 @@ class Grid_con extends CI_Controller {
 
 	}
 
-	function grid_employee_information()
-	{
+	function grid_employee_information(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		//print_r($grid_emp_id);
