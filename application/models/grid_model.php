@@ -8441,13 +8441,14 @@ class Grid_model extends CI_Model{
 				emp_section.sec_name_en,
 				emp_line_num.line_name_bn,
 				emp_line_num.line_name_en,
-				per_dis.name_bn  as  per_dis_name_en,
-				per_upa.name_bn  as  per_upa_name_en,
-				per_post.name_bn as  per_post_name_en,
+				per_dis.name_bn  as  per_dis_name_bn,
+				per_upa.name_bn  as  per_upa_name_bn,
+				per_post.name_bn as  per_post_name_bn,
 
-				pre_dis.name_en  as  pre_dis_name_en,
-				pre_upa.name_en  as  pre_upa_name_en,
-				pre_post.name_en as  pre_post_name_en,
+				pre_dis.name_en  as  pre_dis_name_bn,
+				pre_upa.name_en  as  pre_upa_name_bn,
+				pre_post.name_en as  pre_post_name_bn,
+				
 			');
 			$this->db->from('pr_emp_per_info');
 			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
