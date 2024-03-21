@@ -10853,13 +10853,12 @@ function grid_emp_job_application($grid_emp_id){
 			$data['night_allo_amount'] = $night_allo_amount;
 			return $data;
 	}
-	function get_dept_name($dept_id)
-	{
+	function get_dept_name($dept_id){
 		$this->db->select("dept_name");
 		$this->db->where("dept_id", $dept_id);
 		$query = $this->db->get('emp_depertment');
-		foreach($query->result() as $rows)
-		{
+		$dept_name = '';
+		foreach($query->result() as $rows){
 			$dept_name =  $rows->dept_name;
 		}
 		return $dept_name;
