@@ -107,7 +107,8 @@ for($i = 0; $i<$count;$i++){
 	echo "</td>";
 	echo "<td >";
 	$emp_shift_id =  $values["emp_shift"][$i];
-	echo $this->db->select('shift_name')->where('unit_id',$unit_id)->where('schedule_id',$emp_shift_id)->get('pr_emp_shift')->row()->shift_name;
+	@$shift_name = $this->db->select('shift_name')->where('unit_id',$unit_id)->where('schedule_id',$emp_shift_id)->get('pr_emp_shift')->row();
+	echo isset($shift_name->shift_name) ? $shift_name->shift_name : "";
 	echo "</td>";
 	echo "</tr>";
 	echo "<table>";
