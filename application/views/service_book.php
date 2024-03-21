@@ -47,7 +47,7 @@
                         <p>৫। স্থায়ী ঠিকানা গ্রামঃ <?php echo $value->per_village?>, রাস্তা ..................</p>
                         <p>   &nbsp;&nbsp;&nbsp;&nbsp; ডাকঘরঃ<?php echo $value->per_post?>, থানা ঃ <?php echo $value->per_upa?></p>
                         <p>   &nbsp;&nbsp;&nbsp;&nbsp; জেলা ঃ<?php echo $value->per_dis?></p>
-                        <p>৬। বর্তমান ঠিকানা: <?php echo $value->pre_village.' '.$value->upa_name_bn.' '.$value->?></p>
+                        <p>৬। বর্তমান ঠিকানা: <?php echo $value->pre_village.' '.$value->upa_name_bn.' '.$value->dis_name_bn?></p>
                         <p>৭। জন্ম তারিখ/বয়স: <?php echo $value->emp_dob?></p>
                         <p>৮। জাতীয় পরিচয় পত্র নং (যদি থাকে): <?php echo $value->nid_dob_id?></p>
                         <p>৯।  শিক্ষাগত যোগ্যতা: <?php echo $value->education==''? 'নাই' : $value->education?></p>
