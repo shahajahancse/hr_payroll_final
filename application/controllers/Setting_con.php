@@ -6,7 +6,7 @@ class Setting_con extends CI_Controller {
 
 		/* Standard Libraries */
 		$this->data['user_data'] = $this->session->userdata('data');
-		$this->load->library('Grocery_crud');
+		// $this->load->library('Grocery_crud');
 		$this->load->model('Acl_model');
 		$this->load->model('Common_model');
 
@@ -19,10 +19,10 @@ class Setting_con extends CI_Controller {
             redirect("payroll_con");
             exit;
         }*/
+			
 	}
 
-	function crud()
-	{
+	function crud(){
 		if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
