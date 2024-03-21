@@ -3378,7 +3378,7 @@ class Grid_model extends CI_Model{
 			$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id');
 			$this->db->where("pr_leave_trans.emp_id", $emp_id);
 			$this->db->where("pr_leave_trans.leave_start Between '$grid_firstdate' and '$grid_seconddate'");
-			$data= new array();
+			$data = array();
 			$query = $this->db->get()->result();
 			if (!empty($query)) {
 				foreach($query as $rows){
