@@ -8575,7 +8575,9 @@ class Grid_model extends CI_Model{
 							pr_emp_per_info.*, 
 							emp_depertment.dept_name, 
 							emp_section.sec_name_en, 
+							emp_section.sec_name_bn, 
 							emp_line_num.line_name_en, 
+							emp_line_num.line_name_bn, 
 							emp_designation.desig_name,
 							pr_emp_com_info.emp_join_date,
 							pr_grade.gr_name, 
@@ -8612,10 +8614,6 @@ class Grid_model extends CI_Model{
 		$this->db->join('emp_districts as pre_dis', 	'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
 		$this->db->join('emp_upazilas as pre_upa', 		'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
 		$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
-
-
-
-
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get()->result();

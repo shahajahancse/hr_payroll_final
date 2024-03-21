@@ -44,9 +44,9 @@
 </head>
 
 <body style="width:750px;">
-<?php $row_count=count($values["name_en"]); 
-for($i=0;$i < $row_count;$i++)
-{
+<?php 
+// dd($values);
+foreach($values as $i => $value){
 
 ?>
 <div style="height: 1050px;margin-bottom: 75px;">
@@ -58,7 +58,7 @@ for($i=0;$i < $row_count;$i++)
 	
 	
 	<td  rowspan="4" width="55px;">
-		<img border="1" src="<?php echo base_url();?>uploads/photo/<?php echo $values["img_source"][$i];?>" height="120px;" />
+		<img border="1" src="<?php echo base_url();?>uploads/photo/<?php echo $value->img_source;?>" height="120px;" />
 	</td>
 	
 </tr>
@@ -93,7 +93,7 @@ for($i=0;$i < $row_count;$i++)
 	</td>
 	
 	<td style="background: #DFDFFF">
-		<?php echo $values["emp_id"][$i];?>
+		<?php echo $value->emp_id;?>
 	</td>
 	<td width="7px;">
 		
@@ -112,7 +112,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["emp_name"][$i];?>
+		<?php echo $value->name_en;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -127,7 +127,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["emp_fname"][$i];?>
+		<?php echo $value->father_name;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -142,7 +142,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["emp_mname"][$i];?>
+		<?php echo $value->mother_name;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -159,8 +159,8 @@ for($i=0;$i < $row_count;$i++)
 	<td style="background: #DFDFFF">
 		<?php 
 		
-		$dob = $values["emp_dob"][$i];
-		$date_of_birth = date("d-M-Y", strtotime($values["emp_dob"][$i]));
+		$dob = $value->emp_dob;
+		$date_of_birth = date("d-M-Y", strtotime($value->emp_dob));
 		
 		$curent_date = date("Y-m-d");
 		
@@ -211,7 +211,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["religion_name"][$i];?>
+		<?php echo $value->religion;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -226,7 +226,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["emp_sex"][$i];?>
+		<?php echo $value->emp_sex;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -241,7 +241,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["marrital_status"][$i];?>
+		<?php echo $value->marital_status;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -256,7 +256,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["blood_name"][$i];?>
+		<?php echo $value->blood;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -271,7 +271,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["emp_par_add"][$i];?>
+		<?php echo $value->per_village.', '.$value->per_post_name_bn.', '.$value->per_upa_name_bn.', '.$value->per_dis_name_bn;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -286,7 +286,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["emp_pre_add"][$i];?>
+				<?php echo $value->pre_village.', '.$value->pre_post_name_bn.', '.$value->pre_upa_name_bn.', '.$value->pre_dis_name_bn;?>
 	</td>
 </tr>
 <tr height="50px;">
@@ -315,7 +315,7 @@ for($i=0;$i < $row_count;$i++)
 	<td >
 	</td>
 	<td style="background: #BFDF7F">
-		<?php echo $values["desig_name"][$i];?>
+		<?php echo $value->desig_name;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -330,7 +330,7 @@ for($i=0;$i < $row_count;$i++)
 	
 	</td>
 	<td style="background: #BFDF7F">
-		<?php echo $values["dept_name"][$i];?>
+		<?php echo $value->dept_name;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -345,7 +345,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #BFDF7F">
-		<?php echo $values["sec_name"][$i];?>
+		<?php echo $value->sec_name_bn;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -360,7 +360,7 @@ for($i=0;$i < $row_count;$i++)
 	
 	</td>
 	<td style="background: #BFDF7F">
-		<?php echo $values["stat_type"][$i];?>
+		<?php echo $value->stat_type;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -378,7 +378,7 @@ for($i=0;$i < $row_count;$i++)
 		<?php 
 		
 		
-		$doj = date("d-M-Y", strtotime($values["doj"][$i]));
+		$doj = date("d-M-Y", strtotime($value->emp_join_date));
 		echo $doj;?>
 	</td>
 </tr>
