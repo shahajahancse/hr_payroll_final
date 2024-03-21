@@ -45,9 +45,9 @@
                         <p>৩। মাতার নাম: <?php echo $value->mother_name?></p>
                         <p>৪। স্বামী/স্ত্রীর নাম (প্রযোজ্য ক্ষেত্রে): <?php echo $value->spouse_name?></p>
                         <p>৫। স্থায়ী ঠিকানা গ্রামঃ <?php echo $value->per_village?>, রাস্তা ..................</p>
-                        <p>   &nbsp;&nbsp;&nbsp;&nbsp; ডাকঘরঃ<?php echo $value->per_post?>, থানা ঃ <?php echo $value->per_upa?></p>
-                        <p>   &nbsp;&nbsp;&nbsp;&nbsp; জেলা ঃ<?php echo $value->per_dis?></p>
-                        <p>৬। বর্তমান ঠিকানা: <?php echo $value->pre_village.' '.$value->upa_name_bn.' '.$value->dis_name_bn?></p>
+                        <p>   &nbsp;&nbsp;&nbsp;&nbsp; ডাকঘরঃ<?php echo $value->per_post_name_bn?>, থানা ঃ <?php echo $value->per_upa_name_bn?></p>
+                        <p>   &nbsp;&nbsp;&nbsp;&nbsp; জেলা ঃ<?php echo $value->per_dis_name_bn?></p>
+                        <p>৬। বর্তমান ঠিকানা: <?php echo $value->pre_village.', '.$value->pre_post_name_bn.', '.$value->pre_upa_name_bn.', '.$value->pre_dis_name_bn?></p>
                         <p>৭। জন্ম তারিখ/বয়স: <?php echo $value->emp_dob?></p>
                         <p>৮। জাতীয় পরিচয় পত্র নং (যদি থাকে): <?php echo $value->nid_dob_id?></p>
                         <p>৯।  শিক্ষাগত যোগ্যতা: <?php echo $value->education==''? 'নাই' : $value->education?></p>

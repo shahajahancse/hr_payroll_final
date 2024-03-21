@@ -77,9 +77,9 @@
                             $pr[$key] =0;
                         }
                         
-                    $tt[$key] +=(!empty($group_data))?$group_data->total_emp :0;
-                    $pr[$key] += (!empty($group_data))?$group_data->emp_present :0;
-                    $ab[$key] += (!empty($group_data))?$group_data->emp_absent :0;
+                    $tt[$key] += (isset($group_data->total_emp))?$group_data->total_emp :0;
+                    $pr[$key] += (isset($group_data->emp_present))?$group_data->emp_present :0;
+                    $ab[$key] += (isset($group_data->emp_absent))?$group_data->emp_absent :0;
                 ?>
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
