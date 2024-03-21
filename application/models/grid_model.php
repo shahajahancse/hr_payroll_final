@@ -10869,6 +10869,7 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->select("sec_name_en");
 		$this->db->where("id", $section_id);
 		$query = $this->db->get('emp_section');
+		$sec_name_en = '';
 		foreach($query->result() as $rows)
 		{
 			$sec_name_en =  $rows->sec_name_en;
@@ -10881,6 +10882,7 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->select("line_name_en");
 		$this->db->where("id", $line_id);
 		$query = $this->db->get('emp_line_num');
+		$line_name = '';
 		if($query->num_rows() > 0){
 		foreach($query->result() as $rows)
 		{
@@ -10896,6 +10898,7 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->select("desig_name");
 		$this->db->where("id", $desig_id);
 		$query = $this->db->get('emp_designation');
+		$desig_name = '';
 		foreach($query->result() as $rows)
 		{
 			$desig_name =  $rows->desig_name;
@@ -10908,6 +10911,7 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->select("dept_bangla");
 		$this->db->where("dept_id", $dept_id);
 		$query = $this->db->get('emp_depertment');
+		$dept_bangla = '';
 		foreach($query->result() as $rows)
 		{
 			$dept_bangla =  $rows->dept_bangla;
