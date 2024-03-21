@@ -90,9 +90,9 @@
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                         <tr>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-right:1px solid black;"><?php echo (!empty($group_data))?$group_data->total_emp :'--'?></td>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;"><?php echo  (!empty($group_data))?$group_data->emp_present :'--'?></td>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-left:1px solid black;"><?php echo  (!empty($group_data))?$group_data->emp_absent :'--'?></td>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_dat->total_empa))?$group_data->total_emp :'--'?></td>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
                         </tr>
                     </table>
                </td>
