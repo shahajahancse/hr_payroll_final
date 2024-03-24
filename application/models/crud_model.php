@@ -178,6 +178,7 @@ class Crud_model extends CI_Model{
             'company_add_english' => $fromArray['en_add'],
             'company_add_bangla' => $fromArray['bn_add'],
             'company_phone' => $fromArray['phn'],
+            'unit_id' => $fromArray['unit_id'],
              'company_logo' => $img,
             'company_signature' => $sig,
         );

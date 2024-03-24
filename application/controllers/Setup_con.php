@@ -7,11 +7,12 @@ class Setup_con extends CI_Controller
         parent::__construct();
 
         /* Standard Libraries */
-        $this->load->library('Grocery_crud');
+        // $this->load->library('Grocery_crud');
         $this->load->model('Acl_model');
         $this->load->model('Common_model');
         $this->load->helper('url');
         $this->load->model('Crud_model');
+        $this->load->library('form_validation');
 
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -182,6 +183,7 @@ class Setup_con extends CI_Controller
 
     // Post Office create
     public function post_office_add(){
+
         $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
         $this->form_validation->set_rules('district', 'District Name', 'trim|required');
         $this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
@@ -1531,7 +1533,7 @@ class Setup_con extends CI_Controller
 
     public function company_info_setup()
     {
-        $company_infos = $this->Common_model->company_information();
+        $company_infos = $this->Common_model->company_information($this->data['user_data']->unit_name);
         $this->data['company_infos'] = $company_infos;
         $this->data['title'] = 'Company Info';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1540,6 +1542,7 @@ class Setup_con extends CI_Controller
     }
     public function company_add()
     {
+        // dd( $this->data['user_data']);
         $this->load->library('form_validation');
         $this->load->model('Crud_model');
         $this->form_validation->set_rules('name', 'Company Name', 'trim|required');
@@ -1547,6 +1550,7 @@ class Setup_con extends CI_Controller
         if ($this->form_validation->run() == false) {
             $this->data['title'] = 'Company Add';
             $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['unit_id'] = $this->data['user_data']->unit_name;
             $this->data['subview'] = 'setup/company_add';
             $this->load->view('layout/template', $this->data);
         } else {
@@ -1556,6 +1560,7 @@ class Setup_con extends CI_Controller
             $formArray['en_add'] = $this->input->post('en_add');
             $formArray['bn_add'] = $this->input->post('bn_add');
             $formArray['phn'] = $this->input->post('phn');
+            $formArray['unit_id'] = $this->input->post('unit_id');
             $formArray['comlogo'] = $this->input->post('comlogo');
             $formArray['comsign'] = $this->input->post('comsign');
             $this->Crud_model->company_add($formArray);

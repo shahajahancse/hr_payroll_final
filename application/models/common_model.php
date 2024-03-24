@@ -368,15 +368,15 @@ class Common_model extends CI_Model{
 		return $row->gross_sal;
 	}
 
-	function company_information()
+	function company_information($unit_id)
 	{
-		return $company_infos = $this->db->get('company_infos')->result_array();
+		return $company_infos = $this->db->where('unit_id',$unit_id)->get('company_infos')->result_array();
 		// return $query = $this->db->select('*')->get('company_infos')->row();
 	}
 
-	function company_info()
+	function company_info($unit_id)
 	{
-		return $query = $this->db->select('*')->get('company_infos')->row();
+		return $query = $this->db->select('*')->where('unit_id',$unit_id)->get('company_infos')->row();
 	}
 
 	function bank_note_requisition($amount, $bank_notes)
