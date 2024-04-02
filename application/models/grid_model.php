@@ -1520,21 +1520,7 @@ class Grid_model extends CI_Model{
 			}else{
 				$count++;
 			}
-
-			// foreach ($query->result() as $rows => $value) {
-			// 	if ($value->present_status == "A") {
-			// 		$count++;
-			// 	} elseif ($value->present_status == "W" || $value->present_status == "H") {
-			// 		// $no_imp = 0;
-			// 		$day++;
-			// 	}
-			// 	else{
-			// 		return $count;
-			// 	}
-			// }
-
 		}
-		// dd($count);
 		return $count;
 	}
 
@@ -4271,7 +4257,6 @@ class Grid_model extends CI_Model{
 			$this->db->from('pr_emp_com_info');
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$query = $this->db->get();
-			// dd($query->row());
 			if($query->num_rows() != 0){
 				$data[] = $query->row();
 			}

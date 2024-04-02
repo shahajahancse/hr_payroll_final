@@ -1595,17 +1595,8 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$firstdate = $this->input->post('firstdate');
 
-		$this->db->select('emp_id');
-		$this->db->from('pr_emp_com_info');
-		$this->db->where('unit_id', $unit_id);
-		$this->db->where('emp_cat_id', 1);
-		$emp_id=$this->db->get()->result();
-		$grid_emp_id=[];
-		foreach ($emp_id as $key => $value) {
-			$grid_emp_id[] = $value->emp_id;
-		}
-
-		$data['values'] 	= $this->Grid_model->grid_letter1_count($grid_emp_id,$firstdate);
+		$grid_emp_id=$this->db->select('emp_id')->where('unit_id', $unit_id)->where('emp_cat_id', 1)->get('pr_emp_com_info')->map(function($row) { return $row->emp_id; })->toArray($grid_emp_id);
+		$data['values'] = $this->Grid_model->grid_letter1_count($grid_emp_id,$firstdate);
 		// dd($data);
 		if(is_string($data['values'])){
 			echo 0;
