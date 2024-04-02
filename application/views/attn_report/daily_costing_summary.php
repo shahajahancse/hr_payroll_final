@@ -50,6 +50,7 @@ $num_of_days 	= date("t",strtotime($grid_date));
     <?php
     $sl = 1;
     foreach ($values as $item) {
+      dd($item);
       $total_salary = $item->present_gross_salary - $item->absent_gross_salary + ($item->ot) + ($item->eot );
 	  if($item->line_name_en == "Security"){
 			continue;
@@ -58,16 +59,16 @@ $num_of_days 	= date("t",strtotime($grid_date));
       <tr>
         <td style="padding:5px;text-align:center"><?php echo $sl++; ?></td>
         <td style="padding:5px;text-align:center"><?php echo $item->line_name_en; ?></td>
-        <td style="padding:5px;text-align:center"><?php echo $item->present_emp;@$total_emp +=$item->present_emp ?></td>
-        <td style="padding:5px;text-align:center"><?php echo $item->present_gross_salary; @$total_gross_salary +=$item->present_gross_salary?></td>
-        <td style="padding:5px;text-align:center"><?php echo round($item->present_gross_salary / $num_of_days); @$perday_salary += round($item->present_gross_salary / $num_of_days)?></td>
-        <td style="padding:5px;text-align:center"><?php echo $item->ot;@$total_ot +=$item->ot ?></td>
-        <td style="padding:5px;text-align:center"><?php echo $item->eot; @$total_eot +=$item->eot?></td>
-        <td style="padding:5px;text-align:center"><?php echo (($item->present_emp != 0) ? round(($item->present_gross_salary/104)*$item->ot/$item->present_emp,2) : 0); @$total_ot_amount += (($item->present_emp != 0) ? round($item->present_gross_salary/104,2)*$item->ot : 0)?></td>
-        <td style="padding:5px;text-align:center"><?php echo (($item->present_emp != 0) ? round(($item->present_gross_salary/104)*$item->eot/$item->present_emp,2) : 0); @$total_eot_amount += (($item->present_emp != 0) ? round($item->present_gross_salary/104,2)*$item->eot : 0)?></td>
-        <td style="padding:5px;text-align:center"><?php echo $item->night_allowence; @$total_night_amount += $item->night_allowence?></td>
-        <td style="padding:5px;text-align:center"><?php echo $item->holiday_allowence; @$total_holiday_amount += $item->holiday_allowence?></td>
-        <td style="padding:5px;text-align:center"><?php echo $item->ifter_allowence; @$total_ifter_amount += $item->ifter_allowence?></td>
+        <td style="padding:5px;text-align:center"><?php echo $item->present_emp;$total_emp +=$item->present_emp ?></td>
+        <td style="padding:5px;text-align:center"><?php echo $item->present_gross_salary; $total_gross_salary +=$item->present_gross_salary?></td>
+        <td style="padding:5px;text-align:center"><?php echo round($item->present_gross_salary / $num_of_days); $perday_salary += round($item->present_gross_salary / $num_of_days)?></td>
+        <td style="padding:5px;text-align:center"><?php echo $item->ot;$total_ot +=$item->ot ?></td>
+        <td style="padding:5px;text-align:center"><?php echo $item->eot; $total_eot +=$item->eot?></td>
+        <td style="padding:5px;text-align:center"><?php echo (($item->present_emp != 0) ? round(($item->present_gross_salary/104)*$item->ot/$item->present_emp,2) : 0); $total_ot_amount += (($item->present_emp != 0) ? round($item->present_gross_salary/104,2)*$item->ot : 0)?></td>
+        <td style="padding:5px;text-align:center"><?php echo (($item->present_emp != 0) ? round(($item->present_gross_salary/104)*$item->eot/$item->present_emp,2) : 0); $total_eot_amount += (($item->present_emp != 0) ? round($item->present_gross_salary/104,2)*$item->eot : 0)?></td>
+        <td style="padding:5px;text-align:center"><?php echo $item->night_allowence; $total_night_amount += $item->night_allowence?></td>
+        <td style="padding:5px;text-align:center"><?php echo $item->holiday_allowence; $total_holiday_amount += $item->holiday_allowence?></td>
+        <td style="padding:5px;text-align:center"><?php echo $item->ifter_allowence; $total_ifter_amount += $item->ifter_allowence?></td>
         <td style="padding:5px;text-align:center"><?php echo $total_salary;?></td>
       </tr>
     <?php
