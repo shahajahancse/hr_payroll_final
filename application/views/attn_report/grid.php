@@ -36,7 +36,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label">First Date : </label>
-							<input class= "form-control input-sm date" name="firstdate" id="firstdate" type="text" autocomplete="off">
+							<input onchange="count_l1()" class= "form-control input-sm date" name="firstdate" id="firstdate" type="text" autocomplete="off">
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -52,7 +52,7 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Unit <span style="color: red;">*</span> </label>
-						<select name="unit_id" id="unit_id" class="form-control input-sm">
+						<select onchange="count_l1()" name="unit_id" id="unit_id" class="form-control input-sm">
 							<option value="">Select Unit</option>
 							<?php 
 								foreach ($dept as $row) {
