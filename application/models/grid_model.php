@@ -4266,13 +4266,10 @@ class Grid_model extends CI_Model{
 				continue;
 			}
 			$this->db->select('
-				pr_emp_per_info.id,
+				pr_emp_com_info.emp_id,
 			');
-			$this->db->from('pr_emp_per_info');
-			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-			
+			$this->db->from('pr_emp_com_info');
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$this->db->order_by("pr_emp_com_info.emp_id");
 			$query = $this->db->get();
 			// dd($query->row());
 			if($query->num_rows() != 0){

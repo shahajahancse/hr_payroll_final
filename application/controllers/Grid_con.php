@@ -1598,6 +1598,7 @@ class Grid_con extends CI_Controller {
 		$this->db->select('emp_id');
 		$this->db->from('pr_emp_com_info');
 		$this->db->where('unit_id', $unit_id);
+		$this->db->where('emp_cat_id', 1);
 		$emp_id=$this->db->get()->result();
 		$grid_emp_id=[];
 		foreach ($emp_id as $key => $value) {
