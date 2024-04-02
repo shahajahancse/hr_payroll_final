@@ -106,15 +106,13 @@ $this->load->view("head_english",$data);
 		$total_cash_bank_eot_amount = 0;
 		$total_gross_cash_bank = 0;
 		$total_cash_bank_bonus_amount = 0;
+		// dd($values);
 		
-		
-		$count = count($values["line_name"]);
-		for($i=0; $i < $count; $i++)
-		{
+		$count = count($values["line_name_en"]);
+		for($i=0; $i < $count; $i++){
 			echo "<tr>";
-			
 			echo "<td align='center'>";
-			echo $values["line_name"][$i];
+			echo $values["line_name_en"][$i];
 			echo "</td>";
 			
 				

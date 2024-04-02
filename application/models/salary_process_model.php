@@ -682,12 +682,11 @@ class Salary_process_model extends CI_Model{
 
 	function advance_loan_deduction($emp_id, $salary_month)
 	{
-	
 		$this->db->select("*");
 		$this->db->from("pr_advance_loan_pay_history alp");
 
 		$this->db->where("alp.emp_id", $emp_id);
-		$this->db->where("alp.pay_month", $salary_month);
+		$this->db->like("alp.pay_month", $salary_month);
 
 		$query = $this->db->get()->row();
 		return isset($query->pay_amount) ? $query->pay_amount : 0;
@@ -843,27 +842,26 @@ class Salary_process_model extends CI_Model{
     function attendance_check($emp_id,$start_date,$end_date)
     {
         $this->db->select("
-                SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS attend,
-                SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
-                SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS weekend,
-                SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,  
-                SUM(CASE WHEN late_status    = '1' THEN 1 ELSE 0 END ) AS late_status, 
-                SUM(CASE WHEN holiday_allo 	 = '1' THEN 1 ELSE 0 END ) AS holiday_allo, 
-                SUM(CASE WHEN weekly_allo	 = '1' THEN 1 ELSE 0 END ) AS weekly_allo, 
-                SUM(CASE WHEN night_allo	 = '1' THEN 1 ELSE 0 END ) AS night_allo, 
-                SUM(CASE WHEN tiffin_allo	 = '1' THEN 1 ELSE 0 END ) AS tiffin_allo, 
-                SUM(CASE WHEN ifter_allo	 = '1' THEN 1 ELSE 0 END ) AS ifter_allo, 
-                SUM(ot) AS ot, 
-                SUM(eot) AS eot, 
-                SUM(ot_eot_4pm) AS ot_eot_4pm, 
-                SUM(ot_eot_12am) AS ot_eot_12am, 
-                SUM(modify_eot) AS modify_eot, 
-                SUM(deduction_hour) AS deduction_hour, 
+                COALESCE(SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ), 0) AS attend,
+                COALESCE(SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ), 0) AS absent,
+                COALESCE(SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ), 0) AS weekend,
+                COALESCE(SUM(CASE WHEN holiday_allo = '1' THEN 1 ELSE 0 END ), 0) AS holiday,
+                COALESCE(SUM(CASE WHEN late_status   = '1' THEN 1 ELSE 0 END ), 0) AS late_status,
+                COALESCE(SUM(CASE WHEN weekly_allo  = '1' THEN 1 ELSE 0 END ), 0) AS weekly_allo,
+                COALESCE(SUM(CASE WHEN night_allo   = '1' THEN 1 ELSE 0 END ), 0) AS night_allo,
+                COALESCE(SUM(CASE WHEN tiffin_allo  = '1' THEN 1 ELSE 0 END ), 0) AS tiffin_allo,
+                COALESCE(SUM(ot), 0) AS ot,
+                COALESCE(SUM(eot), 0) AS eot,
+                COALESCE(SUM(ot_eot_4pm), 0) AS ot_eot_4pm,
+                COALESCE(SUM(ot_eot_12am), 0) AS ot_eot_12am,
+                COALESCE(SUM(modify_eot), 0) AS modify_eot,
+                COALESCE(SUM(deduction_hour), 0) AS deduction_hour,
             ");
 
         $this->db->where('emp_id',$emp_id);
         $this->db->where("shift_log_date BETWEEN '$start_date' AND '$end_date'");
         $query = $this->db->get('pr_emp_shift_log');
+		// dd($query->row());
         
         return $query->row();
     }
@@ -872,12 +870,12 @@ class Salary_process_model extends CI_Model{
     {
 
         $this->db->select("
-                SUM(CASE WHEN leave_type = 'cl' THEN total_leave ELSE 0 END ) AS cl,
-                SUM(CASE WHEN leave_type = 'sl' THEN total_leave ELSE 0 END ) AS sl,
-                SUM(CASE WHEN leave_type = 'el' THEN total_leave ELSE 0 END ) AS el,
-                SUM(CASE WHEN leave_type = 'ml' THEN total_leave ELSE 0 END ) AS ml,
-                SUM(CASE WHEN leave_type = 'wp' THEN total_leave ELSE 0 END ) AS wp,
-                SUM(CASE WHEN leave_type = 'do' THEN total_leave ELSE 0 END ) AS do
+                COALESCE(SUM(CASE WHEN leave_type = 'cl' THEN total_leave ELSE 0 END ), 0) AS cl,
+                COALESCE(SUM(CASE WHEN leave_type = 'sl' THEN total_leave ELSE 0 END ), 0) AS sl,
+                COALESCE(SUM(CASE WHEN leave_type = 'el' THEN total_leave ELSE 0 END ), 0) AS el,
+                COALESCE(SUM(CASE WHEN leave_type = 'ml' THEN total_leave ELSE 0 END ), 0) AS ml,
+                COALESCE(SUM(CASE WHEN leave_type = 'wp' THEN total_leave ELSE 0 END ), 0) AS wp,
+                COALESCE(SUM(CASE WHEN leave_type = 'do' THEN total_leave ELSE 0 END ), 0) AS do
             ");
         $this->db->where("emp_id",$emp_id);
         $this->db->where("leave_start >=", $start_date);

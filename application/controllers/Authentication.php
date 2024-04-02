@@ -7,7 +7,7 @@ class Authentication extends CI_Controller {
 		parent::__construct();
 		
 		/* Standard Libraries */
-		$this->load->model('processdb');
+		// $this->load->model('processdb');
 		$this->load->helper('form');
 		
 	}

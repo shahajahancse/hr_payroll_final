@@ -24,8 +24,8 @@ echo $date_format;
 <body>
 
 <?php 
-$emp_id = $value[0]->emp_id;
-$data['unit_id'] = $this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
+// $emp_id = $value->emp_id;
+$data['unit_id'] = $unit_id;
 $this->load->view("head_english",$data);?>
 <div align="center">
 Monthly Bank Note Reqisition Sheet of 
@@ -75,11 +75,11 @@ $total_notes = array();
 		echo "</td>";
 		
 		echo "<td style='padding-left:5px;'>";
-		print_r($value[$k]->emp_full_name);
+		print_r($value[$k]->name_en);
 		echo "</td>"; 
 				
 		echo "<td style='padding-left:5px;'>";
-		print_r($value[$k]->sec_name);
+		print_r($value[$k]->sec_name_en);
 		//echo $row->desig_name;
 		echo "</td>";
 				

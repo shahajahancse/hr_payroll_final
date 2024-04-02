@@ -1,3 +1,4 @@
+
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
@@ -44,6 +45,7 @@
                         <div class="form-group col-md-6">
                             <label>Company Name English</label>
                             <input type="text" name="name" value="" class="form-control">
+                            <input type="hidden" name="unit_id" value="<?php echo $unit_id?>" class="form-control">
                             <?php echo form_error('name');?>
                         </div>
                         <div class="form-group col-md-6">

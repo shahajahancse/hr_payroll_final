@@ -35,7 +35,8 @@ $k = 0;
 			?>
 			<table>
 			
-			<?php
+			<?php 
+			// dd($value);
 for ( $counter = 1; $counter <= $page; $counter ++)
 {
 ?>
@@ -49,7 +50,7 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 <table>
 <?php 
 $date = date('d-m-Y');
-$section_name = $value[0]->sec_bangla;
+$section_name = $value[$k]->sec_name_bn;
 echo "সেকশন : $section_name<br>";
  ?>
 </table>
@@ -152,11 +153,11 @@ echo '</span>';
 		echo "</td>";
 		
 		echo "<td style='width:100px;font-family:SutonnyMj; SolaimanLipi;'>";
-		print_r($value[$k]->bangla_nam);
+		print_r($value[$k]->name_bn);
 		echo '<br>';
 		if($grid_status == 4)
 		{
-			$resign_date = $this->grid_model->get_resign_date_by_empid($value[$k]->emp_id);
+			$resign_date = $this->Grid_model->get_resign_date_by_empid($value[$k]->emp_id);
 			if($resign_date != false){
 			echo $resign_date = date('d-M-y', strtotime($resign_date));}
 		}
@@ -170,7 +171,7 @@ echo '</span>';
 		echo "</td>";
 		
 		echo "<td>";
-		print_r($value[$k]->line_bangla);
+		print_r($value[$k]->line_name_bn);
 		//echo $row->desig_name;
 		echo "</td>";
 				
@@ -187,7 +188,7 @@ echo $date_formate2;
 		echo "</td>";
 			
 		echo "<td style='text-align:center;font-family:SutonnyMj; SolaimanLipi;'>";
-		print_r ($value[$k]->gr_name);
+		print_r ($value[$k]->gr_name == 'None' ? 'নাই' : $value[$k]->gr_name);
 		echo "</td>";
 			
 		echo "<td style='text-align:center;font-family:SutonnyMj; SolaimanLipi;'>";

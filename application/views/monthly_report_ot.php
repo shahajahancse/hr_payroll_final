@@ -10,14 +10,14 @@
 
 <?php 
 	foreach($value as $row){
-		$att_month = $row->att_month;
+		$att_month = $year_month;
 	}
 
 	$att_month = $att_month;
 
-	/*echo "<pre>";
-	print_r($value);
-	exit;*/
+	// echo "<pre>";
+	// print_r($value);
+	// exit;
 	$per_page_id = 11;
 	$row_count=count($value);
 	if($row_count > $per_page_id)
@@ -53,7 +53,7 @@
 	<?php
 		$first_y=trim(substr($att_month,0,4));
 		$first_m=trim(substr($att_month,5,2));
-		$last_date = date("t", mktime(0, 0, 0, $first_m, 1, $first_y));
+		$last_date = date("t", strtotime("$first_y-$first_m-01"));
 
 		for ($k=1 ; $k <= $last_date ; $k++ )
 		{
@@ -83,11 +83,11 @@
 		echo "<tr><td>";
 		 echo $i + 1;
 		echo "</td><td>";
-		echo $value[$i]->emp_id;
+		echo (isset($value[$i]) && isset($value[$i]['emp_id'])) ? $value[$i]['emp_id'] : '';
 		echo "</td><td>";
-		echo $value[$i]->emp_full_name;
+		echo (isset($value[$i]) && isset($value[$i]['name_en'])) ? $value[$i]['name_en'] : '';
 		echo "</td><td>";
-		echo $value[$i]->desig_name;
+		echo (isset($value[$i]) && isset($value[$i]['desig_name'])) ? $value[$i]['desig_name'] : '';
 		echo "</td>";
 
 		/*echo "<td style='font-family: SutonnyMj;font-size:14px;'>";
@@ -103,45 +103,43 @@
 		
 		for ($k=1 ; $k <= $last_date ; $k++ ){
 		$idate = date("d", mktime(0, 0, 0, 0, $k, 0));
-		$date = "date_$idate";
+		// dd($idate);
+		$date = $idate;
 		echo "<td style='text-align:center;'>";
-		if($value[$i]->$date ==''){
+		if(!isset($value[$i][$date])){
 			echo "&nbsp;";
 		}else{
-			if($value[$i]->$date == "A"){
+			if($value[$i][$date] == "A"){
 				echo "<span style='background:#CCCCCC;'> ";
-				echo $value[$i]->$date;
+				echo $value[$i][$date];
 				echo "</span>";
 			}else{
-				echo $value[$i]->$date;
-				$ot_date = date("Y-m-d", mktime(0, 0, 0, $first_m, $k, $first_y));
+				echo $value[$i][$date];
+				$ot_date = date("Y-m-d", mktime(0, 0, 0, $first_m, (int)$k, (int)$first_y));
 				echo "<br>";
-				$daily_total_ot = $this->grid_model->get_daily_total_ot_hour($value[$i]->emp_id, $ot_date);
+				$daily_total_ot = $this->Grid_model->get_daily_total_ot_hour($value[$i]['emp_id'], $ot_date);
 				echo $daily_total_ot;
 				$total_ot = $total_ot + $daily_total_ot;
 			}
-			if($value[$i]->$date == "P"){ $p++;}
-			if($value[$i]->$date == "A"){ $a++; }
-			if($value[$i]->$date == "L"){ $l++; }
-			if($value[$i]->$date == "W"){ $w++; }
-			if($value[$i]->$date == "H"){ $h++; }
+			if($value[$i][$date] == "P"){ $p++;}
+			if($value[$i][$date] == "A"){ $a++; }
+			if($value[$i][$date] == "L"){ $l++; }
+			if($value[$i][$date] == "W"){ $w++; }
+			if($value[$i][$date] == "H"){ $h++; }
 		}
 		echo "</td>";
 	}
-
 		echo "<td style='text-align: center;'> $p </td>";
 		echo "<td style='text-align: center;'> $a </td>";
-		echo "<td style='text-align: center;'>  $w </td>";
+		echo "<td style='text-align: center;'> $w </td>";
 		echo "<td style='text-align: center;'> $h </td>";
 		echo "<td style='text-align: center;'> $l </td>";
 		$t_day = $p+ $a+  $w + $h +$l;
 		echo "<td style='text-align: center;'> $t_day </td>";
 		echo "<td style='text-align: center;'>";
-		// echo "$total_ot+$total_eot =";
 		echo $total_ot;
 		echo "</td>";
 		echo "</tr>";
-		
 		$i++;
   }
  ?>

@@ -37,6 +37,7 @@ class Processdb extends CI_Model{
 			'com_gross_sal'		=> $this->input->post('gross_sal'),
 
 			'ot_entitle'		=> $this->input->post('ot_entitle'),
+			'com_ot_entitle'    => $this->input->post('com_ot_entitle'),
 			'lunch'				=> $this->input->post('lunch'),
 			'transport'			=> $this->input->post('transport'),
 			'salary_draw'		=> $this->input->post('salary_draw'),
@@ -703,6 +704,7 @@ class Processdb extends CI_Model{
 			'com_gross_sal'		=> $this->input->post('gross_sal'),
 
 			'ot_entitle'		=> $this->input->post('ot_entitle'),
+			'com_ot_entitle'		=> $this->input->post('com_ot_entitle'),
 			'lunch'				=> $this->input->post('lunch'),
 			'transport'			=> $this->input->post('transport'),
 			'salary_draw'		=> $this->input->post('salary_draw'),
@@ -2246,7 +2248,7 @@ class Processdb extends CI_Model{
 					   ->join('pr_emp_per_info as per','com.emp_id = per.emp_id', 'left')
 					   ->where('com.emp_id',$emp_id)
 					   ->get()->row();
-		// dd($d);
+		$d->emp_dob= date("d-m-Y", strtotime($d->emp_dob));
 					   
 
 		if ($d == null) {

@@ -8,7 +8,7 @@ class Newcon extends CI_Controller {
 		/* Standard Libraries */
 		ini_set('date.timezone', 'Asia/Dacca');
 		$this->load->model('admin/admin_model');
-		$this->load->model('log_model');
+		$this->load->model('Log_model');
 	}
 	function index()
 	{
@@ -30,7 +30,7 @@ class Newcon extends CI_Controller {
 		if ($data['logged_in']==true)
 		{
 			$this->session->set_userdata($data);
-			$this->log_model->log_login_insert();
+			$this->Log_model->log_login_insert();
 		}
 		redirect();
 	}
@@ -44,7 +44,7 @@ class Newcon extends CI_Controller {
 					'unit_name' => $this->session->userdata('unit_name')
 					);
 		$this->session->sess_destroy();
-		$this->log_model->log_login_out();
+		$this->Log_model->log_login_out();
 		//$this->session->unset_userdata($session_data);
 		$url = base_url();
 		redirect($url, 'refresh');

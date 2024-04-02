@@ -271,8 +271,8 @@ foreach ($values->result() as $row)
 		<?php 
 		  //echo $render_year;
 		  //echo $emp_id;
-		 //$data = $this->grid_model->grid_earn_leave_payment_for_pension($resign_date, $render_year, $emp_id);
-		 $data = $this->grid_model->grid_earn_leave_payment_buyer($resign_date, $render_year, $emp_id);
+		 //$data = $this->Grid_model->grid_earn_leave_payment_for_pension($resign_date, $render_year, $emp_id);
+		 $data = $this->Grid_model->grid_earn_leave_payment_buyer($resign_date, $render_year, $emp_id);
 		  $tpresentday = $data['tAttDays'];
 		  $tel = $data['el'];
 		  //$gross = $data['gross_sal'];

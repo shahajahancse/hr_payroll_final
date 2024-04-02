@@ -121,14 +121,14 @@ $this->load->view("head_english");
 		$gt_bank_salary = 0;
 		$gt_net_salary	= 0;
 		
-		$count = count($values["sec_name"]);
+		$count = count($values["sec_name_en"]);
 		
 		for($i=0; $i < $count; $i++)
 		{
 			echo "<tr>";
 			
 			echo "<td  style='text-align:left; padding-left:5px;'>";
-			echo $values["sec_name"][$i];
+			echo $values["sec_name_en"][$i];
 			echo "</td>";
 			
 			$total_emp = $values["emp_cash"][$i] + $values["emp_bank"][$i];

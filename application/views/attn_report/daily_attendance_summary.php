@@ -4,10 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" >
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" > -->
     <style>
         body{
             font-size: 13px;
+        }
+        .table, th, td {
+            border:1px solid black;
+            border-collapse: collapse;
         }
     </style>
 </head>
@@ -15,7 +19,7 @@
      <!-- < ?php dd($values);?> -->
     <?php $this->load->view("head_english");?><br>
     <div align="center" class="container">
-		<table class="table table-bordered table-sm">
+		<table class="table">
 			<tr>
 				<th class="text-center">Sl.</th>
 				<th class="text-center">Line Name</th>
@@ -26,14 +30,14 @@
                 <th class="text-center">Female</th>
                 <?php foreach($keys as $key){?>
                 <th style="padding:0px">
-                    <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;">
+                    <table style="border-collapse: collapse;border:0px white;">
                         <tr>
-                            <th class="text-center" colspan='3' style="padding: 0;border: none;border-bottom: 1px solid #dee2e6;"><?php echo $key ?></th>
+                            <th class="text-center" colspan='3' style="padding: 0;border: none;border-bottom: 1px solid black;"><?php echo $key ?></th>
                         </tr>
                         <tr>
-                            <td style="border: none;padding:2px;margin: 0;border-right:1px solid #dee2e6;">TT</td>
+                            <td style="border: none;padding:2px;margin: 0;border-right:1px solid black;">TT</td>
                             <td style="border: none;padding:2px;margin: 0;">PR</td>
-                            <td style="border: none;padding:2px;margin: 0;border-left:1px solid #dee2e6;">AB</td>
+                            <td style="border: none;padding:2px;margin: 0;border-left:1px solid black;">AB</td>
                         </tr>
                     </table>
                 </th>
@@ -53,7 +57,7 @@
                 $sumAllMale     += $row->all_male;
                 $sumAllFemale   += $row->all_female;
                 $sumAllLeave   += $row->all_leave;
-                $sumAllLate   += $row->all_late;
+                $sumAllLate    += $row->all_late;
             
             ?>
 			<tr>
@@ -65,7 +69,13 @@
 				<td class="text-center"><?php echo $row->all_male?></td>
 				<td class="text-center"><?php echo $row->all_female?></td>
                <?php 
-                    foreach($keys as $key){ $group_data =$row->group_data[$key];
+                    foreach($keys as $key){ 
+                        if($key=='Input Man'){
+                            $group_data = (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
+                        }else{
+                            $group_data =$row->group_data[$key]?? (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
+                        }
+                    
 
                         if(!isset($tt[$key])){
                             $tt[$key] =0;
@@ -73,16 +83,16 @@
                             $pr[$key] =0;
                         }
                         
-                    $tt[$key] +=(!empty($group_data))?$group_data->total_emp :0;
-                    $pr[$key] += (!empty($group_data))?$group_data->emp_present :0;
-                    $ab[$key] += (!empty($group_data))?$group_data->emp_absent :0;
+                    $tt[$key] += (isset($group_data->total_emp))?$group_data->total_emp :0;
+                    $pr[$key] += (isset($group_data->emp_present))?$group_data->emp_present :0;
+                    $ab[$key] += (isset($group_data->emp_absent))?$group_data->emp_absent :0;
                 ?>
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                         <tr>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-right:1px solid #dee2e6;"><?php echo (!empty($group_data))?$group_data->total_emp :'--'?></td>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;"><?php echo  (!empty($group_data))?$group_data->emp_present :'--'?></td>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-left:1px solid #dee2e6;"><?php echo  (!empty($group_data))?$group_data->emp_absent :'--'?></td>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_dat->total_empa))?$group_data->total_emp :'--'?></td>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
+                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
                         </tr>
                     </table>
                </td>
@@ -127,9 +137,9 @@
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                         <tr>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-right:1px solid #dee2e6;"><?php echo $tt[$key];?></td>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;"><?php echo  $pr[$key]?></td>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-left:1px solid #dee2e6;"><?php echo $ab[$key] ?></td>
+                            <td class="text-center" style="border: none;padding: 9px 2px;margin: 0;border-right:1px solid black;"><?php echo $tt[$key];?></td>
+                            <td class="text-center" style="border: none;padding: 9px 2px;margin: 0;"><?php echo  $pr[$key]?></td>
+                            <td class="text-center" style="border: none;padding: 9px 2px;margin: 0;border-left:1px solid black;"><?php echo $ab[$key] ?></td>
                         </tr>
                     </table>
                </td>

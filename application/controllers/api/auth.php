@@ -14,7 +14,7 @@ class Auth extends REST_Controller
         /* Standard Libraries */
         ini_set('date.timezone', 'Asia/Dacca');
 
-        $this->load->model('admin/admin_model');
+        $this->load->model('admin/Admin_model');
     }
 
 
@@ -24,7 +24,7 @@ class Auth extends REST_Controller
 
         if($username != '' && $password != '')
         {
-            $data =$this->admin_model->check_user_account_FE();
+            $data =$this->Admin_model->check_user_account_FE();
             $this->response($data, 200);
 
             if ($data['logged_in'] == true )

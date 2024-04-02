@@ -22,7 +22,6 @@
                 <br />
                 <br />
                 <table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:13px; width:950px;">
-
                     <tr style="background:#C1E0FF">
                         <th width="30">SL</th>
                         <th width="120"><?php echo $category; ?> Name</th>
@@ -48,6 +47,8 @@
                     <?php 
                         $i=1;
                         $total = 0;
+                        $total_error = 0;
+                        $total_ot = 0;
                         $total_four_pm=0;  
                         $total_five_pm=0;
                         $total_six_pm=0;  
@@ -65,6 +66,8 @@
                         $total_six_am=0;  
                         foreach($values as $row){
                             $total            += $row->all_present; 
+                            $total_error      += $row->present_error; 
+                            $total_ot      += $row->total_ot; 
                             $total_four_pm    += $row->four_pm;
                             $total_five_pm    += $row->five_pm;
                             $total_six_pm     += $row->six_pm;
@@ -79,7 +82,6 @@
                             $total_three_am   += $row->three_am;  
                             $total_four_am    += $row->four_am;  
                             $total_five_am    += $row->five_am;  
-                            $total_six_am     += $row->six_am;  
                         ?>
                         <tr>
                             <th width="30"><?php  echo $i++?></th>
@@ -99,8 +101,8 @@
                             <th width="120"><?php echo $row->three_am?></th>
                             <th width="120"><?php echo $row->four_am?></th>
                             <th width="120"><?php echo $row->five_am?></th>
-                            <th width="120"><?php echo $row->six_am?></th>
-                            <th width="120"><?php echo ''?></th>
+                            <th width="120"><?php echo $row->present_error?></th>
+                            <th width="120"><?php echo $row->total_ot?></th>
                             <th width="120"><?php echo ''?></th>
                         </tr>
                     <?php } ?>
@@ -121,9 +123,9 @@
                         <th><?php echo $total_three_am;?></th>
                         <th><?php echo $total_four_am;?></th>
                         <th><?php echo $total_five_am;?></th>
-                        <th> </th>
-                        <th> </th>
-                        <th> </th>
+                        <th><?php echo $total_error;?></th>
+                        <th><?php echo $total_ot;?></th>
+                        <th></th>
                     </tr>
                 </table>
             </div>

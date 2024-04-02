@@ -15,18 +15,13 @@
 	{ echo 'Resign Employee '; }
 	elseif($grid_status == 6)
 	{ echo 'Promoted Employee '; }
-?>Advance Salary Sheet of 
-<?php 
-
-
-?>
+?> Advance Salary Sheet of <?php ?>
 
 </title>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/print.css" media="print" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" />
 <style>
-.bottom_txt_design
-{
+.bottom_txt_design{
 	 border-top:1px solid;
 	 width:170px;
 	 font-weight:bold;
@@ -79,8 +74,7 @@ $k = 0;
 			
 		
 
-for ( $counter = 1; $counter <= $page; $counter ++)
-{
+for ( $counter = 1; $counter <= $page; $counter ++){
 ?>
 
 <table height="auto"  class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:13px; width:13.6in; font-family:SutonnyMJ, SolaimanLipi; border-collapse:collapse;">
@@ -96,10 +90,12 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 <div style="text-align:left; position:relative;padding-left:10px;width:20%; float:left; font-weight:bold;">
 <table>
 <?php 
+
 $date = date('d-m-Y');
 //$unit_name['unit_name'] = $this->db->where("unit_id",$grid_unit)->get('pr_units')->row()->unit_name;
-$section_name = $value[0]->sec_name;
-$last_day = date("t", strtotime($salary_date1));
+$section_name = $value[0]->sec_name_en;
+// dd($first_date);
+$last_day = date("t", strtotime($first_date));
 $dom = $last_day;//$value[0]->total_days;
 echo "Section : $section_name<br>";
 echo "DOM : $dom<br>";
@@ -109,6 +105,7 @@ echo "DOM : $dom<br>";
 </div>
  <div style="text-align:center; position:relative;padding-left:10px;width:50%; overflow:hidden; float:left; display:block;">
 <?php //$emp_id = $value[0]->emp_id;
+
 //$data['unit_id'] = $this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
 $this->load->view("head_english");?>
 <?php 
@@ -124,15 +121,16 @@ $this->load->view("head_english");?>
 	{ echo 'Promoted Employee '; }
 echo '<span style="font-weight:bold;">';
 echo "Advance Salary Sheet for the month of  ";
-$sstartDate = date("d-M-Y", strtotime($salary_date1));
-$sEndDate = date("d-M-Y", strtotime($salary_date2));
+$sstartDate = date("d-M-Y", strtotime($first_date));
+$sEndDate = date("d-M-Y", strtotime($last_date));
 echo "&nbsp;$sstartDate To $sEndDate";//$date_format;
-$sEndDate = date("d-M-Y", strtotime($salary_date2));
+$sEndDate = date("d-M-Y", strtotime($last_date));
 //MANUALLY DEFINE SALARY DAYS
-$start = strtotime($salary_date1);
-$end = strtotime($salary_date2);
+$start = strtotime($first_date);
+$end = strtotime($last_date);
 
 $total_days = (ceil(abs($end - $start) / 86400)+1);
+// dd($total_days);
 echo '</span>';
 ?>
 </div>
@@ -141,6 +139,7 @@ echo '</span>';
 <?php
 echo "Page No # $counter of $page<br>";
 echo "Payment Date : ";
+
 ?>
 
 </div>
@@ -237,7 +236,7 @@ echo "Payment Date : ";
 		
 		echo "<td  style='font-family:Arial, Helvetica, sans-serif; text-align:left; padding-left:5px;'>";
 		echo "<span  style='font-weight:bold;'>";
-		print_r($value[$k]->emp_full_name);
+		print_r($value[$k]->name_en);
 		echo "</span>";
 		echo '<br>';
 		echo "<span  style='font-size:10px;'>";
@@ -254,13 +253,15 @@ echo "Payment Date : ";
 		echo '<br>';
 		echo "GR: ";print_r ($value[$k]->gr_name);
 		echo '<br>';
+
 		if($grid_status == 4)
 		{
-			$resign_date = $this->grid_model->get_resign_date_by_empid($value[$k]->emp_id);
+			$resign_date = $this->Grid_model->get_resign_date_by_empid($value[$k]->emp_id);
 			if($resign_date != false){
 			echo "Resign : ".$resign_date = date('d-M-y', strtotime($resign_date));
 			}
 		}
+
 		echo "</span>";
 		echo "</td>"; 
 				
@@ -269,10 +270,11 @@ echo "Payment Date : ";
 			
 		echo "<td style='font-family:arial; font-size:10px;'>";
 		//$line_id = $value[$k]->line_id;
-		echo $value[$k]->line_name;
+		echo $value[$k]->line_name_en;
 		echo "</td>";
 		
 		$salary_structure = $this->common_model->salary_structure($value[$k]->gross_sal);
+
 		
 		echo "<td>";
 		echo $basic_salary 			= $salary_structure['basic_sal'];
@@ -312,41 +314,34 @@ echo "Payment Date : ";
 		echo "<td>";
 		echo $gross_salary;
 		echo "</td>";
-		
-	/*	echo "<td>";
-		print_r ($value[$k]->total_days);
-		//echo $row->total_days;
-		echo "</td>";*/ 
+
+				// dd('KO');
 		
 		$attend = "P";
-		$attend = $this->salary_process_model->attendance_check($emp_id,$attend,$total_days, $salary_date1);
+		$attend = $this->salary_process_model->attendance_check($emp_id,$attend,$first_date,$last_date);
 		
 		$absent = "A";
-		$absent = $this->salary_process_model->attendance_check($emp_id,$absent,$total_days, $salary_date1);
+		$absent = $this->salary_process_model->attendance_check($emp_id,$absent,$first_date,$last_date);
 		
 		$weeked = "W";
-		$weeked = $this->salary_process_model->attendance_check($emp_id,$weeked,$total_days, $salary_date1);
+		$weeked = $this->salary_process_model->attendance_check($emp_id,$weeked,$first_date,$last_date);
 		
-		$holiday = "H";
-		$holiday = $this->salary_process_model->attendance_check($emp_id,$holiday,$total_days, $salary_date1);
-		$total_holiday = $weeked + $holiday;
+		$holiday = $this->salary_process_model->attendance_check($emp_id,'H',$first_date,$last_date);
+		$total_holiday = $weeked->weekend +  $holiday->holiday;
 		$holiday_or_weeked = $total_holiday;
-				
 		$leave_type = "cl";
-		$cas_leave = $this->salary_process_model->leave_db($emp_id, $salary_date1, $salary_date2, $leave_type);
+		$cas_leave = $this->salary_process_model->leave_db($emp_id, $first_date, $last_date, $leave_type);
 		$leave_type = "sl";
-		$sick_leave = $this->salary_process_model->leave_db($emp_id, $salary_date1, $salary_date2, $leave_type);
+		$sick_leave = $this->salary_process_model->leave_db($emp_id, $first_date, $last_date, $leave_type);
 		$leave_type = "el";
-		$earn_leave = $this->salary_process_model->leave_db($emp_id, $salary_date1, $salary_date2, $leave_type);
+		$earn_leave = $this->salary_process_model->leave_db($emp_id, $first_date, $last_date, $leave_type);
 				
-		$total_leave =  $cas_leave + $sick_leave + $earn_leave;
-		//$payable_salary_days = $attend + $total_holiday + $total_leave;
-		
-		$pay_days = $attend + $total_holiday + $total_leave;
+		$total_leave =  $cas_leave->cl + $sick_leave->sl + $earn_leave->el;
+		$pay_days = $attend->attend + $total_holiday + $total_leave;
 		
 		
 		echo "<td>";
-		echo $attend;
+		echo $attend->attend;
 		echo "</td>";
 		
 		 
@@ -356,22 +351,19 @@ echo "Payment Date : ";
 		echo "</td>"; 
 		
 		echo "<td>";
-		echo $absent;
-		echo "</td>";
-		
-		
-		
-					
-		echo "<td>";
-		echo $cas_leave;
+		echo $absent->absent;
 		echo "</td>";
 		
 		echo "<td>";
-		echo $sick_leave;
+		echo $cas_leave->cl;
 		echo "</td>";
 		
 		echo "<td>";
-		echo $earn_leave;
+		echo $sick_leave->sl;
+		echo "</td>";
+		
+		echo "<td>";
+		echo $earn_leave->el;
 		echo "</td>";
 				
 		/*echo "<td>";
@@ -392,9 +384,9 @@ echo "Payment Date : ";
 		echo $net_wages;
 		echo "</td>";
 				
-		$ot_rate = $salary_structure['ot_rate'];;
+		$ot_rate = $salary_structure['ot_rate'];
 		
-			$ot_hour = 0;//$this->salary_process_model->ot_hour_between_date($emp_id,$salary_date1, $salary_date2);
+			$ot_hour = 0;//$this->salary_process_model->ot_hour_between_date($emp_id,$first_date, $$last_date);
 		
 		echo "<td>";
 		echo $ot_hour;
@@ -421,56 +413,6 @@ echo "Payment Date : ";
 		echo "";
 		echo "</td>";
 		
-		/*echo "<td>";
-		print_r ($value[$k]->ot_hour);
-		
-		$total_ot_hour 			= $total_ot_hour + $value[$k]->ot_hour;
-		$grand_total_ot_hour 	= $grand_total_ot_hour + $value[$k]->ot_hour;
-		echo "</td>";
-		
-		echo "<td>";
-		print_r ($value[$k]->ot_rate);
-		echo "</td>";
-		
-		$ot_amount 					= $value[$k]->ot_amount;	
-		//$eot_amount 				= $value[$k]->eot_amount;
-		$ot_eot_amount 				= $ot_amount;// + $eot_amount;
-		$total_ot_eot_amount 		= $total_ot_eot_amount + $ot_eot_amount;
-		$grand_total_ot_eot_amount 	= $grand_total_ot_eot_amount + $ot_eot_amount;
-		echo "<td>";
-		echo $ot_amount;
-		echo "</td>";
-		
-		$net_pay 				= $value[$k]->net_pay ;//+ $eot_amount;
-		$total_net_pay 			= $total_net_pay + $net_pay;
-		$grand_total_net_pay 	= $grand_total_net_pay + $net_pay;
-		echo "<td>";
-		echo $net_pay;
-		echo "</td>";
-		
-		echo "<td style='font-family:arial;'>";
-		if($salary_month_check == $doj_check){echo '***';}
-		echo "&nbsp;|&nbsp;";
-		echo "</td>";
-		
-		$total_wages_with_stamp = $total_net_pay  + $total_stamp_deduct ;
-		$grand_total_wages_with_stamp = $grand_total_net_pay + $grand_total_stamp_deduct;	
-		echo "</tr>"; */
-		
-		//ADVANCE LOAN ENTRY TO THE DATABASE
-		/*$query = $this->db->where('emp_id', $emp_id)->where('loan_date', $salary_date1)->where('loan_status', 1)->get('pr_advance_loan');
-		
-		$data = array(
-					'emp_id' 		=> $emp_id,
-					'loan_amt'		=> $net_wages,
-					'pay_amt'		=> $net_wages,
-					'loan_date'		=> $salary_date1,
-					'loan_status'	=> 1
-					);
-		//print_r($data);
-		if($query->num_rows() == 0 ){
-		$this->db->insert('pr_advance_loan', $data);
-		}*/
 		$k++;
 	}
 	?>

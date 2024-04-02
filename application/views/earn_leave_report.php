@@ -27,7 +27,7 @@ Earn Leave Payment Sheet <?php echo date("F-Y"); ?></span>
 <th>Designation</th> 
 <th>Card No.</th>
 <th>Section</th> 
-<th>Join Date</th> 
+<th style="white-space:nowrap">Join Date</th> 
 <th>Previous Month of Payble Wages</th> 
 <th>Actual Working Days <?php echo date("Y"); ?></th> 
 <th>E/L Earn in <?php echo date("Y"); ?> </th> 
@@ -38,12 +38,10 @@ Earn Leave Payment Sheet <?php echo date("F-Y"); ?></span>
 <th>Worker Signature</th> 
 
 <?php
-/*$total_first_tiffin_allo_amount = 0;
-$total_second_tiffin_allo_amount = 0;
-$total_night_allo_amount = 0;
-$all_total = 0;*/
+// dd($values);
+
 $total_net_pay = 0;
-$count = count($values["emp_name"]);
+$count = $values["emp_name"] !== null ? count($values["emp_name"]) : 0;
 for($i=0; $i<$count; $i++ )
 {
 	echo "<tr>";
@@ -74,7 +72,7 @@ for($i=0; $i<$count; $i++ )
 	echo "</td>";
 	
 	echo "<td style='text-align:right'>";
-	echo number_format($values["pay_wages"][$i]);
+	echo isset($values["pay_wages"][$i]) ? number_format($values["pay_wages"][$i]) : 0;
 	echo "</td>";
 	
 	echo "<td style='text-align:center'>";
@@ -88,13 +86,11 @@ for($i=0; $i<$count; $i++ )
 	echo "<td style='text-align:center'>";
 	echo $values["old_earn_balance"][$i];
 	echo "</td>";
-	if($values["pay_days"][$i] == 0)
-	{
-		$per_day_wages = 0;
-	}
+	if(!isset($values["pay_days"][$i])){
+		$per_day_wages = 0;}
 	else
 	{
-		$per_day_wages = round($values["pay_wages"][$i]/$values["total_days"][$i],2);
+		$per_day_wages = round($values["net_pay"][$i]/$values["total_days"][$i],2);
 		//echo $per_day_wages;
 	}
 	//echo $values["total_days"][$i];
@@ -105,7 +101,7 @@ for($i=0; $i<$count; $i++ )
 	echo "</td>";
 	
 	echo "<td style='text-align:center' >";
-	echo $values["pay_days"][$i];
+	echo isset($values["pay_days"][$i]) ? $values["pay_days"][$i] : "&nbsp;";
 	echo "</td>";
 	$net_pay_round = round($net_pay,2);
 	echo "<td style='text-align:right'>";

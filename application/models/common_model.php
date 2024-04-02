@@ -76,125 +76,150 @@ class Common_model extends CI_Model{
 	}
 
 	function get_group_wise_attendance($line_id, $date, $unit_id, $array){
-		$this->db->select("
-	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
-				");
-		$this->db->from("pr_emp_shift_log as log");
-		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
-		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
+		if (!empty($array['Operator'])) {
+			$this->db->select("
+		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
+		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+		                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+		                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
+					");
+			$this->db->from("pr_emp_shift_log as log");
+			$this->db->from('pr_emp_com_info as com');
+			$this->db->from('emp_line_num as num');
+			$this->db->where("log.emp_id = com.id");
+			$this->db->where("num.id = com.emp_line_id");
 
-		$this->db->where("com.emp_line_id", $line_id);
-		$this->db->where("com.unit_id", $unit_id);
-		$this->db->where("log.shift_log_date", $date);
-		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Operator']);
-		$this->db->group_by("log.shift_log_date");
-		$d['Operator'] = $this->db->get()->row();
+			$this->db->where("com.emp_line_id", $line_id);
+			$this->db->where("com.unit_id", $unit_id);
+			$this->db->where("log.shift_log_date", $date);
+			$this->db->where("log.in_time !=", "00:00:00");
+			$this->db->where_in("com.emp_desi_id", $array['Operator']);
+			$this->db->group_by("log.shift_log_date");
+			$d['Operator'] = $this->db->get()->row();
+		} else {
+			$d['Operator'] = new stdClass();
+		}
 
-		$this->db->select("
-	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
-				");
-		$this->db->from("pr_emp_shift_log as log");
-		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
-		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
+		if (!empty($array['Helper'])) {
+			$this->db->select("
+		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
+		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+		                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+		                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
+					");
+			$this->db->from("pr_emp_shift_log as log");
+			$this->db->from('pr_emp_com_info as com');
+			$this->db->from('emp_line_num as num');
+			$this->db->where("log.emp_id = com.id");
+			$this->db->where("num.id = com.emp_line_id");
 
-		$this->db->where("com.emp_line_id", $line_id);
-		$this->db->where("com.unit_id", $unit_id);
-		$this->db->where("log.shift_log_date", $date);
-		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Helper']);
-		$this->db->group_by("log.shift_log_date");
-		$d['Helper'] = $this->db->get()->row();
-		
-		$this->db->select("
-	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
-				");
-		$this->db->from("pr_emp_shift_log as log");
-		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
-		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
+			$this->db->where("com.emp_line_id", $line_id);
+			$this->db->where("com.unit_id", $unit_id);
+			$this->db->where("log.shift_log_date", $date);
+			$this->db->where("log.in_time !=", "00:00:00");
+			$this->db->where_in("com.emp_desi_id", $array['Helper']);
+			$this->db->group_by("log.shift_log_date");
+			$d['Helper'] = $this->db->get()->row();
+		} else {
+			$d['Helper'] = new stdClass();
+		}
 
-		$this->db->where("com.emp_line_id", $line_id);
-		$this->db->where("com.unit_id", $unit_id);
-		$this->db->where("log.shift_log_date", $date);
-		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Iron Man']);
-		$this->db->group_by("log.shift_log_date");
-		$d['Iron Man'] = $this->db->get()->row();
-		
-		$this->db->select("
-	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
-				");
-		$this->db->from("pr_emp_shift_log as log");
-		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
-		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
+		if (!empty($array['Iron Man'])) {		
+			$this->db->select("
+		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
+		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+		                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+		                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
+					");
+			$this->db->from("pr_emp_shift_log as log");
+			$this->db->from('pr_emp_com_info as com');
+			$this->db->from('emp_line_num as num');
+			$this->db->where("log.emp_id = com.id");
+			$this->db->where("num.id = com.emp_line_id");
 
-		$this->db->where("com.emp_line_id", $line_id);
-		$this->db->where("com.unit_id", $unit_id);
-		$this->db->where("log.shift_log_date", $date);
-		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Line Chief']);
-		$this->db->group_by("log.shift_log_date");
-		$d['Line Chief'] = $this->db->get()->row();
-		
-		$this->db->select("
-	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
-				");
-		$this->db->from("pr_emp_shift_log as log");
-		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
-		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
+			$this->db->where("com.emp_line_id", $line_id);
+			$this->db->where("com.unit_id", $unit_id);
+			$this->db->where("log.shift_log_date", $date);
+			$this->db->where("log.in_time !=", "00:00:00");
+			$this->db->where_in("com.emp_desi_id", $array['Iron Man']);
+			$this->db->group_by("log.shift_log_date");
+			$d['Iron Man'] = $this->db->get()->row();
+		} else {
+			$d['Iron Man'] = new stdClass();
+		}
 
-		$this->db->where("com.emp_line_id", $line_id);
-		$this->db->where("com.unit_id", $unit_id);
-		$this->db->where("log.shift_log_date", $date);
-		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['F.Q.I']);
-		$this->db->group_by("log.shift_log_date");
-		$d['F.Q.I'] = $this->db->get()->row();
-		
-		$this->db->select("
-	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
-	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
-	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
-	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
-				");
-		$this->db->from("pr_emp_shift_log as log");
-		$this->db->from('pr_emp_com_info as com');
-		$this->db->from('emp_line_num as num');
-		$this->db->where("log.emp_id = com.id");
-		$this->db->where("num.id = com.emp_line_id");
+		if (!empty($array['Line Chief'])) {	
+			$this->db->select("
+		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
+		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+		                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+		                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
+					");
+			$this->db->from("pr_emp_shift_log as log");
+			$this->db->from('pr_emp_com_info as com');
+			$this->db->from('emp_line_num as num');
+			$this->db->where("log.emp_id = com.id");
+			$this->db->where("num.id = com.emp_line_id");
 
-		$this->db->where("com.emp_line_id", $line_id);
-		$this->db->where("com.unit_id", $unit_id);
-		$this->db->where("log.shift_log_date", $date);
-		$this->db->where("log.in_time !=", "00:00:00");
-		$this->db->where_in("com.emp_desi_id", $array['Supervisor']);
-		$this->db->group_by("log.shift_log_date");
-		$d['Supervisor'] = $this->db->get()->row();
+			$this->db->where("com.emp_line_id", $line_id);
+			$this->db->where("com.unit_id", $unit_id);
+			$this->db->where("log.shift_log_date", $date);
+			$this->db->where("log.in_time !=", "00:00:00");
+			$this->db->where_in("com.emp_desi_id", $array['Line Chief']);
+			$this->db->group_by("log.shift_log_date");
+			$d['Line Chief'] = $this->db->get()->row();
+		} else {
+			$d['Line Chief'] = new stdClass();
+		}
+
+		if (!empty($array['F.Q.I'])) {	
+			$this->db->select("
+		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
+		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+		                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+		                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
+					");
+			$this->db->from("pr_emp_shift_log as log");
+			$this->db->from('pr_emp_com_info as com');
+			$this->db->from('emp_line_num as num');
+			$this->db->where("log.emp_id = com.id");
+			$this->db->where("num.id = com.emp_line_id");
+
+			$this->db->where("com.emp_line_id", $line_id);
+			$this->db->where("com.unit_id", $unit_id);
+			$this->db->where("log.shift_log_date", $date);
+			$this->db->where("log.in_time !=", "00:00:00");
+			$this->db->where_in("com.emp_desi_id", $array['F.Q.I']);
+			$this->db->group_by("log.shift_log_date");
+			$d['F.Q.I'] = $this->db->get()->row();
+		} else {
+			$d['F.Q.I'] = new stdClass();
+		}
+
+		if (!empty($array['Supervisor'])) {	
+			$this->db->select("
+		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
+		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
+		                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS emp_absent,
+		                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS emp_leave,
+					");
+			$this->db->from("pr_emp_shift_log as log");
+			$this->db->from('pr_emp_com_info as com');
+			$this->db->from('emp_line_num as num');
+			$this->db->where("log.emp_id = com.id");
+			$this->db->where("num.id = com.emp_line_id");
+
+			$this->db->where("com.emp_line_id", $line_id);
+			$this->db->where("com.unit_id", $unit_id);
+			$this->db->where("log.shift_log_date", $date);
+			$this->db->where("log.in_time !=", "00:00:00");
+			$this->db->where_in("com.emp_desi_id", $array['Supervisor']);
+			$this->db->group_by("log.shift_log_date");
+			$d['Supervisor'] = $this->db->get()->row();
+		} else {
+			$d['Supervisor'] = new stdClass();
+		}
+
 		return $d;
 	}
 
@@ -224,7 +249,7 @@ class Common_model extends CI_Model{
 
         $i = 0;
         $logs = array();
-        while($first_date < $second_date)
+        while($first_date <= $second_date)
 		{  
             $logs[$i]['date'] = $first_date;
             $this->db->select('
@@ -343,15 +368,15 @@ class Common_model extends CI_Model{
 		return $row->gross_sal;
 	}
 
-	function company_information()
+	function company_information($unit_id)
 	{
-		return $company_infos = $this->db->get('company_infos')->result_array();
+		return $company_infos = $this->db->where('unit_id',$unit_id)->get('company_infos')->result_array();
 		// return $query = $this->db->select('*')->get('company_infos')->row();
 	}
 
-	function company_info()
+	function company_info($unit_id)
 	{
-		return $query = $this->db->select('*')->get('company_infos')->row();
+		return $query = $this->db->select('*')->where('unit_id',$unit_id)->get('company_infos')->row();
 	}
 
 	function bank_note_requisition($amount, $bank_notes)

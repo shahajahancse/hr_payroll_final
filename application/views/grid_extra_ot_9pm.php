@@ -9,11 +9,8 @@
 	<body>
 		<div align="center" style="height:100%; width:100%; overflow:hidden;" >
 			<?php
-
 				$this->load->model('job_card_model');
-
 				foreach ($values as $key => $value) { 
-
 					echo "<div style='min-height:1000px; overflow:hidden;'>";
 					$present_count = 0;
 					$absent_count = 0;
@@ -94,69 +91,66 @@
 					echo $value->dept_name;
 					echo "</td>";
 					echo "</tr>";
+
+										
+					echo "<td >";
+					echo "<strong>Dept :</strong>";
+					echo "</td>";
+					echo "<td >";
+					echo  $this->db->select('shift_name')->where('unit_id',$value->unit_id)->where('schedule_id',$value->emp_shift)->get('pr_emp_shift')->row()->shift_name;;
+					echo "</td>";
+					echo "</tr>";
 					echo "<table>";
-					
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
-					
+					// dd($emp_data);
 					echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0' style='text-align:center; font-size:13px; '> <th>Date</th><th>In Time</th><th>Out Time</th><th>Attn.Status</th><th>OT Hour</th><th>Extra OT Hour</th><th>Total OT Hour</th><th>Remarks</th>";
-
 					foreach ($emp_data['emp_data'] as $key => $row) {
-
 						if ($row->eot > 2) {
-							$extra_ot_hour = '2.0';
-						} else if('0.0' == $row->eot) {
-							$extra_ot_hour = '';
+							$extra_ot_hour = 2.0;
+						} else if(0.0 == $row->eot) {
+							$extra_ot_hour = 0;
 						} else {
 							$extra_ot_hour = $row->eot;
 						}
-
-						if(in_array($row->shift_log_date,$emp_data['leave']))
-						{
+						if(in_array($row->shift_log_date,$emp_data['leave'])){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
 							$att_status = $leave_type;
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$extra_ot_hour = '';
+							$extra_ot_hour = 0;
 						}
-						elseif(in_array($row->shift_log_date,$emp_data['holiday']))
-						{
+						elseif(in_array($row->shift_log_date,$emp_data['holiday'])){
 							$att_status = "Holiday";
 							$att_status_count = "Holiday";
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot ="";
-							$extra_ot_hour = '';
+							$row->ot =0;
+							$extra_ot_hour = 0;
 						} 
-						elseif(in_array($row->shift_log_date,$emp_data['weekend'])) 
-						{
+						elseif(in_array($row->shift_log_date,$emp_data['weekend'])) {
 							$att_status = "Work Off";
 							$att_status_count = "Work Off";
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot ="";
-							$extra_ot_hour = '';
+							$row->ot =0;
+							$extra_ot_hour = 0;
 						}
-						elseif($row->in_time !='00:00:00' and $row->out_time !='00:00:00')
-						{
+						elseif($row->in_time !='00:00:00' and $row->out_time !='00:00:00'){
 							$att_status = "P";
 							$att_status_count = "P";
 						}
-						elseif($row->in_time !='00:00:00' or $row->out_time !='00:00:00')
-						{
+						elseif($row->in_time !='00:00:00' or $row->out_time !='00:00:00'){
 							$att_status = "P(Error)";
 							$att_status_count = "P(Error)";
 						}
-						else
-						{
+						else{
 							$att_status = "A";
 							$att_status_count = "A";
-							$extra_ot_hour = '';
+							$extra_ot_hour = 0;
 						}
-
 						$emp_shift = $this->job_card_model->emp_shift_check($value->emp_id, $row->shift_log_date);
 						$schedule = $this->job_card_model->schedule_check($emp_shift);
-
 						$start_time		=  $schedule[0]["in_start"]; 
 						$late_time 		=  $schedule[0]["late_start"]; 
 						$end_time   	=  $schedule[0]["in_end"];
@@ -165,60 +159,47 @@
 						$out_end_time	=  $schedule[0]["out_end"];	
 						$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
 						$ot_start	    =  $schedule[0]["ot_start"];
-
-
 						$shift_log_date = $row->shift_log_date;
 						$year=trim(substr($shift_log_date,0,4));
 						$month=trim(substr($shift_log_date,5,2));
 						$date=trim(substr($shift_log_date,8,2));
 						$shift_log_date = date("d-M-y", mktime(0, 0, 0, $month, $date, $year));
 						$deduction_hour = $row->deduction_hour;
-						if($row->in_time != "00:00:00")
-						{
+						if($row->in_time != "00:00:00"){
 							$in_time = $row->in_time;
 							$in_time = $this->job_card_model->time_am_pm_format($in_time);	
 						}
-						else
-						{
+						else{
 							$in_time = "00:00:00";
 						}
 
 
-						if($row->out_time != "00:00:00")
-						{
+						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
 							$out_time = $this->job_card_model->get_formated_out_time_5pm($value->emp_id, $out_time, $emp_shift);
 						}
-						else
-						{
+						else{
 							$out_time = "00:00:00";
 						}
-
-
 						echo "<tr>";
-					
 						echo "<td>&nbsp;";
 						echo $shift_log_date;
 						echo "</td>";
 						
 						echo "<td>&nbsp;";
-						if($in_time == "00:00:00")
-						{
+						if($in_time == "00:00:00"){
 							echo "&nbsp;";
 						}
-						else
-						{
+						else{
 							echo $in_time;
 						}
 						echo "</td>";
 								
 						echo "<td>&nbsp;";
-						if($out_time =="00:00:00")
-						{
+						if($out_time =="00:00:00"){
 							echo "&nbsp;";
 						}
-						else
-						{
+						else{
 							echo $out_time;
 						}
 						echo "</td>";
@@ -227,54 +208,39 @@
 						echo $att_status;
 						echo "</td>";
 						
-						if($att_status == "P")
-						{
+						if($att_status == "P"){
 							$present_count++;
 						}
-						elseif($att_status == "A")
-						{
+						elseif($att_status == "A"){
 							$absent_count++;
 						}
-						elseif($att_status_count == "Leave")
-						{
+						elseif($att_status_count == "Leave"){
 							$leave_count++;
 						}
-						elseif($att_status == "P(Error)")
-						{
+						elseif($att_status == "P(Error)"){
 							$perror_count++;
 						}
-						elseif($att_status == "Work Off")
-						{
+						elseif($att_status == "Work Off"){
 							$wk_off_count++;
 						}
-						elseif($att_status == "Holiday")
-						{
+						elseif($att_status == "Holiday"){
 							$holiday_count++;
 						}
-
-						if($row->late_status == 1)
-						{
+						if($row->late_status == 1){
 							$remark = "Late";
 							$late_count++;
-						}
-						else
-						{
+						} else{
 							$remark = "";
 						}
-						
-
 						echo "<td>&nbsp;";
-						if($row->ot == 0)
-						{
+						if($row->ot == 0){
 							echo "&nbsp;";
-						}
-						else
-						{
+						}else{
 							echo $row->ot;
 						}
 						echo "</td>";
-						
 						$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
+// -						$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
 						$total_ot = $total_ot + $row->ot;
 						
 						echo "<td>&nbsp;";

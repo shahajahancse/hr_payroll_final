@@ -119,9 +119,9 @@ $this->load->view("head_english");
 		//$count = count($values['first_month']["sec_name"]);
 		
 		
-		if(isset($values['first_month']['sec_name']))
+		if(isset($values['first_month']['sec_name_en']))
 		{
-			$count = count($values['first_month']['sec_name']);
+			$count = count($values['first_month']['sec_name_en']);
 
 		}
 		else
@@ -134,7 +134,7 @@ $this->load->view("head_english");
 			echo "<tr height='20'>";
 			
 			echo "<td  style='text-align:left; padding-left:5px;'>";
-			echo $values['first_month']["sec_name"][$i];
+			echo $values['first_month']["sec_name_en"][$i];
 			echo "</td>";
 			
 			$total_emp = $values['first_month']["emp_cash"][$i] + $values['first_month']["emp_bank"][$i];
@@ -279,9 +279,9 @@ $this->load->view("head_english");
 		//$count_second = count($values['second_month']["sec_name"]);
 		
 		
-		if(isset($values['second_month']['sec_name']))
+		if(isset($values['second_month']['sec_name_en']))
 		{
-			$count_second = count($values['second_month']['sec_name']);
+			$count_second = count($values['second_month']['sec_name_en']);
 
 		}
 		else
@@ -297,7 +297,7 @@ $this->load->view("head_english");
 			echo "<tr height='20'>";
 			
 			echo "<td  style='text-align:left; padding-left:5px;'>";
-			echo $values['second_month']["sec_name"][$i];
+			echo $values['second_month']["sec_name_en"][$i];
 			echo "</td>";
 			
 			$total_emp_second = $values['second_month']["emp_cash"][$i] + $values['second_month']["emp_bank"][$i];

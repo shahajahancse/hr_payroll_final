@@ -36,6 +36,7 @@ class Attn_process_model extends CI_Model{
 			$emp_id			= $rows->emp_id;
 			$proxi_id		= $rows->proxi_id;
 			$ot_entitle		= $rows->ot_entitle;
+			$com_ot_entitle	= $rows->com_ot_entitle;
 			$emp_desi_id	= $rows->emp_desi_id;
 			$shift_id		= $rows->shift_id;
 			$schedule_id	= $rows->schedule_id;
@@ -148,7 +149,7 @@ class Attn_process_model extends CI_Model{
 				//============= Check employee attendance status =============
 
 				//============= Working day/Weeked/Holiday OT Calculation =============
-				if ($ot_entitle == 0 && $attn_status != 'A' && $in_time != "" && $out_time !="" && $in_time != $out_time) {
+				if ($attn_status != 'A' && $in_time != "" && $out_time !="" && $in_time != $out_time) {
 					//======= Weeked/Holiday Extra OT Calculation==========
 					if($process_date == $weekend || $process_date == $holiday){
 
@@ -178,13 +179,18 @@ class Attn_process_model extends CI_Model{
 
 					} else {
 
+
+
+
+
+						// dd("KO");
+
 						$start_date_time = strtotime($ot_start);
 						$end_date_time 	 = strtotime($out_time);
 
 						if ($end_date_time > $start_date_time && $in_time != '') {
-
 							$minute = round(($end_date_time - $start_date_time)/60);
-
+							// dd($minute);
 							// Tiffin break Deduction Hour
 							if ($tiffin_break_end1 < $out_time && $tiffin_minute != 0) {
 								if($minute > $tiffin_minute){
@@ -193,7 +199,6 @@ class Attn_process_model extends CI_Model{
 									$minute = 0;
 								}
 							}
-
 							// Tiffin break Deduction Hour/
 							if ($tiffin_break_time2 < $out_time && $tiffin_minute2 != 0) {
 								if($minute > $tiffin_minute2){
@@ -202,26 +207,23 @@ class Attn_process_model extends CI_Model{
 									$minute = 0;
 								}
 							}
-
 							// OT Calculation
 							$ot_hour = floor($minute / 60);
 							if ($minute % 60 >= $ot_last_hour) {
 								$ot_hour = $ot_hour + 1;
 							}
-
-							// // EOT Calculation
+							// EOT Calculation
 							if ($ot_hour > 2) {
 								$eot_hour = $ot_hour - 2;
 								$ot_hour = 2;
 							}
-
+							// dd($eot_hour);
 							// 9pm EOT Calculation
 							if ($eot_hour > 2) {
 								$ot_eot_4pm = 2;
 							} else {
 								$ot_eot_4pm = $eot_hour;
 							}
-
 							// 12am EOT Calculation
 							if ($tiffin_break_time2 < $out_time && $tiffin_minute2 != 0) {
 								$ot_eot_12am = 5;
@@ -232,6 +234,7 @@ class Attn_process_model extends CI_Model{
 									$ot_eot_12am = $eot_hour;
 								}
 							}
+						
 						}
 
 					}
@@ -401,6 +404,7 @@ class Attn_process_model extends CI_Model{
 				pr_emp_com_info.emp_desi_id,
 				pr_emp_com_info.att_bonus,
 				pr_emp_com_info.ot_entitle,
+				pr_emp_com_info.com_ot_entitle,
 				pr_emp_com_info.emp_join_date,
 				pr_emp_shift.id as shift_id,
 				pr_emp_shift.schedule_id,
@@ -482,7 +486,7 @@ class Attn_process_model extends CI_Model{
 		$this->db->select("emp_id");
 		$this->db->from("attn_holyday_off");
 		$this->db->where("emp_id", $id);
-		$this->db->where("holiday_date", $att_date);
+		$this->db->where("work_off_date", $att_date);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		if($query->num_rows() > 0)

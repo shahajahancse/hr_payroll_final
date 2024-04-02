@@ -248,13 +248,13 @@ echo '</span>';
 		//echo '<br>';
 		if($grid_status == 4)
 		{
-			$resign_date = $this->grid_model->get_resign_date_by_empid($value[$k]->emp_id);
+			$resign_date = $this->Grid_model->get_resign_date_by_empid($value[$k]->emp_id);
 			if($resign_date != false){
 			echo $resign_date = date('d-M-y', strtotime($resign_date));}
 		}
 		elseif($grid_status == 3)
 		{
-			$left_date = $this->grid_model->get_left_date_by_empid($value[$k]->emp_id);
+			$left_date = $this->Grid_model->get_left_date_by_empid($value[$k]->emp_id);
 			if($left_date != false){
 			echo $left_date = date('d-M-y', strtotime($left_date));}
 		}

@@ -43,7 +43,7 @@ for($i=0; $i<$count; $i++ )
 	echo "</tr>";
 	
 	 ?>
-	<th>SL</th><th>Emp ID</th><th>Punch Card No.</th><th>Employee Name</th><th>Line No. </th> <th>Designation</th> <th>In Time</th><th>Out Time</th><th>Status</th> 
+	<th>SL</th><th>Emp ID</th><th>Employee Name</th><th>Line No. </th> <th>Designation</th> <th>In Time</th><th>Out Time</th><th>Status</th> 
 
 <?php
 	
@@ -61,10 +61,10 @@ for($i=0; $i<$count; $i++ )
 	echo $values["emp_id"][$i];
 	echo "</td>";
 	
-	echo "<td>";
-	echo "&nbsp;";
-	echo $values["proxi_id"][$i];
-	echo "</td>";
+	// echo "<td>";
+	// echo "&nbsp;";
+	// echo $values["proxi_id"][$i];
+	// echo "</td>";
 	
 	echo "<td >";
 	echo $values["emp_name"][$i];

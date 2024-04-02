@@ -14,14 +14,14 @@ class Dashboard extends REST_Controller
         /* Standard Libraries */
         ini_set('date.timezone', 'Asia/Dacca');
 
-        $this->load->model('admin/admin_model');
-        $this->load->model('admin/dashboard_model');
+        $this->load->model('admin/Admin_model');
+        $this->load->model('admin/Dashboard_model');
     }
 
 
     function index_get(){
         $data = array();
-        $login_data = $this->admin_model->check_user_account_FE();
+        $login_data = $this->Admin_model->check_user_account_FE();
         $start_date = '2019-09-01';
         // $start_date = date('Y-m-1',strtotime('-1 month'));
         // $end_date = date('Y-m-t',strtotime('-1 month'));
@@ -42,32 +42,32 @@ class Dashboard extends REST_Controller
                 // Attendance Status
                 $data['attendance'] = null;
                 if (!empty($attendance_date) || ($department || $section || $line)) {
-                    $employee = $this->dashboard_model->get_emp_id($department, $section, $line);
+                    $employee = $this->Dashboard_model->get_emp_id($department, $section, $line);
                     if (!empty($employee)) {
                         // $att_date = date("Y-m-d", strtotime($attendance_date));
                         $att_date = '2019-09-03';
-                        $data['attendance'] = $this->dashboard_model->attendance_status($att_date, $employee);
+                        $data['attendance'] = $this->Dashboard_model->attendance_status($att_date, $employee);
                     } else {
                         $data['attendance'] = null;
                     }
                 } else {
-                    $all_id = $this->dashboard_model->get_emp_id();
-                    $data['attendance'] = $this->dashboard_model->attendance_status('2019-09-03', $all_id);
+                    $all_id = $this->Dashboard_model->get_emp_id();
+                    $data['attendance'] = $this->Dashboard_model->attendance_status('2019-09-03', $all_id);
                 }
                 //  man pawer status
                 if ($department || $section || $line) {
                     // $att_date = date("Y-m-d", strtotime($attendance_date));
                     $att_date = '2019-09-03';
-                    $employee = $this->dashboard_model->get_emp_id($department, $section, $line);
+                    $employee = $this->Dashboard_model->get_emp_id($department, $section, $line);
                     if (!empty($employee)) {
-                        $data['manpower'] = $this->dashboard_model->man_power_status($att_date, $employee);
+                        $data['manpower'] = $this->Dashboard_model->man_power_status($att_date, $employee);
                     } else {
                         $data['manpower'] = null;
                     }
                 } else {
                     $att_date = '2019-09-03';
-                    $all_id = $this->dashboard_model->get_emp_id();
-                    $data['manpower'] = $this->dashboard_model->man_power_status($att_date, $all_id);
+                    $all_id = $this->Dashboard_model->get_emp_id();
+                    $data['manpower'] = $this->Dashboard_model->man_power_status($att_date, $all_id);
                 }
 
                 // Month Salary Expense
@@ -76,18 +76,18 @@ class Dashboard extends REST_Controller
                     $date = $salary_month.'-01';
                     $start_date = date('Y-m-d', strtotime($date));
                     $end_date = date('Y-m-t', strtotime($date));
-                    $data['month_wise_salary'] = $this->dashboard_model->salary_month_expense($start_date, $end_date, $department, $section, $line);
+                    $data['month_wise_salary'] = $this->Dashboard_model->salary_month_expense($start_date, $end_date, $department, $section, $line);
                 } else {
-                    $data['month_wise_salary'] = $this->dashboard_model->salary_month_expense($start_date, $end_date, $department, $section, $line);
+                    $data['month_wise_salary'] = $this->Dashboard_model->salary_month_expense($start_date, $end_date, $department, $section, $line);
 
                 }
 
                 // Monthly Employee Status
                 if ($department || $section || $line || $salary_month) {
-                    $employee = $this->dashboard_model->get_emp_id($department, $section, $line);
-                    $data['monthly_employee']['total_join'] = $this->dashboard_model->monthly_join_emp($start_date, $end_date, $employee);
-                    $data['monthly_employee']['total_resign'] = $this->dashboard_model->monthly_resign_emp($start_date, $end_date, $employee);
-                    $data['monthly_employee']['total_left'] = $this->dashboard_model->monthly_left_emp($start_date, $end_date, $employee);
+                    $employee = $this->Dashboard_model->get_emp_id($department, $section, $line);
+                    $data['monthly_employee']['total_join'] = $this->Dashboard_model->monthly_join_emp($start_date, $end_date, $employee);
+                    $data['monthly_employee']['total_resign'] = $this->Dashboard_model->monthly_resign_emp($start_date, $end_date, $employee);
+                    $data['monthly_employee']['total_left'] = $this->Dashboard_model->monthly_left_emp($start_date, $end_date, $employee);
                 } else {
                     $data['monthly_employee'] = null;
                 }
@@ -96,7 +96,7 @@ class Dashboard extends REST_Controller
 
             }
 
-            $data = $this->dashboard_model->dashboard($start_date, $end_date);
+            $data = $this->Dashboard_model->dashboard($start_date, $end_date);
             $this->response(array('status' => 200, 'response' => 'success', 'data' => $data, 'msg' => 'Data found'), 200);
         }else{
             $this->response(array('status' => 404, 'response' => 'Failed', 'data' => null, 'msg' => 'Data not found'), 404);
@@ -106,7 +106,7 @@ class Dashboard extends REST_Controller
     function common_data_get(){
 
         $data = array();
-        $data = $this->dashboard_model->get_dept_section_line();
+        $data = $this->Dashboard_model->get_dept_section_line();
         if (!empty($data)) {
             $this->response(array('status' => 200, 'response' => 'success', 'data' => $data, 'msg' => 'Data found'), 200);
         } else {
@@ -119,10 +119,10 @@ class Dashboard extends REST_Controller
         $data = array();
         $data['attendance'] = null;
         if (!empty($attendance_date)) {
-            $employee = $this->dashboard_model->get_emp_id($department, $section, $line);
+            $employee = $this->Dashboard_model->get_emp_id($department, $section, $line);
             if (!empty($employee)) {
                 $att_date = date("Y-m-d", strtotime($attendance_date));
-                $data['attendance'] = $this->dashboard_model->attendance_status($att_date, $employee);
+                $data['attendance'] = $this->Dashboard_model->attendance_status($att_date, $employee);
             } else {
                 $data['attendance'] = 0;
             }
@@ -133,7 +133,7 @@ class Dashboard extends REST_Controller
             $date = $salary_month.'-01';
             $start_date = date('Y-m-d', strtotime($date));
             $end_date = date('Y-m-t', strtotime($date));
-            $data['month_wise_salary'] = $this->dashboard_model->salary_month_expense($start_date, $end_date, $department, $section, $line);
+            $data['month_wise_salary'] = $this->Dashboard_model->salary_month_expense($start_date, $end_date, $department, $section, $line);
         } else {
             $data['month_wise_salary'] = null;
         }

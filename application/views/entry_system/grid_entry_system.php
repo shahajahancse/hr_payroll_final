@@ -118,13 +118,13 @@ $unit = $this->common_model->get_unit_id_name();
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">From Date</label>
-                                    <input class="form-control date" type="text" id="first_date" name="first_date">
+                                    <input class="form-control date" id="first_date" name="first_date" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">To Date</label>
-                                    <input class="form-control date" type="text" id="second_date" name="second_date">
+                                    <input class="form-control date" id="second_date" name="second_date" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="padding: 5px !important">
@@ -167,13 +167,13 @@ $unit = $this->common_model->get_unit_id_name();
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">First Date</label>
-                                        <input class="form-control input-sm date" type="text" id="eot_f_date" name="eot_f_date">
+                                        <input class="form-control input-sm date" type="text" id="eot_f_date" name="eot_f_date" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-md-6" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">Second Date</label>
-                                        <input class="form-control input-sm date" type="text" id="eot_s_date" name="eot_s_date">
+                                        <input class="form-control input-sm date" type="text" id="eot_s_date" name="eot_s_date" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -247,6 +247,12 @@ $unit = $this->common_model->get_unit_id_name();
             showMessage('error', 'Please select employee Id');
             return false;
         }
+
+        if (emp_id.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+
         unit_id = document.getElementById('unit_id').value;
         if (unit_id == '') {
             showMessage('error', 'Please select Unit');

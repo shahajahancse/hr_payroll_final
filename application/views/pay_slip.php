@@ -46,7 +46,7 @@ foreach($values as $rows)
 				<?php
 				//$data['unit_id'] = $unit_id;
 				$this->load->view('head_bangla'); ?>
-				<span style="font-size:12px; font-weight:bold;">&#2474;&#2503; - &#2488;&#2509;&#2482;&#2495;&#2474;-<span style="font-family:'Times New Roman', Times, serif;">
+				<span style="font-size:10px; font-weight:bold;">&#2474;&#2503; - &#2488;&#2509;&#2482;&#2495;&#2474;-<span style="font-family:'Times New Roman', Times, serif;">
 				<?php
 					$first= $rows->salary_month;
 					$first_y=trim(substr($first,0,4));
@@ -294,7 +294,7 @@ foreach($values as $rows)
 		<div style="width:320px; height:auto; overflow:hidden; font-size:9px; font-family: SolaimanLipi;margin-bottom:50px; border:1px solid black;">
 			<div style="width:300px; height:40px; margin:0 auto; text-align:center;">
 					<?php $this->load->view('head_bangla'); ?>
-				<span style="font-size:12px; font-weight:bold;">&#2474;&#2503; - &#2488;&#2509;&#2482;&#2495;&#2474;-
+				<span style="font-size:10px; font-weight:bold;">&#2474;&#2503; - &#2488;&#2509;&#2482;&#2495;&#2474;-
 				<span style="font-family:'Times New Roman', Times, serif;">
 					<?php
 						$first= $rows->salary_month;

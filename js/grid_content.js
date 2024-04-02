@@ -63,10 +63,8 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
 			continuous_costing_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_costing_report.document.write(resp);
-			//continuous_costing_report.stop();
 		}
 	}
 }
@@ -130,6 +128,13 @@ function daily_report(s) {
 	}
 }
 
+
+
+
+
+
+
+
 function actual_monthly_salary_sheet()
 {
 	var salary_month = document.getElementById('salary_month').value;
@@ -157,16 +162,18 @@ function actual_monthly_salary_sheet()
 	}
 
 	
+	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/actual_monthly_salary_sheet/";
 
    //  
 	ajaxRequest = new XMLHttpRequest();
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
+	//document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -175,8 +182,7 @@ function actual_monthly_salary_sheet()
 	}
 }
 
-function monthly_salary_sheet()
-{
+function monthly_salary_sheet(){
 	var salary_month = document.getElementById('salary_month').value;
 	if(salary_month =='')
 	{
@@ -201,6 +207,10 @@ function monthly_salary_sheet()
 		return false;
 	}
 
+	// var loader = document.getElementById('loaader');
+	// if (loader) {
+	// 	loader.style.display = 'flex';
+	// }
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/monthly_salary_sheet/";
 
@@ -211,6 +221,7 @@ function monthly_salary_sheet()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
+	// document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -219,8 +230,7 @@ function monthly_salary_sheet()
 	}
 }
 
-function grid_monthly_eot_sheet()
-{
+function grid_monthly_eot_sheet(){
 	var salary_month = document.getElementById('salary_month').value;
 	if(salary_month =='')
 	{
@@ -245,6 +255,7 @@ function grid_monthly_eot_sheet()
 		return false;
 	}
 	
+	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/grid_monthly_eot_sheet/";
 
@@ -254,6 +265,7 @@ function grid_monthly_eot_sheet()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
+	// document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -262,8 +274,7 @@ function grid_monthly_eot_sheet()
 	}
 }
 
-function eot_summary_report()
-{
+function eot_summary_report(){
 	var salary_month = document.getElementById('salary_month').value;
 	if(salary_month =='')
 	{
@@ -288,6 +299,7 @@ function eot_summary_report()
 		return false;
 	}
 	
+	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/eot_summary_report/";
 
@@ -297,6 +309,7 @@ function eot_summary_report()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
+	// document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -324,13 +337,14 @@ function salary_summary()
 	var status = document.getElementById('status').value;
 	var stop_salary = document.getElementById('stop_salary').value;
 
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
+	// var checkboxes = document.getElementsByName('emp_id[]');
+	// var sql = get_checked_value(checkboxes);
+	// if (sql == '') {
+	// 	alert('Please select employee Id');
+	// 	return false;
+	// }
 	
+	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/salary_summary/";
 
@@ -340,6 +354,7 @@ function salary_summary()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
+	// document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -434,6 +449,7 @@ function daily_logout_report()
 		return false;
 	}
 
+	document.getElementById('loaader').style.display = 'flex';
 	var status = document.getElementById('status').value;
 	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&status="+status;
    url =  hostname+"grid_con/daily_logout_report/";
@@ -445,6 +461,7 @@ function daily_logout_report()
    ajaxRequest.send(queryString);
 
    ajaxRequest.onreadystatechange = function(){
+	document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -719,11 +736,11 @@ var report_month_sal = document.getElementById('salary_month').value;
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal ==''){
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal ==''){
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var year_month = report_year_sal+"-"+report_month_sal;
 	//alert(year_month);
@@ -1102,6 +1119,80 @@ function grid_get_all_data_for_entry(){
 }
 
 
+function act_advance_salary_sheet(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	
+	try{
+	   // Opera 8.0+, Firefox, Safari
+	   ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	   // Internet Explorer Browsers
+	   try{
+	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	   }catch (e) {
+	      try{
+	         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+	      }catch (e){
+	         // Something went wrong
+	         alert("Your browser broke!");
+	         return false;
+	      }
+	   }
+	}
+	var report_month_sal = document.getElementById('salary_month').value;
+	if(report_month_sal =='')
+	{
+		alert("Please select month");
+		return;
+	}
+	
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return;
+	// }
+	
+	var grid_start = document.getElementById('unit_id').value;
+	if(grid_start =='Select'){
+		alert("Please select Category options");
+		return;
+	}
+	
+	var grid_status = document.getElementById('status').value;
+	
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	var sal_year_month =report_month_sal+"-"+"01";
+
+	
+		
+	
+	url =  hostname+"index.php/salary_report_con/act_advance_salary_sheet/";
+	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&sql="+sql+"&unit_id="+grid_start;
+   
+//    $(".clearfix").dialog("open");
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+   ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			// $(".clearfix").dialog("close");		
+			sal_sheet_actual_with_eot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			sal_sheet_actual_with_eot.document.write(resp);
+			sal_sheet_actual_with_eot.stop();			
+		}
+	}
+	
+}
+
+
 function grid_per_file(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
@@ -1165,11 +1256,11 @@ function grid_all_search_for_salary(){
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal ==''){
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal ==''){
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var year_month = report_year_sal+"-"+report_month_sal;
 	//alert(year_month);
@@ -2974,12 +3065,12 @@ function grid_pay_slip_non_compliance()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
@@ -3030,8 +3121,7 @@ function grid_pay_slip_non_compliance()
 
 }
 
-function grid_pay_slip_actual()
-{
+function grid_pay_slip_actual(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 
 	try{
@@ -3059,14 +3149,14 @@ function grid_pay_slip_actual()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('salary_month').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
-	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var year_month = report_month_sal+"-"+"01";
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -3143,12 +3233,12 @@ function grid_pay_slip_com()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
@@ -3226,12 +3316,12 @@ function grid_pay_slip_com_non_com_mix()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
@@ -3310,12 +3400,12 @@ function grid_provident_fund()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
@@ -3910,45 +4000,40 @@ function grid_pf_statement()
 	pf_statement = window.open(url,'pf_statement',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	pf_statement.moveTo(0,0);
 }
-//////////////////grid_monthly_att_register_ot//////////////
-function grid_monthly_att_register_ot()
-{
+function grid_monthly_att_register_ot(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
 
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
+	if(firstdate ==''){
 		alert("Please select First date for month and year selection");
 		return false;
 	}
 
 	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
+	if(unit_id =='Select'){
 		alert("Please select Category options");
 		return false;
 	}
 
 	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
+	if(unit_id =='Select'){
 		alert("Please select unit !");
 		return false;
 	}
@@ -3961,8 +4046,8 @@ function grid_monthly_att_register_ot()
 		return false;
 	}
 
-	
-	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
+	document.getElementById('loaader').style.display = 'flex';
+   var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_monthly_att_register_ot/";
     
    ajaxRequest.open("POST", url, true);
@@ -3970,12 +4055,11 @@ function grid_monthly_att_register_ot()
    ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
-			monthly_att_register_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			monthly_att_register_ot.document.write(resp);
-			//monthly_att_register_ot.stop();
+			continuous_costing_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			continuous_costing_report.document.write(resp);
 		}
 	}
 
@@ -4044,8 +4128,7 @@ function grid_monthly_att_register(i)
 	}
 }
 
-function grid_yearly_leave_register()
-{
+function grid_yearly_leave_register(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
  try{
    // Opera 8.0+, Firefox, Safari
@@ -4066,11 +4149,12 @@ function grid_yearly_leave_register()
  }
 
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
-		alert("Please select First date for  year selection");
-		return false;
-	}
+	var seconddate = document.getElementById('seconddate').value;
+	// if(firstdate =='')
+	// {
+	// 	alert("Please select First date for  year selection");
+	// 	return false;
+	// }
 
 
 	var unit_id = document.getElementById('unit_id').value;
@@ -4087,9 +4171,10 @@ function grid_yearly_leave_register()
 		alert('Please select employee Id');
 		return false;
 	}
+
 	
 	
-	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_yearly_leave_register/";
     
    ajaxRequest.open("POST", url, true);
@@ -4157,6 +4242,7 @@ function grid_extra_ot(){
 		return false;
 	}
 
+	document.getElementById('loaader').style.display = 'flex';
 	
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
@@ -4166,7 +4252,8 @@ function grid_extra_ot(){
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 
-	ajaxRequest.onreadystatechange = function(){
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -4176,11 +4263,8 @@ function grid_extra_ot(){
 	}
 }
 
-function grid_extra_ot_9pm()
-{
-
+function grid_extra_ot_9pm(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
-
 	try{
 	   // Opera 8.0+, Firefox, Safari
 	   ajaxRequest = new XMLHttpRequest();
@@ -4198,16 +4282,13 @@ function grid_extra_ot_9pm()
 	        }
 	    }
 	}
-
 	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
+	if(firstdate ==''){
 		alert("Please select First date");
 		return false;
 	}
 	var seconddate = document.getElementById('seconddate').value;
-	if(seconddate =='')
-	{
+	if(seconddate ==''){
 		alert("Please select Second date");
 		return false;
 	}
@@ -4218,28 +4299,139 @@ function grid_extra_ot_9pm()
 		alert("Please select Category options");
 		return false;
 	}
-
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
-
 	if (sql == '') {
 		alert('Please select employee Id');
 		return false;
 	}
-
-	 
+	document.getElementById('loaader').style.display = 'flex';
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
     url =  hostname+"index.php/grid_con/grid_extra_ot_9pm/";
-
-     
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			daily_present_report.document.write(resp);
+			daily_present_report.stop();
+		}
+	}
+}
+
+function grid_extra_ot_4pm(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+	   // Opera 8.0+, Firefox, Safari
+	   ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	    // Internet Explorer Browsers
+	    try{
+	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	    }catch (e) {
+	        try{
+	           ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+	        }catch (e){
+	           // Something went wrong
+	           alert("Your browser broke!");
+	           return false;
+	        }
+	    }
+	}
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate ==''){
+		alert("Please select First date");
+		return false;
+	}
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate ==''){
+		alert("Please select Second date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Category options");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	document.getElementById('loaader').style.display = 'flex';
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
+    url =  hostname+"index.php/grid_con/grid_extra_ot_4pm/";
+    ajaxRequest.open("POST", url, true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+    ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			daily_present_report.document.write(resp);
+			daily_present_report.stop();
+		}
+	}
+}
+function grid_extra_ot_12am(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+	   // Opera 8.0+, Firefox, Safari
+	   ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	    // Internet Explorer Browsers
+	    try{
+	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	    }catch (e) {
+	        try{
+	           ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+	        }catch (e){
+	           // Something went wrong
+	           alert("Your browser broke!");
+	           return false;
+	        }
+	    }
+	}
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate ==''){
+		alert("Please select First date");
+		return false;
+	}
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate ==''){
+		alert("Please select Second date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Category options");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	document.getElementById('loaader').style.display = 'flex';
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
+    url =  hostname+"index.php/grid_con/grid_extra_ot_12am/";
+    ajaxRequest.open("POST", url, true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+    ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function () {
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			daily_present_report.stop();
@@ -4315,26 +4507,25 @@ function grid_extra_ot_mix()
 	}
 }
 
-function grid_earn_leave()
-{
+function grid_earn_leave(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	// Internet Explorer Browsers
+	try{
+		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch (e) {
+		try{
+			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch (e){
+			// Something went wrong
+			alert("Your browser broke!");
+			return false;
+		}
+	}
+	}
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -4352,10 +4543,26 @@ function grid_earn_leave()
 	}
 	// hostname = window. location.href;
 // 
-	url =  hostname + "index.php/grid_con/grid_earn_leave_report/"+sql;
+	// url =  hostname + "index.php/grid_con/grid_earn_leave_report/"+sql;
 
-	grid_earn_leave_report = window.open(url,'grid_earn_leave_report',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	grid_earn_leave_report.moveTo(0,0);
+	// grid_earn_leave_report = window.open(url,'grid_earn_leave_report',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
+	// grid_earn_leave_report.moveTo(0,0);
+
+
+	var queryString="spl="+sql+"&unit_id="+unit_id;
+   	url =  hostname+"index.php/grid_con/grid_earn_leave_report/";
+    
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			extra_ot.document.write(resp);
+		}
+	}
 }
 
 
@@ -5079,8 +5286,7 @@ function delete_shift_log_info(){
 }
 
 
-function grid_monthly_salary_sheet()
-{
+function grid_monthly_salary_sheet(){
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
  try{
@@ -5107,12 +5313,12 @@ function grid_monthly_salary_sheet()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5284,12 +5490,12 @@ function grid_actual_monthly_salary_sheet_not_sec()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5382,12 +5588,12 @@ function grid_mix_salary_sheet()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5466,12 +5672,12 @@ function grid_actual_monthly_salary_sheet_with_eot()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5548,12 +5754,12 @@ function grid_monthly_allowance_with_eot()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5608,12 +5814,12 @@ function grid_festival_bonus()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5622,12 +5828,12 @@ function grid_festival_bonus()
 		return false;
 	}
 
-	var grid_section = document.getElementById('grid_section').value;
-	if(grid_section =='Select')
-	{
-		alert("Please select Section.");
-		return false;
-	}
+	// var grid_section = document.getElementById('grid_section').value;
+	// if(grid_section =='Select')
+	// {
+	// 	alert("Please select Section.");
+	// 	return false;
+	// }
 
 	var status = document.getElementById('status').value;
 
@@ -5638,7 +5844,7 @@ function grid_festival_bonus()
 		alert('Please select employee Id');
 		return false;
 	}
-    var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+    var sal_year_month = report_month_sal+"-"+"01";
 	/*
 	
 
@@ -5667,8 +5873,7 @@ function grid_festival_bonus()
 	}
 
 }
-function grid_advance_salary_sheet()
-{
+function grid_advance_salary_sheet(){
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
  try{
@@ -5695,12 +5900,12 @@ function grid_advance_salary_sheet()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -5709,12 +5914,12 @@ function grid_advance_salary_sheet()
 		return false;
 	}
 
-	var grid_section = document.getElementById('grid_section').value;
-	if(grid_section =='Select')
-	{
-		alert("Please select Section.");
-		return false;
-	}
+	// var grid_section = document.getElementById('grid_section').value;
+	// if(grid_section =='Select')
+	// {
+	// 	alert("Please select Section.");
+	// 	return false;
+	// }
 
 
 	var status = document.getElementById('status').value;
@@ -5726,7 +5931,7 @@ function grid_advance_salary_sheet()
 		alert('Please select employee Id');
 		return false;
 	}
-var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+var sal_year_month = report_month_sal+"-"+"01";
 	/*
 	
 
@@ -5737,7 +5942,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
 	
 	
-	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql+"&grid_section="+grid_section;
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_advance_salary_sheet/";
     
    ajaxRequest.open("POST", url, true);
@@ -5755,8 +5960,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
 }
 
-function sec_sal_summary_report()
-{
+function sec_sal_summary_report(){
 
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
@@ -5784,12 +5988,12 @@ function sec_sal_summary_report()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -5801,7 +6005,7 @@ function sec_sal_summary_report()
 	//var stop_salary = document.getElementById('grid_stop_salary').value;
 	var stop_salary = 1;
 
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var sal_year_month = report_month_sal+"-"+"01";
 
 	
 	
@@ -5833,12 +6037,12 @@ function salary_summary_test(){
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -5882,12 +6086,12 @@ function salary_summary_compliance(){
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -5977,12 +6181,12 @@ function grid_festival_bonus_summary()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -5992,7 +6196,7 @@ function grid_festival_bonus_summary()
 
 	var status = document.getElementById('status').value;
 
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var sal_year_month = report_month_sal+"-"+"01";
 
 	
 	
@@ -6042,12 +6246,12 @@ function grid_festival_bonus_summary_sec_wise()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -6057,7 +6261,7 @@ function grid_festival_bonus_summary_sec_wise()
 
 	var status = document.getElementById('status').value;
 
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var sal_year_month = report_month_sal+"-"+"01";
 
 	
 	
@@ -6107,27 +6311,20 @@ function grid_comprative_salary_statement()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 
-	var report_month_sal_second = document.getElementById('report_month_sal_second').value;
-	if(report_month_sal_second =='')
-	{
-		alert("Please select Second month");
-		return false;
-	}
-
-	var report_year_sal_second = document.getElementById('report_year_sal_second').value;
-	if(report_year_sal_second =='')
-	{
-		alert("Please select Second year");
-		return false;
-	}
+	// var report_month_sal_second = document.getElementById('report_month_sal_second').value;
+	// if(report_month_sal_second =='')
+	// {
+	// 	alert("Please select Second month");
+	// 	return false;
+	// }
 
 
 	var unit_id = document.getElementById('unit_id').value;
@@ -6138,18 +6335,16 @@ function grid_comprative_salary_statement()
 	}
 
 	var status = document.getElementById('status').value;
-	var stop_salary = document.getElementById('grid_stop_salary').value;
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	var sal_year_month2  = report_year_sal_second+"-"+report_month_sal_second+"-"+"01";
+	// var stop_salary = document.getElementById('grid_stop_salary').value;
+	var sal_year_month = report_month_sal+"-"+"01";
 
 	
-	
-	var queryString="sal_year_month="+sal_year_month+"&sal_year_month2="+sal_year_month2+"&status="+status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
-   url =  hostname+"index.php/salary_report_con/grid_comprative_salary_statement/";
-    
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
+	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id;
+	url =  hostname+"index.php/salary_report_con/grid_comprative_salary_statement/";
+		
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
@@ -6190,12 +6385,12 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -6292,6 +6487,46 @@ function grid_general_info()
 			general_info = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			general_info.document.write(resp);
 			//general_info.stop();
+		}
+	}
+}
+function worker_register(){
+	var ajaxRequest;
+	try{
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try {
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){
+		alert("Please select unit !");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	var queryString="spl="+sql+"&unit_id="+unit_id;
+	url =  hostname+"index.php/grid_con/worker_register/";
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			general_info = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			general_info.document.write(resp);
 		}
 	}
 }
@@ -6401,8 +6636,7 @@ function grid_employee_information()
 		}
 	}
 }
-function grid_service_book()
-{
+function grid_service_book(){
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
  try{
@@ -7321,8 +7555,7 @@ function grid_bgm_new_join_report()
 	}
 
 }
-function grid_bank_note_req()
-{
+function grid_bank_note_req(){
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
  try{
@@ -7349,12 +7582,12 @@ function grid_bank_note_req()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -7372,7 +7605,7 @@ function grid_bank_note_req()
 		alert('Please select employee Id');
 		return false;
 	}
-	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+	var sal_year_month = report_month_sal+"-"+"01";
 
 
 	// 
@@ -8440,13 +8673,13 @@ function grid_maternity_benefit(){
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	//alert(report_year_sal);
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// //alert(report_year_sal);
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -8548,12 +8781,12 @@ function grid_monthly_weekend_allowance_sheet()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -8619,12 +8852,12 @@ function grid_monthly_allowance_sheet()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -8690,12 +8923,12 @@ function grid_monthly_stop_sheet()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -8704,12 +8937,12 @@ function grid_monthly_stop_sheet()
 		return false;
 	}
 
-	var grid_section = document.getElementById('grid_section').value;
-	if(grid_section =='Select')
-	{
-		alert("Please select Section options.");
-		return false;
-	}
+	// var grid_section = document.getElementById('grid_section').value;
+	// if(grid_section =='Select')
+	// {
+	// 	alert("Please select Section options.");
+	// 	return false;
+	// }
 
 	var status = document.getElementById('status').value;
 	// var stop_salary = document.getElementById('grid_stop_salary').value;
@@ -8721,7 +8954,7 @@ function grid_monthly_stop_sheet()
 		alert('Please select employee Id');
 		return false;
 	}
-var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+var sal_year_month = report_month_sal+"-"+"01";
 
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql/*+"&stop_salary="+stop_salary*/;
    url =  hostname+"index.php/salary_report_con/grid_monthly_stop_sheet/";
@@ -8768,12 +9001,12 @@ function grid_monthly_night_allowance_sheet()
 		return false;
 	}
 
-	var report_year_sal = document.getElementById('report_year_sal').value;
-	if(report_year_sal =='')
-	{
-		alert("Please select year");
-		return false;
-	}
+	// var report_year_sal = document.getElementById('report_year_sal').value;
+	// if(report_year_sal =='')
+	// {
+	// 	alert("Please select year");
+	// 	return false;
+	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')

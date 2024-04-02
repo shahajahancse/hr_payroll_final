@@ -43,7 +43,7 @@
 		<th class="text-center">Gender</th>
 		<th class="text-center">Blood</th>
 		<th class="text-center" >Signature</th>
-		<!-- < ?php dd($values)?> -->
+		<!-- < ? php dd($values)?> -->
 
 		<?php $i= 1;foreach($values as $row){?>
 		<tr>
