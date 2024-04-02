@@ -1576,12 +1576,10 @@ class Grid_con extends CI_Controller {
 	function grid_letter1_report(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-		dd($grid_emp_id);
 		$unit_id = $this->input->post('unit_id');
 		$firstdate = $this->input->post('firstdate');
 
 		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id,$firstdate);
-		dd($data);
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
@@ -1600,7 +1598,11 @@ class Grid_con extends CI_Controller {
 		$this->db->select('emp_id');
 		$this->db->from('pr_emp_com_info');
 		$this->db->where('unit_id', $unit_id);
-		$grid_emp_id=$this->db->get()->result();
+		$emp_id=$this->db->get()->result();
+		$grid_emp_id=[];
+		foreach ($emp_id as $key => $value) {
+			$grid_emp_id[] = $value->emp_id;
+		}
 		dd($grid_emp_id);
 
 		$data['values'] 	= $this->Grid_model->grid_letter1_count($grid_emp_id,$firstdate);
