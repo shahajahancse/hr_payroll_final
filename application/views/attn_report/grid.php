@@ -36,7 +36,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label">First Date : </label>
-							<input class= "form-control input-sm date" name="firstdate" id="firstdate" type="text" autocomplete="off">
+							<input onchange="count_l1()" class= "form-control input-sm date" name="firstdate" id="firstdate" type="text" autocomplete="off">
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -52,7 +52,7 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Unit <span style="color: red;">*</span> </label>
-						<select name="unit_id" id="unit_id" class="form-control input-sm">
+						<select onchange="count_l1()" name="unit_id" id="unit_id" class="form-control input-sm">
 							<option value="">Select Unit</option>
 							<?php 
 								foreach ($dept as $row) {
@@ -307,13 +307,13 @@
 
 
 							<?php if(in_array(61,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter1_report(1)">Letter 1</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter1_report(1)">Letter 1 <span class="badge bg-red " style="color:#fff !important" id="letter1_count">0</span></button>
 							<?php } ?>
 							<?php if(in_array(62,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter2_report(2)">Letter 2</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter2_report(2)">Letter 2 <span class="badge bg-red" style="color:#fff !important" id="letter2_count">0</span></button>
 							<?php } ?>
 							<?php if(in_array(63,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter3_report(3)">Letter 3</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter3_report(3)">Letter 3 <span class="badge bg-red" style="color:#fff !important" id="letter3_count">0</span></button>
 							<?php } ?>
 							<?php if(in_array(64,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_employee_information()">Employee Information</button>
@@ -524,4 +524,35 @@
 		        grid_emp_list();
 		    });
 		});
+	</script>
+
+	<script>
+		 function count_l1() {
+		    var unit = document.getElementById('unit_id').value;
+			if (unit == '') {
+				return false;
+			}
+		
+		    var first_date = document.getElementById('firstdate').value;
+			if (first_date == '') {
+				return false;
+			}
+			 $.ajax({
+				 type: "POST",
+				 url: hostname + "grid_con/grid_letter1_count",
+				 data: {
+					 "unit_id": unit,
+					 "firstdate": first_date
+				 },
+				 success: function(data) {
+					console.log(data);
+					 $('#letter1_count').html(data);
+				 }
+				 })
+
+
+			 }
+
+
+		 
 	</script>
