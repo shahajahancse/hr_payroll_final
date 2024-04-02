@@ -1600,8 +1600,9 @@ class Grid_con extends CI_Controller {
 		$this->db->from('pr_emp_com_info');
 		$this->db->where('unit_id', $unit_id);
 		$grid_emp_id=$this->db->get()->result();
+		dd($grid_emp_id);
 
-		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id,$firstdate);
+		$data['values'] 	= $this->Grid_model->grid_letter1_count($grid_emp_id,$firstdate);
 		// dd($data);
 		if(is_string($data['values'])){
 			echo 0;
