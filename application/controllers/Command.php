@@ -21,10 +21,12 @@ class Command extends CI_Controller {
 		// $this->load->library('grocery_CRUD');
 		// $this->load->model('acl_model');
 		$this->load->dbforge();
+		exit('for developer');
 	}
 
-	function dpt_sec_lin_pudate()
+	function dpt_sec_lin_udate()
 	{
+		exit('only for developer');
 		$file_name = "import/aj.txt";
 		if (file_exists($file_name)) {
 
