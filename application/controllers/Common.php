@@ -9,8 +9,13 @@ class Common extends CI_Controller {
         $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
         $this->db->from('pr_emp_com_info as com');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
+        $this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
         $this->db->where('com.unit_id', $unit);
 
+
+        $this->db->where('deg.hide_status', 1);
+
+        
         if (!empty($dept)) {
             $this->db->where('com.emp_dept_id', $dept);
         }
@@ -144,6 +149,20 @@ class Common extends CI_Controller {
             $data[$row->designation_id] = $row->desig_name;
         }
 
+        header('Content-Type: application/x-json; charset=utf-8');
+        echo json_encode($data);
+        exit;
+    }
+    function ajax_designation_by_line_id_h($id,$unit_id,$dept_id,$section_id){
+        $this->db->select('dl.*, dg.desig_name, dg.desig_bangla, dg.hide_status');
+        $this->db->from('emp_dasignation_line_acl dl');
+        $this->db->join('emp_designation dg', 'dg.id = dl.designation_id', 'left');
+        $this->db->where('dl.line_id', $id);
+        $this->db->where('dl.unit_id', $unit_id); 
+        $this->db->where('dl.dept_id', $dept_id);
+        $this->db->where('dl.section_id', $section_id);
+        $this->db->order_by('designation_id', 'ASC');
+        $data = $this->db->get()->result();
         header('Content-Type: application/x-json; charset=utf-8');
         echo json_encode($data);
         exit;
