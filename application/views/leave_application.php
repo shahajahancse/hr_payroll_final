@@ -147,7 +147,7 @@ if($leave_type == "el")
 <table style="font-family:SolaimanLipi;">
 	<tr>
 		<td>বরাবর,<br/>
-		ব্যবস্থাপনা পরিচালক সাহেব/ মহাব্যবস্থাপক,
+		ব্যবস্থাপনা পরিচালক / মহাব্যবস্থাপক,
 		</td>
 	</tr>
 	<tr height="30px"></tr>
