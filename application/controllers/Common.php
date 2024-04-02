@@ -12,10 +12,8 @@ class Common extends CI_Controller {
         $this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
         $this->db->where('com.unit_id', $unit);
 
-
         $this->db->where('deg.hide_status', 1);
 
-        
         if (!empty($dept)) {
             $this->db->where('com.emp_dept_id', $dept);
         }
@@ -95,7 +93,7 @@ class Common extends CI_Controller {
         echo json_encode($data);
         exit;
     }
-    
+
     function ajax_section_by_dept_id($id, $unit_id = null){
 
         $data = array();
@@ -116,7 +114,7 @@ class Common extends CI_Controller {
         echo json_encode($data);
         exit;
     }
-    
+
     function ajax_line_by_sec_id($id){
 
         $data = array();
@@ -134,7 +132,7 @@ class Common extends CI_Controller {
         echo json_encode($data);
         exit;
     }
-    
+
     function ajax_designation_by_line_id($id){
 
         $data = array();
@@ -158,7 +156,7 @@ class Common extends CI_Controller {
         $this->db->from('emp_dasignation_line_acl dl');
         $this->db->join('emp_designation dg', 'dg.id = dl.designation_id', 'left');
         $this->db->where('dl.line_id', $id);
-        $this->db->where('dl.unit_id', $unit_id); 
+        $this->db->where('dl.unit_id', $unit_id);
         $this->db->where('dl.dept_id', $dept_id);
         $this->db->where('dl.section_id', $section_id);
         $this->db->order_by('designation_id', 'ASC');
@@ -221,7 +219,7 @@ class Common extends CI_Controller {
         echo json_encode($data);
         exit;
     }
-    
+
     function ajax_post_office_by_upa_id($id){
 
         $data = array();
@@ -239,7 +237,7 @@ class Common extends CI_Controller {
         echo json_encode($data);
         exit;
     }
-    
+
     function get_emp_info_by_id($id, $unit_id = null){
 
         $this->db->select('
