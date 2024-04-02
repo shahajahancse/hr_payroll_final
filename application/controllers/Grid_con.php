@@ -72,10 +72,8 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']    = $unit_id;
 		$data['results']= $data['values']['results'];
 		$data['keys']= $data['values']['keys'];
-		// dd($data['keys']);
 
 		$this->load->view('attn_report/daily_attendance_summary', $data);
-		// $this->load->view('others_report/attendance_summary', $data);
 	}
 
 	function daily_logout_report(){
@@ -1787,6 +1785,7 @@ class Grid_con extends CI_Controller {
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 
 		$query=$this->Grid_model->grid_monthly_att_register($year_month, $grid_emp_id);
+		// dd($query);
 		if(is_string($query)){
 			echo $query;
 		}

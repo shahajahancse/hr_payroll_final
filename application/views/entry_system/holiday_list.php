@@ -80,8 +80,8 @@
                         <td><?php echo $r->user_name ?></td>
                         <td><?php echo $r->emp_id ?></td>
                         <td><?php echo $r->unit_name ?></td>
-                        <td><?php echo $r->holiday_date ?></td>
-                        <td><?php echo date('l', strtotime($r->holiday_date))?></td>
+                        <td><?php echo $r->work_off_date ?></td>
+                        <td><?php echo date('l', strtotime($r->work_off_date))?></td>
                         <td>
                             <a href="<?=base_url('entry_system_con/emp_holiday_del/'.$r->id)?>"
                                 class="btn btn-danger" role="button">Delete</a>

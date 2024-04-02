@@ -2246,6 +2246,8 @@ class Processdb extends CI_Model{
 		$d = $this->db->select('com.*, per.*')
 					   ->from('pr_emp_com_info as com')
 					   ->join('pr_emp_per_info as per','com.emp_id = per.emp_id', 'left')
+					   ->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left')
+					   ->where('deg.hide_status', 1)
 					   ->where('com.emp_id',$emp_id)
 					   ->get()->row();
 		$d->emp_dob= date("d-m-Y", strtotime($d->emp_dob));
