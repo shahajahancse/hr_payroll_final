@@ -9,29 +9,21 @@
 <div align="center" style=" margin:5px auto 0;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
 
 <?php 
+// dd($value);
 	foreach($value as $row){
 		$att_month = $year_month;
 	}
-
 	$att_month = $att_month;
-
-	// echo "<pre>";
-	// print_r($value);
-	// exit;
 	$per_page_id = 11;
 	$row_count=count($value);
-	if($row_count > $per_page_id)
-	{
+	if($row_count > $per_page_id){
 		$page=ceil($row_count/$per_page_id);
 	}
-	else
-	{
+	else{
 		$page=1;
 	}
-
 	$i = 0;
-	for($counter = 1; $counter <= $page; $counter++)
-	{ ?>
+	for($counter = 1; $counter <= $page; $counter++){ ?>
 	<div class="head-container" style="padding:20px 0px;width: 100%;display: inline-block;">
 		<div style="text-align:center; position:relative;padding-left:269px;width:50%; overflow:hidden; float:left; display:block;">
 		<?php 
@@ -47,16 +39,17 @@
 		</div>
 	</div>
 	<table class="sal" border='1' cellpadding='0' cellspacing='0' style=" font-size:16px;">
-
-	<th>SL #</th><th>Emp Id </th><th>Name</th><th>Dsignation</th>
-
+		<th>SL #</th>
+		<th>Emp Id </th>
+		<th>Name</th>
+		<th>Dsignation</th>
 	<?php
-		$first_y=trim(substr($att_month,0,4));
-		$first_m=trim(substr($att_month,5,2));
-		$last_date = date("t", strtotime("$first_y-$first_m-01"));
+		$first_y=date("Y", strtotime("$att_month"));
+		$first_m=date("m", strtotime("$att_month"));
+		$last_date = date("t", strtotime("$att_month"));
+		// dd($first_m);
 
-		for ($k=1 ; $k <= $last_date ; $k++ )
-		{
+		for ($k=1 ; $k <= $last_date ; $k++ ){
 			echo "<th style='width:20px;'>$k</th>";
 		}
 		echo "<th>Pre.</th>";
@@ -67,21 +60,18 @@
 		echo "<th>T. Day</th>";
 		echo "<th>OT/EOT Hour</th>";
 
-		if($counter == $page)
-	  	{
+		if($counter == $page){
 	   		$modulus = ($row_count-1) % $per_page_id;
 	    	$per_page_row = $modulus;
 		}
-	   	else
-	   	{
+	   	else{
 	    	$per_page_row = $per_page_id - 1;
 	   	}
 	   	
-		for($j=0; $j<=$per_page_row; $j++)
-		{ 
+		for($j=0; $j<=$per_page_row; $j++){ 
 
 		echo "<tr><td>";
-		 echo $i + 1;
+		echo $i + 1;
 		echo "</td><td>";
 		echo (isset($value[$i]) && isset($value[$i]['emp_id'])) ? $value[$i]['emp_id'] : '';
 		echo "</td><td>";
@@ -90,10 +80,6 @@
 		echo (isset($value[$i]) && isset($value[$i]['desig_name'])) ? $value[$i]['desig_name'] : '';
 		echo "</td>";
 
-		/*echo "<td style='font-family: SutonnyMj;font-size:14px;'>";
-		$doj = date('d-m-Y',strtotime($value[$i]->emp_join_date));
-		echo $doj;
-		echo "</td>";*/
 		$p = 0 ;
 		$a = 0 ;
 		$l = 0 ;
@@ -101,10 +87,12 @@
 		$h = 0 ;
 		$total_ot = 0;
 		
-		for ($k=1 ; $k <= $last_date ; $k++ ){
-		$idate = date("d", mktime(0, 0, 0, 0, $k, 0));
-		// dd($idate);
+		for ($k=0 ; $k < $last_date ; $k++ ){
+		$idate =$k;
 		$date = $idate;
+		// dd($date);
+
+		
 		echo "<td style='text-align:center;'>";
 		if(!isset($value[$i][$date])){
 			echo "&nbsp;";

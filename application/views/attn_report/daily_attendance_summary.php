@@ -3,9 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" > -->
-    <style>
+   <style>
         body{
             font-size: 13px;
         }
@@ -17,27 +15,28 @@
 </head>
 <body>
      <!-- < ?php dd($values);?> -->
-    <?php $this->load->view("head_english");?><br>
+    <?php $this->load->view("head_english");?>
+    <h4 style="text-align:center">Attendence Summary Report <?php echo date('d/m/Y',strtotime($report_date))?></h4>
     <div align="center" class="container">
 		<table class="table">
 			<tr>
-				<th class="text-center">Sl.</th>
-				<th class="text-center">Line Name</th>
-                <th class="text-center">Total</th>
-				<th class="text-center">Present</th>
-                <th class="text-center">Absent</th>
-				<th class="text-center">Male</th>
-                <th class="text-center">Female</th>
+				<th class="text-center" style="text-align:center">Sl.</th>
+				<th class="text-center" style="text-align:center">Line Name</th>
+                <th class="text-center" style="text-align:center">Total</th>
+				<th class="text-center" style="text-align:center">Present</th>
+                <th class="text-center" style="text-align:center">Absent</th>
+				<th class="text-center" style="text-align:center">Male</th>
+                <th class="text-center" style="text-align:center">Female</th>
                 <?php foreach($keys as $key){?>
                 <th style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;">
                         <tr>
-                            <th class="text-center" colspan='3' style="padding: 0;border: none;border-bottom: 1px solid black;"><?php echo $key ?></th>
+                            <th class="text-center" colspan='3' style="padding: 0;width: 92px;border: none;border-bottom: 1px solid black;"><?php echo $key ?></th>
                         </tr>
                         <tr>
-                            <td style="border: none;padding:2px;margin: 0;border-right:1px solid black;">TT</td>
-                            <td style="border: none;padding:2px;margin: 0;">PR</td>
-                            <td style="border: none;padding:2px;margin: 0;border-left:1px solid black;">AB</td>
+                            <td style="width:25px;border: none;margin: 0;border-right:1px solid black;">TT</td>
+                            <td style="width:25px;border: none;margin: 0;">PR</td>
+                            <td style="width:25px;border: none;margin: 0;border-left:1px solid black;">AB</td>
                         </tr>
                     </table>
                 </th>
@@ -61,13 +60,13 @@
             
             ?>
 			<tr>
-				<td class="text-center"><?php echo $i++?></td>
-				<td class="text-center"><?php echo $row->line_name_en?></td>
-				<td class="text-center"><?php echo $row->all_emp?></td>
-				<td class="text-center"><?php echo $row->all_present?></td>
-				<td class="text-center"><?php echo $row->all_absent?></td>
-				<td class="text-center"><?php echo $row->all_male?></td>
-				<td class="text-center"><?php echo $row->all_female?></td>
+				<td style="text-align:center"><?php echo $i++?></td>
+				<td style="text-align:center"><?php echo $row->line_name_en?></td>
+				<td style="text-align:center"><?php echo $row->all_emp?></td>
+				<td style="text-align:center"><?php echo $row->all_present?></td>
+				<td style="text-align:center"><?php echo $row->all_absent?></td>
+				<td style="text-align:center"><?php echo $row->all_male?></td>
+				<td style="text-align:center"><?php echo $row->all_female?></td>
                <?php 
                     foreach($keys as $key){ 
                         if($key=='Input Man'){
@@ -90,44 +89,44 @@
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                         <tr>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_dat->total_empa))?$group_data->total_emp :'--'?></td>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
-                            <td class="text-center" style="border: none;padding:2px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
+                            <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_dat->total_empa))?$group_data->total_emp :'--'?></td>
+                            <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
+                            <td class="text-center;" style="text-align:center ;border: none;width:16px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
                         </tr>
                     </table>
                </td>
                 <?php }?>
-				<td class="text-center"><?php echo $row->all_leave?></td>
-				<td class="text-center"><?php echo $row->all_late?></td>
+				<td class="text-center" style="text-align:center;"><?php echo $row->all_leave?></td>
+				<td class="text-center" style="text-align:center;"><?php echo $row->all_late?></td>
                 <td></td>
 			</tr>
             <?php }?>
 			<tr>
 				<td colspan="2" style="vertical-align: middle;text-align: center;font-weight:bold">Total</td>
-                <td class="text-center" style="vertical-align: middle;text-align: center;font-weight:bold">
+                <td class="text-center" style="vertical-align: middle;text-align: center;font-weight:bold;text-align:center;">
                     <?php echo $sumAllEmp;
                         // $result = ($percentage / 100) * $number;
                     ?>
                 </td>
-                <td class="text-center" style="font-weight:bold">
+                <td class="text-center" style="font-weight:bold;text-align:center;">
                     <?php echo $sumAllPresent.'<br>';
                         $result = ($sumAllPresent / $sumAllEmp) * 100;
                         echo "(".round($result, 2)."%)";
                     ?>
                 </td>
-                <td class="text-center" style="font-weight:bold">
+                <td class="text-center" style="font-weight:bold;text-align:center;">
                     <?php echo $sumAllAbsent.'<br>';
                         $result = ($sumAllAbsent / $sumAllEmp) * 100;
                         echo "(".round($result, 2)."%)";
                     ?>
                 </td>
-                <td class="text-center" style="font-weight:bold">
+                <td class="text-center" style="font-weight:bold;text-align:center;">
                     <?php echo $sumAllMale.'<br>';
                         $result = ($sumAllMale / $sumAllEmp) * 100;
                         echo "(".round($result, 2)."%)";
                     ?>
                 </td>
-                <td class="text-center" style="font-weight:bold">
+                <td class="text-center" style="font-weight:bold;text-align:center;">
                     <?php echo $sumAllFemale.'<br>';
                         $result = ($sumAllFemale / $sumAllEmp) * 100;
                         echo "(".round($result, 2)."%)";
@@ -137,20 +136,20 @@
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                         <tr>
-                            <td class="text-center" style="border: none;padding: 9px 2px;margin: 0;border-right:1px solid black;"><?php echo $tt[$key];?></td>
-                            <td class="text-center" style="border: none;padding: 9px 2px;margin: 0;"><?php echo  $pr[$key]?></td>
-                            <td class="text-center" style="border: none;padding: 9px 2px;margin: 0;border-left:1px solid black;"><?php echo $ab[$key] ?></td>
+                            <td class="text-center" style="text-align:center;text ;width:30px;border: none;padding: 9px 0px;margin: 0;border-right:1px solid black;"><?php echo $tt[$key];?></td>
+                            <td class="text-center" style="text-align:center;text ;width:30px;border: none;padding: 9px 0px;margin: 0;"><?php echo  $pr[$key]?></td>
+                            <td class="text-center" style="text-align:center;text ;width:30px;border: none;padding: 9px 0px;margin: 0;border-left:1px solid black;"><?php echo $ab[$key] ?></td>
                         </tr>
                     </table>
                </td>
                 <?php }?>
-                <td class="text-center" style="font-weight:bold">
+                <td class="text-center" style="font-weight:bold;text-align:center;">
                     <?php echo $sumAllLeave.'<br>';
                          $result = ($sumAllLeave / $sumAllEmp) * 100;
                          echo "(".round($result, 2)."%)";
                     ?>
                 </td>
-                <td class="text-center" style="font-weight:bold">
+                <td class="text-center" style="font-weight:bold;text-align:center;">
                     <?php echo $sumAllLate.'<br>';
                         $result = ($sumAllLate / $sumAllEmp) * 100;
                         echo "(".round($result, 2)."%)";
