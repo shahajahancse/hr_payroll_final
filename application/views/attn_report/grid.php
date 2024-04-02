@@ -533,7 +533,7 @@
 				return false;
 			}
 		
-		    var first_date = document.getElementById('first_date').value;
+		    var first_date = document.getElementById('firstdate').value;
 			if (first_date == '') {
 				return false;
 			}
