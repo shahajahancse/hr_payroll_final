@@ -5330,6 +5330,48 @@ class Grid_model extends CI_Model{
 			return "Soryy! Requested list is empty";
 		}
 	}
+	function grid_monthly_att_registerr($year_month, $grid_emp_id){
+		$year= trim(substr($year_month,0,4));
+		$month = trim(substr($year_month,5,2));
+		$att_month = "att_".$year."_".$month;
+		if(!$this->db->table_exists($att_month)){
+			return "Report month does not exist!";
+		}
+		$this->db->select('
+						   pr_emp_com_info.emp_id,
+						   pr_emp_com_info.id,
+						   pr_emp_per_info.name_en,
+						   emp_designation.desig_name,
+						   emp_line_num.line_name_en,
+						');
+		$this->db->from('pr_emp_com_info');
+		$this->db->join('pr_emp_per_info','pr_emp_com_info.emp_id = pr_emp_per_info.emp_id','left');
+		$this->db->join('emp_section','emp_section.id = pr_emp_com_info.emp_sec_id','left');
+		$this->db->join('emp_line_num','emp_line_num.id = pr_emp_com_info.emp_line_id','left');
+		$this->db->join('emp_designation','emp_designation.id = pr_emp_com_info.emp_desi_id','left');
+		$this->db->where_in('pr_emp_per_info.emp_id',$grid_emp_id);
+		$this->db->group_by("pr_emp_per_info.emp_id");
+		$this->db->order_by("pr_emp_per_info.emp_id");
+		$query = $this->db->get();
+		if( $query->num_rows() > 0){
+			$data = array();
+			foreach( $query->result() as $row){
+				$newArray = array();
+				$first_day = date('Y-m-01', strtotime($year_month));
+				$last_day  = date('Y-m-t', strtotime($first_day));
+				$a =$this->db->select('present_status')->where('emp_id',$row->id)->where('shift_log_date BETWEEN "'.$first_day.'" AND "'.$last_day.'"')->get('pr_emp_shift_log')->result();
+				foreach ($a as $item) {
+					$newArray[] = $item->present_status;
+				}
+				$newArray = array_merge((array)$row,$newArray);
+				$data[] = $newArray;
+			}
+			return $data;
+		}
+		else{
+			return "Soryy! Requested list is empty";
+		}
+	}
 
 	function grid_monthly_att_register_auto($year_month, $grid_emp_id)
 	{
