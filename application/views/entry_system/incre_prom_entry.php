@@ -110,17 +110,92 @@
 
         <!-- Increment Promtion Line change -->
         <div class="row nav_head">
-            <div class="col-lg-6">
+            <div class="col-lg-5">
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
-            <div class="col-lg-6">
+            <div class="col-lg-7">
                 <div class="input-group" style="display:flex; gap: 14px">
+                    <input class="btn btn-primary" onclick='toggleSection("special")' type="button" value="Special" />
                     <input class="btn btn-primary" onclick='toggleSection("increment")' type="button" value="Increment" />
                     <input class="btn btn-info" onclick='toggleSection("promotion")' type="button" value="Promotion" />
                     <input class="btn btn-success" onclick='toggleSection("line_change")' type="button" value="Line" />
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
+
+        <!-- Special increment entry  -->
+        <div id="special_entry" class="row nav_head" style="margin-top: 13px;">
+            <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="col-md-3" style="padding: 0px 0px 10px 0px !important">
+                                <span style="max-height: 100% !important; max-height: 100% !important; display: block !important;">
+                                    <img id="spc_profile_image" style="height: 90px;width: 110px;" class="img-responsive" >
+                                </span>
+                            </div>
+                            <div class="col-md-9">
+                                <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px; margin-top: 5px">Name: <span id="spc_emp_name"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Dept: <span id="spc_departments_ids"> </span></p>
+                                <p style="font-weight: bold;">Sec : <span id="spc_sections_ids"> </span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <p style="font-weight: bold; margin-bottom: 5px; margin-top: 5px">Emp Id: <span id="spc_emps_ids"> </span></p>
+                                <p style="font-weight: bold; margin-bottom: 5px;">Line  : <span id="spc_lines_ids"> </span></p>
+                                <p style="font-weight: bold;">Desig : <span id="spc_desigs_id"> </span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
+                    <form class="col-md-12" method="post" id="special_entry_form">
+                        <div class="raw">
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Gross Salary</label>
+                                    <input class="form-control" readonly id="spc_salary" name="salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Salary</label>
+                                    <input class="form-control" id="gross_sal" name="gross_sal">
+
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">Com. Salary</label>
+                                    <input class="form-control" readonly id="spc_com_salary" name="com_salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 5px !important">
+                                <div class="form-group" style="margin-bottom: 3px !important;">
+                                    <label class="control-label">New Com. Salary</label>
+                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" top='20px'>
+                            <div class="col-md-3">
+                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group" style="gap: 14px; display: flex;">
+                                    <input type="text" class="form-control date" id="special_date" placeholder="select date">
+                                    <span class="input-group-btn" style="display: flex; gap: 10px;">
+                                        <input class="btn btn-primary" onclick='special_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-danger" onclick="special_delete(event)" type="button" value="Delete">
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <!-- increment entry  -->
         <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
@@ -440,7 +515,7 @@
     </div>
     <!-- </div> -->
 </div>
-
+<!-- line_entry -->
 <script>
     function line_entry(e) {
         e.preventDefault();
@@ -553,7 +628,7 @@
         })
     }
 </script>
-
+<!-- promotion_entry -->
 <script>
     function promotion_entry(e) {
         e.preventDefault();
@@ -679,6 +754,7 @@
         })
     }
 </script>
+<!-- increment_entry -->
 <script>
     function increment_entry(e) {
         e.preventDefault();
@@ -783,7 +859,173 @@
         })
     }
 </script>
+<!-- special_increment_entry -->
 <script>
+    function special_entry(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        gross_sal = document.getElementById('gross_sal').value;
+        if (gross_sal == '') {
+            showMessage('error', 'Please input the New Salary');
+            return false;
+        }
+
+        com_gross_sal = document.getElementById('com_gross_sal').value;
+        if (com_gross_sal == '') {
+            showMessage('error', 'Please input the New Com. Salary');
+            return false;
+        }
+
+        incr_date = document.getElementById('incr_date').value;
+        if (incr_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+
+        var formdata = $("#special_entry_form").serialize();
+        var data = "unit_id="+unit_id +"&incr_date="+incr_date +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/special_entry",
+            data: data,
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Increment Added Successfully');
+                } else {
+                    showMessage('error', 'Increment Not Added');
+                }
+            },
+            error: function(data) {
+                $("#loader").hide();
+                showMessage('error', 'Increment Not Added');
+            }
+        })
+    }
+
+    function special_delete(e) {
+        e.preventDefault();
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            return false;
+        }
+
+        special_date = document.getElementById('special_date').value;
+        if (incr_date == '') {
+            showMessage('error', 'Please select Effective date');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/special_delete_ajax",
+            data: {
+                sql: numbersArray[0],
+                date: special_date,
+                unit_id: unit_id
+            },
+            success: function(data) {
+                $("#loader").hide();
+                if (data == 'success') {
+                    showMessage('success', 'Increment Deleted Successfully');
+                }else {
+                    showMessage('error', 'Increment Not Deleted');
+                }
+            }
+        })
+    }
+</script>
+
+<script>
+    function get_emp_info_line() {
+
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        let numbersArray = sql.split(",");
+        if (numbersArray == '') {
+            showMessage('error', 'Please select employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+                $("#line_change").hide();
+            }, 500);
+            return false;
+        }
+        if (numbersArray.length > 1) {
+            showMessage('error', 'Please select max one employee Id');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+                $("#line_change").hide();
+            }, 500);
+            return false;
+        }
+        unit_id = document.getElementById('unit_id').value;
+        if (unit_id == '') {
+            showMessage('error', 'Please select Unit');
+            setTimeout(() => {
+                $("#loader").hide();
+                $("#increment_entry").hide();
+                $("#promotion_entry").hide();
+                $("#line_change").hide();
+            }, 500);
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
+            success: function(d) {
+                console.log(d);
+                $("#loader").hide();
+                $("#line_change").show();
+                $('#line_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
+                $('#line_emp_name').html(d.name_en);
+                $('#line_departments_ids').html(d.dept_name);
+                $('#line_sections_ids').html(d.sec_name_en);
+                $('#line_emps_ids').html(d.emp_id);
+                $('#line_lines_ids').html(d.line_name_en);
+                $('#line_desigs_id').html(d.desig_name);
+            },
+            error: function() {
+                $("#loader").hide();
+                alert('Something went wrong');
+            }
+        })
+    }
     function get_emp_info_promotion() {
 
         var checkboxes = document.getElementsByName('emp_id[]');
@@ -908,7 +1150,7 @@
             }
         })
     }
-    function get_emp_info_line() {
+    function get_emp_info_special() {
 
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
@@ -953,14 +1195,16 @@
             success: function(d) {
                 console.log(d);
                 $("#loader").hide();
-                $("#line_change").show();
-                $('#line_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
-                $('#line_emp_name').html(d.name_en);
-                $('#line_departments_ids').html(d.dept_name);
-                $('#line_sections_ids').html(d.sec_name_en);
-                $('#line_emps_ids').html(d.emp_id);
-                $('#line_lines_ids').html(d.line_name_en);
-                $('#line_desigs_id').html(d.desig_name);
+                $("#special_entry").show();
+                $('#spc_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
+                $('#spc_emp_name').html(d.name_en);
+                $('#spc_departments_ids').html(d.dept_name);
+                $('#spc_sections_ids').html(d.sec_name_en);
+                $('#spc_emps_ids').html(d.emp_id);
+                $('#spc_lines_ids').html(d.line_name_en);
+                $('#spc_desigs_id').html(d.desig_name);
+                $('#spc_salary').val(d.gross_sal);
+                $('#spc_com_salary').val(d.com_gross_sal);
             },
             error: function() {
                 $("#loader").hide();
@@ -969,6 +1213,7 @@
         })
     }
 </script>
+
 <script>
     //section dropdown
     $('#line_change_department').change(function() {
@@ -1031,6 +1276,7 @@
         });
     });
 </script>
+
 <script>
     //section dropdown
     $('#pro_department').change(function() {
@@ -1093,6 +1339,7 @@
         });
     });
 </script>
+
 <script>
     $(document).ready(function() {
         $("#searchi").on("keyup", function() {
@@ -1104,11 +1351,13 @@
         });
     });
 </script>
+
 <script>
     function loading_open() {
         $('#loader').css('display', 'block');
     }
 </script>
+
 <script type="text/javascript">
     // on load employee
     function grid_emp_list() {
@@ -1255,6 +1504,7 @@
         });
     });
 </script>
+
 <script>
     function get_checked_value(checkboxes) {
         var vals = Array.from(checkboxes)
@@ -1264,25 +1514,34 @@
         return vals;
     }
 </script>
+
 <script>
     function toggleSection(sectionId) {
-        if (sectionId == 'increment') {
+        if (sectionId == 'special') {
+            $("#increment_entry").hide();
+            $("#promotion_entry").hide();
+            $("#line_change").hide();
+            get_emp_info_special();
+        } else if (sectionId == 'increment') {
+            $("#special_entry").hide();
             $("#promotion_entry").hide();
             $("#line_change").hide();
             get_emp_info_increment();
         } else if(sectionId == 'promotion') {
+            $("#special_entry").hide();
             $("#increment_entry").hide();
             $("#line_change").hide();
             get_emp_info_promotion();
         } else {
             $("#promotion_entry").hide();
             $("#increment_entry").hide();
+            $("#special_entry").hide();
             get_emp_info_line();
         }
         $("#" + sectionId).slideToggle();
     }
     // Initial hiding of all sections
-    $("#increment_entry, #promotion_entry, #line_change").hide();
+    $("#special_entry, #increment_entry, #promotion_entry, #line_change").hide();
 </script>
 
 
