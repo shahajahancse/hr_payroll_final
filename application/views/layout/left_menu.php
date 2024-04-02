@@ -126,6 +126,7 @@
           <li class="start <?= activate_method('user_acl_hrm') ?>"> <a href="<?=base_url('setting_con/user_acl_hrm')?>" class="anchor_cls" id="acl">User Access HRM</a> </li>
           <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
           <li class="start <?= activate_method('dasig_group') ?>"> <a href="<?=base_url('setting_con/dasig_group')?>" class="anchor_cls" id="acl">Group Dasignation</a> </li>
+          <li class="start <?= activate_method('hide_designation_employee') ?>"> <a href="<?=base_url('setting_con/hide_designation_employee')?>" class="anchor_cls" id="acl">Hide Designation</a> </li>
         </ul>
       </li>
       <?php } ?>
