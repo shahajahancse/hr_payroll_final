@@ -1576,6 +1576,7 @@ class Grid_con extends CI_Controller {
 	function grid_letter1_report(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
+		dd($grid_emp_id);
 		$unit_id = $this->input->post('unit_id');
 		$firstdate = $this->input->post('firstdate');
 
