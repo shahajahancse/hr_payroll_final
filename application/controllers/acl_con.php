@@ -327,8 +327,6 @@ class Acl_con extends CI_Controller {
 					$this->form_validation->set_message('id_number_check', "Please Select pr_units Name.");
 					return FALSE;
 				}
-
-
 			}
 			else
 			{

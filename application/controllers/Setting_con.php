@@ -79,6 +79,56 @@ class Setting_con extends CI_Controller {
 		$this->data['subview'] = 'settings/user_acl_hrm';
         $this->load->view('layout/template', $this->data);
     }
+	public function hide_designation_employee()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->db->select('emp_depertment.*, pr_units.unit_name');
+        $this->db->from('emp_depertment');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_depertment.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('emp_depertment.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['departments'] = $this->db->get()->result();
+
+
+		$this->data['users'] = $this->get_member();
+        $this->data['title'] = 'Hide Designation Employee';
+        $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['subview'] = 'settings/hide_designation_employee';
+        $this->load->view('layout/template', $this->data);
+    }
+	public function get_emp_by_unit($unit) {
+        $this->db->select('
+                    pr_emp_com_info.id,
+                    pr_emp_com_info.emp_id,
+                    pr_emp_com_info.unit_id,
+                    pr_emp_per_info.name_en,
+                    pr_emp_per_info.name_bn,
+                ');
+        $this->db->from('pr_emp_com_info');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id', 'left');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+        $this->db->where('pr_units.unit_id', $unit);
+        $this->db->where('pr_emp_com_info.emp_cat_id', 1);
+        return $this->db->get();
+    }
+	public function hide_designation($id, $value){
+		$this->db->where('id', $id);
+		if($this->db->update('emp_designation', array('hide_status' => $value))){
+			echo 'success';
+		}else{
+			echo 'failed';
+		}
+	}
 
 	public function user_acl_pr()
     {
