@@ -307,13 +307,13 @@
 
 
 							<?php if(in_array(61,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter1_report(1)">Letter 1</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter1_report(1)">Letter 1 <span class="badge bg-red" id="letter1_count">0</span></button>
 							<?php } ?>
 							<?php if(in_array(62,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter2_report(2)">Letter 2</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter2_report(2)">Letter 2 <span class="badge bg-red" id="letter2_count">0</span></button>
 							<?php } ?>
 							<?php if(in_array(63,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_letter3_report(3)">Letter 3</button>
+							<button class="btn input-sm sbtn" onclick="grid_letter3_report(3)">Letter 3 <span class="badge bg-red" id="letter3_count">0</span></button>
 							<?php } ?>
 							<?php if(in_array(64,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_employee_information()">Employee Information</button>
@@ -546,7 +546,7 @@
 				 },
 				 success: function(data) {
 					console.log(data);
-					 $('#l1_count').html(data);
+					 $('#letter1_count').html(data);
 				 }
 				 })
 
