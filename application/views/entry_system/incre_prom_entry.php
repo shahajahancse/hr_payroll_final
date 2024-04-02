@@ -892,14 +892,14 @@
             return false;
         }
 
-        incr_date = document.getElementById('incr_date').value;
-        if (incr_date == '') {
+        special_date = document.getElementById('special_date').value;
+        if (special_date == '') {
             showMessage('error', 'Please select Effective date');
             return false;
         }
 
         var formdata = $("#special_entry_form").serialize();
-        var data = "unit_id="+unit_id +"&incr_date="+incr_date +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
+        var data = "unit_id="+unit_id +"&special_date="+special_date +"&gross_sal="+gross_sal +"&com_gross_sal="+com_gross_sal +"&emp_id="+numbersArray[0] + "&" + formdata; // Merge the data
 
         $.ajax({
             type: "POST",
@@ -940,7 +940,7 @@
         }
 
         special_date = document.getElementById('special_date').value;
-        if (incr_date == '') {
+        if (special_date == '') {
             showMessage('error', 'Please select Effective date');
             return false;
         }
