@@ -1592,6 +1592,24 @@ class Grid_con extends CI_Controller {
 			$this->load->view('letter1',$data);
 		}
 	}
+	function grid_letter1_count(){
+		$unit_id = $this->input->post('unit_id');
+		$firstdate = $this->input->post('firstdate');
+
+		$this->db->select('emp_id');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where('unit_id', $unit_id);
+		$grid_emp_id=$this->db->get()->result();
+
+		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id,$firstdate);
+		// dd($data);
+		if(is_string($data['values'])){
+			echo 0;
+		}
+		else{
+			echo count($data['values']);
+		}
+	}
 
 
 	function grid_letter2_report(){

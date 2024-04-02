@@ -525,3 +525,34 @@
 		    });
 		});
 	</script>
+
+	<script>
+		 function count_l1() {
+		    var unit = document.getElementById('unit_id').value;
+			if (unit == '') {
+				return false;
+			}
+		
+		    var first_date = document.getElementById('first_date').value;
+			if (first_date == '') {
+				return false;
+			}
+			 $.ajax({
+				 type: "POST",
+				 url: hostname + "grid_con/grid_letter1_count",
+				 data: {
+					 "unit_id": unit,
+					 "firstdate": first_date
+				 },
+				 success: function(data) {
+					console.log(data);
+					 $('#l1_count').html(data);
+				 }
+				 })
+
+
+			 }
+
+
+		 
+	</script>

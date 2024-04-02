@@ -4247,6 +4247,44 @@ class Grid_model extends CI_Model{
 			return "Not Found Data";
 		}
 	}
+	function grid_letter1_count($grid_emp_id, $firstdate){
+		$current_date = date("Y-m-d", strtotime($firstdate));
+		$before_date= date("Y-m-d", strtotime('-10 days'.$firstdate));
+		$letter_status = 1;
+		$data = array();
+		foreach ($grid_emp_id as $key => $id) {
+			$get_absent = $this->attendance_check_for_absent($id,$current_date,$letter_status);
+				if($letter_status == 1){
+					$day = 10;
+				}else if($letter_status == 2){
+					$day = 20;
+				}else{
+					$day = 30;
+				}
+
+			if(!$get_absent >=$day){
+				continue;
+			}
+			$this->db->select('
+				pr_emp_per_info.id,
+			');
+			$this->db->from('pr_emp_per_info');
+			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+			
+			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+			$this->db->order_by("pr_emp_com_info.emp_id");
+			$query = $this->db->get();
+			// dd($query->row());
+			if($query->num_rows() != 0){
+				$data[] = $query->row();
+			}
+		}
+		if(!empty($data)){
+			return $data;
+		}else{
+			return "Not Found Data";
+		}
+	}
 
 	function get_absent_start_date($emp_id,$firstdate,$limit){
 		//echo "$emp_id,$firstdate";
