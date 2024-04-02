@@ -915,12 +915,12 @@ class Entry_system_con extends CI_Controller
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
 
-        $this->db->where('holiday_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
+        $this->db->where('work_off_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
         $this->db->delete('attn_holyday_off');
 
         $data = [];
         foreach ($emp_ids as $value) {
-            $data[] = array('holiday_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+            $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
         }
         if ( $this->db->insert_batch('attn_holyday_off', $data)) {
             echo 'success';
