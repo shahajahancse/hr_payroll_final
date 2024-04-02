@@ -1603,7 +1603,6 @@ class Grid_con extends CI_Controller {
 		foreach ($emp_id as $key => $value) {
 			$grid_emp_id[] = $value->emp_id;
 		}
-		dd($grid_emp_id);
 
 		$data['values'] 	= $this->Grid_model->grid_letter1_count($grid_emp_id,$firstdate);
 		// dd($data);
