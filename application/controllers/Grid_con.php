@@ -1606,6 +1606,7 @@ class Grid_con extends CI_Controller {
 		}
 
 		$data['values'] 	= $this->Grid_model->grid_letter1_count($grid_emp_id,$firstdate);
+		dd($data);
 		// dd($data);
 		if(is_string($data['values'])){
 			echo 0;
