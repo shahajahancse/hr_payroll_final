@@ -1580,6 +1580,7 @@ class Grid_con extends CI_Controller {
 		$firstdate = $this->input->post('firstdate');
 
 		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id,$firstdate);
+		dd($data);
 		$data['unit_id']	= $unit_id;
 		$firstdate = date("Y-m-d", strtotime($firstdate));
 		$data['firstdate']	= $firstdate;
