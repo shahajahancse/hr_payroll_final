@@ -52,7 +52,7 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Unit <span style="color: red;">*</span> </label>
-						<select onchange="count_l1()" name="unit_id" id="unit_id" class="form-control input-sm">
+						<select  name="unit_id" id="unit_id" class="form-control input-sm">
 							<option value="">Select Unit</option>
 							<?php 
 								foreach ($dept as $row) {
@@ -389,42 +389,47 @@
 	<script type="text/javascript">
 		// on load employee
 		function grid_emp_list() {
-		    var unit = document.getElementById('unit_id').value;
-		    var dept = document.getElementById('dept').value;
-		    var section = document.getElementById('section').value;
-		    var line = document.getElementById('line').value;
-		    var desig = document.getElementById('desig').value;
-		    var status = document.getElementById('status').value;
+				var unit = document.getElementById('unit_id').value;
+				var dept = document.getElementById('dept').value;
+				var section = document.getElementById('section').value;
+				var line = document.getElementById('line').value;
+				var desig = document.getElementById('desig').value;
+				var status = document.getElementById('status').value;
 
-		    url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
-		    $.ajax({
-		        url: url,
-		        type: 'GET',
-		        data: {
-		            "status": status
-		        },
-		        contentType: "application/json",
-		        dataType: "json",
-		        success: function(response) {
-		            $('#fileDiv #removeTr').remove();
-		            if (response.length != 0) {
-		                var items = '';
-		                $.each(response, function(index, value) {
-		                    items += '<tr id="removeTr">';
-		                    items +=
-		                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-		                        value.emp_id + '" ></td>';
-		                    items += '<td class="success">' + value.emp_id + '</td>';
-		                    items += '<td class="warning ">' + value.name_en + '</td>';
-		                    items += '</tr>';
-		                });
-		                // console.log(items);
-		                $('#fileDiv tr:last').after(items);
-		            } else {
-		                $('#fileDiv #removeTr').remove();
-		            }
-		        }
-		    });
+				url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+				$.ajax({
+					url: url,
+					type: 'GET',
+					data: {
+						"status": status
+					},
+					contentType: "application/json",
+					dataType: "json",
+					success: function(response) {
+						$('#fileDiv #removeTr').remove();
+						if (response.length != 0) {
+							var items = '';
+							$.each(response, function(index, value) {
+								items += '<tr id="removeTr">';
+								items +=
+									'<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
+									value.emp_id + '" ></td>';
+								items += '<td class="success">' + value.emp_id + '</td>';
+								items += '<td class="warning ">' + value.name_en + '</td>';
+								items += '</tr>';
+							});
+							// console.log(items);
+							$('#fileDiv tr:last').after(items);
+						} else {
+							$('#fileDiv #removeTr').remove();
+						}
+					},
+					complete: function() {
+						count_l1()
+						
+						
+					}
+				});
 		}
 
 		$(document).ready(function() {
@@ -551,31 +556,29 @@
 					$('#letter1_count').html(data[1]);
 					$('#letter2_count').html(data[2]);
 					$('#letter3_count').html(data[3]);
-					localstorage.setItem('l1_count',data[1]);
-					localstorage.setItem('l2_count',data[2]);
-					localstorage.setItem('l3_count',data[3]);
-				 }
-				 })
-
-
-			 }
-
-
-		 
+					localStorage.setItem('l1_count',data[1]);
+					localStorage.setItem('l2_count',data[2]);
+					localStorage.setItem('l3_count',data[3]);
+					}
+					})
+				}
+			
 	</script>
 <script>
 	$(document).ready(function() {
 		var l1_count = localStorage.getItem('l1_count');
 		var l2_count = localStorage.getItem('l2_count');
 		var l3_count = localStorage.getItem('l3_count');
+		console.log(l1_count);
 		if (l1_count !== null) {
-			$('#letter1_count').text(l1_count);
+			
+			$('#letter1_count').html(l1_count);
 		}
 		if (l2_count !== null) {
-			$('#letter2_count').text(l2_count);
+			$('#letter2_count').html(l2_count);
 		}
 		if (l3_count !== null) {
-			$('#letter3_count').text(l3_count);
+			$('#letter3_count').html(l3_count);
 		}
 	});
 </script>
