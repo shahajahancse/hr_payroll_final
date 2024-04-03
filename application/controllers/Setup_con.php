@@ -1523,10 +1523,117 @@ class Setup_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect('/setup_con/shift_management');
     }
-
 //-------------------------------------------------------------------------------------------------------
 // CRUD for Shift Management end
+//------------------------------------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Alter net day start
+    //-------------------------------------------------------------------------------------------------------
+    public function alternet_day(){
+        $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
+        $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
+        $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result_array();
+        $this->data['title'] = 'Shift Management List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/shift_management_list';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function get_shift() {
+        $unit_id = $this->input->post('unit_id');
+        $this->db->where('unit_id', $unit_id);
+        $query = $this->db->get('pr_emp_shift_schedule')->result();
+        echo json_encode($query);
+    }
+    public function shiftmanagement_add(){
+        $this->load->library('form_validation');
+        $this->load->model('Crud_model');
+        $data['shiftmanagementinfo'] = $this->Crud_model->shiftmanagement_fetch();
+        $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
+        if ($this->form_validation->run() == false) {
+            $this->db->select('pr_units.*');
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['title'] = 'Shift Management Add';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/shiftmanagement_add';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $formArray = array(
+                'shift_name' => $this->input->post('shift_name'),
+                'unit_id' => $this->input->post('unit_id'),
+                'schedule_id' => $this->input->post('shift_type'),
+            );
+            if ($this->db->insert('pr_emp_shift', $formArray)) {
+                $this->session->set_flashdata('success', 'Record add successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record add failed!');
+            }
+            redirect(base_url() . 'setup_con/shift_management');
+        }
+    }
+
+    public function shiftmanagement_edit($shiftmanagementId){
+        $this->load->library('form_validation');
+        $this->load->model('Crud_model');
+        $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->db->select('pr_units.*');
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
+            $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type,pr_emp_shift_schedule.id');
+            $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
+            $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
+            $this->db->where('pr_emp_shift.id', $shiftmanagementId);
+            $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->row();
+
+            $unit_id = $this->data['pr_emp_shift']->unit_id;
+            $this->db->where('unit_id', $unit_id);
+            $this->data['shift_type'] = $this->db->get('pr_emp_shift_schedule')->result();
+
+            $this->data['title'] = 'Shift Management Edit';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/shiftmanagement_edit';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $formArray = array(
+                'shift_name' => $this->input->post('shift_name'),
+                'unit_id' => $this->input->post('unit_id'),
+                'schedule_id' => $this->input->post('shift_type'),
+
+            );
+            $this->db->where('id', $shiftmanagementId);
+            if ($this->db->update('pr_emp_shift', $formArray)) {
+                $this->session->set_flashdata('success', 'Record updated successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record update failed!');
+            }
+            redirect(base_url() . 'setup_con/shift_management');
+        }
+
+    }
+
+    public function shiftmanagement_delete($shiftmanagementId)
+    {
+        $this->load->model('Crud_model');
+        $shiftmanagement = $this->Crud_model->getshiftmanagement($shiftmanagementId);
+        if (empty($shiftmanagement)) {
+            $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
+            redirect('/setup_con/shift_management');
+        }
+        $this->Crud_model->shiftmanagement_delete($shiftmanagementId);
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect('/setup_con/shift_management');
+    }
 //-------------------------------------------------------------------------------------------------------
+// CRUD for alter net day end
+//------------------------------------------------------------------------------------------------------
+
 //-------------------------------------------------------------------------------------------------------
 // CRUD for Company Info Setup
 //-------------------------------------------------------------------------------------------------------
