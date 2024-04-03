@@ -1540,13 +1540,8 @@ class Setup_con extends CI_Controller
         $this->data['subview'] = 'setup/shift_management_list';
         $this->load->view('layout/template', $this->data);
     }
-    public function get_shift() {
-        $unit_id = $this->input->post('unit_id');
-        $this->db->where('unit_id', $unit_id);
-        $query = $this->db->get('pr_emp_shift_schedule')->result();
-        echo json_encode($query);
-    }
-    public function shiftmanagement_add(){
+    
+    public function alternet_add(){
         $this->load->library('form_validation');
         $this->load->model('Crud_model');
         $data['shiftmanagementinfo'] = $this->Crud_model->shiftmanagement_fetch();
@@ -1575,7 +1570,7 @@ class Setup_con extends CI_Controller
         }
     }
 
-    public function shiftmanagement_edit($shiftmanagementId){
+    public function alternet_edit($shiftmanagementId){
         $this->load->library('form_validation');
         $this->load->model('Crud_model');
         $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
@@ -1618,7 +1613,7 @@ class Setup_con extends CI_Controller
 
     }
 
-    public function shiftmanagement_delete($shiftmanagementId)
+    public function alternet_delete($shiftmanagementId)
     {
         $this->load->model('Crud_model');
         $shiftmanagement = $this->Crud_model->getshiftmanagement($shiftmanagementId);
