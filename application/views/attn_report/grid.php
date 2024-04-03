@@ -545,8 +545,12 @@
 					 "firstdate": first_date
 				 },
 				 success: function(data) {
+					var data = JSON.parse(data);
 					console.log(data);
-					 $('#letter1_count').html(data);
+					console.log(data[1]);
+					$('#letter1_count').html(data[1]);
+					$('#letter2_count').html(data[2]);
+					$('#letter3_count').html(data[3]);
 				 }
 				 })
 
