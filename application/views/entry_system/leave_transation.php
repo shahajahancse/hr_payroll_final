@@ -148,6 +148,7 @@
                                     <option value='sl'>Sick</option>
                                     <option value='pl'>Paternity</option>
                                     <option value='ml'>Maternity</option>
+                                    <option value='el'>Earn</option>
                                 </select>
                             </div>
                         </div>
@@ -215,27 +216,33 @@
                         <tbody id="leave_balance">
                             <tr>
                                 <th>Casual Leave</th>
-                                <td id="leave_entitle_casual">12</td>
-                                <td id="leave_taken_casual">6</td>
-                                <td id="leave_balance_casual">5</td>
+                                <td id="leave_entitle_casual"></td>
+                                <td id="leave_taken_casual"></td>
+                                <td id="leave_balance_casual"></td>
                             </tr>
                             <tr>
                                 <th>Sick Leave</th>
-                                <td id="leave_entitle_sick">12</td>
-                                <td id="leave_taken_sick">4</td>
-                                <td id="leave_balance_sick">8</td>
+                                <td id="leave_entitle_sick"></td>
+                                <td id="leave_taken_sick"></td>
+                                <td id="leave_balance_sick"></td>
                             </tr>
                             <tr>
                                 <th>Maternity Leave</th>
-                                <td id="leave_entitle_maternity">12</td>
-                                <td id="leave_taken_maternity">4</td>
-                                <td id="leave_balance_maternity">8</td>
+                                <td id="leave_entitle_maternity"></td>
+                                <td id="leave_taken_maternity"></td>
+                                <td id="leave_balance_maternity"></td>
                             </tr>
                             <tr>
                                 <th>Paternity Leave</th>
-                                <td id="leave_entitle_paternity">12</td>
-                                <td id="leave_taken_paternity">4</td>
-                                <td id="leave_balance_paternity">8</td>
+                                <td id="leave_entitle_paternity"></td>
+                                <td id="leave_taken_paternity"></td>
+                                <td id="leave_balance_paternity"></td>
+                            </tr>
+                            <tr>
+                                <th>Earn Leave</th>
+                                <td id="leave_entitle_earn"></td>
+                                <td id="leave_taken_earn"></td>
+                                <td id="leave_balance_earn"></td>
                             </tr>
                         </tbody>
 
@@ -539,14 +546,17 @@
                 $('#leave_entitle_sick').html(data.leave_entitle_sick);
                 $('#leave_entitle_maternity').html(data.leave_entitle_maternity);
                 $('#leave_entitle_paternity').html(data.leave_entitle_paternity);
+                $('#leave_entitle_earn').html(data.leave_entitle_earn);
                 $('#leave_taken_casual').html(data.leave_taken_casual);
                 $('#leave_taken_sick').html(data.leave_taken_sick);
                 $('#leave_taken_maternity').html(data.leave_taken_maternity);
                 $('#leave_taken_paternity').html(data.leave_taken_paternity);
+                $('#leave_taken_earn').html(data.leave_taken_earn);
                 $('#leave_balance_casual').html(data.leave_balance_casual);
                 $('#leave_balance_sick').html(data.leave_balance_sick);
                 $('#leave_balance_maternity').html(data.leave_balance_maternity);
                 $('#leave_balance_paternity').html(data.leave_balance_paternity);
+                $('#leave_balance_earn').html(data.leave_balance_earn);
             },
             error: function() {
                 $("#loader").hide();
@@ -608,7 +618,7 @@
                     $('#reason').val('');
                     showMessage('success', 'Leave Added Successfully');
                 } else {
-                    showMessage('error', 'Leave Not Added');
+                    showMessage('error', data);
                 }
             },
             error: function(data) {
