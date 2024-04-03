@@ -19,7 +19,7 @@ class Setting_con extends CI_Controller {
             redirect("payroll_con");
             exit;
         }*/
-			
+
 	}
 
 	function crud(){
@@ -203,25 +203,42 @@ class Setting_con extends CI_Controller {
         $this->load->view('layout/template', $this->data);
 
 	}
-	public function report_setting_save($status){
+	public function report_setting_save($id){
 
 		$unit_id = $this->input->post('unit_id');
-		$date = date('Y-m-01', strtotime($this->input->post('date')));
+		$date = date('Y-m-d', strtotime($this->input->post('date')));
+		$end_date = date('Y-m-d', strtotime($this->input->post('end_date')));
 		$max_ot = $this->input->post('max_ot');
+		$type = $this->input->post('type');
 		$active_status = $this->input->post('active_status');
 
 		$data = array(
 			'unit_id' => $unit_id,
 			'date' => $date,
+			'end_date' => $end_date,
 			'max_ot' => $max_ot,
+			'type' => $type,
 			'status' => $active_status,
 			'created_by' =>  $this->data['user_data']->id,
 		);
-		if ($status == '0') {
+		if ($id == '0') {
 			$this->db->insert('pr_report_setting', $data);
 		}else{
-			$this->db->where('id', $status);
+			$this->db->where('id', $id);
 			$this->db->update('pr_report_setting', $data);
+		}
+		if ($type == 1) {
+			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->update('pr_emp_shift_log', array('false_ot_4' => $max_ot));
+		} else if ($type == 2) {
+			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->update('pr_emp_shift_log', array('false_ot_12' => $max_ot));
+		} else {
+			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->update('pr_emp_shift_log', array('false_ot_all' => $max_ot));
 		}
 		echo 'true';
 	}
@@ -235,6 +252,21 @@ class Setting_con extends CI_Controller {
 	}
 	public function delete_report_setting(){
 		$id = $this->input->post('id');
+		$data = $this->db->where('id', $id)->get('pr_report_setting')->row();
+
+		if ($data->type == 1) {
+			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->update('pr_emp_shift_log', array('false_ot_4' => 0));
+		} else if ($data->type == 2) {
+			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->update('pr_emp_shift_log', array('false_ot_12' => 0));
+		} else {
+			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->update('pr_emp_shift_log', array('false_ot_all' => 0));
+		}
 		$this->db->where('id', $id);
 		$this->db->delete('pr_report_setting');
 		echo 'true';
