@@ -172,11 +172,27 @@
 						else{
 							$in_time = "00:00:00";
 						}
-
-
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
 							$out_time = $this->job_card_model->get_formated_out_time_5pm($value->emp_id, $out_time, $emp_shift);
+							if($row->eot == 0 && $row->false_ot_4 ==0){
+								$out_time = $out_time;
+							}
+							if($row->eot <2 && $row->false_ot_4 <2){
+								$out_time = $out_time;
+							}
+							if($row->eot >2 && $row->false_ot_4 ==1){
+								$extra_ot_hour = 1;
+								$out_time = date('h:i:s A', strtotime('-1 hour '.$out_time));
+							}
+							if($row->eot >2 && $row->false_ot_4 ==0){
+								$extra_ot_hour = 0;
+								$out_time = date('h:i:s A', strtotime('-2 hour '.$out_time));
+							}
+							if($row->ot==0 && $row->false_ot_4 ==0 && $row->eot==0){
+								$extra_ot_hour = 0;
+								$out_time = date('h:i:s A', strtotime($out_time));
+							}
 						}
 						else{
 							$out_time = "00:00:00";
@@ -234,7 +250,7 @@
 						}
 						echo "<td>&nbsp;";
 						if($row->ot == 0){
-							echo "&nbsp;";
+							echo $row->ot;
 						}else{
 							echo $row->ot;
 						}

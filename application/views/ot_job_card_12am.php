@@ -164,41 +164,45 @@
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
 							$in_time = date('h:i:s A',strtotime($row->in_time));
-							// $in_time = $this->job_card_model->time_am_pm_format($in_time);	
 						}
 						else{
 							$in_time = "00:00:00";
 						}
-
-
 						if($row->out_time != "00:00:00"){
-                            //  $out_time = date('H:i:s A', strtotime($row->out_time));
-                            // $a = date('H:i:s A',strtotime("00:14:14"));
+
 							$current_date = date('Y-m-d', strtotime($shift_log_date));
 							$new_current_date_time = $current_date.' '.date('H:i:s', strtotime($row->out_time));
 							$new_next_date_time = date('Y-m-d', strtotime("+1 day", strtotime($current_date))).' 00:14:14';
-							// dd($new_next_date_time);
-
 							if (strtotime($new_current_date_time) < strtotime($new_next_date_time)) {
-								// dd("A");
 							$out_time =  date('h:i:s A', strtotime($row->out_time));
 							} else {
-								// dd("B");
 								$minutes = date("i", strtotime($row->out_time)); // Extract minutes part
 								$sum = (int)$minutes[0] + (int)$minutes[1]; 
 								$min = $sum==0 ? "00":($sum < 10 ? "0".$sum : $sum);
 								$out_time  ="12:".$min.date(':s A', strtotime($row->out_time));
 							}
-							// $hour = date('h',strtotime( $new_date_time));
-							// $minute = date('i',strtotime( $new_date_time));
-							// $second = date('s',strtotime( $new_date_time));
-							// $out_time = date('H:i:s A',strtotime("+".$hour." hours".$minute." minutes".$second." seconds"));
-							// }
 
-							// dd($out_time);
-
-      
-							// $out_time = $this->job_card_model->get_formated_out_time_5pm($value->emp_id, $out_time, $emp_shift);
+							if($row->ot==0 && $row->false_ot_12==0 && $row->eot==0){
+								$out_time = date('h:i:s A', strtotime('-1 hours '.$row->out_time));
+							}
+							if($row->false_ot_12 == 5){
+								$out_time= $out_time;
+							}
+							if( $row->false_ot_12==4){
+								$out_time = date('h:i:s A', strtotime('-2 hours '.$row->out_time));
+							}
+							if( $row->false_ot_12==3){
+								$out_time = date('h:i:s A', strtotime('-3 hours '.$row->out_time));
+							}
+							if( $row->false_ot_12==2){
+								$out_time = date('h:i:s A', strtotime('-5 hours '.$row->out_time));
+							}							
+							if( $row->false_ot_12==1){
+								$out_time = date('h:i:s A', strtotime('-5 hours '.$row->out_time));
+							}
+							
+							// $out_time =  date('h:i:s A', strtotime($row->out_time));
+							dd($out_time);
 						}
 						else{
 							$out_time = "00:00:00";
@@ -255,11 +259,11 @@
 							$remark = "";
 						}
 						echo "<td>&nbsp;";
-						if($row->ot == 0){
-							echo "&nbsp;";
-						}else{
+						// if($row->ot == 0){
+						// 	echo $row->ot;
+						// }else{
 							echo $row->ot;
-						}
+						// }
 						echo "</td>";
 						$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
 // -						$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;

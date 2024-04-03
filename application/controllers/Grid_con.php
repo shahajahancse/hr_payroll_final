@@ -367,24 +367,6 @@ class Grid_con extends CI_Controller {
 		$grid_seconddate 	 = date("Y-m-d", strtotime($grid_seconddate));
 		$data['values'] = $this->Grid_model->grid_extra_ot_12am( $grid_emp_id);
 		$this->load->view('ot_job_card_12am',$data);
-
-		// if($grid_firstdate <= '2020-05-31' && $grid_seconddate < '2020-06-01'){
-		// 	exit('Data Not Found!');
-		// }else if($grid_firstdate <= '2020-05-31'){
-		// 	$grid_firstdate = '2020-06-01';
-		// }
-		// if($grid_firstdate < '2019-04-01'){
-		// 	echo "Data Not Found";
-		// 	return;
-		// } else {
-		// 	if ($grid_firstdate > "2022-10-31") {
-			// ...................
-			// } else {
-			// 	$data['values'] = $this->grid_model->grid_emp_job_card($grid_emp_id);
-			// 	$this->load->view('ot_job_card_12am_new',$data);
-
-			// }
-
 	  }
 	// }
 
