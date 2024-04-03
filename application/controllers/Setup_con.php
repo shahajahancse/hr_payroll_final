@@ -1531,16 +1531,19 @@ class Setup_con extends CI_Controller
     // CRUD for Alter net day start
     //-------------------------------------------------------------------------------------------------------
     public function alternet_day(){
-        $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type');
-        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
-        $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
-        $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result_array();
-        $this->data['title'] = 'Shift Management List';
+        $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
+        $this->db->from('attn_holyday_off');
+        $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
+        $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        $this->data['results'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Holiday List';
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/shift_management_list';
+        $this->data['subview'] = 'setup/alternet_day';
         $this->load->view('layout/template', $this->data);
     }
-    
+
     public function alternet_add(){
         $this->load->library('form_validation');
         $this->load->model('Crud_model');
