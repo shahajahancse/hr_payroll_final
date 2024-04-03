@@ -1591,6 +1591,40 @@ class Grid_con extends CI_Controller {
 			$this->load->view('letter1',$data);
 		}
 	}
+	function grid_letter1_count(){
+		$unit_id = $this->input->post('unit_id');
+		$firstdate = $this->input->post('firstdate');
+
+		$grid_emp_id = $this->db->select('emp_id')->where('unit_id', $unit_id)->where('emp_cat_id', 1)->get('pr_emp_com_info')->result_array();
+		$grid_emp_id = array_column($grid_emp_id, 'emp_id');
+		$data['values'] 	=  $this->Grid_model->grid_letter1_count($grid_emp_id,$firstdate);
+		$data['values2'] 	= $this->Grid_model->grid_letter2_report($grid_emp_id,$firstdate);
+		$data['values3'] 	= $this->Grid_model->grid_letter3_report($grid_emp_id, $firstdate);
+
+		// dd($data);
+
+		$v=[];
+		if(is_string($data['values'])){
+			$v['1']=0;
+		}
+		else{
+			$v['1']=count($data['values']);
+		}
+
+		if(is_string($data['values2'])){
+			$v['2']=0;
+		}
+		else{
+			$v['2']=count($data['values2']);
+		}
+		if(is_string($data['values3'])){
+			$v['3']=0;
+		}
+		else{
+			$v['3']=count($data['values3']);
+		}
+		echo json_encode($v);
+	}
 
 
 	function grid_letter2_report(){
