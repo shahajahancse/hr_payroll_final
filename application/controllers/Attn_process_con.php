@@ -80,6 +80,38 @@ class Attn_process_con extends CI_Controller {
 			}
 		}
 	}
+	function attendance_process2(){
+
+		$unit = $this->input->post('unit_id');
+		$date1 = $this->input->post('process_date1');
+		$date2 = $this->input->post('process_date2');
+		$days = (strtotime($date2) - strtotime($date1)) / 86400 + 1;
+
+
+		$sql = $this->input->post('sql');
+		$grid_emp_id = explode(',', $sql);
+		$this->db->trans_start();
+		ini_set('memory_limit', '-1');
+		set_time_limit(0);
+		for ($i=0; $i < $days ; $i++) { 
+			$input_date = date("Y-m-d", strtotime($date1 . ' + ' . $i . ' days'));
+			$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
+		}
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			echo "Process failed";
+		}else{
+			$this->db->trans_commit();
+			if($data == true){
+				// ATTENDANCE PROCESS LOG Generate
+				$this->Log_model->log_attn_process($input_date);
+				echo "Process completed sucessfully";
+			}else{
+				echo "Process failed";
+			}
+		}
+	}
 
 	//-------------------------------------------------------------------------------------------------------
 	// List display for file upload
