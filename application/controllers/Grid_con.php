@@ -1598,7 +1598,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = $this->db->select('emp_id')->where('unit_id', $unit_id)->where('emp_cat_id', 1)->get('pr_emp_com_info')->result_array();
 		$grid_emp_id = array_column($grid_emp_id, 'emp_id');
 		$data['values'] 	=  $this->Grid_model->grid_letter1_count($grid_emp_id,$firstdate);
-		$data['values2'] 	= $this->Grid_model->grid_letter2_count($grid_emp_id,$firstdate);
+		$data['values2'] 	= $this->Grid_model->grid_letter2_report($grid_emp_id,$firstdate);
 		$data['values3'] 	= $this->Grid_model->grid_letter3_report($grid_emp_id, $firstdate);
 
 		// dd($data);

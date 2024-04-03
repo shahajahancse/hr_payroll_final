@@ -551,6 +551,9 @@
 					$('#letter1_count').html(data[1]);
 					$('#letter2_count').html(data[2]);
 					$('#letter3_count').html(data[3]);
+					localstorage.setItem('l1_count',data[1]);
+					localstorage.setItem('l2_count',data[2]);
+					localstorage.setItem('l3_count',data[3]);
 				 }
 				 })
 
@@ -560,3 +563,19 @@
 
 		 
 	</script>
+<script>
+	$(document).ready(function() {
+		var l1_count = localStorage.getItem('l1_count');
+		var l2_count = localStorage.getItem('l2_count');
+		var l3_count = localStorage.getItem('l3_count');
+		if (l1_count !== null) {
+			$('#letter1_count').text(l1_count);
+		}
+		if (l2_count !== null) {
+			$('#letter2_count').text(l2_count);
+		}
+		if (l3_count !== null) {
+			$('#letter3_count').text(l3_count);
+		}
+	});
+</script>
