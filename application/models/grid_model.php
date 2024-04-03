@@ -4393,6 +4393,29 @@ class Grid_model extends CI_Model{
 			return $query;
 		}
 	}
+	function grid_letter2_count($grid_emp_id, $firstdate)
+	{
+		//echo $firstdate;
+		$newDate = date("Y-m-d", strtotime('-20 days', strtotime($firstdate)));
+
+			$this->db->select('
+				pr_emp_per_info.*,
+				
+			');
+		
+			$this->db->from('pr_emp_per_info');
+			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+			$this->db->order_by("pr_emp_com_info.emp_id");
+			$query = $this->db->get();
+
+		if($query->num_rows() == 0){
+			return "Employee ID range does not exist!";
+		}
+		else{
+			return $query;
+		}
+	}
 
 	function grid_letter3_report_old($grid_emp_id,$firstdate){
 		$newDate = date("Y-m-d", strtotime('-20 days', strtotime($firstdate)));
