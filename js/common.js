@@ -101,6 +101,58 @@ function attendance_process(){
      }
    }
 }
+function attendance_process2(){
+   var ajaxRequest = new XMLHttpRequest();
+   unit_id = document.getElementById('unit_id').value;
+   if(unit_id == '')
+   {
+     alert('Please select Unit');
+     return ;
+   }   
+
+   process_date1 = document.getElementById('process_date1').value;
+   if(process_date1 == '')
+   {
+     alert('Please select from date');
+     return ;
+   }
+   process_date2 = document.getElementById('process_date2').value;
+   if(process_date2 == '')
+   {
+     alert('Please select to date');
+     return ;
+   }
+
+   var checkboxes = document.getElementsByName('emp_id[]');
+   var sql = get_checked_value(checkboxes);
+   if(sql =='')
+   {
+     alert('Please select employee Id');
+     return ;
+   }
+
+   var okyes;
+   okyes=confirm('Are you sure you want to start process?');
+   if(okyes==false) return;
+
+   loading_open();
+   var data = "process_date1="+process_date1+"&process_date2="+process_date2+"&unit_id="+unit_id+'&sql='+sql;
+   
+   // console.log(data); return;
+   url = hostname + "attn_process_con/attendance_process2";
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(data);
+
+   ajaxRequest.onreadystatechange = function(){
+     if(ajaxRequest.readyState == 4){
+       // console.log(ajaxRequest);
+       var resp = ajaxRequest.responseText;
+       loading_close();
+       alert(resp);
+     }
+   }
+}
 
 // get check box select value
 function get_checked_value(checkboxes) {

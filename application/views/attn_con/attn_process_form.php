@@ -121,6 +121,20 @@
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
+        <div class="row nav_head" style="margin-top: 13px;">
+            <div class="col-lg-4">
+                <span style="font-size: 20px;">Attendance Process <br>Date Between </span>
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="input-group" style="display:flex; gap: 14px">
+                    <input type="text" placeholder="Start Date" class="form-control date" id="process_date1" >
+                    <input type="text" placeholder="End Date" class="form-control date" id="process_date2" >
+                    <span class="input-group-btn">
+                        <input class="btn btn-primary" onclick='attendance_process2()' type="button" value='Process' />
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
     </div>
     <div class="col-md-4 tablebox">
         <div style="height: 80vh; overflow-y: scroll;">
