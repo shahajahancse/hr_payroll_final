@@ -128,9 +128,9 @@ function call_hide(el){
 
     var status;
     if ($(el).prop('checked')) {
-        status = 1;
-    } else {
         status = 0;
+    } else {
+        status = 1;
     }
 
     $.ajax({
