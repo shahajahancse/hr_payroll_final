@@ -120,7 +120,7 @@ class Entry_system_con extends CI_Controller
                 if ($this->db->update('pr_advance_loan', $data)) {
                     $st = true;
                 }
-            } else { 
+            } else {
                 if ($this->db->insert('pr_advance_loan', $data)) {
                     $st = true;
                 }
@@ -157,7 +157,7 @@ class Entry_system_con extends CI_Controller
             if ($this->db->update('emp_tax_entry', $data)) {
                 $st = true;
             }
-        } else { 
+        } else {
             if ($this->db->insert('emp_tax_entry', $data)) {
                 $st = true;
             }
@@ -494,6 +494,84 @@ class Entry_system_con extends CI_Controller
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/incre_prom_entry';
         $this->load->view('layout/template', $this->data);
+    }
+    public function special_entry()
+    {
+        $emp_id         = $_POST['emp_id'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['special_date']));
+        $new_salary     = $_POST['gross_sal'];
+        $new_com_salary = $_POST['com_gross_sal'];
+        $old_salary     = $_POST['salary'];
+        $old_com_salary = $_POST['com_salary'];
+        $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
+        $data = array(
+            'prev_emp_id' => $emp_id,
+            'prev_dept' => $r->emp_dept_id,
+            'prev_section' => $r->emp_sec_id,
+            'prev_line' => $r->emp_line_id,
+            'prev_desig' => $r->emp_desi_id,
+            'prev_grade' => $r->emp_sal_gra_id,
+            'new_emp_id' => $r->emp_id,
+            'new_dept' => $r->emp_dept_id,
+            'new_section' => $r->emp_sec_id,
+            'new_line' => $r->emp_line_id,
+            'new_desig' => $r->emp_desi_id,
+            'new_grade' => $r->emp_sal_gra_id,
+            'new_salary' => $new_salary,
+            'new_com_salary' => $new_com_salary,
+            'effective_month' => $incr_date,
+            'ref_id' => $emp_id,
+            'status' => 4,
+        );
+
+        $dd = array(
+            'gross_sal' => $new_salary,
+            'com_gross_sal' => $new_com_salary,
+        );
+
+        $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->get('pr_incre_prom_pun');
+        if ($check->num_rows() > 0) {
+            $data['prev_salary']      = $check->row()->prev_salary;
+            $data['prev_com_salary']  = $check->row()->prev_com_salary;
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+            if ( $this->db->update('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            $data['prev_salary']      = $r->gross_sal;
+            $data['prev_com_salary']  = $r->com_gross_sal;
+            if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
+                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        }
+    }
+    public function special_delete_ajax(){
+        $emp_id         = $_POST['sql'];
+        $unit_id        = $_POST['unit_id'];
+        $incr_date      = date('Y-m-01', strtotime($_POST['date']));
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+        $r = $this->db->order_by('effective_month', 'DESC')->get('pr_incre_prom_pun')->row();
+        if (!empty($r)) {
+            $dd = array(
+                'gross_sal' => $r->prev_salary,
+                'com_gross_sal' => $r->prev_com_salary,
+            );
+            if ( $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd) ) {
+                $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->delete('pr_incre_prom_pun');
+                echo 'success';
+            }else{
+                echo 'error';
+            }
+        } else {
+            echo 'error';
+        }
     }
     public function increment_entry()
     {
@@ -976,6 +1054,7 @@ class Entry_system_con extends CI_Controller
         // dd($_POST);
         $emp_id = $_POST['emp_id'];
         $from_date = $_POST['from_date'];
+        $year = date("Y", strtotime($from_date));
         $to_date = $_POST['to_date'];
         $leave_type = $_POST['leave_type'];
         $reason = $_POST['reason'];
@@ -983,6 +1062,52 @@ class Entry_system_con extends CI_Controller
         $leave_start = date("Y-m-d", strtotime($from_date));
         $leave_end = date("Y-m-d", strtotime($to_date));
         $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
+
+
+        if ($leave_type == 'el') {
+            if ($this->db->table_exists('pr_earn_'.$year)) {
+                $this->db->where('emp_id', $_POST['emp_id']);
+                $earn_l=$this->db->get('pr_earn_'.$year)->row();
+                if (!empty($earn_l)) {
+                    $earn_leave = $earn_l->earn_leave;
+                }else{
+                    $earn_leave = 0;
+                }
+            }else{
+                $earn_leave = 0;
+            }
+
+            $first_date = $year . "-01-01";
+            $last_date = $year . "-12-31";
+            $this->db->where('emp_id', $_POST['emp_id']);
+            $this->db->where('leave_start >=', $first_date);
+            $this->db->where('leave_end <=', $last_date);
+            $leavei = $this->db->get('pr_leave_trans')->result();
+
+            $leave_taken_earn =0;
+
+            foreach ($leavei as $key => $value) {
+            if($value->leave_type == 'el'){
+                    $leave_taken_earn += $value->total_leave;
+                }
+            }
+            $leave_ba_earn = $earn_leave - $leave_taken_earn;
+            if ($leave_ba_earn < 0) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+
+            if ($leave_ba_earn < $total_leave) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+        }
+
+
+
+
+
+
         $formArray = array(
             'emp_id' => $emp_id,
             'unit_id' => $unit_id,
@@ -1001,9 +1126,29 @@ class Entry_system_con extends CI_Controller
     }
 
     public function leave_balance_ajax(){
+        $year = date($_POST['year']);
+        $emp_id = date($_POST['emp_id']);
+
+
+
+        if ($this->db->table_exists('pr_earn_'.$year)) {
+            $this->db->where('emp_id', $_POST['emp_id']);
+            $earn_l=$this->db->get('pr_earn_'.$year)->row();
+            if (!empty($earn_l)) {
+                $earn_leave = $earn_l->earn_leave;
+            }else{
+                $earn_leave = 0;
+            }
+        }else{
+            $earn_leave = 0;
+        }
+
+        
         $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
         $this->db->where('emp_id', $_POST['emp_id']);
         $data['epm_info']=$this->db->get('pr_emp_per_info')->row();
+
+
 
         $this->db->where('emp_id', $_POST['emp_id']);
         $unit_id=$this->db->get('pr_emp_com_info')->row()->unit_id;
@@ -1015,8 +1160,8 @@ class Entry_system_con extends CI_Controller
         $data['leave_entitle_sick']= $leave_entitle->lv_sl;
         $data['leave_entitle_maternity']= $leave_entitle->lv_ml;
         $data['leave_entitle_paternity']= $leave_entitle->lv_pl;
+        $data['leave_entitle_earn']= $earn_leave;
 
-        $year = date( $_POST['year']);
         $first_date = $year . "-01-01";
         $last_date = $year . "-12-31";
         $this->db->where('emp_id', $_POST['emp_id']);
@@ -1028,6 +1173,7 @@ class Entry_system_con extends CI_Controller
         $leave_taken_sick =0;
         $leave_taken_maternity =0;
         $leave_taken_paternity =0;
+        $leave_taken_earn =0;
 
         foreach ($leavei as $key => $value) {
             if($value->leave_type == 'cl'){
@@ -1038,17 +1184,21 @@ class Entry_system_con extends CI_Controller
                 $leave_taken_maternity += $value->total_leave;
             }else if($value->leave_type == 'pl'){
                 $leave_taken_paternity += $value->total_leave;
+            }else if($value->leave_type == 'el'){
+                $leave_taken_earn += $value->total_leave;
             }
         }
         $data['leave_taken_casual'] = $leave_taken_casual;
         $data['leave_taken_sick'] = $leave_taken_sick;
         $data['leave_taken_maternity'] = $leave_taken_maternity;
         $data['leave_taken_paternity'] = $leave_taken_paternity;
+        $data['leave_taken_earn'] = $leave_taken_earn;
 
         $data['leave_balance_casual'] = $data['leave_entitle_casual'] - $data['leave_taken_casual'];
         $data['leave_balance_sick'] = $data['leave_entitle_sick'] - $data['leave_taken_sick'];
         $data['leave_balance_maternity'] = $data['leave_entitle_maternity'] - $data['leave_taken_maternity'];
         $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
+        $data['leave_balance_earn'] = $data['leave_entitle_earn'] - $data['leave_taken_earn'];
         echo json_encode($data);
     }
 

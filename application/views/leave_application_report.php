@@ -75,7 +75,40 @@
 
                 <p style="font-family:SutonnyMJ;font-size:">১। নৈমিত্তিক ছুটি মোট প্রাপ্য ১০ দিন, ভোগকৃত ছুটি <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_taken_casual']."</span>"?> দিন, অবশিষ্ট <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_balance_casual']."</span>"?> দিন </p>
                 <p style="font-family:SutonnyMJ;font-size:">২। অসুস্থতা <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_entitle_sick']."</span>"?> দিন, ভোগকৃত ছুটি <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_taken_sick']."</span>"?> দিন, অবশিষ্ট <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_balance_sick']."</span>"?> দিন </p>
-                <p>৩। অর্জিত ০ দিন, ভোগকৃত ছুটি  ০ দিন, অবশিষ্ট ০ দিন </p>
+                <?php
+
+                $year = date('Y', strtotime($first_date));
+                if ($this->db->table_exists('pr_earn_'.$year)) {
+                    $this->db->where('emp_id', $_POST['emp_id']);
+                    $earn_l=$this->db->get('pr_earn_'.$year)->row();
+                    if (!empty($earn_l)) {
+                        $earn_leave = $earn_l->earn_leave;
+                    }else{
+                        $earn_leave = 0;
+                    }
+                }else{
+                    $earn_leave = 0;
+                }
+    
+                $first_date = $year . "-01-01";
+                $last_date = $year . "-12-31";
+                $this->db->where('emp_id', $_POST['emp_id']);
+                $this->db->where('leave_start >=', $first_date);
+                $this->db->where('leave_end <=', $last_date);
+                $leavei = $this->db->get('pr_leave_trans')->result();
+    
+                $leave_taken_earn =0;
+    
+                foreach ($leavei as $key => $value) {
+                if($value->leave_type == 'el'){
+                        $leave_taken_earn += $value->total_leave;
+                    }
+                }
+                $leave_ba_earn = $earn_leave - $leave_taken_earn;
+                
+                ?>
+                
+                <p>৩। অর্জিত <?= $earn_leave ?> দিন, ভোগকৃত ছুটি  <?= $leave_taken_earn ?> দিন, অবশিষ্ট <?= $leave_ba_earn ?> দিন </p>
                 <br>
                 <br>
                 <br>

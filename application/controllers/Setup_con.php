@@ -1523,10 +1523,95 @@ class Setup_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect('/setup_con/shift_management');
     }
-
 //-------------------------------------------------------------------------------------------------------
 // CRUD for Shift Management end
+//------------------------------------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Alter net day start
+    //-------------------------------------------------------------------------------------------------------
+    public function alternet_day(){
+        $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
+        $this->db->from('attn_holyday_off');
+        $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
+        $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        $this->db->where('attn_holyday_off.duty_on_day !=', NULL);
+        $this->data['results'] = $this->db->get()->result();
+
+        $this->data['title'] = 'Alternet List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/alternet_day';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function alternet_add()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->data['title'] = 'Alternet Add';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/alternet_add';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function alternet_add_ajax(){
+        $on_day  = date('Y-m-d', strtotime($this->input->post('on_day')));
+        $off_day = date('Y-m-d', strtotime($this->input->post('off_day')));
+        $unit_id = $this->input->post('unit_id');
+        $remark  = $this->input->post('remark');
+        $sql     = $this->input->post('sql');
+        $emp_ids = explode(',', $sql);
+
+        $data = [];
+        foreach ($emp_ids as $value) {
+            $data[] = array(
+                'emp_id'        =>$value,
+                'unit_id'       =>$unit_id,
+                'work_off_date' =>$off_day,
+                'duty_on_day'   =>$on_day,
+                'description'   =>$remark,
+            );
+        }
+        if ( $this->db->insert_batch('attn_holyday_off', $data)) {
+            echo 'success';
+        }else{
+            echo 'error';
+        }
+    }
+
+    public function emp_holiday_del($id){
+        $this->db->where('id', $id);
+        $this->db->delete('attn_holyday_off');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url('setup_con/alternet_day'));
+    }
+
+    public function holiday_delete_all(){
+        $date = date('Y-m-d', strtotime($this->input->post('off_day')));
+        $unit_id = $this->input->post('unit_id');
+        $sql = $this->input->post('sql');
+        $emp_ids = explode(',', $sql);
+
+        $this->db->where('work_off_date ', $date)->where('unit_id ', $unit_id);
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_holyday_off') ) {
+            echo 'success';
+        }else{
+            echo 'error';
+        }
+    }
 //-------------------------------------------------------------------------------------------------------
+// CRUD for alter net day end
+//------------------------------------------------------------------------------------------------------
+
 //-------------------------------------------------------------------------------------------------------
 // CRUD for Company Info Setup
 //-------------------------------------------------------------------------------------------------------
