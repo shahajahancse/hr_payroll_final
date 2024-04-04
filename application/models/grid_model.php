@@ -5688,7 +5688,8 @@ class Grid_model extends CI_Model{
 		emp_depertment.dept_name,
 		emp_section.sec_name_en,
 		emp_line_num.line_name_en,
-		pr_emp_com_info.emp_id, pr_emp_com_info.emp_join_date,
+		pr_emp_com_info.emp_id, 
+		pr_emp_com_info.emp_join_date,
 		pr_id_proxi.proxi_id,
 		pr_emp_com_info.unit_id,
 		pr_emp_com_info.emp_shift,
@@ -5742,7 +5743,6 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_id_proxi.emp_id = pr_emp_com_info.emp_id');
 		$query = $this->db->get();
-		// dd($query->result());
 		return $query->result();
 	}
 

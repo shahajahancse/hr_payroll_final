@@ -204,7 +204,7 @@ class Setting_con extends CI_Controller {
 
 	}
 	public function report_setting_save($id){
-
+		// dd($id);
 		$unit_id = $this->input->post('unit_id');
 		$date = date('Y-m-d', strtotime($this->input->post('date')));
 		$end_date = date('Y-m-d', strtotime($this->input->post('end_date')));
@@ -221,7 +221,7 @@ class Setting_con extends CI_Controller {
 			'status' => $active_status,
 			'created_by' =>  $this->data['user_data']->id,
 		);
-		if ($id == '0') {
+		if ($id == 0) {
 			$this->db->insert('pr_report_setting', $data);
 		}else{
 			$this->db->where('id', $id);
@@ -246,7 +246,7 @@ class Setting_con extends CI_Controller {
 		$id = $this->input->post('id');
 		$this->db->where('id', $id);
 		$data=$this->db->get('pr_report_setting')->row();
-		$data->date=date('Y-m',strtotime($data->date));
+		$data->date=date('Y-m-d',strtotime($data->date));
 
 		echo json_encode($data);
 	}

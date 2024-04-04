@@ -311,6 +311,9 @@ class Job_card_model extends CI_Model{
 						   pr_emp_shift_log.eot, 
 						   pr_emp_shift_log.ot_eot_4pm, 
 						   pr_emp_shift_log.ot_eot_12am, 
+						   pr_emp_shift_log.false_ot_4, 
+						   pr_emp_shift_log.false_ot_12, 
+						   pr_emp_shift_log.false_ot_all, 
 						   pr_emp_shift_log.late_status,
 						   pr_emp_shift_log.deduction_hour
 						   ');

@@ -69,11 +69,11 @@ table.dataTable tbody td {
                 </div>
                 <div class="form-group col-md-2">
                     <label for="acl_name">First Date</label>
-                    <input class="form-control input-sm date" name="date" required autocomplete="off">
+                    <input class="form-control input-sm date" id="first_date" name="date" required autocomplete="off">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="acl_name">Second Date</label>
-                    <input class="form-control input-sm date" name="end_date" required autocomplete="off">
+                    <input class="form-control input-sm date" id="second_date" name="end_date" required autocomplete="off">
                 </div>
                 <div class="form-group col-md-1">
                     <label for="acl_name">Max OT</label>
@@ -134,9 +134,9 @@ table.dataTable tbody td {
                     <td><?= date('d-m-Y', strtotime($value['end_date'])) ?></td>
                     <td><?= $value['max_ot'] ?></td>
                     <td>
-                        <?php if($value['status'] == 1){
+                        <?php if($value['type'] == 1){
                             echo "9pm job card";
-                        }else if($value['status'] == 2){
+                        }else if($value['type'] == 2){
                             echo "12am job card";
                         }else {
                             echo "all wo week";
@@ -193,10 +193,13 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     data = JSON.parse(data)
+                    console.log(data);
                     $("#unit_id").val(data.unit_id)
                     $("#active_status").val(data.status)
                     $("#max_ot").val(parseInt(data.max_ot))
-                    $("#date").val(data.date);
+                    $("#first_date").val(data.date);
+                    $("#second_date").val(data.end_date);
+                    $("#type").val(data.type);
             },
             })
         }
