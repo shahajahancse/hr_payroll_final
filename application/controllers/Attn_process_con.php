@@ -11,11 +11,11 @@ class Attn_process_con extends CI_Controller {
 		ini_set('max_execution_time', 0);
 	    set_time_limit(0);
 		/* Standard Libraries */
-		$this->load->library('grocery_CRUD');
-		$this->load->model('attn_process_model');
-		$this->load->model('log_model');
-		$this->load->model('acl_model');
-		$this->load->model('common_model');
+		// $this->load->library('Grocery_crud');
+		$this->load->model('Attn_process_model');
+		$this->load->model('Log_model');
+		$this->load->model('Acl_model');
+		$this->load->model('Common_model');
 
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -27,6 +27,7 @@ class Attn_process_con extends CI_Controller {
             exit;
         }
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	// Form display for Attendance Process
@@ -40,7 +41,7 @@ class Attn_process_con extends CI_Controller {
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
         if (!empty($this->data['user_data']->unit_name)) {
-	        $this->data['employees'] = $this->common_model->get_emp_by_unit($this->data['user_data']->unit_name);
+	        $this->data['employees'] = $this->Common_model->get_emp_by_unit($this->data['user_data']->unit_name);
         }
 
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -62,7 +63,7 @@ class Attn_process_con extends CI_Controller {
 		$this->db->trans_start();
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
-		$data = $this->attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
+		$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
 
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE){
@@ -72,7 +73,39 @@ class Attn_process_con extends CI_Controller {
 			$this->db->trans_commit();
 			if($data == true){
 				// ATTENDANCE PROCESS LOG Generate
-				$this->log_model->log_attn_process($input_date);
+				$this->Log_model->log_attn_process($input_date);
+				echo "Process completed sucessfully";
+			}else{
+				echo "Process failed";
+			}
+		}
+	}
+	function attendance_process2(){
+
+		$unit = $this->input->post('unit_id');
+		$date1 = $this->input->post('process_date1');
+		$date2 = $this->input->post('process_date2');
+		$days = (strtotime($date2) - strtotime($date1)) / 86400 + 1;
+
+
+		$sql = $this->input->post('sql');
+		$grid_emp_id = explode(',', $sql);
+		$this->db->trans_start();
+		ini_set('memory_limit', '-1');
+		set_time_limit(0);
+		for ($i=0; $i < $days ; $i++) {
+			$input_date = date("Y-m-d", strtotime($date1 . ' + ' . $i . ' days'));
+			$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
+		}
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			echo "Process failed";
+		}else{
+			$this->db->trans_commit();
+			if($data == true){
+				// ATTENDANCE PROCESS LOG Generate
+				$this->Log_model->log_attn_process($input_date);
 				echo "Process completed sucessfully";
 			}else{
 				echo "Process failed";
@@ -299,7 +332,7 @@ class Attn_process_con extends CI_Controller {
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
         if (!empty($this->data['user_data']->unit_name)) {
-	        $this->data['employees'] = $this->common_model->get_emp_by_unit($this->data['user_data']->unit_name);
+	        $this->data['employees'] = $this->Common_model->get_emp_by_unit($this->data['user_data']->unit_name);
         }
 
 		if($this->session->userdata('level') == 0 || $this->session->userdata('level') == 1){
@@ -335,7 +368,7 @@ class Attn_process_con extends CI_Controller {
 	// old code
 	function auto_shift_change($input_date)
 	{
-		$this->load->model('acl_model');
+		$this->load->model('Acl_model');
 		$date 		= $input_date;
 		//$emp_arr = array(000187,000317,000321,000186,000347,000552,000835,000846,002229,002551,002552,002686,002924,002923,003116,003128,004397);
 		$emp_fixed_shift = array(15,16,17);
@@ -443,7 +476,7 @@ class Attn_process_con extends CI_Controller {
 
 	function attn_process_month(){
 		$access_level = 4;
-		$acl = $this->acl_model->acl_check($access_level);
+		$acl = $this->Acl_model->acl_check($access_level);
 
 		$unit = $this->input->post('unit_id');
 		$date = $this->input->post('p_start_date');
@@ -460,7 +493,7 @@ class Attn_process_con extends CI_Controller {
 		for($loop = 1;$loop <= $Month_length;$loop++)
 		{
 			$input_date = date('Y-m-d',strtotime($month_year.'-'.$loop));
-			$data = $this->attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
+			$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
 		}
 
 		$this->db->trans_complete();
@@ -472,7 +505,7 @@ class Attn_process_con extends CI_Controller {
 			$this->db->trans_commit();
 			if(is_array($data)){
 				// ATTENDANCE PROCESS LOG Generate
-				$this->log_model->log_attn_process($input_date);
+				$this->Log_model->log_attn_process($input_date);
 				echo "Process completed sucessfully";
 			}else{
 				echo $data;
@@ -482,19 +515,19 @@ class Attn_process_con extends CI_Controller {
 
 	function earn_leave_process($input_date)
 	{
-		$data = $this->attn_process_model->earn_leave_process($input_date);
+		$data = $this->Attn_process_model->earn_leave_process($input_date);
 	}
 
 	function deduction_hour_process($date)
 	{
-		$data = $this->attn_process_model->deduction_hour_process($date);
+		$data = $this->Attn_process_model->deduction_hour_process($date);
 	}
 
 	function test()
 	{
 		$date1 = '2012-08-20';
 		$date2 = date('Y-m-d');
-		echo $days = $this->attn_process_model->get_date_to_date_day_differance($date1,$date2);
+		echo $days = $this->Attn_process_model->get_date_to_date_day_differance($date1,$date2);
 	}
 	function crud_output($output = null)
 	{
