@@ -1608,6 +1608,22 @@ class Setup_con extends CI_Controller
             echo 'error';
         }
     }
+
+	public function get_emp_by_unit($unit) {
+        $this->db->select('
+                    pr_emp_com_info.id,
+                    pr_emp_com_info.emp_id,
+                    pr_emp_com_info.unit_id,
+                    pr_emp_per_info.name_en,
+                    pr_emp_per_info.name_bn,
+                ');
+        $this->db->from('pr_emp_com_info');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id', 'left');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+        $this->db->where('pr_units.unit_id', $unit);
+        $this->db->where('pr_emp_com_info.emp_cat_id', 1);
+        return $this->db->get();
+    }
 //-------------------------------------------------------------------------------------------------------
 // CRUD for alter net day end
 //------------------------------------------------------------------------------------------------------
