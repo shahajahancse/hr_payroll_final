@@ -27,7 +27,7 @@ class Attn_process_con extends CI_Controller {
             exit;
         }
 	}
-
+	
 
 	//-------------------------------------------------------------------------------------------------------
 	// Form display for Attendance Process
@@ -93,7 +93,7 @@ class Attn_process_con extends CI_Controller {
 		$this->db->trans_start();
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
-		for ($i=0; $i < $days ; $i++) {
+		for ($i=0; $i < $days ; $i++) { 
 			$input_date = date("Y-m-d", strtotime($date1 . ' + ' . $i . ' days'));
 			$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
 		}
@@ -220,7 +220,7 @@ class Attn_process_con extends CI_Controller {
 		if($query->num_rows() == 0){
 			echo "Please upload attendance file.";
 			return false;
-			exit;
+			exit;	
 		}
 
 		$rawfile_name = $query->row()->file_name;
@@ -230,14 +230,14 @@ class Attn_process_con extends CI_Controller {
 			// check att_year_month table exist or not create the table
 			$att_table = "att_". date("Y_m", strtotime($upload_date));
 			if (!$this->db->table_exists($att_table)){
-				$this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(
+				$this->db->query('CREATE TABLE IF NOT EXISTS `'.$att_table.'`(	
 				     `att_id` int(11) NOT NULL AUTO_INCREMENT,
 				     `device_id` int(11) NOT NULL,
 				     `proxi_id` varchar(30) NOT NULL,
 				     `date_time` datetime NOT NULL,
 				      PRIMARY KEY (`att_id`),
 					  KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
-				);
+				);	
 			}
 
 
@@ -259,12 +259,12 @@ class Attn_process_con extends CI_Controller {
 					$date = trim(substr(trim(substr(trim($line),7)),0,8));
 					$time = trim(substr(trim(substr(trim(substr(trim($line),7)),8)),0,8));
 					$format = trim(substr(trim(substr(trim(substr(trim($line),7)),8)),8));
-					$device_id= 1;
+					$device_id= 1;	
 					if ($prox_no == 'No.') {
 						continue;
 					}
 
-					list($d,$m,$y) = explode('/', trim($date));
+					list($d,$m,$y) = explode('/', trim($date));		
 					$date_time = date("Y-m-d H:i:s", strtotime($y.'-'.$m.'-'.$d.' '.$time .' '.$format));
 
 					$this->db->where("proxi_id", $prox_no);
@@ -279,7 +279,7 @@ class Attn_process_con extends CI_Controller {
 								);
 
 						$this->db->insert($att_table , $data);
-
+						
 					}
 				}
 			}
