@@ -169,7 +169,7 @@ function call_hide(el){
                             var td1 = func_data[i].desig_name || "null";
                             var td2 = func_data[i].designation_id || "null";
                             var td3 = func_data[i].hide_status;
-                            var tr_checked = (td3 == 1) ? 'checked' : '';
+                            var tr_checked = (td3 == 0) ? 'checked' : '';
                             tr += `<tr>
                                         <td>
                                             <span class="hints">${td1}</span>
