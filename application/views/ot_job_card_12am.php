@@ -10,7 +10,7 @@
 		<div align="center" style="height:100%; width:100%; overflow:hidden;" >
 			<?php
 				$this->load->model('job_card_model');
-				foreach ($values as $key => $value) { 
+				foreach ($values as $key => $value) {
 					echo "<div style='min-height:1000px; overflow:hidden;'>";
 					$present_count = 0;
 					$absent_count = 0;
@@ -29,7 +29,7 @@
 					echo "Job Card Report from  $grid_firstdate -TO- $grid_seconddate";
 					echo "</span>";
 					echo "<br /><br />";
-					
+
 					echo "<table border='0' style='font-size:13px;' width='480'>";
 					echo "<tr>";
 					echo "<td width='70'>";
@@ -38,7 +38,7 @@
 					echo "<td width='200'>";
 					echo $value->emp_id;
 					echo "</td>";
-					
+
 					echo "<td width='55'>";
 					echo "<strong>Name :</strong>";
 					echo "</td>";
@@ -46,7 +46,7 @@
 					echo $value->name_en;
 					echo "</td>";
 					echo "</tr>";
-					
+
 					echo "<tr>";
 					echo "<td >";
 					echo "<strong>Proxi NO. :</strong>";
@@ -54,7 +54,7 @@
 					echo "<td >";
 					echo $value->proxi_id;
 					echo "</td>";
-					
+
 					echo "<td style:width:20px'>";
 					echo "<strong>Section :</strong>";
 					echo "</td>";
@@ -83,22 +83,14 @@
 					echo "<td>";
 					echo date("d-M-Y", strtotime($value->emp_join_date));
 					echo "</td>";
-					
+
 					echo "<td >";
 					echo "<strong>Dept :</strong>";
 					echo "</td>";
 					echo "<td >";
 					echo $value->dept_name;
 					echo "</td>";
-					echo "</tr>";
-
-					echo "<td >";
-					echo "<strong>Dept :</strong>";
-					echo "</td>";
-					echo "<td >";
-					echo  $this->db->select('shift_name')->where('unit_id',$value->unit_id)->where('schedule_id',$value->emp_shift)->get('pr_emp_shift')->row()->shift_name;;
-					echo "</td>";
-					echo "</tr>";
+					
 					echo "<table>";
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
 					// dd($emp_data);
@@ -126,7 +118,7 @@
 							$row->out_time = "00:00:00";
 							$row->ot =0;
 							$extra_ot_hour = 0;
-						} 
+						}
 						elseif(in_array($row->shift_log_date,$emp_data['weekend'])) {
 							$att_status = "Work Off";
 							$att_status_count = "Work Off";
@@ -151,12 +143,12 @@
 						$emp_shift = $this->job_card_model->emp_shift_check($value->emp_id, $row->shift_log_date);
 						$schedule = $this->job_card_model->schedule_check($emp_shift);
                         // dd($schedule);
-						$start_time		=  $schedule[0]["in_start"]; 
-						$late_time 		=  $schedule[0]["late_start"]; 
+						$start_time		=  $schedule[0]["in_start"];
+						$late_time 		=  $schedule[0]["late_start"];
 						$end_time   	=  $schedule[0]["in_end"];
 						$in_time   		=  $schedule[0]["in_time"];
 						$out_start_time	=  $schedule[0]["out_start"];
-						$out_end_time	=  $schedule[0]["out_end"];	
+						$out_end_time	=  $schedule[0]["out_end"];
 						$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
 						$ot_start	    =  $schedule[0]["ot_start"];
 
@@ -177,7 +169,7 @@
 							$out_time =  date('h:i:s A', strtotime($row->out_time));
 							} else {
 								$minutes = date("i", strtotime($row->out_time)); // Extract minutes part
-								$sum = (int)$minutes[0] + (int)$minutes[1]; 
+								$sum = (int)$minutes[0] + (int)$minutes[1];
 								$min = $sum==0 ? "00":($sum < 10 ? "0".$sum : $sum);
 								$out_time  ="12:".$min.date(':s A', strtotime($row->out_time));
 							}
@@ -229,7 +221,7 @@
 									$out_time = date('08:i:s A', strtotime($out_time));
 								}
 							}
-														
+
 							// $out_time =  date('h:i:s A', strtotime($row->out_time));
 							// dd($out_time);
 						}
@@ -240,7 +232,7 @@
 						echo "<td>&nbsp;";
 						echo $shift_log_date;
 						echo "</td>";
-						
+
 						echo "<td>&nbsp;";
 						if($in_time == "00:00:00"){
 							echo "&nbsp;";
@@ -249,7 +241,7 @@
 							echo $in_time;
 						}
 						echo "</td>";
-								
+
 						echo "<td>&nbsp;";
 						if($out_time =="00:00:00"){
 							echo "&nbsp;";
@@ -258,11 +250,11 @@
 							echo $out_time;
 						}
 						echo "</td>";
-						
+
 						echo "<td style='text-transform:uppercase;'>&nbsp;";
 						echo $att_status;
 						echo "</td>";
-						
+
 						if($att_status == "P"){
 							$present_count++;
 						}
@@ -297,33 +289,33 @@
 						$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
 // -						$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
 						$total_ot = $total_ot + $row->ot;
-						
+
 						echo "<td>&nbsp;";
 						echo $extra_ot_hour;
 						echo "</td>";
-						
+
 						echo "<td>&nbsp;";
 						echo $extra_ot_hour + $row->ot;
 						echo "</td>";
-						
+
 						echo "<td>&nbsp;";
 						echo $remark;
 						echo "</td>";
-						
+
 						echo "</tr>";
 
 					}
 
 					echo "<tr>";
-						
+
 					echo "<td colspan='4'>";
 					echo 'Total';
 					echo "</td>";
-						
+
 					echo "<td>";
 					echo $total_ot;
 					echo "</td>";
-					
+
 					echo "<td>";
 					echo $total_ot_hour - $total_ot;
 					echo "</td>";
@@ -335,63 +327,63 @@
 					echo "<td>";
 					echo "&nbsp;";
 					echo "</td>";
-					
+
 					echo "</tr>";
 
 					echo "</table>";
-					
+
 					echo "<br>";
 					echo "<table border='0' style='font-size:13px;'>";
 					echo "<tr align='center'>";
-							
+
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "PRESENT";
 					echo "</td>";
-							
+
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "ABSENT";
 					echo "</td>";
-							
+
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "LEAVE";
 					echo "</td>";
-							
+
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "WORK OFF";
 					echo "</td>";
-							
+
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "HOLIDAY";
 					echo "</td>";
-					
+
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "PRESENT ERROR";
 					echo "</td>";
-						
+
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "LATE COUNT";
 					echo "</td>";
-					
+
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "OVERTIME";
 					echo "</td>";
-							
+
 					echo "</tr>";
-							
+
 					echo "<tr align='center'>";
-						
+
 					echo "<td>";
 					echo $present_count;
 					echo "</td>";
-						
+
 					echo "<td>";
 					echo $absent_count;
 					echo "</td>";
-					
+
 					echo "<td>";
 					echo $leave_count;
 					echo "</td>";
-							
+
 					echo "<td>";
 					echo $wk_off_count;
 					echo "</td>";
@@ -399,24 +391,24 @@
 					echo "<td>";
 					echo $holiday_count;
 					echo "</td>";
-					
+
 					echo "<td>";
 					echo $perror_count;
 					echo "</td>";
-					
+
 					echo "<td>";
 					echo $late_count;
 					echo "</td>";
 
-					
+
 					echo "<td>";
 					echo $total_ot_hour;
 					echo "</td>";
-					
+
 					echo "</tr>";
 					echo "</table>";
 					echo "<br /><br />";
-					
+
 					echo "</div>";
 					echo "<br>";
 				}
