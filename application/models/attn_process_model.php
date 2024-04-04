@@ -29,6 +29,9 @@ class Attn_process_model extends CI_Model{
 	function attn_process($process_date,$unit,$grid_emp_id, $type = null)
 	{
 		//=========================== Get emplpoyee list ============================
+		$table = 'att_'.date('Y_m',strtotime($process_date));
+		$this->attn_month_table_check($table);
+
 		$all_employee = $this->get_all_employee($grid_emp_id, $type);
 
 		foreach ($all_employee->result() as $rows){
@@ -234,7 +237,7 @@ class Attn_process_model extends CI_Model{
 									$ot_eot_12am = $eot_hour;
 								}
 							}
-						
+
 						}
 
 					}
@@ -582,6 +585,20 @@ class Attn_process_model extends CI_Model{
 			$this->db->where('shift_log_date',$att_date);
 			$this->db->delete('pr_emp_shift_log');
 		}
+	}
+
+	function attn_month_table_check($table) {
+		if (!$this->db->table_exists($table)){
+			$this->db->query('CREATE TABLE IF NOT EXISTS `'.$table.'`(
+			     `att_id` int(11) NOT NULL AUTO_INCREMENT,
+			     `device_id` int(11) NOT NULL,
+			     `proxi_id` varchar(30) NOT NULL,
+			     `date_time` datetime NOT NULL,
+			      PRIMARY KEY (`att_id`),
+				  KEY `device_id` (`device_id`,`proxi_id`,`date_time`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
+			);
+		}
+		return true;
 	}
 
 

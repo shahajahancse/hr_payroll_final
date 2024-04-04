@@ -1536,97 +1536,77 @@ class Setup_con extends CI_Controller
         $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        $this->db->where('attn_holyday_off.duty_on_day !=', NULL);
         $this->data['results'] = $this->db->get()->result();
 
-        $this->data['title'] = 'Holiday List';
+        $this->data['title'] = 'Alternet List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/alternet_day';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function alternet_add(){
-        $this->load->library('form_validation');
-        $this->load->model('Crud_model');
-        $data['shiftmanagementinfo'] = $this->Crud_model->shiftmanagement_fetch();
-        $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
-        if ($this->form_validation->run() == false) {
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
-            $this->data['title'] = 'Shift Management Add';
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'setup/shiftmanagement_add';
-            $this->load->view('layout/template', $this->data);
-        } else {
-            $formArray = array(
-                'shift_name' => $this->input->post('shift_name'),
-                'unit_id' => $this->input->post('unit_id'),
-                'schedule_id' => $this->input->post('shift_type'),
-            );
-            if ($this->db->insert('pr_emp_shift', $formArray)) {
-                $this->session->set_flashdata('success', 'Record add successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record add failed!');
-            }
-            redirect(base_url() . 'setup_con/shift_management');
-        }
-    }
-
-    public function alternet_edit($shiftmanagementId){
-        $this->load->library('form_validation');
-        $this->load->model('Crud_model');
-        $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
-        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
-
-        if ($this->form_validation->run() == false) {
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
-
-            $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type,pr_emp_shift_schedule.id');
-            $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
-            $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
-            $this->db->where('pr_emp_shift.id', $shiftmanagementId);
-            $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->row();
-
-            $unit_id = $this->data['pr_emp_shift']->unit_id;
-            $this->db->where('unit_id', $unit_id);
-            $this->data['shift_type'] = $this->db->get('pr_emp_shift_schedule')->result();
-
-            $this->data['title'] = 'Shift Management Edit';
-            $this->data['username'] = $this->data['user_data']->id_number;
-            $this->data['subview'] = 'setup/shiftmanagement_edit';
-            $this->load->view('layout/template', $this->data);
-        } else {
-            $formArray = array(
-                'shift_name' => $this->input->post('shift_name'),
-                'unit_id' => $this->input->post('unit_id'),
-                'schedule_id' => $this->input->post('shift_type'),
-
-            );
-            $this->db->where('id', $shiftmanagementId);
-            if ($this->db->update('pr_emp_shift', $formArray)) {
-                $this->session->set_flashdata('success', 'Record updated successfully!');
-            } else {
-                $this->session->set_flashdata('failure', 'Record update failed!');
-            }
-            redirect(base_url() . 'setup_con/shift_management');
-        }
-
-    }
-
-    public function alternet_delete($shiftmanagementId)
+    public function alternet_add()
     {
-        $this->load->model('Crud_model');
-        $shiftmanagement = $this->Crud_model->getshiftmanagement($shiftmanagementId);
-        if (empty($shiftmanagement)) {
-            $this->session->set_flashdata('failure', 'Record Not Found in DataBase!');
-            redirect('/setup_con/shift_management');
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
         }
-        $this->Crud_model->shiftmanagement_delete($shiftmanagementId);
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->data['title'] = 'Alternet Add';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/alternet_add';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function alternet_add_ajax(){
+        $on_day  = date('Y-m-d', strtotime($this->input->post('on_day')));
+        $off_day = date('Y-m-d', strtotime($this->input->post('off_day')));
+        $unit_id = $this->input->post('unit_id');
+        $remark  = $this->input->post('remark');
+        $sql     = $this->input->post('sql');
+        $emp_ids = explode(',', $sql);
+
+        $data = [];
+        foreach ($emp_ids as $value) {
+            $data[] = array(
+                'emp_id'        =>$value,
+                'unit_id'       =>$unit_id,
+                'work_off_date' =>$off_day,
+                'duty_on_day'   =>$on_day,
+                'description'   =>$remark,
+            );
+        }
+        if ( $this->db->insert_batch('attn_holyday_off', $data)) {
+            echo 'success';
+        }else{
+            echo 'error';
+        }
+    }
+
+    public function emp_holiday_del($id){
+        $this->db->where('id', $id);
+        $this->db->delete('attn_holyday_off');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-        redirect('/setup_con/shift_management');
+        redirect(base_url('setup_con/alternet_day'));
+    }
+
+    public function holiday_delete_all(){
+        $date = date('Y-m-d', strtotime($this->input->post('off_day')));
+        $unit_id = $this->input->post('unit_id');
+        $sql = $this->input->post('sql');
+        $emp_ids = explode(',', $sql);
+
+        $this->db->where('work_off_date ', $date)->where('unit_id ', $unit_id);
+        if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_holyday_off') ) {
+            echo 'success';
+        }else{
+            echo 'error';
+        }
     }
 //-------------------------------------------------------------------------------------------------------
 // CRUD for alter net day end

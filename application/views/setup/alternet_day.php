@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('entry_system_con/emp_holiday_add') ?>">Add Holiday</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/alternet_add') ?>">Add Alternate Day</a>
                     <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
@@ -61,6 +61,7 @@
                         <th>User name </th>
                         <th>Emp Id</th>
                         <th>Unit name</th>
+                        <th>Duty Day</th>
                         <th>Holiday Date</th>
                         <th>Holiday Day</th>
                         <th>Delete</th>
@@ -80,10 +81,11 @@
                         <td><?php echo $r->user_name ?></td>
                         <td><?php echo $r->emp_id ?></td>
                         <td><?php echo $r->unit_name ?></td>
+                        <td><?php echo $r->duty_on_day ?></td>
                         <td><?php echo $r->work_off_date ?></td>
                         <td><?php echo date('l', strtotime($r->work_off_date))?></td>
                         <td>
-                            <a href="<?=base_url('entry_system_con/emp_holiday_del/'.$r->id)?>"
+                            <a href="<?=base_url('setup_con/emp_holiday_del/'.$r->id)?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
