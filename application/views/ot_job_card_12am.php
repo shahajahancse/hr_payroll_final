@@ -181,28 +181,57 @@
 								$min = $sum==0 ? "00":($sum < 10 ? "0".$sum : $sum);
 								$out_time  ="12:".$min.date(':s A', strtotime($row->out_time));
 							}
-
-							if($row->ot==0 && $row->false_ot_12==0 && $row->eot==0){
-								$out_time = date('h:i:s A', strtotime('-1 hours '.$row->out_time));
+							if($row->false_ot_12 == 0 && $row->ot > 1){
+								$extra_ot_hour = 0;
+								if($row->out_time > '19:15:00'){
+									$out_time = date('07:i:s A', strtotime($out_time));
+								}else{
+									$out_time = date('07:i:s A', strtotime($out_time));
+								}
 							}
-							if($row->false_ot_12 == 5){
-								$out_time= $out_time;
+							if($row->false_ot_12 == 1 && $row->ot > 1){
+								$extra_ot_hour = 1;
+								if($row->out_time > '19:15:00'){
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}else{
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}
 							}
-							if( $row->false_ot_12==4){
-								$out_time = date('h:i:s A', strtotime('-2 hours '.$row->out_time));
+							if($row->false_ot_12 == 2 && $row->ot > 1){
+								$extra_ot_hour = 2;
+								if($row->out_time > '19:15:00'){
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}else{
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}
 							}
-							if( $row->false_ot_12==3){
-								$out_time = date('h:i:s A', strtotime('-3 hours '.$row->out_time));
+							if($row->false_ot_12 == 3 && $row->ot > 1){
+								$extra_ot_hour = 3;
+								if($row->out_time > '19:15:00'){
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}else{
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}
 							}
-							if( $row->false_ot_12==2){
-								$out_time = date('h:i:s A', strtotime('-5 hours '.$row->out_time));
-							}							
-							if( $row->false_ot_12==1){
-								$out_time = date('h:i:s A', strtotime('-5 hours '.$row->out_time));
+							if($row->false_ot_12 == 4 && $row->ot > 1){
+								$extra_ot_hour = 4;
+								if($row->out_time > '19:15:00'){
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}else{
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}
 							}
-							
+							if($row->false_ot_12 == 5 && $row->ot > 1){
+								$extra_ot_hour = 5;
+								if($row->out_time > '19:15:00'){
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}else{
+									$out_time = date('08:i:s A', strtotime($out_time));
+								}
+							}
+														
 							// $out_time =  date('h:i:s A', strtotime($row->out_time));
-							dd($out_time);
+							// dd($out_time);
 						}
 						else{
 							$out_time = "00:00:00";
