@@ -426,8 +426,6 @@
 					},
 					complete: function() {
 						count_l1()
-						
-						
 					}
 				});
 		}
@@ -533,6 +531,11 @@
 
 	<script>
 		 function count_l1() {
+		    var status = document.getElementById('status').value;
+			if (status != 3) {
+				return false;
+			}
+
 		    var unit = document.getElementById('unit_id').value;
 			if (unit == '') {
 				return false;

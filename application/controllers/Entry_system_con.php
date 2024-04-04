@@ -998,7 +998,6 @@ class Entry_system_con extends CI_Controller
             }else{
                 $earn_leave = 0;
             }
-
             $first_date = $year . "-01-01";
             $last_date = $year . "-12-31";
             $this->db->where('emp_id', $_POST['emp_id']);
