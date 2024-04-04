@@ -13,13 +13,14 @@ $this->load->view("head_english");
 Attendance Register of <?php echo  $year_month ?> </span><br/><br />
     <table class="sal" border='1' cellpadding='0' cellspacing='0' style=" font-size:13px;">
         <th>SL #</th><th>Emp Id </th><th>Name</th><th>Dsignation</th><th>Line</th>
-        <?php
+        <?php 
+                // dd($value);
                 foreach ($value as $rows => $row){
                     $att_month = $year_month;
                 }
-                $first_y=trim(substr($att_month,0,4));
-                $first_m=trim(substr($att_month,5,2));
-                $last_date = date("t", mktime(0, 0, 0, $first_m, 1,(int)$first_y));
+                $first_y=date("Y", strtotime("$att_month"));
+                $first_m=date("m", strtotime("$att_month"));
+                $last_date = date("t", strtotime("$att_month"));
                 for ( $k=1 ; $k <= $last_date ; $k++ ){
                     echo "<th style='width:20px;'>$k</th>";
                 }
@@ -52,8 +53,9 @@ Attendance Register of <?php echo  $year_month ?> </span><br/><br />
                 $total_eot = 0;
                 
                 for ( $k=1 ; $k <= $last_date ; $k++ ){
-                    $idate = date("d", mktime(0, 0, 0, 0, $k, 0));
+                    $idate = $k;
                     $date = $idate;
+                    // dd($date);
                     echo "<td style='text-align:center;'>";
                     if(!array_key_exists($date, $row)){
                         echo "&nbsp;";

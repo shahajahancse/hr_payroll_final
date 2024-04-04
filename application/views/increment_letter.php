@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            
+
         }
         .table-bordered td, .table-bordered th {
             border: 1px solid #000000;
@@ -60,15 +60,15 @@
                 <p>KvWt <?php echo $row->emp_id?></p>
                 <p>‡mKkbt <?php echo $row->new_sec_name?></p>
                 <p>jvBbt <?php echo $row->new_line_name?></p>
-                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span> Bs</p>           
+                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span> Bs</p>
         </div>
-        <span class="ml-3"><b style="font-fmaily : SutonnyMJ;font-size: 19px">welq t evrmwiK †eZb e„w× cÖm‡½|</b></span>
+        <span class="ml-3"><b style="font-fmaily : SutonnyMJ;font-size: 19px">welq t <?php echo ($row->status == 1)? 'evrmwiK':'‡¯úwkqvj' ?> †eZb e„w× cÖm‡½|</b></span>
         <div class="ml-3">
             <p class="text-justify" >
                 <span><?php echo $row->gender == "Male"? 'Rbve':'Rbvev'?>,</span><br>
             ï‡f”Qv wb‡eb, Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q †h, Avcbvi PvKzixi †gqv` GK ermi c~b© nIqvq ewb©Z welq ev¯Íevq‡bi j‡ÿ¨ KZ…©cÿ <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->effective_month?> Bs</span>  ZvwiL n‡Z Avcbvi eZ©gvb gvwmK ‡gvU †eZb  <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->prev_salary?></span> UvKvi m‡½ <span style="font-family:SutonnyMJ;font-size:19px"><?php echo ($row->new_salary - $row->prev_salary) ?></span> UvKv †hvM K‡i †gvU <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->new_salary?></span>
             UvKvq DbœxZ Kiv nj| <br>
-            D‡jøL¨, c~e©eZx© eQi GB e„w× µge×©gvb nv‡i e„w× ‡c‡q Ges Avcbvi eZ©gvb †MÖW I c`ex, wb‡qvM c‡Îi gRyix As‡ki gRyix KvVv‡gv 
+            D‡jøL¨, c~e©eZx© eQi GB e„w× µge×©gvb nv‡i e„w× ‡c‡q Ges Avcbvi eZ©gvb †MÖW I c`ex, wb‡qvM c‡Îi gRyix As‡ki gRyix KvVv‡gv
             wb‡Pi †Uwe‡j wjwLZ cwiewZ©Z gRyix web¨vm Kjvg Abyhvqx n‡e| Av‡iv D‡jøL, _v‡K †h, wb‡qvM c‡Îi Ab¨vb¨ kZ©vejx AcwiewZ©Z _vK‡e<br>
             KZ©„cÿ Avkv K‡ib †h, Avcwb mZZv, AvšÍwiKZv I wbôvi mv‡_ KvR K‡i Av‡iv DbœwZ Ki‡eb| Avcbvi ‡eZb e„w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zzjbvg~jK Z_¨vejx wb¤œiƒct
             </p>

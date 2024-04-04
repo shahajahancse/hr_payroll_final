@@ -38,12 +38,12 @@ table.dataTable tbody td {
     <div class="row">
         <div class="col-md-8">
             <?php $success = $this->session->flashdata('success');
-      if ($success != "") { ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
-        $failuer = $this->session->flashdata('failuer');
-        if ($failuer) { ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            if ($success != "") { ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php }
+            $failuer = $this->session->flashdata('failuer');
+            if ($failuer) { ?>
+                <div class="alert alert-failuer"><?php echo $failuer; ?></div>
             <?php } ?>
         </div>
     </div>
@@ -58,9 +58,9 @@ table.dataTable tbody td {
     <div id="add_form" class="row tablebox " style="display: none">
         <form action="" method="post" id="report_setting_form">
             <div class="col-md-12">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="acl_name">Select Unit</label>
-                    <select name="unit_id" id="unit_id" required>
+                    <select class="form-control input-sm" name="unit_id" id="unit_id" required>
                         <option value="">Select</option>
                         <?php  foreach($units as $key => $value) { ?>
                         <option value="<?= $value['unit_id'] ?>"><?= $value['unit_name'] ?></option>
@@ -68,24 +68,37 @@ table.dataTable tbody td {
                     </select>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="acl_name">Month</label>
-                    <input type="month" name="date" id="date" required>
+                    <label for="acl_name">First Date</label>
+                    <input class="form-control input-sm date" name="date" required autocomplete="off">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="acl_name">Max OT</label>
-                    <input type="number" name="max_ot" id="max_ot" max="24" min="0" required>
+                    <label for="acl_name">Second Date</label>
+                    <input class="form-control input-sm date" name="end_date" required autocomplete="off">
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-1">
+                    <label for="acl_name">Max OT</label>
+                    <input class="form-control input-sm" type="number" name="max_ot" id="max_ot" max="24" min="0" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="acl_name">Type</label>
+                    <select class="form-control input-sm" id="type" name ="type" required>
+                        <option value="">Select type</option>
+                        <option value="1">9pm job card</option>
+                        <option value="2">12am job card</option>
+                        <option value="3">all wo week</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
                     <label for="acl_name">Select Status</label>
-                    <select id="active_status" name ="active_status" required>
+                    <select class="form-control input-sm" id="active_status" name ="active_status" required>
                         <option value="">Select Status</option>
                         <option value="1">Enable</option>
                         <option value="2">Disable</option>
                     </select>
                 </div>
-                <div class="col-md-2">
-                        <label for="acl_name" style="co">.</label>
-                        <input type="submit" value="Submit" class="btn btn-success pull-right">
+                <div class="col-md-1">
+                    <label for="acl_name" style="co">.</label>
+                    <input type="submit" value="Submit" class="btn btn-success pull-right" style="padding: 4px 12px !important;">
                 </div>
             </div>
         </form>
@@ -104,8 +117,10 @@ table.dataTable tbody td {
                 <tr>
                     <th>Sl. No.</th>
                     <th>Unit name</th>
-                    <th>Month</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                     <th>Max OT</th>
+                    <th>Type</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -115,15 +130,24 @@ table.dataTable tbody td {
                 <tr>
                     <td><?= $key+1 ?></td>
                     <td><?= $value['unit_name'] ?></td>
-                    <td><?= $value['date'] ?></td>
+                    <td><?= date('d-m-Y', strtotime($value['date'])) ?></td>
+                    <td><?= date('d-m-Y', strtotime($value['end_date'])) ?></td>
                     <td><?= $value['max_ot'] ?></td>
+                    <td>
+                        <?php if($value['status'] == 1){
+                            echo "9pm job card";
+                        }else if($value['status'] == 2){
+                            echo "12am job card";
+                        }else {
+                            echo "all wo week";
+                        } ?>
+                    </td>
                     <td>
                         <?php if($value['status'] == 1){
                             echo "Enable";
                         }else{
                             echo "Disable";
-                        }
-                        ?>
+                        } ?>
                     </td>
                     <td>
                         <a class="btn btn-primary" onclick="add_report_setting('edit',<?= $value['id'] ?>)"> Edit </a>
@@ -155,7 +179,7 @@ $(document).ready(function() {
     function add_report_setting(status,id=null) {
         if (status == 'add') {
             $("#add_form").toggle();
-            $("#report_setting_form")[0].reset(); 
+            $("#report_setting_form")[0].reset();
             $("#ancor").val(0);
         }else if(status == 'edit'){
             $("#add_form").show();
@@ -172,7 +196,7 @@ $(document).ready(function() {
                     $("#unit_id").val(data.unit_id)
                     $("#active_status").val(data.status)
                     $("#max_ot").val(parseInt(data.max_ot))
-                    $("#date").val(data.date);    
+                    $("#date").val(data.date);
             },
             })
         }

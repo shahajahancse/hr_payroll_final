@@ -94,11 +94,11 @@
                     <thead>
                         <tr>
                             <th>Designation Name</th>
-                            <th>Status</th>
+                            <th>Hide / Show</th>
                         </tr>
                     </thead>
                     <tbody id="desig_tbody">
-                       
+
                     </tbody>
                 </table>
             </div>
@@ -111,7 +111,7 @@
             }
         </style>
         <!-- eot entry form   -->
-       
+
     </div>
 </div>
 
@@ -144,7 +144,7 @@ function call_hide(el){
 }
 
     $(document).ready(function() {
-       
+
 
         //Designation dropdown
         $('#line').change(function() {
@@ -153,7 +153,7 @@ function call_hide(el){
             var unit_id = $('#unit_id').val();
             var dept = $('#dept').val();
             var section = $('#section').val();
-           
+
             $.ajax({
                 type: "POST",
                 url: hostname + "common/ajax_designation_by_line_id_h/" + id + "/" + unit_id + "/" + dept + "/" + section,
@@ -169,7 +169,7 @@ function call_hide(el){
                             var td1 = func_data[i].desig_name || "null";
                             var td2 = func_data[i].designation_id || "null";
                             var td3 = func_data[i].hide_status;
-                            var tr_checked = (td3 == 1) ? 'checked' : '';
+                            var tr_checked = (td3 == 0) ? 'checked' : '';
                             tr += `<tr>
                                         <td>
                                             <span class="hints">${td1}</span>

@@ -40,7 +40,7 @@
             <li class="start <?= activate_method('left_resign_entry')?> "><a href="<?= base_url('entry_system_con/left_resign_entry')?>" class="anchor_cls">Left / Resign / Regular</a> </li>
             <li class="start <?= activate_method('left_list')?> "><a href="<?= base_url('entry_system_con/left_list');?>" class="anchor_cls" >Left List</a></li>
             <li class="start <?= activate_method('resign_list')?> "><a href="<?= base_url('entry_system_con/resign_list');?>" class="anchor_cls" >Resign List</a></li>
-            
+
             <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
 
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan & Tax</a> </li>
@@ -102,11 +102,11 @@
           <li class="start <?= activate_method('shift_schedule') ?>"> <a href="<?=base_url('setup_con/shift_schedule')?>" class="anchor_cls">Shift Schedules</a> </li>
           <li class="start <?= activate_method('shift_management') ?>"> <a href="<?=base_url('setup_con/shift_management')?>" class="anchor_cls">Shift Manage</a> </li>
 
+          <li class="start <?= activate_method('alternet_day') ?>"> <a href="<?=base_url('setup_con/alternet_day')?>" >Alternet Day</a> </li>
+
           <li class="start <?= activate_method('salary_grade') ?>"> <a href="<?=base_url('setup_con/salary_grade')?>" class="anchor_cls">Salary Grade</a> </li>
           <li class="start <?= activate_method('leave_setup') ?>"> <a href="<?=base_url()?>setup_con/leave_setup" class="anchor_cls">Leave</a> </li>
           <li class="start <?= activate_method('bonus_setup') ?>"> <a href="<?=base_url()?>setup_con/bonus_setup" class="anchor_cls">Bonus</a> </li>
-
-          <!-- <li class="start <?= activate_method('holiday_allowance_setup') ?>"> <a href="<?=base_url('setup_con/holiday_allowance_setup')?>" >Holiday Allowance</a> </li> -->
 
           <li class="start <?= activate_method('post_office') ?>"> <a href="<?=base_url('setup_con/post_office')?>" class="anchor_cls">Post Office</a> </li>
         </ul>
@@ -136,7 +136,7 @@
       <li class="start <?= activate_class('acl_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
         <span class="title">Maintenance </span> <span class="selected"></span> <span class="arrow <?= arrow_open('acl_con') ?>"></span> </a>
         <ul class="sub-menu ">
-          
+
           <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('acl_con/acl')?>" class="anchor_cls" id="acl">User ACL</a> </li>
           <li class="start <?= activate_method('user_mode') ?>"> <a href="<?=base_url('acl_con/user_mode')?>" class="anchor_cls" id="acl">User Mode</a> </li>
 
@@ -144,8 +144,8 @@
       </li>
       <?php } ?>
 
-          
-      <!-- 
+
+      <!--
       <li class="start ">
         <a href="javascript:;" > <i class="fa fa-money"></i> <span class="title">Payroll</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu">
