@@ -38,7 +38,7 @@
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
-								$select_data='';
+									continue;
 								}  
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';

@@ -1912,7 +1912,7 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data['unit_id'] = $this->input->post('unit_id');
-		$year_month = date("Y-m", strtotime($grid_firstdate));
+		$year_month = date("Y-m", strtotime($grid_firstdate)); 
 		$query=$this->Grid_model->grid_monthly_att_registerr($year_month, $grid_emp_id);
 		if(is_string($query)){
 			echo $query;

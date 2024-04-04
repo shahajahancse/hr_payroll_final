@@ -5327,6 +5327,7 @@ class Grid_model extends CI_Model{
 				$newArray = array_merge((array)$row,$newArray);
 				$data[] = $newArray;
 			}
+			// dd($data);
 			return $data;
 		}
 		else{
