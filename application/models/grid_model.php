@@ -4232,7 +4232,7 @@ class Grid_model extends CI_Model{
 		$current_date = date("Y-m-d", strtotime($firstdate));
 		$before_date = date("Y-m-d", strtotime('-10 days'.$firstdate));
 
-		$this->db->select('emp_id')->where('shift_log_date', $current_date)->where('present_status', 'A')
+		$this->db->select('emp_id')->where('shift_log_date', $current_date)->where('present_status', 'A');
 		$results = $this->db->where('unit_id', $unit_id)->get('pr_emp_shift_log')->result();
 
 		$letter_status = 1;

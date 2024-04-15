@@ -8673,14 +8673,6 @@ function grid_maternity_benefit(){
 		return false;
 	}
 
-	// var report_year_sal = document.getElementById('report_year_sal').value;
-	// //alert(report_year_sal);
-	// if(report_year_sal =='')
-	// {
-	// 	alert("Please select year");
-	// 	return false;
-	// }
-
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -8696,10 +8688,27 @@ function grid_maternity_benefit(){
 		return false;
 	}
 
-	 
-	url =  hostname+"index.php/salary_report_con/grid_maternity_benefit/" + report_year_sal + "/" + spl;
-	maternity_sheet = window.open(url,'maternity_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	maternity_sheet.moveTo(0,0);
+	// url =  hostname+"index.php/salary_report_con/grid_maternity_benefit/" + report_month_sal + "/" + sql;
+	// maternity_sheet = window.open(url,'maternity_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
+	// maternity_sheet.moveTo(0,0);
+
+
+		var queryString="date="+report_month_sal+"&sql="+sql+'&unit_id'+unit_id;
+   url =  hostname+"index.php/salary_report_con/grid_maternity_benefit/";
+    
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			
+			left_resign_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			left_resign_report.document.write(resp);
+			//left_resign_report.stop();
+		}
+	}
 
 }
 

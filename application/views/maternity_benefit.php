@@ -33,6 +33,9 @@
 		border:1px solid #000;
 		border-collapse: collapse;
 	}
+	tr td{
+		font-size:15px !important;
+	}
 </style>
 </head>
 
@@ -138,11 +141,11 @@ if($values->num_rows() == 0)
 foreach($values->result() as $row){ ?>
 
 
-<div style=" width:800px; height:1050px; margin:0 auto;  overflow:hidden;  font-family: Arial, Helvetica, sans-serif; font-size:12px; clear: both;">
+<div style=" width:900px; height:1050px; margin:0 auto;  overflow:hidden;  font-family: Arial, Helvetica, sans-serif; font-size:12px; clear: both;">
   	
   	<table>
   		<tr>
-  			<?php $company_logo = $this->common_model->company_information("company_logo"); ?>
+  			<?php $company_logo = $this->common_model->company_information($unit_id=4);?>
   			<td width="100px">
   				<img width="80" height="60" src="<?php echo base_url(); ?>images/<?php echo $company_logo; ?>" />
   			</td>
@@ -159,7 +162,7 @@ foreach($values->result() as $row){ ?>
 		  <tr>
 			<td width="147">নাম</td>
 			<td width="10">:</td>
-			<td width="226"><span style="font-family:Arial, Helvetica, sans-serif;"><b><?php echo $row->bangla_nam; ?></b></span> </td>
+			<td width="226"><span style="font-family:Arial, Helvetica, sans-serif;"><b><?php echo $row->name_bn; ?></b></span> </td>
 		  </tr>
 		  <tr>
 			<td>কার্ড নং</td>
@@ -200,7 +203,7 @@ foreach($values->result() as $row){ ?>
 			<td>
 				<span style="font-family:Arial, Helvetica, sans-serif;">
 					<b>
-						<?php echo $section = $row->sec_bangla;?>
+						<?php echo $section = $row->sec_name_bn;?>
 					</b>
 				</span>
 			</td>
@@ -231,7 +234,7 @@ foreach($values->result() as $row){ ?>
 			<td>
 				<span style="font-family:SutonnyMJ;">
 					<b>
-						<?php echo $start_leave_date =  date('d/m/Y',strtotime($row->start_leave_date)); ?>
+						<?php echo $start_leave_date =  date('d/m/Y',strtotime($row->start_date)); ?>
 					</b>
 				</span>
 			</td>
@@ -242,7 +245,7 @@ foreach($values->result() as $row){ ?>
 			<td>
 				<span style="font-family:SutonnyMJ;">
 					<b>
-						<?php echo $end_leave_date =  date('d/m/Y',strtotime($row->end_leave_date)); ?>
+						<?php echo $end_leave_date =  date('d/m/Y',strtotime($row->leave_end)); ?>
 					</b>
 				</span>
 			</td>
@@ -265,23 +268,23 @@ foreach($values->result() as $row){ ?>
   		</tr>
   	</table>
   	<div style="width: 100%;height: 10px;clear: both;"></div>
-  	<?php $three_month_back = $this->leave_model->three_month_back_record($row->emp_id,$row->start_leave_date);?>
+  	<?php $three_month_back = $this->leave_model->three_month_back_record($row->emp_id,$row->start_date);?>
 	<div style="width:100%;">
 	  <table class="sal" width="100%" cellpadding="1" cellspacing="1">
 		<tr>
 			<th>নং</th>
 			<th>মাস</th>
 			<th>দিন	</th>
-			<th>সাপ্তাহিক ছুটি</th>
-			<th>অন্যান্য ছুটি</th>
+			<th >সাপ্তাহিক ছুটি</th>
+			<th >অন্যান্য ছুটি</th>
 			<th>অনুপস্থিতির দিন</th>
-			<th>মোট প্রকৃত কর্ম দিবস</th>
-			<th>অনুপস্থিতর জন্য কর্তন</th>
-			<th>প্রদেয় মোট বেতন</th>
-			<th>অতিরিক্ত ভাতা</th>
+			<th >মোট প্রকৃত<br> কর্ম দিবস</th>
+			<th >অনুপস্থিতর জন্য <br>কর্তন</th>
+			<th >প্রদেয় মোট <br>বেতন</th>
+			<th >অতিরিক্ত ভাতা</th>
 			<th>ও টি</th>
-			<th>হাজিরা বোনাস</th>
-			<th>উৎসব বোনাস </th>
+			<th >হাজিরা বোনাস</th>
+			<th >উৎসব বোনাস </th>
 			<th>স্ট্যাম্প</th>
             <th>সর্বমোট</th>
 		</tr>
@@ -297,12 +300,14 @@ foreach($values->result() as $row){ ?>
 		$ttl_fest_bonus = 0;
 		$ttl_stamp 		= 0;
 		$ttl_earning 	= 0;
+		$ttl_festival   = 0;
+		$absent_days     =0;
 
 		foreach($three_month_back as $month){
 		?>
 		<tr style="font-family: SutonnyMJ;">
 			<td><?php echo $i; $i++; ?></td>
-			<td class="left" style="font-family:Arial, Helvetica, sans-serif; ">
+			<td class="left" style="font-family:Arial, Helvetica, sans-serif; white-space:nowrap ">
 			  <?php 
 			  	 echo $ban_month = english_to_bangla_date_convert($month);
 			  ?>  
@@ -312,9 +317,9 @@ foreach($values->result() as $row){ ?>
 			<?php foreach($salary_data->result() as $rowItem){ ?>
 			<?php $other_leave = $rowItem->e_l +  $rowItem->s_l + $rowItem->c_l + $rowItem->m_l;?>
         	<td style="text-align:center;"> <?php echo $rowItem->total_days;?></td>
-        	<td style="text-align:center;"> <?php echo $rowItem->weeked;?></td>
+        	<td style="text-align:center;"> <?php echo $rowItem->weekend;?></td>
         	<td style="text-align:center;"> <?php echo $other_leave;?></td>
-        	<td style="text-align:center;"> <?php echo $absent_days;?></td>
+        	<td style="text-align:center;"> <?php echo $rowItem->absent_days;?></td>
             <td style="text-align:center;"> <?php echo $rowItem->att_days;?></td>
             <td style="text-align:center;"> <?php echo $rowItem->abs_deduction;?></td>
             <td style="text-align:center;"> <?php echo $rowItem->net_pay;?></td>
@@ -347,15 +352,15 @@ foreach($values->result() as $row){ ?>
 
 		<?php } ?>
          <tr style="font-weight:bold;font-family: SutonnyMJ;">
-        	<td colspan="6" style="text-align:center;font-family:Arial, Helvetica, sans-serif;"> Total</td>
+        	<td colspan="6" style="text-align:center;font-family:Arial, Helvetica, sans-serif;font-size:12px !important"> সর্বমোট</td>
             <td style="text-align:center;"> <?php echo $ttl_wk_days; ?></td>
-            <td style="text-align:right;">  <?php echo $ttl_absdeduct; ?></td>
-            <td style="text-align:right;">  <?php echo $ttl_net_pay; ?> </td>
-            <td style="text-align:right;">  <?php echo $ttl_extra_allow; ?> </td>
-            <td style="text-align:right;">  <?php echo $ttl_ot; ?> </td>
-            <td style="text-align:right;">  <?php echo $ttl_att_bonus; ?> </td>
-            <td style="text-align:right;">  <?php echo $ttl_festival; ?> </td>
-            <td style="text-align:right;">  <?php echo $ttl_stamp; ?> </td>
+            <td style="text-align:center;">  <?php echo $ttl_absdeduct; ?></td>
+            <td style="text-align:center;">  <?php echo $ttl_net_pay; ?> </td>
+            <td style="text-align:center;">  <?php echo $ttl_extra_allow; ?> </td>
+            <td style="text-align:center;">  <?php echo $ttl_ot; ?> </td>
+            <td style="text-align:center;">  <?php echo $ttl_att_bonus; ?> </td>
+            <td style="text-align:center;">  <?php echo $ttl_festival; ?> </td>
+            <td style="text-align:center;">  <?php echo $ttl_stamp; ?> </td>
             <td style="text-align:right;">  <?php echo $ttl_earning; ?> </td>
         </tr>
 
@@ -363,36 +368,36 @@ foreach($values->result() as $row){ ?>
 	  <br />
 	  <table class="divided_two" style="width: 100%;font-size: 14px;">
 	  	<tr>
-	  		<td>ছুটির অব্যবহিত পূর্ববর্তী তিন মাসের অর্জিত মোট মজুরী = <?php echo $ttl_earning; ?> টাকা।</td>
+	  		<td>ছুটির অব্যবহিত পূর্ববর্তী তিন মাসের অর্জিত মোট মজুরী = <?php echo '<span style="font-family: SutonnyMJ;font-size: 20px;">'.$ttl_earning.'</span>'; ?> টাকা।</td>
 	  	</tr>
-	  	<t r>
-	  		<td>ছুটির অব্যবহিত পূর্ববর্তী তিন মাসের মোট প্রকৃত কর্মদিবস = <?php echo $ttl_wk_days; ?> টাকা।</td>
+	  	<tr>
+	  		<td>ছুটির অব্যবহিত পূর্ববর্তী তিন মাসের মোট প্রকৃত কর্মদিবস = <?php echo '<span style="font-family: SutonnyMJ;font-size: 20px;">'.$ttl_wk_days.'</span>'; ?> টাকা।</td>
 	  	</tr>
 	  	<tr>
 	  		<td>প্রতিদিনের গড় মজুরী 
 	  		<?php
 	  			$per_day = round($ttl_earning/$ttl_wk_days,2); 
-	  			echo '('.$ttl_earning.'/'.$ttl_wk_days.')'.'='.$per_day.' টাকা।';
+	  			echo '('.'<span style="font-family: SutonnyMJ;font-size: 18px;">'.$ttl_earning.'/'.$ttl_wk_days.')'.'='.$per_day.' </span>টাকা।';
 	  		?>
 	  	</tr>
 	  	<tr>
 	  		<td>প্রসব পূর্ববর্তী ৮ সপ্তাহ বা ৫৬ দিনের জন্য প্রদেয় প্রসূতি কল্যাণ সুবিধা = 
 	  		<?php 
 	  		 $first_amt = round($per_day*56);
-	  		  echo $per_day.'*'.'56'.'='.$first_amt.' টাকা।'; 
+	  		  echo '<span style="font-family: SutonnyMJ;font-size: 18px;">'.$per_day.'*'.'56'.'='.$first_amt.'</span> টাকা।'; 
 	  		?></td>
 	  	</tr>
 	  	<tr>
 	  		<td>প্রসব পরবর্তী ৮ সপ্তাহ বা ৫৬ দিনের জন্য প্রদেয় প্রসূতি কল্যাণ সুবিধা = 
 	  		<?php 
 	  			$second_amt = round($per_day*56);
-	  		    echo $per_day.'*'.'56'.'='.$second_amt.' টাকা।'; 
+	  		    echo '<span style="font-family: SutonnyMJ;font-size: 18px;">'.$per_day.'*'.'56'.'='.$second_amt.'</span> টাকা।'; 
 	  		?>
 	  		</td>
 	  	</tr>
 	  	<tr>
 	  		<td>
-	  			প্রসব পূর্ববর্তী ও পরবর্তী সর্বমোট (৮+৮) = ১৬ সপ্তাহ বা (৫৬+৫৬) = ১১২ দিনের জন্য মোট প্রদেয় সুবিধা = <?php echo $first_amt + $second_amt;?> = <?php echo $total_amt = $first_amt + $second_amt;?>টাকা।
+	  			প্রসব পূর্ববর্তী ও পরবর্তী সর্বমোট (৮+৮) = ১৬ সপ্তাহ বা (৫৬+৫৬) = ১১২ দিনের জন্য মোট প্রদেয় সুবিধা = <?php $taka =  $first_amt + $second_amt; echo '<span style="font-family: SutonnyMJ;font-size: 20px;">'.$taka.'</span>'?>টাকা।
 	  		</td>
 	  	</tr>
 	  </table>
@@ -409,7 +414,7 @@ foreach($values->result() as $row){ ?>
 	   	 </tr>
 	   	 <tr style="font-family: SutonnyMJ; height:60px;">
 	   	 	<td>১ম ধাপ (প্রসব পূর্ববর্তী)</td>
-	   	 	<td><?php echo $start_leave_date =  date('d/m/Y',strtotime('-1 days',strtotime($row->start_leave_date))); ?></td>
+	   	 	<td><?php echo $start_leave_date =  date('d/m/Y',strtotime('-1 days',strtotime($row->start_date))); ?></td>
 	   	 	<td><?php echo $first_amt;?> টাকা</td>
 	   	 	<td>10</td>
 	   	 	<td><?php echo $first_amt - 10;?></td>
@@ -417,7 +422,7 @@ foreach($values->result() as $row){ ?>
 	   	 </tr>
 	   	 <tr style="font-family: SutonnyMJ;  height:60px;">
 	   	 	<td>২য় ধাপ (প্রসব পরবর্তী)</td>
-	   	 	<td><?php echo $start_leave_date =  date('d/m/Y',strtotime('+1 days',strtotime($row->end_leave_date))); ?></td>
+	   	 	<td><?php echo $start_leave_date =  date('d/m/Y',strtotime('+1 days',strtotime($row->leave_end))); ?></td>
 	   	 	<td><?php echo $first_amt;?> টাকা</td>
 	   	 	<td>10</td>
 	   	 	<td><?php echo $tfirst = $first_amt - 10;?></td>
