@@ -1,14 +1,15 @@
 <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
 <?php
-	$unit_id = $this->data['user_data']->unit_name;
-	if ($this->data['user_data']->unit_name == 0) {
+	$unit_id = $this->session->userdata('data');
+	// dd();
+	if ($unit_id->unit_name== 0) {
 		echo "Please Login as unit user (Not allow Super admin)";
 		exit();
 	}
-	//
+	
 	$CI =& get_instance();
 	$CI->load->model('Common_model');
-	$comInfo = $CI->Common_model->company_info($unit_id);
+	$comInfo = $CI->Common_model->company_info($unit_id->unit_name);
 	// dd($comInfo	);
  ?>
 <span style="font-size:18px; font-weight:bold;"><?=$comInfo->company_name_english?></span><br/>

@@ -1152,8 +1152,12 @@ class Entry_system_con extends CI_Controller
         $this->db->where('emp_id', $_POST['emp_id']);
         $unit_id=$this->db->get('pr_emp_com_info')->row()->unit_id;
 
-        $this->db->where('unit_id', $unit_id);
+        if($unit_id != ''){
+            $this->db->where('unit_id', $unit_id);
+            $leave_entitle=$this->db->get('pr_leave')->row();
+        }
         $leave_entitle=$this->db->get('pr_leave')->row();
+        // dd($leave_entitle);
 
         $data['leave_entitle_casual']= $leave_entitle->lv_cl;
         $data['leave_entitle_sick']= $leave_entitle->lv_sl;

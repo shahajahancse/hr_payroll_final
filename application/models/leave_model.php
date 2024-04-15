@@ -520,35 +520,31 @@ class Leave_model extends CI_Model{
 		return $total_present;
 	}
 	
-	function grid_maternity_benefit($grid_emp_id, $grid_year)
-	{
+	function grid_maternity_benefit($grid_emp_id, $grid_year){
 		//echo $grid_year;exit;
-		$this->db->select('pr_emp_com_info.*, pr_emp_per_info.*,pr_emp_add.*, pr_leave_trans.*,pr_designation.desig_bangla,pr_section.sec_bangla,pr_grade.gr_name');
+		$this->db->select('pr_emp_com_info.*, 
+			               pr_emp_per_info.*,
+						   pr_leave_trans.*,
+						   emp_designation.desig_bangla,
+						   emp_section.sec_name_bn,
+						   pr_grade.gr_name'
+						);
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_add');
-		$this->db->from('pr_section');
-		$this->db->from('pr_designation');
+		$this->db->from('emp_section');
+		$this->db->from('emp_designation');
 		$this->db->from('pr_grade');
 		$this->db->from('pr_leave_trans');
 		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
 		$this->db->where("pr_emp_com_info.emp_id = pr_emp_per_info.emp_id");
-		$this->db->where("pr_emp_com_info.emp_id = pr_emp_add.emp_id");
 		$this->db->where("pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id");
-		$this->db->where("pr_section.sec_id = pr_emp_com_info.emp_sec_id");	
-		$this->db->where("pr_designation.desig_id = pr_emp_com_info.emp_desi_id");	
+		$this->db->where("emp_section.id = pr_emp_com_info.emp_sec_id");	
+		$this->db->where("emp_designation.id = pr_emp_com_info.emp_desi_id");	
 		$this->db->where('pr_emp_per_info.emp_sex', 2);
 		$this->db->where("pr_emp_com_info.emp_id = pr_leave_trans.emp_id");
         $this->db->where("pr_leave_trans.leave_type = 'ml'");
-		$this->db->where("substr(pr_leave_trans.start_date,1,4)='$grid_year'");
-		// $this->db->group_by("pr_leave_trans.emp_id");		
-        //$this->db->limit(1);		
+		$this->db->where("substr(pr_leave_trans.start_date,1,4)='$grid_year'");	
 		$query = $this->db->get();
-		/*echo "<pre>";
-		echo $this->db->last_query();exit;*/
-		//echo "<pre>";
-		//print_r($query->result());
-		//exit;
 		return $query;
 	}
 
@@ -570,11 +566,10 @@ class Leave_model extends CI_Model{
 	{
 		// echo $emp_id.'ggg'; exit;
 		$data = array();
-		$this->db->select('att_days,total_days,num_of_workday,festival_bonus,net_pay');	
+		$this->db->select('*');	
 		$this->db->where('emp_id',$emp_id);
 		$this->db->like('salary_month',$salary_month,'after');
-		return $query = $this->db->get('pr_pay_scale_sheet');
-		//echo $this->db->last_query();
+		return $query = $this->db->get('pay_salary_sheet');
 	}
 	
 	function get_designation($emp_desi_id)
