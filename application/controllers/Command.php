@@ -21,7 +21,7 @@ class Command extends CI_Controller {
 		// $this->load->library('grocery_CRUD');
 		// $this->load->model('acl_model');
 		$this->load->dbforge();
-		exit('for developer');
+		// exit('for developer');
 	}
 
 	function dpt_sec_lin_udate()
@@ -407,20 +407,21 @@ class Command extends CI_Controller {
 		$this->db->select('pr_emp_com_info.id, pr_emp_com_info.emp_id, pr_emp_com_info.unit_id');
 		$this->db->from('pr_emp_shift_log');
 		$this->db->from('pr_emp_com_info');
-		$this->db->where('pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id');
-		$this->db->where('pr_emp_com_info.unit_id =', 3);
+		$this->db->where('pr_emp_com_info.id = pr_emp_shift_log.emp_id');
+		$this->db->where('pr_emp_com_info.unit_id =', 4);
 		$this->db->group_by('pr_emp_com_info.id');
 		$results = $this->db->get()->result();
 		// dd($results);
 
 		foreach ($results as $key => $row) {
-			$rs = $this->db->where('emp_id',$row->emp_id)->get('pr_emp_shift_log')->result();
+			$rs = $this->db->where('emp_id',$row->id)->get('pr_emp_shift_log')->result();
+			// dd($rs);
 
 			$data = array(
-				'emp_id'			=> $row->id,
-				'unit_id'			=> $row->unit_id,
+				'emp_id'			=> $row->emp_id,
+				// 'unit_id'			=> $row->unit_id,
 			);
-			$this->db->where('emp_id',$row->emp_id)->update('pr_emp_shift_log', $data);
+			$this->db->where('emp_id',$row->id)->update('pr_emp_shift_log', $data);
 
 			echo "<pre> $row->emp_id =  emp id set = ".count($rs);
 		}

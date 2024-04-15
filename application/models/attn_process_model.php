@@ -58,7 +58,7 @@ class Attn_process_model extends CI_Model{
 			} else {
 
 				//GET CURRENT SHIFT INFORMATION
-				$emp_shift = $this->emp_shift_check_process($com_id, $shift_id, $schedule_id, $process_date);
+				$emp_shift = $this->emp_shift_check_process($emp_id, $shift_id, $schedule_id, $process_date);
 				$schedule  = $this->get_emp_schedule($emp_shift->schedule_id);
 
 				$in_start_time	= $schedule[0]["in_start"];
@@ -182,10 +182,6 @@ class Attn_process_model extends CI_Model{
 
 					} else {
 
-
-
-
-
 						// dd("KO");
 
 						$start_date_time = strtotime($ot_start);
@@ -284,7 +280,7 @@ class Attn_process_model extends CI_Model{
 				);
 
 				$this->db->where('shift_log_date', $process_date);
-				$this->db->where('emp_id', $com_id);
+				$this->db->where('emp_id', $emp_id);
 				$this->db->update('pr_emp_shift_log', $data);
 			}
 		}

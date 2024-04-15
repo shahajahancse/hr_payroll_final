@@ -255,16 +255,16 @@ class Setting_con extends CI_Controller {
 		$data = $this->db->where('id', $id)->get('pr_report_setting')->row();
 
 		if ($data->type == 1) {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
 			$this->db->update('pr_emp_shift_log', array('false_ot_4' => 0));
 		} else if ($data->type == 2) {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
 			$this->db->update('pr_emp_shift_log', array('false_ot_12' => 0));
 		} else {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
 			$this->db->update('pr_emp_shift_log', array('false_ot_all' => 0));
 		}
 		$this->db->where('id', $id);
