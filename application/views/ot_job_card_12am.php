@@ -31,78 +31,82 @@
 					echo "<br /><br />";
 
 					echo "<table border='0' style='font-size:13px;' width='480'>";
-					echo "<tr>";
-					echo "<td width='70'>";
-					echo "<strong>Emp ID:</strong>";
-					echo "</td>";
-					echo "<td width='200'>";
-					echo $value->emp_id;
-					echo "</td>";
+						echo "<tr>";
+						echo "<td width='70'>";
+						echo "<strong>Emp ID:</strong>";
+						echo "</td>";
+						echo "<td width='200'>";
+						echo $value->emp_id;
+						echo "</td>";
 
-					echo "<td width='55'>";
-					echo "<strong>Name :</strong>";
-					echo "</td>";
-					echo "<td width='150'>";
-					echo $value->name_en;
-					echo "</td>";
-					echo "</tr>";
+						echo "<td width='55'>";
+						echo "<strong>Name :</strong>";
+						echo "</td>";
+						echo "<td width='150'>";
+						echo $value->name_en;
+						echo "</td>";
+						echo "</tr>";
 
-					echo "<tr>";
-					echo "<td >";
-					echo "<strong>Proxi NO. :</strong>";
-					echo "</td>";
-					echo "<td >";
-					echo $value->proxi_id;
-					echo "</td>";
+						echo "<tr>";
+						echo "<td >";
+						echo "<strong>Proxi NO. :</strong>";
+						echo "</td>";
+						echo "<td >";
+						echo $value->proxi_id;
+						echo "</td>";
 
-					echo "<td style:width:20px'>";
-					echo "<strong>Section :</strong>";
-					echo "</td>";
-					echo "<td width='30px'>";
-					echo $value->sec_name_en;
-					echo "</td>";
-					echo "</tr>";
-					echo "<tr>";
-					echo "<td>";
-					echo "<strong>Line :</strong>";
-					echo "</td>";
-					echo "<td>";
-					echo $value->line_name_en;
-					echo "</td>";
-					echo "<td>";
-					echo "<strong>Desig :</strong>";
-					echo "</td>";
-					echo "<td>";
-					echo $value->desig_name;
-					echo "</td>";
-					echo "</tr>";
-					echo "<tr>";
-					echo "<td>";
-					echo "<strong>DOJ :</strong>";
-					echo "</td>";
-					echo "<td>";
-					echo date("d-M-Y", strtotime($value->emp_join_date));
-					echo "</td>";
+						echo "<td style:width:20px'>";
+						echo "<strong>Section :</strong>";
+						echo "</td>";
+						echo "<td width='30px'>";
+						echo $value->sec_name_en;
+						echo "</td>";
+						echo "</tr>";
+						echo "<tr>";
+						echo "<td>";
+						echo "<strong>Line :</strong>";
+						echo "</td>";
+						echo "<td>";
+						echo $value->line_name_en;
+						echo "</td>";
+						echo "<td>";
+						echo "<strong>Desig :</strong>";
+						echo "</td>";
+						echo "<td>";
+						echo $value->desig_name;
+						echo "</td>";
+						echo "</tr>";
+						echo "<tr>";
+						echo "<td>";
+						echo "<strong>DOJ :</strong>";
+						echo "</td>";
+						echo "<td>";
+						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo "</td>";
 
-					echo "<td >";
-					echo "<strong>Dept :</strong>";
-					echo "</td>";
-					echo "<td >";
-					echo $value->dept_name;
-					echo "</td>";
-					
+						echo "<td >";
+						echo "<strong>Dept :</strong>";
+						echo "</td>";
+						echo "<td >";
+						echo $value->dept_name;
+						echo "</td>";
+
 					echo "<table>";
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
 					// dd($emp_data);
-					echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0' style='text-align:center; font-size:13px; '> <th>Date</th><th>In Time</th><th>Out Time</th><th>Attn.Status</th><th>OT Hour</th><th>Extra OT Hour</th><th>Total OT Hour</th><th>Remarks</th>";
+					echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0'  style='text-align:center; font-size:13px; '>
+						<th>Date</th>
+						<th>In Time</th>
+						<th>Out Time</th>
+						<th>Attn.Status</th>
+						<th>OT Hour</th>
+						<th>Extra OT Hour</th>
+						<th>Total OT Hour</th>
+						<th>Remarks</th>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
-						// if ($row->eot > 2) {
-						// 	$extra_ot_hour = 2.0;
-						// } else if(0.0 == $row->eot) {
-						// 	$extra_ot_hour = 0;
-						// } else {
-							$extra_ot_hour = $row->ot_eot_12am;
-						// }
+
+						$extra_ot_hour = $row->ot_eot_12am;
+
 						if(in_array($row->shift_log_date,$emp_data['leave'])){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
@@ -156,12 +160,10 @@
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
 							$in_time = date('h:i:s A',strtotime($row->in_time));
-						}
-						else{
+						}else{
 							$in_time = "00:00:00";
 						}
 						if($row->out_time != "00:00:00"){
-
 							$current_date = date('Y-m-d', strtotime($shift_log_date));
 							$new_current_date_time = $current_date.' '.date('H:i:s', strtotime($row->out_time));
 							$new_next_date_time = date('Y-m-d', strtotime("+1 day", strtotime($current_date))).' 00:14:14';
@@ -173,6 +175,7 @@
 								$min = $sum==0 ? "00":($sum < 10 ? "0".$sum : $sum);
 								$out_time  ="12:".$min.date(':s A', strtotime($row->out_time));
 							}
+							
 							if($row->false_ot_12 == 0 && $row->ot > 1){
 								$extra_ot_hour = 0;
 								if($row->out_time > '19:15:00'){

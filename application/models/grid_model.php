@@ -1485,12 +1485,6 @@ class Grid_model extends CI_Model{
 
 	function attendance_check_for_absent($emp_id, $start_date){
 
-		/* if($letter_status == 1){
-			$day = 10;
-		}else if($letter_status == 2){
-			$day = 20;
-		}else{
-		} */
 		$day = 30;
 		$count = 0;
 		$no_imp = 0;
@@ -4234,12 +4228,19 @@ class Grid_model extends CI_Model{
 			return "Not Found Data";
 		}
 	}
-	function grid_letter1_count($grid_emp_id, $firstdate){
+	function grid_letter1_count($firstdate, $unit_id){
 		$current_date = date("Y-m-d", strtotime($firstdate));
-		$before_date= date("Y-m-d", strtotime('-10 days'.$firstdate));
+		$before_date = date("Y-m-d", strtotime('-10 days'.$firstdate));
+
+		$this->db->select('emp_id')->where('shift_log_date', $current_date)->where('present_status', 'A')
+		$results = $this->db->where('unit_id', $unit_id)->get('pr_emp_shift_log')->result();
+
 		$letter_status = 1;
 		$data = array();
-		foreach ($grid_emp_id as $key => $id) {
+		$emp_id = array();
+		foreach ($results as $key => $r) {
+			$id = $r->emp_id;
+			$emp_id[$key] = $r->emp_id;
 			$get_absent = $this->attendance_check_for_absent($id,$current_date,$letter_status);
 				if($letter_status == 1){
 					$day = 10;
@@ -4249,19 +4250,19 @@ class Grid_model extends CI_Model{
 					$day = 30;
 				}
 
-			if(!$get_absent >=$day){
+			if(!$get_absent >= $day){
 				continue;
 			}
-			$this->db->select('
-				pr_emp_com_info.emp_id,
-			');
-			$this->db->from('pr_emp_com_info');
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$query = $this->db->get();
-			if($query->num_rows() != 0){
-				$data[] = $query->row();
-			}
 		}
+
+		$this->db->select('pr_emp_com_info.emp_id, ');
+		$this->db->from('pr_emp_com_info');
+		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+		$query = $this->db->get();
+		if($query->num_rows() != 0){
+			$data[] = $query->row();
+		}
+
 		if(!empty($data)){
 			return $data;
 		}else{
@@ -4400,9 +4401,9 @@ class Grid_model extends CI_Model{
 
 			$this->db->select('
 				pr_emp_per_info.*,
-				
+
 			');
-		
+
 			$this->db->from('pr_emp_per_info');
 			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
@@ -5273,7 +5274,7 @@ class Grid_model extends CI_Model{
 	}
 
 	function grid_monthly_att_register($year_month, $grid_emp_id){
-		// dd($year_month); 
+		// dd($year_month);
 		$year= trim(substr($year_month,0,4));
 		$month = trim(substr($year_month,5,2));
 		$att_month = "att_".$year."_".$month;
@@ -5317,7 +5318,7 @@ class Grid_model extends CI_Model{
 						$newArray = array_merge((array)$row,$newArray);
 						$data[] = $newArray;
 					}
-					
+
 				}
 			}
 			if($data == NULL){
@@ -5688,7 +5689,7 @@ class Grid_model extends CI_Model{
 		emp_depertment.dept_name,
 		emp_section.sec_name_en,
 		emp_line_num.line_name_en,
-		pr_emp_com_info.emp_id, 
+		pr_emp_com_info.emp_id,
 		pr_emp_com_info.emp_join_date,
 		pr_id_proxi.proxi_id,
 		pr_emp_com_info.unit_id,
