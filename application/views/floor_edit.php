@@ -57,7 +57,7 @@
               	if($row[unit_id]==$pr_floor->unit_id){
               		$select_data="selected";
               	}else{
-              		$select_data='';
+              		continue;
               	}
                  echo '<option '.$select_data.'  value="'.$row[unit_id].'">'.$row[unit_name].
                  '</option>';                  
