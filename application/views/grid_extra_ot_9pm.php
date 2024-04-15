@@ -311,35 +311,35 @@
 					echo "<table border='0' style='font-size:13px;'>";
 					echo "<tr align='center'>";
 
-					echo "<td style='padding:5px; border-bottom:#000000 1px solid;'>";
+					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "PRESENT";
 					echo "</td>";
 
-					echo "<td style='padding:5px; border-bottom:#000000 1px solid;'>";
+					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "ABSENT";
 					echo "</td>";
 
-					echo "<td style='padding:5px; border-bottom:#000000 1px solid;'>";
+					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "LEAVE";
 					echo "</td>";
 
-					echo "<td style='padding:5px; border-bottom:#000000 1px solid;'>";
+					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "WORK OFF";
 					echo "</td>";
 
-					echo "<td style='padding:5px; border-bottom:#000000 1px solid;'>";
+					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "HOLIDAY";
 					echo "</td>";
 
-					echo "<td style='padding:5px; border-bottom:#000000 1px solid;'>";
+					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "PRESENT ERROR";
 					echo "</td>";
 
-					echo "<td style='padding:5px; border-bottom:#000000 1px solid;'>";
+					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "LATE COUNT";
 					echo "</td>";
 
-					echo "<td style='padding:5px; border-bottom:#000000 1px solid;'>";
+					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
 					echo "OVERTIME";
 					echo "</td>";
 

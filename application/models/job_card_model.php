@@ -271,6 +271,56 @@ class Job_card_model extends CI_Model{
 		return $buyer_minute;
 	}
 
+	// start actual job card
+	public function actual_job_card($grid_firstdate, $grid_seconddate, $emp_id)
+	{
+		$data = array();
+		$grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
+
+		$joining_check = $this->get_join_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if( $joining_check != false)
+		{
+			$start_date = $joining_check;
+		}
+		else
+		{
+			$start_date = $grid_firstdate;
+		}
+
+		$resign_check  = $this->get_resign_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if($resign_check != false)
+		{
+			$end_date = $resign_check;
+		}
+		else
+		{
+			$end_date = $grid_seconddate;
+		}
+
+		$left_check  = $this->get_left_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if($left_check != false)
+		{
+			$end_date = $left_check;
+		}
+		else
+		{
+			$end_date = $grid_seconddate;
+		}
+
+		$this->db->select();
+		$this->db->where("emp_id",$emp_id);
+		$this->db->where("shift_log_date BETWEEN '$start_date' AND '$end_date' ");
+		$this->db->order_by("shift_log_date");
+		$query = $this->db->get("pr_emp_shift_log")->result();
+
+		$data['emp_data'] = $query;
+
+		return $data;
+	}
+	// end actual job card
+
+	// eot job card
 	function emp_job_card($grid_firstdate, $grid_seconddate, $emp_id){
 		$data = array();
 		$grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
@@ -332,55 +382,6 @@ class Job_card_model extends CI_Model{
 
 		return $data;
 	}
-	// end 9pm eot job card
-	//
-	// start actual job card
-	public function actual_job_card($grid_firstdate, $grid_seconddate, $emp_id)
-	{
-		$data = array();
-		$grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
-		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
-
-		$joining_check = $this->get_join_date($emp_id, $grid_firstdate, $grid_seconddate);
-		if( $joining_check != false)
-		{
-			$start_date = $joining_check;
-		}
-		else
-		{
-			$start_date = $grid_firstdate;
-		}
-
-		$resign_check  = $this->get_resign_date($emp_id, $grid_firstdate, $grid_seconddate);
-		if($resign_check != false)
-		{
-			$end_date = $resign_check;
-		}
-		else
-		{
-			$end_date = $grid_seconddate;
-		}
-
-		$left_check  = $this->get_left_date($emp_id, $grid_firstdate, $grid_seconddate);
-		if($left_check != false)
-		{
-			$end_date = $left_check;
-		}
-		else
-		{
-			$end_date = $grid_seconddate;
-		}
-
-		$this->db->select();
-		$this->db->where("emp_id",$emp_id);
-		$this->db->where("shift_log_date BETWEEN '$start_date' AND '$end_date' ");
-		$this->db->order_by("shift_log_date");
-		$query = $this->db->get("pr_emp_shift_log")->result();
-
-		$data['emp_data'] = $query;
-
-		return $data;
-	}
-	// end actual job card
+	// end eot job card
 
 }
