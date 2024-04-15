@@ -1114,9 +1114,9 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
+        $this->form_validation->set_rules('desig_desc', 'Designation Description', 'required');
 
         if ($this->form_validation->run() == TRUE) {
-
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
                 // 'dept_id' => $this->input->post('emp_dept_id'),
@@ -1129,6 +1129,7 @@ class Setup_con extends CI_Controller
                 'iftar_id' => $this->input->post('iftar_id'),
                 'night_al_id' => $this->input->post('night_al_id'),
                 'tiffin_id' => $this->input->post('tiffin_id'),
+                'desig_desc' => $this->input->post('desig_desc'),
                 // 'group_id' => $this->input->post('group_id'),
             );
             // dd($formArray);
@@ -1159,6 +1160,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
+        $this->form_validation->set_rules('desig_desc', 'Designation Description', 'required');
 
         $this->db->select('pr_units.*');
         $this->data['pr_units'] = $this->db->get('pr_units')->result();
@@ -1191,6 +1193,8 @@ class Setup_con extends CI_Controller
                 'iftar_id'           => $this->input->post('iftar_id'),
                 'night_al_id'        => $this->input->post('night_al_id'),
                 'tiffin_id'          => $this->input->post('tiffin_id'),
+                'desig_desc'         => $this->input->post('desig_desc'),
+
                 // 'group_id'           => $this->input->post('group_id'),
             );
 
