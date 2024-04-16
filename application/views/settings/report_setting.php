@@ -244,7 +244,6 @@ $("#report_setting_form").submit(function(e) {
             url: "<?= base_url('setting_con/delete_report_setting') ?>",
             data: {
                 id: $id
-
             },
             success: function(data) {
                 if (data == 'true') {

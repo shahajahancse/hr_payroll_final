@@ -5602,21 +5602,20 @@ class Grid_model extends CI_Model{
 		$data = array();
 		$this->db->distinct();
 		$this->db->select('pr_emp_per_info.name_en,
-		emp_designation.id,
-		emp_designation.desig_name,
-		emp_depertment.dept_name,
-		emp_section.sec_name_en,
-		emp_line_num.line_name_en,
-		pr_emp_com_info.emp_id,
-		pr_emp_com_info.emp_join_date,
-		pr_id_proxi.proxi_id,
-		pr_emp_com_info.unit_id,
-		pr_emp_com_info.emp_shift,
-		pr_emp_com_info.emp_desi_id'
-	);
+			emp_designation.id,
+			emp_designation.desig_name,
+			emp_depertment.dept_name,
+			emp_section.sec_name_en,
+			emp_line_num.line_name_en,
+			pr_emp_com_info.emp_id,
+			pr_emp_com_info.emp_join_date,
+			pr_emp_com_info.proxi_id,
+			pr_emp_com_info.unit_id,
+			pr_emp_com_info.emp_shift,
+			pr_emp_com_info.emp_desi_id'
+		);
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
-		$this->db->from('pr_id_proxi');
 		$this->db->from('emp_depertment');
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
@@ -5627,7 +5626,6 @@ class Grid_model extends CI_Model{
 		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
 		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_id_proxi.emp_id = pr_emp_com_info.emp_id');
 		$query = $this->db->get();
 		return $query->result();
 	}

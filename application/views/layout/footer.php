@@ -68,6 +68,11 @@
       });
     }
   </script>
+  <script>
+   function alert(d) {
+    Swal.fire(d);
+    }
+  </script>
 
   <script>
       $(document).ready(function() {
