@@ -138,7 +138,7 @@ class Training_con extends CI_Controller {
 
 
 	
-	function employee_training_add()
+	function employee_training_form()
 	{
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -153,9 +153,56 @@ class Training_con extends CI_Controller {
         $this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['user_id'] = $this->data['user_data']->unit_name;
         $this->data['title'] = 'Training Add';
-        $this->data['subview'] = 'training/training_add';
+        $this->data['subview'] = 'training/employee_training_add';
         $this->load->view('layout/template', $this->data);
 
+	}
+	function employee_training_add()
+	{	
+		if (!isset($_POST['training_id']) || !isset($_POST['unit_id']) || !isset($_POST['date']) || !isset($_POST['time'])) {
+			echo '0';
+			exit;
+		}
+		$training_id = $_POST['training_id'];
+		$unit_id = $_POST['unit_id'];
+		$date = $_POST['date'];
+		
+		$time = $_POST['time'];
+		$status = 1;
+		$created_at = date('Y-m-d H:i:s');
+
+		$grid_data = $_POST['spl'];
+		$emp_id = explode(',', trim($grid_data));
+		$data = [];
+		foreach ($emp_id as $key => $value) {
+			if (empty($value)) {
+				continue;
+			}
+			$data[] = array(
+				'emp_id' => $value,
+				'training_id' => $training_id,
+				'unit_id' => $unit_id,
+				'date' => $date,
+				'time' => $time,
+				'status' => $status,
+				'created_at' => $created_at
+			);
+		}
+		if (!empty($data)) {
+			$this->db->insert_batch('training_management', $data);
+		}
+		echo '1';
+	}
+
+	function employee_training_list(){
+		$this->db->select('training_type.*,pr_units.unit_name');
+        $this->db->from('training_type');
+        $this->db->join('pr_units', 'pr_units.unit_id = training_type.unit_id');
+        $this->data['pr_line'] = $this->db->get()->result_array();
+        $this->data['title'] = 'Training List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'training/training_list';
+        $this->load->view('layout/template', $this->data);
 	}
 }
 
