@@ -337,6 +337,9 @@
 							<button class="btn input-sm sbtn" onclick="grid_service_book()">Service Book</button>
 							<?php } ?>
 
+							<?php if(in_array(101,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_final_satalment()">Final Satalment</button>
+							<?php } ?>
 
 							<?php if(in_array(69,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_age_estimation()">Age estimation</button>
