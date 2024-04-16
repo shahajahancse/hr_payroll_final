@@ -70,7 +70,10 @@
   </script>
   <script>
    function alert(d) {
-    Swal.fire(d);
+        Swal.fire({
+            icon: "warning",
+            title: d,
+        });
     }
   </script>
 
