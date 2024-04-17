@@ -190,12 +190,10 @@
 							if($row->eot == 1 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
 								$extra_ot_hour = 0;
 								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							}
-
-							if($row->eot == 2 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
+							} else if($row->eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
 								$extra_ot_hour = 0;
 								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->eot == 2 && $row->false_ot_4 != null && $row->false_ot_4 == 1){
+							} else if($row->eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 1){
 								$extra_ot_hour = 1;
 								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
