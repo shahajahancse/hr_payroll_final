@@ -117,7 +117,7 @@
 						</tr>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
 						if ($row->eot > 2) {
-							$extra_ot_hour = 2.0;
+							$extra_ot_hour = 2;
 						} else if(0.0 == $row->eot) {
 							$extra_ot_hour = 0;
 						} else {
