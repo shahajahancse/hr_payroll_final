@@ -160,7 +160,7 @@
 						$shift_log_date = date("d-M-y", strtotime($row->shift_log_date));
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
-							$in_time = date('h:i:s A',strtotime($row->in_time));
+							$in_time = $row->in_time;
 						}else{
 							$in_time = "00:00:00";
 						}
@@ -168,42 +168,59 @@
 							$out_time = $row->out_time;
 							$out_time = $this->job_card_model->get_formated_out_time_12am($value->emp_id, $out_time, $row->schedule_id);
 
-							if($row->eot == 2 && $row->false_ot_12 != 0 && $row->false_ot_12 == 1){
-								$extra_ot_hour = 1;
-								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
+							if($row->eot == 1 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
 
-							if($row->eot == 3 && $row->false_ot_12 != 0 && $row->false_ot_12 == 1){
+							if($row->eot == 2 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->eot == 2 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
 								$extra_ot_hour = 1;
-								$out_time = date('h:i:s A', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->eot == 3 && $row->false_ot_12 != 0 && $row->false_ot_12 == 2){
-								$extra_ot_hour = 2;
-								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
 
-							if($row->eot == 4 && $row->false_ot_12 != 0 && $row->false_ot_12 == 1){
+							if($row->eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							} else if($row->eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
 								$extra_ot_hour = 1;
-								$out_time = date('h:i:s A', strtotime('-3 hour', strtotime($out_time)));
-							} else if($row->eot == 4 && $row->false_ot_12 != 0 && $row->false_ot_12 == 2){
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
 								$extra_ot_hour = 2;
-								$out_time = date('h:i:s A', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->eot == 4 && $row->false_ot_12 != 0 && $row->false_ot_12 == 3){
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							}
+
+							if($row->eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-4 hour', strtotime($out_time)));
+							} else if($row->eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							} else if($row->eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
+								$extra_ot_hour = 2;
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 3){
 								$extra_ot_hour = 3;
-								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
 
-							if($row->eot >= 5 && $row->false_ot_12 != 0 && $row->false_ot_12 == 1){
+							if($row->eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-5 hour', strtotime($out_time)));
+							} else if($row->eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
 								$extra_ot_hour = 1;
-								$out_time = date('h:i:s A', strtotime('-4 hour', strtotime($out_time)));
-							} else if($row->eot >= 5 && $row->false_ot_12 != 0 && $row->false_ot_12 == 2){
+								$out_time = date('H:i:s ', strtotime('-4 hour', strtotime($out_time)));
+							} else if($row->eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
 								$extra_ot_hour = 2;
-								$out_time = date('h:i:s A', strtotime('-3 hour', strtotime($out_time)));
-							} else if($row->eot >= 5 && $row->false_ot_12 != 0 && $row->false_ot_12 == 3){
+								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							} else if($row->eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 3){
 								$extra_ot_hour = 3;
-								$out_time = date('h:i:s A', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->eot >= 5 && $row->false_ot_12 != 0 && $row->false_ot_12 == 4){
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 4){
 								$extra_ot_hour = 4;
-								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
 						}
 						else{

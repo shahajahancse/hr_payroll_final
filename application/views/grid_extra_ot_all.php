@@ -173,13 +173,13 @@
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
 							$in_time = $row->in_time;
-							$in_time = $this->job_card_model->time_am_pm_format($in_time);
+							// $in_time = $this->job_card_model->time_am_pm_format($in_time);
 						} else{
 							$in_time = "00:00:00";
 						}
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							$out_time = $this->job_card_model->time_am_pm_format($out_time);
+							// $out_time = $this->job_card_model->time_am_pm_format($out_time);
 						} else{
 							$out_time = "00:00:00";
 						}

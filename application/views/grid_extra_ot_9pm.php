@@ -179,21 +179,28 @@
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
 							$in_time = $row->in_time;
-							$in_time = $this->job_card_model->time_am_pm_format($in_time);
-						}
-						else{
+							// $in_time = $this->job_card_model->time_am_pm_format($in_time);
+						}else{
 							$in_time = "00:00:00";
 						}
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
 							$out_time = $this->job_card_model->get_formated_out_time_9pm($value->emp_id, $out_time, $row->schedule_id);
 
-							if($row->eot > 1 && $row->false_ot_4 != 0){
-								$extra_ot_hour = 1;
-								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
+							if($row->eot == 1 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
-						}
-						else{
+
+							if($row->eot == 2 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->eot == 2 && $row->false_ot_4 != null && $row->false_ot_4 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							}
+
+						}else{
 							$out_time = "00:00:00";
 						}
 

@@ -150,12 +150,12 @@ class Job_card_model extends CI_Model{
 	}
 
 	function time_am_pm_format($out_time){
-		return date("H:i:s A", strtotime($out_time));
+		return date("H:i:s ", strtotime($out_time));
 	}
 
 	function time_format_ten_plus($out_time){
 		$time = strtotime($out_time);
-		return date("H:i:s A", strtotime('+11 minutes', $time));
+		return date("H:i:s ", strtotime('+11 minutes', $time));
 	}
 
 	function get_buyer_in_time($exact_time, $in_time){
@@ -173,7 +173,7 @@ class Job_card_model extends CI_Model{
 
 		$buyer_minute = $min_1st_digit + $min_2nd_digit;
 
-		return $time_format = date("H:i:s A", mktime($exact_hour, $buyer_minute, $real_second, 0, 0, 0));
+		return $time_format = date("H:i:s ", mktime($exact_hour, $buyer_minute, $real_second, 0, 0, 0));
 	}
 
 	function get_hour_min_sec($time){
