@@ -8428,9 +8428,17 @@ class Grid_model extends CI_Model{
 				per_upa.name_bn  as  per_upa_name_bn,
 				per_post.name_bn as  per_post_name_bn,
 
-				pre_dis.name_en  as  pre_dis_name_bn,
-				pre_upa.name_en  as  pre_upa_name_bn,
-				pre_post.name_en as  pre_post_name_bn,
+				per_dis.name_en  as  per_dis_name_en,
+				per_upa.name_en  as  per_upa_name_en,
+				per_post.name_en as  per_post_name_en,
+
+				pre_dis.name_bn  as  pre_dis_name_bn,
+				pre_upa.name_bn  as  pre_upa_name_bn,
+				pre_post.name_bn as  pre_post_name_bn,
+
+				pre_dis.name_en  as  pre_dis_name_en,
+				pre_upa.name_en  as  pre_upa_name_en,
+				pre_post.name_en as  pre_post_name_en,
 
 			');
 			$this->db->from('pr_emp_per_info');

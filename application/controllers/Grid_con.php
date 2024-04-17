@@ -2093,13 +2093,17 @@ class Grid_con extends CI_Controller {
 	function grid_service_book(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
-		//print_r($grid_emp_id);
-
 		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
-		// dd($data);
-
 		$this->load->view('service_book',$data);
+	}
+	function grid_final_satalment(){
+		$grid_data = $this->input->post('spl');
+		$status = $this->input->post('status');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
+		$data['unit_id'] = $this->input->post('unit_id');
+		$this->load->view('final_satalment',$data);
 	}
 
 	function grid_service_book2()
