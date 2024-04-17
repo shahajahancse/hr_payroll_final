@@ -116,13 +116,7 @@
 							<th>Remarks</th>
 						</tr>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
-						if ($row->eot > 2) {
-							$extra_ot_hour = 2.0;
-						} else if(0.0 == $row->eot) {
-							$extra_ot_hour = 0;
-						} else {
-							$extra_ot_hour = $row->eot;
-						}
+						$extra_ot_hour = 0;
 
 						if(in_array($row->shift_log_date,$emp_data['leave'])){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
@@ -186,14 +180,8 @@
 						}
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							$out_time = $this->job_card_model->get_formated_out_time_9pm($value->emp_id, $out_time, $row->schedule_id);
-
-							if($row->eot > 1 && $row->false_ot_4 != 0){
-								$extra_ot_hour = 1;
-								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
-							}
-						}
-						else{
+							$out_time = $this->job_card_model->get_formated_out_time_2ot($value->emp_id, $out_time, $row->schedule_id);
+						}else{
 							$out_time = "00:00:00";
 						}
 

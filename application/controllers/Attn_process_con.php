@@ -45,6 +45,7 @@ class Attn_process_con extends CI_Controller {
         }
 
         $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['user_id'] = $this->data['user_data']->unit_name;
         $this->data['title'] = 'Attendance Process';
         $this->data['subview'] = 'attn_con/attn_process_form';
         $this->load->view('layout/template', $this->data);
@@ -337,6 +338,7 @@ class Attn_process_con extends CI_Controller {
 
 		if($this->session->userdata('level') == 0 || $this->session->userdata('level') == 1){
 			$this->data['username'] = $this->data['user_data']->id_number;
+			$this->data['unit_id']=$this->data['user_data']->unit_name;
 			$this->data['title'] = 'kicu ekta';
 			$this->data['subview'] = 'attn_report/grid';
 			$this->load->view('layout/template', $this->data);

@@ -33,7 +33,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="unit_id">Unit Id <span style="color: red;">*</span></label>
-                    <select name="unit_id" onchange="get_data(this.value);" id="unit_id" class=" form-control input-lg">
+                    <select name="unit_id" onchange="get_data(this.value);" id="unit_id" class=" form-control ">
                         <option value="">Select Unit</option>
                         <?php foreach ($pr_units as $key => $value) {?>
                         <option value="<?php echo $value->unit_id; ?>" <?php echo $value->unit_id == $emp_designation->unit_id ? 'selected' : ''; ?>><?php echo $value->unit_name; ?></option>
@@ -45,7 +45,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="atttn_id">Attendance Bonus <span style="color: red;">*</span></label>
-                    <select name="attn_id"  id="attn_id" class="form-control input-lg ">
+                    <select name="attn_id"  id="attn_id" class="form-control  ">
                         <option value="">Select Attendance Bonus</option>
                         <option value="<?php echo $emp_designation->attn_id; ?>" selected><?= $emp_designation->allowance_attn_bonus ?></option>
                     </select>
@@ -55,7 +55,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="holiday_weekend_id">Holiday/Weekend <span style="color: red;">*</span></label>
-                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control input-lg ">
+                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control  ">
                         <option value="">Select Holyday/Weekend</option>
                         <option value="<?php echo $emp_designation->holiday_weekend_id; ?>" selected><?= $emp_designation->allowance_holiday_weekend ?></option>
                     </select>
@@ -67,7 +67,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select  Iftar Allowance <span style="color: red;">*</span></label>
-                    <select name="iftar_id"  id="iftar_id" class="form-control input-lg ">
+                    <select name="iftar_id"  id="iftar_id" class="form-control  ">
                         <option value="">Select Iftar Allowance</option>
                         <option value="<?php echo $emp_designation->iftar_id; ?>" selected><?= $emp_designation->allowance_iftar ?></option>
                     </select>
@@ -77,7 +77,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select  Night Allowance <span style="color: red;">*</span></label>
-                    <select name="night_al_id"  id="night_al_id" class="form-control input-lg ">
+                    <select name="night_al_id"  id="night_al_id" class="form-control  ">
                         <option value="">Select Night Allowance</option>
                         <option value="<?php echo $emp_designation->night_al_id; ?>" selected><?= $emp_designation->allowance_night_rules ?></option>
                     </select>
@@ -87,7 +87,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select Tiffin Allowance  <span style="color: red;">*</span></label>
-                    <select name="tiffin_id"  id="tiffin_id" class="form-control input-lg ">
+                    <select name="tiffin_id"  id="tiffin_id" class="form-control  ">
                         <option value="">Select Tiffin Allowance</option>
                         <option value="<?php echo $emp_designation->tiffin_id; ?>" selected><?= $emp_designation->allowance_tiffin ?></option>
                     </select>
@@ -112,6 +112,37 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Job Description</label>
+                            <textarea name="desig_desc" id="desig_desc" class="form-control" style="height: 200px;"><?= $emp_designation->desig_desc ?></textarea>
+                            <?=(isset($failuer['desig_desc'])) ? '<div class="alert alert-failuer">' . $failuer['desig_desc'] . '</div>' : ''; ?>
+                        </div>
+                    </div>
+                </div>
+            
+                <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+                <script>
+                    ClassicEditor
+                        .create(document.querySelector('#desig_desc'), {
+                            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                            heading: {
+                                options: [
+                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' }
+                                ]
+                            }
+                        })
+                        .then(editor => {
+                            window.editor = editor;
+                        })
+                        .catch(error => {
+                            console.error(error); 
+                        });
+                </script>
         <br>
         <div class="form-group">
             <button type="submit" class="btn btn-primary ">Submit</button></button>

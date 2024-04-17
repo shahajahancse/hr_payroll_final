@@ -14,7 +14,7 @@
 
 		.h3 {
 			margin: 5px !important;
-		    line-height: 20px !important; 
+		    line-height: 20px !important;
 		}
 		.fade.in {
 			display: flex !important;
@@ -54,13 +54,14 @@
 						<label>Unit <span style="color: red;">*</span> </label>
 						<select  name="unit_id" id="unit_id" class="form-control input-sm">
 							<option value="">Select Unit</option>
-							<?php 
+							<?php
+
 								foreach ($dept as $row) {
 									if($row['unit_id'] == $user_data->unit_name){
 									$select_data="selected";
 									}else{
-									$select_data='';
-									}  
+										continue;
+									}
 									echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 									'</option>';
 								}
@@ -73,7 +74,7 @@
 					<div class="form-group">
 						<label>Department </label>
 						<select class="form-control input-sm dept" id='dept' name='dept'>
-							<?php if (!empty($user_data->unit_name)) { 
+							<?php if (!empty($user_data->unit_name)) {
 								$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
 							<option value=''>Select Department</option>
 							<?php foreach ($dpts->result() as $key => $val) { ?>
@@ -139,12 +140,12 @@
 						<li><a href="#other" data-toggle="tab">Other Reports</a></li>
 					</ul>
 					<div class="tab-content">
+						<?php
+							$user_id = $this->session->userdata('data')->id;
+							$acl = check_acl_list($user_id);
+						?>
 						<!-- Daily Reports -->
 						<div class="tab-pane fade in active" id="daily">
-							<?php
-						        $user_id = $this->session->userdata('data')->id;
-						        $acl = check_acl_list($user_id);
-						    ?>
 							<?php if(in_array(21,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(1)">Present Report</button>
 							<?php } ?>
@@ -336,21 +337,28 @@
 							<button class="btn input-sm sbtn" onclick="grid_service_book()">Service Book</button>
 							<?php } ?>
 
+							<?php if(in_array(101,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_final_satalment()">Final Satalment</button>
+							<?php } ?>
 
 							<?php if(in_array(69,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_age_estimation()">Age estimation</button>
 							<?php } ?>
 							<?php if(in_array(70,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_extra_ot()">EOT Job Card</button>
-							<?php } ?>
-							<?php if(in_array(71,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_extra_ot_4pm()">EOT Job Card New</button>
+								<!-- actual job card -->
+							<button class="btn input-sm sbtn" onclick="grid_eot_actual()">Job Card Actual </button>
 							<?php } ?>
 							<?php if(in_array(72,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_extra_ot_9pm()">EOT Job Card 9pm</button>
+								<!-- max 2 eot -->
+							<button class="btn input-sm sbtn" onclick="grid_extra_ot_9pm()">Job Card.</button>
 							<?php } ?>
 							<?php if(in_array(73,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_extra_ot_12am()">EOT Job Card 12pm</button>
+								<!-- max 5 eot -->
+							<button class="btn input-sm sbtn" onclick="grid_extra_ot_12am()">Job Card..</button>
+							<?php } ?>
+							<?php if(in_array(71,$acl)) { ?>
+								<!-- eot all with out off day and holiday -->
+							<button class="btn input-sm sbtn" onclick="grid_extra_ot_all()">Job Card WP</button>
 							<?php } ?>
 						</div>
 						<!-- Other Reports end -->
@@ -370,7 +378,7 @@
 						<th class="" style="background:#0177bcc2;color:white">Id</th>
 						<th class=" text-center" style="background:#0177bc;color:white">Name</th>
 					</tr>
-					<?php if (!empty($employees)) { 
+					<?php if (!empty($employees)) {
 								foreach ($employees as $key => $emp) { ?>
 					<tr id="removeTr">
 						<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
@@ -540,7 +548,7 @@
 			if (unit == '') {
 				return false;
 			}
-		
+
 		    var first_date = document.getElementById('firstdate').value;
 			if (first_date == '') {
 				return false;
@@ -565,7 +573,7 @@
 					}
 					})
 				}
-			
+
 	</script>
 <script>
 	$(document).ready(function() {
@@ -574,7 +582,7 @@
 		var l3_count = localStorage.getItem('l3_count');
 		console.log(l1_count);
 		if (l1_count !== null) {
-			
+
 			$('#letter1_count').html(l1_count);
 		}
 		if (l2_count !== null) {

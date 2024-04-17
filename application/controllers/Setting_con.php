@@ -204,7 +204,7 @@ class Setting_con extends CI_Controller {
 
 	}
 	public function report_setting_save($id){
-
+		// dd($id);
 		$unit_id = $this->input->post('unit_id');
 		$date = date('Y-m-d', strtotime($this->input->post('date')));
 		$end_date = date('Y-m-d', strtotime($this->input->post('end_date')));
@@ -221,9 +221,24 @@ class Setting_con extends CI_Controller {
 			'status' => $active_status,
 			'created_by' =>  $this->data['user_data']->id,
 		);
-		if ($id == '0') {
+		if ($id == 0) {
 			$this->db->insert('pr_report_setting', $data);
 		}else{
+			$row = $this->db->where('id', $id)->get('pr_report_setting')->row();
+			if ($row->type == 1) {
+				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
+				$this->db->update('pr_emp_shift_log', array('false_ot_4' => 0));
+			} else if ($row->type == 2) {
+				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
+				$this->db->update('pr_emp_shift_log', array('false_ot_12' => 0));
+			} else {
+				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
+				$this->db->update('pr_emp_shift_log', array('false_ot_all' => 0));
+			}
+
 			$this->db->where('id', $id);
 			$this->db->update('pr_report_setting', $data);
 		}
@@ -246,7 +261,7 @@ class Setting_con extends CI_Controller {
 		$id = $this->input->post('id');
 		$this->db->where('id', $id);
 		$data=$this->db->get('pr_report_setting')->row();
-		$data->date=date('Y-m',strtotime($data->date));
+		$data->date=date('Y-m-d',strtotime($data->date));
 
 		echo json_encode($data);
 	}
@@ -255,16 +270,16 @@ class Setting_con extends CI_Controller {
 		$data = $this->db->where('id', $id)->get('pr_report_setting')->row();
 
 		if ($data->type == 1) {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
 			$this->db->update('pr_emp_shift_log', array('false_ot_4' => 0));
 		} else if ($data->type == 2) {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
 			$this->db->update('pr_emp_shift_log', array('false_ot_12' => 0));
 		} else {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
+			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
 			$this->db->update('pr_emp_shift_log', array('false_ot_all' => 0));
 		}
 		$this->db->where('id', $id);

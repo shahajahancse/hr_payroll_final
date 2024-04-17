@@ -69,11 +69,11 @@ table.dataTable tbody td {
                 </div>
                 <div class="form-group col-md-2">
                     <label for="acl_name">First Date</label>
-                    <input class="form-control input-sm date" name="date" required autocomplete="off">
+                    <input class="form-control input-sm date" id="first_date" name="date" required autocomplete="off">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="acl_name">Second Date</label>
-                    <input class="form-control input-sm date" name="end_date" required autocomplete="off">
+                    <input class="form-control input-sm date" id="second_date" name="end_date" required autocomplete="off">
                 </div>
                 <div class="form-group col-md-1">
                     <label for="acl_name">Max OT</label>
@@ -134,9 +134,9 @@ table.dataTable tbody td {
                     <td><?= date('d-m-Y', strtotime($value['end_date'])) ?></td>
                     <td><?= $value['max_ot'] ?></td>
                     <td>
-                        <?php if($value['status'] == 1){
+                        <?php if($value['type'] == 1){
                             echo "9pm job card";
-                        }else if($value['status'] == 2){
+                        }else if($value['type'] == 2){
                             echo "12am job card";
                         }else {
                             echo "all wo week";
@@ -193,46 +193,49 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     data = JSON.parse(data)
+                    console.log(data);
                     $("#unit_id").val(data.unit_id)
                     $("#active_status").val(data.status)
                     $("#max_ot").val(parseInt(data.max_ot))
-                    $("#date").val(data.date);
+                    $("#first_date").val(data.date);
+                    $("#second_date").val(data.end_date);
+                    $("#type").val(data.type);
             },
             })
         }
 
     }
-$("#report_setting_form").submit(function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    $status=$("#ancor").val();
-    if ($('unit_id').val() == '') {
-        showMessage('error', 'Please Select Unit')
-        return false
-    }
-    if ($('active_status').val() == '') {
-        showMessage('error', 'Please Select Status')
-        return false
-    }
-    $.ajax({
-        type: "POST",
-        url: "<?= base_url('setting_con/report_setting_save') ?>" + '/' + $status,
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            if (data == 'true') {
-                $("#add_form").toggle();
-                $("#report_setting_form")[0].reset();
-                showMessage('success', 'Record Added successfully')
-                window.location.reload();
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log("AJAX request error:", errorThrown);
+    $("#report_setting_form").submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $status=$("#ancor").val();
+        if ($('unit_id').val() == '') {
+            showMessage('error', 'Please Select Unit')
+            return false
         }
+        if ($('active_status').val() == '') {
+            showMessage('error', 'Please Select Status')
+            return false
+        }
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('setting_con/report_setting_save') ?>" + '/' + $status,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (data == 'true') {
+                    $("#add_form").toggle();
+                    $("#report_setting_form")[0].reset();
+                    showMessage('success', 'Record Added successfully')
+                    window.location.reload();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("AJAX request error:", errorThrown);
+            }
+        })
     })
-})
   function delete_user_mode($id,el) {
     var r = confirm("Are you sure you want to delete?");
     if (r == true) {
@@ -241,7 +244,6 @@ $("#report_setting_form").submit(function(e) {
             url: "<?= base_url('setting_con/delete_report_setting') ?>",
             data: {
                 id: $id
-
             },
             success: function(data) {
                 if (data == 'true') {

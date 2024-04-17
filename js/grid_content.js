@@ -54,7 +54,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	document.getElementById('loaader').style.display = 'flex';
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_continuous_costing_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -109,11 +109,11 @@ function daily_report(s) {
 	}
 
 	document.getElementById('loaader').style.display = 'flex';
-	
+
 	var queryString="firstdate="+firstdate+"&emp_id="+sql+"&unit_id="+unit_id+"&report_type="+s;
 	url = hostname + "grid_con/daily_report/";
-	
-	
+
+
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -161,12 +161,12 @@ function actual_monthly_salary_sheet()
 		return false;
 	}
 
-	
+
 	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/actual_monthly_salary_sheet/";
 
-   //  
+   //
 	ajaxRequest = new XMLHttpRequest();
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -214,7 +214,7 @@ function monthly_salary_sheet(){
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/monthly_salary_sheet/";
 
-   //  
+   //
 	ajaxRequest = new XMLHttpRequest();
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -254,7 +254,7 @@ function grid_monthly_eot_sheet(){
 		alert('Please select employee Id');
 		return false;
 	}
-	
+
 	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/grid_monthly_eot_sheet/";
@@ -298,7 +298,7 @@ function eot_summary_report(){
 		alert('Please select employee Id');
 		return false;
 	}
-	
+
 	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/eot_summary_report/";
@@ -343,7 +343,7 @@ function salary_summary()
 	// 	alert('Please select employee Id');
 	// 	return false;
 	// }
-	
+
 	// document.getElementById('loaader').style.display = 'flex';
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
    url =  hostname+"salary_report_con/salary_summary/";
@@ -432,7 +432,7 @@ function daily_attendance_summary()
 		}
 	}
 }
-	
+
 
 function daily_logout_report()
 {
@@ -471,7 +471,7 @@ function daily_logout_report()
 }
 
 
-// attendance Report 
+// attendance Report
 function grid_continuous_present_report()
 {
 	var firstdate = document.getElementById('firstdate').value;
@@ -507,7 +507,7 @@ function grid_continuous_present_report()
 	ajaxRequest = new XMLHttpRequest();
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"grid_con/grid_continuous_report/";
-	//     
+	//
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -516,7 +516,7 @@ function grid_continuous_present_report()
 		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_present_report.document.write(resp);
 			//continuous_present_report.stop();
@@ -558,7 +558,7 @@ function grid_continuous_absent_report()
 	ajaxRequest = new XMLHttpRequest();
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"grid_con/grid_continuous_report/";
-	//     
+	//
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -567,7 +567,7 @@ function grid_continuous_absent_report()
 		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_present_report.document.write(resp);
 			//continuous_present_report.stop();
@@ -609,7 +609,7 @@ function grid_continuous_late_report()
 	ajaxRequest = new XMLHttpRequest();
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"grid_con/grid_continuous_report/";
-	//     
+	//
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -618,7 +618,7 @@ function grid_continuous_late_report()
 		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_present_report.document.write(resp);
 			//continuous_present_report.stop();
@@ -663,11 +663,11 @@ function grid_continuous_leave_report_new()
 
 	var status = "L";
 	//alert('here');
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql;
     url =  hostname+"grid_con/grid_continuous_report_new/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -677,7 +677,7 @@ function grid_continuous_leave_report_new()
 
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_leave_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_leave_report.document.write(resp);
 			//continuous_leave_report.stop();
@@ -746,8 +746,8 @@ var report_month_sal = document.getElementById('salary_month').value;
 	//alert(year_month);
  	//var queryString="year_month="+year_month;
 	 var queryString="start="+start;
- 
- 
+
+
  url =  hostname + "index.php/payroll_con/manual_atten_co/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -846,8 +846,8 @@ ajaxRequest.onreadystatechange = function(){
 
 	$('#list1').jqGrid('GridUnload');
 
-	
-	
+
+
 	url =  hostname + "index.php/grid_con/grid_get_all_data_for_salary/"+year_month+"/"+start;
 	//var url = "http://localhost/payroll/index.php/grid_con/grid_get_all_data";
 	main_grid(url)
@@ -885,8 +885,8 @@ function grid_get_all_data(){
  //alert(start);
 
  var queryString="start="+start;
- 
- 
+
+
  url =  hostname + "index.php/payroll_con/manual_atten_co/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -973,8 +973,8 @@ ajaxRequest.onreadystatechange = function(){
 
 		$('#list1').jqGrid('GridUnload');
 
-		
-		
+
+
 		url =  hostname + "index.php/grid_con/grid_get_all_data/"+start;
 		//var url = "http://localhost/payroll/index.php/grid_con/grid_get_all_data";
 		main_grid(url)
@@ -1009,8 +1009,8 @@ function grid_get_all_data_for_entry(){
 	 //alert(start);
 
 	 var queryString="start="+start;
-	 
-	 
+
+
 	 url =  hostname + "index.php/payroll_con/manual_atten_co/";
 	 ajaxRequest.open("POST", url, true);
 	 ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -1106,8 +1106,8 @@ function grid_get_all_data_for_entry(){
 
 		$('#list1').jqGrid('GridUnload');
 
-		
-		
+
+
 		url =  hostname + "index.php/grid_con/grid_get_all_data/"+start;
 		//var url = "http://localhost/payroll/index.php/grid_con/grid_get_all_data";
 		main_grid(url)
@@ -1121,7 +1121,7 @@ function grid_get_all_data_for_entry(){
 
 function act_advance_salary_sheet(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
-	
+
 	try{
 	   // Opera 8.0+, Firefox, Safari
 	   ajaxRequest = new XMLHttpRequest();
@@ -1145,22 +1145,22 @@ function act_advance_salary_sheet(){
 		alert("Please select month");
 		return;
 	}
-	
+
 	// var report_year_sal = document.getElementById('report_year_sal').value;
 	// if(report_year_sal =='')
 	// {
 	// 	alert("Please select year");
 	// 	return;
 	// }
-	
+
 	var grid_start = document.getElementById('unit_id').value;
 	if(grid_start =='Select'){
 		alert("Please select Category options");
 		return;
 	}
-	
+
 	var grid_status = document.getElementById('status').value;
-	
+
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
 
@@ -1170,12 +1170,12 @@ function act_advance_salary_sheet(){
 	}
 	var sal_year_month =report_month_sal+"-"+"01";
 
-	
-		
-	
+
+
+
 	url =  hostname+"index.php/salary_report_con/act_advance_salary_sheet/";
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&sql="+sql+"&unit_id="+grid_start;
-   
+
 //    $(".clearfix").dialog("open");
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -1183,13 +1183,13 @@ function act_advance_salary_sheet(){
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			// $(".clearfix").dialog("close");		
+			// $(".clearfix").dialog("close");
 			sal_sheet_actual_with_eot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			sal_sheet_actual_with_eot.document.write(resp);
-			sal_sheet_actual_with_eot.stop();			
+			sal_sheet_actual_with_eot.stop();
 		}
 	}
-	
+
 }
 
 
@@ -1220,8 +1220,8 @@ function grid_per_file(){
 		return false;
 	}
 
-	// 
-	// 
+	//
+	//
 	url =  hostname + "index.php/grid_con/grid_per_file/"+sql;
 
 	per_file = window.open(url,'per_file',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -1276,8 +1276,8 @@ function grid_all_search_for_salary(){
 	// alert(start+','+dept+','+section+','+line+','+designation+','+sex+','+status+','+w_type+','+position);
 	$('#list1').jqGrid('GridUnload');
 	// alert(sex);return false;
-	
-	
+
+
 	url =  hostname + "index.php/grid_con/grid_all_search_for_salary/"+dept+"/"+section+"/"+line+"/"+designation+"/"+sex+"/"+status+"/"+year_month+"/"+start+"/"+w_type+"/"+position;
 	//var url = "http://localhost/payroll/index.php/grid_con/grid_all_search/"+dept+"/"+section+"/"+line+"/"+designation;
 	main_grid(url)
@@ -1295,8 +1295,8 @@ function grid_all_search(){
 
 	$('#list1').jqGrid('GridUnload');
 
-	
-	
+
+
 	url =  hostname + "index.php/grid_con/grid_all_search/"+dept+"/"+section+"/"+line+"/"+designation+"/"+sex+"/"+status+"/"+start+"/"+position;
 	main_grid(url)
 }
@@ -1318,8 +1318,8 @@ function grid_all_search_out_miss(){
 	}
 	// alert(f_date);
 	$('#list1').jqGrid('GridUnload');
-	
-	
+
+
 	url =  hostname + "index.php/grid_con/grid_all_search_out_miss/"+dept+"/"+section+"/"+line+"/"+designation+"/"+sex+"/"+status+"/"+start+"/"+position+"/"+out_miss+"/"+f_date;
 	main_grid(url)
 }
@@ -1374,10 +1374,10 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	// 	alert("Please select Employee ID");
 	// 	return false;
 	// }
-//     
+//
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_actual_present_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1385,7 +1385,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			//daily_present_report.stop();
@@ -1431,15 +1431,15 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert('Please select employee Id');
       return false;
 	}
-		// 
-		
+		//
+
 	//url =  hostname+"index.php/grid_con/grid_daily_costing_report/"+firstdate+"/"+unit_id;
 
 	//daily_costing_rpt = window.open(url,'daily_costing_rpt',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	//daily_costing_rpt.moveTo(0,0);
 	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_costing_report/";
-   //     
+   //
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1447,7 +1447,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			// 
+			//
 			daily_costing_rpt = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_costing_rpt.document.write(resp);
 			//daily_costing_rpt.stop();
@@ -1486,12 +1486,12 @@ function grid_leave_application_form()
 		return false;
 	}
 
-	
-	
+
+
 
    var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&emp_id="+emp_id;
    url =  hostname+"index.php/grid_con/grid_leave_application_form/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1499,7 +1499,7 @@ function grid_leave_application_form()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			leave_application_form = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			leave_application_form.document.write(resp);
 		}
@@ -1554,18 +1554,18 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_absent_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_absent_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_absent_report.document.write(resp);
 			//daily_absent_report.stop();
@@ -1612,11 +1612,11 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
+	//
 	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   hostname.indexOf("index.php"));
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1624,7 +1624,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			//daily_present_report.stop();
@@ -1672,11 +1672,11 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		return false;
 	}
 
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_late_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1684,7 +1684,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			//daily_present_report.stop();
@@ -1731,11 +1731,11 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_out_punch_miss_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1743,7 +1743,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			//daily_present_report.stop();
@@ -1789,18 +1789,18 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_out_in_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			//daily_present_report.stop();
@@ -1847,10 +1847,10 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 		alert('Please select employee Id');
 		return false;
 	}
-// hostname = window .lo cat ion .h re f; 
+// hostname = window .lo cat ion .h re f;
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_actual_out_in_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -1858,7 +1858,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			actual_out_in_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			actual_out_in_report.document.write(resp);
 			//actual_out_in_report.stop();
@@ -1906,19 +1906,19 @@ function grid_daily_holiday_weekend_present_report()
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_holiday_weekend_present_report/";
- 	 
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			 
+
 			daily_holiday_weekend_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_holiday_weekend_present_report.document.write(resp);
 			//daily_holiday_weekend_present_report.stop();
@@ -1966,18 +1966,18 @@ function grid_daily_holiday_weekend_absent_report()
 		alert('Please select employee Id');
 		return false;
 	}
-	//  
+	//
 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_holiday_weekend_absent_report/";
- 	 
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			 
+
 			daily_holiday_weekend_absent_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_holiday_weekend_absent_report.document.write(resp);
 			//daily_holiday_weekend_absent_report.stop();
@@ -2027,18 +2027,18 @@ function grid_daily_move_report()
 		return false;
 	}
 
-		//  
+		//
 
 		var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
 	   url =  hostname+"index.php/grid_con/grid_daily_move_report/";
-	 	 
+
 	   ajaxRequest.open("POST", url, true);
 	   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	    ajaxRequest.send(queryString);
 		ajaxRequest.onreadystatechange = function(){
 			if(ajaxRequest.readyState == 4){
 				var resp = ajaxRequest.responseText;
-				 
+
 				daily_move_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 				daily_move_report.document.write(resp);
 				//daily_move_report.stop();
@@ -2104,18 +2104,18 @@ function grid_daily_punch_report()
 		return false;
 	}
 
-//  
+//
 
 	var queryString="firstdate="+firstdate+"&f_time="+f_time+"&s_time="+s_time+"&spl="+sql+"&grid_unit="+grid_unit;
    url =  hostname+"index.php/grid_con/grid_daily_punch_report/";
- 	 
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			 
+
 			daily_out_punch = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_out_punch.document.write(resp);
 			//daily_out_punch.stop();
@@ -2177,11 +2177,11 @@ function grid_continuous_report_limit(limit)
 	var status = "A";
 	var limit = limit;
 
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id+"&limit="+limit;
     url =  hostname+"index.php/grid_con/grid_continuous_report_limit/";
-     
+
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
@@ -2189,7 +2189,7 @@ function grid_continuous_report_limit(limit)
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_absent_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_absent_report.document.write(resp);
 			//continuous_absent_report.stop();
@@ -2245,11 +2245,11 @@ function grid_continuous_leave_report_old()
 
 	var status = "L";
 
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_continuous_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2257,7 +2257,7 @@ function grid_continuous_leave_report_old()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_leave_report_old = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_leave_report_old.document.write(resp);
 			//continuous_leave_report_old.stop();
@@ -2313,11 +2313,11 @@ function grid_continuous_leave_report()
 	}
 	var status = "L";
 
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_continuous_leave_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2325,7 +2325,7 @@ function grid_continuous_leave_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_leave_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_leave_report.document.write(resp);
 			//continuous_leave_report.stop();
@@ -2389,13 +2389,13 @@ function grid_continuous_ot_eot_report()
 
 	var status = "P";
 
-	// 
-	// 
+	//
+	//
 	document.getElementById('loaader').style.display = 'flex';
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"grid_con/grid_continuous_ot_eot_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2405,7 +2405,7 @@ function grid_continuous_ot_eot_report()
 
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_ot_eot_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_ot_eot_report.document.write(resp);
 			//continuous_ot_eot_report.stop();
@@ -2463,10 +2463,10 @@ function grid_continuous_incre_report()
 	}
 		document.getElementById('loaader').style.display = 'flex';
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
-	
-	
+
+
     url =  hostname+"grid_con/continuous_incre_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2475,7 +2475,7 @@ function grid_continuous_incre_report()
 			document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_incre_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_incre_report.document.write(resp);
 			//continuous_incre_report.stop();
@@ -2533,10 +2533,10 @@ function grid_continuous_prom_report()
 	}
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
-	
-	
+
+
     url =  hostname+"index.php/grid_con/continuous_prom_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -2544,7 +2544,7 @@ function grid_continuous_prom_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_prom_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_prom_report.document.write(resp);
 			//continuous_prom_report.stop();
@@ -2601,17 +2601,17 @@ function grid_continuous_increment_promotion_proposal()
 	}
 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
-	
-	
+
+
     url =  hostname+"index.php/grid_con/continuous_increment_promotion_proposal/";
-   	 
+
    	ajaxRequest.open("POST", url, true);
    	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			continuous_increment_promotion_proposal = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			continuous_increment_promotion_proposal.document.write(resp);
 			//continuous_increment_promotion_proposal.stop();
@@ -2649,18 +2649,18 @@ function grid_app_letter(){
 	// alert('Please select employee Id');
     //   return false;
     // }
-	// 
-	// 
+	//
+	//
 	var queryString="emp_ids="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_app_letter/";
-	//  
+	//
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 			if(ajaxRequest.readyState == 4){
 				var resp = ajaxRequest.responseText;
-				// 
+				//
 				app_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 				app_letter.document.write(resp);
 				//app_letter.stop();
@@ -2710,18 +2710,18 @@ function grid_emp_job_application(){
 	}
 
 
-	// 
-	// 
+	//
+	//
 	var queryString="spl="+sql+"&unit_id="+unit_id;
     url =  hostname+"index.php/grid_con/grid_emp_job_application/";
-//     
+//
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			// 
+			//
 			job_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			job_letter.document.write(resp);
 			//job_letter.stop();
@@ -2820,18 +2820,18 @@ function grid_letter2_report()
 		return false;
 	}
 
-	
-	
+
+
 	var queryString="spl="+sql+"&unit_id="+unit_id+"&firstdate="+firstdate;
    url =  hostname+"index.php/grid_con/grid_letter2_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			letter_2 = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			letter_2.document.write(resp);
 			//letter_2.stop();
@@ -2877,18 +2877,18 @@ function grid_letter3_report(){
 		return false;
 	}
 
-	
-	
+
+
 	var queryString="spl="+sql+"&unit_id="+unit_id+"&firstdate="+firstdate;
    url =  hostname+"index.php/grid_con/grid_letter3_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			app_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			app_letter.document.write(resp);
 			//app_letter.stop();
@@ -2939,18 +2939,18 @@ function grid_ctpat()
 	}
 
 
-	
-	
+
+
 	var queryString="spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_ctpat/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			job_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			job_letter.document.write(resp);
 			//job_letter.stop();
@@ -3022,14 +3022,14 @@ function grid_pay_slip()
 
 	var queryString="salary_month="+year_month+"&sql="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			pay_slip = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			pay_slip.document.write(resp);
 			//pay_slip.stop();
@@ -3097,22 +3097,22 @@ function grid_pay_slip_non_compliance()
 		return false;
 	}
 
-	
-	
+
+
 	//url =  hostname + "index.php/salary_report_con/grid_pay_slip"+"/"+year_month+"/"+sql+"/"+unit_id;
 
 	//pay_slip = window.open(url,'pay_slip',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip_non_compliance/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			pay_slip = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			pay_slip.document.write(resp);
 			//pay_slip.stop();
@@ -3181,22 +3181,22 @@ function grid_pay_slip_actual(){
 		return false;
 	}
 
-	
-	
+
+
 	//url =  hostname + "index.php/salary_report_con/grid_pay_slip"+"/"+year_month+"/"+sql+"/"+unit_id;
 
 	//pay_slip = window.open(url,'pay_slip',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip_actual/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			pay_slip = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			pay_slip.document.write(resp);
 			//pay_slip.stop();
@@ -3265,22 +3265,22 @@ function grid_pay_slip_com()
 		return false;
 	}
 
-	
-	
+
+
 	//url =  hostname + "index.php/salary_report_con/grid_pay_slip"+"/"+year_month+"/"+sql+"/"+unit_id;
 
 	//pay_slip = window.open(url,'pay_slip',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip_com/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			pay_slip = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			pay_slip.document.write(resp);
 			//pay_slip.stop();
@@ -3348,22 +3348,22 @@ function grid_pay_slip_com_non_com_mix()
 		return false;
 	}
 
-	
-	
+
+
 	//url =  hostname + "index.php/salary_report_con/grid_pay_slip"+"/"+year_month+"/"+sql+"/"+unit_id;
 
 	//pay_slip = window.open(url,'pay_slip',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	//pay_slip.moveTo(0,0);
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_pay_slip_com_non_com_mix/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			pay_slip = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			pay_slip.document.write(resp);
 			//pay_slip.stop();
@@ -3424,7 +3424,7 @@ var year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 		return false;
 	}
 
-	
+
 
 	url =  hostname + "index.php/salary_report_con/grid_provident_fund"+"/"+year_month+"/"+sql;
 
@@ -3532,8 +3532,8 @@ function grid_prom_report()
 		   alert("Please select Category options");
 		   return false;
 	   }
-   
-   
+
+
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
 
@@ -3542,17 +3542,17 @@ function grid_prom_report()
 		return false;
 	}
 	   var queryString="firstdate="+firstdate+"&spl="+sql;
-	//    
-	//    
+	//
+	//
 	   url =  hostname+"index.php/grid_con/prom_report/";
-		   
+
 		  ajaxRequest.open("POST", url, true);
 		  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		  ajaxRequest.send(queryString);
 	   ajaxRequest.onreadystatechange = function(){
 		   if(ajaxRequest.readyState == 4){
 			   var resp = ajaxRequest.responseText;
-			   
+
 			   continuous_increment_promotion_proposal = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			   continuous_increment_promotion_proposal.document.write(resp);
 			   //continuous_increment_promotion_proposal.stop();
@@ -3641,10 +3641,10 @@ function grid_pension_report()
 		return false;
 	}
 
-    
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_pension_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -3652,7 +3652,7 @@ function grid_pension_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			//daily_present_report.stop();
@@ -3746,105 +3746,27 @@ function grid_id_card_english()
 		return false;
 	}
 
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/grid_id_card_english/"+sql+"/"+unit_id;
 
 	id_card_english = window.open(url,'id_card_english',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	id_card_english.moveTo(0,0);
 }
-function grid_job_card()
-{
-	var ajaxRequest;  // The variable that makes Ajax possible!
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
-	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
-		alert("Please select First date");
-		return false;
-	}
-	var seconddate = document.getElementById('seconddate').value;
-	if(seconddate =='')
-	{
-		alert("Please select Second date");
-		return false;
-	}
 
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select unit !");
-		return false;
-	}
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
+function grid_auto_notify_FW(){
 
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
+	var ajaxRequest = new XMLHttpRequest();
 
-	document.getElementById('loaader').style.display = 'flex';
-	/*
-	
-
-	url =  hostname + "index.php/grid_con/grid_job_card/"+firstdate+"/"+seconddate+"/"+sql+"/"+unit_id;
-
-	job_card = window.open(url,'job_card',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	job_card.moveTo(0,0);
-	*/
-	
-	
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
-   url =  hostname+"index.php/grid_con/grid_job_card/";
-    
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function () {
-		document.getElementById('loaader').style.display = 'none';
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			
-			job_card = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			job_card.document.write(resp);
-			//job_card.stop();
-		}
-	}
-}
-
-function grid_auto_notify_FW()
-
-{
-
-var ajaxRequest = new XMLHttpRequest();
-
-//alert('how');exit;
-var firstdate = document.getElementById('date').value;
-var grid_emp_id = document.getElementById('grid_emp_id').value;
+	//alert('how');exit;
+	var firstdate = document.getElementById('date').value;
+	var grid_emp_id = document.getElementById('grid_emp_id').value;
 
 	var queryString="grid_emp_id="+grid_emp_id+"&firstdate="+firstdate;
 	//alert(queryString);exit;
    url =  hostname+"index.php/grid_con/grid_auto_notify_FW/";
    //alert(url);exit;
-    
+
    ajaxRequest.open("POST", url, true);
    //exit;
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -3854,28 +3776,26 @@ var grid_emp_id = document.getElementById('grid_emp_id').value;
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			// alert('hey');exit;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 		}
 	}
 }
 
-function grid_auto_notify_SW()
+function grid_auto_notify_SW(){
 
-{
+	var ajaxRequest = new XMLHttpRequest();
 
-var ajaxRequest = new XMLHttpRequest();
-
-//alert('how');exit;
-var firstdate = document.getElementById('date').value;
-var grid_emp_id = document.getElementById('grid_emp_id_2').value;
+	//alert('how');exit;
+	var firstdate = document.getElementById('date').value;
+	var grid_emp_id = document.getElementById('grid_emp_id_2').value;
 
 	var queryString="grid_emp_id="+grid_emp_id+"&firstdate="+firstdate;
 	//alert(queryString);exit;
    url =  hostname+"index.php/grid_con/grid_auto_notify_SW/";
    //alert(url);exit;
-    
+
    ajaxRequest.open("POST", url, true);
    //exit;
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -3885,28 +3805,26 @@ var grid_emp_id = document.getElementById('grid_emp_id_2').value;
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			//alert(resp);exit;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 		}
 	}
 }
 
-function grid_auto_notify_TW()
+function grid_auto_notify_TW(){
 
-{
+	var ajaxRequest = new XMLHttpRequest();
 
-var ajaxRequest = new XMLHttpRequest();
-
-//alert('how');exit;
-var firstdate = document.getElementById('date').value;
-var grid_emp_id = document.getElementById('grid_emp_id_3').value;
+	//alert('how');exit;
+	var firstdate = document.getElementById('date').value;
+	var grid_emp_id = document.getElementById('grid_emp_id_3').value;
 
 	var queryString="grid_emp_id="+grid_emp_id+"&firstdate="+firstdate;
 	//alert(queryString);exit;
    url =  hostname+"index.php/grid_con/grid_auto_notify_TW/";
    //alert(url);exit;
-    
+
    ajaxRequest.open("POST", url, true);
    //exit;
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -3916,7 +3834,7 @@ var grid_emp_id = document.getElementById('grid_emp_id_3').value;
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			//alert(resp);exit;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 		}
@@ -3924,20 +3842,19 @@ var grid_emp_id = document.getElementById('grid_emp_id_3').value;
 }
 
 function grid_auto_notify_LW()
-
 {
 
-var ajaxRequest = new XMLHttpRequest();
+	var ajaxRequest = new XMLHttpRequest();
 
-//alert('how');exit;
-var firstdate = document.getElementById('date').value;
-var grid_emp_id = document.getElementById('grid_emp_id_4').value;
+	//alert('how');exit;
+	var firstdate = document.getElementById('date').value;
+	var grid_emp_id = document.getElementById('grid_emp_id_4').value;
 
 	var queryString="grid_emp_id="+grid_emp_id+"&firstdate="+firstdate;
 	//alert(queryString);exit;
    url =  hostname+"index.php/grid_con/grid_auto_notify_LW/";
    //alert(url);exit;
-    
+
    ajaxRequest.open("POST", url, true);
    //exit;
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -3947,7 +3864,7 @@ var grid_emp_id = document.getElementById('grid_emp_id_4').value;
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
 			//alert(resp);exit;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 		}
@@ -3993,7 +3910,7 @@ function grid_pf_statement()
 		return false;
 	}
 
-	
+
 
 	url =  hostname + "index.php/grid_con/grid_pf_statement/"+year+"/"+month+"/"+sql;
 
@@ -4049,7 +3966,7 @@ function grid_monthly_att_register_ot(){
 	document.getElementById('loaader').style.display = 'flex';
    var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_monthly_att_register_ot/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -4108,11 +4025,11 @@ function grid_monthly_att_register(i)
 		alert('Please select employee Id');
 		return false;
 	}
-	
-	
+
+
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id+"&status="+status;
    url =  hostname+"index.php/grid_con/grid_monthly_att_register/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -4120,7 +4037,7 @@ function grid_monthly_att_register(i)
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			monthly_att_register = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			monthly_att_register.document.write(resp);
 			//monthly_att_register.stop();
@@ -4172,11 +4089,11 @@ function grid_yearly_leave_register(){
 		return false;
 	}
 
-	
-	
+
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_yearly_leave_register/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -4184,7 +4101,7 @@ function grid_yearly_leave_register(){
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			yearly_leave_reister = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			yearly_leave_reister.document.write(resp);
 			//yearly_leave_reister.stop();
@@ -4193,26 +4110,91 @@ function grid_yearly_leave_register(){
 
 }
 
-function grid_extra_ot(){
+function grid_eot_actual() {
+  var ajaxRequest; // The variable that makes Ajax possible!
+  try {
+    // Opera 8.0+, Firefox, Safari
+    ajaxRequest = new XMLHttpRequest();
+  } catch (e) {
+    // Internet Explorer Browsers
+    try {
+      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+      try {
+        ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+      } catch (e) {
+        // Something went wrong
+        alert("Your browser broke!");
+        return false;
+      }
+    }
+  }
+
+  var firstdate = document.getElementById("firstdate").value;
+  if (firstdate == "") {
+    alert("Please select First date");
+    return false;
+  }
+  var seconddate = document.getElementById("seconddate").value;
+  if (seconddate == "") {
+    alert("Please select Second date");
+    return false;
+  }
+
+  var unit_id = document.getElementById("unit_id").value;
+  if (unit_id == "Select") {
+    alert("Please select unit !");
+    return false;
+  }
+
+  var checkboxes = document.getElementsByName("emp_id[]");
+  var sql = get_checked_value(checkboxes);
+
+  if (sql == "") {
+    alert("Please select employee Id");
+    return false;
+  }
+
+  document.getElementById("loaader").style.display = "flex";
+
+  var queryString = "firstdate=" + firstdate + "&seconddate=" + seconddate + "&spl=" + sql + "&unit_id=" + unit_id;
+  url = hostname + "index.php/grid_con/grid_eot_actual/";
+
+  ajaxRequest.open("POST", url, true);
+  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+  ajaxRequest.send(queryString);
+
+  ajaxRequest.onreadystatechange = function () {
+    document.getElementById("loaader").style.display = "none";
+    if (ajaxRequest.readyState == 4) {
+      var resp = ajaxRequest.responseText;
+      extra_ot = window.open("","_blank","menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
+      extra_ot.document.write(resp);
+      extra_ot.stop();
+    }
+  };
+}
+
+function grid_job_card()
+{
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
-	   // Opera 8.0+, Firefox, Safari
-	   ajaxRequest = new XMLHttpRequest();
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
 	}catch (e){
-	   // Internet Explorer Browsers
-	   try{
-	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-	   }catch (e) {
-	      try{
-	         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-	      }catch (e){
-	         // Something went wrong
-	         alert("Your browser broke!");
-	         return false;
-	      }
-	   }
+	// Internet Explorer Browsers
+	try{
+		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch (e) {
+		try{
+			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch (e){
+			// Something went wrong
+			alert("Your browser broke!");
+			return false;
+		}
 	}
-
+	}
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate =='')
 	{
@@ -4226,14 +4208,12 @@ function grid_extra_ot(){
 		return false;
 	}
 
-
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
 		alert("Please select unit !");
 		return false;
 	}
-
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
 
@@ -4243,22 +4223,27 @@ function grid_extra_ot(){
 	}
 
 	document.getElementById('loaader').style.display = 'flex';
-	
+	/*
+	url =  hostname + "index.php/grid_con/grid_job_card/"+firstdate+"/"+seconddate+"/"+sql+"/"+unit_id;
 
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
-    url =  hostname+"index.php/grid_con/grid_extra_ot/";
-    
-	ajaxRequest.open("POST", url, true);
-	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-	ajaxRequest.send(queryString);
+	job_card = window.open(url,'job_card',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
+	job_card.moveTo(0,0);
+	*/
+
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
+   url =  hostname+"index.php/grid_con/grid_job_card/";
+
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function () {
 		document.getElementById('loaader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			extra_ot.document.write(resp);
-			extra_ot.stop();
+			job_card = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			job_card.document.write(resp);
+			job_card.stop();
 		}
 	}
 }
@@ -4322,64 +4307,6 @@ function grid_extra_ot_9pm(){
 	}
 }
 
-function grid_extra_ot_4pm(){
-	var ajaxRequest;  // The variable that makes Ajax possible!
-	try{
-	   // Opera 8.0+, Firefox, Safari
-	   ajaxRequest = new XMLHttpRequest();
-	}catch (e){
-	    // Internet Explorer Browsers
-	    try{
-	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-	    }catch (e) {
-	        try{
-	           ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-	        }catch (e){
-	           // Something went wrong
-	           alert("Your browser broke!");
-	           return false;
-	        }
-	    }
-	}
-	var firstdate = document.getElementById('firstdate').value;
-	if(firstdate ==''){
-		alert("Please select First date");
-		return false;
-	}
-	var seconddate = document.getElementById('seconddate').value;
-	if(seconddate ==''){
-		alert("Please select Second date");
-		return false;
-	}
-
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select Category options");
-		return false;
-	}
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
-	document.getElementById('loaader').style.display = 'flex';
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
-    url =  hostname+"index.php/grid_con/grid_extra_ot_4pm/";
-    ajaxRequest.open("POST", url, true);
-    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-    ajaxRequest.send(queryString);
-	ajaxRequest.onreadystatechange = function () {
-		document.getElementById('loaader').style.display = 'none';
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			daily_present_report.document.write(resp);
-			daily_present_report.stop();
-		}
-	}
-}
 function grid_extra_ot_12am(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
@@ -4439,6 +4366,63 @@ function grid_extra_ot_12am(){
 	}
 }
 
+function grid_extra_ot_all() {
+  var ajaxRequest; // The variable that makes Ajax possible!
+  try {
+    // Opera 8.0+, Firefox, Safari
+    ajaxRequest = new XMLHttpRequest();
+  } catch (e) {
+    // Internet Explorer Browsers
+    try {
+      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+      try {
+        ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+      } catch (e) {
+        // Something went wrong
+        alert("Your browser broke!");
+        return false;
+      }
+    }
+  }
+  var firstdate = document.getElementById("firstdate").value;
+  if (firstdate == "") {
+    alert("Please select First date");
+    return false;
+  }
+  var seconddate = document.getElementById("seconddate").value;
+  if (seconddate == "") {
+    alert("Please select Second date");
+    return false;
+  }
+
+  var unit_id = document.getElementById("unit_id").value;
+  if (unit_id == "Select") {
+    alert("Please select Category options");
+    return false;
+  }
+  var checkboxes = document.getElementsByName("emp_id[]");
+  var sql = get_checked_value(checkboxes);
+  if (sql == "") {
+    alert("Please select employee Id");
+    return false;
+  }
+  document.getElementById("loaader").style.display = "flex";
+  var queryString = "firstdate=" + firstdate + "&seconddate=" + seconddate + "&spl=" + sql;
+  var url = hostname + "index.php/grid_con/grid_extra_ot_all/";
+  ajaxRequest.open("POST", url, true);
+  ajaxRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+  ajaxRequest.send(queryString);
+  ajaxRequest.onreadystatechange = function () {
+    document.getElementById("loaader").style.display = "none";
+    if (ajaxRequest.readyState == 4) {
+      var resp = ajaxRequest.responseText;
+      daily_present_report = window.open("", "_blank", "menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
+      daily_present_report.document.write(resp);
+      daily_present_report.stop();
+    }
+  };
+}
 
 function grid_extra_ot_mix()
 {
@@ -4487,11 +4471,11 @@ function grid_extra_ot_mix()
 		alert('Please select employee Id');
 		return false;
 	}
-	
-	
+
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_extra_ot_mix/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -4499,7 +4483,7 @@ function grid_extra_ot_mix()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			extra_ot.document.write(resp);
 			//extra_ot.stop();
@@ -4542,7 +4526,7 @@ function grid_earn_leave(){
 		return false;
 	}
 	// hostname = window. location.href;
-// 
+//
 	// url =  hostname + "index.php/grid_con/grid_earn_leave_report/"+sql;
 
 	// grid_earn_leave_report = window.open(url,'grid_earn_leave_report',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -4551,7 +4535,7 @@ function grid_earn_leave(){
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
    	url =  hostname+"index.php/grid_con/grid_earn_leave_report/";
-    
+
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -4627,8 +4611,8 @@ function manual_attendance_entry(){
 	okyes=confirm('Are you sure you want to insert attendance?');
 	if(okyes==false) return false;
 
-	
-	
+
+
 	url =  hostname + "index.php/entry_system_con/manual_attendance_entry/";
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&m_s_time="+m_s_time+"&spl="+sql;
 
@@ -4700,7 +4684,7 @@ function manual_entry_Delete()
  okyes=confirm('Are you sure you want to delete?');
 if(okyes==false) return false;
 
-	
+
 
 	url =  hostname + "index.php/entry_system_con/manual_entry_Delete/";
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
@@ -4756,7 +4740,7 @@ function manual_attendance_sheet()
 		alert("Please Enter Emp. ID");
 		return false;
 	}
-	
+
 
 	url =  hostname + "index.php/entry_system_con/manual_attendance_sheet/"+firstdate+"/"+seconddate+"/"+manual_emp_id;
 	attn_sheet = window.open(url,'attn_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -4802,7 +4786,7 @@ function manual_eot_modification()
 		return false;
 	}
 
-	
+
 
 	url =  hostname + "index.php/entry_system_con/manual_eot_modification/"+firstdate+"/"+seconddate+"/"+manual_eot_emp_id;
 
@@ -4868,7 +4852,7 @@ function manual_ot_eot_modification_for_multiple_employee()
  	okyes=confirm('Are you sure ?');
 	if(okyes==false) return false;
 
-	
+
 
 	url =  hostname + "index.php/entry_system_con/manual_ot_eot_modification_for_multiple/";
 
@@ -4940,7 +4924,7 @@ function save_work_off(){
 	okyes=confirm('Are you sure you want to insert weekend?');
 	if(okyes==false) return false;
 
-	
+
 
 	url =  hostname + "index.php/entry_system_con/save_work_off/";
 
@@ -5013,8 +4997,8 @@ function delete_work_off()
  okyes=confirm('Are you sure you want to Delete weekend?');
 if(okyes==false) return false;
 
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/entry_system_con/delete_work_off/";
 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
@@ -5098,7 +5082,7 @@ function save_holiday()
  okyes=confirm('Are you sure you want to insert holiday?');
 if(okyes==false) return false;
 
-	
+
 
 	url =  hostname + "index.php/entry_system_con/save_holiday/";
 
@@ -5173,7 +5157,7 @@ function delete_holiday()
  okyes=confirm('Are you sure you want to Delete holiday?');
 if(okyes==false) return false;
 
-	
+
 
 	url =  hostname + "index.php/entry_system_con/delete_holiday/";
 
@@ -5210,7 +5194,7 @@ function save_date(){
 	okyes=confirm('Are you sure you want to insert Date?');
 	if(okyes==false) return false;
 
-	
+
 
 
 	var queryString="firstdate="+firstdate;
@@ -5261,7 +5245,7 @@ function delete_shift_log_info(){
 	okyes=confirm('Are you sure you want to Delete Date?');
 	if(okyes==false) return false;
 
-	
+
 
 
 	var queryString="firstdate="+firstdate+"&spl="+sql;
@@ -5348,18 +5332,18 @@ var unit_id = document.getElementById('unit_id').value;
 		return false;
 	}
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_monthly_salary_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			sal_sheet = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			sal_sheet.document.write(resp);
 			//sal_sheet.stop();
@@ -5440,18 +5424,18 @@ function grid_actual_monthly_salary_sheet(){
 		return false;
 	}
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			sal_sheet_actual.document.write(resp);
 			//sal_sheet_actual.stop();
@@ -5535,18 +5519,18 @@ function grid_actual_monthly_salary_sheet_not_sec()
 		return false;
 	}
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id+"&salary_draw="+salary_draw+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet_not_sec/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			sal_sheet_actual.document.write(resp);
 			//sal_sheet_actual.stop();
@@ -5625,18 +5609,18 @@ function grid_mix_salary_sheet()
 		return false;
 	}
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id+"&custom_salarydate="+custom_salarydate;
    url =  hostname+"index.php/salary_report_con/grid_mix_salary_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			sal_sheet_actual = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			sal_sheet_actual.document.write(resp);
 			//sal_sheet_actual.stop();
@@ -5704,21 +5688,21 @@ function grid_actual_monthly_salary_sheet_with_eot()
 	}
 
 
-	
-	
+
+
 
 
 
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_actual_monthly_salary_sheet_with_eot/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
    ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			sal_sheet_actual_with_eot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			sal_sheet_actual_with_eot.document.write(resp);
 			//sal_sheet_actual_with_eot.stop();
@@ -5779,8 +5763,8 @@ function grid_monthly_allowance_with_eot()
 	}
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	// 
-	// 
+	//
+	//
 	url =  hostname + "index.php/salary_report_con/grid_monthly_allowance_with_eot/"+sal_year_month+"/"+status+"/"+sql;
 
 	monthly_allowance_with_eot = window.open(url,'monthly_allowance_with_eot',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -5846,18 +5830,18 @@ function grid_festival_bonus()
 	}
     var sal_year_month = report_month_sal+"-"+"01";
 	/*
-	
+
 
 	url =  hostname + "index.php/salary_report_con/grid_festival_bonus/"+sal_year_month+"/"+status+"/"+sql;
 
 	festival_bonus = window.open(url,'festival_bonus',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	festival_bonus.moveTo(0,0);
 	*/
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -5865,7 +5849,7 @@ function grid_festival_bonus()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			festival_bonus = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			festival_bonus.document.write(resp);
 			//festival_bonus.stop();
@@ -5933,25 +5917,25 @@ function grid_advance_salary_sheet(){
 	}
 var sal_year_month = report_month_sal+"-"+"01";
 	/*
-	
+
 
 	url =  hostname + "index.php/salary_report_con/grid_advance_salary_sheet/"+sal_year_month+"/"+status+"/"+sql;
 
 	advance_salary_sheet = window.open(url,'advance_salary_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	advance_salary_sheet.moveTo(0,0); */
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_advance_salary_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			advance_salary_sheet = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			advance_salary_sheet.document.write(resp);
 			//advance_salary_sheet.stop();
@@ -6007,11 +5991,11 @@ function sec_sal_summary_report(){
 
 	var sal_year_month = report_month_sal+"-"+"01";
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/sec_salary_summary/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6019,7 +6003,7 @@ function sec_sal_summary_report(){
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			summary_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			summary_report.document.write(resp);
 			//summary_report.stop();
@@ -6056,11 +6040,11 @@ function salary_summary_test(){
 
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/salary_summary_test/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6068,7 +6052,7 @@ function salary_summary_test(){
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			summary_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			summary_report.document.write(resp);
 		}
@@ -6105,11 +6089,11 @@ function salary_summary_compliance(){
 
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&stop_salary="+stop_salary;
    url =  hostname+"index.php/salary_report_con/salary_summary_compliance/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6117,7 +6101,7 @@ function salary_summary_compliance(){
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			summary_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			summary_report.document.write(resp);
 		}
@@ -6144,7 +6128,7 @@ function first_letter_of_maternity_leave()
 		return false;
 	}
 
-	
+
 
 	url =  hostname + "index.php/grid_con/first_letter_of_maternity_leave/"+firstdate+"/"+sql
 
@@ -6198,11 +6182,11 @@ function grid_festival_bonus_summary()
 
 	var sal_year_month = report_month_sal+"-"+"01";
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus_summary/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6210,7 +6194,7 @@ function grid_festival_bonus_summary()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			festival_bonus_summary = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			festival_bonus_summary.document.write(resp);
 			//festival_bonus_summary.stop();
@@ -6263,11 +6247,11 @@ function grid_festival_bonus_summary_sec_wise()
 
 	var sal_year_month = report_month_sal+"-"+"01";
 
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id;
    url =  hostname+"index.php/salary_report_con/grid_festival_bonus_summary_sec_wise/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6275,7 +6259,7 @@ function grid_festival_bonus_summary_sec_wise()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			festival_bonus_summary = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			festival_bonus_summary.document.write(resp);
 			//festival_bonus_summary.stop();
@@ -6338,10 +6322,10 @@ function grid_comprative_salary_statement()
 	// var stop_salary = document.getElementById('grid_stop_salary').value;
 	var sal_year_month = report_month_sal+"-"+"01";
 
-	
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id;
 	url =  hostname+"index.php/salary_report_con/grid_comprative_salary_statement/";
-		
+
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
@@ -6349,7 +6333,7 @@ function grid_comprative_salary_statement()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			festival_bonus_summary = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			festival_bonus_summary.document.write(resp);
 			//festival_bonus_summary.stop();
@@ -6402,11 +6386,11 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	//alert(status);
 	var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	// var stop_salary = document.getElementById('grid_stop_salary').value;
-	
-	
+
+
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id/*+"&stop_salary="+stop_salary*/;
    url =  hostname+"index.php/salary_report_con/eot_summary_report_sec/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6414,7 +6398,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			eot_summary = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			eot_summary.document.write(resp);
 			//eot_summary.stop();
@@ -6463,19 +6447,19 @@ function grid_general_info()
 		return false;
 	}
 	/*
-	
+
 
 	url =  hostname + "index.php/grid_con/grid_general_info/"+sql;
 
 	gen_info = window.open(url,'gen_info',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	gen_info.moveTo(0,0); */
-	
-	
+
+
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 
    url =  hostname+"index.php/grid_con/grid_general_info/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6483,7 +6467,7 @@ function grid_general_info()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			general_info = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			general_info.document.write(resp);
 			//general_info.stop();
@@ -6560,12 +6544,12 @@ function ot_hour_search()
 	var okyes;
   //okyes=confirm('Are you sure you want to insert holiday?');
 
-	
+
 
 	var queryString="firstdate="+firstdate+"&ot_hour="+ot_hour+"&spl="+sql;
     url =  hostname + "index.php/grid_con/ot_hour_search/";
 
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6573,7 +6557,7 @@ function ot_hour_search()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			general_info = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			general_info.document.write(resp);
 			//general_info.stop();
@@ -6617,19 +6601,19 @@ function grid_employee_information()
 		return false;
 	}
 
-	// 
-	// 
+	//
+	//
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_employee_information/";
-	 
+
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			employee_information = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			employee_information.document.write(resp);
 			//employee_information.stop();
@@ -6670,19 +6654,70 @@ function grid_service_book(){
 		return false;
 	}
 
-	
-	
+
+
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_service_book/";
-	 
+
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
+			service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			service_book.document.write(resp);
+			//service_book.stop();
+		}
+	}
+}
+function grid_final_satalment(){
+	 var ajaxRequest;  // The variable that makes Ajax possible!
+
+ try{
+   // Opera 8.0+, Firefox, Safari
+   ajaxRequest = new XMLHttpRequest();
+ }catch (e){
+   // Internet Explorer Browsers
+   try{
+      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+   }catch (e) {
+      try{
+         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+      }catch (e){
+         // Something went wrong
+         alert("Your browser broke!");
+         return false;
+      }
+   }
+ }
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select'){
+		alert("Please select unit !");
+		return false;
+	}
+	var status = document.getElementById('status').value;
+	if(status !=3){
+		alert("Please select left status !");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == ''){
+		alert('Please select employee Id');
+		return false;
+	}
+	var queryString="spl="+sql+"&unit_id="+unit_id+'&status'+status;
+	url =  hostname+"index.php/grid_con/grid_final_satalment/";
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
 			service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			service_book.document.write(resp);
 			//service_book.stop();
@@ -6742,8 +6777,8 @@ function grid_service_book2()
 		alert('Please select employee Id');
 		return false;
 	}
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/grid_service_book2/"+sql;
 
 	age_estimation_form = window.open(url,'age_estimation_form',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -6785,19 +6820,19 @@ function grid_service_benifit()
 		return false;
 	}
 
-	
-	
+
+
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_service_benifit/";
-	 
+
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			service_book.document.write(resp);
 			//service_book.stop();
@@ -6842,19 +6877,19 @@ function join_letter(){
 		}
 
 
-	// 
-	// 
+	//
+	//
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"index.php/grid_con/grid_join_letter/";
-	//  
+	//
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			// 
+			//
 			grid_join_letter = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			grid_join_letter.document.write(resp);
 			//grid_join_letter.stop();
@@ -6903,19 +6938,19 @@ function grid_current_info()
 		return false;
 	}
 	/*
-	
+
 
 	url =  hostname + "index.php/grid_con/grid_general_info/"+sql;
 
 	gen_info = window.open(url,'gen_info',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	gen_info.moveTo(0,0); */
-	
-	
+
+
 
 	var queryString="spl="+sql+"&unit_id="+unit_id;
 
    url =  hostname+"index.php/grid_con/grid_current_info/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -6923,7 +6958,7 @@ function grid_current_info()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			general_info = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			general_info.document.write(resp);
 			//general_info.stop();
@@ -6981,8 +7016,8 @@ function grid_age_estimation()
 		alert('Please select employee Id');
 		return false;
 	}
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/grid_age_estimation/"+sql;
 
 	age_estimation_form = window.open(url,'age_estimation_form',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7016,7 +7051,7 @@ function bando_certificate_report()
 		alert('Please select employee Id');
 		return false;
 	}
-	
+
 
 	url =  hostname + "index.php/grid_con/bando_certificate_report/"+sql;
 
@@ -7052,7 +7087,7 @@ function grid_one_month_settel_paid_report()
 		return false;
 	}
 // 	hostname = window .location . href;
-// 
+//
 	url =  hostname + "index.php/grid_con/one_month_settel_paid_report/"+sql+"/"+firstdate;
 
 	one_month_settel_paid_report = window.open(url,'one_month_settel_paid_report',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7091,8 +7126,8 @@ function grid_drugscreening_report()
 		alert('Please select employee Id');
 		return false;
 	}
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/grid_drugscreening_report/"+sql;
 
 	drugscreening_report = window.open(url,'drugscreening_report',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7131,8 +7166,8 @@ function grid_ackknowledgement_report()
 		alert('Please select employee Id');
 		return false;
 	}
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/ackknowledgement_report/"+sql;
 
 	ackknowledgement_report = window.open(url,'ackknowledgement_report',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7172,7 +7207,7 @@ function grid_earnl_payment()
 		return false;
 	}
 // 	hostname = window .location .href;
-// 
+//
 	url =  hostname + "index.php/grid_con/earnl_payment/"+sql;
 
 	earnl_payment = window.open(url,'earnl_payment',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7230,8 +7265,8 @@ function grid_nominee()
 		alert('Please select employee Id');
 		return false;
 	}
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/grid_nominee/"+sql;
 
 	age_estimation_form = window.open(url,'age_estimation_form',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7289,7 +7324,7 @@ function grid_requitement_form()
 		return false;
 	}
 // 	hostname = window.location.hre f;
-// 
+//
 	url =  hostname + "index.php/grid_con/grid_requitement_form/"+sql;
 
 	age_estimation_form = window.open(url,'age_estimation_form',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7346,7 +7381,7 @@ function grid_verification_report()
 		return false;
 	}
 // 	hostname = window.loc ation.hr e f ;
-// 
+//
 	url =  hostname + "index.php/grid_con/grid_verification_report/"+sql;
 
 	age_estimation_form = window.open(url,'age_estimation_form',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7411,8 +7446,8 @@ function grid_job_description()
 		alert('Please select employee Id');
 		return false;
 	}
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/grid_job_description/"+sql;
 
 	age_estimation_form = window.open(url,'age_estimation_form',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -7535,11 +7570,11 @@ function grid_bgm_new_join_report()
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_bgm_new_join_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7547,7 +7582,7 @@ function grid_bgm_new_join_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			new_join_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			new_join_report.document.write(resp);
 			//new_join_report.stop();
@@ -7608,11 +7643,11 @@ function grid_bank_note_req(){
 	var sal_year_month = report_month_sal+"-"+"01";
 
 
-	// 
-	// 
+	//
+	//
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_bank_note_requisition/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7620,7 +7655,7 @@ function grid_bank_note_req(){
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			bank_note_req = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			bank_note_req.document.write(resp);
 			//bank_note_req.stop();
@@ -7687,7 +7722,7 @@ function grid_resign_report()
 	// 	return false;
 	// }
 /*
-	
+
 
 	url =  hostname + "index.php/grid_con/grid_resign_report/"+firstdate+"/"+seconddate+"/"+sql;
 
@@ -7695,10 +7730,10 @@ function grid_resign_report()
 	resign_report.moveTo(0,0);
 */
 
-	
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
     url =  hostname+"index.php/grid_con/grid_resign_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7706,7 +7741,7 @@ function grid_resign_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			resign_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			resign_report.document.write(resp);
 			//resign_report.stop();
@@ -7774,7 +7809,7 @@ function grid_resign_report_with_sal()
 		return false;
 	}
 /*
-	
+
 
 	url =  hostname + "index.php/grid_con/grid_resign_report/"+firstdate+"/"+seconddate+"/"+sql;
 
@@ -7782,10 +7817,10 @@ function grid_resign_report_with_sal()
 	resign_report.moveTo(0,0);
 */
 
-	
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_resign_report_with_sal/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7793,7 +7828,7 @@ function grid_resign_report_with_sal()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			resign_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			resign_report.document.write(resp);
 			resign_report.stop();
@@ -7861,7 +7896,7 @@ function grid_left_report_with_sal()
 		return false;
 	}
 /*
-	
+
 
 	url =  hostname + "index.php/grid_con/grid_resign_report/"+firstdate+"/"+seconddate+"/"+sql;
 
@@ -7869,10 +7904,10 @@ function grid_left_report_with_sal()
 	resign_report.moveTo(0,0);
 */
 
-	
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_left_report_with_sal/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7880,7 +7915,7 @@ function grid_left_report_with_sal()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			resign_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			resign_report.document.write(resp);
 			resign_report.stop();
@@ -7948,7 +7983,7 @@ function grid_bgm_resign_report()
 		return false;
 	}
 /*
-	
+
 
 	url =  hostname + "index.php/grid_con/grid_resign_report/"+firstdate+"/"+seconddate+"/"+sql;
 
@@ -7956,10 +7991,10 @@ function grid_bgm_resign_report()
 	resign_report.moveTo(0,0);
 */
 
-	
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_resign_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -7967,7 +8002,7 @@ function grid_bgm_resign_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			resign_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			resign_report.document.write(resp);
 			//resign_report.stop();
@@ -8032,11 +8067,11 @@ function grid_left_report(){
 	// 	alert('Please select employee Id');
 	// 	return false;
 	// }
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_left_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8045,7 +8080,7 @@ function grid_left_report(){
 		// alert(url);
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			left_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			left_report.document.write(resp);
 			// left_report.stop();
@@ -8113,11 +8148,11 @@ function grid_bgm_left_report()
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_left_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8125,7 +8160,7 @@ function grid_bgm_left_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			left_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			left_report.document.write(resp);
 			//left_report.stop();
@@ -8179,11 +8214,11 @@ function grid_bgm_left_resign_report()
 	}
 	var status = document.getElementById('status').value;
 
-	
-	
+
+
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_bgm_left_resign_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8191,7 +8226,7 @@ function grid_bgm_left_resign_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			left_resign_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			left_resign_report.document.write(resp);
 			//left_resign_report.stop();
@@ -8241,11 +8276,11 @@ function grid_daily_eot()
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_eot/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8253,7 +8288,7 @@ function grid_daily_eot()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_eot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_eot.document.write(resp);
 			//daily_eot.stop();
@@ -8303,11 +8338,11 @@ function grid_daily_ot()
 		return false;
 	}
 
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_ot/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8315,7 +8350,7 @@ function grid_daily_ot()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_ot.document.write(resp);
 			//daily_ot.stop();
@@ -8365,11 +8400,11 @@ function grid_daily_night_allowance_report()
 		return false;
 	}
 
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_daily_night_allowance_report/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8377,7 +8412,7 @@ function grid_daily_night_allowance_report()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_night_allowance_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_night_allowance_report.document.write(resp);
 			//daily_night_allowance_report.stop();
@@ -8427,8 +8462,8 @@ function grid_daily_allowance_bills()
 		alert('Please select employee Id');
 		return false;
 	}
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/grid_daily_allowance_bills/"+firstdate+"/"+sql;
 
 	daily_allowance = window.open(url,'daily_allowance',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -8458,11 +8493,11 @@ function grid_daily_weekend_allowance_sheet()
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_weekend_allowance_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8470,7 +8505,7 @@ function grid_daily_weekend_allowance_sheet()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			monthly_ot_register = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			monthly_ot_register.document.write(resp);
 		}
@@ -8500,11 +8535,11 @@ function grid_daily_holiday_allowance_sheet()
 		alert('Please select employee Id');
 		return false;
 	}
-	// 
-	// 
+	//
+	//
 	var queryString="firstdate="+firstdate+"&spl="+sql;
    url =  hostname+"index.php/grid_con/grid_daily_holiday_allowance_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8512,7 +8547,7 @@ function grid_daily_holiday_allowance_sheet()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			monthly_ot_register = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			monthly_ot_register.document.write(resp);
 		}
@@ -8565,10 +8600,10 @@ function grid_monthly_ot_register()
 		return false;
 	}
 	// hostname = window.location.hre f ;
-	// 
+	//
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_monthly_ot_register/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8576,7 +8611,7 @@ function grid_monthly_ot_register()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			monthly_ot_register = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			monthly_ot_register.document.write(resp);
 			//monthly_ot_register.stop();
@@ -8631,7 +8666,7 @@ function grid_monthly_eot_register()
 
 	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/grid_monthly_eot_register/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8639,7 +8674,7 @@ function grid_monthly_eot_register()
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			monthly_eot_register = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			monthly_eot_register.document.write(resp);
 			//monthly_eot_register.stop();
@@ -8673,14 +8708,6 @@ function grid_maternity_benefit(){
 		return false;
 	}
 
-	// var report_year_sal = document.getElementById('report_year_sal').value;
-	// //alert(report_year_sal);
-	// if(report_year_sal =='')
-	// {
-	// 	alert("Please select year");
-	// 	return false;
-	// }
-
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -8696,10 +8723,27 @@ function grid_maternity_benefit(){
 		return false;
 	}
 
-	 
-	url =  hostname+"index.php/salary_report_con/grid_maternity_benefit/" + report_year_sal + "/" + spl;
-	maternity_sheet = window.open(url,'maternity_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	maternity_sheet.moveTo(0,0);
+	// url =  hostname+"index.php/salary_report_con/grid_maternity_benefit/" + report_month_sal + "/" + sql;
+	// maternity_sheet = window.open(url,'maternity_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
+	// maternity_sheet.moveTo(0,0);
+
+
+		var queryString="date="+report_month_sal+"&sql="+sql+'&unit_id'+unit_id;
+   url =  hostname+"index.php/salary_report_con/grid_maternity_benefit/";
+
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+
+			left_resign_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			left_resign_report.document.write(resp);
+			//left_resign_report.stop();
+		}
+	}
 
 }
 
@@ -8744,8 +8788,8 @@ function grid_monthly_allowance_register()
 		alert('Please select employee Id');
 		return false;
 	}
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/grid_con/grid_monthly_allowance_register/"+firstdate+"/"+sql;
 
 	monthly_allowance = window.open(url,'monthly_allowance',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -8805,11 +8849,11 @@ function grid_monthly_weekend_allowance_sheet()
 		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	// 
-	// 
+	//
+	//
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_monthly_weekend_allowance_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8817,7 +8861,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			monthly_weekend_allowance= window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			monthly_weekend_allowance.document.write(resp);
 			//monthly_weekend_allowance.stop();
@@ -8876,11 +8920,11 @@ function grid_monthly_allowance_sheet()
 		return false;
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
-	// 
-	// 
+	//
+	//
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    url =  hostname+"index.php/salary_report_con/grid_monthly_allowance_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8888,7 +8932,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			monthly_allowance_sheet = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			monthly_allowance_sheet.document.write(resp);
 			//monthly_allowance_sheet.stop();
@@ -8958,7 +9002,7 @@ var sal_year_month = report_month_sal+"-"+"01";
 
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql/*+"&stop_salary="+stop_salary*/;
    url =  hostname+"index.php/salary_report_con/grid_monthly_stop_sheet/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -8966,7 +9010,7 @@ var sal_year_month = report_month_sal+"-"+"01";
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			monthly_eot_sheet = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			monthly_eot_sheet.document.write(resp);
 			//monthly_eot_sheet.stop();
@@ -9026,8 +9070,8 @@ function grid_monthly_night_allowance_sheet()
 	}
 var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 
-// 	
-// 
+//
+//
 	url =  hostname + "index.php/salary_report_con/grid_monthly_night_allowance_sheet/"+sal_year_month+"/"+status+"/"+sql;
 
 	night_allowance_sheet = window.open(url,'holiday_allowance_sheet',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
@@ -9082,7 +9126,7 @@ function shorts_emp_summery(){
 
 	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
    url =  hostname+"index.php/grid_con/shorts_emp_summery/";
-    
+
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
    ajaxRequest.send(queryString);
@@ -9090,7 +9134,7 @@ function shorts_emp_summery(){
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-			
+
 			daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			daily_present_report.document.write(resp);
 			//daily_present_report.stop();
