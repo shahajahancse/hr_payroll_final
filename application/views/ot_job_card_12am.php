@@ -124,7 +124,7 @@
 							$row->ot =0;
 							$extra_ot_hour = 0;
 						}
-						elseif(in_array($row->shift_log_date,$emp_data['weekend'])) {
+						elseif($row->present_status == 'W') {
 							$att_status = "Work Off";
 							$att_status_count = "Work Off";
 							$row->in_time = "00:00:00";
@@ -165,70 +165,51 @@
 							$in_time = "00:00:00";
 						}
 						if($row->out_time != "00:00:00"){
-							$current_date = date('Y-m-d', strtotime($shift_log_date));
-							$new_current_date_time = $current_date.' '.date('H:i:s', strtotime($row->out_time));
-							$new_next_date_time = date('Y-m-d', strtotime("+1 day", strtotime($current_date))).' 00:14:14';
-							if (strtotime($new_current_date_time) < strtotime($new_next_date_time)) {
-							$out_time =  date('h:i:s A', strtotime($row->out_time));
-							} else {
-								$minutes = date("i", strtotime($row->out_time)); // Extract minutes part
-								$sum = (int)$minutes[0] + (int)$minutes[1];
-								$min = $sum==0 ? "00":($sum < 10 ? "0".$sum : $sum);
-								$out_time  ="12:".$min.date(':s A', strtotime($row->out_time));
+							$out_time = $row->out_time;
+							$out_time = $this->job_card_model->get_formated_out_time_12am($value->emp_id, $out_time, $row->schedule_id);
+
+							if($row->eot == 2 && $row->false_ot_12 != 0 && $row->false_ot_12 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
 							}
 
-							if($row->false_ot_12 == 0 && $row->ot > 1){
-								$extra_ot_hour = 0;
-								if($row->out_time > '19:15:00'){
-									$out_time = date('07:i:s A', strtotime($out_time));
-								}else{
-									$out_time = date('07:i:s A', strtotime($out_time));
-								}
-							}
-							if($row->false_ot_12 == 1 && $row->ot > 1){
+							if($row->eot == 3 && $row->false_ot_12 != 0 && $row->false_ot_12 == 1){
 								$extra_ot_hour = 1;
-								if($row->out_time > '19:15:00'){
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}else{
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}
-							}
-							if($row->false_ot_12 == 2 && $row->ot > 1){
+								$out_time = date('h:i:s A', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->eot == 3 && $row->false_ot_12 != 0 && $row->false_ot_12 == 2){
 								$extra_ot_hour = 2;
-								if($row->out_time > '19:15:00'){
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}else{
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}
+								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
 							}
-							if($row->false_ot_12 == 3 && $row->ot > 1){
+
+							if($row->eot == 4 && $row->false_ot_12 != 0 && $row->false_ot_12 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('h:i:s A', strtotime('-3 hour', strtotime($out_time)));
+							} else if($row->eot == 4 && $row->false_ot_12 != 0 && $row->false_ot_12 == 2){
+								$extra_ot_hour = 2;
+								$out_time = date('h:i:s A', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->eot == 4 && $row->false_ot_12 != 0 && $row->false_ot_12 == 3){
 								$extra_ot_hour = 3;
-								if($row->out_time > '19:15:00'){
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}else{
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}
+								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
 							}
-							if($row->false_ot_12 == 4 && $row->ot > 1){
+
+							if($row->eot >= 5 && $row->false_ot_12 != 0 && $row->false_ot_12 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('h:i:s A', strtotime('-4 hour', strtotime($out_time)));
+							} else if($row->eot >= 5 && $row->false_ot_12 != 0 && $row->false_ot_12 == 2){
+								$extra_ot_hour = 2;
+								$out_time = date('h:i:s A', strtotime('-3 hour', strtotime($out_time)));
+							} else if($row->eot >= 5 && $row->false_ot_12 != 0 && $row->false_ot_12 == 3){
+								$extra_ot_hour = 3;
+								$out_time = date('h:i:s A', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->eot >= 5 && $row->false_ot_12 != 0 && $row->false_ot_12 == 4){
 								$extra_ot_hour = 4;
-								if($row->out_time > '19:15:00'){
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}else{
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}
-							}
-							if($row->false_ot_12 == 5 && $row->ot > 1){
-								$extra_ot_hour = 5;
-								if($row->out_time > '19:15:00'){
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}else{
-									$out_time = date('08:i:s A', strtotime($out_time));
-								}
+								$out_time = date('h:i:s A', strtotime('-1 hour', strtotime($out_time)));
 							}
 						}
 						else{
 							$out_time = "00:00:00";
 						}
+
 						echo "<tr>";
 							echo "<td>&nbsp;";
 							echo $shift_log_date;
@@ -285,12 +266,9 @@
 								$remark = "";
 							}
 							echo "<td>&nbsp;";
-							// if($row->ot == 0){
-							// 	echo $row->ot;
-							// }else{
-								echo $row->ot;
-							// }
+							echo $row->ot;
 							echo "</td>";
+
 							$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
 							$total_ot = $total_ot + $row->ot;
 
@@ -311,7 +289,7 @@
 
 					echo "<tr>";
 
-					echo "<td colspan='4'>";
+					echo "<td colspan='5'>";
 					echo 'Total';
 					echo "</td>";
 

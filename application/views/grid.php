@@ -3,11 +3,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>HR Reports</title>
-	
+
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>themes/redmond/jquery-ui-1.8.2.custom.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>themes/ui.jqgrid.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>css/calendar.css" />
-		
+
 	<script src="<?php echo base_url(); ?>js/jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url(); ?>js/i18n/grid.locale-en.js" type="text/javascript"></script>
@@ -16,8 +16,8 @@
 	<script src="<?php echo base_url(); ?>js/calendar_eu.js" type="text/javascript"></script>
 	<script>
     $(function() {
-            
-            
+
+
             $( ".clearfix" ).dialog({
                 autoOpen: false,
                 height: 370,
@@ -25,9 +25,9 @@
                 resizable: false,
                 modal: true
             });
-            
-            $(".ui-dialog-titlebar").hide();   
-            
+
+            $(".ui-dialog-titlebar").hide();
+
         });
     </script>
 
@@ -50,11 +50,11 @@
 		// input name
 		'controlname': 'firstdate'
 	});
-	
+
 	// individual template parameters can be modified via the calendar variable
 	o_cal.a_tpl.yearscroll = false;
 	o_cal.a_tpl.weekstart = 6;
-	
+
 	</script>
 </td>
 <td>TO Second Date</td><td>:</td><td> <input type="text" name="seconddate" id="seconddate" style="width:100px;"/></td>
@@ -66,11 +66,11 @@
 		// input name
 		'controlname': 'seconddate'
 	});
-	
+
 	// individual template parameters can be modified via the calendar variable
 	o_cal.a_tpl.yearscroll = false;
 	o_cal.a_tpl.weekstart = 6;
-	
+
 	</script>
 </td>
 </tr>
@@ -83,8 +83,8 @@
 </fieldset>
  </div>
 <br />
-<?php 
-		$this->load->model('common_model'); 
+<?php
+		$this->load->model('common_model');
 		$unit = $this->common_model->get_unit_id_name();
 		foreach ($unit->result() as $row) {
 		 	$unit_id = $row->unit_id;
@@ -206,7 +206,7 @@ if(!in_array(10,$acl)){ ?>
 
    <?php if($unit_id=='2') { ?>
 	<?php if($name == 'lssumon'){ ?>
-	 
+
 	   <td style="width:20%; background-color:#666666;">
 	   <input type="button" style="width:100%; font-size:100%;" value="EOT Register New" onClick="grid_monthly_eot_register_new()">
 	  </td>
@@ -351,14 +351,14 @@ if(!in_array(10,$acl)){ ?>
 	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
   	  </td>
 	 <?php  } else { ?>
-     
+
 	  <td style="width:20%; background-color:#666666;display: none">
 	       <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card New" onClick="grid_extra_ot_4pm()">
 	  </td>
 	  <td style="width:20%; background-color:#666666;display: none">
 	   <input type="button" style="width:100%; font-size:100%;" value="EOT Job Card 12AM" onClick="grid_extra_ot_12am()">
   	  </td>
-	 
+
   <?php  } } ?>
 
   <?php if($unit_id=='3') { ?>

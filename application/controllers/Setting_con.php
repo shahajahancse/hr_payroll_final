@@ -224,6 +224,21 @@ class Setting_con extends CI_Controller {
 		if ($id == 0) {
 			$this->db->insert('pr_report_setting', $data);
 		}else{
+			$row = $this->db->where('id', $id)->get('pr_report_setting')->row();
+			if ($row->type == 1) {
+				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
+				$this->db->update('pr_emp_shift_log', array('false_ot_4' => 0));
+			} else if ($row->type == 2) {
+				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
+				$this->db->update('pr_emp_shift_log', array('false_ot_12' => 0));
+			} else {
+				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
+				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
+				$this->db->update('pr_emp_shift_log', array('false_ot_all' => 0));
+			}
+
 			$this->db->where('id', $id);
 			$this->db->update('pr_report_setting', $data);
 		}
