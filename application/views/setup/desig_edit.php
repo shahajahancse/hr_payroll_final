@@ -140,7 +140,7 @@
                             window.editor = editor;
                         })
                         .catch(error => {
-                            console.error(error);
+                            console.error(error); 
                         });
                 </script>
         <br>

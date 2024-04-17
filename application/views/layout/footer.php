@@ -68,6 +68,14 @@
       });
     }
   </script>
+  <script>
+   function alert(d) {
+        Swal.fire({
+            icon: "warning",
+            title: d,
+        });
+    }
+  </script>
 
   <script>
       $(document).ready(function() {
