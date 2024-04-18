@@ -108,6 +108,7 @@
 							<th>Day</th>
 							<th>In Time</th>
 							<th>Out Time</th>
+							<th>Shift</th>
 							<th>Attn.Status</th>
 							<th>OT Hour</th>
 							<th>Extra OT Hour</th>
@@ -187,11 +188,11 @@
 						echo "<tr>";
 							echo "<td>&nbsp;";
 							echo $shift_log_date;
-							echo "</td>";
+							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
 							echo date('l', strtotime($shift_log_date));
-							echo "</td>";
+							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
 							if($in_time == "00:00:00"){
@@ -199,7 +200,7 @@
 							}else{
 								echo $in_time;
 							}
-							echo "</td>";
+							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
 							if($out_time =="00:00:00"){
@@ -207,11 +208,15 @@
 							}else{
 								echo $out_time;
 							}
-							echo "</td>";
+							echo "&nbsp;</td>";
+
+							echo "<td>&nbsp;";
+							echo $row->shift_name;
+							echo "&nbsp;</td>";
 
 							echo "<td style='text-transform:uppercase;'>&nbsp;";
 							echo $att_status;
-							echo "</td>";
+							echo "&nbsp;</td>";
 
 							if($att_status == "P"){
 								$present_count++;
@@ -239,28 +244,28 @@
 							}
 							echo "<td>&nbsp;";
 							echo $row->ot;
-							echo "</td>";
+							echo "&nbsp;</td>";
 
 							$total_ot = $total_ot + $row->ot;
 							$total_ot_hour = $total_ot_hour + $row->ot + $row->eot;
 
 							echo "<td>&nbsp;";
 							echo $row->eot;
-							echo "</td>";
+							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
 							echo $row->eot + $row->ot;
-							echo "</td>";
+							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
 							echo $remark;
-							echo "</td>";
+							echo "&nbsp;</td>";
 						echo "</tr>";
 					}
 
 					echo "<tr>";
 
-					echo "<td colspan='5'>";
+					echo "<td colspan='6'>";
 					echo 'Total';
 					echo "</td>";
 

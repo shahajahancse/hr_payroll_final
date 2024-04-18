@@ -270,23 +270,28 @@ class Job_card_model extends CI_Model{
 		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
 
 		// $id = $this->db->select('id')->where('emp_id',$emp_id)->get('pr_emp_com_info')->row()->id;
-		$this->db->select('pr_emp_shift_log.in_time ,
-						   pr_emp_shift_log.out_time,
-						   pr_emp_shift_log.shift_log_date,
-						   pr_emp_shift_log.schedule_id,
-						   pr_emp_shift_log.ot,
-						   pr_emp_shift_log.eot,
-						   pr_emp_shift_log.ot_eot_4pm,
-						   pr_emp_shift_log.ot_eot_12am,
-						   pr_emp_shift_log.false_ot_4,
-						   pr_emp_shift_log.false_ot_12,
-						   pr_emp_shift_log.false_ot_all,
-						   pr_emp_shift_log.late_status,
-						   pr_emp_shift_log.present_status,
-						   pr_emp_shift_log.deduction_hour
-						   ');
+		$this->db->select('
+						pr_emp_shift_log.in_time ,
+						pr_emp_shift_log.out_time,
+						pr_emp_shift_log.shift_log_date,
+						pr_emp_shift_log.schedule_id,
+						pr_emp_shift_log.ot,
+						pr_emp_shift_log.eot,
+						pr_emp_shift_log.ot_eot_4pm,
+						pr_emp_shift_log.ot_eot_12am,
+						pr_emp_shift_log.false_ot_4,
+						pr_emp_shift_log.false_ot_12,
+						pr_emp_shift_log.false_ot_all,
+						pr_emp_shift_log.late_status,
+						pr_emp_shift_log.present_status,
+						pr_emp_shift_log.deduction_hour,
+						pr_emp_shift_schedule.sh_type as shift_name
+					');
+
 		$this->db->from('pr_emp_shift_log');
+		$this->db->from('pr_emp_shift_schedule');
 		$this->db->where('pr_emp_shift_log.emp_id', $emp_id);
+		$this->db->where('pr_emp_shift_schedule.id = pr_emp_shift_log.schedule_id');
 		$this->db->where("pr_emp_shift_log.shift_log_date >=", $start_date);
 		$this->db->where("pr_emp_shift_log.shift_log_date <=", $end_date);
 		$this->db->order_by("pr_emp_shift_log.shift_log_date");
