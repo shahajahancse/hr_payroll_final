@@ -77,6 +77,15 @@
       </li>
       <?php } ?>
 
+      <!-- Training -->
+      <li class="start <?= activate_class('training_con') ?>"> <a href="javascript:;"> <i class="fa fa-users"></i>
+        <span class="title">Training</span> <span class="selected"></span> <span class="arrow <?= arrow_open('training_con') ?>"></span> </a>
+        <ul class="sub-menu ">
+          <li class="start <?= activate_method('training_list') ?>"> <a href="<?=base_url('training_con/training_list')?>" >Training List</a></li>
+          <li class="start <?= activate_method('training') ?>"> <a href="<?=base_url('training_con/training')?>" >Training Type</a></li>
+        </ul>
+      </li>
+
       <!-- Setup -->
       <?php if(in_array(2,$acl)) { ?>
       <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
@@ -127,19 +136,7 @@
           <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
           <li class="start <?= activate_method('dasig_group') ?>"> <a href="<?=base_url('setting_con/dasig_group')?>" class="anchor_cls" id="acl">Group Dasignation</a> </li>
           <li class="start <?= activate_method('hide_designation_employee') ?>"> <a href="<?=base_url('setting_con/hide_designation_employee')?>" class="anchor_cls" id="acl">Hide Designation</a> </li>
-        </ul>
-      </li>
-      <?php } ?>
-
-      <!-- ACL -->
-      <?php if(in_array(17,$acl)) { ?>
-      <li class="start <?= activate_class('acl_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
-        <span class="title">Maintenance </span> <span class="selected"></span> <span class="arrow <?= arrow_open('acl_con') ?>"></span> </a>
-        <ul class="sub-menu ">
-
-          <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('acl_con/acl')?>" class="anchor_cls" id="acl">User ACL</a> </li>
-          <li class="start <?= activate_method('user_mode') ?>"> <a href="<?=base_url('acl_con/user_mode')?>" class="anchor_cls" id="acl">User Mode</a> </li>
-
+          <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('setting_con/acl')?>" class="anchor_cls" id="acl">User ACL</a> </li>
         </ul>
       </li>
       <?php } ?>
