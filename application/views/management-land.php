@@ -49,7 +49,7 @@
 
 </head> <!-- END HEAD -->
 
-<body class="" style="background-color: #450D3C !important;">
+<body class="" style="background-color: #ffffff !important;">
     
 <style type="text/css">
   

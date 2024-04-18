@@ -1,4 +1,4 @@
-<body class="" style="background-color: #450D3C !important;">
+<body class="" style="background-color: #ffffff !important;">
   <div class="header navbar navbar-inverse ">
     <!-- BEGIN TOP NAVIGATION BAR -->
     <div class="navbar-inner">

@@ -106,7 +106,7 @@
 
 </head> <!-- END HEAD -->
 
-  <body class="" style="background-color: #450D3C !important;">
+  <body class="" style="background-color: #ffffff !important;">
     <!-- <div id="loading">
       <img id="loading-image" src="<?=base_url()?>awedget/assets/img/icon/loading.gif" alt="Loading..." />
     </div> -->
