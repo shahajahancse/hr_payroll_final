@@ -55,6 +55,11 @@
 .new2 tr:nth-child(1), .new1 .tiles-title {
     color: #000000 !important;
 }
+.new2 .heading {
+    color: #fff !important;
+    background: #00adef;
+    box-shadow: 0px 0px 10px 2px #afafaf;
+}
 </style>
   <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
   <div class="content">
