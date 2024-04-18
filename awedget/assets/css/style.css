@@ -501,7 +501,7 @@ body.menu-non-fixed .page-sidebar {
   color: #006ba3;
   border: none;
   text-shadow: none;
-  font-weight: bold;
+  font-weight: bold;  
 }
 .page-sidebar .page-sidebar-wrapper > ul > li.active > a i {
   color: #006ba3;
