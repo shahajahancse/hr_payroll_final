@@ -166,7 +166,7 @@
                             <button class="btn input-sm sbtn" onclick="actual_salary_sheet()">Actual Salary Sheet</button>
                             <?php } ?>
                             <?php if(in_array(82,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="actual_spay_slip()">Actual Pay Slip </button>
+                            <button class="btn input-sm sbtn" onclick="actual_pay_slip()">Actual Pay Slip </button>
                             <?php } ?>
                             <?php if(in_array(83,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_salary_summary()">Actual Salary Summary</button>

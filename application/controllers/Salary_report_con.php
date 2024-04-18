@@ -119,7 +119,7 @@ class Salary_report_con extends CI_Controller {
 		$data["unit_id"]      = $unit_id;
 		$this->load->view('salary_report/actual_salary_sheet', $data);
 	}
-	function actual_spay_slip()
+	function actual_pay_slip()
 	{
         $salary_month = date('Y-m-01', strtotime($this->input->post('salary_month')));
 		$unit_id 	  = $this->input->post('unit_id');

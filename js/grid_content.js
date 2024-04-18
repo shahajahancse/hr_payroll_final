@@ -386,7 +386,7 @@ function actual_salary_sheet()
 	}
 }
 
-function actual_spay_slip(){
+function actual_pay_slip(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
 	   // Opera 8.0+, Firefox, Safari
@@ -439,7 +439,7 @@ function actual_spay_slip(){
 	}
 
 	var queryString="year_month="+year_month+"&spl="+sql+"&unit_id="+unit_id;
-    url =  hostname+"index.php/salary_report_con/actual_spay_slip/";
+    url =  hostname+"index.php/salary_report_con/actual_pay_slip/";
 
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
