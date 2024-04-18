@@ -14,7 +14,7 @@
 
         .h3 {
             margin: 5px !important;
-            line-height: 20px !important; 
+            line-height: 20px !important;
         }
         .fade.in {
             display: flex !important;
@@ -26,7 +26,7 @@
     <?php
         $this->load->model('common_model');
         $unit = $this->common_model->get_unit_id_name();
-        
+
         $user_id = $this->session->userdata('data')->id;
         $acl = check_acl_list($user_id);
     ?>
@@ -56,13 +56,13 @@
                         <label>Unit <span style="color: red;">*</span> </label>
                         <select name="unit_id" id="unit_id" class="form-control input-sm">
                             <option value="">Select Unit</option>
-                            <?php 
+                            <?php
                                 foreach ($dept as $row) {
                                     if($row['unit_id'] == $user_data->unit_name){
                                     $select_data="selected";
                                     }else{
                                         continue;
-                                    }  
+                                    }
                                     echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
                                     '</option>';
                                 }
@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <label>Department </label>
                         <select class="form-control input-sm dept" id='dept' name='dept'>
-                            <?php if (!empty($user_data->unit_name)) { 
+                            <?php if (!empty($user_data->unit_name)) {
                                 $dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
                             <option value=''>Select Department</option>
                             <?php foreach ($dpts->result() as $key => $val) { ?>
@@ -150,51 +150,55 @@
                         <!-- salary report  -->
                         <div class="tab-pane fade in active" id="daily">
                             <?php if(in_array(77,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="monthly_salary_sheet()">Monthly Salary Sheet</button>
+                            <button class="btn input-sm sbtn" onclick="salary_sheet_com()">Salary Sheet</button>
                             <?php } ?>
                             <?php if(in_array(78,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_pay_slip()">Pay Slip</button>
+                            <button class="btn input-sm sbtn" onclick="pay_slip_com()">Pay Slip</button>
                             <?php } ?>
                             <?php if(in_array(79,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="salary_summary()">Actual Salary Summary</button>
+                            <button class="btn input-sm sbtn" onclick="salary_summary_com()">Salary Summary</button>
                             <?php } ?>
                             <?php if(in_array(80,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="sec_sal_summary_report()">Sec Wise Salary Summary</button>
+                            <button class="btn input-sm sbtn" onclick="sec_sal_summary_com()">Sec Wise Salary Summary</button>
                             <?php } ?>
-
 
                             <?php if(in_array(81,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="actual_monthly_salary_sheet()">Actual Salary Sheet</button>
+                            <button class="btn input-sm sbtn" onclick="actual_salary_sheet()">Actual Salary Sheet</button>
                             <?php } ?>
                             <?php if(in_array(82,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_pay_slip_actual()">Actual Pay Slip </button>
+                            <button class="btn input-sm sbtn" onclick="actual_spay_slip()">Actual Pay Slip </button>
                             <?php } ?>
                             <?php if(in_array(83,$acl)) { ?>
-                            <!-- <button class="btn input-sm sbtn" onclick="grid_mix_salary_sheet()">Salary Sheet BFL</button> -->
+                            <button class="btn input-sm sbtn" onclick="actual_salary_summary()">Actual Salary Summary</button>
                             <?php } ?>
                             <?php if(in_array(84,$acl)) { ?>
-                            <!-- <button class="btn input-sm sbtn" onclick="grid_actual_monthly_salary_sheet_with_eot()">Act. Monthly Sal. Sheet EOT</button> -->
+                            <button class="btn input-sm sbtn" onclick="actual_sec_sal_summary()">Actual Sec Salary Summary</button>
                             <?php } ?>
-
 
                             <?php if(in_array(85,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="monthly_salary_sheet_nine_pm()">Salary Sheet Nine</button>
+                            <button class="btn input-sm sbtn" onclick="grid_pay_slip_com()">Actual Salary Bank</button>
+                            <?php } ?>
+                            <?php if(in_array(97,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="actual_eot_sheet()">Actual EOT Sheet</button>
+                            <?php } ?>
+                            <?php if(in_array(98,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="eot_summary_report()">Actual EOT Summary</button>
                             <?php } ?>
                             <?php if(in_array(86,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_pay_slip_com()">Pay Slip</button>
-                            <?php } ?>
-                            <?php if(in_array(86,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_bank_note_req()">Montly Bank Req.</button>
+                            <button class="btn input-sm sbtn" onclick="grid_monthly_eot_sheet()">Actual EOT Bank</button>
                             <?php } ?>
 
-
-                            <?php if(in_array(86,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_monthly_eot_sheet()">Monthly EOT Sheets</button>
+                            <!-- <button class="btn input-sm sbtn" onclick="grid_bank_note_req()">Montly Bank Req.</button> -->
+                            <?php if(in_array(99,$acl)) { ?>
+                                <button class="btn input-sm sbtn" onclick="()">EOT Sheet.</button>
                             <?php } ?>
-                            <?php if(in_array(86,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="eot_summary_report()">EOT Summary Report</button>
+                            <?php if(in_array(100,$acl)) { ?>
+                                <button class="btn input-sm sbtn" onclick="()">EOT Sheet`</button>
                             <?php } ?>
-                            <?php if(in_array(86,$acl)) { ?>
+                            <?php if(in_array(101,$acl)) { ?>
+                                <button class="btn input-sm sbtn" onclick="()">EOT Sheet!</button>
+                            <?php } ?>
+                            <?php if(in_array(102,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_monthly_stop_sheet()">Stop Salary Sheet</button>
                             <?php } ?>
                         </div>
@@ -255,7 +259,7 @@
                         <th class="" style="background:#0177bcc2;color:white">Id</th>
                         <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                     </tr>
-                    <?php if (!empty($employees)) { 
+                    <?php if (!empty($employees)) {
                                 foreach ($employees as $key => $emp) { ?>
                     <tr id="removeTr">
                         <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">

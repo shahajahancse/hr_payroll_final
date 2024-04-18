@@ -354,11 +354,11 @@
 							<?php } ?>
 							<?php if(in_array(73,$acl)) { ?>
 								<!-- max 5 eot -->
-							<button class="btn input-sm sbtn" onclick="grid_extra_ot_12am()">Job Card..</button>
+							<button class="btn input-sm sbtn" onclick="grid_extra_ot_12am()">Job Card`</button>
 							<?php } ?>
 							<?php if(in_array(71,$acl)) { ?>
 								<!-- eot all with out off day and holiday -->
-							<button class="btn input-sm sbtn" onclick="grid_extra_ot_all()">Job Card WP</button>
+							<button class="btn input-sm sbtn" onclick="grid_extra_ot_all()">Job Card!</button>
 							<?php } ?>
 						</div>
 						<!-- Other Reports end -->
