@@ -2631,5 +2631,11 @@ class Grid_con extends CI_Controller {
 
 	}
 
+	public function final_satalment(){
+		$emp_ids = $this->input->post('id');
+		$data['values'] = $this->Grid_model->grid_employee_information($emp_ids);
+		dd($data);
+		echo json_encode($data);
+	}
 }
 ?>

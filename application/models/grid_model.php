@@ -8595,6 +8595,7 @@ class Grid_model extends CI_Model{
 	}
 
 	function grid_employee_information($grid_emp_id){
+		// dd($grid_emp_id);
 		$this->db->select('pr_emp_com_info.emp_id,
 							pr_emp_per_info.*,
 							emp_depertment.dept_name,
@@ -8603,11 +8604,11 @@ class Grid_model extends CI_Model{
 							emp_line_num.line_name_en,
 							emp_line_num.line_name_bn,
 							emp_designation.desig_name,
+							emp_designation.desig_bangla,
 							pr_emp_com_info.emp_join_date,
 							pr_grade.gr_name,
 							pr_emp_com_info.gross_sal,
 							pr_emp_status.stat_type,
-
 
 							pr_emp_per_info.per_village,
 							per_dis.name_bn as per_dis_name_bn,
@@ -8618,7 +8619,6 @@ class Grid_model extends CI_Model{
 							pre_dis.name_bn as pre_dis_name_bn,
 							pre_upa.name_bn as pre_upa_name_bn,
 							pre_post.name_bn as pre_post_name_bn,
-
 							pr_emp_left_history.left_date
 
 							');
