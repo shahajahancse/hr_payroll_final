@@ -614,7 +614,7 @@ body.menu-non-fixed .page-sidebar {
 .page-sidebar.mini {
   width: 50px;
   overflow: visible !important;
-  background-color: #a153dc !important;
+  background-color: #006ba3 !important;
   /*background-color: #0aa699 !important;*/
   height: 100%;
   margin-top: 0;
@@ -742,12 +742,12 @@ body.menu-non-fixed .page-sidebar {
 .page-sidebar.mini .page-sidebar-wrapper > ul > li.open > a,
 .page-sidebar.mini .page-sidebar-wrapper > ul > li > a:hover,
 .page-sidebar.mini .page-sidebar-wrapper > ul > li:hover > a {
-  background: #0b9c8f;
+  background: #73d9ff;
 }
 .page-sidebar.mini .page-sidebar-wrapper > ul > li > a:hover,
 .page-sidebar.mini .page-sidebar-wrapper > ul > li:hover > a {
-  background: #8732c7;
-  /*background: #0b9c8f;*/
+  background: #8fcae9;
+  /*background: #73d9ff;*/
 }
 .page-sidebar.mini .page-sidebar-wrapper > ul > li.active > a i,
 .page-sidebar .page-sidebar-wrapper > ul > li:hover > a i {

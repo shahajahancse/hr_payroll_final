@@ -240,7 +240,7 @@ and (orientation : portrait) {
 
 	.inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li >a:hover, 
 	.inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li:hover >a {  
-		background: #0b9c8f;
+		background: #73d9ff;
 	}
 	.inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li.open > a, .inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li:hover > a{
 		padding: 13px;
@@ -523,7 +523,7 @@ and (orientation : portrait) {
 
 	.inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li >a:hover, 
 	.inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li:hover >a {  
-		background: #0b9c8f;
+		background: #73d9ff;
 	}
 	.inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li.open > a, .inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .inner-menu-always-open .page-sidebar .page-sidebar-wrapper > ul > li:hover > a{
 		padding: 13px;
