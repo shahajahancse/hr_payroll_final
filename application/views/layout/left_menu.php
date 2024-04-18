@@ -77,6 +77,15 @@
       </li>
       <?php } ?>
 
+      <!-- Training -->
+      <li class="start <?= activate_class('training_con') ?>"> <a href="javascript:;"> <i class="fa fa-users"></i>
+        <span class="title">Training</span> <span class="selected"></span> <span class="arrow <?= arrow_open('training_con') ?>"></span> </a>
+        <ul class="sub-menu ">
+          <li class="start <?= activate_method('training_list') ?>"> <a href="<?=base_url('training_con/training_list')?>" >Training List</a></li>
+          <li class="start <?= activate_method('training') ?>"> <a href="<?=base_url('training_con/training')?>" >Training Type</a></li>
+        </ul>
+      </li>
+
       <!-- Setup -->
       <?php if(in_array(2,$acl)) { ?>
       <li class="start <?= activate_class('setup_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>

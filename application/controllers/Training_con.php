@@ -123,21 +123,6 @@ class Training_con extends CI_Controller {
         redirect(base_url() . 'training_con/training');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 	function employee_training_form()
 	{
         if ($this->session->userdata('logged_in') == false) {
@@ -158,7 +143,7 @@ class Training_con extends CI_Controller {
 
 	}
 	function employee_training_add()
-	{	
+	{
 		if (!isset($_POST['training_id']) || !isset($_POST['unit_id']) || !isset($_POST['date']) || !isset($_POST['time'])) {
 			echo '0';
 			exit;
@@ -166,7 +151,7 @@ class Training_con extends CI_Controller {
 		$training_id = $_POST['training_id'];
 		$unit_id = $_POST['unit_id'];
 		$date = $_POST['date'];
-		
+
 		$time = $_POST['time'];
 		$status = 1;
 		$created_at = date('Y-m-d H:i:s');
@@ -194,7 +179,7 @@ class Training_con extends CI_Controller {
 		echo '1';
 	}
 
-	function employee_training_list(){
+	function training_list(){
 		$this->db->select('training_type.*,pr_units.unit_name');
         $this->db->from('training_type');
         $this->db->join('pr_units', 'pr_units.unit_id = training_type.unit_id');
