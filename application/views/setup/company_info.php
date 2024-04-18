@@ -89,21 +89,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        if (!empty($company_infos)) {foreach ($company_infos as $cominfos) {?>
+                    <?php 
+                        // dd($company_infos);
+                        if (is_array($company_infos) || is_object($company_infos)) {foreach ($company_infos as $cominfos) {?>
                     <tr>
-                        <td><?php echo $cominfos['company_name_bangla'] ?></td>
-                        <td><?php echo $cominfos['company_add_bangla'] ?></td>
-                        <td><?php echo $cominfos['company_phone'] ?></td>
-                        <td><img width="55" height="55" src="<?=base_url()?>images/<?=$cominfos['company_logo']?>" />
+                        <td><?php echo $cominfos->company_name_bangla ?></td>
+                        <td><?php echo $cominfos->company_add_bangla ?></td>
+                        <td><?php echo $cominfos->company_phone ?></td>
+                        <td><img width="55" height="55" src="<?=base_url()?>images/<?=$cominfos->company_logo?>" />
                         </td>
                         <td><img width="55" height="55"
-                            src="<?=base_url()?>images/<?=$cominfos['company_signature']?>" /></td>
+                            src="<?=base_url()?>images/<?=$cominfos->company_signature?>" /></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/company_edit') . '/' . $cominfos["id"]?>" class="btn btn-primary input-sm center-text" role="button">Edit</a>
+                            <a href="<?=base_url('index.php/setup_con/company_edit') . '/' . $cominfos->id?>" class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/company_delete') . '/' . $cominfos["id"]?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
+                            <a href="<?=base_url('index.php/setup_con/company_delete') . '/' . $cominfos->id?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php }} else {?>

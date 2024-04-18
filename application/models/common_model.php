@@ -370,8 +370,8 @@ class Common_model extends CI_Model{
 
 	function company_information($unit_id)
 	{
-		$company_infos = $this->db->where('unit_id',$unit_id)->get('company_infos')->row();
-		return $company_infos->company_logo;
+		return $company_infos = $this->db->where('unit_id',$unit_id)->get('company_infos')->result();
+		
 		// return $query = $this->db->select('*')->get('company_infos')->row();
 	}
 
