@@ -129,8 +129,8 @@
           <!-- BEGIN TOP NAVIGATION MENU -->
           <div class="pull-left">
             <ul class="nav quick-section">
-              <li class="quicklinks"> <a href="javascript:;" class="" id="layout-condensed-toggle" style="color: #8dc641;">
-                <i class="fa fa-bars" style="font-size: 22px; color: #8dc641 !important;"></i>
+              <li class="quicklinks"> <a href="javascript:;" class="" id="layout-condensed-toggle" style="color: #006ba3;">
+                <i class="fa fa-bars" style="font-size: 22px; color: #006ba3 !important;"></i>
                 <!-- <div class="iconset top-menu-toggle-dark"></div> --> </a> 
               </li>
             </ul>
@@ -149,7 +149,7 @@
 
             <ul class="nav quick-section ">
               <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="javascript:;" id="user-options">
-               <i class="fa fa-cog" style="font-size: 22px; color: #8dc641 !important;"></i>
+               <i class="fa fa-cog" style="font-size: 22px; color: #006ba3 !important;"></i>
                </a>
                <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">          
                   <li><a href="<?=base_url()?>change_password"><i class="fa fa-lock"></i>&nbsp;&nbsp;Change Password</a></li>
