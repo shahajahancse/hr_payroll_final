@@ -40,89 +40,96 @@
     $all_absent_7 = $values["all_absent_7"];
 
   ?>
-
+<style>
+  .tiles {
+    border-radius: 6px;
+    box-shadow: 0px 0px 9px 4px #c1c1c1;
+}
+.tiles .tiles-title {
+    font-size: 20px;
+    font-family: 'Open Sans';
+    text-align: center;
+    font-weight: bold;
+    color: #00acec;
+}
+.new2 tr:nth-child(1), .new1 .tiles-title {
+    color: #000000 !important;
+}
+.new2 .heading {
+    color: #fff !important;
+    background: #00adef;
+    box-shadow: 0px 0px 10px 2px #afafaf;
+}
+</style>
   <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
   <div class="content">
-    <div id="container" class="field">
-      <div class="row spacing-bottom 2col">
-         <div class="col-md-6 col-sm-6 spacing-bottom-sm spacing-bottom">
-          <div class="tiles white added-margin">
-            <div class="tiles-body">
-              <div class="tiles-title">Total Department</div>
-              <div class="heading" style="text-align: center;">
-                <span class="" data-value="" data-animation-duration="1200">
-                  <?php
-                     $this->db->select('*');
-                     $this->db->from('emp_depertment');
-                     echo $query = $this->db->get()->num_rows();
-                  ?>
-                </span>
-              </div>
-              <div class="description">
-              </div>
-            </div>
-            <div class="triangle-up"></div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-sm-6 spacing-bottom-sm spacing-bottom">
-          <div class="tiles white added-margin">
-            <div class="tiles-body">
-
-              <div class="tiles-title">Total Section</div>
-              <div class="heading" style="text-align: center;">
-              <span class="" data-value="" data-animation-duration="1200" >
+    <div class="row spacing-bottom-sm spacing-bottom">
+      <div class="col-lg-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+        <div class="tiles white added-margin">
+          <div class="tiles-body">
+            <div class="tiles-title">Total Department</div>
+            <div class="heading" style="text-align: center;">
+              <span class="count" data-value="" data-animation-duration="1200" >
                 <?php
                   $this->db->select('*');
-                  $this->db->from('emp_section');
+                  $this->db->from('emp_depertment');
                   echo $query = $this->db->get()->num_rows();
                 ?>
               </span>
-              </div>
-              <div class="description">
-              </div>
             </div>
-            <div class="triangle-up"></div>
           </div>
         </div>
-        <div class="col-md-6 col-sm-6 spacing-bottom-sm spacing-bottom">
-          <div class="tiles white added-margin">
-            <div class="tiles-body">
+      </div>
 
-              <div class="tiles-title"> Total Designation </div>
-              <div class="heading" style="text-align: center;">
-              <span class="" data-value="" data-animation-duration="1000">
+      <div class="col-lg-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+        <div class="tiles white added-margin">
+          <div class="tiles-body">
+
+            <div class="tiles-title">Total Section</div>
+            <div class="heading" style="text-align: center;">
+            <span class="count" data-value="" data-animation-duration="1200" >
+              <?php
+                $this->db->select('*');
+                $this->db->from('emp_section');
+                echo $query = $this->db->get()->num_rows();
+              ?>
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+        <div class="tiles white added-margin">
+          <div class="tiles-body">
+
+            <div class="tiles-title"> Total Designation </div>
+            <div class="heading" style="text-align: center;">
+            <span class="count" data-value="" data-animation-duration="1000">
+              <?php
+                $this->db->select('*');
+                $this->db->from('emp_designation');
+                echo $query = $this->db->get()->num_rows();
+               ?>
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 spacing-bottom">
+        <div class="tiles white added-margin">
+          <div class="tiles-body">
+
+            <div class="tiles-title">Total Line</div>
+            <div class="heading" style="text-align: center;">
+              <span class="count" data-value="" data-animation-duration="1200" >
                 <?php
                   $this->db->select('*');
-                  $this->db->from('emp_designation');
-                  echo $query = $this->db->get()->num_rows();
+                  $this->db->from('emp_line_num');
+                  $query = $this->db->get()->num_rows();
+                   echo $gtotal_line = $query - 1;
                  ?>
               </span>
-              </div>
-              <div class="description">
-              </div>
             </div>
-            <div class="triangle-up"></div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-6 spacing-bottom">
-          <div class="tiles white added-margin">
-            <div class="tiles-body">
-
-              <div class="tiles-title">Total Line</div>
-              <div class="heading" style="text-align: center;">
-                <span class="" data-value="" data-animation-duration="1200" >
-                  <?php
-                    $this->db->select('*');
-                    $this->db->from('emp_line_num');
-                    $query = $this->db->get()->num_rows();
-                     echo $gtotal_line = $query - 1;
-                   ?>
-                </span>
-              </div>
-              <div class="description"></div>
-            </div>
-            <div class="triangle-up"></div>
           </div>
         </div>
       </div>
@@ -130,9 +137,8 @@
     <div id="container">
       <div class="row spacing-bottom 2col">
         <div class="col-md-6 col-sm-6 spacing-bottom-sm spacing-bottom">
-          <div class="tiles white added-margin new new1">
+          <div class="tiles white added-margin new new2">
             <div class="tiles-body">
-              <div class="tiles-title">Daily Total Manpower</div>
               <div class="heading">
                 <span class="" data-value="" data-animation-duration="1200">Manpower</span>
               </div>
@@ -169,10 +175,8 @@
         <div class="col-md-6 col-sm-6 spacing-bottom-sm spacing-bottom">
           <div class="tiles white added-margin new new2">
             <div class="tiles-body">
-
-              <div class="tiles-title">Daily Attendance</div>
               <div class="heading ">
-                <span class="" data-value="" data-animation-duration="1000">Atten. Status</span>
+                <span class="" data-value="" data-animation-duration="1000">Attendance</span>
               </div>
 
               <div style="border-bottom:1px solid #fff; margin-bottom: 10px"></div>
@@ -205,9 +209,8 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-6 spacing-bottom">
-          <div class="tiles white added-margin new new3">
+          <div class="tiles white added-margin new new2">
             <div class="tiles-body">
-              <div class="tiles-title">Monthly Employee Status</div>
               <div class="heading">
                 <span class="" data-value="" data-animation-duration="1200">Monthly Status</span>
               </div>
@@ -242,10 +245,8 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-6">
-          <div class="tiles white added-margin new new4">
+          <div class="tiles white added-margin new new2">
             <div class="tiles-body">
-
-              <div class="tiles-title"> Last Month Salary Expense </div>
               <div class="row-fluid ">
                 <div class="heading">
                   <span class="" data-value="" data-animation-duration="700">Previous Status</span>
@@ -284,3 +285,16 @@
     </div>
   </div>
 
+<script>
+  $('.count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 2000,
+        easing: 'linear',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+</script>
