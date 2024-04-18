@@ -392,7 +392,7 @@ class Setting_con extends CI_Controller {
 		$this->db->select('SQL_CALC_FOUND_ROWS members.*, pr_units.unit_name', false);
 		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
 		$this->data['members'] = $this->db->get('members')->result_array();
-		$this->data['subview'] = 'settings/members';
+		$this->data['subview'] = 'settings/acl';
         $this->load->view('layout/template', $this->data);
 	}
 
@@ -402,7 +402,7 @@ class Setting_con extends CI_Controller {
 		$param['pr_units'] = $this->db->get('pr_units')->result();
 		$param['acls'] = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
 
-		$this->data['subview'] = 'members_add';
+		$this->data['subview'] = 'settings/member_add';
         $this->load->view('layout/template', $this->data);
 	}
 
@@ -432,7 +432,7 @@ class Setting_con extends CI_Controller {
 		}
 
 		$this->session->set_flashdata('success','Record Insert successfully!');
-		redirect(base_url('index.php/acl_con/acl'));
+		redirect(base_url('setting_con/acl'));
 	}
 
 	function member_edit($id){
@@ -448,7 +448,7 @@ class Setting_con extends CI_Controller {
 		$this->data['acls'] = $acls;
         $this->data['username'] = $this->data['user_data']->id_number;
 
-		$this->data['subview'] = 'member_edit';
+		$this->data['subview'] = 'settings/member_add';
         $this->load->view('layout/template', $this->data);
 		// $this->load->view('', $param);
 	}
@@ -482,14 +482,14 @@ class Setting_con extends CI_Controller {
 		}
 
 		$this->session->set_flashdata('success','Record Updated successfully!');
-		redirect(base_url('index.php/acl_con/acl'));
+		redirect(base_url('setting_con/acl'));
 	}
 
 	function members_delete($id=0){
 		$this->db->where('members.id',$id);
 		$data=$this->db->delete('members');
 		$this->session->set_flashdata('success','Record Deleted successfully!');
-		redirect(base_url('index.php/acl_con/acl'));
+		redirect(base_url('setting_con/acl'));
 	}
 }
 
