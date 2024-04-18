@@ -205,37 +205,37 @@ $(document).ready(function() {
         }
 
     }
-$("#report_setting_form").submit(function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    $status=$("#ancor").val();
-    if ($('unit_id').val() == '') {
-        showMessage('error', 'Please Select Unit')
-        return false
-    }
-    if ($('active_status').val() == '') {
-        showMessage('error', 'Please Select Status')
-        return false
-    }
-    $.ajax({
-        type: "POST",
-        url: "<?= base_url('setting_con/report_setting_save') ?>" + '/' + $status,
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            if (data == 'true') {
-                $("#add_form").toggle();
-                $("#report_setting_form")[0].reset();
-                showMessage('success', 'Record Added successfully')
-                window.location.reload();
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log("AJAX request error:", errorThrown);
+    $("#report_setting_form").submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $status=$("#ancor").val();
+        if ($('unit_id').val() == '') {
+            showMessage('error', 'Please Select Unit')
+            return false
         }
+        if ($('active_status').val() == '') {
+            showMessage('error', 'Please Select Status')
+            return false
+        }
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('setting_con/report_setting_save') ?>" + '/' + $status,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (data == 'true') {
+                    $("#add_form").toggle();
+                    $("#report_setting_form")[0].reset();
+                    showMessage('success', 'Record Added successfully')
+                    window.location.reload();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("AJAX request error:", errorThrown);
+            }
+        })
     })
-})
   function delete_user_mode($id,el) {
     var r = confirm("Are you sure you want to delete?");
     if (r == true) {

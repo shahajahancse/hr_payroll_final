@@ -12,7 +12,7 @@
     .table td {
         padding: 0px 3px !important;
         font-size: 13px;
-      
+
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
@@ -28,13 +28,13 @@
 </style>
 
 <div class="content" style="display: flex;flex-direction: column;gap: 10px">
-  
+
   <div class="row">
     <div class="col-md-8">
       <?php $success = $this->session->flashdata('success');
       if ($success != "") { ?>
         <div class="alert alert-success"><?php echo $success; ?></div>
-        <?php } 
+        <?php }
         $failuer = $this->session->flashdata('failuer');
         if ($failuer) { ?>
         <div class="alert alert-failuer"><?php echo $failuer; ?></div>
@@ -53,9 +53,9 @@
                 <label for="acl_name">ACL Type</label>
                 <select name="type" id="">
                     <option value="1">Left Menu</option>
-                    <option value="2">Attendance Button</option>
-                    <option value="3">Report Button</option>
-                    <option value="4">Other Button</option>
+                    <option value="2">Hr Report</option>
+                    <option value="3">Payroll Report</option>
+                    <option value="4">Other Report</option>
                 </select>
             </div>
             <div class="form-group col-md-2">
@@ -95,7 +95,7 @@
                 echo '<td>Payroll Button</td>';
             } else {
                 echo '<td>Other Button</td>';
-            }          
+            }
             echo '<td><a href="'.base_url('setting_con/acl_access_delete/'.$value->id).'" class="btn btn-danger">Delete</a></td>';
             echo '</tr>';
           }?>

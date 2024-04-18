@@ -21,7 +21,7 @@ class Command extends CI_Controller {
 		// $this->load->library('grocery_CRUD');
 		// $this->load->model('acl_model');
 		$this->load->dbforge();
-		// exit('for developer');
+		exit('only for developer');
 	}
 
 	function dpt_sec_lin_udate()
@@ -404,6 +404,7 @@ class Command extends CI_Controller {
 	public function log_emp_id()
 	{
 		echo "hello, ci";
+		exit('only for developer');
 		$this->db->select('pr_emp_com_info.id, pr_emp_com_info.emp_id, pr_emp_com_info.unit_id');
 		$this->db->from('pr_emp_shift_log');
 		$this->db->from('pr_emp_com_info');

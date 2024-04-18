@@ -149,108 +149,31 @@ class Job_card_model extends CI_Model{
 		}
 	}
 
-	function get_formated_out_time_5pm($emp_id, $out_time, $emp_shift){
-		if($out_time =='00:00:00'){
-			return $out_time ='';
-		}
-		$schedule 				= $this->schedule_check($emp_shift);
-		$out_start				= $schedule[0]["out_start"];
-		$ot_start				= $schedule[0]["ot_start"];
-		$ot_minute				= $schedule[0]["ot_minute_to_one_hour"];
-		$one_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($ot_start)));
-		$one_hour_ot_out_time	= $schedule[0]["one_hour_ot_out_time"];
-
-		$two_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($one_hour_ot_out_time)));
-		$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
-
-		$three_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($two_hour_ot_out_time)));
-		$three_hour_ot_out_time	= date("H:i:s", strtotime("+60 minutes", strtotime($two_hour_ot_out_time)));
-
-		$four_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($three_hour_ot_out_time)));
-		$four_hour_ot_out_time	= date("H:i:s", strtotime("+60 minutes", strtotime($three_hour_ot_out_time)));
-
-		if($out_start < $out_time) {
-			// one hour ot cal and get buyer time
-			if ($out_time >= $one_hour_ot AND $out_time <= $one_hour_ot_out_time) {
-				if ($out_time >= $one_hour_ot) {
-					return $out_time = $this->time_format_ten_plus($out_time);
-				} else {
-					return $out_time = $this->time_am_pm_format_new($out_time);
-				}
-			}
-
-			// two hour ot cal and get buyer time
-			if ($out_time >= $two_hour_ot AND $out_time <= $two_hour_ot_out_time) {
-				if ($out_time >= $two_hour_ot) {
-					return $out_time = $this->time_format_ten_plus($out_time);
-				} else {
-					return $out_time = $this->time_am_pm_format_new($out_time);
-				}
-			}
-
-			// three hour ot cal and get buyer time
-			if ($out_time >= $three_hour_ot AND $out_time <= $three_hour_ot_out_time) {
-				if ($three_hour_ot) {
-					return $out_time = $this->time_format_ten_plus($out_time);
-				} else {
-					// exit($out_time);
-					return $out_time = $this->time_am_pm_format_new($out_time);
-				}
-			}
-
-			// four hour ot cal and get buyer time
-			if ($out_time >= $four_hour_ot AND $out_time <= $four_hour_ot_out_time) {
-				if ($four_hour_ot) {
-					return $out_time = $this->time_format_ten_plus($out_time);
-				} else {
-					return $out_time = $this->time_am_pm_format_new($out_time);
-				}
-			}
-
-			if ($out_time > $four_hour_ot_out_time) {
-				return  $out_time = $this->time_am_pm_format_new($four_hour_ot_out_time, $out_time);
-			} else {
-				return $out_time = $this->time_am_pm_format($out_time);
-			}
-		}
-		else{
-			return $out_time = $this->get_buyer_in_time($four_hour_ot_out_time ,$out_time);
-		}
-	}
-
 	function time_am_pm_format($out_time){
-		return date("h:i:s A", strtotime($out_time));
+		return date("H:i:s ", strtotime($out_time));
 	}
 
 	function time_format_ten_plus($out_time){
 		$time = strtotime($out_time);
-		return date("h:i:s A", strtotime('+11 minutes', $time));
+		return date("H:i:s ", strtotime('+11 minutes', $time));
 	}
 
-	function get_buyer_in_time($exact_time_15min_back ,$in_time){
-		$exact_hour_min_sec = $this->get_hour_min_sec($exact_time_15min_back);
+	function get_buyer_in_time($exact_time, $in_time){
+		$exact_time = date("H:i:s", strtotime("+2 seconds", strtotime($exact_time)));
+
+		$exact_hour_min_sec = $this->get_hour_min_sec($exact_time);
 		$exact_hour   		= $exact_hour_min_sec['hour'];
-		$exact_minute 		= $exact_hour_min_sec['minute'];
 
 		$real_hour_min_sec 	= $this->get_hour_min_sec($in_time);
 		$real_minute  		= $real_hour_min_sec['minute'];
 		$real_second 		= $real_hour_min_sec['second'];
 
-		$buyer_minute = $this->create_buyer_minute($real_minute);
-		$buyer_minute = $buyer_minute + $exact_minute;
+		$min_1st_digit = substr($real_minute,0,1);
+		$min_2nd_digit = substr($real_minute,1,1);
 
-		return $time_format = date("h:i:s A", mktime($exact_hour, $buyer_minute, $real_second, 0, 0, 0));
+		$buyer_minute = $min_1st_digit + $min_2nd_digit;
 
-	}
-
-	function time_am_pm_format_new($out_time){
-		$real_hour_min_sec 	= $this->get_hour_min_sec($out_time);
-		$hour  				= $real_hour_min_sec['hour'];
-		$minute  			= $real_hour_min_sec['minute'];
-		$second 			= $real_hour_min_sec['second'];
-
-		$buyer_minute = $this->create_buyer_minute($minute);
-		return date("h:i:s A", mktime($hour, $buyer_minute, $second, 0, 0, 0));
+		return $time_format = date("H:i:s ", mktime($exact_hour, $buyer_minute, $real_second, 0, 0, 0));
 	}
 
 	function get_hour_min_sec($time){
@@ -261,15 +184,6 @@ class Job_card_model extends CI_Model{
 		return $data;
 	}
 
-	function create_buyer_minute($minute)
-	{
-		$min_1st_digit = substr($minute,0,1);
-		$min_2nd_digit = substr($minute,1,1);
-		$buyer_minute  = $min_1st_digit + $min_2nd_digit;
-		$rand_min = rand(1,2);
-		$buyer_minute = $rand_min;
-		return $buyer_minute;
-	}
 
 	// start actual job card
 	public function actual_job_card($grid_firstdate, $grid_seconddate, $emp_id)
@@ -356,23 +270,28 @@ class Job_card_model extends CI_Model{
 		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
 
 		// $id = $this->db->select('id')->where('emp_id',$emp_id)->get('pr_emp_com_info')->row()->id;
-		$this->db->select('pr_emp_shift_log.in_time ,
-						   pr_emp_shift_log.out_time,
-						   pr_emp_shift_log.shift_log_date,
-						   pr_emp_shift_log.schedule_id,
-						   pr_emp_shift_log.ot,
-						   pr_emp_shift_log.eot,
-						   pr_emp_shift_log.ot_eot_4pm,
-						   pr_emp_shift_log.ot_eot_12am,
-						   pr_emp_shift_log.false_ot_4,
-						   pr_emp_shift_log.false_ot_12,
-						   pr_emp_shift_log.false_ot_all,
-						   pr_emp_shift_log.late_status,
-						   pr_emp_shift_log.present_status,
-						   pr_emp_shift_log.deduction_hour
-						   ');
+		$this->db->select('
+						pr_emp_shift_log.in_time ,
+						pr_emp_shift_log.out_time,
+						pr_emp_shift_log.shift_log_date,
+						pr_emp_shift_log.schedule_id,
+						pr_emp_shift_log.ot,
+						pr_emp_shift_log.eot,
+						pr_emp_shift_log.ot_eot_4pm,
+						pr_emp_shift_log.ot_eot_12am,
+						pr_emp_shift_log.false_ot_4,
+						pr_emp_shift_log.false_ot_12,
+						pr_emp_shift_log.false_ot_all,
+						pr_emp_shift_log.late_status,
+						pr_emp_shift_log.present_status,
+						pr_emp_shift_log.deduction_hour,
+						pr_emp_shift_schedule.sh_type as shift_name
+					');
+
 		$this->db->from('pr_emp_shift_log');
+		$this->db->from('pr_emp_shift_schedule');
 		$this->db->where('pr_emp_shift_log.emp_id', $emp_id);
+		$this->db->where('pr_emp_shift_schedule.id = pr_emp_shift_log.schedule_id');
 		$this->db->where("pr_emp_shift_log.shift_log_date >=", $start_date);
 		$this->db->where("pr_emp_shift_log.shift_log_date <=", $end_date);
 		$this->db->order_by("pr_emp_shift_log.shift_log_date");
@@ -383,5 +302,215 @@ class Job_card_model extends CI_Model{
 		return $data;
 	}
 	// end eot job card
+
+	// 2 ot
+	function get_formated_out_time_2ot($emp_id, $out_time, $emp_shift){
+		if($out_time =='00:00:00'){
+			return $out_time ='';
+		}
+		$schedule 				= $this->schedule_check($emp_shift);
+		$out_start				= $schedule[0]["out_start"];
+		$ot_start				= $schedule[0]["ot_start"];
+		$ot_minute				= $schedule[0]["ot_minute_to_one_hour"];
+		$one_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($ot_start)));
+		$one_hour_ot_out_time	= $schedule[0]["one_hour_ot_out_time"];
+
+		$two_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($one_hour_ot_out_time)));
+		$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
+
+		if($out_start < $out_time) {
+			// one hour ot cal and get buyer time
+			if ($out_time >= $one_hour_ot AND $out_time <= $one_hour_ot_out_time) {
+				if ($out_time >= $one_hour_ot) {
+					return $out_time = $this->time_format_ten_plus($out_time);
+				} else {
+					return $out_time = $this->get_buyer_in_time($one_hour_ot_out_time, $out_time);
+				}
+			}
+
+			// two hour ot cal and get buyer time
+			if ($out_time >= $two_hour_ot AND $out_time <= $two_hour_ot_out_time) {
+				if ($out_time >= $two_hour_ot) {
+					return $out_time = $this->time_format_ten_plus($out_time);
+				} else {
+					return $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
+				}
+			}
+
+			if ($out_time > $two_hour_ot_out_time) {
+				return  $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
+			} else {
+				return $out_time = $this->time_am_pm_format($out_time);
+			}
+		}
+		else{
+			return $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
+		}
+	}
+	// end 2 ot
+
+	// out time for 9pm
+	function get_formated_out_time_9pm($emp_id, $out_time, $emp_shift){
+		if($out_time =='00:00:00'){
+			return $out_time ='';
+		}
+		$schedule 				= $this->schedule_check($emp_shift);
+		$out_start				= $schedule[0]["out_start"];
+		$ot_start				= $schedule[0]["ot_start"];
+		$ot_minute				= $schedule[0]["ot_minute_to_one_hour"];
+		$one_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($ot_start)));
+		$one_hour_ot_out_time	= $schedule[0]["one_hour_ot_out_time"];
+
+		$two_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($one_hour_ot_out_time)));
+		$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
+
+		$three_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($two_hour_ot_out_time)));
+		$three_hour_ot_out_time	= date("H:i:s", strtotime("+60 minutes", strtotime($two_hour_ot_out_time)));
+
+		$four_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($three_hour_ot_out_time)));
+		$four_hour_ot_out_time	= date("H:i:s", strtotime("+60 minutes", strtotime($three_hour_ot_out_time)));
+
+		if($out_start < $out_time) {
+			// one hour ot cal and get buyer time
+			if ($out_time >= $one_hour_ot AND $out_time <= $one_hour_ot_out_time) {
+				if ($out_time >= $one_hour_ot) {
+					return $out_time = $this->time_format_ten_plus($out_time);
+				} else {
+					return $out_time = $this->get_buyer_in_time($one_hour_ot_out_time, $out_time);
+				}
+			}
+
+			// two hour ot cal and get buyer time
+			if ($out_time >= $two_hour_ot AND $out_time <= $two_hour_ot_out_time) {
+				if ($out_time >= $two_hour_ot) {
+					return $out_time = $this->time_format_ten_plus($out_time);
+				} else {
+					return $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
+				}
+			}
+
+			// three hour ot cal and get buyer time
+			if ($out_time >= $three_hour_ot AND $out_time <= $three_hour_ot_out_time) {
+				if ($out_time >= $three_hour_ot) {
+					return $out_time = $this->time_format_ten_plus($out_time);
+				} else {
+					// exit($out_time);
+					return $out_time = $this->get_buyer_in_time($three_hour_ot_out_time, $out_time);
+				}
+			}
+
+			// four hour ot cal and get buyer time
+			if ($out_time >= $four_hour_ot AND $out_time <= $four_hour_ot_out_time) {
+				if ($out_time >= $four_hour_ot) {
+					return $out_time = $this->time_format_ten_plus($out_time);
+				} else {
+					return $out_time = $this->get_buyer_in_time($four_hour_ot_out_time, $out_time);
+				}
+			}
+
+			if ($out_time > $four_hour_ot_out_time) {
+				return  $out_time = $this->get_buyer_in_time($four_hour_ot_out_time, $out_time);
+			} else {
+				return $out_time = $this->time_am_pm_format($out_time);
+			}
+		}
+		else{
+			return $out_time = $this->get_buyer_in_time($four_hour_ot_out_time, $out_time);
+		}
+	}
+	// end out time for 9pm
+
+	// out time for 12am
+	function get_formated_out_time_12am($emp_id, $out_time, $emp_shift){
+		if($out_time =='00:00:00'){
+			return $out_time ='';
+		}
+		$schedule 				= $this->schedule_check($emp_shift);
+		$out_start				= $schedule[0]["out_start"];
+		$ot_start				= $schedule[0]["ot_start"];
+		$ot_minute				= $schedule[0]["ot_minute_to_one_hour"];
+		$one_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($ot_start)));
+		$one_hour_ot_out_time	= $schedule[0]["one_hour_ot_out_time"];
+
+		$two_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($one_hour_ot_out_time)));
+		$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
+
+		$three_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($two_hour_ot_out_time)));
+		$three_hour_ot_out_time	= date("H:i:s", strtotime("+60 minutes", strtotime($two_hour_ot_out_time)));
+
+		$four_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($three_hour_ot_out_time)));
+		$four_hour_ot_out_time	= date("H:i:s", strtotime("+60 minutes", strtotime($three_hour_ot_out_time)));
+
+		$five_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($four_hour_ot_out_time)));
+		$five_hour_ot_out_time	= date("H:i:s", strtotime("+60 minutes", strtotime($four_hour_ot_out_time)));
+
+		$six_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($five_hour_ot_out_time)));
+		$six_hour_ot_out_time	= date("H:i:s", strtotime("+60 minutes", strtotime($five_hour_ot_out_time)));
+
+		$seven_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($six_hour_ot_out_time)));
+		$seven_hour_ot_out_time	= date("H:i:59", strtotime("+59 minutes", strtotime($six_hour_ot_out_time)));
+
+		if($out_start < $out_time) {
+			// one hour ot cal and get buyer time
+			if ($out_time >= $one_hour_ot AND $out_time < $one_hour_ot_out_time) {
+				return $out_time = $this->time_format_ten_plus($out_time);
+			} else if ($out_time >= $one_hour_ot_out_time AND $out_time < $two_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($one_hour_ot_out_time, $out_time);
+			}
+
+			// two hour ot cal and get buyer time
+			if ($out_time >= $two_hour_ot AND $out_time < $two_hour_ot_out_time) {
+				return $out_time = $this->time_format_ten_plus($out_time);
+			} else if ($out_time >= $two_hour_ot_out_time AND $out_time < $three_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
+			}
+
+			// three hour ot cal and get buyer time
+			if ($out_time >= $three_hour_ot AND $out_time < $three_hour_ot_out_time) {
+				return $out_time = $this->time_format_ten_plus($out_time);
+			} else if ($out_time >= $three_hour_ot_out_time AND $out_time < $four_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($three_hour_ot_out_time, $out_time);
+			}
+
+			// four hour ot cal and get buyer time
+			if ($out_time >= $four_hour_ot AND $out_time < $four_hour_ot_out_time) {
+				return $out_time = $this->time_format_ten_plus($out_time);
+			} else if ($out_time >= $four_hour_ot_out_time AND $out_time < $five_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($four_hour_ot_out_time, $out_time);
+			}
+
+			// five hour ot cal and get buyer time
+			if ($out_time >= $five_hour_ot AND $out_time < $five_hour_ot_out_time) {
+				return $out_time = $this->time_format_ten_plus($out_time);
+			} else if ($out_time >= $five_hour_ot_out_time AND $out_time < $six_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($five_hour_ot_out_time, $out_time);
+			}
+
+			// six hour ot cal and get buyer time
+			if ($out_time >= $six_hour_ot AND $out_time < $six_hour_ot_out_time) {
+				return $out_time = $this->time_format_ten_plus($out_time);
+			} else if ($out_time >= $six_hour_ot_out_time AND $out_time < $seven_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($six_hour_ot_out_time, $out_time);
+			}
+
+			// seven hour ot cal and get buyer time
+			if ($out_time >= $seven_hour_ot AND $out_time <= $seven_hour_ot_out_time) {
+				if ($seven_hour_ot) {
+					return $out_time = $this->time_format_ten_plus($out_time);
+				} else {
+					return $out_time = $this->get_buyer_in_time($seven_hour_ot_out_time, $out_time);
+				}
+			}
+
+			if ($out_time > $seven_hour_ot_out_time) {
+				return  $out_time = $this->get_buyer_in_time($seven_hour_ot_out_time, $out_time);
+			} else {
+				return $out_time = $this->time_am_pm_format($out_time);
+			}
+		} else {
+			return $out_time = $this->get_buyer_in_time($seven_hour_ot_out_time, $out_time);
+		}
+	}
+	// end out time for 12am
 
 }
