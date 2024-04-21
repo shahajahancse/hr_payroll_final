@@ -11,8 +11,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info"href="<?=base_url('index.php/acl_con/members_add')?>" >Add Member</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info"href="<?=base_url('setting_con/member_add')?>" >Add Member</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -76,8 +76,8 @@
                           <td class="text-center"><?php echo $member['unit_name'] ?></td>
                           <td class="text-center"><?php echo $member['status'] ?></td>
                           <td class="text-center">
-                              <a href="<?=base_url('index.php/acl_con/members_edit').'/'.$member["id"]?>"target='_blank' class="btn btn-primary" role="button">Edit</a>
-                              <a href="<?=base_url('index.php/acl_con/members_delete').'/'.$member["id"]?>" class="btn btn-danger" role="button">Delete</a>
+                              <a href="<?=base_url('setting_con/member_edit').'/'.$member["id"]?>"target='_blank' class="btn btn-primary" role="button">Edit</a>
+                              <a href="<?=base_url('setting_con/members_delete').'/'.$member["id"]?>" class="btn btn-danger" role="button">Delete</a>
                           </td>
                       </tr>
                     <?php } }else{?>
