@@ -176,27 +176,27 @@
                             <?php } ?>
 
                             <?php if(in_array(85,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_pay_slip_com()">Actual Salary Bank</button>
+                            <button class="btn input-sm sbtn" onclick="actual_salary_sheet_bank()">Actual Salary Bank</button>
                             <?php } ?>
                             <?php if(in_array(97,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_eot_sheet()">Actual EOT Sheet</button>
                             <?php } ?>
                             <?php if(in_array(98,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="eot_summary_report()">Actual EOT Summary</button>
+                            <button class="btn input-sm sbtn" onclick="actual_eot_summary()">Actual EOT Summary</button>
                             <?php } ?>
                             <?php if(in_array(86,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_monthly_eot_sheet()">Actual EOT Bank</button>
+                            <button class="btn input-sm sbtn" onclick="actual_eot_sheet_bank()">Actual EOT Bank</button>
                             <?php } ?>
 
                             <!-- <button class="btn input-sm sbtn" onclick="grid_bank_note_req()">Montly Bank Req.</button> -->
                             <?php if(in_array(99,$acl)) { ?>
-                                <button class="btn input-sm sbtn" onclick="()">EOT Sheet.</button>
+                                <button class="btn input-sm sbtn" onclick="eot_sheet_com_9()">EOT Sheet.</button>
                             <?php } ?>
                             <?php if(in_array(100,$acl)) { ?>
-                                <button class="btn input-sm sbtn" onclick="()">EOT Sheet`</button>
+                                <button class="btn input-sm sbtn" onclick="eot_sheet_com_12()">EOT Sheet`</button>
                             <?php } ?>
                             <?php if(in_array(101,$acl)) { ?>
-                                <button class="btn input-sm sbtn" onclick="()">EOT Sheet!</button>
+                                <button class="btn input-sm sbtn" onclick="eot_sheet_com_all()">EOT Sheet!</button>
                             <?php } ?>
                             <?php if(in_array(102,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_monthly_stop_sheet()">Stop Salary Sheet</button>
