@@ -54,7 +54,7 @@ class Grid_con extends CI_Controller {
 		// dd($data["values"]);
 		$data["grid_date"]	= $date;
 		$data["unit_id"]	= $unit_id;
-		$this->load->view('attn_report/daily_costing_summary',$data);
+		$this->load->view('grid_con/daily_costing_summary',$data);
 	}
 
 	function daily_attendance_summary()
@@ -73,7 +73,7 @@ class Grid_con extends CI_Controller {
 		$data['results']= $data['values']['results'];
 		$data['keys']= $data['values']['keys'];
 
-		$this->load->view('attn_report/daily_attendance_summary', $data);
+		$this->load->view('grid_con/daily_attendance_summary', $data);
 	}
 
 	function daily_logout_report(){
@@ -86,10 +86,9 @@ class Grid_con extends CI_Controller {
 		$data['category']    = 'Line';
 		$data['unit_id']    = $unit_id;
 		// dd($data);
-		$this->load->view('attn_report/daily_logout_report', $data);
+		$this->load->view('grid_con/daily_logout_report', $data);
 		// $this->load->view('others_report/daily_logout', $data);
 	}
-
 
 	function grid_continuous_report(){
 		$grid_firstdate = date("Y-m-d",strtotime($this->input->post('firstdate')));
@@ -132,15 +131,13 @@ class Grid_con extends CI_Controller {
 		}
 		else
 		{
-			$this->load->view('continuous_report',$data);
+			$this->load->view('grid_con/continuous_report',$data);
 		}
 
 
 	}
 
-
 	// Increment Promotion Line Letter
-
 	function incre_prom_report(){
 		$first_date = date('Y-m-d',strtotime($this->input->post('first_date')));
 		$second_date = date('Y-m-d',strtotime($this->input->post('second_date')));
@@ -152,18 +149,15 @@ class Grid_con extends CI_Controller {
 		// dd($type);
 		$data["values"] = $this->Grid_model->incre_prom_report($first_date,$second_date,$emp_id,$type);
         if($type == 1){
-			$this->load->view('increment_letter',$data);
+			$this->load->view('grid_con/increment_letter',$data);
 		}else if($type == 2){
-			$this->load->view('promotion_letter',$data);
+			$this->load->view('grid_con/promotion_letter',$data);
 		}else{
-			$this->load->view('line_letter',$data);
+			$this->load->view('grid_con/line_letter',$data);
 		}
 	}
 
-
-
     // New Joining
-
 	function grid_new_join_report(){
 		$grid_firstdate 	= $this->input->post('firstdate');
 		$grid_seconddate	= $this->input->post('seconddate');
@@ -177,13 +171,11 @@ class Grid_con extends CI_Controller {
 			echo $data['values'];
 		}
 		else{
-			$this->load->view('new_join_emp_report',$data);
+			$this->load->view('grid_con/new_join_emp_report',$data);
 		}
 	}
 
-
 	// resign report
-
 	function grid_resign_report(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
@@ -197,7 +189,7 @@ class Grid_con extends CI_Controller {
 			echo $data['values'];
 		}
 		else{
-			$this->load->view('resign_emp_report',$data);
+			$this->load->view('grid_con/resign_emp_report',$data);
 		}
 	}
     // left report
@@ -214,10 +206,9 @@ class Grid_con extends CI_Controller {
 			echo $data['values'];
 		}
 		else{
-			$this->load->view('left_emp_report',$data);
+			$this->load->view('grid_con/left_emp_report',$data);
 		}
 	}
-
 
 	function id_card(){
 		$emp_ids = $this->input->post('emp_id');
@@ -237,9 +228,9 @@ class Grid_con extends CI_Controller {
 		else{
 			// $this->load->view('id_card',$query);
 			if($status == 1){
-				$this->load->view('id_card_bangla',$query);
+				$this->load->view('grid_con/id_card_bangla',$query);
 			}else{
-				$this->load->view('id_card_eng',$query);
+				$this->load->view('grid_con/id_card_eng',$query);
 			}
 		}
 	}
@@ -258,7 +249,7 @@ class Grid_con extends CI_Controller {
 		}
 		else
 		{
-			$this->load->view('id_card_english',$query);
+			$this->load->view('grid_con/id_card_english',$query);
 		}
 	}
 
@@ -277,7 +268,7 @@ class Grid_con extends CI_Controller {
 		$interval = $date2->diff($date1);
 		$interval->d += 1;
 		if($data['values']['leave_entitle_casual'] > $interval->format('%d')){
-			$this->load->view('leave_application_report',$data);
+			$this->load->view('grid_con/leave_application_report',$data);
 		}else{
 			echo "Sorry! You are not eligible to apply for this leave";
 		}
@@ -290,7 +281,7 @@ class Grid_con extends CI_Controller {
 		$data["values"] = $this->Grid_model->grid_general_info($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['grid_emp_id'] = $grid_emp_id;
-		$this->load->view('general_info',$data);
+		$this->load->view('grid_con/general_info',$data);
 	}
 	function worker_register(){
 		$grid_data = $this->input->post('spl');
@@ -298,7 +289,7 @@ class Grid_con extends CI_Controller {
 		$data["values"] = $this->Grid_model->grid_general_info($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['grid_emp_id'] = $grid_emp_id;
-		$this->load->view('worker_register',$data);
+		$this->load->view('grid_con/worker_register',$data);
 	}
 
 	function grid_eot_actual(){
@@ -318,7 +309,7 @@ class Grid_con extends CI_Controller {
 			echo $data['values'];
 		}else{
 			// $this->load->view('grid_job_card',$data);
-			$this->load->view('grid_eot_actual',$data);
+			$this->load->view('grid_con/grid_eot_actual',$data);
 		}
 	}
 
@@ -339,7 +330,7 @@ class Grid_con extends CI_Controller {
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}else{
-			$this->load->view('grid_job_card',$data);
+			$this->load->view('grid_con/grid_job_card',$data);
 		}
 	}
 

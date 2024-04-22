@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>
-<?php 
+<?php
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
 	elseif($grid_status == 2)
@@ -14,8 +14,8 @@
 	{ echo 'Resign Employee '; }
 	elseif($grid_status == 6)
 	{ echo 'Promoted Employee '; }
-?>Monthly Stop Salary Sheet of 
-<?php 
+?>Monthly Stop Salary Sheet of
+<?php
 $date = $salary_month;
 $year=trim(substr($date,0,4));
 $month=trim(substr($date,5,2));
@@ -39,7 +39,7 @@ echo $date_format;
 </style>
 </head>
 <body style="width:800px; float: left;">
-<?php 
+<?php
 $row_count=count($value);
 if($row_count > 19)
 {
@@ -99,7 +99,7 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 ?>
 <table align="center" height="auto"  class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:12px; width:740px;">
 <tr height="85px">
-<?php if($deduct_status == "Yes"){?> 
+<?php if($deduct_status == "Yes"){?>
 <td colspan="14" align="center">
 <?php }else{ ?>
 <td colspan="14" align="center">
@@ -107,15 +107,15 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 <div style="width:100%; font-family:Arial, Helvetica, sans-serif;">
 <div style="text-align:left; position:relative;padding-left:10px;width:20%; float:left; font-weight:bold;">
 <table>
-<?php 
+<?php
 $date = date('d-m-Y');
-$section_name = $value[0]->sec_name;
+$section_name = isset($section_name)?$section_name:'';
 echo "Section : $section_name<br>";
  ?>
 </table>
 </div>
 <div style="text-align:center; position:relative;padding-left:10px;width:50%; overflow:hidden; float:left; display:block;">
-<?php 
+<?php
 $this->load->view("head_english");
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
@@ -129,8 +129,8 @@ $this->load->view("head_english");
 	{ echo 'Promoted Employee '; }
 echo '<span style="font-weight:bold;">';
 ?>
-Monthly Stop Salary Sheet of 
-<?php 
+Monthly Stop Salary Sheet of
+<?php
 $date = $salary_month;
 $year=trim(substr($date,0,4));
 $month=trim(substr($date,5,2));
@@ -191,20 +191,20 @@ echo "Payment Date : ";
 	$total_ot_amount_per_page = 0;
 	$total_eot_hour_per_page = 0;
 	$total_eot_amount_per_page = 0;
-	
+
 	for($p=0; $p<=$per_page_row;$p++)
 	{
 		echo "<tr height='45' style='text-align:center;' >";
 		echo "<td >";
 		echo $k+1;
 		echo "</td>";
-		
+
 		echo "<td style='font-weight:bold;'>";
 		print_r($value[$k]->emp_id);
 		echo "</td>";
-		
+
 		echo "<td style='width:100px;'>";
-		print_r($value[$k]->emp_full_name);
+		print_r($value[$k]->name_en);
 		if($grid_status == 4)
 		{
 			$resign_date = $this->Grid_model->get_resign_date_by_empid($value[$k]->emp_id);
@@ -217,17 +217,17 @@ echo "Payment Date : ";
 			if($left_date != false){
 			echo $left_date = date('d-M-y', strtotime($left_date));}
 		}
-		echo "</td>"; 
-				
+		echo "</td>";
+
 		echo "<td>";
 		print_r($value[$k]->desig_name);
 		echo "</td>";
-		
+
 		echo "<td>";
-		print_r($value[$k]->line_name);
+		print_r($value[$k]->line_name_en);
 		echo "</td>";
-				
-				
+
+
 		echo "<td>";
 		$date = $value[$k]->emp_join_date;
 		$year=trim(substr($date,0,4));
@@ -236,18 +236,18 @@ echo "Payment Date : ";
 		$date_format = date("d-M-y", mktime(0, 0, 0, $month, $day, $year));
 		echo $date_format;
 		echo "</td>";
-			
+
 		echo "<td>";
 		print_r ($value[$k]->gr_name);
 		echo "</td>";
-	
+
 		$gross_salary 				= $value[$k]->gross_sal;
 		$total_gross_salary 		= $total_gross_salary + $gross_salary;
 		$grand_total_gross_salary 	= $grand_total_gross_salary + $gross_salary;
 		echo "<td>";
 		echo $gross_salary;
 		echo "</td>";
-			 
+
 		$net_pay 				= $value[$k]->net_pay ;//+ $eot_amount;
 		$total_net_pay 			= $total_net_pay + $net_pay;
 		$grand_total_net_pay 	= $grand_total_net_pay + $net_pay;
@@ -258,12 +258,12 @@ echo "Payment Date : ";
 		echo "<td>";
 		echo "&nbsp Stop &nbsp;";
 		echo "</td>";
-		
+
 		echo "<td>";
 		echo "&nbsp;";
 		echo "</td>";
 
-		echo "</tr>"; 
+		echo "</tr>";
 		$k++;
 	}
 	?>
@@ -271,7 +271,7 @@ echo "Payment Date : ";
 		<td align="center" colspan="7"><strong>Total Per Page</strong></td>
         <td align="right"><strong><?php echo $english_format_number = number_format($total_gross_salary);?></strong></td>
         <td align="right"><strong><?php echo $english_format_number = number_format($total_net_pay);?></strong></td>
-		
+
 	</tr>
 	<?php
 	if($counter == $page)
@@ -282,7 +282,7 @@ echo "Payment Date : ";
             <td align="right"><strong><?php echo $english_format_number = number_format($grand_total_net_pay);?></strong></td>
 			</tr>
 			<?php } ?>
-			
+
 			<table width="100%" height="80px" border="0" align="center" style="margin-bottom:50px; font-family:Arial, Helvetica, sans-serif; font-size:10px;">
 			<tr height="80%" >
 			<td colspan="28"></td>
