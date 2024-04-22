@@ -180,14 +180,24 @@ class Training_con extends CI_Controller {
 	}
 
 	function training_list(){
-		$this->db->select('training_type.*,pr_units.unit_name');
-        $this->db->from('training_type');
-        $this->db->join('pr_units', 'pr_units.unit_id = training_type.unit_id');
+		$this->db->select('training_management.*,pr_units.unit_name,training_type.title as training_name,pr_emp_per_info.name_en as emp_name');
+        $this->db->from('training_management');
+        $this->db->join('pr_units', 'pr_units.unit_id = training_management.unit_id');
+        $this->db->join('training_type', 'training_type.id = training_management.training_id');
+        $this->db->join('pr_emp_com_info', 'pr_emp_com_info.id = training_management.emp_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
         $this->data['pr_line'] = $this->db->get()->result_array();
-        $this->data['title'] = 'Training List';
+        $this->data['title'] = 'Employee Training List';
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'training/training_list';
+        $this->data['subview'] = 'training/employee_training_list';
         $this->load->view('layout/template', $this->data);
 	}
+    function employee_training_delete($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('training_management');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url() . 'training_con/training_list');
+    }
 }
 
