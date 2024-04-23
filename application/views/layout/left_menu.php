@@ -83,6 +83,7 @@
         <ul class="sub-menu ">
           <li class="start <?= activate_method('training_list') ?>"> <a href="<?=base_url('training_con/training_list')?>" >Training List</a></li>
           <li class="start <?= activate_method('training') ?>"> <a href="<?=base_url('training_con/training')?>" >Training Type</a></li>
+          <li class="start <?= activate_method('training_report') ?>"> <a href="<?=base_url('training_con/training_report')?>" >Training Report</a></li>
         </ul>
       </li>
 

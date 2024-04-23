@@ -409,7 +409,7 @@ class Command extends CI_Controller {
 		$this->db->from('pr_emp_shift_log');
 		$this->db->from('pr_emp_com_info');
 		$this->db->where('pr_emp_com_info.id = pr_emp_shift_log.emp_id');
-		$this->db->where('pr_emp_com_info.unit_id =', 4);
+		$this->db->where('pr_emp_com_info.unit_id =', 2);
 		$this->db->group_by('pr_emp_com_info.id');
 		$results = $this->db->get()->result();
 		// dd($results);

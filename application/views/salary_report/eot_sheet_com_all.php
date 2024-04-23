@@ -46,7 +46,7 @@ echo $date_format;
 <body style="width:800px; float: left;">
 
 <?php
-$row_count=count($value);
+$row_count=count($values);
 if($row_count > 19)
 {
 $page = ceil($row_count/19);
@@ -76,7 +76,7 @@ $k = 0;
 			$others_allaw = 0;
 			$total_allaw =0;
 			$ot_hour =0;
-			$ot_rate =0;
+			$ot_rates =0;
 			$ot_amount =0;
 			$gross_pay =0;
 			$adv_deduct =0;
@@ -124,7 +124,7 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 <table>
 <?php
 $date = date('d-m-Y');
-//$section_name = $value[0]->sec_name;
+//$section_name = $values[0]->sec_name;
 echo "Section : <br>";
  ?>
 </table>
@@ -172,35 +172,32 @@ echo "Payment Date : ";
 
 
 </td>
-</tr>
-
-
+	</tr>
         <th rowspan="2" width="15" height="20px"><div align="center"><strong>	SI. No				</strong></div></th>
         <th rowspan="2" width="14" height="20px"><div align="center"><strong>	Card No				</strong></div></th>
         <th rowspan="2" width="30" height="20px"><div align="center"><strong>	Name of Employee	</strong></div></th>
         <th rowspan="2" width="25" height="20px"><div align="center"><strong>	Designation			</strong></div></th>
         <th rowspan="2" width="50" height="20px"><div align="center"><strong>	Line				</strong></div></th>
         <th rowspan="2" width="25" height="20px"><div align="center"><strong>	Joining Date		</strong></div></th>
-        <th rowspan="2" width="25" height="20px"><div align="center"><strong>	Grade				</strong></div></th>
-      <th rowspan="2" width="35" height="20px"><div align="center"><strong>	Gross Salary		</strong></div></th>
+      	<th rowspan="2" width="35" height="20px"><div align="center"><strong>	Gross Salary		</strong></div></th>
         <th rowspan="2" width="35" height="20px"><div align="center"><strong>	Total OT			</strong></div></th>
         <th rowspan="2" width="35" height="20px"><div align="center"><strong>	Salary OT			</strong></div></th>
         <th rowspan="2" width="35" height="20px"><div align="center"><strong>	EOT			</strong></div></th>
         <th rowspan="2" width="35" height="20px"><div align="center"><strong>	OT Rate			</strong></div></th>
         <th rowspan="2" width="35" height="20px"><div align="center"><strong>	OT Amount				</strong></div></th>
         <th rowspan="2" width="120" height="20px"><div align="center"><strong>	Signature			</strong></div></th>
-        <tr></tr>
-<?php
-
-	if($counter == $page)
-  	{
-   		$modulus = ($row_count-1) % 19;
-    	$per_page_row=$modulus;
-	}
-   	else
-   	{
-    	$per_page_row=18;
-   	}
+        <tr>
+	</tr>
+	<?php
+		if($counter == $page)
+		{
+			$modulus = ($row_count-1) % 19;
+			$per_page_row=$modulus;
+		}
+		else
+		{
+			$per_page_row=18;
+		}
 
    	$total_pay_wages	= 0;
 	$total_ot_hours   	= 0;
@@ -234,43 +231,42 @@ echo "Payment Date : ";
 
 
 		echo "<td style='font-weight:bold;'>";
-		print_r($value[$k]->emp_id);
+		print_r($values[$k]->emp_id);
 		//echo $row->emp_id;
 		echo "</td>";
 
 		echo "<td style='width:100px;'>";
-		print_r($value[$k]->name_bn);
+		print_r($values[$k]->name_bn);
 		echo '<br>';
 		if($grid_status == 4)
 		{
-			$resign_date = $this->Grid_model->get_resign_date_by_empid($value[$k]->emp_id);
+			$resign_date = $this->Grid_model->get_resign_date_by_empid($values[$k]->emp_id);
 			if($resign_date != false){
 			echo $resign_date = date('d-M-y', strtotime($resign_date));}
 		}
 		elseif($grid_status == 3)
 		{
-			$left_date = $this->Grid_model->get_left_date_by_empid($value[$k]->emp_id);
+			$left_date = $this->Grid_model->get_left_date_by_empid($values[$k]->emp_id);
 			if($left_date != false){
 			echo $left_date = date('d-M-y', strtotime($left_date));}
 		}
 		echo "</td>";
 
 
-
 		echo "<td>";
-		print_r($value[$k]->name_en);
+		print_r($values[$k]->name_en);
 		//echo $row->desig_name;
 		echo "</td>";
 
 		echo "<td>";
-		print_r($value[$k]->line_name_en);
+		print_r($values[$k]->line_name_en);
 		//echo $row->desig_name;
 		echo "</td>";
 
 
 		echo "<td>";
-		$date = $value[$k]->emp_join_date;
-		//print_r($value[$k]->emp_join_date);
+		$date = $values[$k]->emp_join_date;
+		//print_r($values[$k]->emp_join_date);
 		$year=trim(substr($date,0,4));
 		$month=trim(substr($date,5,2));
 		$day=trim(substr($date,8,2));
@@ -278,64 +274,28 @@ echo "Payment Date : ";
 		echo $date_format;
 		echo "</td>";
 
-		echo "<td>";
-		print_r ($value[$k]->gr_name);
-		echo "</td>";
-	/*
-		echo "<td>";
-		print_r ($value[$k]->basic_sal);
-		$basic = $basic + $value[$k]->basic_sal;
-		echo "</td>";
-
-		echo "<td>";
-		print_r ($value[$k]->house_r);
-		//echo $row->house_r;
-		$house_rent = $house_rent + $value[$k]->house_r;
-		echo "</td>";
-
-		echo "<td>";
-		print_r ($value[$k]->medical_a);
-		//echo $row->medical_a;
-		$medical_all = $medical_all + $value[$k]->medical_a;
-		echo "</td>";
-
-		echo "<td>";
-		print_r ($value[$k]->trans_allow);
-		echo "</td>";
-
-		echo "<td>";
-		print_r ($value[$k]->food_allow);
-		echo "</td>";
-		*/
 		echo "<td style='font-weight:bold;'>";
-		print_r ($value[$k]->gross_sal);
+		print_r ($values[$k]->gross_sal);
 		//echo "<strong>$row->gross_sal</strong>";
-		$gross_sal = $gross_sal + $value[$k]->gross_sal;
-		$total_gross_sal_per_page = $total_gross_sal_per_page + $value[$k]->gross_sal;
+		$gross_sal = $gross_sal + $values[$k]->gross_sal;
+		$total_gross_sal_per_page = $total_gross_sal_per_page + $values[$k]->gross_sal;
 		echo "</td>";
 
-		$user_id = $this->Acl_model->get_user_id($this->session->userdata('username'));
-		$acl     = $this->Acl_model->get_acl_list($user_id);
-		if(in_array(14,$acl)){
-			$eot_hour 	= $value[$k]->eot_hr_for_sa;
-			$eot_amount = $value[$k]->eot_amt_for_sa;
-		}
-		else
-		{
-			$eot_hour 	= $value[$k]->eot_hour;
-			$eot_amount = round($eot_hour * $value[$k]->ot_rate);
-		}
+		$ot_data = $this->Grid_model->cal_eot_com($values[$k]->emp_id, $salary_month, $second_date);
 
-		$total_ot_eot_hour	= $value[$k]->ot_hour + $eot_hour;
+		$ot_rate    = round(($values[$k]->basic_sal * 2  / 208), 2);
+		$eot_hour 	= $ot_data->eot;
+		$eot_amount = round($eot_hour * $ot_rate);
+
+		$total_ot_eot_hour	= $ot_data->ot + $eot_hour;
 		echo "<td>";
-		//echo $eot_hour = $value[$k]->eot_hour;
 		echo $total_ot_eot_hour;
 		echo "</td>";
 		$total_ot_eot_hour_per_page = $total_ot_eot_hour_per_page + $total_ot_eot_hour;
 		$grand_total_ot_eot_hour = $grand_total_ot_eot_hour + $total_ot_eot_hour;
 
 		echo "<td>";
-		echo $ot_hour = $value[$k]->ot_hour;
+		echo $ot_hour = $ot_data->ot;
 		echo "</td>";
 		$total_ot_hour_per_page = $total_ot_hour_per_page + $ot_hour;
 		$grand_total_ot_hour = $ot_hour + $grand_total_ot_hour;
@@ -350,9 +310,9 @@ echo "Payment Date : ";
 		$grand_total_eot_hour = $grand_total_eot_hour + $eot_hour;
 
 		echo "<td>";
-		print_r ($value[$k]->ot_rate);
+		print_r ($ot_rate);
 		//echo "o_r".$row->ot_rate;
-		$ot_rate = $ot_rate + $value[$k]->ot_rate;
+		$ot_rates = $ot_rates + $ot_rate;
 		echo "</td>";
 		//$total_ot_rate_per_page = $total_ot_rate_per_page + $ot_rate;
 
@@ -374,7 +334,7 @@ echo "Payment Date : ";
 	}
 	?>
 	<tr>
-		<td align="center" colspan="7"><strong>Total Per Page</strong></td>
+		<td align="center" colspan="6"><strong>Total Per Page</strong></td>
         <td align="right"><strong><?php echo $english_format_number = number_format($total_gross_sal_per_page);?></strong></td>
         <td align="right"><strong><?php echo $english_format_number = number_format($total_ot_eot_hour_per_page);?></strong></td>
         <td align="right"><strong><?php echo $english_format_number = number_format($total_ot_hour_per_page);?></strong></td>
@@ -387,7 +347,7 @@ echo "Payment Date : ";
 	if($counter == $page)
    		{?>
 			<tr height="10">
-			<td colspan="7" align="center"><strong>Grand Total Amount Tk</strong></td>
+			<td colspan="6" align="center"><strong>Grand Total Amount Tk</strong></td>
             <td align="right"><strong><?php echo $english_format_number = number_format($gross_sal);?></strong></td>
             <td align="right"><strong><?php echo $english_format_number = number_format($grand_total_ot_eot_hour);?></strong></td>
             <td align="right"><strong><?php echo $english_format_number = number_format($grand_total_ot_hour);?></strong></td>
@@ -446,20 +406,7 @@ echo "Payment Date : ";
 <?php } ?>
 				</td>
 			</tr>
-			<!-- <table width="100%" height="80px" border="0" align="center" style="margin-bottom:50px; font-family:Arial, Helvetica, sans-serif; font-size:10px;">
-			<tr height="80%" >
-			<td colspan="28"></td>
-			</tr>
-			<tr height="20%">
-			<td  align="center" style="width:10%;"><dt style="width: 128px;" class="bottom_txt_design" >Prepared By</dt></td>
-            <td align="center"  style="width:20%" ><dt style="width: 128px;" class="bottom_txt_design" >Account Executive</dt></td>
-			<td  align="center" style="width:15%" ><dt style="width: 128px;" class="bottom_txt_design" >HR Manager\ AGM</dt></td>
-			<td  align="center" style="width:15%" ><dt style="width: 128px;" class="bottom_txt_design" >GM(HR,Admin & Comp.)</dt></td>
-            <td  align="center" style="width:15%" ><dt style="width: 128px;" class="bottom_txt_design" >GM</dt></td>
-            <td  align="center" style="width:15%" ><dt style="width: 128px;" class="bottom_txt_design" >Director</dt></td>
-			</tr>
 
-			</table> -->
 			</table>
 			<div style="page-break-after: always;"></div>
 			<?php
