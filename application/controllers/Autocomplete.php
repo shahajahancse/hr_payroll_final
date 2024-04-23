@@ -17,10 +17,12 @@ class Autocomplete extends CI_Controller {
 		}
 	}
     public function employee_id(){
-        dd($this->data['user_data']);
         $id = $this->input->post('id');
         $this->db->select('emp_id');
         $this->db->like('emp_id', $id);
+        if ($this->data['user_data']->unit_name != 0 && $this->data['user_data']->unit_name != NULL) {
+            $this->db->where('unit_id', $this->data['user_data']->unit_name);
+        }
         $this->db->limit(70);
         $query = $this->db->get('pr_emp_com_info');
 
