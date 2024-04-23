@@ -39,7 +39,7 @@ class Emp_info_con extends CI_Controller {
 		$this->db->order_by('emp_id', 'desc');
 		$this->db->limit(1);
 		$query = $this->db->get('pr_emp_com_info');
-		echo($query);
+		dd($query);
 		// echo $query->row()->emp_id;
 	}
 
