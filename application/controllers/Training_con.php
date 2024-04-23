@@ -14,6 +14,8 @@ class Training_con extends CI_Controller {
 		$this->load->model('Log_model');
 		$this->load->model('Acl_model');
 		$this->load->model('Common_model');
+        $this->load->model('grid_model');
+
 
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -142,6 +144,37 @@ class Training_con extends CI_Controller {
         $this->load->view('layout/template', $this->data);
 
 	}
+	function training_report()
+	{
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name)) {
+	        $this->data['employees'] = $this->Common_model->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
+
+        $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['user_id'] = $this->data['user_data']->unit_name;
+        $this->data['title'] = 'Training Report';
+        $this->data['subview'] = 'training/training_report';
+        $this->load->view('layout/template', $this->data);
+
+	}
+    function training_report_list()
+	{
+		$training_id = $this->input->post('training_id');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+        $data["emp_id"] = $grid_emp_id;
+        $data["training_id"] = $training_id;
+        $data["type"] = $this->input->post('type');
+        $data["unit_id"] = $this->input->post('unit_id');
+		$this->load->view('training/done_not_done',$data);
+	}
+
 	function employee_training_add()
 	{
 		if (!isset($_POST['training_id']) || !isset($_POST['unit_id']) || !isset($_POST['date']) || !isset($_POST['time'])) {
@@ -163,6 +196,15 @@ class Training_con extends CI_Controller {
 			if (empty($value)) {
 				continue;
 			}
+
+            $this->db->where('emp_id', $value);
+            $this->db->where('training_id', $training_id);
+            $this->db->where('unit_id', $unit_id);
+            $query = $this->db->get('training_management');
+            if ($query->num_rows() > 0) {
+                continue;
+            }
+
 			$data[] = array(
 				'emp_id' => $value,
 				'training_id' => $training_id,

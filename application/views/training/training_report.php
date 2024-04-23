@@ -27,10 +27,11 @@
     <!-- <div class="container-fluid">	 -->
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
-        <div class="col-md-12" style="display: flex;justify-content: space-between;align-items: center;">
-            <h3 style="font-weight: 600;"><?= $title ?></h3>
-            <a class="btn btn-primary" href="<?= base_url(); ?>training_con/training_list"><<< Back </a>
-        </div>
+            <div class="col-md-12" style="display: flex;justify-content: space-between;align-items: center;">
+                <h3 style="font-weight: 600;"><?= $title ?></h3>
+                <a class="btn btn-primary" href="<?= base_url(); ?>training_con/training_list">
+                    <<< Back </a>
+            </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Unit <span style="color: red;">*</span> </label>
@@ -111,47 +112,36 @@
         <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
-		<form id="add_emp_training">
-			<div class="row nav_head" style="display: flex;flex-direction: column;">
-			
-				<div class="col-lg-12">
-					<span style="font-size: 20px;">Training Add </span>
-				</div><!-- /.col-lg-6 -->
-				<br>
-				<div class="col-md-12 d-flex">
-					<div class="input-group col-md-6">
-						<label for="">Training name</label>
-						<select name="training_id" id="training_id" required>
-							<option value="">Select Training</option>
-							<?php
+        <form id="add_emp_training">
+            <div class="row nav_head" style="display: flex;flex-direction: column;">
+
+                <div class="col-lg-12">
+                    <span style="font-size: 20px;"><?= $title ?> </span>
+                </div><!-- /.col-lg-6 -->
+                <br>
+                <div class="col-md-12 d-flex">
+                    <div class="input-group col-md-6">
+                        <label for="">Training name</label>
+                        <select name="training_id" id="training_id" required>
+                            <option value="">Select Training</option>
+                            <?php
                             $this->db->select('training_type.*,pr_units.unit_name');
                             $this->db->from('training_type');
                             $this->db->join('pr_units', 'pr_units.unit_id = training_type.unit_id');
 							$training = $this->db->get()->result();
 								foreach ($training as $key => $value) { ?>
-							<option value="<?= $value->id ?>"><?= $value->title ?> >> <?= $value->unit_name ?></option>
-							<?php } ?>
-						</select>
-					</div><!-- /input-group -->
-				</div>
-				<br>
-				<div class="col-md-12" style="display: flex;gap: 10px">
-					<div class="input-group col-md-4">
-						<label for="">Date</label>
-						<input type="date" name="date" id="date" class="form-control" required>
-					</div><!-- /input-group -->
-					<div class="input-group col-md-4">
-						<label for="">Time</label>
-						<input type="time" name="time" id="time" class="form-control" required>
-					</div><!-- /input-group -->
-					<div class="input-group col-md-4">
-						<label style="color:white">.</label>
-						<input type="submit" value="Add" class="btn btn-primary">
-					</div><!-- /input-group -->
-				</div>
-			</div><!-- /.row -->
-		</form>
-
+                            <option value="<?= $value->id ?>"><?= $value->title ?> >> <?= $value->unit_name ?></option>
+                            <?php } ?>
+                        </select>
+                    </div><!-- /input-group -->
+                </div>
+                <br>
+                <div class="col-md-12" style="display: flex;gap: 10px">
+                    <button type="button" class="btn btn-primary" onclick="view_training(0)">Done list</button>
+                    <button type="button" class="btn btn-primary" onclick="view_training(1)">Not done list</button>
+                </div>
+            </div><!-- /.row -->
+        </form>
     </div>
     <div class="col-md-4 tablebox">
         <div style="height: 80vh; overflow-y: scroll;">
@@ -323,48 +313,69 @@ $(document).ready(function() {
 </script>
 
 
+
 <script>
-$(document).ready(function() {
-	$('#add_emp_training').submit(function(e) {
-		e.preventDefault();
-		var url = '<?= base_url('training_con/employee_training_add')?>';
+function get_checked_value(checkboxes) {
+    var vals = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+        .join(",");
+}
 
-		// id	emp_id	unit_id	training_id	date	time	status	created_at	
+function view_training(type) {
+    var ajaxRequest; // The variable that makes Ajax possible!
+    try {
+        // Opera 8.0+, Firefox, Safari
+        ajaxRequest = new XMLHttpRequest();
+    } catch (e) {
+        // Internet Explorer Browsers
+        try {
+            ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+                // Something went wrong
+                alert("Your browser broke!");
+                return false;
+            }
+        }
+    }
+    
 
+    var training_id = document.getElementById('training_id').value;
+    if (training_id == '') {
+        alert("Please select Training.");
+        return false;
+    }
+    
+    var unit_id = document.getElementById('unit_id').value;
+    if (unit_id == 'Select') {
+        alert("Please select Unit.");
+        return false;
+    }
+    var checkboxes = document.getElementsByName('emp_id[]');
+    var sql = get_checked_value(checkboxes);
 
-		var checkboxes = document.getElementsByName('emp_id[]');
-		var sql = get_checked_value(checkboxes);
+    if (sql == '') {
+        alert('Please select employee Id');
+        return false;
+    }
 
-		if (sql == '') {
-			alert('Please select employee Id');
-			return false;
-		}
+    var queryString = "spl=" + sql + "&training_id=" + training_id + "&unit_id=" + unit_id + "&type=" + type;
+    url = hostname + "training_con/training_report_list/";
 
+    ajaxRequest.open("POST", url, true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+    ajaxRequest.send(queryString);
 
-		var unit_id = document.getElementById('unit_id').value;
-		if(unit_id =='Select')
-		{
-			alert("Please select Unit.");
-			return false;
-		}
-		var training_id = document.getElementById('training_id').value;
-		var date = document.getElementById('date').value;
-		var time = document.getElementById('time').value;
-		var data="training_id="+training_id+"&date="+date+"&unit_id="+unit_id+"&spl="+sql+"&time="+time;
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: data,
-			success: function(data) {
-				if (data == '1') {
-					showMessage('success', 'Training added successfully');
-				}
-			},
-			error: function(jqXHR, exception) {
-				console.error('jqXHR:', jqXHR);
-				console.error('exception:', exception);
-			}
-		});
-	})
-})
+    ajaxRequest.onreadystatechange = function() {
+        if (ajaxRequest.readyState == 4) {
+            var resp = ajaxRequest.responseText;
+            continuous_costing_report = window.open('', '_blank',
+                'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+            continuous_costing_report.document.write(resp);
+        }
+    }
+}
 </script>
