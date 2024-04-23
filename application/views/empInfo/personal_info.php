@@ -217,8 +217,22 @@ input[type="number"] {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Education </label>
-                                <input type="text" name="education" id="education" class="form-control input-sm">
-                                <?php echo form_error('education');?>
+                                <!-- <input type="text" name="education" id="education" class="form-control input-sm">
+                                <?php echo form_error('education');?> -->
+                                <Select name="education" id="education" class="form-control input-sm">
+                                    <option value="">select</option>
+                                    <option value="None">None</option>
+                                    <option value="PSC">PSC</option>
+                                    <option value="6th Pass">6th Pass</option>
+                                    <option value="7th Pass">7th Pass</option>
+                                    <option value="JSC">JSC</option>
+                                    <option value="SSC">SSC</option>
+                                    <option value="HSC">HSC</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Graduation">Graduation</option>
+                                    <option value="Post Graduation">Post Graduation</option>
+                                    <option value="Other">Other</option>
+                                </Select>
                             </div>
                         </div>
                     </div>
@@ -629,7 +643,8 @@ input[type="number"] {
                     </div>
 
 
-                    <div class="row">
+                    <div class="row" <?php  $user_id = $this->session->userdata('data')->id;
+        $acl = check_acl_list($user_id); if(in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> >
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Salary <span style="color: red;">*</span> </label>
