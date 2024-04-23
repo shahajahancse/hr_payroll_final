@@ -641,10 +641,7 @@ input[type="number"] {
                             <input type="radio" name="ot_entitle" id="ot_entitle" value="1" class="form-check-input" style="display: inline; margin-right: 10px;" required>No
                         </div>
                     </div>
-
-
-                    <div class="row" <?php  $user_id = $this->session->userdata('data')->id;
-        $acl = check_acl_list($user_id); if(in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> >
+                    <div class="row" <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> >
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Salary <span style="color: red;">*</span> </label>
