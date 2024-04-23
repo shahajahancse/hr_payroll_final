@@ -34,13 +34,14 @@ class Emp_info_con extends CI_Controller {
 	function get_last_id()
 	{
 		$unit_id = $this->input->post('unit_id');
+		dd($unit_id);
 		$this->db->select('emp_id');
 		$this->db->where('unit_id', $unit_id);
 		$this->db->order_by('emp_id', 'desc');
 		$this->db->limit(1);
 		$query = $this->db->get('pr_emp_com_info');
 		echo $query->row()->emp_id;
-		
+
 	}
 
 
@@ -51,7 +52,7 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_rules('unit_id', 'Unit', 'trim|required');
 		if($this->input->post('pi_save')) {
 			$this->form_validation->set_rules('emp_id', 'Employee ID', 'trim|required|is_unique[pr_emp_com_info.emp_id]');
-		} 
+		}
 		$this->form_validation->set_rules('proxi_id', 'Punch ID', 'trim');  //|is_unique[pr_emp_com_info.proxi_id]
 		$this->form_validation->set_rules('name_en', 'Employee Name', 'trim|required');
 		$this->form_validation->set_rules('name_bn', 'Employee Bangla Name', 'trim|required');
@@ -75,7 +76,7 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_rules('pre_district', 'Present District', 'trim|required');
 		$this->form_validation->set_rules('pre_thana', 'Present Upazila', 'trim|required');
 		$this->form_validation->set_rules('pre_post', 'Present Post Office', 'trim|required');
-		
+
 		$this->form_validation->set_rules('per_village', 'Parmanent Village', 'trim|required');
 		$this->form_validation->set_rules('per_village_bn', 'Parmanent Village Bangla', 'trim|required');
 		$this->form_validation->set_rules('per_district', 'Parmanent District', 'trim|required');
