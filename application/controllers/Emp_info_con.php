@@ -34,7 +34,7 @@ class Emp_info_con extends CI_Controller {
 	function get_last_id()
 	{
 		$unit_id = $this->input->post('unit_id');
-		echo($unit_id);
+		// echo($unit_id);
 		$this->db->select('emp_id');
 		$this->db->where('unit_id', $unit_id);
 		$this->db->order_by('emp_id', 'desc');
