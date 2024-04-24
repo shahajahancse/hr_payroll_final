@@ -13,7 +13,6 @@ class Setting_con extends CI_Controller {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-        $this->data['user_data'] = $this->session->userdata('data');
         /*if (!check_acl_list($this->data['user_data']->id, 17)) {
             echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
             redirect("payroll_con");
@@ -186,7 +185,6 @@ class Setting_con extends CI_Controller {
 	}
 
 	public function report_setting(){
-
 		if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
@@ -201,8 +199,8 @@ class Setting_con extends CI_Controller {
         $this->data['title'] = 'Report setting';
         $this->data['subview'] = 'settings/report_setting';
         $this->load->view('layout/template', $this->data);
-
 	}
+
 	public function report_setting_save($id){
 		// dd($id);
 		$unit_id = $this->input->post('unit_id');
