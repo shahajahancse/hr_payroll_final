@@ -50,7 +50,7 @@ input[type="number"] {
                                 <label>Unit <span style="color: red;">*</span> </label>
                                 <select name="unit_id" id="unit_id" onchange='get_last_id()' id="unit_id"
                                     class="form-control input-sm" required>
-                                    <option>Select Unit</option>
+                                    <option value="" >Select Unit</option>
                                     <?php
 										foreach ($units as $row) {
 										if($row->unit_id == $user_data->unit_name){
