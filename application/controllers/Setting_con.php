@@ -422,8 +422,8 @@ class Setting_con extends CI_Controller {
 	function member_add(){
 		$this->data['username'] = $this->data['user_data']->id_number;
 
-		$param['pr_units'] = $this->db->get('pr_units')->result();
-		$param['acls'] = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
+		$this->data['pr_units'] = $this->db->get('pr_units')->result();
+		// $param['acls'] = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
 
 		$this->data['subview'] = 'settings/member_add';
         $this->load->view('layout/template', $this->data);
@@ -438,45 +438,26 @@ class Setting_con extends CI_Controller {
 		$data['id_number'] = $this->input->post('id_number');
 		$data['password'] = $this->input->post('password');
 		$data['level'] = $this->input->post('level');
-		$data['pr_units_name'] = $this->input->post('pr_units_name');
+		$data['unit_name'] = $this->input->post('unit_name');
 		$data['status'] = $this->input->post('status');
 		$this->db->insert('members',$data);
-		$id = $this->db->insert_id();
-
-		$acl_count = $this->input->post('acl_id');
-
-		if (count($acl_count)) {
-			for ($i=0; $i < count($acl_count); $i++) {
-				$acl_data['username_id'] = $id;
-				$acl_data['acl_id'] = $this->input->post('acl_id')[$i];
-				$acl_data['priority'] = $i;
-				$this->db->insert('member_acl_level', $acl_data);
-			}
-		}
-
 		$this->session->set_flashdata('success','Record Insert successfully!');
 		redirect(base_url('setting_con/acl'));
 	}
 
 	function member_edit($id){
-		$this->db->select('members.*, members.unit_name as u_id, pr_units.unit_name', false);
-		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
         $this->db->where('members.id', $id);
-		$this->data['members'] = $this->db->get('members')->row();
+		$this->data['row'] = $this->db->get('members')->row();
 
-		$acls = $this->db->select('cl.*, mcl.acl_id')
-							->join('member_acl_level mcl', 'cl.id = mcl.acl_id and mcl.username_id = "'.$id.'"', 'left')
-							->get('member_acl_list as cl')->result();
-
-		$this->data['acls'] = $acls;
         $this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['pr_units'] = $this->db->get('pr_units')->result();
 
-		$this->data['subview'] = 'settings/member_add';
+		$this->data['subview'] = 'settings/member_edit';
         $this->load->view('layout/template', $this->data);
 		// $this->load->view('', $param);
 	}
 
-	function update_members($id=0){
+	function update_member($id=0){
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('id_number', 'members Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -485,24 +466,10 @@ class Setting_con extends CI_Controller {
 		$data['id_number'] = $this->input->post('id_number');
 		$data['password'] = $this->input->post('password');
 		$data['level'] = $this->input->post('level');
-		$data['pr_units_name'] = $this->input->post('pr_units_name');
+		$data['unit_name'] = $this->input->post('unit_name');
 		$data['status'] = $this->input->post('status');
 		$this->db->where('members.id',$id);
 		$this->db->update('members',$data);
-
-		$acl_count = $this->input->post('acl_id');
-
-		if (count($acl_count)) {
-			$this->db->where('member_acl_level.username_id',$id);
-			$data=$this->db->delete('member_acl_level');
-
-			for ($i=0; $i < count($acl_count); $i++) {
-				$acl_data['username_id'] = $id;
-				$acl_data['acl_id'] = $this->input->post('acl_id')[$i];
-				$acl_data['priority'] = $i;
-				$this->db->insert('member_acl_level', $acl_data);
-			}
-		}
 
 		$this->session->set_flashdata('success','Record Updated successfully!');
 		redirect(base_url('setting_con/acl'));

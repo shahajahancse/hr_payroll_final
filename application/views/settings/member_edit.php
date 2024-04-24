@@ -23,53 +23,45 @@
   <!-- <h3>Update Member</h3> -->
   <!-- <hr> -->
   <div style="padding-left: 20px; padding-top: 10px;">
-    <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url().'setting_con/update_member/'.$member->id;?>">
+    <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url('setting_con/update_member/').$row->id;?>">
       <div class="row">
         <div class="col-md-6">
-          <input type="hidden" name="id"value="<?=$member->id?>" class="form-control">
+          <input type="hidden" name="id"value="<?=$row->id?>" class="form-control">
           <div class="form-group">
 
             <label>Member Name</label>
-            <input type="text" name="id_number"value="<?=set_value('id_number',$member->id_number)?>" class="form-control">
+            <input type="text" name="id_number"value="<?=set_value('id_number',$row->id_number)?>" class="form-control">
             <?php echo form_error('id_number');?>
           </div>
           <div class="form-group">
             <label>Password</label>
-            <input type="password" name="password"value="<?=set_value('password',$member->password)?>" class="form-control">
+            <input type="password" name="password"value="<?=set_value('password',$row->password)?>" class="form-control">
             <?php echo form_error('password');?>
           </div>
           <div class="form-group">
             <label>Level</label>
               <select name="level" id= "field-level" class="form-control chosen-select chzn-done">
-                <!-- <option value="<?=set_value('level',$member->level)?>"><?php echo $member->level; ?></option> -->
                 <option value="">Select level</option>
-                <option value="All" <?php echo ($member->level == "All")? "selected":"";?>>All</option>
-                <option value="Unit" <?php echo ($member->level == "Unit")? "selected":"";?>>Unit</option>
+                <option value="All" <?php echo ($row->level == "All")? "selected":"";?>>All</option>
+                <option value="Unit" <?php echo ($row->level == "Unit")? "selected":"";?>>Unit</option>
               </select>
           </div>
           <div class="form-group">
             <label>Unit Name</label>
               <select name="unit_name" id= "field-unit_name" class="form-control">
-                <option value="<?=set_value('unit_name',$member->u_id)?>"><?=$member->unit_name?></option>
+                <option value="">Select Unit</option>
+                <?php foreach ($pr_units as $r) { ?>
+                  <option <?= ($row->unit_name == $r->unit_id)? 'selected':'' ?> value="<?= $r->unit_id ?>"> <?= $r->unit_name?> </option>
+                <?php } ?>
               </select>
           </div>
           <div class="form-group">
             <label>Status</label>
               <select name="status" id= "field-status" class="form-control">
-                <option value="<?=set_value('id_number',$member->status)?>"><?php echo $member->status ?></option>
-                <option value="Enable">Enable</option>
-                <option value="Disable">Disable</option>
+                <option value="">select status</option>
+                <option <?= ($row->status == 'Enable')? 'selected':'' ?> value="Enable">Enable</option>
+                <option <?= ($row->status == 'Disable')? 'selected':'' ?> value="Disable">Disable</option>
               </select>
-          </div>
-        </div>
-
-        <div class="col-md-6" style="padding-left: 25px;">
-          <div class="form-group">
-            <label>ACL</label> <br>
-            <?php foreach ($acls as $key => $acl) { ?>
-              <label class="checkbox-inline">&nbsp;
-              <input type="checkbox" name="acl_id[]" value="<?php echo $acl->id; ?>" <?php echo ($acl->acl_id != 0 )? "checked":"" ?>><?php echo $acl->acl_name; ?></label><br>
-            <?php } ?>
           </div>
         </div>
 

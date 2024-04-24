@@ -76,7 +76,7 @@
                           <td class="text-center"><?php echo $member['unit_name'] ?></td>
                           <td class="text-center"><?php echo $member['status'] ?></td>
                           <td class="text-center">
-                              <a href="<?=base_url('setting_con/member_edit').'/'.$member["id"]?>"target='_blank' class="btn btn-primary" role="button">Edit</a>
+                              <a href="<?=base_url('setting_con/member_edit').'/'.$member["id"]?>" class="btn btn-primary" role="button">Edit</a>
                               <a href="<?=base_url('setting_con/members_delete').'/'.$member["id"]?>" class="btn btn-danger" role="button">Delete</a>
                           </td>
                       </tr>
