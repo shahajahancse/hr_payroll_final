@@ -96,7 +96,7 @@
             } else {
                 echo '<td>Other Button</td>';
             }
-            echo '<td><a href="'.base_url('setting_con/acl_access_delete/'.$value->id).'" class="btn btn-primary">Edit</a>
+            echo '<td><a href="'.base_url('setting_con/acl_access_edit/'.$value->id).'" class="btn btn-primary">Edit</a>
               <a href="'.base_url('setting_con/acl_access_delete/'.$value->id).'" class="btn btn-danger">Delete</a></td>';
             echo '</tr>';
           }?>
