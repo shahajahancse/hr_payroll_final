@@ -36,11 +36,36 @@ class Setting_con extends CI_Controller {
 	function acl_access_add(){
 		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
 			$this->session->set_flashdata('success', 'ACL Added Successfully');
-
 		}else{
 			$this->session->set_flashdata('failuer', 'ACL Added Failed');
 		}
 		redirect('setting_con/crud');
+	}
+
+	function acl_access_edit($id){
+
+		if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+
+		if (!empty($_POST['acl_name'])) {
+			$data =	array(
+				'acl_name' => $_POST['acl_name'],
+				'type' 	   => $_POST['type']
+			);
+			$this->db->where('id', $id);
+			$this->db->update('member_acl_list', $data);
+			$this->session->set_flashdata('success', 'ACL Updated Successfully');
+			redirect('setting_con/crud');
+		}
+		$this->db->select('pr_units.*');
+        $this->data['units'] = $this->db->get('pr_units')->result_array();
+
+		$this->data['row']      = $this->db->where('id', $id)->get('member_acl_list')->row();
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title']    = 'Access List Edit';
+        $this->data['subview']  = 'settings/acl_access_edit';
+        $this->load->view('layout/template', $this->data);
 	}
 
 	function acl_access_delete($id){
