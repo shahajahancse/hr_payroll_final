@@ -400,7 +400,7 @@ class Entry_system_con extends CI_Controller
         $seconde_dat = date("Y-m-d", strtotime('+ 1 day', strtotime($second_date)));
         $emp_ids     = explode(',', $sql);
         $att_table   = "att_" . date("Y_m", strtotime($first_date));
-        $com_ids     = $this->get_com_emp_id($emp_ids);
+        // $com_ids     = $this->get_com_emp_id($emp_ids);
 
         $first  = $first_date .' '. '06:30:00';
         $second  = $seconde_dat .' '. '06:30:00';
@@ -417,13 +417,14 @@ class Entry_system_con extends CI_Controller
         $this->db->where("date_time BETWEEN '$first' and '$second' ");
         $this->db->where_in('proxi_id', $emp_ids)->delete($att_table);
 
-        $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
+        $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $emp_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
             echo 'success';
         } else {
             echo 'error';
         }
     }
+
     public function log_delete()
     {
         $sql         = $_POST['emp_id'];
@@ -431,8 +432,8 @@ class Entry_system_con extends CI_Controller
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $emp_ids     = explode(',', $sql);
-        $com_ids    = $this->get_com_emp_id($emp_ids);
-        $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
+        // $com_ids    = $this->get_com_emp_id($emp_ids);
+        $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $emp_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
             echo 'success';
         } else {
@@ -1142,7 +1143,7 @@ class Entry_system_con extends CI_Controller
             $earn_leave = 0;
         }
 
-        
+
         $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
         $this->db->where('emp_id', $_POST['emp_id']);
         $data['epm_info']=$this->db->get('pr_emp_per_info')->row();

@@ -14,7 +14,7 @@
 
 
 <div class="container" style="padding-top: 10px;">
-<!-- Static navbar -->
+  <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -75,16 +75,6 @@
                 <option value="Enable">Enable</option>
                 <option value="Disable">Disable</option>
               </select>
-          </div>
-        </div>
-
-        <div class="col-md-6" style="padding-left: 25px;">
-          <div class="form-group">
-            <label>ACL</label> <br>
-            <?php foreach ($acls as $acl) { ?>
-              <label class="checkbox-inline">&nbsp;
-              <input type="checkbox" name="acl_id[]" value="<?php echo $acl->id; ?>"><?php echo $acl->acl_name; ?></label><br>
-            <?php } ?>
           </div>
         </div>
 
