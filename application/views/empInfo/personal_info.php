@@ -417,11 +417,11 @@ input[type="number"] {
                 <hr style="margin-bottom: 0px !important;">
                 <div style="background-color: white; padding: 15px !important;">
                     <?php
-		        	if (!empty($user_data->unit_name)) {
-		        		$this->db->where('unit_id', $user_data->unit_name);
-		        	}
-	        		$depts = $this->db->get('emp_depertment')->result();
-	        	?>
+                        if (!empty($user_data->unit_name)) {
+                            $this->db->where('unit_id', $user_data->unit_name);
+                        }
+                        $depts = $this->db->get('emp_depertment')->result();
+                    ?>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -548,18 +548,6 @@ input[type="number"] {
                                 </select>
                             </div>
                         </div>
-<!--
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>OT Entitle <span style="color: red;">*</span> </label>
-                                < ?php echo form_error('ot_entitle');?>
-                                <select name="ot_entitle" id="ot_entitle" class="form-control input-sm" required>
-                                    <option>Select</option>
-                                    <option value="0">Yes</option>
-                                    <option value="1">No</option>
-                                </select>
-                            </div>
-                        </div> -->
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -728,7 +716,7 @@ input[type="number"] {
                                 <select name="nomi_district" id="nomi_district" class="form-control input-sm" required>
                                     <option>-- Select District --</option>
                                     <?php foreach ($districts as $key => $row) { ?>
-                                    <option value="<?= $row->id ?>"><?= $row->name_en; ?></option>
+                                    <option value="<?= $row->id ?>"><?= $row->name_en.' >>'.$row->name_bn; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -838,7 +826,7 @@ input[type="number"] {
                                 <select name="ref_district" id="ref_district" class="form-control input-sm" required>
                                     <option>-- Select --</option>
                                     <?php foreach ($districts as $key => $row) { ?>
-                                    <option value="<?= $row->id ?>"><?= $row->name_en; ?></option>
+                                    <option value="<?= $row->id ?>"><?= $row->name_en.' >>'.$row->name_bn; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
