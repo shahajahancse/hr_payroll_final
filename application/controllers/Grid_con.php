@@ -347,7 +347,7 @@ class Grid_con extends CI_Controller {
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}else{
-			$this->load->view('grid_extra_ot_9pm',$data);
+			$this->load->view('grid_con/grid_extra_ot_9pm',$data);
 		}
 	}
 
@@ -362,7 +362,7 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate  	 = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate 	 = date("Y-m-d", strtotime($grid_seconddate));
 		$data['values'] = $this->Grid_model->get_ot_emp_info( $grid_emp_id);
-		$this->load->view('grid_extra_ot_12am',$data);
+		$this->load->view('grid_con/grid_extra_ot_12am',$data);
 	}
 
 	function grid_extra_ot_all(){
@@ -378,7 +378,7 @@ class Grid_con extends CI_Controller {
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}else{
-			$this->load->view('grid_extra_ot_all',$data);
+			$this->load->view('grid_con/grid_extra_ot_all',$data);
 		}
 	}
 
