@@ -32,8 +32,8 @@
         <span class="title">Entry System</span> <span class="selected"></span> <span class="arrow <?= arrow_open('entry_system_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <li class="start <?= activate_method('grid_entry_system')?> "><a href="<?= base_url('entry_system_con/grid_entry_system')?>" class="anchor_cls">All Entry</a> </li>
-            <li class="start <?= activate_method('weekend_list')?> "><a href="<?= base_url('entry_system_con/weekend_list')?>" class="anchor_cls">Weeked</a> </li>
-            <li class="start <?= activate_method('holiday_list')?> "><a href="<?= base_url('entry_system_con/holiday_list')?>" class="anchor_cls">Holiday</a> </li>
+            <li class="start <?= activate_method('emp_weekend_add')?> "><a href="<?= base_url('entry_system_con/emp_weekend_add')?>" class="anchor_cls">Weeked add</a> </li>
+            <li class="start <?= activate_method('emp_holiday_add')?> "><a href="<?= base_url('entry_system_con/emp_holiday_add')?>" class="anchor_cls">Holiday add</a> </li>
             <li class="start <?= activate_method('leave_transation')?> "><a href="<?= base_url('entry_system_con/leave_transation')?>" class="anchor_cls">Leave Transaction</a> </li>
             <li class="start <?= activate_method('leave_list')?> "><a href="<?= base_url('entry_system_con/leave_list')?>" class="anchor_cls">Leave List</a></li>
 
