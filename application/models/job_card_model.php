@@ -285,6 +285,7 @@ class Job_card_model extends CI_Model{
 						pr_emp_shift_log.late_status,
 						pr_emp_shift_log.present_status,
 						pr_emp_shift_log.deduction_hour,
+						pr_emp_shift_log.modify_eot,
 						pr_emp_shift_schedule.sh_type as shift_name
 					');
 
