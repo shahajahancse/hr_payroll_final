@@ -879,11 +879,13 @@ class Entry_system_con extends CI_Controller
     //---------------------------------------------------------------------------------------
     public function weekend_list()
     {
+        $date = date("Y-m-d", strtotime('-18 month', strtotime(date("Y-m-d"))));
         $this->db->select('attn_work_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
         $this->db->from('attn_work_off');
         $this->db->join('pr_units', 'pr_units.unit_id = attn_work_off.unit_id', 'left');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_work_off.emp_id', 'left');
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        $this->db->where('attn_work_off.work_off_date', $date);
         $this->data['results'] = $this->db->get()->result();
 
         $this->data['title'] = 'Weekend List';
