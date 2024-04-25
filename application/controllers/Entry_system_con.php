@@ -1261,10 +1261,11 @@ class Entry_system_con extends CI_Controller
     public function add_left_regign()
     {
         $sql = $_POST['sql'];
-        $date = $_POST['date'];
+        $date = date('Y-m-d', strtotime($_POST['date']));
         $type = $_POST['type'];
         $unit_id = $_POST['unit_id'];
         $emp_ids = explode(',', $sql);
+        dd($_POST);
 
         if ($type == 1) {
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids)->delete('pr_emp_left_history');
