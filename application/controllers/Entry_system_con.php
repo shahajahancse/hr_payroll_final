@@ -962,11 +962,13 @@ class Entry_system_con extends CI_Controller
     // CRUD for holiday
     //-------------------------------------------------------------------------------------
     public function holiday_list(){
+        $date = date("Y-m-d", strtotime('-12 month', strtotime(date("Y-m-d"))));
         $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
         $this->db->from('attn_holyday_off');
         $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        $this->db->where('attn_holyday_off.work_off_date >=', $date);
         $this->data['results'] = $this->db->get()->result();
 
         $this->data['title'] = 'Holiday List';
