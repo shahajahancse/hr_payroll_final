@@ -1009,7 +1009,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                console.log(d);
+                // console.log(d);
                 $("#loader").hide();
                 $("#line_change").show();
                 $('#line_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1069,7 +1069,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                console.log(d);
+                // console.log(d);
                 $("#loader").hide();
                 $("#promotion_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1131,7 +1131,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                console.log(d);
+                // console.log(d);
                 $("#loader").hide();
                 $("#increment_entry").show();
                 $('#inc_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1193,7 +1193,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                console.log(d);
+                // console.log(d);
                 $("#loader").hide();
                 $("#special_entry").show();
                 $('#spc_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1521,16 +1521,22 @@
             $("#increment_entry").hide();
             $("#promotion_entry").hide();
             $("#line_change").hide();
+            document.getElementById('com_gross_sal').value = "";
+            document.getElementById('gross_sal').value = "";
             get_emp_info_special();
         } else if (sectionId == 'increment') {
             $("#special_entry").hide();
             $("#promotion_entry").hide();
             $("#line_change").hide();
+            document.getElementById('com_gross_sal').value = "";
+            document.getElementById('gross_sal').value = "";
             get_emp_info_increment();
         } else if(sectionId == 'promotion') {
             $("#special_entry").hide();
             $("#increment_entry").hide();
             $("#line_change").hide();
+            document.getElementById('com_gross_sal').value = "";
+            document.getElementById('gross_sal').value = "";
             get_emp_info_promotion();
         } else {
             $("#promotion_entry").hide();
