@@ -775,13 +775,13 @@
             return false;
         }
 
-        gross_sal = document.getElementById('gross_sal').value;
+        gross_sal = document.getElementById('inc_gross_sal').value;
         if (gross_sal == '') {
             showMessage('error', 'Please input the New Salary');
             return false;
         }
 
-        com_gross_sal = document.getElementById('com_gross_sal').value;
+        com_gross_sal = document.getElementById('inc_com_gross_sal').value;
         if (com_gross_sal == '') {
             showMessage('error', 'Please input the New Com. Salary');
             return false;
@@ -1517,11 +1517,7 @@
 
 <script>
     function toggleSection(sectionId) {
-
         $(".rm").find("input:text,number").val('');
-
-
-
         if (sectionId == 'special') {
             $("#increment_entry").hide();
             $("#promotion_entry").hide();
@@ -1547,10 +1543,5 @@
         }
         $("#" + sectionId).slideToggle();
     }
-    // Initial hiding of all sections
     $("#special_entry, #increment_entry, #promotion_entry, #line_change").hide();
 </script>
-
-
-
-
