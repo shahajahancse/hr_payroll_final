@@ -125,47 +125,43 @@
                 <div class="modal-body">
                     <form action="<?= base_url('entry_system_con/add_final_satalment')?>" method="post">
                         <input type="hidden" name="emp_id" id="emp_id" required>
-                        <!-- <div class="form-group">
-                            <label for="final_satalment">Final Satalment</label>
-                            <input type="text" class="form-control" id="final_satalment" name="final_satalment" required>
-                        </div> -->
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-4">
-                                নাম	:	মোছাঃ ফাতেমা
+                                নাম	:	<span id="full_name"></span>
                             </div>
                             <div class="col-md-4">
-                                কার্ড	:	5001303
+                                কার্ড	:	<span id="card_no" style="font-family: SutonnyMJ;"></span>
                             </div>
                             <div class="col-md-4">
-                                পদবী	:	জুনিঃ অপারেটর
+                                পদবী	:	<span id="designation_name"></span>
                             </div>
                         </div>
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-4">
-                                সেকশন	:	Sewing Section
+                                সেকশন	:	<span id="section_name"></span>
                             </div>
                             <div class="col-md-4">
-                                যোগদানের তারিখ	:	16-11-2020 Bs
+                                যোগদানের তারিখ	:	<span id="joining_date" style="font-family: SutonnyMJ;"></span> ইং
+
                             </div>
                             <div class="col-md-4">
-                                শেষ কর্মদিবস	:	16-11-2023 Bs
+                                শেষ কর্মদিবস	:	<span id="last_working_date" style="font-family: SutonnyMJ;"> </span> ইং
+                            </div> 
+                        </div>
+                        <div class="row" style="font-size: 15px;">
+                            <div class="col-md-4">
+                                চাকুরীকাল	:	<span id="job_duration"> </span>
+                            </div>
+                            <div class="col-md-4">
+                                মোট বেতন	:	<span id="gross_salary" style="font-family:SutonnyMJ"> </span> টাকা
+                            </div>
+                            <div class="col-md-4">
+                                মূল বেতন	:	<span id="basic_salary" style="font-family:SutonnyMJ"> </span> টাকা
                             </div>
                         </div>
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-4">
-                                চাকুরীকাল	:	3 eQi 0 gvm 0 w`b
-                            </div>
-                            <div class="col-md-4">
-                                মোট বেতন	:	10244 UvKv
-                            </div>
-                            <div class="col-md-4">
-                                মূল বেতন	:	7794 UvKv
-                            </div>
-                        </div>
-                        <div class="row" style="font-size: 15px;">
-                            <div class="col-md-4">
-                                প্রতি ঘন্টার ওভার টাইম হার	:	98.5UvKv
-                            </div>
+                                প্রতি ঘন্টার ওভার টাইম হার	:	<span id="ot_rate" style="font-family:SutonnyMJ"> </span> টাকা
                         </div>
 
                     <table class="table table-bordered ml-3 inputs tables" style="border: 1px solid #d6d1d1 !important;">
@@ -176,7 +172,7 @@
                                 <th class="text-center" style="border: 1px solid #d6d1d1 !important;">টাকা</th>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #d6d1d1 !important;">ডিসেম্বর - ২০২৪/</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span id='resign_year'></span></td>
                                 <td style="border: 1px solid #d6d1d1 !important;">১৩  </td>
                                 <td style="border: 1px solid #d6d1d1 !important;">৬৭৪.৪৫  </td>
                                 <td style="border: 1px solid #d6d1d1 !important;">৮৭৬৮</td>
@@ -272,22 +268,21 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
-    $("#mytable").dataTable();
-    $('#mytable_filter').css({
-        "display": "none"
-    })
-    $('#mytable_length').css({
-        "display": "none"
-    })
-    $("#mytable").dataTable();
-    oTable = $('#mytable').DataTable();
-    $('#deptSearch').keyup(function() {
-        oTable.search($(this).val()).draw();
-    })
-});
+    $(document).ready(function() {
+        $("#mytable").dataTable();
+        $('#mytable_filter').css({
+            "display": "none"
+        })
+        $('#mytable_length').css({
+            "display": "none"
+        })
+        $("#mytable").dataTable();
+        oTable = $('#mytable').DataTable();
+        $('#deptSearch').keyup(function() {
+            oTable.search($(this).val()).draw();
+        })
+    });
 </script>
-
 <script>
     function final_satalment(id) {
         $.ajax({
@@ -295,9 +290,48 @@ $(document).ready(function() {
             url: "<?php echo base_url(); ?>index.php/grid_con/final_satalment",
             data: {id: id},
             success: function (data) {
-                console.log(data);
-                return false;
-                $("#final_satalment_report").html(data);
+                // console.log(data);
+                // return false;
+              // Assuming 'data' contains the JSON response you provided
+                // Parse the JSON response
+                var employeeData = JSON.parse(data);
+
+                // Set values to respective HTML elements
+                $("#full_name").html(employeeData.values[0].name_bn);
+                $("#card_no").html(employeeData.values[0].emp_id);
+                $("#designation_name").html(employeeData.values[0].desig_bangla);
+                $("#section_name").html(employeeData.values[0].sec_name_bn);
+                $("#year").html(employeeData.values[0].resign_year);
+                $("#joining_date").html(employeeData.values[0].emp_join_date.split('-').reverse().join('-'));
+                var d = new Date(employeeData.values[0].resign_date);
+                d.setDate(d.getDate() - 1);
+                $("#last_working_date").html(d.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/[^0-9]/g, "-"));
+                $("#job_duration").html(calculateJobDuration(employeeData.values[0].emp_join_date, employeeData.values[0].resign_date));
+                $("#gross_salary").html(employeeData.values[0].gross_sal);
+                $("#basic_salary").html(calculateBasicSalary(employeeData.values[0].gross_sal));
+                $("#ot_rate").html(calculateOtRate(employeeData.values[0].gross_sal));
+
+                // Function to calculate job duration
+                function calculateJobDuration(startDate, endDate) {
+                    var start = new Date(startDate);
+                    var end = new Date(endDate);
+                    var duration = end - start;
+                    var days = duration / (1000 * 60 * 60 * 24);
+                    var years = Math.floor(days / 365);
+                    days = days % 365;
+                    var months = Math.floor(days / 30);
+                    days = days % 30;
+                    return "<span style='font-family:SutonnyMJ'> " + years + " </span>  বছর <span style='font-family:SutonnyMJ'>" + months + "</span> মাস <span style='font-family:SutonnyMJ'>" + days + "</span> দিন";
+                }
+                // Function to calculate basic salary (assuming it's 40% of the gross salary)
+                function calculateBasicSalary(grossSalary) {
+                    var basic = ((parseFloat(grossSalary) -2450)/1.5);
+                    return basic.toFixed(2);
+                }
+                function calculateOtRate(grossSalary) {
+                    var basic = (((parseFloat(grossSalary)-2450)/ 208)  * 2  );
+                    return basic.toFixed(2);
+                }
 
             }
         });
