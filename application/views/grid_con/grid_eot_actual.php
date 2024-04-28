@@ -21,6 +21,8 @@
 					$holiday_count = 0;
 					$perror_count = 0;
 					$total_ot_hour = 0;
+					$total_ot_modify = 0;
+					$total_ot_deduct = 0;
 					$total_ot = 0;
 
 					$this->load->view('head_english');
@@ -112,6 +114,8 @@
 							<th>Attn.Status</th>
 							<th>OT Hour</th>
 							<th>Extra OT Hour</th>
+							<th>Modify EOT</th>
+							<th>EOT Ded.</th>
 							<th>Total OT Hour</th>
 							<th>Remarks</th>
 						</tr>";
@@ -237,14 +241,25 @@
 							echo "&nbsp;</td>";
 
 							$total_ot = $total_ot + $row->ot;
-							$total_ot_hour = $total_ot_hour + $row->ot + $row->eot;
+							$total_ot_hour = $total_ot_hour + $row->ot + $row->eot  - $row->deduction_hour + ($row->modify_eot);
+
+							$total_ot_modify = $total_ot_modify + ($row->modify_eot);
+							$total_ot_deduct = $total_ot_deduct + ($row->deduction_hour);
 
 							echo "<td>&nbsp;";
 							echo $row->eot;
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
-							echo $row->eot + $row->ot;
+							echo $row->modify_eot;
+							echo "&nbsp;</td>";
+
+							echo "<td>&nbsp;";
+							echo $row->deduction_hour;
+							echo "&nbsp;</td>";
+
+							echo "<td>&nbsp;";
+							echo $row->eot + $row->ot - $row->deduction_hour + ($row->modify_eot);
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
@@ -265,6 +280,14 @@
 
 					echo "<td>";
 					echo $total_ot_hour - $total_ot;
+					echo "</td>";
+
+					echo "<td>";
+					echo $total_ot_modify;
+					echo "</td>";
+
+					echo "<td>";
+					echo $total_ot_deduct;
 					echo "</td>";
 
 					echo "<td>";

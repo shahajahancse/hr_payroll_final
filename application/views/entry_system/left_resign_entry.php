@@ -117,7 +117,7 @@
                     <input type="text" class="form-control date" id="date" placeholder="select date">
                     <select name="types" id="types">
                         <option value="">Type</option>
-                        <option value="1">Regular</option>
+                        <!-- <option value="1">Regular</option> -->
                         <option value="3">Left</option>
                         <option value="4">Resign</option>
                     </select>

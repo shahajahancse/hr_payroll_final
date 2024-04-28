@@ -26,9 +26,9 @@ class Common_model extends CI_Model{
 			$data['ot_rate']       = round(($data['basic_sal'] * 2  / 208),2);
 			//$data['ot_rate']       = round(($gross_salary - $data['basic_sal']/1.5 * 208),2);
 			$data['stamp'] = 0;
-			
+
 		}else{
-			
+
 			$data['medical_allow'] 	= 250;
 			$data['trans_allow'] 	= 200;
 			$data['food_allow'] 	= 650;
@@ -39,10 +39,10 @@ class Common_model extends CI_Model{
 			$data['house_rent']    = round($basic_salary * 40 / 100);
 			$data['ot_rate']       = round(($data['basic_sal'] * 2  / 208),2);
 			$data['stamp'] = 0;
-			
+
 		}
-		
-		
+
+
 		if($gross_salary == 0)
 		{
 			$data['medical_allow'] 	= 0;
@@ -54,7 +54,7 @@ class Common_model extends CI_Model{
 			$data['ot_rate']       	= 0;
 			$data['stamp'] 			= 0;
 		}
-		
+
 		return $data;
 	}
 
@@ -124,7 +124,7 @@ class Common_model extends CI_Model{
 			$d['Helper'] = new stdClass();
 		}
 
-		if (!empty($array['Iron Man'])) {		
+		if (!empty($array['Iron Man'])) {
 			$this->db->select("
 		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
 		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
@@ -148,7 +148,7 @@ class Common_model extends CI_Model{
 			$d['Iron Man'] = new stdClass();
 		}
 
-		if (!empty($array['Line Chief'])) {	
+		if (!empty($array['Line Chief'])) {
 			$this->db->select("
 		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
 		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
@@ -172,7 +172,7 @@ class Common_model extends CI_Model{
 			$d['Line Chief'] = new stdClass();
 		}
 
-		if (!empty($array['F.Q.I'])) {	
+		if (!empty($array['F.Q.I'])) {
 			$this->db->select("
 		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
 		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
@@ -196,7 +196,7 @@ class Common_model extends CI_Model{
 			$d['F.Q.I'] = new stdClass();
 		}
 
-		if (!empty($array['Supervisor'])) {	
+		if (!empty($array['Supervisor'])) {
 			$this->db->select("
 		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
 		                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS emp_present,
@@ -250,19 +250,19 @@ class Common_model extends CI_Model{
         $i = 0;
         $logs = array();
         while($first_date <= $second_date)
-		{  
+		{
             $logs[$i]['date'] = $first_date;
             $this->db->select('
-                    pr_emp_shift_log.in_time, 
-                    pr_emp_shift_log.out_time, 
-                    pr_emp_shift_log.shift_log_date, 
-                    pr_emp_shift_log.ot, 
+                    pr_emp_shift_log.in_time,
+                    pr_emp_shift_log.out_time,
+                    pr_emp_shift_log.shift_log_date,
+                    pr_emp_shift_log.ot,
                     pr_emp_shift_log.eot,
                     pr_emp_shift.shift_name,
                 ');
             $this->db->from('pr_emp_shift_log');
             $this->db->from('pr_emp_shift');
-            $this->db->where('pr_emp_shift_log.emp_id', $row->id);
+            $this->db->where_in('pr_emp_shift_log.emp_id', $emp_id);
             $this->db->where("pr_emp_shift_log.shift_log_date", $first_date);
             $this->db->where('pr_emp_shift.id = pr_emp_shift_log.shift_id');
             $shift = $this->db->get()->row();
@@ -278,9 +278,9 @@ class Common_model extends CI_Model{
                 $logs[$i]["out_time"] 	= '';
                 $logs[$i]["shift_name"] = '';
             }
-            $first_date = date("Y-m-d", strtotime("+1 day", strtotime($first_date)));  
+            $first_date = date("Y-m-d", strtotime("+1 day", strtotime($first_date)));
             $i = $i + 1;
-     	} 
+     	}
 		return $logs;
 	}
 
@@ -295,6 +295,9 @@ class Common_model extends CI_Model{
 
 
 
+
+
+	
 
 	///////////////////// ====================== ///////////////////////
 	// old code
@@ -371,7 +374,7 @@ class Common_model extends CI_Model{
 	function company_information($unit_id)
 	{
 		return $company_infos = $this->db->where('unit_id',$unit_id)->get('company_infos')->result();
-		
+
 		// return $query = $this->db->select('*')->get('company_infos')->row();
 	}
 
