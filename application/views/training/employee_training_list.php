@@ -91,7 +91,7 @@
                             <td> <?php echo $pr_lines["emp_id"] ?></td>
                             <td> <?php echo $pr_lines["emp_name"] ?></td>
                             <td> <?php echo $pr_lines["training_name"] ?></td>
-                            <td> <?php echo $pr_lines["training_date"] ?></td>
+                            <td> <?php echo $pr_lines["date"] ?></td>
                             <td> <?php echo $pr_lines["unit_name"] ?></td>
                             <td>
                                 <a href="<?=base_url('training_con/employee_training_delete') . '/' . $pr_lines["id"]?>"
