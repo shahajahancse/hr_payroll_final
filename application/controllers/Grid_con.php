@@ -28,18 +28,10 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
 		$type = $this->input->post('report_type');
-		// dd($type);
-		$year=date("Y",strtotime($date));
-		$month=date("m",strtotime($date));
-		$day=date("d",strtotime($date));
+		// dd($_POST);
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Grid_model->grid_daily_report($date,$grid_emp_id,$type);
-		// if($type == 9){
-		//     $data['values'] =	$this->Grid_model->grid_daily_costing_report($date,$unit_id);
-		// 	$data['unit_id']= $unit_id;
-		// 	$data['date']= $date;
-		// 	$this->load->view('others_report/daily_costing_summary',$data);
-		// }
+
 		$data["unit_id"] 		= $unit_id;
 		$data['daily_status']   = $type;
 		$data['date']   		= $date;
