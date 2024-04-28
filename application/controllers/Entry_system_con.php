@@ -1069,7 +1069,6 @@ class Entry_system_con extends CI_Controller
         $leave_end = date("Y-m-d", strtotime($to_date));
         $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
 
-
         if ($leave_type == 'el') {
             if ($this->db->table_exists('pr_earn_'.$year)) {
                 $this->db->where('emp_id', $_POST['emp_id']);
@@ -1108,10 +1107,8 @@ class Entry_system_con extends CI_Controller
             }
         }
 
-
-
-
-
+        $balance = $this->leave_balance_ajax($emp_id, $leave_start, 1);
+        dd($balance);
 
         $formArray = array(
             'emp_id' => $emp_id,
@@ -1130,11 +1127,15 @@ class Entry_system_con extends CI_Controller
         };
     }
 
-    public function leave_balance_ajax(){
-        $year = date($_POST['year']);
-        $emp_id = date($_POST['emp_id']);
+    public function leave_balance_ajax($id = null, $year = null, $type = null){
+        if ($id != null && $year != null && $type != null) {
+            $year = date('Y', strtotime($year));
+            $emp_id = $id;
+        } else {
+            $year = date($_POST['year']);
+            $emp_id = date($_POST['emp_id']);
 
-
+        }
 
         if ($this->db->table_exists('pr_earn_'.$year)) {
             $this->db->where('emp_id', $_POST['emp_id']);
@@ -1154,10 +1155,8 @@ class Entry_system_con extends CI_Controller
         $data['epm_info']=$this->db->get('pr_emp_per_info')->row();
 
 
-
         $this->db->where('emp_id', $_POST['emp_id']);
         $unit_id=$this->db->get('pr_emp_com_info')->row()->unit_id;
-
         if($unit_id != ''){
             $this->db->where('unit_id', $unit_id);
             $leave_entitle=$this->db->get('pr_leave')->row();
@@ -1173,42 +1172,42 @@ class Entry_system_con extends CI_Controller
 
         $first_date = $year . "-01-01";
         $last_date = $year . "-12-31";
+        $this->db->select("
+                SUM(CASE WHEN leave_type = 'cl' THEN total_leave ELSE 0 END) AS cl,
+                SUM(CASE WHEN leave_type = 'sl' THEN total_leave ELSE 0 END) AS sl,
+                SUM(CASE WHEN leave_type = 'ml' THEN total_leave ELSE 0 END) AS ml,
+                SUM(CASE WHEN leave_type = 'pl' THEN total_leave ELSE 0 END) AS pl,
+                SUM(CASE WHEN leave_type = 'el' THEN total_leave ELSE 0 END) AS el,
+            ");
         $this->db->where('emp_id', $_POST['emp_id']);
         $this->db->where('leave_start >=', $first_date);
         $this->db->where('leave_end <=', $last_date);
-        $leavei = $this->db->get('pr_leave_trans')->result();
+        $value = $this->db->get('pr_leave_trans')->row();
 
-        $leave_taken_casual =0;
-        $leave_taken_sick =0;
-        $leave_taken_maternity =0;
-        $leave_taken_paternity =0;
-        $leave_taken_earn =0;
-
-        foreach ($leavei as $key => $value) {
-            if($value->leave_type == 'cl'){
-                $leave_taken_casual += $value->total_leave;
-            }else if($value->leave_type == 'sl'){
-                $leave_taken_sick += $value->total_leave;
-            }else if($value->leave_type == 'ml'){
-                $leave_taken_maternity += $value->total_leave;
-            }else if($value->leave_type == 'pl'){
-                $leave_taken_paternity += $value->total_leave;
-            }else if($value->leave_type == 'el'){
-                $leave_taken_earn += $value->total_leave;
-            }
+        if (!empty($value)) {
+            $data['leave_taken_casual'] = $value->cl;
+            $data['leave_taken_sick'] = $value->sl;
+            $data['leave_taken_maternity'] = $value->ml;
+            $data['leave_taken_paternity'] = $value->pl;
+            $data['leave_taken_earn'] = $value->el;
+        } else {
+            $leave_taken_casual =0;
+            $leave_taken_sick =0;
+            $leave_taken_maternity =0;
+            $leave_taken_paternity =0;
+            $leave_taken_earn =0;
         }
-        $data['leave_taken_casual'] = $leave_taken_casual;
-        $data['leave_taken_sick'] = $leave_taken_sick;
-        $data['leave_taken_maternity'] = $leave_taken_maternity;
-        $data['leave_taken_paternity'] = $leave_taken_paternity;
-        $data['leave_taken_earn'] = $leave_taken_earn;
 
         $data['leave_balance_casual'] = $data['leave_entitle_casual'] - $data['leave_taken_casual'];
         $data['leave_balance_sick'] = $data['leave_entitle_sick'] - $data['leave_taken_sick'];
         $data['leave_balance_maternity'] = $data['leave_entitle_maternity'] - $data['leave_taken_maternity'];
         $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
         $data['leave_balance_earn'] = $data['leave_entitle_earn'] - $data['leave_taken_earn'];
-        echo json_encode($data);
+        if ($type != null) {
+            return $data;
+        } else {
+            echo json_encode($data);
+        }
     }
 
     public function leave_list(){
