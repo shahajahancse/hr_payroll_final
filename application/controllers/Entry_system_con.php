@@ -1264,7 +1264,6 @@ class Entry_system_con extends CI_Controller
         $type = $_POST['type'];
         $unit_id = $_POST['unit_id'];
         $emp_ids = explode(',', $sql);
-        // dd($_POST);
 
         if ($type == 1) {
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids)->delete('pr_emp_left_history');
@@ -1294,16 +1293,15 @@ class Entry_system_con extends CI_Controller
                 echo 'error';
             }
         } else {
+            // dd("KO");
             $data = [];
             foreach ($emp_ids as $value) {
                 $data[] = array('unit_id' => $unit_id, 'emp_id' => $value, 'resign_date' => $date);
                 $dd = $this->db->where('unit_id', $unit_id)->where('emp_id', $value)->get('pr_emp_resign_history');
                 if (empty($dd->row())) {
-                    $this->db->insert('pr_emp_resign_history', $data);
+                    $this->db->insert('pr_emp_resign_history', $data[0]);
                 }
             }
-            // $this->db->insert_batch('pr_emp_resign_history', $data);
-
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
             if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 4))) {
                 echo 'success';
