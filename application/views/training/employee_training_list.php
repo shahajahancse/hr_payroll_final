@@ -75,8 +75,10 @@
                 <thead>
                     <tr>
                         <th>Sl. No.</th>
+                        <th>Employee Id</th>
                         <th>Employee Name</th>
                         <th>Training Name</th>
+                        <th>Training Date</th>
                         <th>Unit</th>
                         <th>Delete</th>
                     </tr>
@@ -86,8 +88,10 @@
                        if (!empty($pr_line)) {foreach ($pr_line as $key => $pr_lines) {?>
                         <tr>
                             <td><?php echo $key + 1  ?></td>
+                            <td> <?php echo $pr_lines["emp_id"] ?></td>
                             <td> <?php echo $pr_lines["emp_name"] ?></td>
                             <td> <?php echo $pr_lines["training_name"] ?></td>
+                            <td> <?php echo $pr_lines["training_date"] ?></td>
                             <td> <?php echo $pr_lines["unit_name"] ?></td>
                             <td>
                                 <a href="<?=base_url('training_con/employee_training_delete') . '/' . $pr_lines["id"]?>"
