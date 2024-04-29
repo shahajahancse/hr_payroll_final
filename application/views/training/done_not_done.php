@@ -45,7 +45,6 @@
             $this->db->where_in('training_management.emp_id', $done_list);
             $this->db->where('training_management.training_id', $training_id);
             $done= $this->db->get()->result();
-            dd($done);
             ?>
     <h3 align="center" height="auto">Done Training List</h3>
     <table class="heading" border="1" cellspacing="0" align="center" height="auto">
