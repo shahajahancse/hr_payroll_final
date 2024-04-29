@@ -8,15 +8,16 @@
         Separation Report
     </title>
 </head>
+
 <body>
-<?php 
+    <?php 
     $data['unit_id'] = $unit_id;
     $this->load->view("head_english",$data);
 
     $this->db->where('training_type.id', $training_id);
     $training=$this->db->get('training_type')->row();
 ?>
-<div style="text-align: center;">Training Name : <?= $training->title ?></div>
+    <div style="text-align: center;">Training Name : <?= $training->title ?></div>
 
     <?php 
     $done_list = array();
@@ -46,68 +47,69 @@
             $this->db->where('training_management.training_id', $training_id);
             $done= $this->db->get()->result();
             ?>
-            <h3  align="center" height="auto">Done Training List</h3>
-            <table class="heading"  border="1" cellspacing="0" align="center" height="auto">
-                <thead>
-                    <tr>
-                        <th style="width: 200px;">Employee Name</th>
-                        <th style="width: 200px;">Training Name</th>
-                        <th style="width: 200px;">Unit Name</th>
-                        <th style="width: 200px;">Date</th>
-                        <th style="width: 200px;">Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
+    <h3 align="center" height="auto">Done Training List</h3>
+    <table class="heading" border="1" cellspacing="0" align="center" height="auto">
+        <thead>
+            <tr>
+                <th style="width: 200px;">Employee Name</th>
+                <th style="width: 200px;">Training Name</th>
+                <th style="width: 200px;">Unit Name</th>
+                <th style="width: 200px;">Date</th>
+                <th style="width: 200px;">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
                     foreach ($done as $key => $value) {
                         ?>
-                        <tr>
-                            <td><?php echo $value->emp_name; ?></td>
-                            <td><?php echo $value->training_name; ?></td>
-                            <td><?php echo $value->unit_name; ?></td>
-                            <td><?php echo $value->date; ?></td>
-                            <td><?php echo $value->time; ?></td>
-                        </tr>
-                        <?php
+            <tr>
+                <td><?php echo $value->emp_name; ?></td>
+                <td><?php echo $value->training_name; ?></td>
+                <td><?php echo $value->unit_name; ?></td>
+                <td><?php echo $value->date; ?></td>
+                <td><?php echo $value->time; ?></td>
+            </tr>
+            <?php
                     }
                     ?>
-                </tbody>
-            </table>
-        <?php }elseif ($type==1) {
+        </tbody>
+    </table>
+    <?php }elseif ($type==1) {
         $this->load->model('grid_model');
         $not_done=$this->grid_model->grid_employee_information2($not_done_list);
             ?>
-            <h3  align="center" height="auto" >Not Done Training List</h3>
-            <table class="heading" border="1" cellspacing="0"  align="center" height="auto">
-                <thead>
-                    <tr>
-                        <th >SL.</th>
-                        <th>Employee ID</th>
-                        <th style="width: 200px;">Employee Name</th>
-                        <th style="width: 200px;">Designation Name</th>
+    <h3 align="center" height="auto">Not Done Training List</h3>
+    <table class="heading" border="1" cellspacing="0" align="center" height="auto">
+        <thead>
+            <tr>
+                <th>SL.</th>
+                <th>Employee ID</th>
+                <th style="width: 200px;">Employee Name</th>
+                <th style="width: 200px;">Designation Name</th>
 
-                        <th style="width: 200px;">Line Name</th>
-                        <th>Remarks</th>
-                    </tr>  
-                </thead>
-                <tbody>
-                    <?php
+                <th style="width: 200px;">Line Name</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
                     foreach ($not_done as $key => $value) {
                         ?>
-                        <tr>
-                        <td><?php echo $key + 1; ?></td>
-                            <td><?php echo $value->emp_id2; ?></td>
-                            <td><?php echo $value->name_en; ?></td>
-                            <td><?php echo $value->desig_name; ?></td>
-                            <td><?php echo $value->line_name_en; ?></td>
-                            <td></td>
-                        </tr>
-                        <?php
+            <tr>
+                <td><?php echo $key + 1; ?></td>
+                <td><?php echo $value->emp_id2; ?></td>
+                <td><?php echo $value->name_en; ?></td>
+                <td><?php echo $value->desig_name; ?></td>
+                <td><?php echo $value->line_name_en; ?></td>
+                <td></td>
+            </tr>
+            <?php
                     }
                     ?>
-                </tbody>
-            </table>
-        <?php }
+        </tbody>
+    </table>
+    <?php }
         ?>
 </body>
+
 </html>
