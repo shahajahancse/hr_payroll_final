@@ -12,7 +12,12 @@
 <?php 
     $data['unit_id'] = $unit_id;
     $this->load->view("head_english",$data);
+
+    $this->db->where('training_type.id', $training_id);
+    $training=$this->db->get('training_type')->row();
 ?>
+<div style="text-align: center;">Training Name : <?= $training->title ?></div>
+
     <?php 
     $done_list = array();
     $not_done_list = array();
