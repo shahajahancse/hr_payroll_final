@@ -124,7 +124,7 @@
         </div><!-- /.row -->
 
         <!-- Special increment entry  -->
-        <div id="special_entry" class="row nav_head" style="margin-top: 13px;">
+        <div id="special_entry" class="row nav_head rm" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
@@ -198,7 +198,7 @@
         </div>
 
         <!-- increment entry  -->
-        <div id="increment_entry" class="row nav_head" style="margin-top: 13px;">
+        <div id="increment_entry" class="row nav_head rm" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
@@ -235,7 +235,7 @@
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="gross_sal" name="gross_sal">
+                                    <input class="form-control" id="inc_gross_sal" name="gross_sal">
 
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Com. Salary</label>
-                                    <input class="form-control" id="com_gross_sal" name="com_gross_sal">
+                                    <input class="form-control" id="inc_com_gross_sal" name="com_gross_sal">
                                 </div>
                             </div>
                         </div>
@@ -272,7 +272,7 @@
         </div>
 
         <!-- promotion entry  -->
-        <div id="promotion_entry" class="row nav_head" style="margin-top: 13px;">
+        <div id="promotion_entry" class="row nav_head rm" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
@@ -398,7 +398,7 @@
         </div>
 
         <!-- Line change entry  -->
-        <div id="line_change" class="row nav_head" style="margin-top: 13px;">
+        <div id="line_change" class="row nav_head rm" style="margin-top: 13px;">
             <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 8px;">
                     <div class="row">
@@ -775,13 +775,13 @@
             return false;
         }
 
-        gross_sal = document.getElementById('gross_sal').value;
+        gross_sal = document.getElementById('inc_gross_sal').value;
         if (gross_sal == '') {
             showMessage('error', 'Please input the New Salary');
             return false;
         }
 
-        com_gross_sal = document.getElementById('com_gross_sal').value;
+        com_gross_sal = document.getElementById('inc_com_gross_sal').value;
         if (com_gross_sal == '') {
             showMessage('error', 'Please input the New Com. Salary');
             return false;
@@ -1009,7 +1009,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                console.log(d);
+                // console.log(d);
                 $("#loader").hide();
                 $("#line_change").show();
                 $('#line_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1069,7 +1069,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                console.log(d);
+                // console.log(d);
                 $("#loader").hide();
                 $("#promotion_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1131,7 +1131,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                console.log(d);
+                // console.log(d);
                 $("#loader").hide();
                 $("#increment_entry").show();
                 $('#inc_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1193,7 +1193,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                console.log(d);
+                // console.log(d);
                 $("#loader").hide();
                 $("#special_entry").show();
                 $('#spc_profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1517,10 +1517,13 @@
 
 <script>
     function toggleSection(sectionId) {
+        $(".rm").find("input:text,number").val('');
         if (sectionId == 'special') {
             $("#increment_entry").hide();
             $("#promotion_entry").hide();
             $("#line_change").hide();
+            document.getElementById('com_gross_sal').value = "";
+            document.getElementById('gross_sal').value = "";
             get_emp_info_special();
         } else if (sectionId == 'increment') {
             $("#special_entry").hide();
@@ -1540,10 +1543,5 @@
         }
         $("#" + sectionId).slideToggle();
     }
-    // Initial hiding of all sections
     $("#special_entry, #increment_entry, #promotion_entry, #line_change").hide();
 </script>
-
-
-
-

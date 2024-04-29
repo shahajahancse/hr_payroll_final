@@ -994,18 +994,26 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
     public function holiday_add_ajax(){
-        $date = $this->input->post('date');
-        $sql = $this->input->post('sql');
-        $unit_id = $this->input->post('unit_id');
-        $emp_ids = explode(',', $sql);
+        $date         = date("Y-m-d", strtotime($this->input->post('date')));
+        $description  = $this->input->post('description');
+        $sql          = $this->input->post('sql');
+        $unit_id      = $this->input->post('unit_id');
+        $emp_ids      = explode(',', $sql);
 
         $this->db->where('work_off_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
         $this->db->delete('attn_holyday_off');
 
         $data = [];
         foreach ($emp_ids as $value) {
-            $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+            $data[] = array(
+                'work_off_date' => $date,
+                'emp_id' => $value,
+                'unit_id' => $unit_id,
+                'description' => $description,
+            );
         }
+        $this->db->where('work_off_date', $date)->where_in('emp_id', $emp_ids);
+        $this->db->delete('attn_holyday_off');
         if ( $this->db->insert_batch('attn_holyday_off', $data)) {
             echo 'success';
         }else{
@@ -1057,7 +1065,6 @@ class Entry_system_con extends CI_Controller
     }
 
     public function leave_entry(){
-        // dd($_POST);
         $emp_id = $_POST['emp_id'];
         $from_date = $_POST['from_date'];
         $year = date("Y", strtotime($from_date));
@@ -1067,48 +1074,69 @@ class Entry_system_con extends CI_Controller
         $unit_id = $_POST['unit_id'];
         $leave_start = date("Y-m-d", strtotime($from_date));
         $leave_end = date("Y-m-d", strtotime($to_date));
-        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
+        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a') + 1;
+
+        $balance = $this->leave_balance_ajax($emp_id, $leave_start, 1);
 
         if ($leave_type == 'el') {
-            if ($this->db->table_exists('pr_earn_'.$year)) {
-                $this->db->where('emp_id', $_POST['emp_id']);
-                $earn_l=$this->db->get('pr_earn_'.$year)->row();
-                if (!empty($earn_l)) {
-                    $earn_leave = $earn_l->earn_leave;
-                }else{
-                    $earn_leave = 0;
-                }
-            }else{
-                $earn_leave = 0;
-            }
-            $first_date = $year . "-01-01";
-            $last_date = $year . "-12-31";
-            $this->db->where('emp_id', $_POST['emp_id']);
-            $this->db->where('leave_start >=', $first_date);
-            $this->db->where('leave_end <=', $last_date);
-            $leavei = $this->db->get('pr_leave_trans')->result();
-
-            $leave_taken_earn =0;
-
-            foreach ($leavei as $key => $value) {
-            if($value->leave_type == 'el'){
-                    $leave_taken_earn += $value->total_leave;
-                }
-            }
-            $leave_ba_earn = $earn_leave - $leave_taken_earn;
-            if ($leave_ba_earn < 0) {
+            if ($balance['leave_balance_earn'] <= 0) {
                 echo "This employee have not enough leave balance";
                 exit();
             }
 
-            if ($leave_ba_earn < $total_leave) {
+            if ($balance['leave_balance_earn'] < $total_leave) {
                 echo "This employee have not enough leave balance";
                 exit();
             }
         }
 
-        $balance = $this->leave_balance_ajax($emp_id, $leave_start, 1);
-        dd($balance);
+        if ($leave_type == 'cl') {
+            if ($balance['leave_balance_casual'] <= 0) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+
+            if ($balance['leave_balance_casual'] < $total_leave) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+        }
+
+        if ($leave_type == 'sl') {
+            if ($balance['leave_balance_sick'] <= 0) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+
+            if ($balance['leave_balance_sick'] < $total_leave) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+        }
+
+        if ($leave_type == 'ml') {
+            if ($balance['leave_balance_maternity'] <= 0) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+
+            if ($balance['leave_balance_maternity'] < $total_leave) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+        }
+
+        if ($leave_type == 'pl') {
+            if ($balance['leave_balance_paternity'] <= 0) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+
+            if ($balance['leave_balance_paternity'] < $total_leave) {
+                echo "This employee have not enough leave balance";
+                exit();
+            }
+        }
 
         $formArray = array(
             'emp_id' => $emp_id,
@@ -1264,7 +1292,6 @@ class Entry_system_con extends CI_Controller
         $type = $_POST['type'];
         $unit_id = $_POST['unit_id'];
         $emp_ids = explode(',', $sql);
-        // dd($_POST);
 
         if ($type == 1) {
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids)->delete('pr_emp_left_history');
@@ -1294,16 +1321,15 @@ class Entry_system_con extends CI_Controller
                 echo 'error';
             }
         } else {
+            // dd("KO");
             $data = [];
             foreach ($emp_ids as $value) {
                 $data[] = array('unit_id' => $unit_id, 'emp_id' => $value, 'resign_date' => $date);
                 $dd = $this->db->where('unit_id', $unit_id)->where('emp_id', $value)->get('pr_emp_resign_history');
                 if (empty($dd->row())) {
-                    $this->db->insert('pr_emp_resign_history', $data);
+                    $this->db->insert('pr_emp_resign_history', $data[0]);
                 }
             }
-            // $this->db->insert_batch('pr_emp_resign_history', $data);
-
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
             if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 4))) {
                 echo 'success';

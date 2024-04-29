@@ -41,29 +41,32 @@
             <h5 class="text-center" style="border-bottom: 2px solid black;width: 200px;margin: 0 auto;">ছুটির আবেদন পত্র</h5>
             <p class="ml-3">তারিখঃ <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y')."</span>"?></p>
         </div>
-        <?php 
+        <?php
            $data =  $this->db->select('leave_type,leave_start,leave_end,total_leave')->where('leave_start',date('Y-m-d',strtotime($first_date)))->where('emp_id',$values['emp_info']->emp_id)->order_by('leave_end','DESC')->get('pr_leave_trans')->row();
             // dd($this->db->last_query());
         ?>
         <div class="ml-3">
                 <p>বরাবর,</p>
                 <p>ব্যবস্থাপনা পরিচালক সাহেব/ মহাব্যবস্থাপক,</p>
-                
-                <p>বিনীত নিবেদন এই যে, অনুগ্রহ পূর্বক <span style="border-bottom: 2px dotted black"><?php echo $reason?></span>  কারনে 
-                    <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হইতে <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> তারিখ পর্যন্ত 
-                    মোট <?php  $date1 = new DateTime($first_date); 
+
+                <p>বিনীত নিবেদন এই যে, অনুগ্রহ পূর্বক <span style="border-bottom: 2px dotted black"><?php echo $reason?></span>  কারনে
+                    <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হইতে <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> তারিখ পর্যন্ত
+                    মোট <?php  $date1 = new DateTime($first_date);
                     $date2 = new DateTime($second_date);
                     $interval = $date2->diff($date1);
                     $interval->d += 1;
-                    // dd($interval);
                                 echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%d ')."</span>";
                         ?>  দিন আমাকে <?php
                         if($type == 'cl'){
                             echo 'নৈমিত্তিক';
                         }elseif($type == 'el') {
                             echo 'অর্জিত';
-                        }else{
+                        }elseif($type == 'sl') {
                             echo 'অসুস্থতার';
+                        }elseif($type == 'ml') {
+                            echo 'মাতৃত্ব জনিত';
+                        }else{
+                            echo '........................................';
                         }
                         ?>
                          ছুটি মঞ্জুরের জন্য আবেদন জানাচ্ছি।
@@ -98,25 +101,25 @@
                 }else{
                     $earn_leave = 0;
                 }
-    
+
                 $first_date = $year . "-01-01";
                 $last_date = $year . "-12-31";
                 $this->db->where('emp_id', $_POST['emp_id']);
                 $this->db->where('leave_start >=', $first_date);
                 $this->db->where('leave_end <=', $last_date);
                 $leavei = $this->db->get('pr_leave_trans')->result();
-    
+
                 $leave_taken_earn =0;
-    
+
                 foreach ($leavei as $key => $value) {
                 if($value->leave_type == 'el'){
                         $leave_taken_earn += $value->total_leave;
                     }
                 }
                 $leave_ba_earn = $earn_leave - $leave_taken_earn;
-                
+
                 ?>
-                
+
                 <p>৩। অর্জিত <?= $earn_leave ?> দিন, ভোগকৃত ছুটি  <?= $leave_taken_earn ?> দিন, অবশিষ্ট <?= $leave_ba_earn ?> দিন </p>
                 <br>
                 <br>
@@ -126,10 +129,10 @@
                <br>
                <br>
                <br>
-                <p class="text-justify">আবেদনকারীকে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হতে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> পর্যন্ত মোট <?php  $date1 = new DateTime($first_date); 
+                <p class="text-justify">আবেদনকারীকে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হতে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> পর্যন্ত মোট <?php  $date1 = new DateTime($first_date);
                                 $date2 = new DateTime($second_date);
-                                $interval = $date2->diff($date1); 
-                                $interval->d += 1; 
+                                $interval = $date2->diff($date1);
+                                $interval->d += 1;
                                 echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%d ')."</span>";
                         ?>   দিন  <?php echo $type == 'cl' ? ' নৈমিত্তিক': 'অসুস্থতা' ?> ছুটি মঞ্জুর করা যেতে পারে।</p>
                 <p>উক্ত সুপারিশ মোতাবেক ছুটি মঞ্জুর করা হইল।</p>
@@ -138,9 +141,9 @@
             <br>
             <br>
             <div class="ml-3 d-flex justify-content-between">
-                <p style="border-top:1px solid black">বিভাগীয় প্রধান</p> 
-                <p style="border-top:1px solid black">প্রশাসনিক বিভাগ</p> 
-                <p style="border-top:1px solid black">মহাব্যবস্থাপক</p> 
+                <p style="border-top:1px solid black">বিভাগীয় প্রধান</p>
+                <p style="border-top:1px solid black">প্রশাসনিক বিভাগ</p>
+                <p style="border-top:1px solid black">মহাব্যবস্থাপক</p>
                 <p style="border-top:1px solid black">পরিচালক</p>
             </div>
     </div>

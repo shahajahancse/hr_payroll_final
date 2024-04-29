@@ -134,6 +134,27 @@
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
+        <style>
+            .nav_headss {
+                position: relative;
+                display: flex;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border-radius: 4px;
+                padding: 14px 14px;
+                margin: 0;
+                align-items: center;
+                background-image: linear-gradient(to top, #f1f2f5, rgba(255, 255, 255, 0)), linear-gradient(to bottom, #f6f6f9, #f6f6f9);
+                border: 1px solid #eeeef0;
+            }
+        </style>
+        <div class="row nav_headss">
+            <div class="col-lg-12">
+                <textarea class="form-control input-sm" id="description" placeholder="Description here" ></textarea>
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
     </div>
 
 
@@ -147,171 +168,172 @@
                     <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                 </tr>
                 <?php if (!empty($employees)) {
-					  		foreach ($employees as $key => $emp) {
-					  	?>
-                <tr id="removeTr">
-                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-                    </td>
-                    <td class="success"><?= $emp->emp_id ?></td>
-                    <td class="warning "><?= $emp->name_en ?></td>
-                </tr>
+					foreach ($employees as $key => $emp) { ?>
+                    <tr id="removeTr">
+                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+                        </td>
+                        <td class="success"><?= $emp->emp_id ?></td>
+                        <td class="warning "><?= $emp->name_en ?></td>
+                    </tr>
                 <?php } } ?>
             </table>
         </div>
     </div>
     <!-- </div> -->
 </div>
+
 <script>
-function loading_open() {
-    $('#loader').css('display', 'block');
-}
+    function loading_open() {
+        $('#loader').css('display', 'block');
+    }
 </script>
 
 <script type="text/javascript">
-// on load employee
-function grid_emp_list() {
-    var unit = document.getElementById('unit_id').value;
-    var dept = document.getElementById('dept').value;
-    var section = document.getElementById('section').value;
-    var line = document.getElementById('line').value;
-    var desig = document.getElementById('desig').value;
-    var status = document.getElementById('status').value;
+    // on load employee
+    function grid_emp_list() {
+        var unit = document.getElementById('unit_id').value;
+        var dept = document.getElementById('dept').value;
+        var section = document.getElementById('section').value;
+        var line = document.getElementById('line').value;
+        var desig = document.getElementById('desig').value;
+        var status = document.getElementById('status').value;
 
-    url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
-    $.ajax({
-        url: url,
-        type: 'GET',
-        data: {
-            "status": status
-        },
-        contentType: "application/json",
-        dataType: "json",
+        url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                "status": status
+            },
+            contentType: "application/json",
+            dataType: "json",
 
 
-        success: function(response) {
-            $('#fileDiv #removeTr').remove();
-            if (response.length != 0) {
-                var items = '';
-                $.each(response, function(index, value) {
-                    items += '<tr id="removeTr">';
-                    items +=
-                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                        value.emp_id + '" ></td>';
-                    items += '<td class="success">' + value.emp_id + '</td>';
-                    items += '<td class="warning ">' + value.name_en + '</td>';
-                    items += '</tr>';
-                });
-                // console.log(items);
-                $('#fileDiv tr:last').after(items);
-            } else {
+            success: function(response) {
                 $('#fileDiv #removeTr').remove();
-            }
-        }
-    });
-}
-
-
-$(document).ready(function() {
-    // select all item or deselect all item
-    $("#select_all").click(function() {
-        $('input:checkbox').not(this).prop('checked', this.checked);
-    });
-
-    //Designation dropdown
-    $('#line').change(function() {
-        $('.desig').addClass('form-control input-sm');
-        $(".desig > option").remove();
-        var id = $('#line').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_designation_by_line_id/" + id,
-            success: function(func_data) {
-                $('.desig').append("<option value=''>-- Select Designation --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.desig').append(opt);
-                });
+                if (response.length != 0) {
+                    var items = '';
+                    $.each(response, function(index, value) {
+                        items += '<tr id="removeTr">';
+                        items +=
+                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
+                            value.emp_id + '" ></td>';
+                        items += '<td class="success">' + value.emp_id + '</td>';
+                        items += '<td class="warning ">' + value.name_en + '</td>';
+                        items += '</tr>';
+                    });
+                    // console.log(items);
+                    $('#fileDiv tr:last').after(items);
+                } else {
+                    $('#fileDiv #removeTr').remove();
+                }
             }
         });
-        // load employee
-        grid_emp_list();
-    });
+    }
 
-    //Line dropdown
-    $('#section').change(function() {
-        $('.line').addClass('form-control input-sm');
-        $(".line > option").remove();
-        $(".desig > option").remove();
-        var id = $('#section').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_line_by_sec_id/" + id,
-            success: function(func_data) {
-                $('.line').append("<option value=''>-- Select Line --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.line').append(opt);
-                });
-            }
-        });
-        // load employee
-        grid_emp_list();
-    });
 
-    //section dropdown
-    $('#dept').change(function() {
-        $('.section').addClass('form-control input-sm');
-        $(".section > option").remove();
-        $(".line > option").remove();
-        $(".desig > option").remove();
-        var id = $('#dept').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_section_by_dept_id/" + id,
-            success: function(func_data) {
-                $('.section').append("<option value=''>-- Select Section --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.section').append(opt);
-                });
-            }
+    $(document).ready(function() {
+        // select all item or deselect all item
+        $("#select_all").click(function() {
+            $('input:checkbox').not(this).prop('checked', this.checked);
         });
-        // load employee
-        grid_emp_list();
-    });
 
-    //Department dropdown
-    $('#unit_id').change(function() {
-        $('.dept').addClass('form-control input-sm');
-        $(".dept > option").remove();
-        $(".section > option").remove();
-        $(".line > option").remove();
-        $(".desig > option").remove();
-        var id = $('#unit_id').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "common/ajax_department_by_unit_id/" + id,
-            success: function(func_data) {
-                $('.dept').append("<option value=''>-- Select Department --</option>");
-                $.each(func_data, function(id, name) {
-                    var opt = $('<option />');
-                    opt.val(id);
-                    opt.text(name);
-                    $('.dept').append(opt);
-                });
-            }
+        //Designation dropdown
+        $('#line').change(function() {
+            $('.desig').addClass('form-control input-sm');
+            $(".desig > option").remove();
+            var id = $('#line').val();
+            $.ajax({
+                type: "POST",
+                url: hostname + "common/ajax_designation_by_line_id/" + id,
+                success: function(func_data) {
+                    $('.desig').append("<option value=''>-- Select Designation --</option>");
+                    $.each(func_data, function(id, name) {
+                        var opt = $('<option />');
+                        opt.val(id);
+                        opt.text(name);
+                        $('.desig').append(opt);
+                    });
+                }
+            });
+            // load employee
+            grid_emp_list();
         });
-        // load employee
-        grid_emp_list();
+
+        //Line dropdown
+        $('#section').change(function() {
+            $('.line').addClass('form-control input-sm');
+            $(".line > option").remove();
+            $(".desig > option").remove();
+            var id = $('#section').val();
+            $.ajax({
+                type: "POST",
+                url: hostname + "common/ajax_line_by_sec_id/" + id,
+                success: function(func_data) {
+                    $('.line').append("<option value=''>-- Select Line --</option>");
+                    $.each(func_data, function(id, name) {
+                        var opt = $('<option />');
+                        opt.val(id);
+                        opt.text(name);
+                        $('.line').append(opt);
+                    });
+                }
+            });
+            // load employee
+            grid_emp_list();
+        });
+
+        //section dropdown
+        $('#dept').change(function() {
+            $('.section').addClass('form-control input-sm');
+            $(".section > option").remove();
+            $(".line > option").remove();
+            $(".desig > option").remove();
+            var id = $('#dept').val();
+            $.ajax({
+                type: "POST",
+                url: hostname + "common/ajax_section_by_dept_id/" + id,
+                success: function(func_data) {
+                    $('.section').append("<option value=''>-- Select Section --</option>");
+                    $.each(func_data, function(id, name) {
+                        var opt = $('<option />');
+                        opt.val(id);
+                        opt.text(name);
+                        $('.section').append(opt);
+                    });
+                }
+            });
+            // load employee
+            grid_emp_list();
+        });
+
+        //Department dropdown
+        $('#unit_id').change(function() {
+            $('.dept').addClass('form-control input-sm');
+            $(".dept > option").remove();
+            $(".section > option").remove();
+            $(".line > option").remove();
+            $(".desig > option").remove();
+            var id = $('#unit_id').val();
+            $.ajax({
+                type: "POST",
+                url: hostname + "common/ajax_department_by_unit_id/" + id,
+                success: function(func_data) {
+                    $('.dept').append("<option value=''>-- Select Department --</option>");
+                    $.each(func_data, function(id, name) {
+                        var opt = $('<option />');
+                        opt.val(id);
+                        opt.text(name);
+                        $('.dept').append(opt);
+                    });
+                }
+            });
+            // load employee
+            grid_emp_list();
+        });
     });
-});
 </script>
+
 <script>
   function get_checked_value(checkboxes) {
     var vals = Array.from(checkboxes)
@@ -342,17 +364,19 @@ $(document).ready(function() {
     }
     var unit_id = $('#unit_id').val();
     if (unit_id =='') {
-      alert('Please select Unit');
-      $("#loader").hide();
-      return false;
+        alert('Please select Unit');
+        $("#loader").hide();
+        return false;
     }
+    var description = $('#description').val();
     $.ajax({
       type: "POST",
       url: hostname + "entry_system_con/holiday_add_ajax",
       data: {
         sql: sql,
         date: date,
-        unit_id: unit_id
+        unit_id: unit_id,
+        description: description,
       },
       success: function(data) {
         // console.log(data);

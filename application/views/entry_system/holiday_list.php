@@ -63,6 +63,7 @@
                         <th>Unit name</th>
                         <th>Holiday Date</th>
                         <th>Holiday Day</th>
+                        <th>Description</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -82,6 +83,7 @@
                         <td><?php echo $r->unit_name ?></td>
                         <td><?php echo $r->work_off_date ?></td>
                         <td><?php echo date('l', strtotime($r->work_off_date))?></td>
+                        <td><?php echo $r->description ?></td>
                         <td>
                             <a href="<?=base_url('entry_system_con/emp_holiday_del/'.$r->id)?>"
                                 class="btn btn-danger" role="button">Delete</a>

@@ -28,22 +28,38 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
 		$type = $this->input->post('report_type');
-		// dd($type);
-		$year=date("Y",strtotime($date));
-		$month=date("m",strtotime($date));
-		$day=date("d",strtotime($date));
+		// dd($_POST);
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Grid_model->grid_daily_report($date,$grid_emp_id,$type);
-		// if($type == 9){
-		//     $data['values'] =	$this->Grid_model->grid_daily_costing_report($date,$unit_id);
-		// 	$data['unit_id']= $unit_id;
-		// 	$data['date']= $date;
-		// 	$this->load->view('others_report/daily_costing_summary',$data);
-		// }
+
 		$data["unit_id"] 		= $unit_id;
 		$data['daily_status']   = $type;
 		$data['date']   		= $date;
 		$this->load->view('grid_con/daily_report',$data);
+	}
+
+	function grid_actual_present_report()
+	{
+		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
+		$status = $this->input->post('status');
+		$unit_id = $this->input->post('unit_id');
+		$spl = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($spl));
+
+		$data["values"] = $this->Grid_model->grid_daily_report($date, $grid_emp_id, 1);
+		// dd($data["values"]);
+		$data["date"]			= $date;
+		$data["daily_status"]	= $status;
+		$data["unit_id"] 		= $unit_id;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/daily_report',$data);
+		}
 	}
 
 	function daily_costing_summary(){
@@ -267,10 +283,10 @@ class Grid_con extends CI_Controller {
 		$date2 = new DateTime($second_date);
 		$interval = $date2->diff($date1);
 		$interval->d += 1;
-		if($data['values']['leave_entitle_casual'] > $interval->format('%d')){
+		if($data['values']['leave_entitle_casual'] >= $interval->format('%d')){
 			$this->load->view('grid_con/leave_application_report',$data);
 		}else{
-			echo "Sorry! You are not eligible to apply for this leave";
+			echo false;
 		}
 	}
 	// emp general report
@@ -992,39 +1008,6 @@ class Grid_con extends CI_Controller {
 		else
 		{
 			$this->load->view('daily_absent_report',$data);
-		}
-	}
-
-	function grid_actual_present_report()
-	{
-		$grid_date = $this->input->post('firstdate');
-		$unit_id = $this->input->post('unit_id');
-
-		list($date, $month, $year) = explode('-', trim($grid_date));
-		$status = $this->input->post('status');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		//print_r($grid_emp_id);
-		$data["values"] = $this->Grid_model->grid_actual_present_report($year, $month, $date, $status, $grid_emp_id);
-
-		$data["year"]			= $year;
-		$data["month"]			= $month;
-		$data["date"]			= $date;
-		$data["daily_status"]	= $status;
-		$data["col_desig"] 		= "";
-		$data["col_line"] 		= "";
-		$data["col_section"] 	= "";
-		$data["col_dept"] 		= "";
-		$data["col_all"] 		= "";
-		$data["unit_id"] 		= $unit_id;
-
-		if(is_string($data["values"]))
-		{
-			echo $data["values"];
-		}
-		else
-		{
-			$this->load->view('daily_report',$data);
 		}
 	}
 
@@ -2626,7 +2609,7 @@ class Grid_con extends CI_Controller {
 	public function final_satalment(){
 		$emp_ids = $this->input->post('id');
 		$data['values'] = $this->Grid_model->grid_employee_information($emp_ids);
-		dd($data);
+		// dd($data);
 		echo json_encode($data);
 	}
 }
