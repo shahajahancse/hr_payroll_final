@@ -11,7 +11,7 @@
 <body>
 
 <div style=" margin:0 auto; ">
-<?php 
+<?php
 $emp_id = $values["emp_id"][1];
 $data['unit_id'] = $unit_id;//$this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
 $this->load->view("head_english",$data);
@@ -34,20 +34,20 @@ $num_of_days = date("t",strtotime($grid_date));
 <th style="padding:4px;">SL</th>
 <th style="padding:4px;">Emp ID</th>
 <th style="padding:4px;">Employee Name</th>
-<th style="padding:4px;">Section</th>
 <th style="padding:4px;">Designation</th>
-<th style="padding:4px;">Status</th> 
+<th style="padding:4px;">Line</th>
+<th style="padding:4px;">Status</th>
 <th style="padding:4px;">Gross Sal</th>
 <th style="padding:4px;">Per Day Salary</th>
 <th style="padding:4px;">OT Hour</th>
-<th style="padding:4px;">EOT Hour</th>   
-<th style="padding:4px;">OT Rate</th>  
-<th style="padding:4px;">OT Amount</th> 
-<th style="padding:4px;">EOT Amount</th>       
-<th style="padding:4px;">Night Allowence</th> 
-<th style="padding:4px;">Holiday Allowence</th> 
-<th style="padding:4px;">Ifter Allowence</th> 
-<th style="padding:4px;">Total Salary</th> 
+<th style="padding:4px;">EOT Hour</th>
+<th style="padding:4px;">OT Rate</th>
+<th style="padding:4px;">OT Amount</th>
+<th style="padding:4px;">EOT Amount</th>
+<th style="padding:4px;">Night Allowence</th>
+<th style="padding:4px;">Holiday Allowence</th>
+<th style="padding:4px;">Ifter Allowence</th>
+<th style="padding:4px;">Total Salary</th>
 
 
 <?php
@@ -67,13 +67,13 @@ for($i=0; $i<$count; $i++ ){
 	echo "<td colspan='17' style='font-size:16px; font-weight : bold;'>Line :".$values["line_name"][$i]."</td>";
 	echo "</tr>";
 	}
-	
+
 	echo "<tr>";
-	
+
 	echo "<td style='text-align:center;'>";
 	echo $k = $i+1;
 	echo "</td>";
-	
+
 	echo "<td style='text-align:center;padding:0px 5px;'>";
 	echo $values["emp_id"][$i];
 	echo "</td>";
@@ -81,49 +81,49 @@ for($i=0; $i<$count; $i++ ){
 	echo "<td   style='text-align:left;padding-left:5px;' >";
 	echo $values["emp_full_name"][$i];
 	echo "</td>";
-	
-	echo "<td style='text-align:left;padding-left:5px;'>";
-	echo $values["sec_name"][$i];
-	echo "</td>";
-	
+
 	echo "<td  style='text-align:left;padding-left:5px;'>";
 	echo $values["desig_name"][$i];
 	echo "</td>";
-	
+
+	echo "<td style='text-align:left;padding-left:5px;'>";
+	echo $values["line_name"][$i];
+	echo "</td>";
+
 	echo "<td style='text-align:center;'>";
 	echo $values["present_status"][$i];
 	echo "</td>";
-	
+
 	echo "<td  width='40'  style='text-align:right;padding-right:5px' >";
 	echo $values["gross_sal"][$i];
 	echo "</td>";
-	
+
 	$gross_sal = $values["gross_sal"][$i];
 	$per_day_salary = round($gross_sal / $num_of_days);
-	
+
 	echo "<td  width='40'  style='text-align:right;padding-right:5px' >";
 	echo $per_day_salary;
 	echo "</td>";
 	$total_per_day_salary = $total_per_day_salary + $per_day_salary;
-	
+
 	echo "<td  style='text-align:center;' >";
 	echo $values["ot_hour"][$i];
 	echo "</td>";
-	
-	
+
+
 	echo "<td  style='text-align:right;padding-right:5px' >";
 	echo $values["extra_ot_hour"][$i];
 	echo "</td>";
-	
+
 	echo "<td  style='text-align:right;padding-right:5px' >";
 	echo $values["ot_rate"][$i];
 	echo "</td>";
-	
-	
+
+
 	$ot_amount = round($values["ot_hour"][$i] * $values["ot_rate"][$i]);
 	$eot_amount = round($values["extra_ot_hour"][$i] * $values["ot_rate"][$i]);
-	
-	
+
+
 	echo "<td  style='text-align:right;padding-right:5px' >";
 	echo $ot_amount;
 	echo "</td>";
@@ -139,13 +139,13 @@ for($i=0; $i<$count; $i++ ){
 	echo "</td>";
 
 
-		
+
 	echo "<td  style='text-align:right;padding-right:5px' >";
 	echo $values['holiday_allo'][$i];
 	echo "</td>";
 
 
-		
+
 	echo "<td  style='text-align:right;padding-right:5px' >";
 	echo $values['tiffin_allo'][$i];
 	echo "</td>";
@@ -155,15 +155,15 @@ for($i=0; $i<$count; $i++ ){
 	echo "<td  style='text-align:right;padding-right:5px' >";
 	echo $total_amount;
 	echo "</td>";
-	
+
 	$total_salary = $total_salary + $total_amount;
 
-	
 
-	
+
+
 	echo "</tr>";
 	$line_name = $values["line_name"][$i];
-	
+
 }
 
 ?>

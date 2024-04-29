@@ -766,26 +766,37 @@ class Grid_model extends CI_Model{
 				pr_emp_com_info.gross_sal,
 				pr_emp_com_info.com_gross_sal,
 				pr_emp_per_info.name_en,
-				emp_designation.desig_name,
-				emp_section.sec_name_en,
+				desig.desig_name,
 				emp_line_num.line_name_en,
 				pr_emp_shift_log.present_status,
 				pr_emp_shift_log.ot,
 				pr_emp_shift_log.eot,
 				pr_emp_shift_log.modify_eot,
 				pr_emp_shift_log.deduction_hour,
+
+				allowance_tiffin_bill.allowance_amount as tiffin_bill,
+				allowance_night_rules.night_allowance as night_bill,
+				wholialo.allowance_amount as holiday_bill,
+
+				pr_emp_shift_log.tiffin_allo,
 				pr_emp_shift_log.night_allo,
 				pr_emp_shift_log.holiday_allo,
-				pr_emp_shift_log.tiffin_allo,
+				pr_emp_shift_log.weekly_allo,
+
 			");
 		$this->db->from('pr_emp_shift_log');
 		$this->db->join("pr_emp_com_info","pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id", 'left');
 		$this->db->join("pr_emp_per_info","pr_emp_per_info.emp_id = pr_emp_com_info.emp_id", 'left');
-		$this->db->join("emp_designation","pr_emp_com_info.emp_desi_id = emp_designation.id", 'left');
-		$this->db->join("emp_section","pr_emp_com_info.emp_sec_id = emp_section.id", 'left');
 		$this->db->join("emp_line_num","pr_emp_com_info.emp_line_id = emp_line_num.id", 'left');
+
+		$this->db->join("emp_designation as desig","pr_emp_com_info.emp_desi_id = desig.id", 'left');
+		$this->db->join("allowance_tiffin_bill","allowance_tiffin_bill.id = desig.tiffin_id", 'left');
+		$this->db->join("allowance_night_rules","allowance_night_rules.id = desig.night_al_id", 'left');
+		$this->db->join("allowance_holiday_weekend_rules wholialo","wholialo.id = desig.holiday_weekend_id", 'left');
+
 		$this->db->where("pr_emp_com_info.unit_id",$grid_unit);
 		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
+		$this->db->where("pr_emp_shift_log.present_status !=", 'A');
 		$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
 		$this->db->order_by("emp_line_num.line_name_en");
 		$query = $this->db->get();
@@ -793,7 +804,7 @@ class Grid_model extends CI_Model{
 			$emp_id 					= $rows->emp_id;
 			$data['emp_id'] []			= $emp_id ;
 			$data['emp_full_name'] []	= $rows->name_en;
-			$data['sec_name'] []		= $rows->sec_name_en;
+			// $data['sec_name'] []		= $rows->sec_name_en;
 			$data['line_name'] []		= $rows->line_name_en;
 			$data['desig_name'][] 		= $rows->desig_name;
 			$data['gross_sal'] []		= $rows->gross_sal;
