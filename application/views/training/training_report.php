@@ -372,7 +372,6 @@ function view_training(type) {
 
     ajaxRequest.onreadystatechange = function() {
         $('#loader').hide();
-
         if (ajaxRequest.readyState == 4) {
             var resp = ajaxRequest.responseText;
             continuous_costing_report = window.open('', '_blank',
