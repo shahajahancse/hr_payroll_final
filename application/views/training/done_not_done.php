@@ -16,7 +16,7 @@
     $this->db->where('training_type.id', $training_id);
     $training=$this->db->get('training_type')->row();
 ?>
-    <div style="text-align: center;">Training Name : <?= $training->title ?></div>
+    <div style="text-align: center;font-weight: bold;font-size: 18px;" >Training Name : <?= $training->title ?></div>
 
     <?php 
     $done_list = array();
@@ -46,7 +46,7 @@
             $this->db->where('training_management.training_id', $training_id);
             $done= $this->db->get()->result();
             ?>
-    <h3 align="center" height="auto">Done Training List</h3>
+    <h3 align="center" height="auto" style="padding: 0;margin: 7px;">Done Training List</h3>
     <table class="heading" border="1" cellspacing="0" align="center" height="auto">
         <thead>
             <tr>
@@ -77,7 +77,7 @@
         $this->load->model('grid_model');
         $not_done=$this->grid_model->grid_employee_information2($not_done_list);
             ?>
-    <h3 align="center" height="auto">Not Done Training List</h3>
+    <h3 align="center" height="auto" style="padding: 0;margin: 7px;">Not Done Training List</h3>
     <table class="heading" border="1" cellspacing="0" align="center" height="auto">
         <thead>
             <tr>
