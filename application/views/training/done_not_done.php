@@ -28,6 +28,7 @@
             $this->db->where('emp_id', $emp);
             $this->db->where('training_id', $training_id);
             $done = $this->db->get()->result();
+            dd($done);
             if (!empty($done)) {
                 $done_list[] = $emp;
             } else {
