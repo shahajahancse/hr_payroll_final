@@ -1160,7 +1160,6 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
-        $this->form_validation->set_rules('desig_desc', 'Designation Description', 'required');
 
         $this->db->select('pr_units.*');
         $this->data['pr_units'] = $this->db->get('pr_units')->result();
@@ -1205,8 +1204,6 @@ class Setup_con extends CI_Controller
             } else {
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
-        }else {
-            dd($this->form_validation->error_array('desig_desc'));
         }
 
         $this->data['title'] = 'Edit Designation';
