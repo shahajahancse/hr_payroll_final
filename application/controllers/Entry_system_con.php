@@ -1012,6 +1012,8 @@ class Entry_system_con extends CI_Controller
                 'description' => $description,
             );
         }
+        $this->db->where('work_off_date', $date)->where_in('emp_id', $emp_ids);
+        $this->db->delete('attn_holyday_off');
         if ( $this->db->insert_batch('attn_holyday_off', $data)) {
             echo 'success';
         }else{
