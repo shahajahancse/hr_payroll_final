@@ -79,8 +79,9 @@
                         <th style="width: 200px;">SL.</th>
                         <th style="width: 200px;">Employee ID</th>
                         <th style="width: 200px;">Employee Name</th>
-                        <th style="width: 200px;">Line Name</th>
                         <th style="width: 200px;">Designation Name</th>
+
+                        <th style="width: 200px;">Line Name</th>
                         <th>Remarks</th>
                     </tr>
                 </thead>
@@ -92,8 +93,9 @@
                         <td><?php echo $key + 1; ?></td>
                             <td><?php echo $value->emp_id; ?></td>
                             <td><?php echo $value->name_en; ?></td>
-                            <td><?php echo $value->line_name_en; ?></td>
                             <td><?php echo $value->desig_name; ?></td>
+
+                            <td><?php echo $value->line_name_en; ?></td>
                             <td></td>
                         </tr>
                         <?php
