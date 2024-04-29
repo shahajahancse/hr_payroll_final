@@ -283,7 +283,7 @@ class Grid_con extends CI_Controller {
 		$date2 = new DateTime($second_date);
 		$interval = $date2->diff($date1);
 		$interval->d += 1;
-		if($data['values']['leave_entitle_casual'] > $interval->format('%d')){
+		if($data['values']['leave_entitle_casual'] >= $interval->format('%d')){
 			$this->load->view('grid_con/leave_application_report',$data);
 		}else{
 			echo false;
