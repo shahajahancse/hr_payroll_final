@@ -50,6 +50,8 @@
     <table class="heading" border="1" cellspacing="0" align="center" height="auto">
         <thead>
             <tr>
+                <th>SL.</th>
+                <th >Employee ID</th>
                 <th style="width: 200px;">Employee Name</th>
                 <th style="width: 200px;">Training Name</th>
                 <th style="width: 200px;">Unit Name</th>
@@ -62,6 +64,8 @@
                     foreach ($done as $key => $value) {
                         ?>
             <tr>
+                <td><?php echo $key + 1; ?></td>
+                <td><?php echo $value->emp_id; ?></td>
                 <td><?php echo $value->emp_name; ?></td>
                 <td><?php echo $value->training_name; ?></td>
                 <td><?php echo $value->unit_name; ?></td>
