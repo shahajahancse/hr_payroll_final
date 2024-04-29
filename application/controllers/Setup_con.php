@@ -1206,7 +1206,7 @@ class Setup_con extends CI_Controller
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
         }else {
-            dd($this->form_validation->error_array());
+            dd($this->form_validation->error_array('desig_desc'));
         }
 
         $this->data['title'] = 'Edit Designation';
