@@ -36,7 +36,7 @@
         }
         if ($type==0) {
             
-            $this->db->select('training_management.*,pr_units.unit_name,training_type.title as training_name,pr_emp_per_info.name_en as emp_name');
+            $this->db->select('training_management.*,pr_units.unit_name,pr_emp_per_info.emp_id as emp_id2,training_type.title as training_name,pr_emp_per_info.name_en as emp_name');
             $this->db->from('training_management');
             $this->db->join('pr_units', 'pr_units.unit_id = training_management.unit_id');
             $this->db->join('training_type', 'training_type.id = training_management.training_id');
@@ -65,7 +65,7 @@
                         ?>
             <tr>
                 <td><?php echo $key + 1; ?></td>
-                <td><?php echo $value->emp_id; ?></td>
+                <td><?php echo $value->emp_id2; ?></td>
                 <td><?php echo $value->emp_name; ?></td>
                 <td><?php echo $value->training_name; ?></td>
                 <td><?php echo $value->unit_name; ?></td>
