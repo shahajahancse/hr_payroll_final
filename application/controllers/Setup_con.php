@@ -1114,7 +1114,6 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
-        $this->form_validation->set_rules('desig_desc', 'Designation Description', 'required');
 
         if ($this->form_validation->run() == TRUE) {
             $formArray = array(
