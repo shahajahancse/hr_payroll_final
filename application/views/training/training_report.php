@@ -361,6 +361,7 @@ function view_training(type) {
         alert('Please select employee Id');
         return false;
     }
+    $('#loader').show();
 
     var queryString = "spl=" + sql + "&training_id=" + training_id + "&unit_id=" + unit_id + "&type=" + type;
     url = hostname + "training_con/training_report_list/";
@@ -370,6 +371,8 @@ function view_training(type) {
     ajaxRequest.send(queryString);
 
     ajaxRequest.onreadystatechange = function() {
+        $('#loader').hide();
+
         if (ajaxRequest.readyState == 4) {
             var resp = ajaxRequest.responseText;
             continuous_costing_report = window.open('', '_blank',
