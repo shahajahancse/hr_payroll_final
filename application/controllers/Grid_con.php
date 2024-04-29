@@ -286,7 +286,7 @@ class Grid_con extends CI_Controller {
 		if($data['values']['leave_entitle_casual'] > $interval->format('%d')){
 			$this->load->view('grid_con/leave_application_report',$data);
 		}else{
-			echo "Sorry! You are not eligible to apply for this leave";
+			echo false;
 		}
 	}
 	// emp general report

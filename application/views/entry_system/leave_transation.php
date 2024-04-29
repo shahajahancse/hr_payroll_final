@@ -661,11 +661,7 @@
             alert("Please select second date");
             return false;
         }
-        // const firstDate = new Date('2022-01-01');
-        // const secondDate = new Date('2022-01-10');
-        // const differenceInTime = secondDate.getTime() - firstDate.getTime();
-        // const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-        // alert(differenceInDays);
+
         var unit_id = document.getElementById('unit_id').value;
         if(unit_id ==''){
             alert("Please select unit !");
@@ -691,8 +687,12 @@
         ajaxRequest.onreadystatechange = function () {
             if(ajaxRequest.readyState == 4){
                 var resp = ajaxRequest.responseText;
-                daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-                daily_present_report.document.write(resp);
+                if (resp == false) {
+                    alert("Sorry! You are not eligible to apply for this leave");
+                } else {
+                    daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                    daily_present_report.document.write(resp);
+                }
             }
         }
     }
