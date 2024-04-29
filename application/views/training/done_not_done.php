@@ -52,11 +52,11 @@
             <tr>
                 <th>SL.</th>
                 <th >Employee ID</th>
-                <th>Employee Name</th>
-                <th>Training Name</th>
-                <th>Unit Name</th>
-                <th>Date</th>
-                <th>Time</th>
+                <th style="width: 200px;">Employee Name</th>
+                <th style="width: 200px;">Training Name</th>
+                <th style="width: 200px;">Unit Name</th>
+                <th style="width: 200px;">Date</th>
+                <th style="width: 200px;">Time</th>
             </tr>
         </thead>
         <tbody>
@@ -87,9 +87,10 @@
             <tr>
                 <th>SL.</th>
                 <th>Employee ID</th>
-                <th >Employee Name</th>
-                <th >Designation Name</th>
-                <th >Line Name</th>
+                <th style="width: 200px;">Employee Name</th>
+                <th style="width: 200px;">Designation Name</th>
+
+                <th style="width: 200px;">Line Name</th>
                 <th>Remarks</th>
             </tr>
         </thead>
