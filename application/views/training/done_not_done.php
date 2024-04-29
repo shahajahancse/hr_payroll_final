@@ -13,7 +13,6 @@
     <?php 
     $data['unit_id'] = $unit_id;
     $this->load->view("head_english",$data);
-
     $this->db->where('training_type.id', $training_id);
     $training=$this->db->get('training_type')->row();
 ?>
