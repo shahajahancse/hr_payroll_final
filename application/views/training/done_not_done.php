@@ -27,9 +27,8 @@
             $this->db->from('training_management');
             $this->db->where('emp_id', $emp);
             $this->db->where('training_id', $training_id);
-            $done = $this->db->get()->result();
-            dd($done);
-            if (!empty($done)) {
+            $done_e = $this->db->get()->result();
+            if (!empty($done_e)) {
                 $done_list[] = $emp;
             } else {
                 $not_done_list[] = $emp;
@@ -46,6 +45,7 @@
             $this->db->where_in('training_management.emp_id', $done_list);
             $this->db->where('training_management.training_id', $training_id);
             $done= $this->db->get()->result();
+            dd($done);
             ?>
     <h3 align="center" height="auto">Done Training List</h3>
     <table class="heading" border="1" cellspacing="0" align="center" height="auto">
