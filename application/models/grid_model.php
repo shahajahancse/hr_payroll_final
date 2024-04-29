@@ -8694,6 +8694,7 @@ class Grid_model extends CI_Model{
 		// dd($grid_emp_id);
 		$this->db->select('pr_emp_com_info.emp_id,
 							pr_emp_per_info.*,
+							pr_emp_per_info.emp_id as emp_id2,
 							emp_depertment.dept_name,
 							emp_section.sec_name_en,
 							emp_section.sec_name_bn,
