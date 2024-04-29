@@ -1074,7 +1074,7 @@ class Entry_system_con extends CI_Controller
         $unit_id = $_POST['unit_id'];
         $leave_start = date("Y-m-d", strtotime($from_date));
         $leave_end = date("Y-m-d", strtotime($to_date));
-        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
+        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a') + 1;
 
         $balance = $this->leave_balance_ajax($emp_id, $leave_start, 1);
 
