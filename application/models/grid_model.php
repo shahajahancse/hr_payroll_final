@@ -765,9 +765,10 @@ class Grid_model extends CI_Model{
 				pr_emp_com_info.emp_cat_id,
 				pr_emp_com_info.gross_sal,
 				pr_emp_com_info.com_gross_sal,
+				pr_emp_com_info.emp_line_id,
 				pr_emp_per_info.name_en,
 				desig.desig_name,
-				emp_line_num.line_name_en,
+				emp_line_num.line_name_en as line_name,
 				pr_emp_shift_log.present_status,
 				pr_emp_shift_log.ot,
 				pr_emp_shift_log.eot,
@@ -805,6 +806,9 @@ class Grid_model extends CI_Model{
 		} else {
 			return "Requested list is empty";
 		}
+
+		exit();
+
 		foreach($query->result() as $rows){
 			$emp_id 					= $rows->emp_id;
 			$data['emp_id'] []			= $emp_id ;

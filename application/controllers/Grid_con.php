@@ -408,13 +408,19 @@ class Grid_con extends CI_Controller {
 		$data["grid_date"]	= date("d-M-Y",strtotime($grid_date));
 		$data["unit_id"]	= $grid_unit;
 
-		dd($data["values"]);
-
+		// dd($data["values"]);
 		if(is_string($data["values"])){
 			echo $data["values"];
 		}else{
-			$this->load->view('grid_con/daily_costing_report',$data);
+			$this->load->view('grid_con/grid_daily_costing_report',$data);
 		}
+		exit();
+
+		/* if(is_string($data["values"])){
+			echo $data["values"];
+		}else{
+			$this->load->view('grid_con/daily_costing_report',$data);
+		} */
 	}
 	// ============================== end Daily Costing Report ===============
 
