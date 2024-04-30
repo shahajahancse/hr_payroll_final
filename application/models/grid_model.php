@@ -800,6 +800,11 @@ class Grid_model extends CI_Model{
 		$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
 		$this->db->order_by("emp_line_num.line_name_en");
 		$query = $this->db->get();
+		if (!empty($query->result())) {
+			return $query->result();
+		} else {
+			return "Requested list is empty";
+		}
 		foreach($query->result() as $rows){
 			$emp_id 					= $rows->emp_id;
 			$data['emp_id'] []			= $emp_id ;
@@ -821,8 +826,7 @@ class Grid_model extends CI_Model{
 		}
 		if(isset($data)){
 			return $data;
-		}
-		else{
+		} else {
 			return "Requested list is empty";
 		}
 	}

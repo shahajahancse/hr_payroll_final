@@ -407,10 +407,12 @@ class Grid_con extends CI_Controller {
 		$data["values"] = $this->Grid_model->grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id);
 		$data["grid_date"]	= date("d-M-Y",strtotime($grid_date));
 		$data["unit_id"]	= $grid_unit;
+
+		dd($data["values"]);
+
 		if(is_string($data["values"])){
 			echo $data["values"];
-		}
-		else{
+		}else{
 			$this->load->view('grid_con/daily_costing_report',$data);
 		}
 	}
