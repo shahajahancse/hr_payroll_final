@@ -674,6 +674,7 @@ class Grid_model extends CI_Model{
 			emp_line_num.line_name_en,
 			pr_emp_shift.shift_name,
 			pr_emp_com_info.emp_cat_id,
+			pr_emp_com_info.emp_sec_id,
 			pr_emp_shift_log.in_time,
 			pr_emp_shift_log.out_time,
 			pr_emp_shift_log.present_status,

@@ -38,30 +38,6 @@ class Grid_con extends CI_Controller {
 		$this->load->view('grid_con/daily_report',$data);
 	}
 
-	function grid_actual_present_report()
-	{
-		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
-		$status = $this->input->post('status');
-		$unit_id = $this->input->post('unit_id');
-		$spl = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($spl));
-
-		$data["values"] = $this->Grid_model->grid_daily_report($date, $grid_emp_id, 1);
-		// dd($data["values"]);
-		$data["date"]			= $date;
-		$data["daily_status"]	= $status;
-		$data["unit_id"] 		= $unit_id;
-
-		if(is_string($data["values"]))
-		{
-			echo $data["values"];
-		}
-		else
-		{
-			$this->load->view('grid_con/daily_report',$data);
-		}
-	}
-
 	function daily_costing_summary(){
 		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
@@ -397,6 +373,32 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/grid_extra_ot_all',$data);
 		}
 	}
+
+	// ============================== Daily Actual Report ===============
+		function grid_actual_present_report()
+	{
+		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
+		$status = $this->input->post('status');
+		$unit_id = $this->input->post('unit_id');
+		$spl = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($spl));
+
+		$data["values"] = $this->Grid_model->grid_daily_report($date, $grid_emp_id, 1);
+		// dd($data["values"]);
+		$data["date"]			= $date;
+		$data["daily_status"]	= $status;
+		$data["unit_id"] 		= $unit_id;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/grid_actual_present_report',$data);
+		}
+	}
+	// ============================== end Daily Actual Report ===============
 
 	// ============================== Daily Costing Report ===============
 	function grid_daily_costing_report(){
