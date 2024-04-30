@@ -27,6 +27,7 @@
     <div class="tablebox">
     <h3>Update Designation</h3>
     <hr>
+    <?= validation_errors();?>
     <form action="<?= base_url('setup_con/designation_edit').'/'.$emp_designation->id?>"
         enctype="multipart/form-data" method="post">
         <div class="row">
