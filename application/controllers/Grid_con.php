@@ -414,8 +414,6 @@ class Grid_con extends CI_Controller {
 		}else{
 			$this->load->view('grid_con/grid_daily_costing_report',$data);
 		}
-		exit();
-
 		/* if(is_string($data["values"])){
 			echo $data["values"];
 		}else{
