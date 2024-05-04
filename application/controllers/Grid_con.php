@@ -375,7 +375,7 @@ class Grid_con extends CI_Controller {
 	}
 
 	// ============================== Daily Actual Report ===============
-		function grid_actual_present_report()
+	function grid_actual_present_report()
 	{
 		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
 		$status = $this->input->post('status');
@@ -423,6 +423,27 @@ class Grid_con extends CI_Controller {
 		} */
 	}
 	// ============================== end Daily Costing Report ===============
+
+	// ============================== holiday / weekend Report ===============
+	function holiday_weekend_attn_report(){
+		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
+		$unit_id = $this->input->post('unit_id');
+		$grid_data = $this->input->post('spl');
+		$status = $this->input->post('status');
+		$emp_id = explode(',', trim($grid_data));
+
+		$data["values"] = $this->Grid_model->holiday_weekend_attn_report($emp_id, $date, $status, $unit_id);
+		$data["date"]		= $date;
+		$data["status"]		= $status;
+		$data["unit_id"]	= $unit_id;
+
+		if(is_string($data["values"])){
+			echo $data["values"];
+		}else{
+			$this->load->view('grid_con/holiday_weekend_attn_report',$data);
+		}
+	}
+	// ============================== end holiday / weekend Report ===============
 
 
 
@@ -1243,29 +1264,6 @@ class Grid_con extends CI_Controller {
 		else{
 			// exit;
 			$this->load->view('daily_holiday_weekend_present_report',$data);
-		}
-	}
-
-	function grid_daily_holiday_weekend_absent_report(){
-		$grid_date = $this->input->post('firstdate');
-		list($date, $month, $year) = explode('-', trim($grid_date));
-		$status = $this->input->post('status');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('grid_start');
-		$status = 'A';
-		$data["values"] = $this->Grid_model->grid_daily_holiday_weekend_absent_report($year, $month, $date, $status, $grid_emp_id);
-		$data["year"]			= $year;
-		$data["month"]			= $month;
-		$data["date"]			= $date;
-		$data["daily_status"]	= $status;
-		$data["unit_id"]		= $unit_id;
-
-		if(is_string($data["values"])){
-			echo $data["values"];
-		}
-		else{
-			$this->load->view('daily_holiday_weekend_absent_report',$data);
 		}
 	}
 
