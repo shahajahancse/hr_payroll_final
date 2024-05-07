@@ -187,7 +187,6 @@
                  attnIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.rule}</option>`);
                });
              }
-             attnIdSelect.append("<option value='0'>None</option>");
 
              if (holiday_weekend.length > 0) {
                holidayWeekendIdSelect.empty().append("<option value=''>Select Holiday/Weekend</option>");
@@ -195,7 +194,6 @@
                  holidayWeekendIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
              }
-             holidayWeekendIdSelect.append("<option value='0'>None</option>");
 
 
              if (iftar.length > 0) {
@@ -204,7 +202,6 @@
                  iftarIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
              }
-             iftarIdSelect.append("<option value='0'>None</option>");
 
 
              if (night.length > 0) {
@@ -213,7 +210,6 @@
                  nightAlIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.night_allowance}</option>`);
                });
              }
-             nightAlIdSelect.append("<option value='0'>None</option>");
 
 
              if (tiffin.length > 0) {
@@ -222,7 +218,6 @@
                  tiffinIdSelect.append(`<option value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
              }
-             tiffinIdSelect.append("<option value='0'>None</option>");
            },
             error: function(data) {
 

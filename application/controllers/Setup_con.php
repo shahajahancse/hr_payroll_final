@@ -1107,14 +1107,13 @@ class Setup_con extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('Crud_model');
         $this->form_validation->set_rules('desig_name', 'Designation Name English', 'required');
-        $this->form_validation->set_rules('desig_bangla', 'Designation Bangla', 'required');
+        // $this->form_validation->set_rules('desig_bangla', 'Designation Bangla', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('attn_id', 'Attendence Bonus', 'required');
         $this->form_validation->set_rules('holiday_weekend_id', 'Holiday Weekend', 'required');
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
-        $this->form_validation->set_rules('desig_desc', 'Designation Description', 'required');
 
         if ($this->form_validation->run() == TRUE) {
             $formArray = array(
@@ -1153,14 +1152,13 @@ class Setup_con extends CI_Controller
     public function designation_edit($id){
         $this->load->library('form_validation');
         $this->form_validation->set_rules('desig_name', 'Designation Name English', 'required');
-        $this->form_validation->set_rules('desig_bangla', 'Designation Bangla', 'required');
+        // $this->form_validation->set_rules('desig_bangla', 'Designation Bangla', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('attn_id', 'Attendence Bonus', 'required');
         $this->form_validation->set_rules('holiday_weekend_id', 'Holiday Weekend', 'required');
         $this->form_validation->set_rules('iftar_id', 'Iftar Allowance', 'required');
         $this->form_validation->set_rules('night_al_id', 'Night Allowance', 'required');
         $this->form_validation->set_rules('tiffin_id', 'Tiffin Allowance', 'required');
-        $this->form_validation->set_rules('desig_desc', 'Designation Description', 'required');
 
         $this->db->select('pr_units.*');
         $this->data['pr_units'] = $this->db->get('pr_units')->result();

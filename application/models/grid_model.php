@@ -751,6 +751,87 @@ class Grid_model extends CI_Model{
 		}
 	}
 
+	//-------------------------------------------------------------------------------------------------
+	// Daily Cost Sheet
+	//-------------------------------------------------------------------------------------------------
+	function grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id){
+		$date 			= date("Y-m-d",strtotime($grid_date));
+
+		$this->db->select("
+				pr_emp_com_info.id,
+				pr_emp_com_info.emp_id,
+				pr_emp_com_info.unit_id,
+				pr_emp_com_info.emp_sal_gra_id,
+				pr_emp_com_info.emp_cat_id,
+				pr_emp_com_info.gross_sal,
+				pr_emp_com_info.com_gross_sal,
+				pr_emp_per_info.name_en,
+				desig.desig_name,
+				emp_line_num.line_name_en,
+				pr_emp_shift_log.present_status,
+				pr_emp_shift_log.ot,
+				pr_emp_shift_log.eot,
+				pr_emp_shift_log.modify_eot,
+				pr_emp_shift_log.deduction_hour,
+
+				allowance_tiffin_bill.allowance_amount as tiffin_bill,
+				allowance_night_rules.night_allowance as night_bill,
+				wholialo.allowance_amount as holiday_bill,
+
+				pr_emp_shift_log.tiffin_allo,
+				pr_emp_shift_log.night_allo,
+				pr_emp_shift_log.holiday_allo,
+				pr_emp_shift_log.weekly_allo,
+
+			");
+		$this->db->from('pr_emp_shift_log');
+		$this->db->join("pr_emp_com_info","pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id", 'left');
+		$this->db->join("pr_emp_per_info","pr_emp_per_info.emp_id = pr_emp_com_info.emp_id", 'left');
+		$this->db->join("emp_line_num","pr_emp_com_info.emp_line_id = emp_line_num.id", 'left');
+
+		$this->db->join("emp_designation as desig","pr_emp_com_info.emp_desi_id = desig.id", 'left');
+		$this->db->join("allowance_tiffin_bill","allowance_tiffin_bill.id = desig.tiffin_id", 'left');
+		$this->db->join("allowance_night_rules","allowance_night_rules.id = desig.night_al_id", 'left');
+		$this->db->join("allowance_holiday_weekend_rules wholialo","wholialo.id = desig.holiday_weekend_id", 'left');
+
+		$this->db->where("pr_emp_com_info.unit_id",$grid_unit);
+		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
+		$this->db->where("pr_emp_shift_log.present_status !=", 'A');
+		$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
+		$this->db->order_by("emp_line_num.line_name_en");
+		$query = $this->db->get();
+		if (!empty($query->result())) {
+			return $query->result();
+		} else {
+			return "Requested list is empty";
+		}
+		foreach($query->result() as $rows){
+			$emp_id 					= $rows->emp_id;
+			$data['emp_id'] []			= $emp_id ;
+			$data['emp_full_name'] []	= $rows->name_en;
+			// $data['sec_name'] []		= $rows->sec_name_en;
+			$data['line_name'] []		= $rows->line_name_en;
+			$data['desig_name'][] 		= $rows->desig_name;
+			$data['gross_sal'] []		= $rows->gross_sal;
+			$data['present_status'] []	= $rows->present_status;
+			$salary_structure 			= $this->common_model->salary_structure($rows->gross_sal);
+			$ot_rate 					= $salary_structure['ot_rate'];
+			$data['ot_hour'] []			= $rows->ot;
+			$extra_eot 					= $rows->eot + $rows->modify_eot - $rows->deduction_hour;
+			$data['extra_ot_hour'][] 	= $extra_eot;
+			$data['ot_rate'][] 			= $ot_rate;
+			$data['night_allo'][] 		= $rows->night_allo;
+			$data['holiday_allo'][] 	= $rows->holiday_allo;
+			$data['tiffin_allo'][] 		= $rows->tiffin_allo;
+		}
+		if(isset($data)){
+			return $data;
+		} else {
+			return "Requested list is empty";
+		}
+	}
+
+
 
 
 
@@ -1806,67 +1887,6 @@ class Grid_model extends CI_Model{
 	}
 
 
-	//-------------------------------------------------------------------------------------------------
-	// Daily Cost Sheet
-	//-------------------------------------------------------------------------------------------------
-	function grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id){
-		$date 	= date("Y-m-d",strtotime($grid_date));
-		$year_month 	= date("Y-m",strtotime($date));
-		$day 			= date("d",strtotime($date));
-		$status_absent = 'A';
-		$this->db->select("pr_emp_com_info.*,
-						   pr_emp_per_info.emp_id,
-						   pr_emp_per_info.name_en,
-						   emp_designation.desig_name,
-						   emp_section.sec_name_en,
-						   emp_line_num.line_name_en,
-						   pr_emp_shift_log.present_status,
-						   pr_emp_shift_log.ot,
-						   pr_emp_shift_log.eot,
-						   pr_emp_shift_log.modify_eot,
-						   pr_emp_shift_log.deduction_hour,
-						   pr_emp_shift_log.night_allo,
-						   pr_emp_shift_log.holiday_allo,
-						   pr_emp_shift_log.tiffin_allo,
-						   "
-						);
-		$this->db->from('pr_emp_shift_log');
-		$this->db->join("pr_emp_com_info","pr_emp_com_info.id = pr_emp_shift_log.emp_id");
-		$this->db->join("pr_emp_per_info","pr_emp_per_info.emp_id = pr_emp_com_info.emp_id");
-		$this->db->join("emp_designation","pr_emp_com_info.emp_desi_id = emp_designation.id");
-		$this->db->join("emp_section","pr_emp_com_info.emp_sec_id = emp_section.id");
-		$this->db->join("emp_line_num","pr_emp_com_info.emp_line_id = emp_line_num.id");
-		$this->db->where("pr_emp_com_info.unit_id",$grid_unit);
-		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
-		$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
-		$this->db->order_by("emp_line_num.line_name_en");
-		$query = $this->db->get();
-		foreach($query->result() as $rows){
-			$emp_id 					= $rows->emp_id;
-			$data['emp_id'] []			= $emp_id ;
-			$data['emp_full_name'] []	= $rows->name_en;
-			$data['sec_name'] []		= $rows->sec_name_en;
-			$data['line_name'] []		= $rows->line_name_en;
-			$data['desig_name'][] 		= $rows->desig_name;
-			$data['gross_sal'] []		= $rows->gross_sal;
-			$data['present_status'] []	= $rows->present_status;
-			$salary_structure 			= $this->common_model->salary_structure($rows->gross_sal);
-			$ot_rate 					= $salary_structure['ot_rate'];
-			$data['ot_hour'] []			= $rows->ot;
-			$extra_eot 					= $rows->eot + $rows->modify_eot - $rows->deduction_hour;
-			$data['extra_ot_hour'][] 	= $extra_eot;
-			$data['ot_rate'][] 			= $ot_rate;
-			$data['night_allo'][] 		= $rows->night_allo;
-			$data['holiday_allo'][] 	= $rows->holiday_allo;
-			$data['tiffin_allo'][] 		= $rows->tiffin_allo;
-		}
-		if(isset($data)){
-			return $data;
-		}
-		else{
-			return "Requested list is empty";
-		}
-	}
 
 	function grid_continuous_costing_report($firstdate, $seconddate, $grid_unit, $grid_emp_id)
 	{
@@ -8561,6 +8581,7 @@ class Grid_model extends CI_Model{
 		// dd($grid_emp_id);
 		$this->db->select('pr_emp_com_info.emp_id,
 							pr_emp_per_info.*,
+							pr_emp_per_info.emp_id as emp_id2,
 							emp_depertment.dept_name,
 							emp_section.sec_name_en,
 							emp_section.sec_name_bn,

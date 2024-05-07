@@ -283,10 +283,10 @@ class Grid_con extends CI_Controller {
 		$date2 = new DateTime($second_date);
 		$interval = $date2->diff($date1);
 		$interval->d += 1;
-		if($data['values']['leave_entitle_casual'] > $interval->format('%d')){
+		if($data['values']['leave_entitle_casual'] >= $interval->format('%d')){
 			$this->load->view('grid_con/leave_application_report',$data);
 		}else{
-			echo "Sorry! You are not eligible to apply for this leave";
+			echo false;
 		}
 	}
 	// emp general report
@@ -397,6 +397,26 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/grid_extra_ot_all',$data);
 		}
 	}
+
+	// ============================== Daily Costing Report ===============
+	function grid_daily_costing_report(){
+		$grid_date = $this->input->post('firstdate');
+		$grid_unit = $this->input->post('unit_id');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->Grid_model->grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id);
+		$data["grid_date"]	= date("d-M-Y",strtotime($grid_date));
+		$data["unit_id"]	= $grid_unit;
+
+		dd($data["values"]);
+
+		if(is_string($data["values"])){
+			echo $data["values"];
+		}else{
+			$this->load->view('grid_con/daily_costing_report',$data);
+		}
+	}
+	// ============================== end Daily Costing Report ===============
 
 
 
@@ -1011,21 +1031,6 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_daily_costing_report(){
-		$grid_date = $this->input->post('firstdate');
-		$grid_unit = $this->input->post('unit_id');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->Grid_model->grid_daily_costing_report($grid_date,$grid_unit,$grid_emp_id);
-		$data["grid_date"]	= date("d-M-Y",strtotime($grid_date));
-		$data["unit_id"]	= $grid_unit;
-		if(is_string($data["values"])){
-			echo $data["values"];
-		}
-		else{
-			$this->load->view('daily_costing_report',$data);
-		}
-	}
 
 	function grid_continuous_costing_report()
 	{

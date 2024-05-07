@@ -994,18 +994,26 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
     public function holiday_add_ajax(){
-        $date = $this->input->post('date');
-        $sql = $this->input->post('sql');
-        $unit_id = $this->input->post('unit_id');
-        $emp_ids = explode(',', $sql);
+        $date         = date("Y-m-d", strtotime($this->input->post('date')));
+        $description  = $this->input->post('description');
+        $sql          = $this->input->post('sql');
+        $unit_id      = $this->input->post('unit_id');
+        $emp_ids      = explode(',', $sql);
 
         $this->db->where('work_off_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
         $this->db->delete('attn_holyday_off');
 
         $data = [];
         foreach ($emp_ids as $value) {
-            $data[] = array('work_off_date' => $date, 'emp_id' => $value, 'unit_id' => $unit_id);
+            $data[] = array(
+                'work_off_date' => $date,
+                'emp_id' => $value,
+                'unit_id' => $unit_id,
+                'description' => $description,
+            );
         }
+        $this->db->where('work_off_date', $date)->where_in('emp_id', $emp_ids);
+        $this->db->delete('attn_holyday_off');
         if ( $this->db->insert_batch('attn_holyday_off', $data)) {
             echo 'success';
         }else{
@@ -1066,7 +1074,7 @@ class Entry_system_con extends CI_Controller
         $unit_id = $_POST['unit_id'];
         $leave_start = date("Y-m-d", strtotime($from_date));
         $leave_end = date("Y-m-d", strtotime($to_date));
-        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a');
+        $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a') + 1;
 
         $balance = $this->leave_balance_ajax($emp_id, $leave_start, 1);
 

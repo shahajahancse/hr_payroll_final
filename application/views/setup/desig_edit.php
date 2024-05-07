@@ -27,6 +27,7 @@
     <div class="tablebox">
     <h3>Update Designation</h3>
     <hr>
+    <?= validation_errors();?>
     <form action="<?= base_url('setup_con/designation_edit').'/'.$emp_designation->id?>"
         enctype="multipart/form-data" method="post">
         <div class="row">
@@ -191,7 +192,6 @@
                  attnIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.rule}</option>`);
                });
 
-             attnIdSelect.append("<option value='0'>None</option>");
 
                holidayWeekendIdSelect.empty().append("<option value='0'>Select Holiday/Weekend</option>");
                holiday_weekend.forEach(function(item) {
@@ -203,7 +203,6 @@
                  holidayWeekendIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
 
-             holidayWeekendIdSelect.append("<option value='0'>None</option>");
 
 
                iftarIdSelect.empty().append("<option value='0'>Select Iftar</option>");
@@ -216,7 +215,6 @@
                  iftarIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
 
-             iftarIdSelect.append("<option value='0'>None</option>");
 
 
                nightAlIdSelect.empty().append("<option value='0'>Select Night Allowance</option>");
@@ -229,7 +227,6 @@
                  nightAlIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.night_allowance}</option>`);
                });
 
-             nightAlIdSelect.append("<option value='0'>None</option>");
 
 
                tiffinIdSelect.empty().append("<option value='0'>Select Tiffin</option>");
@@ -242,7 +239,6 @@
                  tiffinIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
 
-             tiffinIdSelect.append("<option value='0'>None</option>");
            },
             error: function(data) {
             }
