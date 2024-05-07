@@ -89,7 +89,7 @@
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                         <tr>
-                            <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_dat->total_emp))?$group_data->total_emp :'--'?></td>
+                            <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_data->total_emp))?$group_data->total_emp :'--'?></td>
                             <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
                             <td class="text-center;" style="text-align:center ;border: none;width:16px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
                         </tr>
