@@ -184,10 +184,10 @@
 								<button class="btn input-sm sbtn" onclick="grid_daily_actual_out_in_report()">Actual Out & IN Report</button>
 							<?php } ?>
 							<?php if(in_array(32,$acl)) { ?>
-								<button class="btn input-sm sbtn" onclick="grid_daily_holiday_weekend_absent_report()">Holiday / Weekend Absent</button>
+								<button class="btn input-sm sbtn" onclick="holiday_weekend_attn_report('A')">Holiday / Weekend Absent</button>
 							<?php } ?>
 							<?php if(in_array(33,$acl)) { ?>
-								<button class="btn input-sm sbtn" onclick="grid_daily_holiday_weekend_present_report()">Holiday / Weekend Present</button>
+								<button class="btn input-sm sbtn" onclick="holiday_weekend_attn_report('P')">Holiday / Weekend Present</button>
 							<?php } ?>
 
 

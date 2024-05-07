@@ -905,7 +905,6 @@ function actual_eot_sheet_bank()
 // end actual monthly salary
 
 
-
 function daily_costing_summary()
 {
 	var firstdate = document.getElementById('firstdate').value;
@@ -1012,7 +1011,7 @@ function daily_logout_report()
 	}
 }
 
-// attendance Report
+// attendance Report actual
 function grid_continuous_present_report()
 {
 	var firstdate = document.getElementById('firstdate').value;
@@ -1285,6 +1284,69 @@ function grid_actual_present_report()
 		}
 	}
 }
+
+function holiday_weekend_attn_report(status)
+{
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	// Internet Explorer Browsers
+	try{
+		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch (e) {
+		try{
+			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch (e){
+			// Something went wrong
+			alert("Your browser broke!");
+			return false;
+		}
+	}
+	}
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Category options");
+		return false;
+	}
+
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	//
+
+	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
+	url =  hostname+"grid_con/holiday_weekend_attn_report/";
+
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+    ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+
+			daily_holiday_weekend_absent_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			daily_holiday_weekend_absent_report.document.write(resp);
+			//daily_holiday_weekend_absent_report.stop();
+		}
+	}
+}
+
+// end attendance Report actual
+
 
 
 
@@ -2452,65 +2514,7 @@ function grid_daily_holiday_weekend_present_report()
 		}
 	}
 }
-function grid_daily_holiday_weekend_absent_report()
-{
-	var ajaxRequest;  // The variable that makes Ajax possible!
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
- var firstdate = document.getElementById('firstdate').value;
-	if(firstdate =='')
-	{
-		alert("Please select First date");
-		return false;
-	}
 
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select Category options");
-		return false;
-	}
-
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
-	//
-
-	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"grid_con/grid_daily_holiday_weekend_absent_report/";
-
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-    ajaxRequest.send(queryString);
-	ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-
-			daily_holiday_weekend_absent_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			daily_holiday_weekend_absent_report.document.write(resp);
-			//daily_holiday_weekend_absent_report.stop();
-		}
-	}
-}
 function grid_daily_move_report()
 {
 	var ajaxRequest;  // The variable that makes Ajax possible!

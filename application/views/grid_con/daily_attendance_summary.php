@@ -45,11 +45,12 @@
                 <th class="text-center">Late</th>
 				<th class="text-center">Remark</th>
 			</tr>
-            <?php 
-                $i=1; 
+            <?php
+                $i=1;
                 $sumAllEmp=$sumAllPresent=$sumAllPresent=$sumAllAbsent=$sumAllMale=$sumAllFemale=$sumAllLeave=$sumAllLate=0;
                 $tt=$pr=$ab= array();
-                foreach($results as $row){ 
+                foreach($results as $row){
+
                 $sumAllEmp      += $row->all_emp;
                 $sumAllPresent  += $row->all_present;
                 $sumAllAbsent   += $row->all_absent;
@@ -57,7 +58,6 @@
                 $sumAllFemale   += $row->all_female;
                 $sumAllLeave   += $row->all_leave;
                 $sumAllLate    += $row->all_late;
-            
             ?>
 			<tr>
 				<td style="text-align:center"><?php echo $i++?></td>
@@ -67,21 +67,21 @@
 				<td style="text-align:center"><?php echo $row->all_absent?></td>
 				<td style="text-align:center"><?php echo $row->all_male?></td>
 				<td style="text-align:center"><?php echo $row->all_female?></td>
-               <?php 
-                    foreach($keys as $key){ 
-                        if($key=='Input Man'){
+               <?php
+                    foreach($keys as $key){
+                        /* if($key=='Input Man'){
                             $group_data = (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
                         }else{
-                            $group_data =$row->group_data[$key]?? (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
-                        }
-                    
+                        } */
+                        $group_data =$row->group_data[$key]?? (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
+
 
                         if(!isset($tt[$key])){
                             $tt[$key] =0;
                             $ab[$key] =0;
                             $pr[$key] =0;
                         }
-                        
+
                     $tt[$key] += (isset($group_data->total_emp))?$group_data->total_emp :0;
                     $pr[$key] += (isset($group_data->emp_present))?$group_data->emp_present :0;
                     $ab[$key] += (isset($group_data->emp_absent))?$group_data->emp_absent :0;
@@ -89,7 +89,7 @@
                 <td style="padding:0px">
                     <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                         <tr>
-                            <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_dat->total_empa))?$group_data->total_emp :'--'?></td>
+                            <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_data->total_emp))?$group_data->total_emp :'--'?></td>
                             <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
                             <td class="text-center;" style="text-align:center ;border: none;width:16px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
                         </tr>

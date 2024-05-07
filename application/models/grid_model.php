@@ -488,7 +488,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('emp_line_num as num');
 		$this->db->from('pr_emp_per_info as per');
 
-		$this->db->where("log.emp_id = com.id");
+		$this->db->where("log.emp_id = com.emp_id");
 		$this->db->where("per.emp_id = com.emp_id");
 		$this->db->where("num.id = com.emp_line_id");
 
@@ -674,6 +674,7 @@ class Grid_model extends CI_Model{
 			emp_line_num.line_name_en,
 			pr_emp_shift.shift_name,
 			pr_emp_com_info.emp_cat_id,
+			pr_emp_com_info.emp_sec_id,
 			pr_emp_shift_log.in_time,
 			pr_emp_shift_log.out_time,
 			pr_emp_shift_log.present_status,
@@ -783,7 +784,6 @@ class Grid_model extends CI_Model{
 				pr_emp_shift_log.night_allo,
 				pr_emp_shift_log.holiday_allo,
 				pr_emp_shift_log.weekly_allo,
-
 			");
 		$this->db->from('pr_emp_shift_log');
 		$this->db->join("pr_emp_com_info","pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id", 'left');
@@ -830,6 +830,57 @@ class Grid_model extends CI_Model{
 		}
 		if(isset($data)){
 			return $data;
+		} else {
+			return "Requested list is empty";
+		}
+	}
+
+	function holiday_weekend_attn_report($emp_id, $date, $status, $unit_id = null){
+		$this->db->select("
+			pr_emp_com_info.id,
+			pr_emp_com_info.emp_id,
+			pr_emp_com_info.unit_id,
+			pr_emp_com_info.emp_join_date,
+			pr_emp_com_info.emp_sec_id,
+			pr_emp_per_info.name_en,
+			pr_emp_per_info.personal_mobile,
+			desig.desig_name,
+			emp_line_num.line_name_en,
+			emp_section.sec_name_en,
+
+			pr_emp_shift.shift_name,
+			pr_emp_shift_log.shift_log_date,
+			pr_emp_shift_log.in_time,
+			pr_emp_shift_log.out_time,
+			pr_emp_shift_log.present_status,
+			pr_emp_shift_log.late_status,
+			pr_emp_shift_log.ot,
+			pr_emp_shift_log.eot,
+			pr_emp_shift_log.deduction_hour,
+			pr_emp_shift_log.modify_eot,
+		");
+		$this->db->from('pr_emp_shift_log');
+		$this->db->join("pr_emp_com_info","pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id", 'left');
+		$this->db->join("pr_emp_per_info","pr_emp_per_info.emp_id = pr_emp_com_info.emp_id", 'left');
+		$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
+		$this->db->join("emp_line_num","pr_emp_com_info.emp_line_id = emp_line_num.id", 'left');
+		$this->db->join("emp_designation as desig","pr_emp_com_info.emp_desi_id = desig.id", 'left');
+		$this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'LEFT');
+		$this->db->where("pr_emp_com_info.unit_id",$unit_id);
+		$this->db->where("pr_emp_shift_log.shift_log_date",$date);
+		if ($status == "A") {
+			$this->db->where("pr_emp_shift_log.in_time =", '00:00:00');
+			$this->db->where("pr_emp_shift_log.out_time =", '00:00:00');
+		} elseif ($status == "P") {
+			$this->db->where("pr_emp_shift_log.in_time !=", '00:00:00');
+		}
+		$this->db->where_in("pr_emp_com_info.emp_id",$emp_id);
+		$this->db->where_in("pr_emp_shift_log.present_status",array('H','W'));
+		$this->db->order_by("pr_emp_com_info.emp_id");
+		$query = $this->db->get();
+
+		if (!empty($query->result())) {
+			return $query->result();
 		} else {
 			return "Requested list is empty";
 		}
@@ -1826,69 +1877,7 @@ class Grid_model extends CI_Model{
 	}
 
 
-	function grid_daily_holiday_weekend_absent_report($year,$month,$date,$status,$grid_emp_id){
-		$data = array();
-		$day = $year . "-" . $month . "-" . $date;
-		$ids = $this->db->select('id')->where_in('emp_id', $grid_emp_id)->get('pr_emp_com_info')->result();
 
-		foreach ($ids as $row) {
-			$query = $this->db
-				->select('pr_emp_com_info.emp_id,
-						pr_emp_per_info.name_en,
-						emp_designation.desig_name,
-						pr_emp_com_info.emp_join_date,
-						emp_depertment.dept_name,
-						emp_section.sec_name_en,
-						emp_line_num.line_name_en,
-						pr_emp_shift.shift_name,
-						pr_emp_com_info.emp_cat_id,
-						pr_emp_shift_log.in_time,
-						pr_emp_shift_log.out_time')
-				->from('pr_emp_per_info')
-				->from('pr_emp_com_info')
-				->from('emp_designation')
-				->from('emp_depertment')
-				->from('emp_section')
-				->from('emp_line_num')
-				->from('pr_emp_shift')
-				->from('pr_emp_shift_log')
-				->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id')
-				->where('pr_emp_shift_log.emp_id = pr_emp_com_info.id')
-				->where('pr_emp_com_info.emp_desi_id = emp_designation.id')
-				->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id')
-				->where('pr_emp_com_info.emp_sec_id = emp_section.id')
-				->where('pr_emp_com_info.emp_line_id = emp_line_num.id')
-				->where('pr_emp_shift.id = pr_emp_com_info.emp_shift')
-				->where_in("pr_emp_shift_log.emp_id", $row->id)
-				->where("pr_emp_shift_log.shift_log_date", $day)
-				->where("pr_emp_com_info.emp_cat_id", 1)
-				->where("pr_emp_shift_log.in_time", '00:00:00')
-				->order_by("pr_emp_com_info.emp_id")
-				->get();
-
-			foreach ($query->result() as $rows) {
-				$emp_id = $rows->emp_id;
-				$data["emp_id"][] = $rows->emp_id;
-				$data["emp_name"][] = $rows->name_en;
-				$data["desig_name"][] = $rows->desig_name;
-				$data["doj"][] = $rows->emp_join_date;
-				$data["dept_name"][] = $rows->dept_name;
-				$data["sec_name_en"][] = $rows->sec_name_en;
-				$data["line_name"][] = $rows->line_name_en;
-				$status = "A";
-				$limit_days = $this->common_model->get_setup_attributes(9);
-				$emp_num_rows = $this->attendance_check_for_absent($emp_id, $status, $limit_days, $day);
-				$data["cont_absent"][] = $emp_num_rows;
-			}
-		}
-
-		if ($data) {
-			return $data;
-		} else {
-			return "Requested list is empty";
-		}
-
-	}
 
 
 

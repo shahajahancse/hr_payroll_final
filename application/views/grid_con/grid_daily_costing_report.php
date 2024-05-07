@@ -49,6 +49,9 @@
 					$total_ot_amount = 0;
 					$total_extra_ot_hour = 0;
 					$total_eot_amount = 0;
+					$total_tifin_amount = 0;
+					$total_night_amount = 0;
+					$total_offday_amount = 0;
 					$total_per_day_salary = 0;
 					$total_salary = 0;
 					$emp_line_id = '';
@@ -84,19 +87,25 @@
 					<td style='text-align:center;padding:0px 5px;'> <?php echo $ot_rate; ?> </td>
 
 					<?php
-						$ot_amount = round($row->ot * $ot_rate);
-						$eot_amount = round($row->eot * $ot_rate);
-						$total_ot_amount  = $total_ot_amount + $ot_amount;
-						$total_eot_amount = $total_eot_amount + $eot_amount;
+						$ot_amount 			 = round($row->ot * $ot_rate);
+						$total_ot_hour	     = $total_ot_hour + $row->ot;
+						$total_ot_amount     = $total_ot_amount + $ot_amount;
+						$eot_amount 		 = round($row->eot * $ot_rate);
+						$total_extra_ot_hour = $total_extra_ot_hour + $row->eot;
+						$total_eot_amount 	 = $total_eot_amount + $eot_amount;
 					?>
 					<td style='text-align:center;padding:0px 5px;'> <?php echo $ot_amount; ?> </td>
 					<td style='text-align:center;padding:0px 5px;'> <?php echo $eot_amount; ?> </td>
 					<?php
-
 						$tiffin_allo  = $row->tiffin_allo != 0 ? $row->tiffin_bill : 0;
 						$night_allo   = $row->night_allo != 0 ? $row->night_bill : 0;
 						$holiday_allo = $row->holiday_allo != 0 ? $row->holiday_bill : 0;
 						$weekly_allo  = $row->weekly_allo != 0 ? $row->holiday_bill : 0;
+
+						$total_tifin_amount = $tiffin_allo + $total_tifin_amount;
+						$total_night_amount = $night_allo + $total_night_amount;
+						$total_offday_amount = $weekly_allo + $holiday_allo + $total_offday_amount;
+
 						$total_amount = $ot_amount + $eot_amount + $per_day_salary;
 						$total_allow = $weekly_allo + $holiday_allo + $night_allo + $tiffin_allo;
 						$total_salary = $total_salary + $total_amount + $total_allow;
@@ -109,7 +118,16 @@
 				</tr>
 				<?php $emp_line_id = $row->emp_line_id; } ?>
 				<tr>
-				<td  colspan="16" style="text-align:center; font-weight:bold;" > Grand Total </td>
+				<td  colspan="7" style="text-align:center; font-weight:bold;" > Grand Total </td>
+				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_per_day_salary); ?></td>
+				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_ot_hour); ?></td>
+				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_extra_ot_hour); ?></td>
+				<td></td>
+				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_ot_amount); ?></td>
+				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_eot_amount); ?></td>
+				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_night_amount); ?></td>
+				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_offday_amount); ?></td>
+				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_tifin_amount); ?></td>
 				<td style="text-align:center; font-weight:bold;" ><?php echo number_format($total_salary); ?></td>
 				</tr>
             </table>
