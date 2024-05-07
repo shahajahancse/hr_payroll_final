@@ -506,6 +506,7 @@ class Grid_model extends CI_Model{
 			$d = $this->common_model->get_group_wise_attendance($row->line_id, $date, $unit_id, $data);
 			$data['results'][$key]->group_data = $d;
 		}
+		dd('ddd');
 
 
 		// dd($data);
