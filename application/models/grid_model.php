@@ -488,7 +488,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('emp_line_num as num');
 		$this->db->from('pr_emp_per_info as per');
 
-		$this->db->where("log.emp_id = com.id");
+		$this->db->where("log.emp_id = com.emp_id");
 		$this->db->where("per.emp_id = com.emp_id");
 		$this->db->where("num.id = com.emp_line_id");
 
