@@ -1349,8 +1349,7 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-    public function resign_list()
-    {
+    public function resign_list(){
         $this->db->select('rs.*, pr_units.unit_name, per.name_en as user_name');
         $this->db->from('pr_emp_resign_history as rs');
         $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');

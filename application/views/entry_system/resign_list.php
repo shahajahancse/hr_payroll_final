@@ -172,10 +172,10 @@
                                 <th class="text-center" style="border: 1px solid #d6d1d1 !important;">টাকা</th>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #d6d1d1 !important;"><span id='resign_year'></span></td>
-                                <td style="border: 1px solid #d6d1d1 !important;">১৩  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৬৭৪.৪৫  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৮৭৬৮</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span id='resign_date'></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="working_days"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="per_day_rate"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="total1"></span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">চলতি মাসের ওভার টাইম  </td>
@@ -284,18 +284,17 @@
     });
 </script>
 <script>
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).find("input,textarea,select").val('').end().find("input[type=checkbox], input[type=radio]").prop("checked", "").end().find("option:selected").removeAttr("selected");
+    })
     function final_satalment(id) {
         $.ajax({
             type: "POST",
             url: "<?php echo base_url(); ?>index.php/grid_con/final_satalment",
             data: {id: id},
             success: function (data) {
-                // console.log(data);
-                // return false;
-              // Assuming 'data' contains the JSON response you provided
-                // Parse the JSON response
                 var employeeData = JSON.parse(data);
-
+                // console.log(employeeData);return false;
                 // Set values to respective HTML elements
                 $("#full_name").html(employeeData.values[0].name_bn);
                 $("#card_no").html(employeeData.values[0].emp_id);
@@ -304,12 +303,19 @@
                 $("#year").html(employeeData.values[0].resign_year);
                 $("#joining_date").html(employeeData.values[0].emp_join_date.split('-').reverse().join('-'));
                 var d = new Date(employeeData.values[0].resign_date);
-                d.setDate(d.getDate() - 1);
+                var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+                var resign_date = d.toLocaleString('bn-BD', { year: 'numeric', month: 'long' });
+                var year_str = "<span style='font-family:sutonnyMJ;font-size:16px'>"+d.getFullYear()+'</span>';
+                $("#resign_date").html(resign_date);
+                $("#resign_date").html(bnMonths[d.getMonth()] + " " + year_str);
                 $("#last_working_date").html(d.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/[^0-9]/g, "-"));
                 $("#job_duration").html(calculateJobDuration(employeeData.values[0].emp_join_date, employeeData.values[0].resign_date));
                 $("#gross_salary").html(employeeData.values[0].gross_sal);
                 $("#basic_salary").html(calculateBasicSalary(employeeData.values[0].gross_sal));
                 $("#ot_rate").html(calculateOtRate(employeeData.values[0].gross_sal));
+                $("#working_days").html(employeeData.values[0].working_days);
+                $("#per_day_rate").html(calculatePerDayRate(employeeData.values[0].gross_sal));
+                $("#total1").html( parseFloat(employeeData.values[0].working_days* calculatePerDayRate(employeeData.values[0].gross_sal)).toFixed(2));
 
                 // Function to calculate job duration
                 function calculateJobDuration(startDate, endDate) {
@@ -330,6 +336,10 @@
                 }
                 function calculateOtRate(grossSalary) {
                     var basic = (((parseFloat(grossSalary)-2450)/ 208)  * 2  );
+                    return basic.toFixed(2);
+                }
+                function calculatePerDayRate(grossSalary) {
+                    var basic = ((parseFloat(grossSalary)/30));
                     return basic.toFixed(2);
                 }
 

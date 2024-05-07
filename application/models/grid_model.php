@@ -8523,19 +8523,19 @@ class Grid_model extends CI_Model{
 							pr_grade.gr_name,
 							pr_emp_com_info.gross_sal,
 							pr_emp_status.stat_type,
-
 							pr_emp_per_info.per_village,
 							per_dis.name_bn as per_dis_name_bn,
 							per_upa.name_bn as per_upa_name_bn,
 							per_post.name_bn as per_post_name_bn,
-
 							pr_emp_per_info.per_village,
 							pre_dis.name_bn as pre_dis_name_bn,
 							pre_upa.name_bn as pre_upa_name_bn,
 							pre_post.name_bn as pre_post_name_bn,
 							pr_emp_resign_history.resign_date,
+							DAY(pr_emp_resign_history.resign_date) as working_days,
 							year(pr_emp_resign_history.resign_date) as resign_year,
-							');
+
+						');
 		$this->db->from('pr_emp_per_info');
 		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
 		$this->db->join('pr_emp_resign_history', 'pr_emp_per_info.emp_id = pr_emp_resign_history.emp_id', 'left');
@@ -8545,7 +8545,6 @@ class Grid_model extends CI_Model{
 		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id', 'left');
 		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id', 'left');
 		$this->db->join('pr_emp_status', 'pr_emp_com_info.emp_cat_id = pr_emp_status.stat_id', 'left');
-
 		$this->db->join('emp_districts as per_dis', 	'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
 		$this->db->join('emp_upazilas as per_upa', 		'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
 		$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
@@ -8555,7 +8554,6 @@ class Grid_model extends CI_Model{
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get()->result();
-		// dd($query);
 		return $query;
 
 	}
