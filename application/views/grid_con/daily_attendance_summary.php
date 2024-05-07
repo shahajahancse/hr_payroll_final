@@ -69,11 +69,11 @@
 				<td style="text-align:center"><?php echo $row->all_female?></td>
                <?php
                     foreach($keys as $key){
-                        if($key=='Input Man'){
+                        /* if($key=='Input Man'){
                             $group_data = (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
                         }else{
-                            $group_data =$row->group_data[$key]?? (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
-                        }
+                        } */
+                        $group_data =$row->group_data[$key]?? (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
 
 
                         if(!isset($tt[$key])){
