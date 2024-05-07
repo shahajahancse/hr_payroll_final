@@ -465,13 +465,13 @@ class Grid_model extends CI_Model{
 	// Daily attendance summary
 	function daily_attendance_summary($date, $unit_id){
 
-		$results = $this->db->where('unit_id', $unit_id)->where('id', 15)->order_by('id')->get('emp_group_dasignation')->result();
+		$results = $this->db->where('unit_id', $unit_id)->order_by('id')->get('emp_group_dasignation')->result();
 		$data = array();
 		foreach ($results as $key => $r) {
 			$data[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
 		}
 		$data['keys'] = array_keys($data);
-
+dd($data);
 		$this->db->select("
 					num.id as line_id, num.line_name_en, num.line_name_bn,
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS all_emp,
@@ -506,7 +506,7 @@ class Grid_model extends CI_Model{
 			$d = $this->common_model->get_group_wise_attendance($row->line_id, $date, $unit_id, $data);
 			$data['results'][$key]->group_data = $d;
 		}
-		dd($data);
+
 
 		// dd($data);
 		if($data['results'] == null){
