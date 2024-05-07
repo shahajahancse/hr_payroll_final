@@ -2619,9 +2619,22 @@ class Grid_con extends CI_Controller {
 
 	public function final_satalment(){
 		$emp_ids = $this->input->post('id');
-		$data['values'] = $this->Grid_model->grid_employee_information($emp_ids);
-		// dd($data);
-		echo json_encode($data);
+		$d= $this->Grid_model->grid_employee_information($emp_ids);
+		$get_all=[];
+		foreach($d as $key => $row){
+			$get_all[$key] = $row;
+			$dd = $this->db->select('SUM(ot) as ot_hour, SUM(eot) as eot_hour')
+						->from('pr_emp_shift_log')
+						->where('pr_emp_shift_log.emp_id',$row->com_id)
+						->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)))
+						->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)))
+						->get()->row();
+			$get_all[$key]->ot_hour = $dd->ot_hour;
+			$get_all[$key]->eot_hour = $dd->eot_hour;
+		}
+		
+		// dd($get_all);
+		echo json_encode($get_all[0]);
 	}
 }
 ?>

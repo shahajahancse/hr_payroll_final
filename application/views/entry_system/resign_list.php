@@ -161,7 +161,7 @@
                         </div>
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-4">
-                                প্রতি ঘন্টার ওভার টাইম হার	:	<span id="ot_rate" style="font-family:SutonnyMJ"> </span> টাকা
+                                প্রতি ঘন্টার ওভার টাইম হার	:	<span class="ot_rate" style="font-family:SutonnyMJ"> </span> টাকা
                         </div>
 
                     <table class="table table-bordered ml-3 inputs tables" style="border: 1px solid #d6d1d1 !important;">
@@ -174,14 +174,14 @@
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span id='resign_date'></span></td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="working_days"></span></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="per_day_rate"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="per_day_rate"></span></td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="total1"></span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">চলতি মাসের ওভার টাইম  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">১৮  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">১১৮.৩২  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">২১৩০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="ot_eot"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="ot_rate"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="total_ot_rate"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">হাজিরা বোনাস </td>
@@ -296,26 +296,28 @@
                 var employeeData = JSON.parse(data);
                 // console.log(employeeData);return false;
                 // Set values to respective HTML elements
-                $("#full_name").html(employeeData.values[0].name_bn);
-                $("#card_no").html(employeeData.values[0].emp_id);
-                $("#designation_name").html(employeeData.values[0].desig_bangla);
-                $("#section_name").html(employeeData.values[0].sec_name_bn);
-                $("#year").html(employeeData.values[0].resign_year);
-                $("#joining_date").html(employeeData.values[0].emp_join_date.split('-').reverse().join('-'));
-                var d = new Date(employeeData.values[0].resign_date);
+                $("#full_name").html(employeeData.name_bn);
+                $("#card_no").html(employeeData.emp_id);
+                $("#designation_name").html(employeeData.desig_bangla);
+                $("#section_name").html(employeeData.sec_name_bn);
+                $("#year").html(employeeData.resign_year);
+                $("#joining_date").html(employeeData.emp_join_date.split('-').reverse().join('-'));
+                var d = new Date(employeeData.resign_date);
                 var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
                 var resign_date = d.toLocaleString('bn-BD', { year: 'numeric', month: 'long' });
                 var year_str = "<span style='font-family:sutonnyMJ;font-size:16px'>"+d.getFullYear()+'</span>';
                 $("#resign_date").html(resign_date);
                 $("#resign_date").html(bnMonths[d.getMonth()] + " " + year_str);
                 $("#last_working_date").html(d.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/[^0-9]/g, "-"));
-                $("#job_duration").html(calculateJobDuration(employeeData.values[0].emp_join_date, employeeData.values[0].resign_date));
-                $("#gross_salary").html(employeeData.values[0].gross_sal);
-                $("#basic_salary").html(calculateBasicSalary(employeeData.values[0].gross_sal));
-                $("#ot_rate").html(calculateOtRate(employeeData.values[0].gross_sal));
-                $("#working_days").html(employeeData.values[0].working_days);
-                $("#per_day_rate").html(calculatePerDayRate(employeeData.values[0].gross_sal));
-                $("#total1").html( parseFloat(employeeData.values[0].working_days* calculatePerDayRate(employeeData.values[0].gross_sal)).toFixed(2));
+                $("#job_duration").html(calculateJobDuration(employeeData.emp_join_date, employeeData.resign_date));
+                $("#gross_salary").html(employeeData.gross_sal);
+                $("#basic_salary").html(calculateBasicSalary(employeeData.gross_sal));
+                $(".ot_rate").html(calculateOtRate(employeeData.gross_sal));
+                $("#working_days").html(employeeData.working_days);
+                $(".per_day_rate").html(calculatePerDayRate(employeeData.gross_sal));
+                $("#total1").html( parseFloat(employeeData.working_days* calculatePerDayRate(employeeData.gross_sal)).toFixed(2));
+                $("#ot_eot").html((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) );
+                $("#total_ot_rate").html(parseFloat((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) * calculateOtRate(employeeData.gross_sal)).toFixed(2));
 
                 // Function to calculate job duration
                 function calculateJobDuration(startDate, endDate) {

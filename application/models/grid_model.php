@@ -8534,7 +8534,9 @@ class Grid_model extends CI_Model{
 
 	function grid_employee_information($grid_emp_id){
 		// dd($grid_emp_id);
-		$this->db->select('pr_emp_com_info.emp_id,
+		$this->db->select('
+							pr_emp_com_info.id as com_id,
+							pr_emp_com_info.emp_id,
 							pr_emp_per_info.*,
 							emp_depertment.dept_name,
 							emp_section.sec_name_en,
@@ -8558,10 +8560,9 @@ class Grid_model extends CI_Model{
 							pr_emp_resign_history.resign_date,
 							DAY(pr_emp_resign_history.resign_date) as working_days,
 							year(pr_emp_resign_history.resign_date) as resign_year,
-
 						');
-		$this->db->from('pr_emp_per_info');
-		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+		$this->db->from('pr_emp_com_info');
+		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
 		$this->db->join('pr_emp_resign_history', 'pr_emp_per_info.emp_id = pr_emp_resign_history.emp_id', 'left');
 		$this->db->join('pr_grade', 'pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id', 'left');
 		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id', 'left');
@@ -8577,7 +8578,8 @@ class Grid_model extends CI_Model{
 		$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get()->result();
+		$this->db->group_by("pr_emp_com_info.emp_id");
+		$query = $this->db->get()->result();		
 		return $query;
 
 	}
