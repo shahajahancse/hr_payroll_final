@@ -471,7 +471,6 @@ class Grid_model extends CI_Model{
 			$data[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
 		}
 		$data['keys'] = array_keys($data);
-		dd($data);
 
 		$this->db->select("
 					num.id as line_id, num.line_name_en, num.line_name_bn,
@@ -507,6 +506,7 @@ class Grid_model extends CI_Model{
 			$d = $this->common_model->get_group_wise_attendance($row->line_id, $date, $unit_id, $data);
 			$data['results'][$key]->group_data = $d;
 		}
+		dd($data);
 
 		// dd($data);
 		if($data['results'] == null){
