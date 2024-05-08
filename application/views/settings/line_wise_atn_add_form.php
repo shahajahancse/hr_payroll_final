@@ -193,7 +193,7 @@ function grid_emp_list() {
                     items += '<tr id="removeTr">';
                     items +=
                         '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                        value.id + '" ></td>';
+                        value.emp_id + '" ></td>';
                     items += '<td class="success">' + value.emp_id + '</td>';
                     items += '<td class="warning ">' + value.name_en + '</td>';
                     items += '</tr>';
@@ -225,7 +225,7 @@ $(document).ready(function() {
                 $('.desig').append("<option value=''>-- Select District --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
-                    opt.val(id);
+                    opt.val(emp_id);
                     opt.text(name);
                     $('.desig').append(opt);
                 });
@@ -248,7 +248,7 @@ $(document).ready(function() {
                 $('.line').append("<option value=''>-- Select District --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
-                    opt.val(id);
+                    opt.val(emp_id);
                     opt.text(name);
                     $('.line').append(opt);
                 });
@@ -272,7 +272,7 @@ $(document).ready(function() {
                 $('.section').append("<option value=''>-- Select District --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
-                    opt.val(id);
+                    opt.val(emp_id);
                     opt.text(name);
                     $('.section').append(opt);
                 });
@@ -297,7 +297,7 @@ $(document).ready(function() {
                 $('.dept').append("<option value=''>-- Select Department --</option>");
                 $.each(func_data, function(id, name) {
                     var opt = $('<option />');
-                    opt.val(id);
+                    opt.val(emp_id);
                     opt.text(name);
                     $('.dept').append(opt);
                 });
