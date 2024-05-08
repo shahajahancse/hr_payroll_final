@@ -27,8 +27,8 @@
                 <th class="text-center" style="text-align:center">Absent</th>
 				<th class="text-center" style="text-align:center">Male</th>
                 <th class="text-center" style="text-align:center">Female</th>
-                <?php foreach($keys as $key){?>
-                <?php if (count($keys) % 2 == 0) { ?>
+                <?php $dddd = 0; foreach($keys as $key){ $dddd = $dddd + 1; ?>
+                <?php if ($dddd % 2 == 0) { ?>
                     <th style="padding:0px; background: #dbf5f9;">
                         <table style="border-collapse: collapse;border:0px white;">
                             <tr>
@@ -81,8 +81,8 @@
 				<td style="text-align:center"><?php echo $row->all_absent?></td>
 				<td style="text-align:center"><?php echo $row->all_male?></td>
 				<td style="text-align:center"><?php echo $row->all_female?></td>
-               <?php
-                    foreach($keys as $key){
+               <?php $dddd = 0;
+                    foreach($keys as $key){ $dddd = $dddd + 1;
                         $group_data = $row->group_data[$key]?? (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
 
 
@@ -96,8 +96,8 @@
                     $pr[$key] += (isset($group_data->emp_present))?$group_data->emp_present :0;
                     $ab[$key] += (isset($group_data->emp_absent))?$group_data->emp_absent :0;
                 ?>
-                <?php if (count($keys) % 2 == 0) { ?>
-                    <td style="padding:0px">
+                <?php if ($dddd % 2 == 0) { ?>
+                    <td style="padding:0px; background: #dbf5f9;">
                         <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
                             <tr>
                                 <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_data->total_emp))?$group_data->total_emp :'--'?></td>
