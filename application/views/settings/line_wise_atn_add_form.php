@@ -122,9 +122,9 @@
 						<select name="line_id" id="line_id" required>
 							<option value="">Select Line</option>
 							<?php
-                            $this->db->select('pr_line_num.*,pr_units.unit_name');
-                            $this->db->from('pr_line_num');
-                            $this->db->join('pr_units', 'pr_units.unit_id = pr_line_num.unit_id');
+                            $this->db->select('emp_line_num.*,pr_units.unit_name');
+                            $this->db->from('emp_line_num');
+                            $this->db->join('pr_units', 'pr_units.unit_id = emp_line_num.unit_id');
 							$training = $this->db->where('pr_units.unit_id', $user_id)->get()->result();
 								foreach ($training as $key => $value) { ?>
 							    <option value="<?= $value->id ?>"><?= $value->line_name_en ?> >> <?= $value->unit_name ?></option>
