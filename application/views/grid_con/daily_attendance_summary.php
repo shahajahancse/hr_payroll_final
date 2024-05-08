@@ -20,13 +20,13 @@
     <div align="center" class="container">
 		<table class="table">
 			<tr>
-				<th class="text-center" style="text-align:center">Sl.</th>
-				<th class="text-center" style="text-align:center">Line Name</th>
+				<th class="text-center; background: #dbf5f9;" style="text-align:center">Sl.</th>
+				<th class="text-center; background: #dbf5f9;" style="text-align:center">Line Name</th>
                 <th class="text-center" style="text-align:center">Total</th>
 				<th class="text-center" style="text-align:center">Present</th>
                 <th class="text-center" style="text-align:center">Absent</th>
-				<th class="text-center" style="text-align:center">Male</th>
-                <th class="text-center" style="text-align:center">Female</th>
+				<th class="text-center; background: #dbf5f9;" style="text-align:center">Male</th>
+                <th class="text-center; background: #dbf5f9;" style="text-align:center">Female</th>
                 <?php $dddd = 0; foreach($keys as $key){ $dddd = $dddd + 1; ?>
                 <?php if ($dddd % 2 == 0) { ?>
                     <th style="padding:0px; background: #dbf5f9;">
@@ -74,13 +74,13 @@
                 $sumAllLate    += $row->all_late;
             ?>
 			<tr>
-				<td style="text-align:center"><?php echo $i++?></td>
-				<td style="text-align:center"><?php echo $row->line_name_en?></td>
+				<td style="text-align:center; background: #dbf5f9;"><?php echo $i++?></td>
+				<td style="text-align:center; background: #dbf5f9;"><?php echo $row->line_name_en?></td>
 				<td style="text-align:center"><?php echo $row->all_emp?></td>
 				<td style="text-align:center"><?php echo $row->all_present?></td>
 				<td style="text-align:center"><?php echo $row->all_absent?></td>
-				<td style="text-align:center"><?php echo $row->all_male?></td>
-				<td style="text-align:center"><?php echo $row->all_female?></td>
+				<td style="text-align:center; background: #dbf5f9;"><?php echo $row->all_male?></td>
+				<td style="text-align:center; background: #dbf5f9;"><?php echo $row->all_female?></td>
                <?php $dddd = 0;
                     foreach($keys as $key){ $dddd = $dddd + 1;
                         $group_data = $row->group_data[$key]?? (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
