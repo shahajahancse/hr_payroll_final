@@ -43,7 +43,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
 		$data["values"] 	= $this->Grid_model->daily_costing_summary($date,$unit_id);
-		dd($data["values"]);
+		// dd($data["values"]);
 		$data["grid_date"]	= $date;
 		$data["unit_id"]	= $unit_id;
 		$this->load->view('grid_con/daily_costing_summary',$data);
