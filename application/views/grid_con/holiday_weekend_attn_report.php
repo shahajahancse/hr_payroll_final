@@ -17,8 +17,8 @@
 <body style="margin: 0px;">
     <?php $this->load->view("head_english"); ?>
     <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
-        <span style="font-size:12px; font-weight:bold;"> Daily
-            <?php "Holiday / Weekend ". ($status == "P" ? "Present" : "Absent") ?> Report, Date
+        <span style="font-size:12px; font-weight:bold;">
+            <?php echo "Holiday / Weekend ". ($status == "P" ? "Present" : "Absent") ?> Report, Date
             <?php echo date("d/m/Y",strtotime($date)); ?>
         </span>
         <br><br>
