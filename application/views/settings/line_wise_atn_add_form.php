@@ -23,7 +23,7 @@
     </div>
     <!-- <div class="container-fluid">	 -->
     <div class="col-md-8">
-        <div class="tablebox" style="display: block;">
+        <div class="row tablebox" style="display: block;">
             <div class="col-md-12" style="display: flex;justify-content: space-between;align-items: center;">
                 <h3 style="font-weight: 600;"><?= $title ?></h3>
                 <a class="btn btn-primary" href="<?= base_url(); ?>setting_con/line_wise_atn_desig"><<< Back </a>
