@@ -26,92 +26,90 @@
         </div>
     </div>
     <!-- <div class="container-fluid">	 -->
-    <!-- <div class="col-md-12"> -->
-        <div class="row tablebox" style="display: block;">
-            <!-- <h3 style="font-weight: 600;"><?= $title ?></h3> -->
-            <div class="col-md-6">
-                <div class="form-group" style="margin-bottom: 10px !important;">
-                    <label>Unit <span style="color: red;">*</span> </label>
-                    <select name="unit_id" id="unit_id" class="form-control input-sm">
-                        <option value="">Select Unit</option>
-                        <?php
-                        foreach ($dept as $row) {
-                            if ($row['unit_id'] == $user_data->unit_name) {
-                                $select_data = "selected";
-                            } else {
-                                $select_data = '';
-                            }
-                            echo '<option ' . $select_data . '  value="' . $row['unit_id'] . '">' . $row['unit_name'] .
-                                '</option>';
+    <div class="row tablebox" style="display: block;">
+        <!-- <h3 style="font-weight: 600;"><?= $title ?></h3> -->
+        <div class="col-md-6">
+            <div class="form-group" style="margin-bottom: 10px !important;">
+                <label>Unit <span style="color: red;">*</span> </label>
+                <select name="unit_id" id="unit_id" class="form-control input-sm">
+                    <option value="">Select Unit</option>
+                    <?php
+                    foreach ($dept as $row) {
+                        if ($row['unit_id'] == $user_data->unit_name) {
+                            $select_data = "selected";
+                        } else {
+                            $select_data = '';
                         }
-                        ?>
-                    </select>
-                </div>
-            </div>
-            <!-- department -->
-            <div class="col-md-6">
-                <div class="form-group" style="margin-bottom: 10px !important;">
-                    <label>Department </label>
-                    <select class="form-control input-sm dept" id='dept' name='dept'>
-                        <?php if (!empty($user_data->unit_name)) {
-                            $dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
-                            <option value=''>Select Department</option>
-                            <?php foreach ($dpts->result() as $key => $val) { ?>
-                                <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
-                        <?php }
-                        } ?>
-                    </select>
-                </div>
-            </div>
-            <!-- section -->
-            <div class="col-md-6">
-                <div class="form-group" style="margin-bottom: 10px !important;">
-                    <label class="control-label">Section </label>
-                    <select class="form-control input-sm section" id='section' name='section'>
-                        <option value=''></option>
-                    </select>
-                </div>
-            </div>
-            <!-- line -->
-            <div class="col-md-6">
-                <div class="form-group" style="margin-bottom: 10px !important;">
-                    <label class="control-label">Line </label>
-                    <select class="form-control input-sm line" id='line' name='line'>
-                        <option value=''></option>
-                    </select>
-                </div>
+                        echo '<option ' . $select_data . '  value="' . $row['unit_id'] . '">' . $row['unit_name'] .
+                            '</option>';
+                    }
+                    ?>
+                </select>
             </div>
         </div>
-        <br>
-        <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:5px;">
-            <img src="<?php echo base_url('images/ajax-loader.gif'); ?>" />
-        </div>
-
-        <!-- present entry form -->
-        <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
-            <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Designation Name</th>
-                            <th>Hide / Show</th>
-                        </tr>
-                    </thead>
-                    <tbody id="desig_tbody">
-
-                    </tbody>
-                </table>
+        <!-- department -->
+        <div class="col-md-6">
+            <div class="form-group" style="margin-bottom: 10px !important;">
+                <label>Department </label>
+                <select class="form-control input-sm dept" id='dept' name='dept'>
+                    <?php if (!empty($user_data->unit_name)) {
+                        $dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
+                        <option value=''>Select Department</option>
+                        <?php foreach ($dpts->result() as $key => $val) { ?>
+                            <option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
+                    <?php }
+                    } ?>
+                </select>
             </div>
         </div>
+        <!-- section -->
+        <div class="col-md-6">
+            <div class="form-group" style="margin-bottom: 10px !important;">
+                <label class="control-label">Section </label>
+                <select class="form-control input-sm section" id='section' name='section'>
+                    <option value=''></option>
+                </select>
+            </div>
+        </div>
+        <!-- line -->
+        <div class="col-md-6">
+            <div class="form-group" style="margin-bottom: 10px !important;">
+                <label class="control-label">Line </label>
+                <select class="form-control input-sm line" id='line' name='line'>
+                    <option value=''></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:5px;">
+        <img src="<?php echo base_url('images/ajax-loader.gif'); ?>" />
+    </div>
 
-        <style>
-            .hints {
-                color: #436D19;
-                font-weight: bold;
-            }
-        </style>
-        <!-- eot entry form   -->
-    <!-- </div> -->
+    <!-- present entry form -->
+    <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
+        <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Designation Name</th>
+                        <th>Hide / Show</th>
+                    </tr>
+                </thead>
+                <tbody id="desig_tbody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        .hints {
+            color: #436D19;
+            font-weight: bold;
+        }
+    </style>
+    <!-- eot entry form   -->
 </div>
 
 <script>
