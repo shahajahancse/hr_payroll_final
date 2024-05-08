@@ -26,7 +26,7 @@
         </div>
     </div>
     <!-- <div class="container-fluid">	 -->
-    <div class="col-md-12">
+    <!-- <div class="col-md-12"> -->
         <div class="row tablebox" style="display: block;">
             <!-- <h3 style="font-weight: 600;"><?= $title ?></h3> -->
             <div class="col-md-6">
@@ -111,8 +111,7 @@
             }
         </style>
         <!-- eot entry form   -->
-
-    </div>
+    <!-- </div> -->
 </div>
 
 <script>
