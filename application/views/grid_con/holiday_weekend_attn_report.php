@@ -40,9 +40,9 @@
 				<th style="padding:4px">Deduct EOT</th>
 				<th style="padding:4px">Total OT</th>
 				<?php } ?>
-				<th style="padding:4px">Mobile</th>
-				<th style="padding:4px">Remark</th>
-				<th style="padding:4px">Sign</th>
+				<th style="padding:4px; width: 10%;">Mobile</th>
+				<th style="padding:4px; width: 10%;">Remark</th>
+				<th style="padding:4px; width: 10%;">Sign</th>
 			</tr>
 
 			<?php $emp_sec = '';
@@ -71,9 +71,9 @@
 					<?php $total_ot = $row->ot + $row->eot + ($row->modify_eot) - $row->deduction_hour; ?>
 					<td style="text-align:center; padding:2px"><?php echo $total_ot; ?></td>
 					<?php } ?>
-					<td style="padding:4px"><?=$row->personal_mobile?></td>
-					<td style="padding:4px"></td>
-					<td style="padding:4px"></td>
+					<td style="padding:10px"><?=$row->personal_mobile?></td>
+					<td style="padding:10px"></td>
+					<td style="padding:10px"></td>
 				</tr>
 				<?php $emp_sec = $row->emp_sec_id; ?>
 			<?php } ?>
