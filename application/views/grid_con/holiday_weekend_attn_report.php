@@ -31,6 +31,7 @@
 				<th style="padding:4px">Designation</th>
 				<th style="padding:4px">Line</th>
 				<th style="padding:4px">Shift</th>
+				<?php if ($status == "P") { ?>
 				<th style="padding:4px">In Time</th>
 				<th style="padding:4px">Out Time</th>
 				<th style="padding:4px">OT Hour</th>
@@ -38,6 +39,10 @@
 				<th style="padding:4px">Modify EOT</th>
 				<th style="padding:4px">Deduct EOT</th>
 				<th style="padding:4px">Total OT</th>
+				<?php } ?>
+				<th style="padding:4px">Mobile</th>
+				<th style="padding:4px">Remark</th>
+				<th style="padding:4px">Sign</th>
 			</tr>
 
 			<?php $emp_sec = '';
@@ -56,15 +61,19 @@
 					<td style="text-align:left;   padding:2px"><?php echo $row->desig_name?></td>
 					<td style="text-align:left;   padding:2px"><?php echo $row->line_name_en?></td>
 					<td style="text-align:left;   padding:2px"><?php echo $row->shift_name?></td>
+					<?php if ($status == "P") { ?>
 					<td style="text-align:center; padding:2px"><?php echo $row->in_time; ?> </td>
 					<td style="text-align:center; padding:2px"><?php echo $row->out_time;?> </td>
-
 					<td style="text-align:center; padding:2px"><?php echo $row->ot?></td>
 					<td style="text-align:center; padding:2px"><?php echo $row->eot?></td>
 					<td style="text-align:center; padding:2px"><?php echo $row->modify_eot?></td>
 					<td style="text-align:center; padding:2px"><?php echo $row->deduction_hour?></td>
 					<?php $total_ot = $row->ot + $row->eot + ($row->modify_eot) - $row->deduction_hour; ?>
 					<td style="text-align:center; padding:2px"><?php echo $total_ot; ?></td>
+					<?php } ?>
+					<td style="padding:4px"><?=$row->personal_mobile?></td>
+					<td style="padding:4px"></td>
+					<td style="padding:4px"></td>
 				</tr>
 				<?php $emp_sec = $row->emp_sec_id; ?>
 			<?php } ?>
