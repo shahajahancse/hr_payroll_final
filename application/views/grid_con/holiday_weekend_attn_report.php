@@ -81,6 +81,7 @@
 			<?php } ?>
 		</table>
 	</div>
+	<br><br>
 </body>
 </html>
 <?php exit(); ?>

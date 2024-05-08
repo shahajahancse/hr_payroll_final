@@ -19,7 +19,7 @@
 </head>
 <body>
 	<div class="container-fluid">
-    
+
 		<div height="85px" style="margin-top: 20px;">
 			<span style="text-align:center;line-height:10px;margin-top:10px">
                 <p>ফরম-৮</p>
@@ -59,11 +59,11 @@
 		<tr>
 			<td class="text-center"><?php echo "<span style='font-family:SutonnyMJ;font-size:18px'>".$i++."</span>"?></td>
 			<td class="text-center"><?php echo "<span style='font-family:SutonnyMJ;font-size:18px'>".$row->id."</span>"?></td>
-			<td class="text-center"><?php echo $row->name_bn .'<br>'.$row->nid_dob_id?></td> 
+			<td class="text-center"><?php echo $row->name_bn .'<br>'.$row->nid_dob_id?></td>
 			<td class="text-center"><?php echo $row->father_name?></td>
 			<td class="text-center"><?php echo $row->mother_name?></td>
 			<td class="text-center">
-                <?php 
+                <?php
                     echo $row->gender == 'Male' ? 'পুরুষ' : 'নারী'.' ,';echo '<br>'."<span style='font-family:SutonnyMJ;font-size:16px'>".date('d/m/Y',strtotime($row->emp_dob))."</span>";$currentDate = new DateTime();
                     $employeeDob = new DateTime($row->emp_dob);
                     $diff = $currentDate->diff($employeeDob);
@@ -76,7 +76,7 @@
 			<td class="text-center"><?php echo $row->emp_id?></td>
 			<td class="text-center"><?php echo ''?></td>
 			<td class="text-center"><?php echo 'সকাল ০৮ হইতে <br> বিকাল ০৫ টা <br> পর্যন্ত'?></td>
-			<td class="text-center"><?php echo 'দুপুর ০১ হইতে <br>০২ টা <br> পর্যন্ত'?></td>  
+			<td class="text-center"><?php echo 'দুপুর ০১ হইতে <br>০২ টা <br> পর্যন্ত'?></td>
 			<td class="text-center"><?php echo 'শুক্রবার'?></td>
 			<td class="text-center"><?php echo ''?></td>
 			<td class="text-center"></td>
@@ -89,3 +89,4 @@
 	<div style="page-break-after: always;"></div>
 </body>
 </html>
+<?php exit(); ?>

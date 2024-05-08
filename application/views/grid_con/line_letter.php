@@ -12,7 +12,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family:SutonnyMJ;
-            
+
         }
         .table-bordered td, .table-bordered th {
             border: 1px solid #000000;
@@ -30,7 +30,7 @@
 
     .image {
         height: 500 !important;
-        width: 400 !important; 
+        width: 400 !important;
         margin-top: 10px !important;
         position: absolute !important;
     }
@@ -75,7 +75,7 @@
                 <p>KvWt <?php echo $row->emp_id?></p>
                 <p>‡mKkbt <?php echo $row->new_sec_name?></p>
                 <p>jvBbt <?php echo $row->new_line_name?></p>
-                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span>Bs</p>           
+                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span>Bs</p>
         </div>
         <br>
         <h6 class="ml-3"><b>welq: jvBb cwieZ©b c«m‡½|</b></h6><br>
@@ -106,3 +106,4 @@
     <?php }?>
 </body>
 </html>
+<?php exit(); ?>

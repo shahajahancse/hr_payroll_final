@@ -49,7 +49,7 @@ for($j=1; $j<= $div_loop; $j++){
 		if($l % 2 == 0){
 	?>
 	</tr>
-<?php 
+<?php
 if($m>=4 and $m % 4 == 0){
 	echo '<div style="page-break-after: always;"></div>';
 }
@@ -68,13 +68,13 @@ if($m>=4 and $m % 4 == 0){
 					</div>
 				   	<div class="e_front_col_6" style="font-size:12px; padding:1px 22px 0px 0px;">
 						<b><spam style="font-size: 12px;  "><?php echo "Loopdot Fashion Ltd."; ?></spam></b>
-						
+
 					</div>
 				</div>
 			</div>
 			<div class="front_top_left" style="width:100%; vertical-align:top; font-size: 20px;">
 				<div style="width:100%;padding-right:5px;text-align:center;margin-top: 0px;font-size:12px;">
-					<p style="margin: 0px;  font-size:12px;"> Phone: 
+					<p style="margin: 0px;  font-size:12px;"> Phone:
 						<?php echo $this->common_model->company_info()->company_phone; ?>
 					</p>
 				</div>
@@ -94,11 +94,11 @@ if($m>=4 and $m % 4 == 0){
 			<div class="front_row_2" style="text-align-last: left;">
 				<div class="e_front_col_8" style="line-height: 14px;font-size: 12px; margin: 2px; ">
 					3। Designation <b>
-				   <?php 
+				   <?php
 				     $des = strtolower($data[$i]["desig_name"]);
-	                  echo ucwords($des);				 
+	                  echo ucwords($des);
 				   ?>
-				   	
+
 				   </b>
 				</div>
 			</div>
@@ -119,8 +119,8 @@ if($m>=4 and $m % 4 == 0){
 			<div class="front_row_4" style=" text-align-last: left;">
 				<div class="e_front_col_13" style="font-size: 12px; line-height: 14px;margin: 2px; ">
 					7। join Date : <b>
-					<?php 
-						$join_date = $data[$i]["emp_join_date"]; 
+					<?php
+						$join_date = $data[$i]["emp_join_date"];
 						$year=trim(substr($join_date,0,4));
 						$month=trim(substr($join_date,5,2));
 						$day=trim(substr($join_date,8,2));
@@ -128,7 +128,7 @@ if($m>=4 and $m % 4 == 0){
 					?></b>
 				</div>
 			</div>
-			
+
 			<div class="front_row_5" style="text-align:left;margin-top:7px;  width: 100%;">
 				<div style=" float: left;  width: 50%;">
 					<img src="<?php echo base_url();?>images/<?php echo $company_signature = $this->common_model->company_info()->company_signature; ?>" width="60" height="20" />
@@ -169,7 +169,7 @@ if($m>=4 and $m % 4 == 0){
 				<div class="e_front_col_12" style="font-size: 12px; margin: 5px 0;  ">
 					NID Card: <b>
 					<?php echo $data[$i]["emp_n_id"]; ?>
-				   	
+
 				   </b>
 				</div>
 			</div>
@@ -181,7 +181,7 @@ if($m>=4 and $m % 4 == 0){
 					<img src="<?php  echo base_url();?>images/<?php echo $company_logo = $this->common_model->company_info()->company_logo; ?>" height="30" width="30" />
 				</div>
 				<div class="front_top_middle" style=" height: 20px; text-align:center; float:right; margin: 0;vertical-align:top; float: left;   padding-top: 10px;">
-					<b><spam style="font-size: 16px;line-height: 14px;">&nbsp;<?php echo "  &nbsp;&nbsp; Loopdot Fashion Ltd."; ?></spam></b>	
+					<b><spam style="font-size: 16px;line-height: 14px;">&nbsp;<?php echo "  &nbsp;&nbsp; Loopdot Fashion Ltd."; ?></spam></b>
 				</div>
 			</div>
 			<div class="front_top_left" style="width:100%; vertical-align:top; font-size: 20px; ">
@@ -209,7 +209,4 @@ if($m>=4 and $m % 4 == 0){
 </body>
 </html>
 
-
-
-
-
+<?php exit(); ?>

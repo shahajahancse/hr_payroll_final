@@ -158,3 +158,4 @@
     <br><br>
 </body>
 </html>
+<?php exit(); ?>

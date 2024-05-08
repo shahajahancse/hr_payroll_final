@@ -181,5 +181,7 @@ Grand Total
 </table>
 </div>
 </div>
+<br><br>
 </body>
 </html>
+<?php exit(); ?>

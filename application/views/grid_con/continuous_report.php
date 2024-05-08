@@ -25,21 +25,21 @@
         <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
             <span style="font-size:13px; font-weight:bold;">
 		<?php echo $status; ?> Report from
-		<?php 
+		<?php
 			$year= trim(substr($start_date,0,4));
 			$month = trim(substr($start_date,5,2));
 			$tarik = trim(substr($start_date,8,2));
 			$date_format = date("d-M-Y", mktime(0, 0, 0, $month, $tarik, $year));
 			echo $date_format;
-			
+
 			echo " - TO - ";
-			
+
 			$year= trim(substr($end_date,0,4));
 			$month = trim(substr($end_date,5,2));
 			$tarik = trim(substr($end_date,8,2));
 			$date_format = date("d-M-Y", mktime(0, 0, 0, $month, $tarik, $year));
 			echo $date_format;
-			
+
 		?></span>
 		<br />
 		<br />
@@ -53,17 +53,17 @@
 				$count = count($values["empid"]);
 				for($i=0; $i<$count; $i++ )
 				{
-					
+
 					if($section!=$values["sec_name_en"][$i]){
 					echo "<tr bgcolor='#CCCCCC'>";
 					$r++;
 					echo "<td colspan='7' style='font-size:16px'>Section :".$values["sec_name_en"][$i]."</td>";
 					echo "</tr>";
-					
+
 					?>
 
 						<tr>
-							<?php $r++;?>	
+							<?php $r++;?>
 							<th>SL</th>
 							<th>Emp ID</th>
 							<th>Name</th>
@@ -72,35 +72,35 @@
 							<th>Total <?php echo $status; ?></th>
 						</tr>
 					<?php }
-					
+
 					echo "<tr>";
 					$r++;
-					
+
 					echo "<td>";
 					echo $i+1;
 					echo "</td>";
-					
+
 					echo "<td>";
 					echo $values["empid"][$i];
 					echo "</td>";
-					
+
 					echo "<td>";
 					echo $values["fullname"][$i];
 					echo "</td>";
-					
-					
+
+
 					echo "<td>";
 					echo $values["line_name"][$i];
 					echo "</td>";
-					
+
 					echo "<td>";
 					echo $values["desig"][$i];
 					echo "</td>";
-					
+
 					echo "<td style='text-align:center; font-weight:bold;'>";
 					echo $values["total"][$i];
 					echo "</td>";
-					
+
 					echo "<tr>";
 					$section=$values["sec_name_en"][$i];
 					// if ($r==$per_page) {
@@ -115,6 +115,8 @@
 			?>
 		</table>
 	</div>
+	<br><br>
 </body>
 
 </html>
+<?php exit(); ?>

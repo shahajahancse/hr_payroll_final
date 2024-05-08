@@ -59,7 +59,7 @@
                 <p>KvWt <?php echo $row->emp_id?></p>
                 <p>‡mKkbt <?php echo $row->new_sec_name?></p>
                 <p>jvBbt <?php echo $row->new_line_name?></p>
-                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span> ইং</p>          
+                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span> ইং</p>
         </div>
         <br>
         <h6 class="ml-3"><b>welq t c‡`vbœwZ cÖm‡½|</b></h6>
@@ -150,3 +150,4 @@
     <?php }?>
 </body>
 </html>
+<?php exit(); ?>

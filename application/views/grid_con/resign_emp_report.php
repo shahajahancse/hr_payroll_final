@@ -30,7 +30,7 @@ table.main_table{
 
 table.main_table tr,table.main_table tr td,table.main_table tr th{
  border: 1px solid #000000;
- 
+
 }
 </style>
 
@@ -52,7 +52,7 @@ $page=1;
 }
 
 $k = 0;
-	
+
  for($counter = 1; $counter <= $page; $counter ++)
  {
 ?>
@@ -61,7 +61,7 @@ $k = 0;
 		<td style="text-align:center;width: 70%;padding-left:150px;">
 		<?php $this->load->view("head_english");?><span style="font-size:13px; font-weight:bold; text-align: center;">
 			Resign Employee  Information </br>
-				<?php 
+				<?php
 					$year= trim(substr($start_date,0,4));
 					$month = trim(substr($start_date,5,2));
 					$tarik = trim(substr($start_date,8,2));
@@ -69,10 +69,10 @@ $k = 0;
 					$lastday = date("t", mktime(0, 0, 0, $month, 1, $year));
 					$date_format_2 = date("d-M-Y", mktime(0, 0, 0, $month, $lastday, $year));
 					echo $date_format_1;
-					
+
 					echo " - TO - ";
 					echo $date_format_2;
-					
+
 				?>
 			</span>
 		</td>
@@ -93,11 +93,11 @@ $k = 0;
 
 <th>Remarks</th>
 <?php
-	$section=array();		
-	
+	$section=array();
+
 	for($i=0; $i<=$per_page_id;$i++)
 	{
-		
+
 		if($section!=$values["sec_name_en"][$k]){
 			$i=$i+1;
 			$row_count = $row_count+1;
@@ -119,32 +119,32 @@ $k = 0;
 	}
 
 	echo "<tr>";
-	
+
 	echo "<td>";
 	echo $s = $k+1 ;//= $i+1;
 	echo "</td>";
-	
-		
+
+
 	echo "<td  style=''>";
 	echo $values["emp_id"][$k];
 	echo "</td>";
-	
-	
+
+
 	echo "<td >";
 	echo $values["emp_name"][$k];
 	echo "</td>";
 
-	
-	
+
+
 	echo "<td style='margin:0px;padding:0px;'>";
 	echo $values["desig_name"][$k];
 	echo "</td>";
-	
+
 	echo "<td >";
 	echo $values["line_name"][$k];
 	echo "</td>";
-	
-	
+
+
 	echo "<td   style=''>";
 	$year= trim(substr($values["emp_dob"][$k],0,4));
 	$month = trim(substr($values["emp_dob"][$k],5,2));
@@ -152,7 +152,7 @@ $k = 0;
 	$date_format = date("d-M-y", mktime(0, 0, 0, $month, $tarik, $year));
 	echo $date_format;
 	echo "</td>";
-	
+
 	echo "<td  style=''>";
 	$year= trim(substr($values["doj"][$k],0,4));
 	$month = trim(substr($values["doj"][$k],5,2));
@@ -160,7 +160,7 @@ $k = 0;
 	$date_format = date("d-M-y", mktime(0, 0, 0, $month, $tarik, $year));
 	echo $date_format;
 	echo "</td>";
-	
+
 	echo "<td  style=''>";
 	$year= trim(substr($values["e_date"][$k],0,4));
 	$month = trim(substr($values["e_date"][$k],5,2));
@@ -168,11 +168,11 @@ $k = 0;
 	$date_format = date("d-M-y", mktime(0, 0, 0, $month, $tarik, $year));
 	echo $date_format;
 	echo "</td>";
-	
+
 	echo "<td  style=';'>";
 	echo "&nbsp";
 	echo "</td>";
-	
+
 	echo "</tr>";
 		$section=$values["sec_name_en"][$k];
 		$k++;
@@ -201,3 +201,4 @@ $k = 0;
 	} ?>
 </body>
 </html>
+<?php exit(); ?>
