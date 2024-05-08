@@ -28,19 +28,33 @@
 				<th class="text-center" style="text-align:center">Male</th>
                 <th class="text-center" style="text-align:center">Female</th>
                 <?php foreach($keys as $key){?>
-                <th style="padding:0px">
-                    <table style="border-collapse: collapse;border:0px white;">
-                        <tr>
-                            <th class="text-center" colspan='3' style="padding: 0;width: 92px;border: none;border-bottom: 1px solid black;"><?php echo $key ?></th>
-                        </tr>
-                        <tr>
-                            <td style="width:25px;border: none;margin: 0;border-right:1px solid black;">TT</td>
-                            <td style="width:25px;border: none;margin: 0;">PR</td>
-                            <td style="width:25px;border: none;margin: 0;border-left:1px solid black;">AB</td>
-                        </tr>
-                    </table>
-                </th>
-                <?php }?>
+                <?php if (count($keys) % 2 == 0) { ?>
+                    <th style="padding:0px; background: #dbf5f9;">
+                        <table style="border-collapse: collapse;border:0px white;">
+                            <tr>
+                                <th class="text-center" colspan='3' style="padding: 0;width: 92px;border: none;border-bottom: 1px solid black;"><?php echo $key ?></th>
+                            </tr>
+                            <tr>
+                                <td style="width:25px;border: none;margin: 0;border-right:1px solid black;">TT</td>
+                                <td style="width:25px;border: none;margin: 0;">PR</td>
+                                <td style="width:25px;border: none;margin: 0;border-left:1px solid black;">AB</td>
+                            </tr>
+                        </table>
+                    </th>
+                <?php } else { ?>
+                    <th style="padding:0px;">
+                        <table style="border-collapse: collapse;border:0px white;">
+                            <tr>
+                                <th class="text-center" colspan='3' style="padding: 0;width: 92px;border: none;border-bottom: 1px solid black;"><?php echo $key ?></th>
+                            </tr>
+                            <tr>
+                                <td style="width:25px;border: none;margin: 0;border-right:1px solid black;">TT</td>
+                                <td style="width:25px;border: none;margin: 0;">PR</td>
+                                <td style="width:25px;border: none;margin: 0;border-left:1px solid black;">AB</td>
+                            </tr>
+                        </table>
+                    </th>
+                <?php } } ?>
 				<th class="text-center">Leave</th>
                 <th class="text-center">Late</th>
 				<th class="text-center">Remark</th>
@@ -82,16 +96,27 @@
                     $pr[$key] += (isset($group_data->emp_present))?$group_data->emp_present :0;
                     $ab[$key] += (isset($group_data->emp_absent))?$group_data->emp_absent :0;
                 ?>
-                <td style="padding:0px">
-                    <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
-                        <tr>
-                            <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_data->total_emp))?$group_data->total_emp :'--'?></td>
-                            <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
-                            <td class="text-center;" style="text-align:center ;border: none;width:16px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
-                        </tr>
-                    </table>
-               </td>
-                <?php }?>
+                <?php if (count($keys) % 2 == 0) { ?>
+                    <td style="padding:0px">
+                        <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
+                            <tr>
+                                <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_data->total_emp))?$group_data->total_emp :'--'?></td>
+                                <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
+                                <td class="text-center;" style="text-align:center ;border: none;width:16px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
+                            </tr>
+                        </table>
+                    </td>
+                <?php } else { ?>
+                    <td style="padding:0px">
+                        <table style="border-collapse: collapse;border:0px white;width: -webkit-fill-available;" >
+                            <tr>
+                                <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;border-right:1px solid black;"><?php echo (isset($group_data->total_emp))?$group_data->total_emp :'--'?></td>
+                                <td class="text-center;" style="text-align:center;border: none;width:16px;margin: 0;"><?php echo  (isset($group_data->emp_present))?$group_data->emp_present :'--'?></td>
+                                <td class="text-center;" style="text-align:center ;border: none;width:16px;margin: 0;border-left:1px solid black;"><?php echo  (isset($group_data->emp_absent))?$group_data->emp_absent :'--'?></td>
+                            </tr>
+                        </table>
+                    </td>
+                <?php } } ?>
 				<td class="text-center" style="text-align:center;"><?php echo $row->all_leave?></td>
 				<td class="text-center" style="text-align:center;"><?php echo $row->all_late?></td>
                 <td></td>
