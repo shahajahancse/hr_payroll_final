@@ -328,8 +328,6 @@ $(document).ready(function() {
             return false;
         }
 
-
-
 		var line_id = document.getElementById('line_id').value;
 
 		var data="line_id="+line_id+"&spl="+sql;
