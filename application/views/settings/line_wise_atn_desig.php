@@ -12,7 +12,7 @@
     .table td {
         padding: 0px 3px !important;
         font-size: 13px;
-      
+
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
@@ -36,7 +36,7 @@
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5" style="padding: 7px;">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('line_wise_desig/add_form') ?>">Add Line Wise Designation</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setting_con/line_wise_atn_add_form') ?>">Add Line Wise Designation</a>
                     <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>

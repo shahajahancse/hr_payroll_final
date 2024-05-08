@@ -17,7 +17,7 @@
             <?php $success = $this->session->flashdata('success');
 	        if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
 	         $error = $this->session->flashdata('error');
 	         if ($error) { ?>
             <div class="alert alert-failuer"><?php echo $error; ?></div>
@@ -29,20 +29,20 @@
         <div class="row tablebox" style="display: block;">
         <div class="col-md-12" style="display: flex;justify-content: space-between;align-items: center;">
             <h3 style="font-weight: 600;"><?= $title ?></h3>
-            <a class="btn btn-primary" href="<?= base_url(); ?>training_con/training_list"><<< Back </a>
+            <a class="btn btn-primary" href="<?= base_url(); ?>setting_con/line_wise_atn_desig"><<< Back </a>
         </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Unit <span style="color: red;">*</span> </label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
-                        <?php 
+                        <?php
 							foreach ($dept as $row) {
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
 									continue;
-								}  
+								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
 							}
@@ -55,7 +55,7 @@
                 <div class="form-group">
                     <label>Department </label>
                     <select class="form-control input-sm dept" id='dept' name='dept'>
-                        <?php if (!empty($user_data->unit_name)) { 
+                        <?php if (!empty($user_data->unit_name)) {
 										$dpts = $this->db->where('unit_id', $user_data->unit_name)->get('emp_depertment'); ?>
                         <option value=''>Select Department</option>
                         <?php foreach ($dpts->result() as $key => $val) { ?>
@@ -113,7 +113,7 @@
         </div>
 		<form id="add_emp_training">
 			<div class="row nav_head" style="display: flex;flex-direction: column;">
-			
+
 				<div class="col-lg-12">
 					<span style="font-size: 20px;">Line wise Designation Add </span>
 				</div><!-- /.col-lg-6 -->
@@ -137,7 +137,7 @@
 						<label style="color:white">.</label>
 						<input type="submit" value="Add" class="btn btn-primary">
 					</div><!-- /input-group -->
-				</div>				
+				</div>
 			</div>
 		</form>
 
@@ -151,7 +151,7 @@
                     <th class="" style="background:#0177bcc2;color:white">Id</th>
                     <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                 </tr>
-                <?php if (!empty($employees)) { 
+                <?php if (!empty($employees)) {
 					  		foreach ($employees as $key => $emp) { ?>
                 <tr id="removeTr">
                     <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
@@ -326,9 +326,9 @@ $(document).ready(function() {
 		}
 
 
-		
+
 		var line_id = document.getElementById('line_id').value;
-		
+
 		var data="line_id="+line_id+"&spl="+sql;
 		$.ajax({
 			type: "POST",
