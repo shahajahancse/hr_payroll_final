@@ -154,7 +154,7 @@
                 <?php if (!empty($employees)) { 
 					  		foreach ($employees as $key => $emp) { ?>
                 <tr id="removeTr">
-                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
+                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
                     </td>
                     <td class="success"><?= $emp->emp_id ?></td>
                     <td class="warning "><?= $emp->name_en ?></td>
@@ -316,11 +316,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 	$('#add_emp_training').submit(function(e) {
 		e.preventDefault();
-		var url = '<?= base_url('training_con/employee_training_add')?>';
-
-		// id	emp_id	unit_id	training_id	date	time	status	created_at	
-
-
+		var url = '<?= base_url('line_wise_desig/line_add')?>';
 		var checkboxes = document.getElementsByName('emp_id[]');
 		var sql = get_checked_value(checkboxes);
 
@@ -330,23 +326,17 @@ $(document).ready(function() {
 		}
 
 
-		var unit_id = document.getElementById('unit_id').value;
-		if(unit_id =='Select')
-		{
-			alert("Please select Unit.");
-			return false;
-		}
-		var training_id = document.getElementById('training_id').value;
-		var date = document.getElementById('date').value;
-		var time = document.getElementById('time').value;
-		var data="training_id="+training_id+"&date="+date+"&unit_id="+unit_id+"&spl="+sql+"&time="+time;
+		
+		var line_id = document.getElementById('line_id').value;
+		
+		var data="line_id="+line_id+"&spl="+sql;
 		$.ajax({
 			type: "POST",
 			url: url,
 			data: data,
 			success: function(data) {
 				if (data == '1') {
-					showMessage('success', 'Training added successfully');
+					showMessage('success', 'line added successfully');
 				}
 			},
 			error: function(jqXHR, exception) {
