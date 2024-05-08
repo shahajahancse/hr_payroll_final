@@ -23,11 +23,12 @@
     </div>
     <!-- <div class="container-fluid">	 -->
     <div class="col-md-8">
-        <!-- <div class="row tablebox" style="display: block;"> -->
+        <div class="tablebox" style="display: block;">
             <div class="col-md-12" style="display: flex;justify-content: space-between;align-items: center;">
                 <h3 style="font-weight: 600;"><?= $title ?></h3>
                 <a class="btn btn-primary" href="<?= base_url(); ?>setting_con/line_wise_atn_desig"><<< Back </a>
             </div>
+
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Unit <span style="color: red;">*</span> </label>
@@ -103,7 +104,7 @@
                     </select>
                 </div>
             </div>
-        <!-- </div> -->
+        </div>
         <br>
         <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
