@@ -524,6 +524,7 @@ class Setting_con extends CI_Controller {
 	{
 		$line_id = $_POST['line_id'];
 		$emp_id = $_POST['spl'];
+		dd($_POST);
 		$this->db->where('emp_id', $emp_id);
 		$this->db->update('pr_emp_com_info', array('attn_sum_line_id' => $line_id));
 		echo '1';
