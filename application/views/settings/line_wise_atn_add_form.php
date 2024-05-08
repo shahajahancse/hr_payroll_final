@@ -314,7 +314,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 	$('#add_emp_training').submit(function(e) {
 		e.preventDefault();
-		var url = '<?= base_url('line_wise_desig/line_add')?>';
+		var url = '<?= base_url('setting_con/line_add')?>';
 		var checkboxes = document.getElementsByName('emp_id[]');
 		var sql = get_checked_value(checkboxes);
 
