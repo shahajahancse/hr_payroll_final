@@ -227,7 +227,7 @@ class Setup_con extends CI_Controller
     }
 
     // Post Office update
-     public function post_office_edit($id){
+    public function post_office_edit($id){
         $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
         $this->form_validation->set_rules('district', 'District Name', 'trim|required');
         $this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
@@ -418,7 +418,6 @@ class Setup_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url() . 'setup_con/section');
     }
-
     //----------------------------------------------------------------------------------
     // CRUD for Section END
     //----------------------------------------------------------------------------------
@@ -426,7 +425,6 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     // CRUD for LINE start
     //----------------------------------------------------------------------------------
-
     public function line()
     {
         $this->db->select('emp_line_num.*,emp_depertment.dept_name,pr_units.unit_name,emp_section.sec_name_en');
@@ -1047,7 +1045,7 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------
-    // CRUD for Night Allowance Start
+    // CRUD for Designation manage  Start
     //----------------------------------------------------------------------------------
     public function designation(){
         $this->db->select(' emp_designation.*,
@@ -1300,9 +1298,8 @@ class Setup_con extends CI_Controller
             $this->db->where('section_id', $section_id)->where('line_id', $line_id)->delete('emp_dasignation_line_acl');
         }
     }
-
     //----------------------------------------------------------------------------------
-    // CRUD for Night Allowance end
+    // CRUD for designation manage end
     //----------------------------------------------------------------------------------
 
     //-------------------------------------------------------------------------------------------------------
@@ -1966,36 +1963,6 @@ public function bonus_delete($shiftmanagementId)
         $this->load->view('output.php', $output);
     }
 
-    // function staff_id_entry()
-    // {
-    //     $crud = new grocery_CRUD();
-
-    //     $crud->set_table('staff_ot_list_emp');
-    //     $crud->set_subject('Entry Emp Id');
-    //     $crud->display_as( 'emp_id' , 'EMP_ID' );
-    //     $crud->unset_delete();
-
-    //     $output = $crud->render();
-
-    //     $this->crud_output($output);
-    // }
-
-    // function proxi_id_entry()
-    // {
-    //     $crud = new grocery_CRUD();
-
-    //     $crud->set_table('pr_id_proxi');
-    //     $crud->set_subject('Entry Emp Id');
-    //     $crud->display_as( 'emp_id' , 'EMP_ID' );
-    //     $crud->display_as( 'proxi_id' , 'Proxi Id' );
-    //     $crud->unset_delete();
-    //     $crud->unset_add();
-
-    //     $output = $crud->render();
-
-    //     $this->crud_output($output);
-    // }
-
     public function dashboard_date_setup()
     {
         $crud = new grocery_CRUD();
@@ -2164,28 +2131,8 @@ public function bonus_delete($shiftmanagementId)
         $output = $crud->render();
         $this->crud_output($output);
     }
-/*
-function designation_check()
-{
-$id = $this->uri->segment(4);
-if(!empty($id) && is_numeric($id))
-{
-$desig_id_old = $this->db->where("emp_desig_id",$id)->get('pr_emp_job_desc')->row()->emp_desig_id;
-$this->db->where("emp_desig_id !=",$desig_id_old);
-}
-$num_row = $this->db->where('emp_desig_id',$str)->get('pr_emp_job_desc')->num_rows();
-if ($num_row >= 1)
-{
-$this->form_validation->set_message('designation_check', $str.' already exists');
-return FALSE;
-}
-else
-{
-return TRUE;
-}
-}
- *
- */
+
+
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Attendance Bonus
     //-------------------------------------------------------------------------------------------------------

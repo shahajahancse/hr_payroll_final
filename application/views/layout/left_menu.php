@@ -137,6 +137,7 @@
           <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
           <li class="start <?= activate_method('dasig_group') ?>"> <a href="<?=base_url('setting_con/dasig_group')?>" class="anchor_cls" id="acl">Group Dasignation</a> </li>
           <li class="start <?= activate_method('hide_designation_employee') ?>"> <a href="<?=base_url('setting_con/hide_designation_employee')?>" class="anchor_cls" id="acl">Hide Designation</a> </li>
+          <li class="start <?= activate_method('line_wise_atn_desig') ?>"> <a href="<?=base_url('setting_con/line_wise_atn_desig')?>" class="anchor_cls" id="acl">line wise Designation</a> </li>
           <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('setting_con/acl')?>" class="anchor_cls" id="acl">User ACL</a> </li>
         </ul>
       </li>

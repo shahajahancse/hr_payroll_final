@@ -44,10 +44,7 @@ class Line_wise_desig extends CI_Controller {
         $this->data['subview'] = 'line_wise_desig/list';
         $this->load->view('layout/template', $this->data);
     }
-   
 
-
- 
 	function add_form()
 	{
         if ($this->session->userdata('logged_in') == false) {
@@ -67,7 +64,6 @@ class Line_wise_desig extends CI_Controller {
         $this->load->view('layout/template', $this->data);
 
 	}
-	
 
 	function line_add()
 	{
@@ -80,7 +76,6 @@ class Line_wise_desig extends CI_Controller {
 		}
 		echo '1';
 	}
-
 
     function line_delete($id)
     {
