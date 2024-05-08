@@ -13,7 +13,7 @@
         <?php // print_r($values); ?>
         <div style=" margin:0 auto;  width:auto;">
         <div id="no_print" style="float:right;"></div>
-            <?php 
+            <?php
                 $data['unit_id'] = $unit_id;
                 $this->load->view("head_english",$data);
             ?>
@@ -40,48 +40,50 @@
                         <th width="50">03 AM</th>
                         <th width="50">04 AM</th>
                         <th width="50">05 AM</th>
+                        <th width="50">06 AM</th>
                         <th width="80">P.Error</th>
                         <th width="80" style="white-space:nowrap">TTL O.T</th>
                         <th width="80">Remarks</th>
                     </tr>
-                    <?php 
+                    <?php
                         $i=1;
                         $total = 0;
                         $total_error = 0;
                         $total_ot = 0;
-                        $total_four_pm=0;  
+                        $total_four_pm=0;
                         $total_five_pm=0;
-                        $total_six_pm=0;  
+                        $total_six_pm=0;
                         $total_seven_pm=0;
-                        $total_eight_pm=0;  
+                        $total_eight_pm=0;
                         $total_nine_pm=0;
-                        $total_ten_pm=0;  
+                        $total_ten_pm=0;
                         $total_eleven_pm=0;
-                        $total_tweelve_pm=0;  
+                        $total_tweelve_pm=0;
                         $total_one_am=0;
-                        $total_two_am=0;  
+                        $total_two_am=0;
                         $total_three_am=0;
-                        $total_four_am=0; 
-                        $total_five_am=0;  
-                        $total_six_am=0;  
+                        $total_four_am=0;
+                        $total_five_am=0;
+                        $total_six_am=0;
                         foreach($values as $row){
-                            $total            += $row->all_present; 
-                            $total_error      += $row->present_error; 
-                            $total_ot      += $row->total_ot; 
+                            $total            += $row->all_present;
+                            $total_error      += $row->present_error;
+                            $total_ot      += $row->total_ot;
                             $total_four_pm    += $row->four_pm;
                             $total_five_pm    += $row->five_pm;
                             $total_six_pm     += $row->six_pm;
                             $total_seven_pm   += $row->seven_pm;
-                            $total_eight_pm   += $row->eight_pm;  
-                            $total_nine_pm    += $row->nine_pm;  
-                            $total_ten_pm     += $row->ten_pm;  
-                            $total_eleven_pm += $row->eleven_pm;  
-                            $total_tweelve_pm += $row->tweelve_pm;  
-                            $total_one_am     += $row->one_am;  
-                            $total_two_am     += $row->two_am;  
-                            $total_three_am   += $row->three_am;  
-                            $total_four_am    += $row->four_am;  
-                            $total_five_am    += $row->five_am;  
+                            $total_eight_pm   += $row->eight_pm;
+                            $total_nine_pm    += $row->nine_pm;
+                            $total_ten_pm     += $row->ten_pm;
+                            $total_eleven_pm += $row->eleven_pm;
+                            $total_tweelve_pm += $row->tweelve_pm;
+                            $total_one_am     += $row->one_am;
+                            $total_two_am     += $row->two_am;
+                            $total_three_am   += $row->three_am;
+                            $total_four_am    += $row->four_am;
+                            $total_five_am    += $row->five_am;
+                            $total_six_am    += $row->six_am;
                         ?>
                         <tr>
                             <th width="30"><?php  echo $i++?></th>
@@ -101,6 +103,7 @@
                             <th width="120"><?php echo $row->three_am?></th>
                             <th width="120"><?php echo $row->four_am?></th>
                             <th width="120"><?php echo $row->five_am?></th>
+                            <th width="120"><?php echo $row->six_am?></th>
                             <th width="120"><?php echo $row->present_error?></th>
                             <th width="120"><?php echo $row->total_ot?></th>
                             <th width="120"><?php echo ''?></th>
@@ -123,6 +126,7 @@
                         <th><?php echo $total_three_am;?></th>
                         <th><?php echo $total_four_am;?></th>
                         <th><?php echo $total_five_am;?></th>
+                        <th><?php echo $total_six_am;?></th>
                         <th><?php echo $total_error;?></th>
                         <th><?php echo $total_ot;?></th>
                         <th></th>
