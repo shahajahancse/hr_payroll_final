@@ -11,7 +11,7 @@
 <body>
 
 <div style=" margin:0 auto;  width:850px;">
-<?php 
+<?php
 // $emp_id = $values["emp_id"][1];
 $data1['unit_id'] = $unit_id;//$this->db->where("emp_id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
 $this->load->view("head_english",$data1);
@@ -32,17 +32,17 @@ $num_of_days 	= date("t",strtotime($grid_date));
   <thead>
     <tr>
       <th style="padding:5px">SL</th>
-      <th style="padding:5px">Line</th> 
-      <th style="padding:5px">Emp</th> 
+      <th style="padding:5px">Line</th>
+      <th style="padding:5px">Emp</th>
       <th style="padding:5px">Gross Sal</th>
       <th style="padding:5px">Per Day Salary</th>
       <th style="padding:5px">OT Hour</th>
-      <th style="padding:5px">EOT Hour</th>   
-      <th style="padding:5px">OT Amount</th> 
-      <th style="padding:5px">EOT Amount</th> 
-      <th style="padding:5px">Night Allowence</th> 
-      <th style="padding:5px">Holiday Allowence</th> 
-      <th style="padding:5px">Ifter Allowence</th> 
+      <th style="padding:5px">EOT Hour</th>
+      <th style="padding:5px">OT Amount</th>
+      <th style="padding:5px">EOT Amount</th>
+      <th style="padding:5px">Night Allowence</th>
+      <th style="padding:5px">Holiday Allowence</th>
+      <th style="padding:5px">Ifter Allowence</th>
       <th style="padding:5px">Total Salary</th>
     </tr>
   </thead>
@@ -94,5 +94,7 @@ $num_of_days 	= date("t",strtotime($grid_date));
 </table>
 </div>
 </div>
+<br><br>
 </body>
 </html>
+<?php exit(); ?>

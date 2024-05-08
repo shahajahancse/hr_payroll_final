@@ -87,17 +87,17 @@
                        if (!empty($pr_line)) {foreach ($pr_line as $key => $pr_lines) {?>
                         <tr>
                             <td><?php echo $key + 1  ?></td>
-                            <td><?php echo $pr_lines["emp_name"] ?></td>
+                            <td><?php echo $pr_lines["name_en"] ?></td>
                             <td><?php echo $pr_lines["line_name_en"] ?></td>
                             <td><?php echo $pr_lines["unit_name"] ?></td>
                             <td><?php
                             $samari_line=$pr_lines["attn_sum_line_id"];
-                            $this->db->where('line_id', $samari_line);
+                            $this->db->where('id', $samari_line);
                             $query = $this->db->get('pr_line_num')->row();
                             echo $query->line_name_en
                             ?></td>
                             <td>
-                                <a href="<?=base_url('line_wise_desig/line_wise_desig_delete') . '/' . $pr_lines["id"]?>"
+                                <a href="<?=base_url('line_wise_desig/line_delete') . '/' . $pr_lines["emp_id"]?>"
                                     class="btn btn-danger center-text" role="button">Delete</a>
                             </td>
                         </tr>

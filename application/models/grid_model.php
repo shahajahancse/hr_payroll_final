@@ -455,7 +455,7 @@ class Grid_model extends CI_Model{
 		$this->db->from('emp_line_num as num');
 		$this->db->from('pr_emp_shift_log as log');
 		$this->db->where("num.id = com.emp_line_id");
-		$this->db->where("log.emp_id = com.id");
+		$this->db->where("log.emp_id = com.emp_id");
 		$this->db->where("log.shift_log_date", $date);
         $this->db->where("com.unit_id", $unit_id);
 		$this->db->group_by("num.id");
@@ -548,11 +548,12 @@ class Grid_model extends CI_Model{
 			SUM( CASE WHEN log.out_time > '02:00:00' AND log.out_time <= '03:00:00' THEN 1 ELSE 0 END ) AS three_am,
 			SUM( CASE WHEN log.out_time > '03:00:00' AND log.out_time <= '04:00:00' THEN 1 ELSE 0 END ) AS four_am,
 			SUM( CASE WHEN log.out_time > '04:00:00' AND log.out_time <= '05:00:00' THEN 1 ELSE 0 END ) AS five_am,
+			SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '06:00:00' THEN 1 ELSE 0 END ) AS six_am,
 		");
 
 		$this->db->from("emp_line_num as num");
 		$this->db->join("pr_emp_com_info as com", "num.id = com.emp_line_id", "left");
-		$this->db->join("pr_emp_shift_log as log", "com.id = log.emp_id", "left");
+		$this->db->join("pr_emp_shift_log as log", "com.emp_id = log.emp_id", "left");
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.present_status","P");

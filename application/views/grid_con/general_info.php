@@ -48,7 +48,7 @@
 		<?php $i= 1;foreach($values as $row){?>
 		<tr>
 			<td class="text-center"><?php echo $i++?></td>
-			<td class="text-center"><?php echo $row->emp_id?></td> 
+			<td class="text-center"><?php echo $row->emp_id?></td>
 			<td class="text-center"><?php echo $row->name_en?></td>
 			<td class="text-center"><?php echo $row->dept_name?></td>
 			<td class="text-center"><?php echo $row->sec_name_en?></td>
@@ -58,7 +58,7 @@
 			<td class="text-center"><?php echo $row->emp_sal_gra_id?></td>
 			<td class="text-center"><?php echo $row->gross_sal?></td>
 			<td class="text-center"><?php echo $row->nid_dob_id?></td>
-			<td class="text-center"><?php echo date('d/m/Y',strtotime($row->emp_dob))?></td>  
+			<td class="text-center"><?php echo date('d/m/Y',strtotime($row->emp_dob))?></td>
 			<td class="text-center"><?php echo $row->father_name?></td>
 			<td class="text-center"><?php echo $row->mother_name?></td>
 			<td class="text-center"><?php echo $row->spouse_name?></td>
@@ -92,4 +92,6 @@
 	</div>
 	<div style="page-break-after: always;"></div>
 </body>
+<br><br>
 </html>
+<?php exit(); ?>

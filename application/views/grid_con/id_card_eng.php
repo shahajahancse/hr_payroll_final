@@ -95,7 +95,7 @@
           <p><img src="<?php echo base_url('/images'.'/'.$image)?>" style="height: 30px;width: 50px;margin-top:5px"></p>
           <h6>Honeywell Garments Ltd.</h6>
           <img src="<?php echo base_url('/uploads/photo'.'/'.$value->img_source)?>" alt="" class="box-img">
-          <p><b><?php echo $value->name_en?></b></p> 
+          <p><b><?php echo $value->name_en?></b></p>
           <p><b><?php echo $value->line_name_en?></b></p>
           <div class="left_content">
             <p>Department : <b><?php echo $value->dept_name?></b></p>
@@ -124,12 +124,12 @@
           <p>Vill: <b><?php echo $value->per_village?></b>, Post: <b><?php echo $value->post_name_en?></b>,</p>
           <p>Upazila: <b><?php echo $value->upa_name_en?></b>, District: <b><?php echo $value->dis_name_en?></b></p>
           <p class="text-center bg-info" style="width:100% ; border-radius: 10px 10px 0 0;position: absolute;bottom: -1px;left: -1px;height: 26px;"></p>
-        </div> 
+        </div>
         <div class="page_break"></div>
-      </div>  
+      </div>
       <?php }?>
-  </div>   
-      
+  </div>
+
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -138,3 +138,4 @@
 </body>
 
 </html>
+<?php exit(); ?>

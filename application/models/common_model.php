@@ -239,9 +239,9 @@ class Common_model extends CI_Model{
 			$this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Input Man']);
 			$this->db->group_by("log.shift_log_date");
-			$d['Supervisor'] = $this->db->get()->row();
+			$d['Input Man'] = $this->db->get()->row();
 		} else {
-			$d['Supervisor'] = new stdClass();
+			$d['Input Man'] = new stdClass();
 		}
 		return $d;
 	}
