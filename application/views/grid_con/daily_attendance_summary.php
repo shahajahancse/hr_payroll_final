@@ -46,7 +46,7 @@
 				<th class="text-center">Remark</th>
 			</tr>
             <?php
-            dd($results);
+            // dd($results['group_data']);
                 $i=1;
                 $sumAllEmp=$sumAllPresent=$sumAllPresent=$sumAllAbsent=$sumAllMale=$sumAllFemale=$sumAllLeave=$sumAllLate=0;
                 $tt=$pr=$ab= array();
