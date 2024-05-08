@@ -97,7 +97,7 @@
                             echo $query->line_name_en
                             ?></td>
                             <td>
-                                <a href="<?=base_url('line_wise_desig/line_delete') . '/' . $pr_lines["emp_id"]?>"
+                                <a href="<?=base_url('setting_con/line_delete') . '/' . $pr_lines["emp_id"]?>"
                                     class="btn btn-danger center-text" role="button">Delete</a>
                             </td>
                         </tr>
