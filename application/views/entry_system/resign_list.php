@@ -18,6 +18,12 @@
     .tables th, .tables td{
         padding: 0px !important;
     }
+    input[type=number] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+        font-size: 15px;
+        font-family: SutonnyMJ;
+    }
 </style>    
 
 <div class="content">
@@ -180,26 +186,26 @@
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">চলতি মাসের ওভার টাইম  </td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="ot_eot"></span></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="ot_rate"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="per_day_rate"></td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="total_ot_rate"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">হাজিরা বোনাস </td>
                                 <td style="border: 1px solid #d6d1d1 !important;">০</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০.০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="per_day_rate"></td>
                                 <td style="border: 1px solid #d6d1d1 !important;">০</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important; width:51%;">চাকুরী হইতে অবসান এর নোটিশ পে বাংলাদেশ শ্রম আইন ২০০৬ এর ধারা ২৬ (১)</td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name="resign_pay_day" id="resign_pay_day"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="per_day_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="total_resign_pay_day" style="font-size: 15px;font-family: SutonnyMJ;"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">অতিরিক্ত ক্ষতিপূরণ </td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name="extra_payoff" id="extra_payoff"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="per_day_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="total_extra_payoff" style="font-size: 15px;font-family: SutonnyMJ;"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">জমাকৃত অর্জিত ছুটির দিন ( ৫৬৩) উপস্থিতি</td>
@@ -209,13 +215,13 @@
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">সার্ভিস বেনিফিট   </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০   </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৪১০.১৮</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="service_benifit" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="service_benifit_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="total_service_benifit" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;" colspan="3">অন্যান্য পাওনাদি</td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name="another_deposit"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;" colspan="3">মোট প্রাপ্য টাকা</td>
@@ -226,9 +232,9 @@
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">নোটিশ পিরিয়ড কম বা না দেয়ার কারনে কোম্পানীর প্রাপ্য বাবদ কর্তন (মোট মজুরি থেকে)</td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name=""></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name=""></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name=""></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">ষ্ট্যাম্প বাবদ কর্তন</td>
@@ -244,7 +250,7 @@
                             </tr>
                              <tr>
                                 <td colspan="3" style="border: 1px solid #d6d1d1 !important;">অগ্রীম বেতন</td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name=""></td>
                             </tr>
                             <tr>
                                 <td colspan="3" style="border: 1px solid #d6d1d1 !important;">মোট কর্তন</td>
@@ -318,7 +324,8 @@
                 $("#total1").html( parseFloat(employeeData.working_days* calculatePerDayRate(employeeData.gross_sal)).toFixed(2));
                 $("#ot_eot").html((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) );
                 $("#total_ot_rate").html(parseFloat((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) * calculateOtRate(employeeData.gross_sal)).toFixed(2));
-
+                $('.total_resign_pay_day').html(0);
+                $('.total_extra_payoff').html(0);
                 // Function to calculate job duration
                 function calculateJobDuration(startDate, endDate) {
                     var start = new Date(startDate);
@@ -331,20 +338,106 @@
                     days = days % 30;
                     return "<span style='font-family:SutonnyMJ'> " + years + " </span>  বছর <span style='font-family:SutonnyMJ'>" + months + "</span> মাস <span style='font-family:SutonnyMJ'>" + days + "</span> দিন";
                 }
+
+                //  employeeData.emp_join_date, 
+                // employeeData.resign_date
+
+
+                // calculate service benifit eligiblity
+
+                $(".service_benifit").html(calculateServiceBenifit(employeeData.emp_join_date, employeeData.resign_date));
+                $(".service_benifit_rate").html(parseFloat(calculateBasicSalary(employeeData.gross_sal)/30).toFixed(2));
+
+                function calculateServiceBenifit(startDate, endDate) {
+                    var start = new Date(startDate);
+                    var end = new Date(endDate);
+                    var duration = end - start;
+                    var days = duration / (1000 * 60 * 60 * 24);
+                    var years = Math.floor(days / 365);
+                    days = days % 365;
+                    var months = Math.floor(days / 30);
+                    days = days % 30;
+                    if (years == 5 && months < 11) {
+                        return 14*5;
+                    }else if (years == 5 && months > 11) {
+                        return 14*6;
+                    }else if (years == 6 && months  < 11) {
+                        return 14*6;
+                    }else if (years == 6 && months  > 11) {
+                        return 14*7;
+                    } else if (years == 7 && months  < 11) {
+                        return 14*7;
+                    }else if (years == 7 && months  > 11) {
+                        return 14*8;
+                    }else if (years == 8 && months  > 11) {
+                        return 14*9;
+                    }else if (years == 8 && months  < 11) {
+                        return 14*8;
+                    } else if (years == 9 && months  > 11) {
+                        return 14*10;
+                    } else if (years == 9 && months  < 11) {
+                        return 14*9;
+                    } else if (years == 10 && months < 11) {
+                        return 14*10;
+                    } else if (years == 10 && months > 11) {
+                        return 14*111;
+                    } else if (years == 11 && months < 11) {
+                        return 14*11;
+                    }else if (years == 11 && months > 11) {
+                        return 14*12;
+                    }  else if (years == 12 && months < 11) {
+                        return 14*12;
+                    }else if (years == 12 && months > 11) {
+                        return 14*13;
+                    } else if (years == 13 && months < 11) {
+                        return 14*13;
+                    } else if (years == 13 && months > 11) {
+                        return 14*14;
+                    }  else if (years == 14 && months < 11) {
+                        return 14*14;
+                    } else if (years == 14 && months > 11) {
+                        return 14*15;
+                    } else if (years == 15 && months < 11) {
+                        return 14*15;
+                    } else if (years == 15 && months > 11) {
+                        return 14*16;
+                    } else{
+                        return 0;
+                    }
+                }
+                
+
+
+
+
                 // Function to calculate basic salary (assuming it's 40% of the gross salary)
                 function calculateBasicSalary(grossSalary) {
                     var basic = ((parseFloat(grossSalary) -2450)/1.5);
                     return basic.toFixed(2);
                 }
                 function calculateOtRate(grossSalary) {
-                    var basic = (((parseFloat(grossSalary)-2450)/ 208)  * 2  );
+                    var basic = (parseFloat((((grossSalary)-2450)/ 1.5)/104));
                     return basic.toFixed(2);
                 }
                 function calculatePerDayRate(grossSalary) {
                     var basic = ((parseFloat(grossSalary)/30));
                     return basic.toFixed(2);
                 }
+                
 
+                $("#resign_pay_day").on("input", function() {
+                    var resign_pay_day = parseFloat($(this).val());
+                    var ot_rate = parseFloat($(".ot_rate").html());
+                    var total_resign_pay_day = resign_pay_day * ot_rate;
+                   return  $(".total_resign_pay_day").html(total_resign_pay_day.toFixed(2));
+                });
+
+                $("#extra_payoff").on("input", function() {
+                    var extra_payoff = parseFloat($(this).val());
+                    var ot_rate = parseFloat($(".ot_rate").html());
+                    var total_extra_payoff = extra_payoff * ot_rate;
+                   return  $(".total_extra_payoff").html(total_extra_payoff.toFixed(2));
+                });
             }
         });
     }
