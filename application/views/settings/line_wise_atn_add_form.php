@@ -317,11 +317,16 @@ $(document).ready(function() {
 		var url = '<?= base_url('setting_con/line_add')?>';
 		var checkboxes = document.getElementsByName('emp_id[]');
 		var sql = get_checked_value(checkboxes);
-
+        let numbersArray = sql.split(",");
 		if (sql == '') {
 			alert('Please select employee Id');
 			return false;
 		}
+
+        if (numbersArray.length > 1) {
+            alert('Please select max one employee');
+            return false;
+        }
 
 
 
