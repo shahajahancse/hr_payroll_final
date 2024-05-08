@@ -71,9 +71,9 @@
 					<?php $total_ot = $row->ot + $row->eot + ($row->modify_eot) - $row->deduction_hour; ?>
 					<td style="text-align:center; padding:2px"><?php echo $total_ot; ?></td>
 					<?php } ?>
-					<td style="padding:10px"><?=$row->personal_mobile?></td>
-					<td style="padding:10px"></td>
-					<td style="padding:10px"></td>
+					<td style="padding:20px"><?=$row->personal_mobile?></td>
+					<td style="padding:20px"></td>
+					<td style="padding:20px"></td>
 				</tr>
 				<?php $emp_sec = $row->emp_sec_id; ?>
 			<?php } ?>
