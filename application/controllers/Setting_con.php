@@ -525,6 +525,7 @@ class Setting_con extends CI_Controller {
 		$line_id = $_POST['line_id'];
 		$grid_data = $_POST['spl'];
 		$emp_id = explode(',', trim($grid_data));
+		dd($_POST);
 		foreach ($emp_id as $key => $value) {
             $this->db->where('emp_id', $value);
             $this->db->update('pr_emp_com_info', array('attn_sum_line_id' => $line_id));
