@@ -431,7 +431,6 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$status = $this->input->post('status');
 		$emp_id = explode(',', trim($grid_data));
-		dd($_POST);
 
 		$data["values"] = $this->Grid_model->holiday_weekend_attn_report($emp_id, $date, $status, $unit_id);
 		$data["date"]		= $date;
