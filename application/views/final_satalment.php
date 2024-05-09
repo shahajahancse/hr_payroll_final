@@ -16,6 +16,9 @@
             border: 1px solid #000000;
             padding:2px;
         }
+        table tr td {
+            font-family:sutonnyMJ;
+        }
     </style>
 </head>
 
@@ -46,7 +49,7 @@
             <h5 class="text-center" style="border-bottom: 2px solid black;width: 300px;margin: 0 auto;">চুড়ান্ত (হিসাব) নিস্পত্তি প্রতিবেদন</h5>
         </div>
 
-        <?php dd($values); foreach($values as $row){?>
+        <?php  foreach($values as $row){?>
             <div class="ml-3">
                 <h6>প্রতি,</h6>
                 <table class="table table-bordered">
@@ -55,44 +58,36 @@
                     </tr> -->
                     <tr>
                         <td>নাম</td>
-                        
                         <td> <?php echo $row->name_bn?></td>
                     </tr>
                     <tr>
                         <td>কার্ড</td>
-                        
                         <td>  <?php echo $row->emp_id?></td>
                     </tr>
                     <tr>
                         <td>পদবী</td>
-                        
                         <td>  <?php echo $row->desig_bangla?></td>
                     </tr>
                 
                     <tr>
                         <td>সেকশন</td>
-                        
                         <td> <?php echo $row->sec_name_bn?></td>
                     </tr>
                     <tr>
                         <td>লাইন</td>
-                        
                         <td> <?php echo $row->line_name_bn?></td>
                     </tr>
                     <tr>
                         <td>যোগদানের তারিখ</td>
-                        
                         <td style="font-size:19px;font-family:SutonnyMJ"> <?php echo $join_date = date('d-m-Y', strtotime($row->emp_join_date))?> Bs</td>
                     </tr>
                     <?php $last_day = $this->db->select('left_date')->where('emp_id',$row->emp_id)->get('pr_emp_left_history')->row('left_date')?>
                     <tr>
                         <td>শেষ কর্মদিবস</td>
-                        
                         <td style=" font-size:19px;font-family:SutonnyMJ"> <?php echo $last_day= date('d-m-Y', strtotime('-1 day'.$last_day))?> Bs</td>
                     </tr>
                     <tr>
                         <td>চাকুরীকাল</td>
-                        
                         <td>
                         <?php 
                             $date1 = new DateTime($join_date);
@@ -104,18 +99,15 @@
                     </tr>
                     <tr>
                         <td>মোট বেতন</td>
-                        
                         <td style=" font-size:19px;font-family:SutonnyMJ"> <?php echo $row->gross_sal?> UvKv</td>
                     </tr>
                     <tr>
                         <td>মূল বেতন</td>
-                        
-                        <td style="font-size:19px;font-family:SutonnyMJ"> <?php echo ($row->gross_sal -2450)?> UvKv</td>
+                        <td style="font-size:19px;font-family:SutonnyMJ"> <?php echo round(($row->gross_sal -2450)/1.5)?> UvKv</td>
                     </tr>
                     <tr>
                         <td>প্রতি ঘন্টার ওভার টাইম হার</td>
-                        
-                        <td style="font-size:19px;font-family:SutonnyMJ"> <?php echo round($row->gross_sal * 2  / 208,2) ?>UvKv </td>
+                        <td style="font-size:19px;font-family:SutonnyMJ"> <?php echo round((($row->gross_sal -2450)/1.5)/104,2) ?> UvKv </td>
                     </tr>
                 </table>
             </div>
@@ -130,86 +122,86 @@
                 </tr>
                 <tr>
                     <td>ডিসেম্বর - ২০২৪/</td>
-                    <td>১৩  </td>
-                    <td>৬৭৪.৪৫  </td>
-                    <td>৮৭৬৮</td>
+                    <td><?php echo $total_value->working_days?> </td>
+                    <td><?php echo $total_value->per_day_rate?></td>
+                    <td><?php echo $total_value->working_days* $total_value->per_day_rate?></td>
                 </tr>
                 <tr>
-                    <td>চলতি মাসের ওভার টাইম  </td>
-                    <td>১৮  </td>
-                    <td>১১৮.৩২  </td>
-                    <td>২১৩০</td>
+                    <td>চলতি মাসের ওভার টাইম </td>
+                    <td><?php echo $total_value->ot_eot?></td>
+                    <td><?php echo $total_value->ot_rate?> </td>
+                    <td><?php echo $total_value->ot_eot * $total_value->ot_rate?></td>
                 </tr>
                 <tr>
                     <td>হাজিরা বোনাস </td>
                     <td>০</td>
-                    <td>০.০</td>
-                    <td>০</td>
+                    <td><?php echo $total_value->ot_rate?></td>
+                    <td><?php echo $c=0;?></td>
                 </tr>
                 <tr>
                     <td>চাকুরী হইতে অবসান এর নোটিশ পে বাংলাদেশ শ্রম আইন ২০০৬ এর ধারা ২৬ (১)</td>
-                    <td>০</td>
-                    <td>৪১০.১৮</td>
-                    <td>০</td>
+                    <td><?php echo $total_value->resign_pay_day?></td>
+                    <td><?php echo $total_value->service_benifit_rate?></td>
+                    <td><?php echo $total_value->resign_pay_day * $total_value->service_benifit_rate?></td>
                 </tr>
                 <tr>
                     <td>অতিরিক্ত ক্ষতিপূরণ </td>
-                    <td>০ </td>
-                    <td>৪১০.১৮ </td>
+                    <td><?php echo $total_value->extra_payoff?></td>
+                    <td><?php echo $total_value->service_benifit_rate?></td>
                     <td>০</td>
                 </tr>
                 <tr>
                     <td>জমাকৃত অর্জিত ছুটির দিন ( ৫৬৩) উপস্থিতি</td>
-                    <td>৩১.২৮</td>
-                    <td>৬৯৬.৯৩</td>
-                    <td>২১৭৯৯</td>
+                    <td><?php echo $total_value->earn_leave?></td>
+                    <td><?php echo $total_value->per_day_rate?></td>
+                    <td><?php echo $total_value->per_day_rate*$total_value->earn_leave?></td>
                 </tr>
                 <tr>
                     <td>সার্ভিস বেনিফিট   </td>
-                    <td>০   </td>
-                    <td>৪১০.১৮</td>
-                    <td>০</td>
+                    <td><?php echo $total_value->service_benifit?></td>
+                    <td><?php echo $total_value->service_benifit_rate?></td>
+                    <td><?php echo $total_value->service_benifit * $total_value->service_benifit_rate?></td>
                 </tr>
                 <tr>
                     <td colspan="3">অন্যান্য পাওনাদি</td>
-                    <td >০</td>
+                    <td ><?php echo $total_value->another_deposit?></td>
                 </tr>
                 <tr>
                     <td colspan="3">মোট প্রাপ্য টাকা</td>
-                    <td >৩২৬৯৯</td>
+                    <td ><?php echo $total_value->net_pay + $total_value->total_deduct ?></td>
                 </tr>
                 <tr>
                     <td colspan="4">কর্তন</td>
                 </tr>
                 <tr>
                     <td>নোটিশ পিরিয়ড কম বা না দেয়ার কারনে কোম্পানীর প্রাপ্য বাবদ কর্তন (মোট মজুরি থেকে)</td>
-                    <td>০</td>
-                    <td>৪১০.১৮</td>
-                    <td>০</td>
+                    <td><?php echo $total_value->notice_deduct?></td>
+                    <td><?php echo $total_value->service_benifit_rate?></td>
+                    <td><?php echo $total_value->notice_deduct*$total_value->service_benifit_rate?></td>
                 </tr>
                 <tr>
                     <td>ষ্ট্যাম্প বাবদ কর্তন</td>
                     <td>০</td>
-                    <td>১০.১০</td>
+                    <td>১০.০০</td>
                     <td>১০</td>
                 </tr>
                 <tr>
                     <td>অনুপস্থিত বাবদ কর্তন (মূল মজুরি থেকে)</td>
-                    <td>০</td>
-                    <td>৪১০.১৮</td>
-                    <td>১০</td>
+                    <td><?php echo $total_value->absent?></td>
+                    <td><?php echo $total_value->service_benifit_rate?></td>
+                    <td><?php echo $total_value->absent*$total_value->service_benifit_rate?></td>
                 </tr>
                 <tr>
                     <td colspan="3">অগ্রীম বেতন</td>
-                    <td>০</td>
+                    <td><?php echo $total_value->advanced_salary?></td>
                 </tr>
                 <tr>
                     <td colspan="3">মোট কর্তন</td>
-                    <td>১০</td>
+                    <td><?php echo $total_value->total_deduct?></td>
                 </tr>
                 <tr>
                     <td colspan="3">নিট প্রাপ্য / প্রদেয় টাকা</td>
-                    <td>৩২৮৬৮</td>
+                    <td><?php echo $total_value->net_pay?></td>
                 </tr>
             </table>
         <?php }?>

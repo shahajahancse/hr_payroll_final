@@ -2085,6 +2085,8 @@ class Grid_con extends CI_Controller {
 		$status = $this->input->post('status');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
+		$data['total_value']= $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
+		// dd($data['total_value']);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$this->load->view('final_satalment',$data,false);
 	}
