@@ -753,7 +753,7 @@ class Grid_model extends CI_Model{
 		}
 	}
 
-	function grid_daily_report($date, $grid_emp_id, $status){
+	function ot_acknowledgement_sheet($date, $grid_emp_id, $status){
 		$this->db->select('
 			pr_emp_com_info.emp_id,
 			pr_emp_com_info.gross_sal,
@@ -788,7 +788,7 @@ class Grid_model extends CI_Model{
 
 		$this->db->order_by('pr_emp_com_info.emp_line_id','ASC');
 		$this->db->group_by('pr_emp_com_info.emp_id');
-		$query = $this->db->get()->result();
+		$query = $this->db->get()->result_array();
 		// dd($query);
 		if(empty($query)){
 			echo "Requested list is empty";
@@ -8657,7 +8657,7 @@ class Grid_model extends CI_Model{
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->order_by("pr_emp_com_info.emp_id");
 		$this->db->group_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get()->result();		
+		$query = $this->db->get()->result();
 		return $query;
 
 	}

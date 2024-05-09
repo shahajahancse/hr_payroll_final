@@ -472,7 +472,7 @@ class Grid_con extends CI_Controller {
 		$spl = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($spl));
 
-		$data["values"] = $this->Grid_model->grid_daily_report($date, $grid_emp_id, $status);
+		$data["values"] = $this->Grid_model->ot_acknowledgement_sheet($date, $grid_emp_id, $status);
 		$data["date"]			= $date;
 		$data["status"]			= $status;
 		$data["unit_id"] 		= $unit_id;
@@ -2674,7 +2674,7 @@ class Grid_con extends CI_Controller {
 			$get_all[$key]->eot_hour = $dd->eot_hour;
 			$get_all[$key]->status = $dd->status;
 		}
-		
+
 		// dd($get_all[0]->status);
 		echo json_encode($get_all[0]);
 	}
