@@ -463,6 +463,29 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/last_increment_promotion',$data);
 		}
 	}
+
+	function ot_acknowledgement_sheet()
+	{
+		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
+		$status = $this->input->post('status');
+		$unit_id = $this->input->post('unit_id');
+		$spl = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($spl));
+
+		$data["values"] = $this->Grid_model->grid_daily_report($date, $grid_emp_id, $status);
+		$data["date"]			= $date;
+		$data["status"]			= $status;
+		$data["unit_id"] 		= $unit_id;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/ot_acknowledgement_sheet',$data);
+		}
+	}
 	// ============================== end last increment or promotion Report ===============
 
 

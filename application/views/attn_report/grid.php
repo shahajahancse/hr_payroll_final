@@ -263,6 +263,10 @@
 							<?php if(in_array(104,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="last_increment_promotion(2)">Last Promotion Check</button>
 							<?php } ?>
+							<?php if(in_array(105,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="ot_acknowledgement_sheet(1)">OT Acknowledgement sheet</button>
+							<button class="btn input-sm sbtn" onclick="ot_acknowledgement_sheet(2)">OT Acknowledgement Female</button>
+							<?php } ?>
 						</div>
 						<!-- Continuous Reports end -->
 

@@ -753,6 +753,50 @@ class Grid_model extends CI_Model{
 		}
 	}
 
+	function grid_daily_report($date, $grid_emp_id, $status){
+		$this->db->select('
+			pr_emp_com_info.emp_id,
+			pr_emp_com_info.gross_sal,
+			pr_emp_com_info.emp_join_date,
+			pr_emp_per_info.name_en,
+			pr_emp_per_info.personal_mobile,
+
+			emp_designation.desig_name,
+			emp_depertment.dept_name,
+			emp_section.sec_name_en,
+			emp_line_num.line_name_en,
+			pr_emp_shift_log.ot,
+			pr_emp_shift_log.eot,
+			pr_emp_shift_log.deduction_hour,
+			pr_emp_shift_log.modify_eot,
+		');
+
+		$this->db->from('pr_emp_com_info');
+		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+		$this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id', 'LEFT');
+		$this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id', 'LEFT');
+		$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
+		$this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id', 'LEFT');
+		$this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+		$this->db->where('pr_emp_shift_log.shift_log_date', $date);
+
+		$this->db->where('pr_emp_shift_log.ot !=', 0);
+		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+		if ($status == 2) {
+			$this->db->where('pr_emp_per_info.gender', "Female");
+		}
+
+		$this->db->order_by('pr_emp_com_info.emp_line_id','ASC');
+		$this->db->group_by('pr_emp_com_info.emp_id');
+		$query = $this->db->get()->result();
+		// dd($query);
+		if(empty($query)){
+			echo "Requested list is empty";
+			exit;
+		}else{
+			return $query;
+		}
+	}
 	//-------------------------------------------------------------------------------------------------
 	// Daily Cost Sheet
 	//-------------------------------------------------------------------------------------------------
