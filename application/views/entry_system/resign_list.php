@@ -18,6 +18,12 @@
     .tables th, .tables td{
         padding: 0px !important;
     }
+    input[type=number] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+        font-size: 15px;
+        font-family: SutonnyMJ;
+    }
 </style>    
 
 <div class="content">
@@ -123,8 +129,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url('entry_system_con/add_final_satalment')?>" method="post">
-                        <input type="hidden" name="emp_id" id="emp_id" required>
+                    <form action="#" method="post" id="form">
+                        <!-- <input type="hidden" name="emp_id" id="emp_id"> -->
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-4">
                                 নাম	:	<span id="full_name"></span>
@@ -161,7 +167,7 @@
                         </div>
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-4">
-                                প্রতি ঘন্টার ওভার টাইম হার	:	<span id="ot_rate" style="font-family:SutonnyMJ"> </span> টাকা
+                                প্রতি ঘন্টার ওভার টাইম হার	:	<span class="ot_rate" style="font-family:SutonnyMJ"> </span> টাকা
                         </div>
 
                     <table class="table table-bordered ml-3 inputs tables" style="border: 1px solid #d6d1d1 !important;">
@@ -172,63 +178,63 @@
                                 <th class="text-center" style="border: 1px solid #d6d1d1 !important;">টাকা</th>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #d6d1d1 !important;"><span id='resign_year'></span></td>
-                                <td style="border: 1px solid #d6d1d1 !important;">১৩  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৬৭৪.৪৫  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৮৭৬৮</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span id='resign_date'></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="working_days"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="per_day_rate"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="total1"></span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">চলতি মাসের ওভার টাইম  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">১৮  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">১১৮.৩২  </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">২১৩০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="ot_eot"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="ot_rate"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="total_ot_rate"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">হাজিরা বোনাস </td>
                                 <td style="border: 1px solid #d6d1d1 !important;">০</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০.০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="ot_rate"></td>
                                 <td style="border: 1px solid #d6d1d1 !important;">০</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important; width:51%;">চাকুরী হইতে অবসান এর নোটিশ পে বাংলাদেশ শ্রম আইন ২০০৬ এর ধারা ২৬ (১)</td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name="resign_pay_day" id="resign_pay_day"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="service_benifit_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="total_resign_pay_day" style="font-size: 15px;font-family: SutonnyMJ;" min="0"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">অতিরিক্ত ক্ষতিপূরণ </td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name="extra_payoff" id="extra_payoff"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="service_benifit_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="total_extra_payoff" style="font-size: 15px;font-family: SutonnyMJ;"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">জমাকৃত অর্জিত ছুটির দিন ( ৫৬৩) উপস্থিতি</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৩১.২৮</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৬৯৬.৯৩</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">২১৭৯৯</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" style="font-family:SutonnyMJ;font-size: 15px;" class="earn_leave form-control"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="per_day_rate"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="total_earn_leave"></span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">সার্ভিস বেনিফিট   </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০   </td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৪১০.১৮</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="service_benifit" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="service_benifit_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="total_service_benifit" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;" colspan="3">অন্যান্য পাওনাদি</td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="another_deposit form-control" name="another_deposit"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;" colspan="3">মোট প্রাপ্য টাকা</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৩২৬৯৯</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span id="total_get" style="font-family:sutonnyMJ;font-size: 15px;"></span"></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;" colspan="4">কর্তন</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">নোটিশ পিরিয়ড কম বা না দেয়ার কারনে কোম্পানীর প্রাপ্য বাবদ কর্তন (মোট মজুরি থেকে)</td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name="notice_deduct" id="notice_deduct"></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="service_benifit_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="total_notice_deduct_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">ষ্ট্যাম্প বাবদ কর্তন</td>
@@ -238,26 +244,26 @@
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">অনুপস্থিত বাবদ কর্তন (মূল মজুরি থেকে)</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">০</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৪১০.১৮</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">১০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span id="absent" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="service_benifit_rate" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="absent_deduct" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
                             </tr>
                              <tr>
                                 <td colspan="3" style="border: 1px solid #d6d1d1 !important;">অগ্রীম বেতন</td>
-                                <td style="border: 1px solid #d6d1d1 !important;"><input type="text" class="form-control" name=""></td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><input type="number" class="form-control" name="advanced_salary" id="advanced_salary" ></td>
                             </tr>
                             <tr>
                                 <td colspan="3" style="border: 1px solid #d6d1d1 !important;">মোট কর্তন</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">১০</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span class="total_deduct" style="font-size: 15px;font-family: SutonnyMJ;"></span></td>
                             </tr>
                             <tr>
                                 <td colspan="3" style="border: 1px solid #d6d1d1 !important;">নিট প্রাপ্য / প্রদেয় টাকা</td>
-                                <td style="border: 1px solid #d6d1d1 !important;">৩২৮৬৮</td>
+                                <td style="border: 1px solid #d6d1d1 !important;"><span id="net_pay" style="font-family: SutonnyMJ;font-size: 15px"></span"></td>
                             </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="save_button">Save</button>
                     <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                 </div>
                 </form>
@@ -284,32 +290,51 @@
     });
 </script>
 <script>
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).find("input,textarea,select").val('').end().find("input[type=checkbox], input[type=radio]").prop("checked", "").end().find("option:selected").removeAttr("selected");
+    })
     function final_satalment(id) {
         $.ajax({
             type: "POST",
             url: "<?php echo base_url(); ?>index.php/grid_con/final_satalment",
             data: {id: id},
             success: function (data) {
-                // console.log(data);
-                // return false;
-              // Assuming 'data' contains the JSON response you provided
-                // Parse the JSON response
                 var employeeData = JSON.parse(data);
-
+                // console.log(employeeData);return false;
                 // Set values to respective HTML elements
-                $("#full_name").html(employeeData.values[0].name_bn);
-                $("#card_no").html(employeeData.values[0].emp_id);
-                $("#designation_name").html(employeeData.values[0].desig_bangla);
-                $("#section_name").html(employeeData.values[0].sec_name_bn);
-                $("#year").html(employeeData.values[0].resign_year);
-                $("#joining_date").html(employeeData.values[0].emp_join_date.split('-').reverse().join('-'));
-                var d = new Date(employeeData.values[0].resign_date);
-                d.setDate(d.getDate() - 1);
+                $("#full_name").html(employeeData.name_bn);
+                $("#card_no").html(employeeData.emp_id);
+                $("#designation_name").html(employeeData.desig_bangla);
+                $("#section_name").html(employeeData.sec_name_bn);
+                $("#year").html(employeeData.resign_year);
+                $("#joining_date").html(employeeData.emp_join_date.split('-').reverse().join('-'));
+                var d = new Date(employeeData.resign_date);
+                var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+                var resign_date = d.toLocaleString('bn-BD', { year: 'numeric', month: 'long' });
+                var year_str = "<span style='font-family:sutonnyMJ;font-size:16px'>"+d.getFullYear()+'</span>';
+                $("#resign_date").html(resign_date);
+                $("#resign_date").html(bnMonths[d.getMonth()] + " " + year_str);
                 $("#last_working_date").html(d.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/[^0-9]/g, "-"));
-                $("#job_duration").html(calculateJobDuration(employeeData.values[0].emp_join_date, employeeData.values[0].resign_date));
-                $("#gross_salary").html(employeeData.values[0].gross_sal);
-                $("#basic_salary").html(calculateBasicSalary(employeeData.values[0].gross_sal));
-                $("#ot_rate").html(calculateOtRate(employeeData.values[0].gross_sal));
+                $("#job_duration").html(calculateJobDuration(employeeData.emp_join_date, employeeData.resign_date));
+                $("#gross_salary").html(employeeData.gross_sal);
+                $("#basic_salary").html(calculateBasicSalary(employeeData.gross_sal));
+                $(".ot_rate").html(calculateOtRate(employeeData.gross_sal));
+                $("#working_days").html(employeeData.working_days);
+                $("#absent").html(employeeData.status);
+                $(".per_day_rate").html(calculatePerDayRate(employeeData.gross_sal));
+                $("#total1").html( parseFloat(employeeData.working_days* calculatePerDayRate(employeeData.gross_sal)).toFixed(2));
+                $("#ot_eot").html((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) );
+                $("#total_ot_rate").html(parseFloat((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) * calculateOtRate(employeeData.gross_sal)).toFixed(2));
+                $('.total_resign_pay_day').html(0);
+                $('.total_earn_leave').html(0);
+                $('.total_notice_deduct_rate').html(0);
+                $('.total_extra_payoff').html(0);
+                if(isNaN($(".another_deposit").val())){
+                   $(".another_deposit").val(0);
+                    $("#total_get").html(0);
+                }else{
+                    parseFloat($(".another_deposit").val());
+                }
 
                 // Function to calculate job duration
                 function calculateJobDuration(startDate, endDate) {
@@ -323,17 +348,248 @@
                     days = days % 30;
                     return "<span style='font-family:SutonnyMJ'> " + years + " </span>  বছর <span style='font-family:SutonnyMJ'>" + months + "</span> মাস <span style='font-family:SutonnyMJ'>" + days + "</span> দিন";
                 }
+
+                //  employeeData.emp_join_date, 
+                // employeeData.resign_date
+
+
+                // calculate service benifit eligiblity
+
+                $(".service_benifit").html(calculateServiceBenifit(employeeData.emp_join_date, employeeData.resign_date));
+                $(".service_benifit_rate").html(parseFloat(calculateBasicSalary(employeeData.gross_sal)/30).toFixed(2));
+
+                function calculateServiceBenifit(startDate, endDate) {
+                    var start = new Date(startDate);
+                    var end = new Date(endDate);
+                    var duration = end - start;
+                    var days = duration / (1000 * 60 * 60 * 24);
+                    var years = Math.floor(days / 365);
+                    days = days % 365;
+                    var months = Math.floor(days / 30);
+                    days = days % 30;
+                    if (years == 5 && months < 11) {
+                        return 14*5;
+                    }else if (years == 5 && months > 11) {
+                        return 14*6;
+                    }else if (years == 6 && months  < 11) {
+                        return 14*6;
+                    }else if (years == 6 && months  > 11) {
+                        return 14*7;
+                    } else if (years == 7 && months  < 11) {
+                        return 14*7;
+                    }else if (years == 7 && months  > 11) {
+                        return 14*8;
+                    }else if (years == 8 && months  > 11) {
+                        return 14*9;
+                    }else if (years == 8 && months  < 11) {
+                        return 14*8;
+                    } else if (years == 9 && months  > 11) {
+                        return 14*10;
+                    } else if (years == 9 && months  < 11) {
+                        return 14*9;
+                    } else if (years == 10 && months < 11) {
+                        return 14*10;
+                    } else if (years == 10 && months > 11) {
+                        return 14*111;
+                    } else if (years == 11 && months < 11) {
+                        return 14*11;
+                    }else if (years == 11 && months > 11) {
+                        return 14*12;
+                    }  else if (years == 12 && months < 11) {
+                        return 14*12;
+                    }else if (years == 12 && months > 11) {
+                        return 14*13;
+                    } else if (years == 13 && months < 11) {
+                        return 14*13;
+                    } else if (years == 13 && months > 11) {
+                        return 14*14;
+                    }  else if (years == 14 && months < 11) {
+                        return 14*14;
+                    } else if (years == 14 && months > 11) {
+                        return 14*15;
+                    } else if (years == 15 && months < 11) {
+                        return 14*15;
+                    } else if (years == 15 && months > 11) {
+                        return 14*16;
+                    } else{
+                        return 0;
+                    }
+                }
+                
                 // Function to calculate basic salary (assuming it's 40% of the gross salary)
                 function calculateBasicSalary(grossSalary) {
                     var basic = ((parseFloat(grossSalary) -2450)/1.5);
                     return basic.toFixed(2);
                 }
                 function calculateOtRate(grossSalary) {
-                    var basic = (((parseFloat(grossSalary)-2450)/ 208)  * 2  );
+                    var basic = (parseFloat((((grossSalary)-2450)/ 1.5)/104));
                     return basic.toFixed(2);
                 }
+                function calculatePerDayRate(grossSalary) {
+                    var basic = ((parseFloat(grossSalary)/30));
+                    return basic.toFixed(2);
+                }
+                
 
+                $("#resign_pay_day").on("input", function() {
+                    var resign_pay_day = parseFloat($(this).val());
+                    var ot_rate = parseFloat($(".service_benifit_rate").html());
+                     if (isNaN(resign_pay_day)){
+                        resign_pay_day = 0;
+                        $("#total_get").html(0);
+                     }
+                    var total_resign_pay_day = resign_pay_day * ot_rate;
+                   return  $(".total_resign_pay_day").html(total_resign_pay_day.toFixed(2));
+                });
+
+                $("#extra_payoff").on("input", function() {
+                    var extra_payoff = parseFloat($(this).val());
+                    var ot_rate = parseFloat($(".service_benifit_rate").html());
+                    if (isNaN(extra_payoff)){
+                        extra_payoff = 0;
+                        $("#total_get").html(0);
+                     }
+                    var total_extra_payoff = extra_payoff * ot_rate;
+                   return  $(".total_extra_payoff").html(total_extra_payoff.toFixed(2));
+                });
+
+                $("#notice_deduct").on("input", function() {
+                    var notice_deduct = parseFloat($(this).val());
+                    var notice_deduct_rate = parseFloat($(".service_benifit_rate").html());
+                    if (isNaN(notice_deduct)){
+                        notice_deduct = 0;
+                        $("#total_get").html(0);
+                     }
+                    var total_notice_deduct_rate = notice_deduct * notice_deduct_rate;
+                   return  $(".total_notice_deduct_rate").html(total_notice_deduct_rate.toFixed(2));
+                });
+                $(".earn_leave").on("input", function() {
+                    var earn_leave = parseFloat($(this).val());
+                    var earn_leave_rate = parseFloat($(".per_day_rate").html());
+                    if (isNaN(earn_leave)){
+                        earn_leave = 0;
+                        $("#total_get").html(0);
+                     }
+                    var total_earn_leave = parseFloat((earn_leave/18) * earn_leave_rate);
+                   return  $(".total_earn_leave").html(total_earn_leave.toFixed(2));
+                });
+
+
+                var service_benifit = parseFloat($(".service_benifit").html());
+                var service_benifit_rate = parseFloat($(".service_benifit_rate").html());
+                var total_service_benifit = service_benifit * service_benifit_rate;
+                $(".total_service_benifit").html(total_service_benifit.toFixed(2));
+
+
+                // absent_deduct 
+
+                var absent = parseFloat($("#absent").html());
+                var service_benifit_rate = parseFloat($(".service_benifit_rate").html());
+                var absent_deduct = absent * service_benifit_rate;
+                $(".absent_deduct").html(absent_deduct.toFixed(2));
+
+                // end
+
+                $("#extra_payoff, #resign_pay_day, .another_deposit").val(0);
+
+                var total_get = 0;
+                $("#extra_payoff, #resign_pay_day, .another_deposit, .earn_leave").on("input", function(){
+                    var total_get = 0;
+                    $("#total1, #total_ot_rate, .total_resign_pay_day, .total_extra_payoff, .total_service_benifit").each(function(){
+                        var html = $(this).html();
+                            var value = parseFloat(html);
+                            if (isNaN(value)) {
+                                value = 0;
+                            }
+                            total_get += value;
+                    });
+                    total_get += parseFloat($(".another_deposit").val()) ==NaN ? 0 : parseFloat($(".another_deposit").val());
+                    $("#total_get").html(total_get.toFixed(2));
+                    var total_get = parseFloat($('#total_get').html());
+                    var total_deduct = parseFloat($('.total_deduct').html());
+                    $('#net_pay').html(parseFloat(total_get - total_deduct-10).toFixed(2));
+                });
+                $("#total_get").html(0);
+                 $("#advanced_salary, #notice_deduct").val(0);
+                var total_deduct = 0;
+                
+                $('#advanced_salary, #notice_deduct').on('input', function() {
+                    var total_deduct = 0;
+                    $(".absent_deduct, .total_notice_deduct_rate").each(function(){
+                    var html = $(this).html();
+                    var value = parseFloat(html);
+                    if (isNaN(value)) {
+                        value = 0;
+                    }
+                    total_deduct += value;
+                });
+                    total_deduct += parseFloat($("#advanced_salary").val()) == NaN ? 0 : parseFloat($("#advanced_salary").val());
+                    $(".total_deduct").html(total_deduct.toFixed(2));
+                    var total_get = parseFloat($('#total_get').html());
+                    var total_deduct = parseFloat($('.total_deduct').html());
+                    $('#net_pay').html(parseFloat(total_get - total_deduct -10).toFixed(2));
+                }); 
+                   $(".total_deduct").html(0);
+
+                // var net_pay = total_get.toFixed(2) - total_deduct.toFixed(2);
+
+                // $('#net_pay').html($('#total_get').html() - $('#total_deduct').html());
             }
         });
+
+
+        $('#save_button').on('click', function() {
+                var formData = {
+                    'emp_id'                : $("#card_no").html(),
+                    'working_days'          : $("#working_days").html(),
+                    'per_day_rate'          : $(".per_day_rate").html(),
+                    'ot_eot'                : $("#ot_eot").html(),
+                    'ot_rate'               : $(".ot_rate").html(),
+                    'resign_pay_day'        : $("#resign_pay_day").val(),
+                    'service_benifit_rate'  : $(".service_benifit_rate").html(),
+                    'extra_payoff'          : $("#extra_payoff").html(),
+                    'earn_leave'            : $(".earn_leave").val(),
+                    'service_benifit'       : $(".service_benifit").html(),
+                    'another_deposit'       : $(".another_deposit").val(),
+                    'notice_deduct'         : $("#notice_deduct").val(),
+                    'absent'                : $("#absent").html(),
+                    'advanced_salary'       : $("#advanced_salary").val(),
+                    'total_deduct'          : $(".total_deduct").html(),
+                    'net_pay'               : $("#net_pay").html()
+                };
+                $.ajax({
+                    url: "<?php echo base_url('entry_system_con/add_final_satalment'); ?>",
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        var dataObj = (typeof data == "string") ? JSON.parse(data) : data;
+                        if(dataObj.success == true){
+                            alert('added');
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        console.error('jqXHR:', jqXHR);
+                        console.error('exception:', exception);
+                    }
+                    // }
+                });
+
+
+
+        });
+        // console.log("KO"); return false;
+        // document.getElementById("form").submit();
     }
 </script>
+
+
+
+
+
+
+
+<!-- 
+  -->
+
+

@@ -1357,8 +1357,7 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-    public function resign_list()
-    {
+    public function resign_list(){
         $this->db->select('rs.*, pr_units.unit_name, per.name_en as user_name');
         $this->db->from('pr_emp_resign_history as rs');
         $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
@@ -1976,7 +1975,26 @@ class Entry_system_con extends CI_Controller
 
     }
 
-
-
-
+    public function add_final_satalment(){
+        $data = array(
+            'working_days' => $_POST['working_days'],
+            'per_day_rate' => $_POST['per_day_rate'],
+            'ot_eot' => $_POST['ot_eot'],
+            'ot_rate' => $_POST['ot_rate'],
+            'resign_pay_day' => $_POST['resign_pay_day'],
+            'service_benifit_rate' => $_POST['service_benifit_rate'],
+            'extra_payoff' => $_POST['extra_payoff'],
+            'earn_leave' => $_POST['earn_leave'],
+            'service_benifit' => $_POST['service_benifit'],
+            'another_deposit' => $_POST['another_deposit'],
+            'notice_deduct' => $_POST['notice_deduct'],
+            'absent' => $_POST['absent'],
+            'advanced_salary' => $_POST['advanced_salary'],
+            'total_deduct' => $_POST['total_deduct'],
+            'net_pay' => $_POST['net_pay']
+        );
+    
+        $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);
+        echo json_encode(array('success' => true));
+    }
 }
