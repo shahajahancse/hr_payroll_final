@@ -8,7 +8,7 @@
 
 <div align="center" style=" margin:5px auto 0;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
 
-<?php 
+<?php
 // dd($value);
 	foreach($value as $row){
 		$att_month = $year_month;
@@ -26,7 +26,7 @@
 	for($counter = 1; $counter <= $page; $counter++){ ?>
 	<div class="head-container" style="padding:20px 0px;width: 100%;display: inline-block;">
 		<div style="text-align:center; position:relative;padding-left:269px;width:50%; overflow:hidden; float:left; display:block;">
-		<?php 
+		<?php
 			$this->load->view("head_bangla");
 		?>
 		<span style="font-size:13px; font-weight:bold;">
@@ -67,8 +67,8 @@
 	   	else{
 	    	$per_page_row = $per_page_id - 1;
 	   	}
-	   	
-		for($j=0; $j<=$per_page_row; $j++){ 
+
+		for($j=0; $j<=$per_page_row; $j++){
 
 		echo "<tr><td>";
 		echo $i + 1;
@@ -86,13 +86,13 @@
 		$w = 0 ;
 		$h = 0 ;
 		$total_ot = 0;
-		
+
 		for ($k=0 ; $k < $last_date ; $k++ ){
 		$idate =$k;
 		$date = $idate;
 		// dd($date);
 
-		
+
 		echo "<td style='text-align:center;'>";
 		if(!isset($value[$i][$date])){
 			echo "&nbsp;";
@@ -135,3 +135,4 @@
 <?php } ?>
 </body>
 </html>
+<?php exit(); ?>

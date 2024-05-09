@@ -5267,7 +5267,6 @@ class Grid_model extends CI_Model{
 
 				}
 			}
-			dd($data);
 			if($data == NULL){
 				return "Soryy! Requested list is empty";
 			}
