@@ -453,7 +453,7 @@ class Grid_con extends CI_Controller {
 		$emp_id = explode(',', trim($grid_data));
 
 		$data["values"] = $this->Grid_model->last_increment_promotion($emp_id, $status, $unit_id);
-		dd($data["values"]);
+		// dd($data["values"]);
 		$data["status"]		= $status;
 		$data["unit_id"]	= $unit_id;
 
