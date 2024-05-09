@@ -10402,7 +10402,7 @@ function grid_emp_job_application($grid_emp_id){
 			$ot_rate = round($ot_rate,2);
 
 			$this->db->select('SUM(ot) AS ot_hour');
-			$this->db->where('emp_id', $id);
+			$this->db->where('emp_id', $emp_id);
 			$this->db->where('shift_log_date between "'. $first_day .'" and "'. $last_day .'"');
 			$this->db->having('SUM(ot) >', 0);
 			$this->db->group_by('emp_id');
@@ -10490,7 +10490,7 @@ function grid_emp_job_application($grid_emp_id){
 			$ot_rate = round($ot_rate,2);
 
 			$this->db->select('SUM(eot) AS eot_hour');
-			$this->db->where('emp_id', $id);
+			$this->db->where('emp_id', $emp_id);
 			$this->db->where('shift_log_date between "'. $first_day .'" and "'. $last_day .'"');
 			$this->db->having('SUM(eot) >', 0);
 			$this->db->group_by('emp_id');

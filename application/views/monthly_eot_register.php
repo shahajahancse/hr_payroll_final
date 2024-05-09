@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<?php 
+<?php
 $per_page_id = 56;
 $row_count = count($values["emp_id"]);
 $max = $row_count;
@@ -29,7 +29,7 @@ for($counter = 1; $counter <= $page; $counter ++)
  ?>
 
 <div style=" margin:0 auto;  width:750px;">
-<?php 
+<?php
 $this->load->view("head_english");
 ?>
 <!--Report title goes here-->
@@ -37,7 +37,7 @@ $this->load->view("head_english");
 Monthly EOT Report of <?php echo "$start_date"; ?></span>
 <div style="clear:both;width: 100%;height: 20px;"></div>
 <table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:12px;">
-<th>SL</th><th>Emp ID</th><th>Punch Card No.</th><th>Employee Name</th> <!--<th>DOJ</th>--> <th>Department</th> <!--<th>Section</th>--> <th>Line No. </th> <th>Designation</th> <th>Shift</th> <th>Gross Sal</th> <th>OT Rate</th> <th>Total EOT Hour</th><th>Total EOT Amount</th> 
+<th>SL</th><th>Emp ID</th><th>Punch Card No.</th><th>Employee Name</th> <!--<th>DOJ</th>--> <th>Department</th> <!--<th>Section</th>--> <th>Line No. </th> <th>Designation</th> <th>Shift</th> <th>Gross Sal</th> <th>OT Rate</th> <th>Total EOT Hour</th><th>Total EOT Amount</th>
 
 
 <?php
@@ -59,7 +59,7 @@ $section=array();
 		else
 		{
 		$page=1;
-		}	
+		}
 
 		echo "<tr bgcolor='#CCCCCC'>";
 		echo "<td colspan='12' style='font-size:16px'>Section :&nbsp;".$values["sec_name"][$k]."</td>";
@@ -67,65 +67,65 @@ $section=array();
 
 	}
 	echo "<tr>";
-	
+
 	echo "<td>";
 	echo $s = $k+1;
 	echo "</td>";
-	
+
 	echo "<td>";
 	echo $values["emp_id"][$k];
 	echo "</td>";
-	
+
 	echo "<td>";
 	echo "&nbsp;";
 	echo $values["proxi_id"][$k];
 	echo "</td>";
-	
+
 	echo "<td width='150'  style='text-align:left;' >";
 	echo $values["emp_name"][$k];
 	echo "</td>";
-	
-	
+
+
 	echo "<td  width='140'  style='text-align:left;'>";
 	echo $values["dept_name"][$k];
 	echo "</td>";
-	
-	
+
+
 	echo "<td  width='140'  style='text-align:left;'>";
 	echo $values["line_name"][$k];
 	echo "</td>";
-	
+
 	echo "<td  width='140'  style='text-align:left;'>";
 	echo $values["desig_name"][$k];
 	echo "</td>";
-	
+
 	echo "<td >";
 	echo $values["emp_shift"][$k];
 	echo "</td>";
-	
+
 	echo "<td  width='40'  style='text-align:right;' >";
 	echo $values["gross_sal"][$k];
 	echo "</td>";
-	
+
 	echo "<td  style='text-align:right;' >";
 	echo $values["ot_rate"][$k];
 	echo "</td>";
-	
+
 	echo "<td  style='text-align:center;' >";
 	echo $values["total_eot_hour"][$k];
 	echo "</td>";
-	
-	
-	$eot_hour = $values["total_eot_hour"][$k];	
+
+
+	$eot_hour = $values["total_eot_hour"][$k];
 
 	$total_eot_hour = $total_eot_hour + $eot_hour;
-	
-	
+
+
 	echo "<td  style='text-align:right;' >";
 	echo $values["total_eot_amount"][$k];
 	echo "</td>";
-	
-	$eot_amount = $values["total_eot_amount"][$k];	
+
+	$eot_amount = $values["total_eot_amount"][$k];
 
 	$total_eot_amount = $total_eot_amount + $eot_amount;
 	echo "</tr>";
@@ -149,7 +149,7 @@ Grand Total
 <div style="page-break-after: always;"></div>
 </div>
 </div>
-<?php 
+<?php
 	if($max==$k){
 		break;
 	}
@@ -157,3 +157,4 @@ Grand Total
 } ?>
 </body>
 </html>
+<?php exit(); ?>
