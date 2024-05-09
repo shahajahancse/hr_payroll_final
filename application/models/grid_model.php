@@ -5254,7 +5254,7 @@ class Grid_model extends CI_Model{
 					$newArray = array();
 					$first_day = date('Y-m-01', strtotime($year_month));
 					$last_day  = date('Y-m-t', strtotime($first_day));
-					$a =$this->db->select('present_status')->where('emp_id',$row->id)->where('shift_log_date BETWEEN "'.$first_day.'" AND "'.$last_day.'"')->get('pr_emp_shift_log')->result();
+					$a =$this->db->select('present_status')->where('emp_id',$row->emp_id)->where('shift_log_date BETWEEN "'.$first_day.'" AND "'.$last_day.'"')->get('pr_emp_shift_log')->result();
 					foreach ($a as $item) {
 						$newArray[] = $item->present_status;
 					}
