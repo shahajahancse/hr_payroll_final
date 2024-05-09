@@ -39,7 +39,7 @@
 				<th style="padding:4px">current Salary</th>
 				<th style="padding:4px">com. Salary</th>
 				<th style="padding:4px">com. cur. Salary</th>
-				
+
 				<th style="padding:4px">Effective date</th>
 				<th style="padding:4px; width: 10%;">Remark</th>
 			</tr>
@@ -50,7 +50,7 @@
 					<td style="text-align:center; padding:2px"><?php echo $key +1; ?></td>
 					<td style="text-align:center; padding:2px"><?php echo $row->emp_id?></td>
 					<td style="text-align:left;   padding:2px"><?php echo $row->name_bn?></td>
-					<td style="text-align:left;   padding:2px"><?php echo date('d-m-T', strtotime($row->emp_join_date)) ?></td>
+					<td style="text-align:left;   padding:2px"><?php echo date('d-m-Y', strtotime($row->emp_join_date)) ?></td>
 					<td style="text-align:left;   padding:2px"><?php echo $row->dept_bangla?></td>
 					<td style="text-align:left;   padding:2px"><?php echo $row->sec_name_bn?></td>
 					<td style="text-align:left;   padding:2px"><?php echo $row->line_name_bn?></td>
@@ -61,7 +61,7 @@
 					<td style="text-align:left;   padding:2px"><?php echo $row->prev_com_salary?></td>
 					<td style="text-align:left;   padding:2px"><?php echo $row->new_com_salary?></td>
 
-					<td style="text-align:left;   padding:2px"><?php echo date('d-m-T', strtotime($row->effective_month)) ?></td>
+					<td style="text-align:left;   padding:2px"><?php echo date('d-m-Y', strtotime($row->effective_month)) ?></td>
 					<td></td>
 				</tr>
 
