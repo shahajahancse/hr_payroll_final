@@ -466,6 +466,7 @@ class Grid_con extends CI_Controller {
 
 	function ot_acknowledgement_sheet()
 	{
+		dd($this->input->post('firstdate'));
 		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
 		$status = $this->input->post('status');
 		$unit_id = $this->input->post('unit_id');
