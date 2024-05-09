@@ -204,6 +204,9 @@
 							<button class="btn input-sm sbtn" onclick="ot_acknowledgement_sheet(1)">OT Acknowledgement sheet</button>
 							<button class="btn input-sm sbtn" onclick="ot_acknowledgement_sheet(2)">OT Acknowledgement Female</button>
 							<?php } ?>
+							<?php if(in_array(107,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="iftar_bill_list()">Iftar Bill List</button>
+							<?php } ?>
 						</div>
 						<!-- Daily Reports end -->
 

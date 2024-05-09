@@ -507,6 +507,27 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/increment_able_employee',$data);
 		}
 	}
+
+	function iftar_bill_list()
+	{
+		$date = $this->input->post('firstdate');
+		$unit_id = $this->input->post('unit_id');
+		$spl = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($spl));
+
+		$data["values"] = $this->Grid_model->iftar_bill_list($date, $grid_emp_id, $unit_id);
+		$data["date"]			= $date;
+		$data["unit_id"] 		= $unit_id;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/iftar_bill_list',$data);
+		}
+	}
 	// ============================== end last increment or promotion Report ===============
 
 

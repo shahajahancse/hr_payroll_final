@@ -1470,6 +1470,49 @@ function increment_able_employee()
 		}
 	}
 }
+function iftar_bill_list()
+{
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select unit !");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+
+	document.getElementById('loaader').style.display = 'flex';
+	ajaxRequest = new XMLHttpRequest();
+	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
+	url =  hostname+"grid_con/iftar_bill_list/";
+	//
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+
+			continuous_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			continuous_present_report.document.write(resp);
+			//continuous_present_report.stop();
+		}
+	}
+}
 // Increment report and promotion report end
 
 
