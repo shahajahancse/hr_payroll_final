@@ -900,7 +900,15 @@ class Grid_model extends CI_Model{
 			emp_depertment.dept_bangla,
 			emp_section.sec_name_bn,
 			emp_line_num.line_name_bn,
+			incre.prev_grade,
+			incre.prev_salary,
+			incre.prev_com_salary,
+			incre.new_grade,
+			incre.new_salary,
+			incre.new_com_salary,
+			incre.effective_month,
 		");
+
 		$this->db->distinct();
 		$this->db->from('pr_incre_prom_pun as incre');
 		$this->db->join('pr_emp_com_info as com',"incre.ref_id = com.emp_id", 'left');
@@ -5231,10 +5239,11 @@ class Grid_model extends CI_Model{
 		$this->db->join('emp_section','emp_section.id = pr_emp_com_info.emp_sec_id','left');
 		$this->db->join('emp_line_num','emp_line_num.id = pr_emp_com_info.emp_line_id','left');
 		$this->db->join('emp_designation','emp_designation.id = pr_emp_com_info.emp_desi_id','left');
-		$this->db->where_in('pr_emp_per_info.emp_id',$grid_emp_id);
+		$this->db->where_in('pr_emp_com_info.emp_id',$grid_emp_id);
 		$this->db->group_by("pr_emp_per_info.emp_id");
 		$this->db->order_by("pr_emp_per_info.emp_id");
 		$query = $this->db->get();
+		dd($query->result());
 		if( $query->num_rows() > 0){
 			$data = array();
 
