@@ -976,8 +976,8 @@ class Grid_model extends CI_Model{
 	}
 
 	function increment_able_employee($date, $emp_id, $unit_id = null) {
-		$da = date('Y-m', strtotime('-12 month', $date));
-		dd($da);
+		$da = date('Y-m', strtotime('-12 month', strtotime($date)));
+		dd($da );
 		$this->db->select("
 			com.emp_id,
 			com.unit_id,
