@@ -58,7 +58,7 @@
 					<td style="text-align:left;   padding:2px">
 					<?php
 						if (!empty($r->prev_salary)) {
-							echo $r->prev_salary
+							echo $r->prev_salary;
 						} else {
 							echo "--";
 						}
@@ -69,7 +69,7 @@
 					<td style="text-align:left;   padding:2px">
 					<?php
 						if (!empty($r->prev_com_salary)) {
-							echo $r->prev_com_salary
+							echo $r->prev_com_salary;
 						} else {
 							echo "--";
 						}
@@ -80,7 +80,7 @@
 					<td style="text-align:left;   padding:2px">
 					<?php
 						if (!empty($r->effective_month)) {
-							echo date('d-m-Y', strtotime($r->effective_month))
+							echo date('d-m-Y', strtotime($r->effective_month));
 						} else {
 							echo "--";
 						}
