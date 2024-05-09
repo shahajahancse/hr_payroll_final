@@ -74,8 +74,9 @@
         <!-- niog -->
         <?php
             // dd($values);
-            $image = $this->db->select('company_logo')->get('company_infos')->row();
-            dd($image);
+            $company_info = $this->db->select()->get('company_infos')->row();
+            dd($company_info);
+            $image = $company_info->company_logo;
             foreach($values as $value){
 
 
