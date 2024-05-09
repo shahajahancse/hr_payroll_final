@@ -28,48 +28,43 @@
 				<th style="padding:2px 10px;">SL</th>
 				<th style="padding:2px 10px;">ID</th>
 				<th style="padding:4px;">Emp Name</th>
-				<th style="padding:4px">Designation</th>
-				<th style="padding:4px">Line</th>
-				<th style="padding:4px">Shift</th>
+				<th style="padding:4px">Joining Date</th>
 
-				<th style="padding:4px; width: 10%;">Mobile</th>
+				<th style="padding:4px">Department</th>
+				<th style="padding:4px">Section</th>
+				<th style="padding:4px">Line</th>
+				<th style="padding:4px">Designation</th>
+
+				<th style="padding:4px">prev. Salary</th>
+				<th style="padding:4px">current Salary</th>
+				<th style="padding:4px">com. Salary</th>
+				<th style="padding:4px">com. cur. Salary</th>
+				
+				<th style="padding:4px">Effective date</th>
 				<th style="padding:4px; width: 10%;">Remark</th>
-				<th style="padding:4px; width: 10%;">Sign</th>
-				<?php } ?>
 			</tr>
 
 			<?php $emp_sec = '';
-				foreach ($values as $key => $row) {
-					if ($emp_sec != $row->emp_sec_id) {
-					echo "<tr bgcolor='#CCCCCC'>";
-					echo "<td colspan='17' style='font-size:16px; font-weight:bold;'>Line :".$row->sec_name_en."</td>";
-					echo "</tr>";
-					}
-				?>
-
+				foreach ($values as $key => $row) { ?>
 				<tr>
 					<td style="text-align:center; padding:2px"><?php echo $key +1; ?></td>
 					<td style="text-align:center; padding:2px"><?php echo $row->emp_id?></td>
-					<td style="text-align:left;   padding:2px"><?php echo $row->name_en?></td>
-					<td style="text-align:left;   padding:2px"><?php echo $row->desig_name?></td>
-					<td style="text-align:left;   padding:2px"><?php echo $row->line_name_en?></td>
-					<td style="text-align:left;   padding:2px"><?php echo $row->shift_name?></td>
-					<?php if ($status == "P") { ?>
-					<td style="text-align:center; padding:2px"><?php echo $row->in_time; ?> </td>
-					<td style="text-align:center; padding:2px"><?php echo $row->out_time;?> </td>
-					<td style="text-align:center; padding:2px"><?php echo $row->ot?></td>
-					<td style="text-align:center; padding:2px"><?php echo $row->eot?></td>
-					<td style="text-align:center; padding:2px"><?php echo $row->modify_eot?></td>
-					<td style="text-align:center; padding:2px"><?php echo $row->deduction_hour?></td>
-					<?php $total_ot = $row->ot + $row->eot + ($row->modify_eot) - $row->deduction_hour; ?>
-					<td style="text-align:center; padding:2px"><?php echo $total_ot; ?></td>
-					<?php } else { ?>
-					<td style="padding:20px"><?=$row->personal_mobile?></td>
-					<td style="padding:20px"></td>
-					<td style="padding:20px"></td>
-					<?php } ?>
+					<td style="text-align:left;   padding:2px"><?php echo $row->name_bn?></td>
+					<td style="text-align:left;   padding:2px"><?php echo date('d-m-T', strtotime($row->emp_join_date)) ?></td>
+					<td style="text-align:left;   padding:2px"><?php echo $row->dept_bangla?></td>
+					<td style="text-align:left;   padding:2px"><?php echo $row->sec_name_bn?></td>
+					<td style="text-align:left;   padding:2px"><?php echo $row->line_name_bn?></td>
+					<td style="text-align:left;   padding:2px"><?php echo $row->desig_bangla?></td>
+
+					<td style="text-align:left;   padding:2px"><?php echo $row->prev_salary?></td>
+					<td style="text-align:left;   padding:2px"><?php echo $row->new_salary?></td>
+					<td style="text-align:left;   padding:2px"><?php echo $row->prev_com_salary?></td>
+					<td style="text-align:left;   padding:2px"><?php echo $row->new_com_salary?></td>
+
+					<td style="text-align:left;   padding:2px"><?php echo date('d-m-T', strtotime($row->effective_month)) ?></td>
+					<td></td>
 				</tr>
-				<?php $emp_sec = $row->emp_sec_id; ?>
+
 			<?php } ?>
 		</table>
 	</div>
