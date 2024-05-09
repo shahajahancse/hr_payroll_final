@@ -1409,7 +1409,7 @@ function ot_acknowledgement_sheet(status)
 
 	document.getElementById('loaader').style.display = 'flex';
 	ajaxRequest = new XMLHttpRequest();
-	var queryString="firstdate"+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"grid_con/ot_acknowledgement_sheet/";
 	//
    ajaxRequest.open("POST", url, true);
