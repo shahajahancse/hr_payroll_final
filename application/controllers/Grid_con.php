@@ -2086,7 +2086,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		$data['unit_id'] = $this->input->post('unit_id');
-		$this->load->view('final_satalment',$data);
+		$this->load->view('final_satalment',$data,false);
 	}
 
 	function grid_service_book2()

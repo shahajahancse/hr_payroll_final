@@ -90,7 +90,8 @@
 
                 <tbody>
 
-                    <?php
+                    <?php  
+                            // dd($results);
 
                   if (!empty($results)) {foreach ($results as $key => $r) {?>
                     <tr>
@@ -100,7 +101,11 @@
                         <td><?php echo $r->unit_name ?></td>
                         <td><?php echo date('d-m-Y', strtotime($r->resign_date))?></td>
                         <td>
+                            <?php if($r->status == 1){?>
+                            <a href="#" class="btn btn-sm btn-info" onclick="report(<?= $r->emp_id ?>)" >Report</a>
+                            <?php }else{ ?>
                             <a href="#" class="btn btn-sm btn-info" role="button" data-toggle="modal" data-target="#myModal" onclick="final_satalment(<?= $r->emp_id ?>)" >Add Final Satalment</a>
+                            <?php }?>
                             <a href="<?=base_url('entry_system_con/resign_delete/'.$r->emp_id)?>"
                                 class="btn btn-sm btn-danger" role="button">Delete</a>
                         </td>
@@ -530,10 +535,6 @@
                     $('#net_pay').html(parseFloat(total_get - total_deduct -10).toFixed(2));
                 }); 
                    $(".total_deduct").html(0);
-
-                // var net_pay = total_get.toFixed(2) - total_deduct.toFixed(2);
-
-                // $('#net_pay').html($('#total_get').html() - $('#total_deduct').html());
             }
         });
 
@@ -572,14 +573,29 @@
                         console.error('jqXHR:', jqXHR);
                         console.error('exception:', exception);
                     }
-                    // }
                 });
-
-
-
         });
-        // console.log("KO"); return false;
-        // document.getElementById("form").submit();
+    }
+
+
+    function report(id){
+        // alert(id);
+        var status =4;
+        $.ajax({
+            url: "<?php echo base_url('Grid_con/grid_final_satalment'); ?>",
+            type: 'POST',
+            data: {spl: id,status:status},
+            success: function (data) {
+                // console.log(data);/
+                var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10'); 
+                win.document.write(data);
+                win.document.close();
+            },
+            error: function(jqXHR, exception) {
+                console.error('jqXHR:', jqXHR);
+                console.error('exception:', exception);
+            }
+        });
     }
 </script>
 
