@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title> <?= ($status == "2" ? "Promotion" : "Increment") ?> Report </title>
+    <title> Increment employee Report </title>
     <style>
 		@media print {
 			table {
@@ -18,7 +18,7 @@
     <?php $this->load->view("head_english"); ?>
     <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
         <span style="font-size:12px; font-weight:bold;">
-            <?= ($status == "2" ? "Promotion" : "Increment") ?> Report, Date
+            Increment able employees Report Report, Date
             <?php echo date("d/m/Y"); ?>
         </span>
         <br><br>
