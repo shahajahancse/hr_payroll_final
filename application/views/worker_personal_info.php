@@ -75,10 +75,11 @@
         <?php
             // dd($values);
             $company_info = $this->db->select()->get('company_infos')->row();
-            dd($company_info);
             $image = $company_info->company_logo;
+            $company_name_bangla = $company_info->company_name_bangla;
+            $company_add_bangla = $company_info->company_add_bangla;
             foreach($values as $value){
-
+            dd($values);
 
         ?>
         <div class="container break_page" style=" font-family: sutonnymj;">
@@ -92,7 +93,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -280,7 +281,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -468,7 +469,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -499,7 +500,7 @@
 
                     <p style="font-size:21px;">eivei,</p>
                     <p style="font-size:21px;">cwiPvjK/wbev©nx cwiPvjK/gnve¨e¯’vcK/KviLvbv e¨e¯’vcK</p>
-                    <p style="font-size:21px;">KviLvbvi bvgt nvwbI‡qj Mv‡g©›Um wjwg‡UW</p>
+                    <p style="font-size:21px;">KviLvbvi bvgt  <?= $company_name_bangla; ?></p>
                     <p style="font-size:21px;">wVKvbvt 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
                     <p style="font-size:22px;" class="mt-4"><b>welqt Kv‡R †hvM`vb cÎ</b></p>
 
@@ -539,7 +540,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -627,7 +628,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -652,7 +653,7 @@
 
                     <p style="font-size:21px">eivei,</p>
                     <p style="font-size:21px">cwiPvjK/wbev©nx cwiPvjK/gnve¨e¯’vcK/KviLvbv e¨e¯’vcK</p>
-                    <p style="font-size:21px">KviLvbvi bvgt nvwbI‡qj Mv‡g©›Um wjwg‡UW</p>
+                    <p style="font-size:21px">KviLvbvi bvgt  <?= $company_name_bangla; ?></p>
                     <p style="font-size:21px">wVKvbvt 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
                     <p style="font-size:21px" class="mt-3">welqt c‡` PvKzixi Rb¨ Av‡e`b |</p>
 
@@ -737,7 +738,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -753,7 +754,7 @@
             </div>
             <br>
             <div>
-                <p> 1| KviLvbv / cÖwZôv‡bi bvg t nvwbI‡qj Mv‡g©›Um wjwg‡UW|</p>
+                <p> 1| KviLvbv / cÖwZôv‡bi bvg t  <?= $company_name_bangla; ?>|</p>
                 <p> 2| KviLvbv / cÖwZôv‡bi wVKvbv t 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <div class="d-flex flex-row">
                     <p> 3| kÖwg‡Ki bvg I wVKvbvt</p>
@@ -923,7 +924,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -936,7 +937,7 @@
                 <p>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</p><br><br>
                 <p>eivei,</p>
                 <p>e¨e¯’vcbv cwiPvjK</p>
-                <p>KviLvbvi bvgt nvwbI‡qj Mv‡g©›Um wjwg‡UW .</p>
+                <p>KviLvbvi bvgt  <?= $company_name_bangla; ?> .</p>
                 <p>wVKvbvt 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <p>welqt weKvk bv¤^v‡i ‡eZbvw` cÖ`v‡bi Rb¨ Av‡e`b cÎ</p>
                 <br>
@@ -973,7 +974,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -986,7 +987,7 @@
                 <p>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</p><br><br>
                 <p>eivei,</p>
                 <p>e¨e¯’vcbv cwiPvjK</p>
-                <p>KviLvbvi bvgt nvwbI‡qj Mv‡g©›Um wjwg‡UW .</p>
+                <p>KviLvbvi bvgt  <?= $company_name_bangla; ?> .</p>
                 <p>wVKvbvt 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <p>welqt weKvk bv¤^v‡i ‡eZbvw` cÖ`v‡bi Rb¨ Av‡e`b cÎ</p>
                 <br>
