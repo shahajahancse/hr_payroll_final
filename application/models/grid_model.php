@@ -975,6 +975,50 @@ class Grid_model extends CI_Model{
 		}
 	}
 
+	function increment_able_employee($date, $emp_id, $unit_id = null) {
+		$da = date('Y-m', strtotime('-12 month', $date));
+		dd($da);
+		$this->db->select("
+			com.emp_id,
+			com.unit_id,
+			com.emp_join_date,
+			per.name_en,
+			per.name_bn,
+			per.personal_mobile,
+			per.gender,
+			emp_designation.desig_bangla,
+			emp_depertment.dept_bangla,
+			emp_section.sec_name_bn,
+			emp_line_num.line_name_bn,
+			incre.prev_grade,
+			incre.prev_salary,
+			incre.prev_com_salary,
+			incre.new_grade,
+			incre.new_salary,
+			incre.new_com_salary,
+			incre.effective_month,
+		");
+
+		$this->db->distinct();
+		$this->db->from('pr_incre_prom_pun as incre');
+		$this->db->join('pr_emp_com_info as com',"incre.ref_id = com.emp_id", 'left');
+		$this->db->join("pr_emp_per_info as per","per.emp_id = com.emp_id", 'left');
+		$this->db->join('emp_designation', 'com.emp_desi_id = emp_designation.id');
+		$this->db->join('emp_depertment', 'com.emp_dept_id = emp_depertment.dept_id');
+		$this->db->join('emp_section', 'com.emp_sec_id = emp_section.id');
+		$this->db->join('emp_line_num', 'com.emp_line_id = emp_line_num.id');
+		$this->db->where_in("com.emp_id",$emp_id);
+		$this->db->order_by("incre.effective_month", "DESC");
+		$this->db->group_by("incre.ref_id");
+		$query = $this->db->get();
+
+		if (!empty($query->result())) {
+			return $query->result();
+		} else {
+			return "Requested list is empty";
+		}
+	}
+
 
 
 

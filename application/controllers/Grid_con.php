@@ -486,6 +486,29 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/ot_acknowledgement_sheet',$data);
 		}
 	}
+
+	function increment_able_employee()
+	{
+		$date = $this->input->post('firstdate');
+		$status = $this->input->post('status');
+		$unit_id = $this->input->post('unit_id');
+		$spl = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($spl));
+
+		$data["values"] = $this->Grid_model->increment_able_employee($date, $grid_emp_id, $unit_id);
+		$data["date"]			= $date;
+		$data["status"]			= $status;
+		$data["unit_id"] 		= $unit_id;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/increment_able_employee',$data);
+		}
+	}
 	// ============================== end last increment or promotion Report ===============
 
 

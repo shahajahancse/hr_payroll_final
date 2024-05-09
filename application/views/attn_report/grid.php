@@ -267,6 +267,9 @@
 							<?php if(in_array(104,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="last_increment_promotion(2)">Last Promotion Check</button>
 							<?php } ?>
+							<?php if(in_array(106,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="increment_able_employee()">Increment able employee</button>
+							<?php } ?>
 						</div>
 						<!-- Continuous Reports end -->
 
