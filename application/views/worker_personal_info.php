@@ -79,7 +79,6 @@
             $company_name_bangla = $company_info->company_name_bangla;
             $company_add_bangla = $company_info->company_add_bangla;
             foreach($values as $value){
-            dd($values);
 
         ?>
         <div class="container break_page" style=" font-family: sutonnymj;">

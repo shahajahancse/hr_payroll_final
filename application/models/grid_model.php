@@ -1049,7 +1049,7 @@ class Grid_model extends CI_Model{
 		$array2 = $this->db->get();
 		$array2 =  $array2->result_array();
 		$array = array_merge($array1, $array2);
-		
+
 		if (!empty($array)) {
 			return $array;
 		} else {
@@ -8991,6 +8991,7 @@ function grid_emp_job_application($grid_emp_id){
 
 		emp_designation.desig_name,
 		emp_designation.desig_bangla,
+		emp_designation.desig_desc as desig_description,
 		emp_depertment.dept_name,
 		emp_depertment.dept_bangla,
 		emp_section.sec_name_en,
