@@ -983,8 +983,8 @@
 
             <div>
                 <br><br>
-                <p style="text-align:center"> <?= $value->desig_bangla; ?> এর দায়িত্ব ও কর্তব্য  </p><br>
                 <p style>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</p><br>
+                <p style="text-align:center;"> <?= $value->desig_bangla; ?> এর দায়িত্ব ও কর্তব্য  </p><br>
                 <p style=" font-family: sutonnymj;"> <?= $value->desig_description; ?></p>
 
 
