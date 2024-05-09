@@ -1452,7 +1452,7 @@ function increment_able_employee()
 
 	document.getElementById('loaader').style.display = 'flex';
 	ajaxRequest = new XMLHttpRequest();
-	var queryString="firstdate="+firstdate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
 	url =  hostname+"grid_con/increment_able_employee/";
 	//
    ajaxRequest.open("POST", url, true);
