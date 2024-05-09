@@ -976,8 +976,9 @@ class Grid_model extends CI_Model{
 	}
 
 	function increment_able_employee($date, $emp_id, $unit_id = null) {
-		$da = date('Y-m', strtotime('-12 month', strtotime($date)));
-		dd($da );
+		$da1 = date('Y-m-01', strtotime('-12 month', strtotime($date)));
+		$da2 = date('Y-m-t', strtotime('-12 month', strtotime($date)));
+
 		$this->db->select("
 			com.emp_id,
 			com.unit_id,
@@ -1007,13 +1008,46 @@ class Grid_model extends CI_Model{
 		$this->db->join('emp_depertment', 'com.emp_dept_id = emp_depertment.dept_id');
 		$this->db->join('emp_section', 'com.emp_sec_id = emp_section.id');
 		$this->db->join('emp_line_num', 'com.emp_line_id = emp_line_num.id');
-		$this->db->where_in("com.emp_id",$emp_id);
+		$this->db->where("incre.effective_month BETWEEN '$da1' AND '$da2'");
+		$this->db->where_in("com.emp_id", $emp_id);
 		$this->db->order_by("incre.effective_month", "DESC");
 		$this->db->group_by("incre.ref_id");
-		$query = $this->db->get();
+		$array1 = $this->db->get();
+		$array1 =  $array1->result_array();
+		$employee_id=array_column($array1, 'emp_id');
+		dd($employee_id);
+
+		$this->db->select("
+			com.emp_id,
+			com.unit_id,
+			com.emp_join_date,
+			per.name_en,
+			per.name_bn,
+			per.personal_mobile,
+			per.gender,
+			emp_designation.desig_bangla,
+			emp_depertment.dept_bangla,
+			emp_section.sec_name_bn,
+			emp_line_num.line_name_bn,
+		");
+
+		$this->db->distinct();
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->join("pr_emp_per_info as per","per.emp_id = com.emp_id", 'left');
+		$this->db->join('emp_designation', 'com.emp_desi_id = emp_designation.id');
+		$this->db->join('emp_depertment', 'com.emp_dept_id = emp_depertment.dept_id');
+		$this->db->join('emp_section', 'com.emp_sec_id = emp_section.id');
+		$this->db->join('emp_line_num', 'com.emp_line_id = emp_line_num.id');
+		$this->db->where("com.emp_join_date BETWEEN '$da1' AND '$da2'");
+		$this->db->where_in("com.emp_id",$emp_id);
+		$this->db->where_in("com.emp_id not in ");
+		$this->db->order_by("com.emp_join_date", "DESC");
+		$this->db->group_by("com.emp_id");
+		$array2 = $this->db->get();
+		$array2 =  $array2->result_array();
+		$array = array_merge($array1, $array2);
 
 		if (!empty($query->result())) {
-			return $query->result();
 		} else {
 			return "Requested list is empty";
 		}
