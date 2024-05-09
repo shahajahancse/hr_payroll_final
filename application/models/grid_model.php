@@ -5243,7 +5243,7 @@ class Grid_model extends CI_Model{
 		$this->db->group_by("pr_emp_per_info.emp_id");
 		$this->db->order_by("pr_emp_per_info.emp_id");
 		$query = $this->db->get();
-		dd($query->result());
+
 		if( $query->num_rows() > 0){
 			$data = array();
 
@@ -5267,6 +5267,7 @@ class Grid_model extends CI_Model{
 
 				}
 			}
+			dd($data);
 			if($data == NULL){
 				return "Soryy! Requested list is empty";
 			}
