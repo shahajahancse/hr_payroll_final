@@ -1049,7 +1049,7 @@ class Grid_model extends CI_Model{
 		$array2 = $this->db->get();
 		$array2 =  $array2->result_array();
 		$array = array_merge($array1, $array2);
-		dd($array);
+		
 		if (!empty($array)) {
 			return $array;
 		} else {
