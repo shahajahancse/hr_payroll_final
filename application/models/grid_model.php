@@ -983,6 +983,8 @@ class Grid_model extends CI_Model{
 			com.emp_id,
 			com.unit_id,
 			com.emp_join_date,
+			com.gross_sal,
+			com.com_gross_sal,
 			per.name_en,
 			per.name_bn,
 			per.personal_mobile,
@@ -995,8 +997,6 @@ class Grid_model extends CI_Model{
 			incre.prev_salary,
 			incre.prev_com_salary,
 			incre.new_grade,
-			incre.new_salary,
-			incre.new_com_salary,
 			incre.effective_month,
 		");
 
@@ -1015,12 +1015,13 @@ class Grid_model extends CI_Model{
 		$array1 = $this->db->get();
 		$array1 =  $array1->result_array();
 		$employee_id=array_column($array1, 'emp_id');
-		dd($employee_id);
 
 		$this->db->select("
 			com.emp_id,
 			com.unit_id,
 			com.emp_join_date,
+			com.gross_sal,
+			com.com_gross_sal,
 			per.name_en,
 			per.name_bn,
 			per.personal_mobile,
@@ -1039,15 +1040,18 @@ class Grid_model extends CI_Model{
 		$this->db->join('emp_section', 'com.emp_sec_id = emp_section.id');
 		$this->db->join('emp_line_num', 'com.emp_line_id = emp_line_num.id');
 		$this->db->where("com.emp_join_date BETWEEN '$da1' AND '$da2'");
-		$this->db->where_in("com.emp_id",$emp_id);
-		$this->db->where_in("com.emp_id not in ");
+
+		$this->db->where_in("com.emp_id", $emp_id);
+		$this->db->where_not_in("com.emp_id", $employee_id);
+
 		$this->db->order_by("com.emp_join_date", "DESC");
 		$this->db->group_by("com.emp_id");
 		$array2 = $this->db->get();
 		$array2 =  $array2->result_array();
 		$array = array_merge($array1, $array2);
-
-		if (!empty($query->result())) {
+		dd($array);
+		if (!empty($array)) {
+			return $array;
 		} else {
 			return "Requested list is empty";
 		}
