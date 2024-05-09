@@ -74,7 +74,7 @@
         <!-- niog -->
         <?php
             // dd($values);
-            $company_info = $this->db->select()->get('company_infos')->row();
+            $company_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row();
             $image = $company_info->company_logo;
             $company_name_bangla = $company_info->company_name_bangla;
             $company_add_bangla = $company_info->company_add_bangla;
@@ -961,7 +961,7 @@
             </div>
         </div>
 
-        <!-- job card -->
+        <!-- job description -->
         <div class="container break_page" style="margin-left:-10px">
             <div class="d-flex flex-row justify-content-between p_screen">
                 <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
