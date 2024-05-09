@@ -789,6 +789,7 @@ class Grid_model extends CI_Model{
 		$this->db->order_by('pr_emp_com_info.emp_line_id','ASC');
 		$this->db->group_by('pr_emp_com_info.emp_id');
 		$query = $this->db->get()->result_array();
+		$query = $this->db->get()->result_array();
 		// dd($query);
 		if(empty($query)){
 			echo "Requested list is empty";
