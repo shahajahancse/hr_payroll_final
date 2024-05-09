@@ -758,6 +758,7 @@ class Grid_model extends CI_Model{
 			pr_emp_com_info.emp_id,
 			pr_emp_com_info.gross_sal,
 			pr_emp_com_info.emp_join_date,
+			pr_emp_com_info.emp_sec_id,
 			pr_emp_per_info.name_en,
 			pr_emp_per_info.personal_mobile,
 
