@@ -257,6 +257,12 @@
 							<?php if(in_array(48,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_report_limit(10)">Absent ten</button>
 							<?php } ?>
+							<?php if(in_array(103,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="last_increment_promotion(1)">Last Increment Check</button>
+							<?php } ?>
+							<?php if(in_array(104,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="last_increment_promotion(2)">Last Promotion Check</button>
+							<?php } ?>
 						</div>
 						<!-- Continuous Reports end -->
 
