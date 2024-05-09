@@ -985,16 +985,9 @@
                 <br>
                 <p>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</p><br><br>
                 <p>eivei,</p>
-                <p>e¨e¯’vcbv cwiPvjK</p>
-                <p>KviLvbvi bvgt  <?= $company_name_bangla; ?> .</p>
-                <p>wVKvbvt 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-                <p>welqt weKvk bv¤^v‡i ‡eZbvw` cÖ`v‡bi Rb¨ Av‡e`b cÎ</p>
-                <br>
-                <p><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
+                <p><?= $value->desig_description; ?></p>
 
-                <p>Avwg <span style='font-size:15px'><?php echo $value->name_bn?></span>,c`ext <span style='font-size:15px'><?php echo $value->desig_bangla?></span>,KvW© bst <span><?php echo $value->emp_id?></span>, ‡mKkbt <span style='font-size:15px'><?php echo $value->sec_name_bn?></span>,<span style='font-size:15px'>লাইনt <?php echo $value->line_name_bn?> </span></p>
-                <p>Avwg Avgvi hveZxq ‡eZbvw` wb‡gœv³ weKvk bv¤^v‡i cÖ`v‡bi Rb¨ Aby‡iva KiwQ|</p>
-                <p>weKvk b¤^it <span><?php echo $value->bank_bkash_no?></span></p>
+
                 <br><br><br><br>
                 <div class="d-flex" style="margin-left: -15px;">
                     <div class="col-md-6">
