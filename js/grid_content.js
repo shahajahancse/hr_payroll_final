@@ -1387,6 +1387,7 @@ function last_increment_promotion(status)
 function ot_acknowledgement_sheet(status)
 {
 	var firstdate = document.getElementById('firstdate').value;
+	alert(firstdate); return
 	if(firstdate =='')
 	{
 		alert("Please select First date");
