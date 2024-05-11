@@ -206,6 +206,16 @@ class Entry_system_con extends CI_Controller
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
         $mm = array();
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
         $emp_data = $this->Attn_process_model->get_all_employee($emp_ids, 1);
         while ($first_date <= $second_date) {
             $data = array();
@@ -237,7 +247,7 @@ class Entry_system_con extends CI_Controller
         if (!empty($mm) && $mm['massage'] == 1) {
             echo 'success';
         } else {
-            echo 'error';
+            echo 'Record Not Inserted';
         }
     }
     function insert_attn_process($data, $date, $unit_id, $emp_ids) {
@@ -271,6 +281,15 @@ class Entry_system_con extends CI_Controller
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $emp_id      = explode(',', $sql);
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
 
         $this->db->select('
                     pr_emp_com_info.id,
@@ -321,6 +340,15 @@ class Entry_system_con extends CI_Controller
         $date        = $_POST['date'];
         $in_time     = $_POST['in_time'];
         $out_time    = $_POST['out_time'];
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
 
         $emp_data = $this->Attn_process_model->get_all_employee(array($emp_id), null)->row();
 
@@ -402,6 +430,15 @@ class Entry_system_con extends CI_Controller
         $att_table   = "att_" . date("Y_m", strtotime($first_date));
         // $com_ids     = $this->get_com_emp_id($emp_ids);
 
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
         $first  = $first_date .' '. '06:30:00';
         $second  = $seconde_dat .' '. '06:30:00';
         if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
@@ -421,7 +458,7 @@ class Entry_system_con extends CI_Controller
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
             echo 'success';
         } else {
-            echo 'error';
+            echo 'Record Not Deleted';
         }
     }
 
@@ -432,12 +469,22 @@ class Entry_system_con extends CI_Controller
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $emp_ids     = explode(',', $sql);
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
         // $com_ids    = $this->get_com_emp_id($emp_ids);
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $emp_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
             echo 'success';
         } else {
-            echo 'error';
+            echo 'Shift Log Not Deleted';
         }
     }
 
@@ -450,12 +497,21 @@ class Entry_system_con extends CI_Controller
         $eot         = $_POST['eot'];
         $emp_ids     = explode(',', $sql);
 
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
         $com_ids    = $this->get_com_emp_id($emp_ids);
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->update('pr_emp_shift_log', array('modify_eot' => $eot))) {
             echo 'success';
         } else {
-            echo 'error';
+            echo 'EOT not updated';
         }
     }
     function get_com_emp_id($emp_ids) {

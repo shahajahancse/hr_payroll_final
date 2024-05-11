@@ -282,6 +282,15 @@
 							<?php if(in_array(110,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="unit_transferred_list(2)">Unit transferred list</button>
 							<?php } ?>
+							<?php if(in_array(111,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="emp_conformation_list(1)">Staff Conformation List</button>
+							<?php } ?>
+							<?php if(in_array(112,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="emp_conformation_list(2)">Emp Conformation List</button>
+							<?php } ?>
+							<?php if(in_array(113,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="emp_conformation_list(3)">Conformation Letter</button>
+							<?php } ?>
 						</div>
 						<!-- Continuous Reports end -->
 

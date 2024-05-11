@@ -576,6 +576,34 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/yearly_leave_register',$data);
 		}
 	}
+
+	function emp_conformation_list(){
+		$unit_id = $this->input->post('unit_id');
+		$status = $this->input->post('status');
+		$grid_data = $this->input->post('spl');
+		$emp_id = explode(',', trim($grid_data));
+		if($status == 1){
+			$firstdate  = date('Y-m-d',strtotime('-180 day',strtotime($this->input->post('firstdate'))));
+			$seconddate = date('Y-m-d',strtotime('-180 day',strtotime($this->input->post('seconddate'))));
+		} else if ($status == 2) {
+			$firstdate  = date('Y-m-d',strtotime('-90 day',strtotime($this->input->post('firstdate'))));
+			$seconddate = date('Y-m-d',strtotime('-90 day',strtotime($this->input->post('seconddate'))));
+		} else {
+			$firstdate  = date('Y-m-d',strtotime($this->input->post('firstdate')));
+			$seconddate = date('Y-m-d',strtotime($this->input->post('seconddate')));
+			$status = null;
+		}
+
+		$data["values"] = $this->Grid_model->emp_conformation_list($emp_id, $firstdate, $seconddate, $unit_id, $status);
+		$data["status"]		= $status;
+		$data["unit_id"]	= $unit_id;
+
+		if(is_string($data["values"])){
+			echo $data["values"];
+		}else{
+			$this->load->view('grid_con/emp_conformation_list',$data);
+		}
+	}
 	// ============================== end last increment or promotion Report ===============
 
 

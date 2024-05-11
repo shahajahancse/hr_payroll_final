@@ -137,6 +137,7 @@ class Grid_model extends CI_Model{
 		return $this->db->get()->result();
 
 	}
+
 	function get_emp_info($grid_emp_id, $start_date=null){
 		$data = array();
 		$this->db->distinct();
@@ -1117,6 +1118,51 @@ class Grid_model extends CI_Model{
 		$query = $this->db->get()->row();
 		return $query;
 	}
+	function emp_conformation_list($emp_id, $firstdate, $seconddate, $unit_id, $status = null){
+		$data = array();
+		$this->db->distinct();
+		$this->db->select('
+			com.emp_id,
+			per.name_en,
+			per.name_bn,
+			emp_designation.id,
+			emp_designation.desig_name,
+			emp_line_num.line_name_en,
+			emp_section.sec_name_en,
+			emp_depertment.dept_name,
+			com.emp_join_date,
+			com.unit_id,
+			com.gross_sal,
+			com.com_gross_sal,
+		');
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('pr_emp_per_info as per');
+		$this->db->from('emp_depertment');
+		$this->db->from('emp_section');
+		$this->db->from('emp_line_num');
+		$this->db->from('emp_designation');
+		$this->db->where('per.emp_id = com.emp_id');
+		$this->db->where('com.emp_dept_id = emp_depertment.dept_id');
+		$this->db->where('com.emp_desi_id = emp_designation.id');
+		$this->db->where('com.emp_sec_id = emp_section.id');
+		$this->db->where('com.emp_line_id = emp_line_num.id');
+		$this->db->where_in('com.emp_id', $emp_id);
+		if($status != null){
+			$this->db->where('com.status', $status);
+		}
+		$this->db->where('com.emp_join_date BETWEEN "'.$firstdate.'" AND "'.$seconddate.'"');
+		$this->db->where('com.unit_id', $unit_id);
+		$this->db->order_by('com.emp_join_date', 'DESC');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+
+
+
+
+
+
 
 
 	// =======================================================
@@ -8830,11 +8876,13 @@ class Grid_model extends CI_Model{
 							pre_upa.name_bn as pre_upa_name_bn,
 							pre_post.name_bn as pre_post_name_bn,
 							pr_emp_resign_history.resign_date,
+							pr_emp_left_history.left_date,
 							DAY(pr_emp_resign_history.resign_date) as last_working_day,
 							year(pr_emp_resign_history.resign_date) as resign_year,
 						');
 		$this->db->from('pr_emp_com_info');
 		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+		$this->db->join('pr_emp_left_history', 'pr_emp_per_info.emp_id = pr_emp_left_history.emp_id', 'left');
 		$this->db->join('pr_emp_resign_history', 'pr_emp_per_info.emp_id = pr_emp_resign_history.emp_id', 'left');
 		$this->db->join('pr_grade', 'pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id', 'left');
 		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id', 'left');
