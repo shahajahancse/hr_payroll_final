@@ -168,7 +168,7 @@
                 </tr>
                 <tr>
                     <td colspan="3">মোট প্রাপ্য টাকা</td>
-                    <td ><?php echo $total_value->net_pay + $total_value->total_deduct ?></td>
+                    <td ><?php echo $total_value->total_get ?></td>
                 </tr>
                 <tr>
                     <td colspan="4">কর্তন</td>
@@ -204,7 +204,7 @@
                     <td><?php echo $total_value->net_pay?></td>
                 </tr>
             </table>
-        <?php }?>
+ 
 
         <div class="ml-3 d-flex justify-content-between">
             <p>প্রস্তুতকারী</p>
@@ -214,10 +214,15 @@
         </div>
         <h6 class="text-center" style="border:2px solid black;width: fit-content;margin: 0 auto;padding: 4px;">প্রাপ্তি স্বীকার</h6>
 
-        <p class="text-justify ml-3">আমি মোঃ <span>আবদুর রাজ্জাক</span> পদবীঃ <span>কাটার ম্যান</span> র্কাড নম্বরঃ <span>৫০০০১৭৫</span> সকেশন এন্ড লাইনঃ <span>কাটিং, কাটিং</span>, চুড়ান্ত  নিষ্পত্তকিরন বাবদঃ
-        <span>৩২৬৮৬</span> টাকা এর প্রাপ্তি স্বীকার করছি এবং এই প্রতিষ্ঠানে আমার আর কোন আর্থিক পাওনা কিংবা দাবী-দাওয়া নাই।
+        <p class="text-justify ml-3">আমি  <span><?php echo $row->name_bn?></span>, পদবীঃ <span><?php echo $row->desig_bangla?></span>, র্কাড নম্বরঃ <span style="font-family:sutonnyMJ;font-size:19px"><?php echo $row->emp_id?></span>, সেকশন এন্ড লাইনঃ <span><?php $row->sec_name_bn.' ,'.$row->line_name_bn?></span>, চুড়ান্ত  নিষ্পত্তকিরন বাবদঃ
+        <span style="font-family:sutonnyMJ;font-size:19px"><?php echo $total_value->net_pay?></span> টাকা এর প্রাপ্তি স্বীকার করছি এবং এই প্রতিষ্ঠানে আমার আর কোন আর্থিক পাওনা কিংবা দাবী-দাওয়া নাই।
         </p>
         <p class="text-right"> স্বাক্ষরঃ</p>
+        <?php }?>
     </div>
+
 </body>
 </html>
+
+
+

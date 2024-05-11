@@ -2167,13 +2167,20 @@ class Grid_con extends CI_Controller {
 	}
 	function grid_final_satalment(){
 		$grid_data = $this->input->post('spl');
-		$status = $this->input->post('status');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		$data['total_value']= $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
-		// dd($data['total_value']);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$this->load->view('final_satalment',$data,false);
+	}
+	function grid_final_satalment_edit(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$datas =$this->Grid_model->grid_employee_information($grid_emp_id);
+		// dd($data[0]);
+		$db_row = $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
+		$data = array_merge((array) $datas[0], (array) $db_row);
+		echo json_encode($data);
 	}
 
 	function grid_service_book2()
@@ -2719,8 +2726,6 @@ class Grid_con extends CI_Controller {
 			$get_all[$key]->status = $dd->status;
 			$get_all[$key]->working_days = ($dd->working_days+$dd->status);
 		}
-
-		// dd($get_all[0]->status);
 		echo json_encode($get_all[0]);
 	}
 }

@@ -1547,7 +1547,6 @@ class Entry_system_con extends CI_Controller
         if ($this->db->delete('pr_emp_resign_history')) {
             $this->db->where('emp_id', $id)->update('pr_emp_com_info', array('emp_cat_id' => 1));
         }
-
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url('entry_system_con/resign_list'));
     }
@@ -2149,7 +2148,8 @@ class Entry_system_con extends CI_Controller
             'absent' => $_POST['absent'],
             'advanced_salary' => $_POST['advanced_salary'],
             'total_deduct' => $_POST['total_deduct'],
-            'net_pay' => $_POST['net_pay']
+            'net_pay' => $_POST['net_pay'],
+            'total_get' => $_POST['total_get']
         );
     
         $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);

@@ -103,11 +103,11 @@
                         <td>
                             <?php if($r->status == 1){?>
                             <a href="#" class="btn btn-sm btn-info" onclick="report(<?= $r->emp_id ?>)" >Report</a>
+                            <!-- <a href="#" class="btn btn-sm btn-success" role="button" data-toggle="modal" data-target="#myModal" onclick="edit(< ?= $r->emp_id ?>)" >Edit</a> -->
                             <?php }else{ ?>
                             <a href="#" class="btn btn-sm btn-info" role="button" data-toggle="modal" data-target="#myModal" onclick="final_satalment(<?= $r->emp_id ?>)" >Add Final Satalment</a>
                             <?php }?>
-                            <a href="<?=base_url('entry_system_con/resign_delete/'.$r->emp_id)?>"
-                                class="btn btn-sm btn-danger" role="button">Delete</a>
+                            <a href="<?=base_url('entry_system_con/resign_delete/'.$r->emp_id)?>"class="btn btn-sm btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php }} else {?>
@@ -543,8 +543,8 @@
                 var formData = {
                     'emp_id'                : $("#card_no").html(),
                     'working_days'          : $("#working_days").html(),
-                    'per_day_rate'          : $(".per_day_rate").html(),
                     'ot_eot'                : $("#ot_eot").html(),
+                    'per_day_rate'          : $(".per_day_rate").html(),
                     'ot_rate'               : $(".ot_rate").html(),
                     'resign_pay_day'        : $("#resign_pay_day").val(),
                     'service_benifit_rate'  : $(".service_benifit_rate").html(),
@@ -556,7 +556,8 @@
                     'absent'                : $("#absent").html(),
                     'advanced_salary'       : $("#advanced_salary").val(),
                     'total_deduct'          : $(".total_deduct").html(),
-                    'net_pay'               : $("#net_pay").html()
+                    'net_pay'               : $("#net_pay").html(),
+                    'total_get'             : $("#total_get").html(),
                 };
                 $.ajax({
                     url: "<?php echo base_url('entry_system_con/add_final_satalment'); ?>",
@@ -577,14 +578,12 @@
         });
     }
 
-
     function report(id){
         // alert(id);
-        var status =4;
         $.ajax({
             url: "<?php echo base_url('Grid_con/grid_final_satalment'); ?>",
             type: 'POST',
-            data: {spl: id,status:status},
+            data: {spl: id},
             success: function (data) {
                 // console.log(data);/
                 var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10'); 
@@ -597,15 +596,87 @@
             }
         });
     }
+
+    //  function edit(id){
+    //     $.ajax({
+    //         url: "<?php echo base_url('Grid_con/grid_final_satalment_edit'); ?>",
+    //         type: 'POST',
+    //         data: {spl: id},
+    //         success: function (data) {
+
+    //               var employeeData = JSON.parse(data);
+
+    //             // console.log(employeeData);return false;
+    //             // Set values to respective HTML elements
+    //             $("#full_name").html(employeeData.name_bn);
+    //             $("#card_no").html(employeeData.emp_id);
+    //             $("#designation_name").html(employeeData.desig_bangla);
+    //             $("#section_name").html(employeeData.sec_name_bn);
+    //             $("#year").html(employeeData.resign_year);
+    //             $("#joining_date").html(employeeData.emp_join_date.split('-').reverse().join('-'));
+    //             var d = new Date(employeeData.resign_date);
+    //             var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+    //             var resign_date = d.toLocaleString('bn-BD', { year: 'numeric', month: 'long' });
+    //             var year_str = "<span style='font-family:sutonnyMJ;font-size:16px'>"+d.getFullYear()+'</span>';
+    //             // $("#resign_date").html(resign_date);
+    //             $("#resign_date").html(bnMonths[d.getMonth()] + " " + year_str);
+    //             $("#last_working_date").html(d.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/[^0-9]/g, "-").replace(/^(..)-(..)-(....)$/, "$2-$1-$3"));
+    //             // $("#job_duration").html( calculateJobDuration(employeeData.emp_join_date, employeeData.resign_date) );
+    //             $("#gross_salary").html(employeeData.gross_sal);
+    //             // $("#basic_salary").html(calculateBasicSalary(employeeData.gross_sal));
+    //             // $(".ot_rate").html(calculateOtRate(employeeData.gross_sal));
+    //             $("#working_days").html(employeeData.working_days);
+    //             $("#absent").html(employeeData.status);
+    //             $(".per_day_rate").html(calculatePerDayRate(employeeData.gross_sal));
+    //             // $("#total1").html( parseFloat(employeeData.working_days* calculatePerDayRate(employeeData.gross_sal)).toFixed(2));
+    //             $("#ot_eot").html( (employeeData.ot_hour==="" || employeeData.ot_hour==null)? 0 : parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour) );
+    //             $("#total_ot_rate").html(parseFloat((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) * calculateOtRate(employeeData.gross_sal)).toFixed(2));
+
+    //             $("#working_days").html(employeeData.working_days),
+    //             $("#ot_eot").html(employeeData.ot_eot),
+    //             $(".per_day_rate").html(employeeData.per_day_rate),
+    //             $(".ot_rate").html(employeeData.ot_rate),
+    //             $("#resign_pay_day").val(employeeData.resign_pay_day),
+    //             $(".service_benifit_rate").html(employeeData.service_benifit_rate),
+    //             $("#extra_payoff").html(employeeData.extra_payoff),
+    //             $(".earn_leave").val(employeeData.earn_leave),
+    //             $(".service_benifit").html(employeeData.service_benifit),
+    //             $(".another_deposit").val(employeeData.another_deposit),
+    //             $("#notice_deduct").val(employeeData.notice_deduct),
+    //             $("#absent").html(employeeData.absent),
+    //             $("#advanced_salary").val(employeeData.advanced_salary),
+    //             $(".total_deduct").html(employeeData.total_deduct),
+    //             $("#net_pay").html(employeeData.net_pay),
+    //             $("#total_get").html(employeeData.total_get),
+
+    //             // function calculateJobDuration(startDate, endDate) {
+    //             //     var start = new Date(startDate);
+    //             //     var end = new Date(endDate);
+    //             //     var duration = end - start;
+    //             //     var days = duration / (1000 * 60 * 60 * 24);
+    //             //     var years = Math.floor(days / 365);
+    //             //     days = days % 365;
+    //             //     var months = Math.floor(days / 30);
+    //             //     days = days % 30;
+    //             //     return "<span style='font-family:SutonnyMJ'> " + years + " </span>  বছর <span style='font-family:SutonnyMJ'>" + months + "</span> মাস <span style='font-family:SutonnyMJ'>" + days + "</span> দিন";
+    //             // }
+    //             function calculateBasicSalary(grossSalary) {
+    //                 var basic = ((parseFloat(grossSalary) -2450)/1.5);
+    //                 return basic.toFixed(2);
+    //             }
+    //             function calculateOtRate(grossSalary) {
+    //                 var basic = (parseFloat((((grossSalary)-2450)/ 1.5)/104));
+    //                 return basic.toFixed(2);
+    //             }
+    //             // console.log(data);/
+    //             // var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10'); 
+    //             // win.document.write(data);
+    //             // win.document.close();
+    //         },
+    //         error: function(jqXHR, exception) {
+    //             console.error('jqXHR:', jqXHR);
+    //             console.error('exception:', exception);
+    //         }
+    //     });
+    // }
 </script>
-
-
-
-
-
-
-
-<!-- 
-  -->
-
-

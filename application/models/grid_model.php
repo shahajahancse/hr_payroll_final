@@ -8719,11 +8719,13 @@ class Grid_model extends CI_Model{
 							pre_upa.name_bn as pre_upa_name_bn,
 							pre_post.name_bn as pre_post_name_bn,
 							pr_emp_resign_history.resign_date,
+							pr_emp_left_history.left_date,
 							DAY(pr_emp_resign_history.resign_date) as last_working_day,
 							year(pr_emp_resign_history.resign_date) as resign_year,
 						');
 		$this->db->from('pr_emp_com_info');
 		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+		$this->db->join('pr_emp_left_history', 'pr_emp_per_info.emp_id = pr_emp_left_history.emp_id', 'left');
 		$this->db->join('pr_emp_resign_history', 'pr_emp_per_info.emp_id = pr_emp_resign_history.emp_id', 'left');
 		$this->db->join('pr_grade', 'pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id', 'left');
 		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id', 'left');

@@ -55,7 +55,7 @@
                         <p>১১। উচ্চতা: </p> 
 						<p>১২। রক্তের গ্রুপ (যদি থাকে): <?php echo $value->blood == 'None'? 'নাই' : $value->blood?></p>
                         <p>১৩। সনাক্ত করিবার জন্য বিশেষ কোনচিহ্ন (যদি থাকে): নাই</p>
-                        <p>১৪। সার্ভিস বহি খুলিবার তারিখ: ২৯-১২-২০২০ ইং</p>
+                        <p>১৪। সার্ভিস বহি খুলিবার তারিখ: ইং</p>
                         <p>১৫। বাম হাতের বৃদ্ধাঙ্গুলীর ছাপ: </p>
                         <div style="position: absolute; top: 10px;right: 10px;">
                             <img style="border: 3px solid black;" src="<?php echo base_url('uploads/photo/'.$value->img_source.'')?>" alt="" width="100px" height="130px">
@@ -125,9 +125,9 @@
                         </thead>
                         <tbody>
                             <tr class="text-center">
-                                <td style="white-space: nowrap;"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> ইং</td>
-                                <td><?php echo $value->left_date=='' ? '':date('d-m-Y',strtotime($value->left_date))?> </td>
-                                <td>সেচ্ছায়</td>
+                                <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
+                                <td><?php echo $value->left_date=='' ? 'বর্তমান':date('d-m-Y',strtotime($value->left_date))?> </td>
+                                <td>    </td>
                                 <td>    </td>
                                 <td>    </td>
                             </tr>
@@ -147,8 +147,8 @@
                     <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                         <thead>
                             <tr class="text-center">
-                                <th>বর্তমান পদে চাকুরী আরম্ভের তারিখ</th>
-                                <th>চাকুরীর পদ ও কার্ড নম্বর</th>
+                                <th>বর্তমান <br>পদে চাকুরী আরম্ভের<br> তারিখ</th>
+                                <th>চাকুরীর <br>পদ <br>ও কার্ড <br>নম্বর</th>
                                 <th colspan="4">মাসিক মজুরির হার</th>
                             </tr>
                             <tr class="text-center">
@@ -158,7 +158,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="text-center">
+                            <tr class="text-center" style="font-weight: bold;white-space: nowrap">
                                 <td></td>
                                 <td></td>
                                 <td>মূল মজুরী</td>
@@ -166,21 +166,20 @@
                                 <td>চিকিৎসা ভাতা</td>
                                 <td>বোনাস (যদি থাকে)</td>
                             </tr>
-                            <tr class="text-center">
+                            <tr class="text-center" style="font-weight: bold;" >
                                 <td></td>
                                 <td></td>
                                 <td>টাকা</td>
                                 <td>টাকা</td>
                                 <td>টাকা</td>
                                 <td>টাকা</td>
-                               
                             </tr>
                             <tr class="text-center">
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
+                                <td style="font-size:15px;font-family:sutonnyMJ"><?php echo '<span style="font-size:12px;">'.$value->desig_bangla.'</span>'.' '.$value->emp_id?></td>
+                                <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($value->gross_sal-2450)/1.5)?></td>
+                                <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round((($value->gross_sal-2450)/1.5/2))?></td>
+                                <td style="font-size:15px;font-family:sutonnyMJ">750</td>
                                 <td>-</td>
                             </tr>
                         </tbody>
@@ -200,7 +199,7 @@
                                 <th>মোট, প্রভিডেন্ট ফান্ড (যদি থাকে)</th>
                                 <th>শ্রমিকের প্রদেয় চাঁদা</th>
                                 <th>মালিকের প্রদেয় চাঁদা</th>
-                                <th>ত্যগ/অবসানের ধরন/কারন </th>
+                                <th>ত্যাগ/অবসানের ধরন/কারন </th>
                                 <th>মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
                                 <th>শ্রমিকের স্বাক্ষর/টিপসই </th>
                             </tr>
@@ -213,8 +212,8 @@
                                 <th>৮</th>
                                 <th>৯</th>
                             </tr>
-                            <tr class="text-center">
-                                <th>টাকা</th>
+                            <tr class="text-center" style="font-weight:">
+                                <th style="bold;padding:20px;">টাকা</th>
                                 <th>টাকা</th>
                                 <th>টাকা</th>
                                 <th>টাকা</th>
@@ -225,9 +224,9 @@
                         </thead>
                         <tbody>
                             <tr class="text-center">
-                                <td>২৯-১২-২০২০ ইং</td>
-                                <td>২৯-১২-২০২০ ইং</td>
-                                <td>সেচ্ছায়</td>
+                                <td style="    padding: 29px;">-</td>
+                                <td>-</td>
+                                <td> </td>
                                 <td> </td>
                                 <td> </td>
                                 <td> </td>
