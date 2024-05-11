@@ -317,9 +317,9 @@
                 var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
                 var resign_date = d.toLocaleString('bn-BD', { year: 'numeric', month: 'long' });
                 var year_str = "<span style='font-family:sutonnyMJ;font-size:16px'>"+d.getFullYear()+'</span>';
-                $("#resign_date").html(resign_date);
+                // $("#resign_date").html(resign_date);
                 $("#resign_date").html(bnMonths[d.getMonth()] + " " + year_str);
-                $("#last_working_date").html(d.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/[^0-9]/g, "-"));
+                $("#last_working_date").html(d.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/[^0-9]/g, "-").replace(/^(..)-(..)-(....)$/, "$2-$1-$3"));
                 $("#job_duration").html(calculateJobDuration(employeeData.emp_join_date, employeeData.resign_date));
                 $("#gross_salary").html(employeeData.gross_sal);
                 $("#basic_salary").html(calculateBasicSalary(employeeData.gross_sal));
@@ -328,7 +328,7 @@
                 $("#absent").html(employeeData.status);
                 $(".per_day_rate").html(calculatePerDayRate(employeeData.gross_sal));
                 $("#total1").html( parseFloat(employeeData.working_days* calculatePerDayRate(employeeData.gross_sal)).toFixed(2));
-                $("#ot_eot").html((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) );
+                $("#ot_eot").html( (employeeData.ot_hour==="" || employeeData.ot_hour==null)? 0 : parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour) );
                 $("#total_ot_rate").html(parseFloat((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) * calculateOtRate(employeeData.gross_sal)).toFixed(2));
                 $('.total_resign_pay_day').html(0);
                 $('.total_earn_leave').html(0);
