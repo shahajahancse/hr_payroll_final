@@ -2623,7 +2623,7 @@ class Grid_con extends CI_Controller {
 		$get_all=[];
 		foreach($d as $key => $row){
 			$get_all[$key] = $row;
-			$dd = $this->db->select('SUM(ot) as ot_hour, SUM(eot) as eot_hour, COUNT(CASE WHEN present_status = "A" THEN 1 ELSE NULL END) as status', FALSE)
+			$dd = $this->db->select('SUM(ot) as ot_hour, SUM(eot) as eot_hour, COUNT(CASE WHEN present_status != "A" THEN 1 END) as working_days, COUNT(CASE WHEN present_status = "A" THEN 1 END) as status', FALSE)
 						->from('pr_emp_shift_log')
 						->where('pr_emp_shift_log.emp_id',$row->com_id)
 						->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)))
@@ -2632,6 +2632,7 @@ class Grid_con extends CI_Controller {
 			$get_all[$key]->ot_hour = $dd->ot_hour;
 			$get_all[$key]->eot_hour = $dd->eot_hour;
 			$get_all[$key]->status = $dd->status;
+			$get_all[$key]->working_days = ($dd->working_days+$dd->status);
 		}
 		
 		// dd($get_all[0]->status);

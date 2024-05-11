@@ -8548,7 +8548,7 @@ class Grid_model extends CI_Model{
 							pre_upa.name_bn as pre_upa_name_bn,
 							pre_post.name_bn as pre_post_name_bn,
 							pr_emp_resign_history.resign_date,
-							DAY(pr_emp_resign_history.resign_date) as working_days,
+							DAY(pr_emp_resign_history.resign_date) as last_working_day,
 							year(pr_emp_resign_history.resign_date) as resign_year,
 						');
 		$this->db->from('pr_emp_com_info');
