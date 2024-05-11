@@ -72,16 +72,21 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>Company Logo</label>
 
                             <input style="padding: 4px 9px;height: 37px!important;border: 1px solid #0aa699 !important;"
                                 type="file" name="comlogo" id="comlogo" value="" class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>Company Signature</label>
                             <input style="padding: 4px 9px;height: 37px!important;border: 1px solid #0aa699 !important;"
                                 type="file" name="comsign" id="comsign" value="" class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Resister signature</label>
+                            <input style="padding: 4px 9px;height: 37px!important;border: 1px solid #0aa699 !important;"
+                                type="file" name="register" id="register" value="" class="form-control">
                         </div>
                     </div>
                     <div class="row">

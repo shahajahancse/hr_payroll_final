@@ -251,6 +251,9 @@
 							<?php if(in_array(44,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_prom_report()">Promotion Report</button>
 							<?php } ?>
+							<?php if(in_array(44,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_line_report()">Line Change Report</button>
+							<?php } ?>
 							<?php if(in_array(45,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_ot_eot_report()">OT / EOT Report</button>
 							<?php } ?>
@@ -272,6 +275,12 @@
 							<?php } ?>
 							<?php if(in_array(106,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="increment_able_employee()">Increment able employee</button>
+							<?php } ?>
+							<?php if(in_array(109,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="unit_transferred_list(1)">Unit transfer list</button>
+							<?php } ?>
+							<?php if(in_array(110,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="unit_transferred_list(2)">Unit transferred list</button>
 							<?php } ?>
 						</div>
 						<!-- Continuous Reports end -->
@@ -591,21 +600,21 @@
 				}
 
 	</script>
-<script>
-	$(document).ready(function() {
-		var l1_count = localStorage.getItem('l1_count');
-		var l2_count = localStorage.getItem('l2_count');
-		var l3_count = localStorage.getItem('l3_count');
-		console.log(l1_count);
-		if (l1_count !== null) {
+	<script>
+		$(document).ready(function() {
+			var l1_count = localStorage.getItem('l1_count');
+			var l2_count = localStorage.getItem('l2_count');
+			var l3_count = localStorage.getItem('l3_count');
+			console.log(l1_count);
+			if (l1_count !== null) {
 
-			$('#letter1_count').html(l1_count);
-		}
-		if (l2_count !== null) {
-			$('#letter2_count').html(l2_count);
-		}
-		if (l3_count !== null) {
-			$('#letter3_count').html(l3_count);
-		}
-	});
-</script>
+				$('#letter1_count').html(l1_count);
+			}
+			if (l2_count !== null) {
+				$('#letter2_count').html(l2_count);
+			}
+			if (l3_count !== null) {
+				$('#letter3_count').html(l3_count);
+			}
+		});
+	</script>

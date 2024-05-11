@@ -1470,12 +1470,18 @@ function increment_able_employee()
 		}
 	}
 }
-function iftar_bill_list()
+function unit_transferred_list(type)
 {
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate =='')
 	{
 		alert("Please select First date");
+		return false;
+	}
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate =='')
+	{
+		alert("Please select Second date");
 		return false;
 	}
 
@@ -1495,7 +1501,57 @@ function iftar_bill_list()
 
 	document.getElementById('loaader').style.display = 'flex';
 	ajaxRequest = new XMLHttpRequest();
-	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id+"&type="+type+"&seconddate="+seconddate;
+	url =  hostname+"grid_con/unit_transferred_list/";
+	//
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+
+			continuous_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			continuous_present_report.document.write(resp);
+			//continuous_present_report.stop();
+		}
+	}
+}
+function iftar_bill_list()
+{
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+
+	var seconddate = document.getElementById('seconddate').value;
+	// if(seconddate =='')
+	// {
+	// 	alert("Please select Second date");
+	// 	return false;
+	// }
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select unit !");
+		return false;
+	}
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+
+	document.getElementById('loaader').style.display = 'flex';
+	ajaxRequest = new XMLHttpRequest();
+	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id+"&seconddate="+seconddate;
 	url =  hostname+"grid_con/iftar_bill_list/";
 	//
    ajaxRequest.open("POST", url, true);
@@ -3172,6 +3228,76 @@ function grid_continuous_incre_report()
 
 
     url =  hostname+"grid_con/continuous_incre_report/";
+
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function () {
+			document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+
+			continuous_incre_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			continuous_incre_report.document.write(resp);
+			//continuous_incre_report.stop();
+		}
+	}
+
+}
+function grid_continuous_line_report()
+{
+	 var ajaxRequest;  // The variable that makes Ajax possible!
+
+ try{
+   // Opera 8.0+, Firefox, Safari
+   ajaxRequest = new XMLHttpRequest();
+ }catch (e){
+   // Internet Explorer Browsers
+   try{
+      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+   }catch (e) {
+      try{
+         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+      }catch (e){
+         // Something went wrong
+         alert("Your browser broke!");
+         return false;
+      }
+   }
+ }
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate =='')
+	{
+		alert("Please select Second date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select unit !");
+		return false;
+	}
+
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+		document.getElementById('loaader').style.display = 'flex';
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
+
+
+    url =  hostname+"grid_con/continuous_line_report/";
 
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");

@@ -275,6 +275,7 @@ class Grid_con extends CI_Controller {
 		$data['grid_emp_id'] = $grid_emp_id;
 		$this->load->view('grid_con/general_info',$data);
 	}
+
 	function worker_register(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
@@ -507,16 +508,44 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/increment_able_employee',$data);
 		}
 	}
+	function unit_transferred_list()
+	{
+		$firstdate= date('Y-m-d',strtotime($this->input->post('firstdate'))); //$this->input->post('firstdate'));
+		$seconddate= date('Y-m-d',strtotime($this->input->post('seconddate'))); // $this->input->post('seconddate');
+		 $type = $this->input->post('type');
+		$spl = $this->input->post('spl');
+		$emp_id= $grid_emp_id = explode(',', trim($spl));
+		$unit_id= $unit_id = $this->input->post('unit_id');
+		$sql = "SELECT DISTINCT transfer.*, com.emp_id, com.unit_id, com.emp_join_date, com.gross_sal, com.com_gross_sal, per.name_en, per.name_bn, per.personal_mobile, per.gender, desig.desig_bangla, dept.dept_bangla, sec.sec_name_bn, line.line_name_bn FROM pr_unit_transfer as transfer
+				LEFT JOIN pr_emp_com_info as com ON transfer.".($type == 1 ? 'new_emp_id' : 'old_emp_id')." = com.emp_id
+				LEFT JOIN pr_emp_per_info as per ON per.emp_id = com.emp_id
+				LEFT JOIN emp_designation as desig ON com.emp_desi_id = desig.id
+				LEFT JOIN emp_depertment as dept ON com.emp_dept_id = dept.dept_id
+				LEFT JOIN emp_section as sec ON com.emp_sec_id = sec.id
+				LEFT JOIN emp_line_num as line ON com.emp_line_id = line.id
+				WHERE transfer.joining_date BETWEEN '$firstdate' AND '$seconddate'
+				AND com.emp_id IN (".implode(',', $emp_id).")
+				AND com.unit_id = $unit_id
+				GROUP BY com.emp_id";
+		$data["array"] = $this->db->query($sql)->result();
+		$this->load->view('grid_con/'.($type == 1 ? 'unit_transfer_list' : 'unit_transferred_list'), $data);
+	}
 
 	function iftar_bill_list()
 	{
-		$date = $this->input->post('firstdate');
+		$date1= date('Y-m-d',strtotime($this->input->post('firstdate'))); //$this->input->post('firstdate'));
+		$date2= date('Y-m-d',strtotime($this->input->post('seconddate'))); // $this->input->post('seconddate');
+
+		if (empty($date2)) {
+			$date2=$date1;
+		};
 		$unit_id = $this->input->post('unit_id');
 		$spl = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($spl));
 
-		$data["values"] = $this->Grid_model->iftar_bill_list($date, $grid_emp_id, $unit_id);
-		$data["date"]			= $date;
+		$data["values"] = $this->Grid_model->iftar_bill_list($date1, $date2, $grid_emp_id, $unit_id);
+		$data["date1"]			= $date1;
+		$data["date2"]			= $date2;
 		$data["unit_id"] 		= $unit_id;
 
 		if(is_string($data["values"]))
@@ -525,7 +554,26 @@ class Grid_con extends CI_Controller {
 		}
 		else
 		{
-			$this->load->view('grid_con/iftar_bill_list',$data);
+			$this->load->view('grid_con/iftar_bill_list_report',$data);
+		}
+	}
+
+	function grid_yearly_leave_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_yearly_leave_register($grid_firstdate, $grid_seconddate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["values"]		 = $query;
+			$data['unit_id']	 = $unit_id ;
+			$data["first_date"]  = $grid_firstdate;
+			$data["second_date"] = $grid_seconddate;
+			//  dd($this->input->post('seconddate'));
+			$this->load->view('grid_con/yearly_leave_register',$data);
 		}
 	}
 	// ============================== end last increment or promotion Report ===============
@@ -1524,6 +1572,31 @@ class Grid_con extends CI_Controller {
 		}
 
 	}
+	function continuous_line_report()
+	{
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+
+		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
+		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
+		$data["values"] = $this->Grid_model->continuous_line_report($sStartDate,$sEndDate,$grid_emp_id);
+		$data["start_date"] = $sStartDate;
+		$data["end_date"] = $sEndDate;
+		$data["unit_id"] = $unit_id;
+		//print_r($data);
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('continuous_line_report',$data);
+		}
+
+	}
 
 	function continuous_prom_report()
 	{
@@ -1880,27 +1953,6 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_report_ot',$data);
 		}
 	}
-
-	function grid_yearly_leave_register(){
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$query=$this->Grid_model->grid_yearly_leave_register($grid_firstdate, $grid_seconddate,$grid_emp_id);
-		if(is_string($query)){
-			echo $query;
-		}
-		else{
-			$data["values"]		 = $query;
-			$data['unit_id']	 = $unit_id ;
-			$data["first_date"]  = $grid_firstdate;
-			$data["second_date"] = $grid_seconddate;
-			//  dd($this->input->post('seconddate'));
-			$this->load->view('yearly_leave_register',$data);
-		}
-	}
-
 
 	function grid_continuous_ot_eot_report()
 	{
@@ -2685,8 +2737,7 @@ class Grid_con extends CI_Controller {
 	}
 
 
-	public  function grid_com_salessssss()
-	{
+	public  function grid_com_salessssss(){
 		// exit('ok');
 		$this->db->select('pr_emp_com_info.emp_id, pr_emp_com_info.gross_sal');
 		$this->db->from('pr_emp_com_info');
@@ -2708,18 +2759,17 @@ class Grid_con extends CI_Controller {
 		$get_all=[];
 		foreach($d as $key => $row){
 			$get_all[$key] = $row;
-			$dd = $this->db->select('SUM(ot) as ot_hour, SUM(eot) as eot_hour, COUNT(CASE WHEN present_status = "A" THEN 1 ELSE NULL END) as status', FALSE)
+			$dd = $this->db->select('SUM(ot) as ot_hour, SUM(eot) as eot_hour, COUNT(CASE WHEN present_status != "A" THEN 1 END) as working_days, COUNT(CASE WHEN present_status = "A" THEN 1 END) as status')
 						->from('pr_emp_shift_log')
-						->where('pr_emp_shift_log.emp_id',$row->com_id)
+						->where('pr_emp_shift_log.emp_id',$row->emp_id)
 						->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)))
 						->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)))
-						->get()->row();
+						->get()->row();			
 			$get_all[$key]->ot_hour = $dd->ot_hour;
 			$get_all[$key]->eot_hour = $dd->eot_hour;
 			$get_all[$key]->status = $dd->status;
+			$get_all[$key]->working_days = ($dd->working_days+$dd->status);
 		}
-
-		// dd($get_all[0]->status);
 		echo json_encode($get_all[0]);
 	}
 }

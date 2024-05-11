@@ -171,6 +171,23 @@ class Crud_model extends CI_Model{
                 $sig = $data["upload_data"]["file_name"];
             }
         }
+        if($_FILES["register"]["name"] != ''){
+            $config['upload_path'] = './images/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = '2000';
+            // $config['max_width']  = '1000';
+            // $config['max_height']  = '1000';
+            $this->load->library('upload', $config);
+            if ( ! $this->upload->do_upload('register')){
+                // exit('gdfg');
+                $error = array('error' => $this->upload->display_errors());
+                // print_r($error);exit('obaydullah');
+                // echo $error["error"];
+            }else{
+                $data = array('upload_data' => $this->upload->data());
+                $register = $data["upload_data"]["file_name"];
+            }
+        }
 
         $comData = array(
             'company_name_english' => $fromArray['name'],
@@ -181,6 +198,7 @@ class Crud_model extends CI_Model{
             'unit_id' => $fromArray['unit_id'],
              'company_logo' => $img,
             'company_signature' => $sig,
+            'register' => $register
         );
 
           $this->db->insert('company_infos',$comData);
@@ -237,6 +255,23 @@ class Crud_model extends CI_Model{
             }else{
                 $data = array('upload_data' => $this->upload->data());
                 $formArray['company_logo'] = $data["upload_data"]["file_name"];
+            }
+        }
+        if($_FILES["register"]["name"] != ''){
+            $config['upload_path'] = './images/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = '2000';
+            // $config['max_width']  = '1000';
+            // $config['max_height']  = '1000';
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('register')){
+                // exit('gdfg');
+                $error = array('error' => $this->upload->display_errors());
+                // print_r($error);exit('obaydullah');
+                // echo $error["error"];
+            }else{
+                $data = array('upload_data' => $this->upload->data());
+                $formArray['register'] = $data["upload_data"]["file_name"];
             }
         }
 

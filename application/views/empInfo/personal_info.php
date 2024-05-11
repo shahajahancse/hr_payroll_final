@@ -876,7 +876,7 @@ input[type="number"] {
                             </div>
 
                             <?php $desig = $this->db->get('emp_designation')->result(); ?>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Designation </label>
                                     <?php echo form_error('exp_dasignation');?>
@@ -885,12 +885,19 @@ input[type="number"] {
                                         required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Image </label>
                                     <?php echo form_error('img_source');?>
                                     <input type="file" name="img_source" id="img_source" class="form-control input-sm"
                                         style="height: 35px !important; line-height: 20px !important;">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Signature </label>
+                                    <?php echo form_error('signature');?>
+                                    <input type="file" name="signature" id="signature" class="form-control input-sm" style="height: 35px !important; line-height: 20px !important;">
                                 </div>
                             </div>
                         </div>

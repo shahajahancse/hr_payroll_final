@@ -138,8 +138,35 @@ class Processdb extends CI_Model{
 				}
 
 			}
+			$signature="";
+			if($_FILES["signature"]["name"] != '')
+			{
+				$imgs = explode('.', $_FILES["signature"]["name"]);
+				$ext = end($imgs);
+
+				$config['upload_path']    = './uploads/photo';
+	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['file_name'] 	  =  $id .'.'. $ext;
+				$config['max_size']	 	  = '4000';
+				// $config['max_width']  	  = '5000';
+				// $config['max_height']     = '7000';
+	        	$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				if (!$this->upload->do_upload('signature'))
+				{
+					$error = array('error' => $this->upload->display_errors());
+					echo $error["error"];
+				}
+				else
+				{
+					$img_upload = array('upload_data' => $this->upload->data());
+					$signature = $img_upload["upload_data"]["file_name"];
+				}
+
+			}
 
 			$per_data['img_source'] = $img;
+			$per_data['signature'] = $signature;
 
 			// dd($per_data);
 			$this->db->insert('pr_emp_per_info', $per_data);
@@ -799,6 +826,31 @@ class Processdb extends CI_Model{
 					$img_upload = array('upload_data' => $this->upload->data());
 					$img = $img_upload["upload_data"]["file_name"];
 					$per_data['img_source'] = $img;
+				}
+			}
+			if($_FILES["signature"]["name"] != '')
+			{
+				$imgs = explode('.', $_FILES["signature"]["name"]);
+				$ext = end($imgs);
+
+				$config['upload_path']    = './uploads/photo';
+	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['file_name'] 	  =  $per_data['emp_id'] .'.'. $ext;
+				$config['max_size']	 	  = '4000';
+				// $config['max_width']  	  = '5000';
+				// $config['max_height']     = '7000';
+	        	$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				if ( ! $this->upload->do_upload('signature'))
+				{
+					$error = array('error' => $this->upload->display_errors());
+					echo $error["error"];
+				}
+				else
+				{
+					$img_upload = array('upload_data' => $this->upload->data());
+					$signature = $img_upload["upload_data"]["file_name"];
+					$per_data['signature'] = $signature;
 				}
 
 			}

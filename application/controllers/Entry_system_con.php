@@ -1059,22 +1059,25 @@ class Entry_system_con extends CI_Controller
     }
     public function inter_unit_transfer_add(){
         $last_working_date = $this->input->post('last_working_date');
+        $joining_date = $this->input->post('joining_date');
 
         $sql = $this->input->post('sql');
         $new_unit_id = $this->input->post('new_unit_id');
         $emp_ids = explode(',', $sql);
         foreach ($emp_ids as $value) {
-            $this->unit_transfer($value, $new_unit_id,$last_working_date);
+            $this->unit_transfer($value, $new_unit_id,$last_working_date,$joining_date);
         }
+        echo 1;
     }
-
-
-    function unit_transfer($id, $new_unit_id,$last_working_date){
+    function unit_transfer($id, $new_unit_id,$last_working_date,$joining_date){
         $this->db->where('emp_id', $id);
         $pr_emp_per_info=$this->db->get('pr_emp_per_info')->row();
 
         $this->db->where('emp_id', $id);
         $pr_emp_com_info=$this->db->get('pr_emp_com_info')->row();
+
+        $this->db->where('emp_id', $id);
+        $this->db->update('pr_emp_com_info', array('emp_cat_id' => 5));
 
         $pre_unit_id=$pr_emp_com_info->unit_id;
 
@@ -1097,19 +1100,14 @@ class Entry_system_con extends CI_Controller
             'new_unit_id' => $new_unit_id,
             'new_emp_id' => $new_emp_id,
             'last_working_day' => $last_working_date,
-            'joining_date' => $pr_emp_com_info->emp_join_date,
+            'joining_date' => $joining_date,
             'create_at' => date('Y-m-d'),
         );
-        if($this->db->insert('pr_unit_transfer', $data)){
-            echo 1;
-        }else{
-            echo 0;
-        };
-
+        $this->db->insert('pr_unit_transfer', $data);
     }
     function change_pr_emp_per_info($id, $new_unit_id, $pre_unit_id, $pr_emp_per_info){
         $this->db->where('unit_id', $new_unit_id);
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('emp_id', 'DESC');
         $this->db->limit(1);
         $last_id=$this->db->get('pr_emp_com_info')->row()->emp_id;
         $new_emp_id=$last_id+1;
@@ -1190,18 +1188,13 @@ class Entry_system_con extends CI_Controller
             'new_com_salary' => $pr_incre_prom_pun->new_com_salary,
             'effective_month' => $pr_incre_prom_pun->effective_month,
             'ref_id' => $pr_incre_prom_pun->ref_id,
-            'status' => $pr_incre_prom_pun->status,
+            'status' => $pr_incre_prom_pun->status, //tranfer unit 
         );
         $this->db->insert('pr_incre_prom_pun', $data);
     }
-
-
-
-
     //------------------------------------------------------------------------------------------
     // GRID for holiday
     //------------------------------------------------------------------------------------------
-
     //------------------------------------------------------------------------------------------
     // Leave entry to the Database
     //------------------------------------------------------------------------------------------
@@ -2149,9 +2142,9 @@ class Entry_system_con extends CI_Controller
             'absent' => $_POST['absent'],
             'advanced_salary' => $_POST['advanced_salary'],
             'total_deduct' => $_POST['total_deduct'],
-            'net_pay' => $_POST['net_pay']
+            'net_pay' => $_POST['net_pay'],
+            'status' => $_POST['status']
         );
-    
         $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);
         echo json_encode(array('success' => true));
     }
