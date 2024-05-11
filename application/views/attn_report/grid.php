@@ -200,6 +200,13 @@
 							<?php if(in_array(76,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="daily_logout_report()">Daily Logout Report</button>
 							<?php } ?>
+							<?php if(in_array(105,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="ot_acknowledgement_sheet(1)">OT Acknowledgement sheet</button>
+							<button class="btn input-sm sbtn" onclick="ot_acknowledgement_sheet(2)">OT Acknowledgement Female</button>
+							<?php } ?>
+							<?php if(in_array(107,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="iftar_bill_list()">Iftar Bill List</button>
+							<?php } ?>
 						</div>
 						<!-- Daily Reports end -->
 
@@ -256,6 +263,15 @@
 							<?php } ?>
 							<?php if(in_array(48,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_report_limit(10)">Absent ten</button>
+							<?php } ?>
+							<?php if(in_array(103,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="last_increment_promotion(1)">Last Increment Check</button>
+							<?php } ?>
+							<?php if(in_array(104,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="last_increment_promotion(2)">Last Promotion Check</button>
+							<?php } ?>
+							<?php if(in_array(106,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="increment_able_employee()">Increment able employee</button>
 							<?php } ?>
 						</div>
 						<!-- Continuous Reports end -->

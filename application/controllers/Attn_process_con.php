@@ -339,7 +339,7 @@ class Attn_process_con extends CI_Controller {
 		if($this->session->userdata('level') == 0 || $this->session->userdata('level') == 1){
 			$this->data['username'] = $this->data['user_data']->id_number;
 			$this->data['unit_id']=$this->data['user_data']->unit_name;
-			$this->data['title'] = 'kicu ekta';
+			$this->data['title'] = 'Attendance Report';
 			$this->data['subview'] = 'attn_report/grid';
 			$this->load->view('layout/template', $this->data);
 		} else if ($this->session->userdata('level') == 2){

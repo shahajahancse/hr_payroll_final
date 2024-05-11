@@ -8,7 +8,7 @@
         <style>
             .table td{
                 padding: 0px;
-                
+
             }
             p{
                 margin-bottom: 4px;
@@ -16,22 +16,22 @@
             @media print{
                 .break_page{
                     page-break-before: always;
-                    } 
+                    }
                 body{
                     text-align: justify;
                     margin: 0px;
-                    
+
                 }
                 .vl {
                     margin-left: 100px;
                 }
-        
+
                 img{
                     width: 20%;
-                }    
+                }
 
                 .container {
-                    size: A4; 
+                    size: A4;
                     margin-top:1px !important;
                     margin-right: 10px !important;
                     padding-left:10px !important;
@@ -72,12 +72,14 @@
 
     <body style="">
         <!-- niog -->
-        <?php 
+        <?php
             // dd($values);
-            $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;
+            $company_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row();
+            $image = $company_info->company_logo;
+            $company_name_bangla = $company_info->company_name_bangla;
+            $company_add_bangla = $company_info->company_add_bangla;
             foreach($values as $value){
 
-            
         ?>
         <div class="container break_page" style=" font-family: sutonnymj;">
             <div class="d-flex flex-row justify-content-between">
@@ -90,7 +92,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -206,14 +208,14 @@
                         cÖwZôv‡b
                         cª‡hvR¨ wbqg Abyhvqx Ab¨vb¨ mKj myweav ‡fvM Kwi‡Z cvwi‡eb|
                     </p>
-            
+
                     <p style="font-size:21px !important;line-height:22px !important;">‰bwgwËK QzwU - 10 (`k) w`b (c~b© †eZbmn)</p>
                     <p style="font-size:21px !important;line-height:22px !important;">cxov QzwU - 14 (†PŠÏ) w`b (c~b© †eZbmn)</p>
                     <p style="font-size:21px !important;line-height:22px !important;">Drme QzwU - 12 (evi) w`b (c~b© †eZbmn)</p>
                     <p style="font-size:21px !important;line-height:22px !important;">evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
                     <p style="font-size:21px !important;line-height:22px !important;">cÖmywZ Kj¨vb QzwU - 16 (‡lvj) mßvn, cÖm‡ei m¤¢ve¨ ZvwiL Gi c~‡e© AÎ cÖwZôv‡b Aby¨b 06 (Qq) gvm wbiwew”Qbœ
                         fv‡e Kg©iZ _vK‡j|</p>
-            
+
                     <p style="font-size:21px !important;line-height:22px !important;"> 6. PvKyix nB‡Z Ae¨nwZ : ¯’vqx kÖwgK PvKzix Qvovi †ÿ‡Î 60 (lvU) w`‡bi AwMÖg †bvwUk w`‡Z nB‡e, Ab¨_vq ‡bvwUk
                         †gqv‡`i
                         mgcwigvb A_©
@@ -238,7 +240,7 @@
                         ‰ea AwaKvi msiÿb K‡ib|</p>
                     <p style="font-size:21px !important;line-height:22px !important;">13. evsjv‡`k kÖg AvB‡bi Av‡jv‡K Avcbvi evrmwiK †eZb e„w× Kiv nB‡e|</p>
                     <p style="font-size:21px !important;line-height:22px !important;">14. Avcbvi PvKyixi Ab¨vb¨ kZv©ejx ‡`‡ki kªg AvBb I †Kv¤úvbxi wbqg Abyhvqx wbqwš¿Z nB‡e|</p>
-            
+
                 </div>
             </div>
             <br>
@@ -265,8 +267,8 @@
                 </div>
             </div>
         </div>
-      
-      
+
+
         <div class="container break_page" style=" font-family: sutonnymj;">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
@@ -278,7 +280,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -394,14 +396,14 @@
                         cÖwZôv‡b
                         cª‡hvR¨ wbqg Abyhvqx Ab¨vb¨ mKj myweav ‡fvM Kwi‡Z cvwi‡eb|
                     </p>
-            
+
                     <p style="font-size:21px !important;line-height:22px !important;">‰bwgwËK QzwU - 10 (`k) w`b (c~b© †eZbmn)</p>
                     <p style="font-size:21px !important;line-height:22px !important;">cxov QzwU - 14 (†PŠÏ) w`b (c~b© †eZbmn)</p>
                     <p style="font-size:21px !important;line-height:22px !important;">Drme QzwU - 12 (evi) w`b (c~b© †eZbmn)</p>
                     <p style="font-size:21px !important;line-height:22px !important;">evwl©K QzwU - cÖwZ 18 (AvVvi) w`b Kv‡Ri Rb¨ 1 (GK) w`b Z‡e GK ermi PvKzix m¤úb nIqvi ci|</p>
                     <p style="font-size:21px !important;line-height:22px !important;">cÖmywZ Kj¨vb QzwU - 16 (‡lvj) mßvn, cÖm‡ei m¤¢ve¨ ZvwiL Gi c~‡e© AÎ cÖwZôv‡b Aby¨b 06 (Qq) gvm wbiwew”Qbœ
                         fv‡e Kg©iZ _vK‡j|</p>
-            
+
                     <p style="font-size:21px !important;line-height:22px !important;"> 6. PvKyix nB‡Z Ae¨nwZ : ¯’vqx kÖwgK PvKzix Qvovi †ÿ‡Î 60 (lvU) w`‡bi AwMÖg †bvwUk w`‡Z nB‡e, Ab¨_vq ‡bvwUk
                         †gqv‡`i
                         mgcwigvb A_©
@@ -426,7 +428,7 @@
                         ‰ea AwaKvi msiÿb K‡ib|</p>
                     <p style="font-size:21px !important;line-height:22px !important;">13. evsjv‡`k kÖg AvB‡bi Av‡jv‡K Avcbvi evrmwiK †eZb e„w× Kiv nB‡e|</p>
                     <p style="font-size:21px !important;line-height:22px !important;">14. Avcbvi PvKyixi Ab¨vb¨ kZv©ejx ‡`‡ki kªg AvBb I †Kv¤úvbxi wbqg Abyhvqx wbqwš¿Z nB‡e|</p>
-            
+
                 </div>
             </div>
             <br>
@@ -452,8 +454,9 @@
                    </table>
                 </div>
             </div>
-        </div>    
-        <!-- jogdan --> 
+        </div>
+
+        <!-- jogdan -->
         <div class="container break_page" style="font-family:sutonnymj;">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
@@ -465,7 +468,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -474,7 +477,7 @@
             <div>
             <!-- <div class="row"> -->
                 <br>
-            
+
             <h2 class="text-center mt-2"><b style="border: 2px solid black;padding-left:6px;padding-right:6px;">Kv‡R †hvM`vb cÎ</b></h2>
             <!-- </div> -->
             <div class="row mt-4">
@@ -493,25 +496,25 @@
                     </table>
                 </div>
                 <div class="col-md-12 mt-3">
-        
+
                     <p style="font-size:21px;">eivei,</p>
                     <p style="font-size:21px;">cwiPvjK/wbev©nx cwiPvjK/gnve¨e¯’vcK/KviLvbv e¨e¯’vcK</p>
-                    <p style="font-size:21px;">KviLvbvi bvgt nvwbI‡qj Mv‡g©›Um wjwg‡UW</p>
+                    <p style="font-size:21px;">KviLvbvi bvgt  <?= $company_name_bangla; ?></p>
                     <p style="font-size:21px;">wVKvbvt 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
                     <p style="font-size:22px;" class="mt-4"><b>welqt Kv‡R †hvM`vb cÎ</b></p>
-        
+
                     <p style="font-size:21px;" class="mt-4"><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
                     <p style="font-size:21px;"> Avcbvi wbKU †_‡K cªvß wb‡qvM cÎ AvBwW bs <?php echo $value->emp_id?> Bs ZvwiL <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs Gi ‡cªwÿ‡Z Rvbv‡bv
                         hv‡”Q †h Avwg A`¨ <?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs ZvwiL n‡Z Avcbvi wkícÖwZôv‡b Dc‡i D‡jwLZwb‡qvM c‡Îi kZ©
                         †gvZv‡eK <span style="font-size:15px"><?php echo $value->desig_bangla?></span> c‡` †hvM`vb Kijvg|</p>
-        
+
                     <p style="font-size:21px;" class="mt-4"> AZGe Avcbvi wbKU Av‡e`b GB †h, Avgvi `vwLjK„Z Kv‡R †hvM`vb cÎwU MÖnY K‡i evwaZ Ki‡eb|</p>
-        
-        
+
+
                     <p style="font-size:21px;" class="mt-4">ab¨ev`v‡šÍ</p>
                                         <br>
                     <br>
-                    <br>  
+                    <br>
                     <p style="font-size:21px;" class="mt-4">Avcbvi wek¦¯Í</p>
                 </div>
 
@@ -522,10 +525,9 @@
                 </div>
             </div>
         </div>
-            <br>
-    
-        <!-- potovumi -->
+        <br>
 
+        <!-- potovumi -->
         <div class="container break_page" style=" font-family: sutonnymj;">
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
@@ -537,7 +539,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -549,7 +551,7 @@
                 <h3 style="font-family:Arial;border-bottom:1px solid black;padding-left:2px;padding-right:2px">Background Check</h3>
                 <h3>cUf~wg wbixÿb</h3>
             </div>
-        
+
             <div class="row">
                 <div class="col-md-6 mt-4">
                     <table>
@@ -561,24 +563,24 @@
                     </table>
                 </div>
                 <div class="col-md-12">
-        
+
                     <p style="font-size:21px">1| bvgt <span style="font-size:15px"><?php echo $value->name_bn?></span></p>
                     <p style="font-size:21px">2| wcZvi bvgt <span style="font-size:15px"><?php echo $value->father_name?></span></p>
                     <p style="font-size:21px">3| gvZvi bvgt <span style="font-size:15px"><?php echo $value->mother_name?></span></p>
                     <p style="font-size:21px">4| ¯’vqx wVKvbvt  <span style="font-size:15px"><?php echo $value->per_village_bn?>,<?php echo $value->post_name_bn?>, <?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span> |</p>
                     <p style="font-size:21px">     wbR †gvevBj bs <span><?php echo $value->personal_mobile?></span>  AwfeveK †gvevBj bs <span><?php echo $value->refer_mobile?></span>  bwgwb †gvevBjBs <span><?php echo $value->nomi_mobile?></span></p>
                     <p style="font-size:21px">5| wj½t <span style="font-size:15px"><?php echo $value->gender == 'Male' ? 'পুরুষ':'নারী'?></span></p>
-                    <p style="font-size:21px">6| ‰eevwnK Ae¯’vt <span><?php 
+                    <p style="font-size:21px">6| ‰eevwnK Ae¯’vt <span><?php
                                                 if($value->marital_status == 'Unmarried'){
                                                     echo 'AweevwnZ' ;
                                                 }else{
                                                    echo 'weevwnZ ,' ;
                                                    echo ' ¯¿xi bvgt '.$value->spouse_name;
                                                    echo ', mšÍv‡bi weeiYt ';
-                                                   echo ' ‡Q‡jt '.$value->m_child; 
-                                                   echo ', ‡g‡qt '.$value->f_child; 
-                                                   echo ', ‡gvU mšÍvbt '.$value->f_child + $value->m_child; 
-                                                }  
+                                                   echo ' ‡Q‡jt '.$value->m_child;
+                                                   echo ', ‡g‡qt '.$value->f_child;
+                                                   echo ', ‡gvU mšÍvbt '.$value->f_child + $value->m_child;
+                                                }
                                               ?>
                                         </span>
                     </p>
@@ -586,32 +588,32 @@
                     <p style="font-size:21px">8| fvovwUqv n‡j - </p>
                     <p style="font-size:21px"> evwoi gvwj‡Ki bvgt  <span style="font-size:15px"><?php echo $value->pre_home_owner?></span></p>
                     <p style="font-size:21px"> †dvb / †gvevBj bs (hw` _v‡K)/t <span><?php echo $value->home_own_mobile?></span></p>
-        
+
                     <p style="font-size:21px">9| ‡idv‡iÝKvixi / Awfeve‡Ki bvgt<span style="font-size:15px"><?php echo $value->refer_name?></span>
                         <!-- <p>‡ckv t ............«Referees_job»|</p> -->
                     <p style="font-size:21px"> wVKvbvt <span style="font-size:15px"><?php echo $value->refer_village?>,<?php echo $value->ref_post_name_bn?>, <?php echo $value->ref_upa_name_bn?>, <?php echo $value->ref_dis_name_bn?></span>|</p>
                     <p style="font-size:21px"> †gvevBjt <span><?php echo $value->refer_mobile?></span></p>
-                    <br>                            
+                    <br>
                     <p style="width:160px;border-bottom: 1px solid black;font-size:21px"><b>wbixÿbKvixi gšÍe¨t</b></p>
                     <p style="font-size:21px">Avwg m‡iRwg‡b/†gvevBj †dv‡bi gva¨‡g †idv‡iÝKvix e¨w³i mv‡_ †hvMv‡hvM K‡i wb‡¤œv³ Z_¨w` mwVK †cjvg:</p>
                     <p style="font-size:21px">1| Dc‡iv³ bvg wVKvbv mwVK|</p>
                     <p style="font-size:21px">2| Av‡e`bKvix Av`vj‡Z `ÛcÖvß bq e‡j Rvbv hvq|</p>
                     <p style="font-size:21px">3| †m gv`Kvm³ bq e‡j †idv‡iÝKvix Rvbvq|</p>
                     <br>
-        
+
                     <p style="font-size:21px">wbixÿbKvixi ¯^vÿit ............................................................</p>
-        
+
                     <p style="font-size:21px">bvgt ..........................................................................</p>
                     <p style="font-size:21px">c`ext .........................................................................</p>
                     <p style="font-size:21px"> ZvwiLt........................................................................</p>
-        
-        
+
+
                 </div>
             </div>
         </div>
-            <br>
-            <br>
-            <br>
+        <br>
+        <br>
+        <br>
         <!-- abedon -->
 
         <div class="container-fluid break_page" style=" font-family: sutonnymj;margin-left:-15px">
@@ -625,7 +627,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -647,20 +649,20 @@
                     </table>
                 </div>
                 <div class="col-md-12">
-        
+
                     <p style="font-size:21px">eivei,</p>
                     <p style="font-size:21px">cwiPvjK/wbev©nx cwiPvjK/gnve¨e¯’vcK/KviLvbv e¨e¯’vcK</p>
-                    <p style="font-size:21px">KviLvbvi bvgt nvwbI‡qj Mv‡g©›Um wjwg‡UW</p>
+                    <p style="font-size:21px">KviLvbvi bvgt  <?= $company_name_bangla; ?></p>
                     <p style="font-size:21px">wVKvbvt 799 (cyivZb cøU bs-1010/1011) AvgevM, †gŠRv evwNqv, ‡Kvbvevox, MvRxcyi|</p>
                     <p style="font-size:21px" class="mt-3">welqt c‡` PvKzixi Rb¨ Av‡e`b |</p>
-        
+
                     <p style="font-size:21px" class="mt-3"><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
                     <p style="font-size:21px"> h_vwenxZ m¤§vb cÖ`k©b c~e©K weYxZ wb‡e`b GB †h, Avwg Avcbvi KviLvbvq <span style='font-size:15px'><?php echo $value->sec_name_bn?></span> c‡`
                         †hvM`vb Ki‡Z
                         B”QzK| D³ c‡`i GKRb cÖv_x© wnmv‡e Avgvi Rxeb e„ËvšÍ Avcbvi my-we‡ePbvi Rb¨ `vwLj Kijvg|</p>
-        
+
                     <p style="font-size:21px" class="mt-3">GZGe, wb¤œ cÖ`Ë Z_¨vejx hvPvB K‡i Avgv‡K D³ c‡` wb‡qvM `vb Ki‡j Avwg Avcbvi wbKU K…ZÁ _vKe|</p>
-        
+
                     <p style="font-size:21px">1| bvgt <span style='font-size:15px'><?php echo $value->name_bn?></p>
                     <p style="font-size:21px">2| wcZvt <span style='font-size:15px'><?php echo $value->father_name?></span></p>
                     <p style="font-size:21px">3| eZ©gvb wVKvbvt <span style="font-size:15px"><?php echo $value->pre_village_bn?>, <?php echo $value->post_name_bn?>,<?php echo $value->upa_name_bn?>, <?php echo $value->dis_name_bn?></span>| </p>
@@ -670,7 +672,7 @@
                     <p style="font-size:21px">7| ag©t <span style="font-size:21px"><?php echo $value->religion == 'Islam' ?'Bmjvg':($value->religion == 'Hindu' ? 'wn›`y':($value->religion=='Christian' ?'wLª÷vb':'‡eŠ×')) ?></span> </p>
                     <p style="font-size:21px">8| RvZxqZvt  Kg©xi †gvevBj bs <span><?php echo $value->bank_bkash_no?></span></p>
                     <p style="font-size:21px">9| AwfÁZvt </p>
-        
+
                     <table class="table" style="border:1px solid black"  border="1">
                         <tr>
                             <th style="padding:0px !important;border:1px solid black" class="text-center">µwgK bs</th>
@@ -685,16 +687,16 @@
                             <td class="text-center"><span style="font-size:15px"><?php echo $value->exp_duration?></span></td>
                         </tr>
                     </table>
-        
-        
-        
-        
+
+
+
+
                     <p style="font-size:21px">10| †idv‡iÝt (1) bvgt <span style="font-size:15px"><?php echo $value->refer_name?></span></p>
                     <p style="font-size:21px">wVKvbvt <span style="font-size:15px"><?php echo $value->refer_village?>, <?php echo $value->ref_post_name_bn.', '.$value->ref_upa_name_bn.', '.$value->ref_dis_name_bn?></span></p>
                     <p style="font-size:21px"> †dvbt <?php echo $value->refer_mobile?></p>
-        
-        
-        
+
+
+
                     <div style="float: right;">
                         <p style="font-size:21px">¯^vÿit ................ √.......................</p>
                         <p style="font-size:21px">bvgt <span style="font-size:15px"><?php echo $value->name_bn?></span></p>
@@ -716,7 +718,7 @@
                         </div>
 
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
 
@@ -735,7 +737,7 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
@@ -751,7 +753,7 @@
             </div>
             <br>
             <div>
-                <p> 1| KviLvbv / cÖwZôv‡bi bvg t nvwbI‡qj Mv‡g©›Um wjwg‡UW|</p>
+                <p> 1| KviLvbv / cÖwZôv‡bi bvg t  <?= $company_name_bangla; ?>|</p>
                 <p> 2| KviLvbv / cÖwZôv‡bi wVKvbv t 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <div class="d-flex flex-row">
                     <p> 3| kÖwg‡Ki bvg I wVKvbvt</p>
@@ -760,7 +762,7 @@
                     <p>, WvKNit  <span style="font-size:15px"> <?php echo $value->pre_post_name_bn?></span> </p>
                     <p>,_vbvt   <span style="font-size:15px"> <?php echo $value->pre_upa_name_bn?> </p>
                     <p>, ‡Rjvt <span style="font-size:15px"> <?php echo $value->pre_dis_name_bn?></span> </p>
-                  
+
                 </div>
                 <p>4| wj½t <span style="font-size:15px"><?php echo $value->gender == "Male"? "পুরুষ":"নারী"?></span></p>
                 <p>5| Rb¥ ZvwiLt <?php echo date("d-m-Y",strtotime($value->emp_dob))?> Bs</span></p>
@@ -771,7 +773,7 @@
                     <p>,_vbvt <span style="font-size:15px"><?php echo $value->pre_upa_name_bn?></span></p>
                     <p>,‡Rjvt <span style="font-size:15px"><?php echo $value->pre_dis_name_bn?></span></p>
 
-                    
+
                 </div>
                 <p>8| PvKwi‡Z wbhyw³i ZvwiLt <span><?php echo date("d-m-Y",strtotime($value->emp_join_date))?> Bs</span> </p>
                 <p>9| c‡`i bvgt <span style="font-size:15px"><?php echo $value->desig_bangla?></span></p>
@@ -802,7 +804,7 @@
                     <tr>
                         <td class="" ><span style="font-size:15px"><?php echo $value->nominee_name?></span></td>
                         <td class="text-center">
-                            <?php 
+                            <?php
                                 if($value->nomi_relation == 1){
                                     echo "‡Q‡j";
                                 }else if($value->nomi_relation ==2){
@@ -825,7 +827,7 @@
                             ?>
                         </td>
                         <td class="text-center">
-                            <?php 
+                            <?php
                                 $nomi_age = $value->nomi_age;
                                 $timestamp_nomi_age = strtotime($nomi_age);
                                 $current_year = date('Y');
@@ -893,12 +895,12 @@
                 <div class="d-flex justify-content-between">
                     <div class="flex-column align-items-start">
                         <p>................................................. </p>
-        
+
                         <p>ZvwiLmn g‡bvbxZ e¨w³M‡Yi </p>
                         <p> ¯^vÿi A_ev wUcmwn </p>
                         <p> (kÖwgK KZ…©K mZ¨vwqZ Qwe) </p>
                     </div>
-        
+
                     <div class="flex-column align-items-end">
                         <p>................................................. </p>
                         <p>gvwj‡Ki ev cÖwaKvicÖvß Kg©KZ©vi ¯^vÿi</p>
@@ -921,28 +923,71 @@
                     <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
                 </div>
                 <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;">nvwbI‡qj Mv‡g©›Um wjwg‡UW </h1>
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
                 </div>
                 </div>
                 <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
                     <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 </div>
             <div>
-        
+
             <div>
                 <br>
                 <p>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</p><br><br>
                 <p>eivei,</p>
                 <p>e¨e¯’vcbv cwiPvjK</p>
-                <p>KviLvbvi bvgt nvwbI‡qj Mv‡g©›Um wjwg‡UW .</p>
+                <p>KviLvbvi bvgt  <?= $company_name_bangla; ?> .</p>
                 <p>wVKvbvt 799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
                 <p>welqt weKvk bv¤^v‡i ‡eZbvw` cÖ`v‡bi Rb¨ Av‡e`b cÎ</p>
                 <br>
                 <p><?php echo $value->gender == 'Male' ? 'Rbve': 'Rbvev'?>,</p>
-            
+
                 <p>Avwg <span style='font-size:15px'><?php echo $value->name_bn?></span>,c`ext <span style='font-size:15px'><?php echo $value->desig_bangla?></span>,KvW© bst <span><?php echo $value->emp_id?></span>, ‡mKkbt <span style='font-size:15px'><?php echo $value->sec_name_bn?></span>,<span style='font-size:15px'>লাইনt <?php echo $value->line_name_bn?> </span></p>
                 <p>Avwg Avgvi hveZxq ‡eZbvw` wb‡gœv³ weKvk bv¤^v‡i cÖ`v‡bi Rb¨ Aby‡iva KiwQ|</p>
                 <p>weKvk b¤^it <span><?php echo $value->bank_bkash_no?></span></p>
+                <br><br><br><br>
+                <div class="d-flex" style="margin-left: -15px;">
+                    <div class="col-md-6">
+                        <p>¯^vÿi Ges wUcmBt...................√.............</p>
+                        <p>bvgt <span style='font-size:15px'><?php echo $value->name_bn?></p>
+                        <p>c`ext <span style='font-size:15px'><?php echo $value->sec_name_bn?></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>........................</p>
+                        <p>KZ©„c‡ÿi ¯^vÿi</p>
+                   </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- job description -->
+        <div class="container break_page" style="margin-left:-10px">
+            <div class="d-flex flex-row justify-content-between p_screen">
+                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Document Code :HGL/HRD/HR/03/028</p>
+            </div>
+            <div class="d-flex">
+                <div class="col-md-2">
+                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+                </div>
+                <div class="col-md-12">
+                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
+                </div>
+                </div>
+                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+                </div>
+            <div>
+
+            <div>
+                <br><br>
+                <p style>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</p><br>
+                <p style="text-align:center;"> <?= $value->desig_bangla; ?> এর দায়িত্ব ও কর্তব্য  </p><br>
+                <p style=" font-family: sutonnymj;"> <?= $value->desig_description; ?></p>
+
+
                 <br><br><br><br>
                 <div class="d-flex" style="margin-left: -15px;">
                     <div class="col-md-6">

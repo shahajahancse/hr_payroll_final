@@ -42,6 +42,7 @@
             <li class="start <?= activate_method('resign_list')?> "><a href="<?= base_url('entry_system_con/resign_list');?>" class="anchor_cls" >Resign List</a></li>
 
             <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
+            <li class="start <?= activate_method('inter_unit_transfer') ?>"> <a href="<?=base_url('entry_system_con/inter_unit_transfer')?>" class="anchor_cls" id="acl">Unit Transfer</a> </li>
 
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan & Tax</a> </li>
             <!-- <li class="start <?= activate_method('letter_notification')?> "><a href="<?= base_url('entry_system_con/letter_notification')?>" class="anchor_cls">Letter Notification</a> </li> -->
@@ -137,6 +138,7 @@
           <li class="start <?= activate_method('user_acl_pr') ?>"> <a href="<?=base_url('setting_con/user_acl_pr')?>" class="anchor_cls" id="acl">User Access Payroll</a> </li>
           <li class="start <?= activate_method('dasig_group') ?>"> <a href="<?=base_url('setting_con/dasig_group')?>" class="anchor_cls" id="acl">Group Dasignation</a> </li>
           <li class="start <?= activate_method('hide_designation_employee') ?>"> <a href="<?=base_url('setting_con/hide_designation_employee')?>" class="anchor_cls" id="acl">Hide Designation</a> </li>
+          <li class="start <?= activate_method('line_wise_atn_desig') ?>"> <a href="<?=base_url('setting_con/line_wise_atn_desig')?>" class="anchor_cls" id="acl">line wise Designation</a> </li>
           <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('setting_con/acl')?>" class="anchor_cls" id="acl">User ACL</a> </li>
         </ul>
       </li>

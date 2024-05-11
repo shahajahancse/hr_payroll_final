@@ -993,6 +993,23 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/emp_holiday_add';
         $this->load->view('layout/template', $this->data);
     }
+    public function inter_unit_transfer()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->data['title'] = 'Unit Transfer';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/inter_unit_transfer';
+        $this->load->view('layout/template', $this->data);
+    }
     public function holiday_add_ajax(){
         $date         = date("Y-m-d", strtotime($this->input->post('date')));
         $description  = $this->input->post('description');
@@ -1040,6 +1057,147 @@ class Entry_system_con extends CI_Controller
             echo 'error';
         }
     }
+    public function inter_unit_transfer_add(){
+        $last_working_date = $this->input->post('last_working_date');
+
+        $sql = $this->input->post('sql');
+        $new_unit_id = $this->input->post('new_unit_id');
+        $emp_ids = explode(',', $sql);
+        foreach ($emp_ids as $value) {
+            $this->unit_transfer($value, $new_unit_id,$last_working_date);
+        }
+    }
+
+
+    function unit_transfer($id, $new_unit_id,$last_working_date){
+        $this->db->where('emp_id', $id);
+        $pr_emp_per_info=$this->db->get('pr_emp_per_info')->row();
+
+        $this->db->where('emp_id', $id);
+        $pr_emp_com_info=$this->db->get('pr_emp_com_info')->row();
+
+        $pre_unit_id=$pr_emp_com_info->unit_id;
+
+        $this->db->where('new_emp_id', $id);
+        $this->db->where_in('status', [1,2]);
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1);
+        $pr_incre_prom_pun=$this->db->get('pr_incre_prom_pun')->row();
+
+
+        $new_emp_id=$this->change_pr_emp_per_info($id, $new_unit_id, $pre_unit_id, $pr_emp_per_info);
+        $this->change_pr_emp_com_info($id, $new_unit_id,$new_emp_id, $pr_emp_com_info);
+        if(!empty($pr_incre_prom_pun)){
+            $this->change_pr_incre_prom_pun($id,$new_emp_id,$pr_incre_prom_pun);
+        }
+
+        $data= array(
+            'old_unit_id' => $pre_unit_id,
+            'old_emp_id' => $id,
+            'new_unit_id' => $new_unit_id,
+            'new_emp_id' => $new_emp_id,
+            'last_working_day' => $last_working_date,
+            'joining_date' => $pr_emp_com_info->emp_join_date,
+            'create_at' => date('Y-m-d'),
+        );
+        if($this->db->insert('pr_unit_transfer', $data)){
+            echo 1;
+        }else{
+            echo 0;
+        };
+
+    }
+    function change_pr_emp_per_info($id, $new_unit_id, $pre_unit_id, $pr_emp_per_info){
+        $this->db->where('unit_id', $new_unit_id);
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1);
+        $last_id=$this->db->get('pr_emp_com_info')->row()->emp_id;
+        $new_emp_id=$last_id+1;
+
+        $data = array(
+            'emp_id' => $new_emp_id,
+            'name_en' => $pr_emp_per_info->name_en,
+            'name_bn' => $pr_emp_per_info->name_bn,
+            'national_brn_id' => $pr_emp_per_info->national_brn_id,
+            'father_name' => $pr_emp_per_info->father_name,
+            'mother_name' => $pr_emp_per_info->mother_name,
+            'per_village' => $pr_emp_per_info->per_village,
+            'per_post' => $pr_emp_per_info->per_post,
+            'per_thana' => $pr_emp_per_info->per_thana,
+            'per_district' => $pr_emp_per_info->per_district,
+            'per_village_bn' => $pr_emp_per_info->per_village_bn,
+            'pre_home_owner' => $pr_emp_per_info->pre_home_owner,
+            'holding_num' => $pr_emp_per_info->holding_num,
+            'home_own_mobile' => $pr_emp_per_info->home_own_mobile,
+            'pre_village' => $pr_emp_per_info->pre_village,
+            'pre_post' => $pr_emp_per_info->pre_post,
+            'pre_thana' => $pr_emp_per_info->pre_thana,
+            'pre_district' => $pr_emp_per_info->pre_district,
+            'pre_village_bn' => $pr_emp_per_info->pre_village_bn,
+            'spouse_name' => $pr_emp_per_info->spouse_name,
+            'emp_dob' => $pr_emp_per_info->emp_dob,
+            'gender' => $pr_emp_per_info->gender,
+            'marital_status' => $pr_emp_per_info->marital_status,
+            'religion' => $pr_emp_per_info->religion,
+        );
+        $this->db->insert('pr_emp_per_info', $data);
+        
+        return $new_emp_id;
+    }
+    function change_pr_emp_com_info($id, $new_unit_id,$new_emp_id, $pr_emp_com_info){
+        $data = array(
+            'emp_id' => $new_emp_id,
+            'unit_id' => $new_unit_id,
+            'emp_dept_id' => $pr_emp_com_info->emp_dept_id,
+            'emp_sec_id' => $pr_emp_com_info->emp_sec_id,
+            'emp_line_id' => $pr_emp_com_info->emp_line_id,
+            'attn_sum_line_id' => $pr_emp_com_info->attn_sum_line_id,
+            'emp_desi_id' => $pr_emp_com_info->emp_desi_id,
+            'emp_sal_gra_id' => $pr_emp_com_info->emp_sal_gra_id,
+            'emp_cat_id' => $pr_emp_com_info->emp_cat_id,
+            'proxi_id' => $pr_emp_com_info->proxi_id,
+            'emp_shift' => $pr_emp_com_info->emp_shift,
+            'gross_sal' => $pr_emp_com_info->gross_sal,
+            'com_gross_sal' => $pr_emp_com_info->com_gross_sal,
+            'ot_entitle' => $pr_emp_com_info->ot_entitle,
+            'com_ot_entitle' => $pr_emp_com_info->com_ot_entitle,
+            'transport' => $pr_emp_com_info->transport,
+            'lunch' => $pr_emp_com_info->lunch,
+            'att_bonus' => $pr_emp_com_info->att_bonus,
+            'salary_draw' => $pr_emp_com_info->salary_draw,
+            'salary_type' => $pr_emp_com_info->salary_type,
+            'emp_join_date' => $pr_emp_com_info->emp_join_date,
+        );
+        $this->db->insert('pr_emp_com_info', $data);
+    }
+    function change_pr_incre_prom_pun($old_emp_id,$new_emp_id,$pr_incre_prom_pun){
+        $data = array(
+            'prev_emp_id' => $old_emp_id,
+            'prev_dept' => $pr_incre_prom_pun->prev_dept,
+            'prev_section' => $pr_incre_prom_pun->prev_section,
+            'prev_line' => $pr_incre_prom_pun->prev_line,
+            'prev_desig' => $pr_incre_prom_pun->prev_desig,
+            'prev_grade' => $pr_incre_prom_pun->prev_grade,
+            'prev_salary' => $pr_incre_prom_pun->prev_salary,
+            'prev_com_salary' => $pr_incre_prom_pun->prev_com_salary,
+            'new_emp_id' => $new_emp_id,
+            'new_dept' => $pr_incre_prom_pun->new_dept,
+            'new_section' => $pr_incre_prom_pun->new_section,
+            'new_line' => $pr_incre_prom_pun->new_line,
+            'new_desig' => $pr_incre_prom_pun->new_desig,
+            'new_grade' => $pr_incre_prom_pun->new_grade,
+            'new_salary' => $pr_incre_prom_pun->new_salary,
+            'new_com_salary' => $pr_incre_prom_pun->new_com_salary,
+            'effective_month' => $pr_incre_prom_pun->effective_month,
+            'ref_id' => $pr_incre_prom_pun->ref_id,
+            'status' => $pr_incre_prom_pun->status,
+        );
+        $this->db->insert('pr_incre_prom_pun', $data);
+    }
+
+
+
+
     //------------------------------------------------------------------------------------------
     // GRID for holiday
     //------------------------------------------------------------------------------------------

@@ -445,6 +445,91 @@ class Grid_con extends CI_Controller {
 	}
 	// ============================== end holiday / weekend Report ===============
 
+	// ============================== last increment or promotion Report ===============
+	function last_increment_promotion(){
+		$unit_id = $this->input->post('unit_id');
+		$grid_data = $this->input->post('spl');
+		$status = $this->input->post('status');
+		$emp_id = explode(',', trim($grid_data));
+
+		$data["values"] = $this->Grid_model->last_increment_promotion($emp_id, $status, $unit_id);
+		// dd($data["values"]);
+		$data["status"]		= $status;
+		$data["unit_id"]	= $unit_id;
+
+		if(is_string($data["values"])){
+			echo $data["values"];
+		}else{
+			$this->load->view('grid_con/last_increment_promotion',$data);
+		}
+	}
+
+	function ot_acknowledgement_sheet()
+	{
+		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
+		$status = $this->input->post('status');
+		$unit_id = $this->input->post('unit_id');
+		$spl = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($spl));
+
+		$data["values"] = $this->Grid_model->ot_acknowledgement_sheet($date, $grid_emp_id, $status);
+		$data["date"]			= $date;
+		$data["status"]			= $status;
+		$data["unit_id"] 		= $unit_id;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/ot_acknowledgement_sheet',$data);
+		}
+	}
+
+	function increment_able_employee()
+	{
+		$date = $this->input->post('firstdate');
+		$unit_id = $this->input->post('unit_id');
+		$spl = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($spl));
+
+		$data["values"] = $this->Grid_model->increment_able_employee($date, $grid_emp_id, $unit_id);
+		$data["date"]			= $date;
+		$data["unit_id"] 		= $unit_id;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/increment_able_employee',$data);
+		}
+	}
+
+	function iftar_bill_list()
+	{
+		$date = $this->input->post('firstdate');
+		$unit_id = $this->input->post('unit_id');
+		$spl = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($spl));
+
+		$data["values"] = $this->Grid_model->iftar_bill_list($date, $grid_emp_id, $unit_id);
+		$data["date"]			= $date;
+		$data["unit_id"] 		= $unit_id;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/iftar_bill_list',$data);
+		}
+	}
+	// ============================== end last increment or promotion Report ===============
+
 
 
 
@@ -2634,7 +2719,7 @@ class Grid_con extends CI_Controller {
 			$get_all[$key]->status = $dd->status;
 			$get_all[$key]->working_days = ($dd->working_days+$dd->status);
 		}
-		
+
 		// dd($get_all[0]->status);
 		echo json_encode($get_all[0]);
 	}
