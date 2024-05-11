@@ -2247,13 +2247,20 @@ class Grid_con extends CI_Controller {
 	}
 	function grid_final_satalment(){
 		$grid_data = $this->input->post('spl');
-		$status = $this->input->post('status');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		$data['total_value']= $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
-		// dd($data['total_value']);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$this->load->view('final_satalment',$data,false);
+	}
+	function grid_final_satalment_edit(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$datas =$this->Grid_model->grid_employee_information($grid_emp_id);
+		// dd($data[0]);
+		$db_row = $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
+		$data = array_merge((array) $datas[0], (array) $db_row);
+		echo json_encode($data);
 	}
 
 	function grid_service_book2()
@@ -2787,7 +2794,7 @@ class Grid_con extends CI_Controller {
 		$get_all=[];
 		foreach($d as $key => $row){
 			$get_all[$key] = $row;
-			$dd = $this->db->select('SUM(ot) as ot_hour, SUM(eot) as eot_hour, COUNT(CASE WHEN present_status != "A" THEN 1 END) as working_days, COUNT(CASE WHEN present_status = "A" THEN 1 END) as status')
+			$dd = $this->db->select('SUM(ot) as ot_hour, SUM(eot) as eot_hour, COUNT(CASE WHEN present_status != "A" THEN 1 END) as working_days, COUNT(CASE WHEN present_status = "A" THEN 1 END) as status', FALSE)
 						->from('pr_emp_shift_log')
 						->where('pr_emp_shift_log.emp_id',$row->emp_id)
 						->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)))
