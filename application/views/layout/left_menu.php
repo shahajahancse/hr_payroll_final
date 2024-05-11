@@ -42,6 +42,7 @@
             <li class="start <?= activate_method('resign_list')?> "><a href="<?= base_url('entry_system_con/resign_list');?>" class="anchor_cls" >Resign List</a></li>
 
             <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
+            <li class="start <?= activate_method('inter_unit_transfer') ?>"> <a href="<?=base_url('entry_system_con/inter_unit_transfer')?>" class="anchor_cls" id="acl">Unit Transfer</a> </li>
 
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan & Tax</a> </li>
             <!-- <li class="start <?= activate_method('letter_notification')?> "><a href="<?= base_url('entry_system_con/letter_notification')?>" class="anchor_cls">Letter Notification</a> </li> -->
