@@ -84,6 +84,7 @@
                         <th>Company Phone No</th>
                         <th>Company Logo</th>
                         <th>Company Signature</th>
+                        <th>Register Signature</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -99,7 +100,11 @@
                         <td><img width="55" height="55" src="<?=base_url()?>images/<?=$cominfos->company_logo?>" />
                         </td>
                         <td><img width="55" height="55"
-                            src="<?=base_url()?>images/<?=$cominfos->company_signature?>" /></td>
+                            src="<?=base_url()?>images/<?=$cominfos->company_signature?>" />
+                        </td>
+                        <td><img width="55" height="55"
+                            src="<?=base_url()?>images/<?=$cominfos->register?>" />
+                        </td>
                         <td>
                             <a href="<?=base_url('index.php/setup_con/company_edit') . '/' . $cominfos->id?>" class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>

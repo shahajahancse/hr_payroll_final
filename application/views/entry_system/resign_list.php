@@ -395,27 +395,27 @@
                     } else if (years == 10 && months < 11) {
                         return 14*10;
                     } else if (years == 10 && months > 11) {
-                        return 14*111;
+                        return 30*11;
                     } else if (years == 11 && months < 11) {
-                        return 14*11;
+                        return 30*11;
                     }else if (years == 11 && months > 11) {
-                        return 14*12;
+                        return 30*12;
                     }  else if (years == 12 && months < 11) {
-                        return 14*12;
+                        return 30*12;
                     }else if (years == 12 && months > 11) {
-                        return 14*13;
+                        return 30*13;
                     } else if (years == 13 && months < 11) {
-                        return 14*13;
+                        return 30*13;
                     } else if (years == 13 && months > 11) {
-                        return 14*14;
+                        return 30*14;
                     }  else if (years == 14 && months < 11) {
-                        return 14*14;
+                        return 30*14;
                     } else if (years == 14 && months > 11) {
-                        return 14*15;
+                        return 30*15;
                     } else if (years == 15 && months < 11) {
-                        return 14*15;
+                        return 30*15;
                     } else if (years == 15 && months > 11) {
-                        return 14*16;
+                        return 30*16;
                     } else{
                         return 0;
                     }
@@ -557,7 +557,11 @@
                     'advanced_salary'       : $("#advanced_salary").val(),
                     'total_deduct'          : $(".total_deduct").html(),
                     'net_pay'               : $("#net_pay").html(),
+<<<<<<< HEAD
+                    'status'                : 1
+=======
                     'total_get'             : $("#total_get").html(),
+>>>>>>> 4aa0a198a255eed8cf3eea8210c15b9712e4ed6a
                 };
                 $.ajax({
                     url: "<?php echo base_url('entry_system_con/add_final_satalment'); ?>",
@@ -596,6 +600,8 @@
             }
         });
     }
+<<<<<<< HEAD
+=======
 
     //  function edit(id){
     //     $.ajax({
@@ -679,4 +685,5 @@
     //         }
     //     });
     // }
+>>>>>>> 4aa0a198a255eed8cf3eea8210c15b9712e4ed6a
 </script>

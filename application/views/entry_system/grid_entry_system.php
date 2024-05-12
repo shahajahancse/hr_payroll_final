@@ -288,7 +288,7 @@ $unit = $this->common_model->get_unit_id_name();
                 if (data == 'success') {
                     showMessage('success', 'EOT updated Successfully');
                 } else {
-                    showMessage('error', 'EOT not updated');
+                    showMessage('error', data);
                 }
             },
             error: function(data) {
@@ -387,7 +387,7 @@ $unit = $this->common_model->get_unit_id_name();
                 if (data == 'success') {
                     showMessage('success', 'Record Inserted Successfully');
                 } else {
-                    showMessage('error', 'Record Not Inserted');
+                    showMessage('error', data);
                 }
             },
             error: function(data) {
@@ -436,7 +436,7 @@ $unit = $this->common_model->get_unit_id_name();
                 if (data == 'success') {
                     showMessage('success', 'Record Deleted Successfully');
                 } else {
-                    showMessage('error', 'Record Not Deleted');
+                    showMessage('error', data);
                 }
             },
             error: function(data) {
@@ -486,7 +486,7 @@ $unit = $this->common_model->get_unit_id_name();
                 if (data == 'success') {
                     showMessage('success', 'Shift Log Deleted Successfully');
                 } else {
-                    showMessage('error', 'Shift Log Not Deleted');
+                    showMessage('error', data);
                 }
             },
             error: function(data) {

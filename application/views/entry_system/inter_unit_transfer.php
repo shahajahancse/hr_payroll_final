@@ -121,8 +121,8 @@
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div>
             <div class="col-md-12">
-                <div class="col-md-10">
-                    <div class="form-group col-md-6">
+                <div class="col-md-12">
+                    <div class="form-group col-md-4">
                         <label> New Unit <span style="color: red;">*</span> </label>
                         <select name="new_unit_id" id="new_unit_id" class="form-control input-sm">
                             <option value="">Select Unit</option>
@@ -137,9 +137,12 @@
                         <label>Last Working Date<span style="color: red;">*</span> </label>
                         <input type="date" name="last_working_date" id="last_working_date" class="form-control input-sm">
                     </div>
+                    <div class="form-group col-md-4">
+                        <label>Joining Date<span style="color: red;">*</span> </label>
+                        <input type="date" name="joining_date" id="joining_date" class="form-control input-sm">
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <label for="" style="color: transparent">.</label>
+                <div class="col-md-12" style="display: flex;justify-content: flex-end;padding: 4px 30px;">
                     <button type="button" class="btn btn-primary btn-sm" style="padding: 4px;" onclick="transfer_unit()">Transfer</button>
                 </div>
             </div>
@@ -357,6 +360,12 @@
         $("#loader").hide();
         return false;
     }
+    var joining_date = $('#joining_date').val();
+    if (joining_date =='') {
+        alert('Please select joining date');
+        $("#loader").hide();
+        return false;
+    }
     $.ajax({
       type: "POST",
       url: hostname + "entry_system_con/inter_unit_transfer_add",
@@ -364,20 +373,21 @@
         sql: sql,
         new_unit_id: unit_id,
         last_working_date: last_working_date,
+        joining_date: joining_date
 
       },
       success: function(data) {
         // console.log(data);
           $("#loader").hide();
           if (data == 1) {
-              showMessage('success', 'Holiday Added Successfully');
+              showMessage('success', 'Transfered Successfully');
           }else {
-              showMessage('error', 'Holiday Not Added');
+              showMessage('error', 'Something went wrong');
           }
       },
       error: function(data) {
         $("#loader").hide();
-        console.log(data);
+        showMessage('error', 'Something went wrong');
       }
     })
   }

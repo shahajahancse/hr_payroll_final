@@ -31,11 +31,11 @@ class Salary_process_model extends CI_Model{
 		}
 
 		//SALARY BLOCK CHECK
-		/*$sb = $this->db->where('block_month',$start_date)->where('unit_id',$unit_id)->get('pay_salary_block')->num_rows();
+		$sb = $this->db->where('block_month',$start_date)->where('unit_id',$unit_id)->get('pay_salary_block')->num_rows();
 		if($sb > 0)
 		{
 			return "This Month Already Finally Processed.";
-		}*/
+		}
 
 		$prev_month = date("Y-m-d",strtotime("-1 month",strtotime($start_date)));
 		$pvm = $this->db->where('block_month',$prev_month)->where('unit_id',$unit_id)->get('pay_salary_block')->num_rows();

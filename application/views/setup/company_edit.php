@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>Company Logo</label>
                             <img width="55" height="55"
                                 src="<?=base_url()?>images/<?=$company_infos->company_logo ?>" />
@@ -90,12 +90,19 @@
                                 value="<?php echo set_value('company_logo',$company_infos->company_logo)?>"
                                 class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>Company Signature</label>
                             <img width="55" height="55"
                                 src="<?=base_url()?>images/<?=$company_infos->company_signature ?>" />
                             <input style="padding: 4px 9px;height: 37px!important;border: 1px solid #0aa699 !important;"
                                 type="file" name="comsign" value="" class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Register Signature</label>
+                            <img width="55" height="55"
+                                src="<?=base_url()?>images/<?=$company_infos->register ?>" />
+                            <input style="padding: 4px 9px;height: 37px!important;border: 1px solid #0aa699 !important;"
+                                type="file" name="register" value="" class="form-control">
                         </div>
                     </div>
                     <div class="form-group footer_button">

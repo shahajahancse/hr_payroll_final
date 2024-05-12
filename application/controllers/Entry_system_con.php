@@ -206,6 +206,16 @@ class Entry_system_con extends CI_Controller
         $time        = date('H:i:s', strtotime($_POST['time']));
         $emp_ids     = explode(',', $sql);
         $mm = array();
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
         $emp_data = $this->Attn_process_model->get_all_employee($emp_ids, 1);
         while ($first_date <= $second_date) {
             $data = array();
@@ -237,7 +247,7 @@ class Entry_system_con extends CI_Controller
         if (!empty($mm) && $mm['massage'] == 1) {
             echo 'success';
         } else {
-            echo 'error';
+            echo 'Record Not Inserted';
         }
     }
     function insert_attn_process($data, $date, $unit_id, $emp_ids) {
@@ -271,6 +281,15 @@ class Entry_system_con extends CI_Controller
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $emp_id      = explode(',', $sql);
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
 
         $this->db->select('
                     pr_emp_com_info.id,
@@ -321,6 +340,15 @@ class Entry_system_con extends CI_Controller
         $date        = $_POST['date'];
         $in_time     = $_POST['in_time'];
         $out_time    = $_POST['out_time'];
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
 
         $emp_data = $this->Attn_process_model->get_all_employee(array($emp_id), null)->row();
 
@@ -402,6 +430,15 @@ class Entry_system_con extends CI_Controller
         $att_table   = "att_" . date("Y_m", strtotime($first_date));
         // $com_ids     = $this->get_com_emp_id($emp_ids);
 
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
         $first  = $first_date .' '. '06:30:00';
         $second  = $seconde_dat .' '. '06:30:00';
         if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
@@ -421,7 +458,7 @@ class Entry_system_con extends CI_Controller
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
             echo 'success';
         } else {
-            echo 'error';
+            echo 'Record Not Deleted';
         }
     }
 
@@ -432,12 +469,22 @@ class Entry_system_con extends CI_Controller
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
         $emp_ids     = explode(',', $sql);
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
         // $com_ids    = $this->get_com_emp_id($emp_ids);
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $emp_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
             echo 'success';
         } else {
-            echo 'error';
+            echo 'Shift Log Not Deleted';
         }
     }
 
@@ -450,12 +497,21 @@ class Entry_system_con extends CI_Controller
         $eot         = $_POST['eot'];
         $emp_ids     = explode(',', $sql);
 
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
         $com_ids    = $this->get_com_emp_id($emp_ids);
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $com_ids);
         if ($this->db->where('unit_id', $unit_id)->update('pr_emp_shift_log', array('modify_eot' => $eot))) {
             echo 'success';
         } else {
-            echo 'error';
+            echo 'EOT not updated';
         }
     }
     function get_com_emp_id($emp_ids) {
@@ -1059,22 +1115,25 @@ class Entry_system_con extends CI_Controller
     }
     public function inter_unit_transfer_add(){
         $last_working_date = $this->input->post('last_working_date');
+        $joining_date = $this->input->post('joining_date');
 
         $sql = $this->input->post('sql');
         $new_unit_id = $this->input->post('new_unit_id');
         $emp_ids = explode(',', $sql);
         foreach ($emp_ids as $value) {
-            $this->unit_transfer($value, $new_unit_id,$last_working_date);
+            $this->unit_transfer($value, $new_unit_id,$last_working_date,$joining_date);
         }
+        echo 1;
     }
-
-
-    function unit_transfer($id, $new_unit_id,$last_working_date){
+    function unit_transfer($id, $new_unit_id,$last_working_date,$joining_date){
         $this->db->where('emp_id', $id);
         $pr_emp_per_info=$this->db->get('pr_emp_per_info')->row();
 
         $this->db->where('emp_id', $id);
         $pr_emp_com_info=$this->db->get('pr_emp_com_info')->row();
+
+        $this->db->where('emp_id', $id);
+        $this->db->update('pr_emp_com_info', array('emp_cat_id' => 5));
 
         $pre_unit_id=$pr_emp_com_info->unit_id;
 
@@ -1097,19 +1156,14 @@ class Entry_system_con extends CI_Controller
             'new_unit_id' => $new_unit_id,
             'new_emp_id' => $new_emp_id,
             'last_working_day' => $last_working_date,
-            'joining_date' => $pr_emp_com_info->emp_join_date,
+            'joining_date' => $joining_date,
             'create_at' => date('Y-m-d'),
         );
-        if($this->db->insert('pr_unit_transfer', $data)){
-            echo 1;
-        }else{
-            echo 0;
-        };
-
+        $this->db->insert('pr_unit_transfer', $data);
     }
     function change_pr_emp_per_info($id, $new_unit_id, $pre_unit_id, $pr_emp_per_info){
         $this->db->where('unit_id', $new_unit_id);
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('emp_id', 'DESC');
         $this->db->limit(1);
         $last_id=$this->db->get('pr_emp_com_info')->row()->emp_id;
         $new_emp_id=$last_id+1;
@@ -1190,18 +1244,13 @@ class Entry_system_con extends CI_Controller
             'new_com_salary' => $pr_incre_prom_pun->new_com_salary,
             'effective_month' => $pr_incre_prom_pun->effective_month,
             'ref_id' => $pr_incre_prom_pun->ref_id,
-            'status' => $pr_incre_prom_pun->status,
+            'status' => $pr_incre_prom_pun->status, //tranfer unit 
         );
         $this->db->insert('pr_incre_prom_pun', $data);
     }
-
-
-
-
     //------------------------------------------------------------------------------------------
     // GRID for holiday
     //------------------------------------------------------------------------------------------
-
     //------------------------------------------------------------------------------------------
     // Leave entry to the Database
     //------------------------------------------------------------------------------------------
@@ -2149,9 +2198,9 @@ class Entry_system_con extends CI_Controller
             'advanced_salary' => $_POST['advanced_salary'],
             'total_deduct' => $_POST['total_deduct'],
             'net_pay' => $_POST['net_pay'],
+            'status' => $_POST['status']
             'total_get' => $_POST['total_get']
         );
-    
         $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);
         echo json_encode(array('success' => true));
     }

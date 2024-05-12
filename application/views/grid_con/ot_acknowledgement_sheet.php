@@ -42,12 +42,12 @@
 				?>
 
 				<tr>
-					<td style="text-align:center; padding:2px"><?php echo $key +1; ?></td>
-					<td style="text-align:center; padding:2px"><?php echo $row['emp_id']?></td>
-					<td style="text-align:left; padding:2px"><?php echo $row['name_en']?></td>
-					<td style="text-align:left; padding:2px"><?php echo $row['desig_name']?></td>
-					<td style="text-align:left; padding:2px"><?php echo $row['line_name_en']?></td>
-					<td style="text-align:center; padding:2px"></td>
+					<td style="font-size: 15px; padding:15px"><?php echo $key +1; ?></td>
+					<td style="font-size: 15px; padding:15px"><?php echo $row['emp_id']?></td>
+					<td style="font-size: 15px; padding:15px"><?php echo $row['name_en']?></td>
+					<td style="font-size: 15px; padding:15px"><?php echo $row['desig_name']?></td>
+					<td style="font-size: 15px; padding:15px"><?php echo $row['line_name_en']?></td>
+					<td style="font-size: 15px; padding:15px"></td>
 				</tr>
 				<?php $emp_sec = $row['emp_sec_id']; ?>
 			<?php } ?>

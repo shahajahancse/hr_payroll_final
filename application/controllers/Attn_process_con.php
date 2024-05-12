@@ -60,12 +60,21 @@ class Attn_process_con extends CI_Controller {
 
 		$input_date = date("Y-m-d", strtotime($date));
 		$grid_emp_id = explode(',', $sql);
-
+		
 		$this->db->trans_start();
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
-		$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
+		
+		// final process check
+		$slm = date("Y-m-01", strtotime($date));
+		$check = $this->db->where('unit_id', $unit)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
 
+		$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE){
 			$this->db->trans_rollback();
@@ -81,6 +90,7 @@ class Attn_process_con extends CI_Controller {
 			}
 		}
 	}
+
 	function attendance_process2(){
 
 		$unit = $this->input->post('unit_id');
@@ -94,6 +104,16 @@ class Attn_process_con extends CI_Controller {
 		$this->db->trans_start();
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
+
+		// final process check
+		$slm = date("Y-m-01", strtotime($date1));
+		$check = $this->db->where('unit_id', $unit)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
 		for ($i=0; $i < $days ; $i++) {
 			$input_date = date("Y-m-d", strtotime($date1 . ' + ' . $i . ' days'));
 			$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
