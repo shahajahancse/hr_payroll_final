@@ -60,18 +60,18 @@ class Attn_process_con extends CI_Controller {
 
 		$input_date = date("Y-m-d", strtotime($date));
 		$grid_emp_id = explode(',', $sql);
-		
+
 		$this->db->trans_start();
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
-		
+
 		// final process check
 		$slm = date("Y-m-01", strtotime($date));
 		$check = $this->db->where('unit_id', $unit)->where('block_month',$slm)->get('pay_salary_block');
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
 			return false; exit();
-		} 
+		}
 		// final process check end
 
 		$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
@@ -111,7 +111,7 @@ class Attn_process_con extends CI_Controller {
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
 			return false; exit();
-		} 
+		}
 		// final process check end
 
 		for ($i=0; $i < $days ; $i++) {
@@ -360,7 +360,7 @@ class Attn_process_con extends CI_Controller {
 			$this->data['username'] = $this->data['user_data']->id_number;
 			$this->data['unit_id']=$this->data['user_data']->unit_name;
 			$this->data['title'] = 'Attendance Report';
-			$this->data['subview'] = 'attn_report/grid';
+			$this->data['subview'] = 'attn_report/grid_window';
 			$this->load->view('layout/template', $this->data);
 		} else if ($this->session->userdata('level') == 2){
 			$this->data['username'] = $this->data['user_data']->id_number;

@@ -38,7 +38,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('entry_system_con/left_resign_entry') ?>">Add Resign</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/roster_entry') ?>">Add Roster shift</a>
                     <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
@@ -78,36 +78,46 @@
                 <thead class="text-center">
                     <tr class="text-center">
                         <th class="text-center">SL</th>
-                        <th class="text-center">Emp Name </th>
-                        <th class="text-center">Emp Id</th>
+                        <th class="text-center">Name</th>
                         <th class="text-center">Unit name</th>
-                        <th class="text-center">Date</th>
+                        <th class="text-center">Start date</th>
+                        <th class="text-center">End date</th>
+                        <th class="text-center">Duration</th>
+                        <th class="text-center">Shift type</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
-
                 </thead>
-
                 <tbody>
-
                     <?php  
-                            // dd($results);
-
                   if (!empty($results)) {foreach ($results as $key => $r) {?>
                     <tr>
                         <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $r->user_name ?></td>
-                        <td><?php echo $r->emp_id ?></td>
-                        <td><?php echo $r->unit_name ?></td>
-                        <td><?php echo date('d-m-Y', strtotime($r->resign_date))?></td>
+                        <td><?= $r->name ?></td>
+                        <td><?= $r->unit_name ?></td>
+                        <td><?= $r->start_date ?></td>
+                        <td><?= $r->end_date ?></td>
+                        <td><?= $r->duration ?></td>
+                        <td><?php
+                        $shift_type=json_decode($r->shift_type);
+
+                        if (is_null($shift_type) || !isset($shift_type[0])) {
+                            // A null or invalid shift_type field is not expected, but it could happen.
+                            echo "Error: Null or invalid shift_type field in database.";
+                        } else {
+                            $this->db->where_in('id',$shift_type[0]);
+                            $query = $this->db->get('pr_emp_shift');
+                            if ($query->num_rows() > 0) {
+                                $data = $query->result();
+                                echo implode(", ",array_column($data,'shift_name'));
+                            } else {
+                                echo "Error: No matching shifts found for shift_type field in database.";
+                            }
+                        }
+                        ?></td>
                         <td>
-                            <?php if($r->status == 1){?>
-                            <a href="#" style="padding: 3px 12px;" class="btn btn-sm btn-info" onclick="report(<?= $r->emp_id ?>)" >Report</a>
-                            <!-- <a href="#" class="btn btn-sm btn-success" role="button" data-toggle="modal" data-target="#myModal" onclick="edit(< ?= $r->emp_id ?>)" >Edit</a> -->
-                            <?php }else{ ?>
-                            <a href="#" style="padding: 3px 12px;" class="btn btn-sm btn-info" role="button" data-toggle="modal" data-target="#myModal" onclick="final_satalment(<?= $r->emp_id ?>)" >Add Final Satalment</a>
-                            <?php }?>
-                            <a href="<?=base_url('entry_system_con/resign_delete/'.$r->emp_id)?>"class="btn btn-sm btn-danger" style="padding: 3px 12px;" role="button">Delete</a>
+                            <a href="<?=base_url('setup_con/roster_edit/'.$r->id)?>"class="btn btn-sm btn-primary" style="padding: 3px 12px;" role="button">Edit</a>
+                            <a href="<?=base_url('setup_con/rester_delete/'.$r->id)?>"class="btn btn-sm btn-danger" style="padding: 3px 12px;" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php }} else {?>

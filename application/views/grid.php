@@ -16,8 +16,6 @@
 	<script src="<?php echo base_url(); ?>js/calendar_eu.js" type="text/javascript"></script>
 	<script>
     $(function() {
-
-
             $( ".clearfix" ).dialog({
                 autoOpen: false,
                 height: 370,
@@ -25,9 +23,7 @@
                 resizable: false,
                 modal: true
             });
-
             $(".ui-dialog-titlebar").hide();
-
         });
     </script>
 

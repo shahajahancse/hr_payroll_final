@@ -1471,6 +1471,30 @@ class Entry_system_con extends CI_Controller
     // Leave end
     //--------------------------------------------------------------------------------------
 
+    //------------------------------------------------------------------------------------------
+    // maternity entry to the Database
+    //------------------------------------------------------------------------------------------
+    public function maternity_entry()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+        $this->data['title'] = 'Maternity Entry';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/maternity_entry';
+        $this->load->view('layout/template', $this->data);
+    }
+    //------------------------------------------------------------------------------------------
+    // end maternity entry to the Database
+    //------------------------------------------------------------------------------------------
+
+
     //-------------------------------------------------------------------------------------
     // CRUD for // Left/Resign
     //-------------------------------------------------------------------------------------
@@ -1556,6 +1580,7 @@ class Entry_system_con extends CI_Controller
             $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         }
         $this->db->group_by('lf.emp_id');
+        $this->db->order_by('lf.left_date', 'DESC');
         $this->data['results'] = $this->db->get()->result();
 
         $this->data['title'] = 'Left List';
@@ -1572,6 +1597,7 @@ class Entry_system_con extends CI_Controller
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         }
+        $this->db->order_by('rs.resign_date', 'DESC');
         $this->db->group_by('rs.emp_id');
         $this->data['results'] = $this->db->get()->result();
 
@@ -1617,6 +1643,9 @@ class Entry_system_con extends CI_Controller
         $this->db->where('pr_emp_com_info.emp_cat_id', 1);
         return $this->db->get();
     }
+
+
+   
 
 
 
@@ -2198,7 +2227,7 @@ class Entry_system_con extends CI_Controller
             'advanced_salary' => $_POST['advanced_salary'],
             'total_deduct' => $_POST['total_deduct'],
             'net_pay' => $_POST['net_pay'],
-            'status' => $_POST['status']
+            'status' => $_POST['status'],
             'total_get' => $_POST['total_get']
         );
         $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);

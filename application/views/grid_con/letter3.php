@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Letter 2</title>
+    <title>Letter 3</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -15,8 +15,8 @@
     </style>
   </head>
   <body>
+<?php foreach($values as $value){?>
 
-<?php foreach($values->result() as $value){?>
   <div class="container w-75 mb-5">
     <div class="d-flex flex-row justify-content-between">
       <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
@@ -24,7 +24,7 @@
       <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
     </div>
     <div class="d-flex">
-      <div class="col-md-2">
+      <div class="col-md-3">
         <?php $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;?>
         <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
       </div>
@@ -36,12 +36,12 @@
       <p class="text-center h6">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
     </div>
     <div class="d-flex">
-      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?>/<?php echo date('m/Y')?></span>-বি</div>
+      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-সি</div>
       <div class="col-md-6 text-right">তারিখঃ ২৫/০১/২০২৪</div>
     </div>
 
     <div>
-      <h5 class="text-center mt-5">"রেজিষ্ট্রি ডাক যোগে প্রেরিত" দ্বিতীয় চিঠি</h5>
+      <h5 class="text-center mt-5">"রেজিষ্ট্রি ডাক যোগে প্রেরিত" তৃতীয় চিঠি</h5>
     </div>
 
       <div class="d-flex ml-3 mt-5">
@@ -74,19 +74,20 @@
       </div>
 
     
-      <h6 class="ml-3 mt-5"><b>বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭(৩ক) ধারা মোতাবেক আত্নপক্ষ সমর্থনের সুযোগ প্রদান প্রসঙ্গে।</b></h6>
+      <h6 class="ml-3 mt-5"><b>বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭ (৩ক) ধারা মোতাবেক শ্রমিক কর্তৃক সে¦চ্ছায় চাকুরী হইতে ইস্তফা প্রসঙ্গে।</b></h6>
     <div class="ml-3 mt-5">
       <p class="text-justify">
         <span>জনাব/জনাবা,</span><br> 
-
-        আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত রয়েছেন। এ প্রেক্ষিতে কারখানার
-        কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y', strtotime($value->left_date . ' +10 days'));?></span></b> ইং তারিখে যার সূত্র নংঃ-
-        এইচজিএল/অনু <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</b> এর বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে।
-        কিন্তু অদ্যবদি আপনি উপরোক্ত বিষয়ে লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।
+        আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ হতে অদ্যবদি পর্যন্ত কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত থাকার কারনে আপনাকে গত
+        <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y', strtotime($value->left_date . ' +10 days'));?></span></b> ইং তারিখে যার সূত্র নংঃ- <b>এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</b> এর একটি পত্রের মাধ্যেমে ১০ (দশ) দিনের সময় দিয়ে চাকুরীতে
+        যোগদান সহ ব্যাখ্যা প্রদান করতে বলা হয়েছিল। কিন্তু আপনি নির্ধারিত সময়ের মধ্যে কর্মস্থলে উপস্থিত হননি এবং কোন ব্যাখ্যা
+        প্রদান করেন নি। তথাপিও কর্তৃপক্ষ গত <b>১১/০২/২০২৪</b> ইং তারিখে যার সূত্র নংঃ-<b> এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-বি </b>এর আরও একটি পত্রর
+        মাধ্যেমে আপনাকে আরো ০৭ (সাত) কর্মদিবসের সময় দিয়ে আত্মপক্ষ সমর্থন সহ চাকুরীতে যোগদানের জন্য পূণরায় নির্দেশ প্রদান করেন।
+        তৎসত্বেও আপনি নির্ধারিত সময়ের মধ্যে আত্নপক্ষ সামর্থন করেননি এমনকি চাকুরীতেও যোগদান করেননি। সুতরাং বাংলাদেশ শ্রম আইন ২০০৬
+        এর ২৭ (৩ক) ধারা অনুযায়ী অনুপস্থিত দিন থেকে আপনি স্বেচ্ছায় চাকুরী হতে ইস্তফা গ্রহন করেছেন বলে গন্য করা হলো।
         <br><br>
-        অতএব, অত্র পত্র প্রাপ্তির ০৭ (সাত) কর্ম দিবসের মধ্যে আত্মপক্ষ সমর্থন সহ কাজে যোগদান করিতে আপনাকে নির্দেশ দেওয়া হলো।
-        উক্ত সময়ের মধ্যে আপনি আত্মপক্ষ সমর্থন সহ কাজে যোগদান করতে ব্যর্থ হলে বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭ (৩ক) ধারা অনুযায়ী আপনি
-        স্বেচ্ছায় “চাকুরীতে ইস্তফা দিয়েছেন” বলে গন্য হবে।
+        অতএব আপনার বকেয়া মজুরী ও আইনানুগ পাওনা (যদি থাকে) যে কোন কর্ম দিবসে অফিস চলাকালীন সময়ে কারখানার হিসাব বিভাগ থেকে গ্রহন
+        করার জন্য নির্দেশ দেওয়া গেল।
       </p>
 
       <div class="mt-5">
@@ -101,6 +102,7 @@
       </div>
     </div>
   </div>    
+
 <div style="page-break-after:always"></div>
   <?php }?>
   </body>
