@@ -36,7 +36,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label">First Date : </label>
-							<input onchange="count_l1()" class= "form-control input-sm date" name="firstdate" id="firstdate" type="text" autocomplete="off">
+							<input value="<?= date('Y-m-d') ?>" onchange="count_l1()" class="form-control input-sm date" name="firstdate" id="firstdate" >
 						</div>
 					</div>
 					<div class="col-md-6">
