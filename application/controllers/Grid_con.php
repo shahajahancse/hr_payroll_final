@@ -605,6 +605,69 @@ class Grid_con extends CI_Controller {
 		}
 	}
 	// ============================== end last increment or promotion Report ===============
+	// ============================== start left letter Report ===============
+	function grid_letter_report(){
+		$unit_id = $this->input->post('unit_id');
+		$status = $this->input->post('status');
+		$firstdate = $this->input->post('firstdate');
+		$data['firstdate']	= date("Y-m-d", strtotime($firstdate));
+		if ($status == 1) {
+			$days = 11;
+		} else if ($status == 2) {
+			$days = 21;
+		} else {
+			$days = 30;
+		}
+		$off_day = 'Fri';
+		$data['values'] 	= $this->Grid_model->grid_letter1_report($data['firstdate'], $unit_id, $off_day, $days);
+		$data['unit_id']	= $unit_id;
+		
+		if(empty($data)){
+			echo "Not Found Data"; exit();
+		}else{
+			if ($status == 1) {
+				$this->load->view('grid_con/letter1',$data);
+			} else if ($status == 2) {
+				$this->load->view('grid_con/letter2',$data);
+			} else {
+				$this->load->view('grid_con/letter3',$data);
+			}
+		}
+	}
+
+	function grid_letter_count(){
+		$unit_id = $this->input->post('unit_id');
+		$firstdate = $this->input->post('firstdate');
+		$data['firstdate']	= date("Y-m-d", strtotime($firstdate));
+		$days1 = 11;
+		$days2 = 21;
+		$days3 = 30;
+		$off_day = 'Fri';
+
+		$data['values'] = $this->Grid_model->grid_letter1_report($data['firstdate'], $unit_id, $off_day, $days1);
+		$data['values2'] = $this->Grid_model->grid_letter1_report($data['firstdate'], $unit_id, $off_day, $days2);
+		$data['values3'] = $this->Grid_model->grid_letter1_report($data['firstdate'], $unit_id, $off_day, $days3);
+
+		if (!empty($data['values'])) {
+			$v['1'] = count($data['values']);
+		} else {
+			$v['1'] = 0;
+		}
+
+		if (!empty($data['values2'])) {
+			$v['2'] = count($data['values2']);
+		} else {
+			$v['2'] = 0;
+		}
+
+		if (!empty($data['values3'])) {
+			$v['3'] = count($data['values3']);
+		} else {
+			$v['3'] = 0;
+		}
+		echo json_encode($v);
+	}
+	// ============================== end left letter Report ===============D
 
 
 
@@ -1722,92 +1785,6 @@ class Grid_con extends CI_Controller {
 			echo $query['values'];
 		}else{
 			$this->load->view('stuff',$query);
-		}
-	}
-
-	function grid_letter1_report(){
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$firstdate = $this->input->post('firstdate');
-
-		$data['values'] 	= $this->Grid_model->grid_letter1_report($grid_emp_id,$firstdate);
-		$data['unit_id']	= $unit_id;
-		$firstdate = date("Y-m-d", strtotime($firstdate));
-		$data['firstdate']	= $firstdate;
-		// dd($data);
-		if(is_string($data['values'])){
-			echo $data['values'];
-		}
-		else{
-			$this->load->view('letter1',$data);
-		}
-	}
-	function grid_letter1_count(){
-		$unit_id = $this->input->post('unit_id');
-		$firstdate = $this->input->post('firstdate');
-
-		$data['values'] 	=  $this->Grid_model->grid_letter1_count($firstdate, $unit_id);
-		$data['values2'] 	= $this->Grid_model->grid_letter2_report($grid_emp_id,$firstdate);
-		$data['values3'] 	= $this->Grid_model->grid_letter3_report($grid_emp_id, $firstdate);
-
-		// dd($data);
-
-		$v=[];
-		if(is_string($data['values'])){
-			$v['1']=0;
-		}
-		else{
-			$v['1']=count($data['values']);
-		}
-
-		if(is_string($data['values2'])){
-			$v['2']=0;
-		}
-		else{
-			$v['2']=count($data['values2']);
-		}
-		if(is_string($data['values3'])){
-			$v['3']=0;
-		}
-		else{
-			$v['3']=count($data['values3']);
-		}
-		echo json_encode($v);
-	}
-
-
-	function grid_letter2_report(){
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$firstdate = $this->input->post('firstdate');
-		$data['values'] 	= $this->Grid_model->grid_letter2_report($grid_emp_id,$firstdate);
-		$data['unit_id']	= $unit_id;
-		$firstdate = date("Y-m-d", strtotime($firstdate));
-		$data['firstdate']	= $firstdate;
-		if(is_string($data['values'])){
-			echo $data['values'];
-		}
-		else{
-			$this->load->view('letter2',$data);
-		}
-	}
-	function grid_letter3_report(){
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$firstdate = $this->input->post('firstdate');
-
-		$data['values'] 	= $this->Grid_model->grid_letter3_report($grid_emp_id, $firstdate);
-		$data['unit_id']	= $unit_id;
-		$firstdate = date("Y-m-d", strtotime($firstdate));
-		$data['firstdate']	= $firstdate;
-		if(is_string($data['values'])){
-			echo $data['values'];
-		}
-		else{
-			$this->load->view('letter3',$data);
 		}
 	}
 

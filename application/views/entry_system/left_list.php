@@ -68,14 +68,14 @@
                   if (!empty($results)) {foreach ($results as $key => $r) {?>
 
                     <tr>
-                        <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $r->user_name ?></td>
-                        <td><?php echo $r->emp_id ?></td>
-                        <td><?php echo $r->unit_name ?></td>
-                        <td><?php echo date('d-m-Y', strtotime($r->left_date))?></td>
-                        <td>
+                        <td style="padding: 5px !important"><?php echo $key + 1  ?></td>
+                        <td style="padding: 5px !important"><?php echo $r->user_name ?></td>
+                        <td style="padding: 5px !important"><?php echo $r->emp_id ?></td>
+                        <td style="padding: 5px !important"><?php echo $r->unit_name ?></td>
+                        <td style="padding: 5px !important"><?php echo date('d-m-Y', strtotime($r->left_date))?></td>
+                        <td style="padding: 5px !important">
                             <a href="<?=base_url('entry_system_con/left_delete/'.$r->emp_id)?>"
-                                class="btn btn-danger" role="button">Delete</a>
+                                class="btn btn-danger btn-sm" style="padding: 3px 12px;" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php }} else {?>

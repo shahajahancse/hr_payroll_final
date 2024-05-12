@@ -1943,6 +1943,105 @@ public function bonus_delete($shiftmanagementId)
     redirect('/setup_con/bonus_setup');
 }
 
+public function emp_roster_shift() {
+    $this->db->select('rs.*, pr_units.unit_name');
+    $this->db->from('pr_emp_roster_shift as rs');
+    $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
+
+    // if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+    //     $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+    // }
+    $this->db->order_by('rs.id', 'DESC');
+    $this->data['results'] = $this->db->get()->result();
+    $this->data['title'] = 'Roster Shift List';
+    $this->data['username'] = $this->data['user_data']->id_number;
+    $this->data['subview'] = 'setup/emp_roster_list';
+    $this->load->view('layout/template', $this->data);
+}
+public function roster_entry() {   
+    $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+    if ($this->form_validation->run() == false) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->session->set_flashdata('failure', $this->form_validation->error_array());
+        }
+        $this->db->select('pr_units.*');
+        $this->data['pr_units'] = $this->db->get('pr_units')->result();
+        $this->db->select('pr_emp_shift.*');
+        $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result();
+        $this->data['title'] = 'Roster Shift Add';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/emp_roster_entry';
+        $this->load->view('layout/template', $this->data);
+    } else {
+        $shift_type[]=$this->input->post('shift_type');
+        $formArray = array(
+            'name' => $this->input->post('name'),
+            'unit_id' => $this->input->post('unit_id'),
+            'start_date' => date('Y-m-d', strtotime($this->input->post('start_date'))),
+            'duration' => $this->input->post('duration'),
+            'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))), 
+            'shift_type' =>  json_encode($shift_type),
+        );
+        if ($this->db->insert('pr_emp_roster_shift', $formArray)) {
+            $this->session->set_flashdata('success', 'Record add successfully!');
+        } else {
+            $this->session->set_flashdata('failure', 'Record add failed!');
+        }
+        redirect(base_url() . 'setup_con/emp_roster_shift');
+    }
+}
+public function roster_edit($id) {   
+    $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+    if ($this->form_validation->run() == false) {
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->session->set_flashdata('failure', $this->form_validation->error_array());
+        }
+
+        $this->db->select('pr_units.*');
+        $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
+        $this->db->select('pr_emp_roster_shift.*');
+        $this->db->where('id', $id);
+        $this->data['pr_emp_roster_shift'] = $this->db->get('pr_emp_roster_shift')->row();
+
+        $this->db->select('pr_emp_shift.*');
+        $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result();
+
+        $this->data['title'] = 'Roster Shift Edit';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/emp_roster_edit';
+        $this->load->view('layout/template', $this->data);
+    } else {
+        $shift_type[]=$this->input->post('shift_type');
+        $formArray = array(
+            'name' => $this->input->post('name'),
+            'unit_id' => $this->input->post('unit_id'),
+            'start_date' => date('Y-m-d', strtotime($this->input->post('start_date'))),
+            'duration' => $this->input->post('duration'),
+            'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))), 
+            'shift_type' =>  json_encode($shift_type),
+        );
+        $this->db->where('id', $id);
+        if ($this->db->update('pr_emp_roster_shift', $formArray)) {
+            $this->session->set_flashdata('success', 'Record Update successfully!');
+        } else {
+            $this->session->set_flashdata('failure', 'Record Update  failed!');
+        }
+        redirect(base_url() . 'setup_con/emp_roster_shift');
+    }
+}
+public function rester_delete($id)
+{
+    $this->db->where('id', $id);
+    if ($this->db->delete('pr_emp_roster_shift')) {
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+    } else {
+        $this->session->set_flashdata('failure', 'Record Delete failed!');
+    }
+    redirect(base_url() . 'setup_con/emp_roster_shift');
+}
+
 
 
 //-------------------------------------------------------------------------------------------------------

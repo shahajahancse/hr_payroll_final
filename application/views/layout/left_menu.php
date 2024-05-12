@@ -35,6 +35,7 @@
             <li class="start <?= activate_method('emp_weekend_add')?> "><a href="<?= base_url('entry_system_con/emp_weekend_add')?>" class="anchor_cls">Weeked add</a> </li>
             <li class="start <?= activate_method('emp_holiday_add')?> "><a href="<?= base_url('entry_system_con/emp_holiday_add')?>" class="anchor_cls">Holiday add</a> </li>
             <li class="start <?= activate_method('leave_transation')?> "><a href="<?= base_url('entry_system_con/leave_transation')?>" class="anchor_cls">Leave Transaction</a> </li>
+            <li class="start <?= activate_method('maternity_entry')?> "><a href="<?= base_url('entry_system_con/maternity_entry')?>" class="anchor_cls">Maternity entry</a> </li>
             <li class="start <?= activate_method('leave_list')?> "><a href="<?= base_url('entry_system_con/leave_list')?>" class="anchor_cls">Leave List</a></li>
 
             <li class="start <?= activate_method('left_resign_entry')?> "><a href="<?= base_url('entry_system_con/left_resign_entry')?>" class="anchor_cls">Left / Resign / Regular</a> </li>
@@ -112,6 +113,7 @@
 
           <li class="start <?= activate_method('shift_schedule') ?>"> <a href="<?=base_url('setup_con/shift_schedule')?>" class="anchor_cls">Shift Schedules</a> </li>
           <li class="start <?= activate_method('shift_management') ?>"> <a href="<?=base_url('setup_con/shift_management')?>" class="anchor_cls">Shift Manage</a> </li>
+          <li class="start <?= activate_method('emp_roster_shift') ?>"> <a href="<?=base_url('setup_con/emp_roster_shift')?>" class="anchor_cls">Roster Shift</a> </li>
 
           <li class="start <?= activate_method('alternet_day') ?>"> <a href="<?=base_url('setup_con/alternet_day')?>" >Alternet Day</a> </li>
 

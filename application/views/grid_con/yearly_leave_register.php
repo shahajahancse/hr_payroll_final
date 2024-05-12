@@ -118,7 +118,6 @@
 						$year = date('Y', strtotime($object->start_date));
 						$separated_data[$year][] = $object;
 					}
-                    // dd($year);
                     ?>
 				<tr>
 				<?php $leave_year='';	foreach ($separated_data as $year => $objects) {
@@ -170,8 +169,8 @@
 						<td class="text-center"><?php   echo  $object->leave_type == 'el' ? ($total_el_leave - $total_el_use):'';?></td>
 						<td class="text-center"><?php   echo  $object->leave_type == 'cl' ? ($total_cl_leave - $total_cl_use):'';?></td>
 						<td class="text-center"><?php   echo  $object->leave_type == 'sl' ? ($total_sl_leave - $total_sl_use):'';?></td>
-						<td><?php echo ""?></td>
-						<td><?php echo ""?></td>
+						<td><img style="height: 38px;" src="<?=base_url('images/'.$values['emp_info']->signature)?>"></td>
+						<td><img style="height: 38px;" src="<?=base_url('images/'.$values['emp_info']->register)?>"></td>
 					</tr>
                     
 					<?php 

@@ -1157,6 +1157,80 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
+	function grid_letter1_report($current_date, $unit_id, $off_day, $days){
+
+		$get_date = $this->grid_letter_day_count($off_day, $days, $current_date, $unit_id);
+
+		$this->db->select('
+			per.*,
+			com.emp_join_date,
+			com.id as id_emp,
+			com.emp_sal_gra_id as grade,
+			com.com_gross_sal as salary,
+			emp_designation.desig_name,
+			emp_designation.desig_bangla,
+			emp_depertment.dept_name,
+			emp_depertment.dept_bangla,
+			emp_section.sec_name_en,
+			emp_section.sec_name_bn,
+			emp_line_num.line_name_bn,
+			emp_line_num.line_name_en,
+			per_dis.name_bn as dis_name_bn,
+			per_upa.name_bn as upa_name_bn,
+			per_post.name_bn as post_name_bn,
+			pre_dis.name_bn as dis_bn,
+			pre_upa.name_bn as upa_bn,
+			pre_post.name_bn as post_bn,
+			lh.left_date
+		');
+		$this->db->from('pr_emp_left_history as lh');
+		$this->db->join('pr_emp_com_info as com', 'lh.emp_id = com.emp_id');
+		$this->db->join('pr_emp_per_info per', 'lh.emp_id = per.emp_id');
+
+		$this->db->join('emp_designation', 'com.emp_desi_id = emp_designation.id', 'left');
+		$this->db->join('emp_depertment', 'com.emp_dept_id = emp_depertment.dept_id', 'left');
+		$this->db->join('emp_section', 'com.emp_sec_id = emp_section.id', 'left');
+		$this->db->join('emp_line_num', 'com.emp_line_id = emp_line_num.id', 'left');
+
+		$this->db->join('emp_districts as per_dis', 'per.per_district = per_dis.id', 'LEFT');
+		$this->db->join('emp_upazilas as per_upa', 'per.per_thana = per_upa.id', 'LEFT');
+		$this->db->join('emp_post_offices as per_post', 'per.per_post = per_post.id', 'LEFT');
+		$this->db->join('emp_districts as pre_dis', 'per.pre_district = pre_dis.id', 'LEFT');
+		$this->db->join('emp_upazilas as pre_upa', 'per.pre_thana = pre_upa.id', 'LEFT');
+		$this->db->join('emp_post_offices as pre_post', 'per.pre_post = pre_post.id', 'LEFT');
+		$this->db->where('lh.left_date', $get_date);
+		$this->db->order_by("com.emp_id");
+		$data = $this->db->get()->result();
+		return $data;
+	}
+
+	function grid_letter_day_count($off_day, $days, $firstdate, $unit_id){
+		$seconddate = $firstdate;
+		$check_day = date("D", strtotime($firstdate));
+		$num = ($check_day != $off_day)? 1:0;
+		while ($num <= $days) {
+			$check_day = date("D", strtotime('-1 days'.$seconddate));
+			$num = ($check_day != $off_day)? $num+1:$num+0;
+			$seconddate = date("Y-m-d", strtotime('-1 days'.$seconddate));
+		}
+
+		$this->db->where('unit_id', $unit_id)->where('work_off_date BETWEEN "'.$firstdate.'" AND "'.$seconddate.'"');
+		$rs = $this->db->group_by('work_off_date')->get('attn_holyday_off')->result();
+		$tday = count($rs);
+		if ($tday > 0) {
+			$seconddate = date("Y-m-d", strtotime("-$tday days".$seconddate));
+			return $seconddate;
+		} else {
+			return $seconddate;
+		}
+	}
+
+
+
+
+
+
+
 
 
 
@@ -4473,114 +4547,9 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function grid_letter1_report($grid_emp_id, $firstdate){
-		$current_date = date("Y-m-d", strtotime($firstdate));
-		$before_date= date("Y-m-d", strtotime('-10 days'.$firstdate));
-		$letter_status = 1;
-		$data = array();
-		foreach ($grid_emp_id as $key => $id) {
-			$get_absent = $this->attendance_check_for_absent($id,$current_date,$letter_status);
-				if($letter_status == 1){
-					$day = 10;
-				}else if($letter_status == 2){
-					$day = 20;
-				}else{
-					$day = 30;
-				}
 
-			if(!$get_absent >=$day){
-				continue;
-			}
-			$this->db->select('
-				pr_emp_per_info.*,
-				pr_emp_com_info.emp_join_date,
-				pr_emp_com_info.id as id_emp,
-				emp_designation.desig_name,
-				emp_designation.desig_bangla,
-				emp_depertment.dept_name,
-				emp_depertment.dept_bangla,
-				emp_section.sec_name_en,
-				emp_section.sec_name_bn,
-				emp_line_num.line_name_bn,
-				emp_line_num.line_name_en,
-				per_dis.name_bn as dis_name_bn,
-				per_upa.name_bn as upa_name_bn,
-				per_post.name_bn as post_name_bn,
-				pre_dis.name_bn as dis_bn,
-				pre_upa.name_bn as upa_bn,
-				pre_post.name_bn as post_bn,
-				pr_emp_com_info.emp_sal_gra_id as grade,
-				pr_emp_com_info.com_gross_sal as salary,
-				pr_emp_left_history.left_date
-			');
-			$this->db->from('pr_emp_per_info');
-			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-			$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id');
-			$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-			$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
-			$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
-			$this->db->join('pr_emp_left_history', 'pr_emp_com_info.emp_id = pr_emp_left_history.emp_id');
-			$this->db->join('emp_districts as per_dis', 'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
-			$this->db->join('emp_upazilas as per_upa', 'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
-			$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
-			$this->db->join('emp_districts as pre_dis', 'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
-			$this->db->join('emp_upazilas as pre_upa', 'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
-			$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$this->db->order_by("pr_emp_com_info.emp_id");
-			$query = $this->db->get();
-			// dd($query->row());
-			if($query->num_rows() != 0){
-				$data[] = $query->row();
-			}
-		}
-		if(!empty($data)){
-			return $data;
-		}else{
-			return "Not Found Data";
-		}
-	}
-	function grid_letter1_count($firstdate, $unit_id){
-		$current_date = date("Y-m-d", strtotime($firstdate));
-		$before_date = date("Y-m-d", strtotime('-10 days'.$firstdate));
 
-		$this->db->select('emp_id')->where('shift_log_date', $current_date)->where('present_status', 'A');
-		$results = $this->db->where('unit_id', $unit_id)->get('pr_emp_shift_log')->result();
 
-		$letter_status = 1;
-		$data = array();
-		$emp_id = array();
-		foreach ($results as $key => $r) {
-			$id = $r->emp_id;
-			$emp_id[$key] = $r->emp_id;
-			$get_absent = $this->attendance_check_for_absent($id,$current_date,$letter_status);
-				if($letter_status == 1){
-					$day = 10;
-				}else if($letter_status == 2){
-					$day = 20;
-				}else{
-					$day = 30;
-				}
-
-			if(!$get_absent >= $day){
-				continue;
-			}
-		}
-
-		$this->db->select('pr_emp_com_info.emp_id, ');
-		$this->db->from('pr_emp_com_info');
-		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-		$query = $this->db->get();
-		if($query->num_rows() != 0){
-			$data[] = $query->row();
-		}
-
-		if(!empty($data)){
-			return $data;
-		}else{
-			return "Not Found Data";
-		}
-	}
 
 	function get_absent_start_date($emp_id,$firstdate,$limit){
 		//echo "$emp_id,$firstdate";
@@ -9234,16 +9203,19 @@ function grid_emp_job_application($grid_emp_id){
 			pr_emp_com_info.id,
 			pr_emp_per_info.name_en,
 			pr_emp_per_info.name_bn,
+			pr_emp_per_info.signature,
 			emp_depertment.dept_name,
 			emp_depertment.dept_bangla,
 			emp_section.sec_name_en,
 			emp_line_num.line_name_en,
 			emp_designation.desig_name,
 			emp_designation.desig_bangla,
-			pr_emp_com_info.emp_join_date
+			pr_emp_com_info.emp_join_date,
+			company_infos.register
 		');
 		$this->db->from('pr_emp_per_info');
 		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+		$this->db->join('company_infos', 'pr_emp_com_info.unit_id = company_infos.unit_id');
 		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id');
 		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id');
