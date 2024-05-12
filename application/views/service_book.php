@@ -16,6 +16,10 @@
                 line-height: 8px;
                 
             }
+            tr td{
+                text-align: center;
+            }
+     
         </style>
     </head>
         <body class="container">
@@ -23,7 +27,12 @@
             <?php 
                 $session = $this->session->userdata('data'); 
             ?>
-			<?php foreach($values as $value){ ?>
+			<?php foreach($values as $value){ 
+                // dd($value);
+                $emp_signature =$this->db->select('signature')->where('emp_id',$value->emp_id)->get('pr_emp_per_info')->row('signature');    
+                $register =$this->db->select('register')->where('unit_id',$unit_id)->get('company_infos')->row('register');    
+                // dd($emp_signature);
+            ?>
             <div class="d-flex">
                 <div class="flex-fill" style="height:90vh;width:60vw;border: 3px solid black;">
                         <div class="text-center" >
@@ -62,9 +71,13 @@
                         <div style="position: absolute; top: 10px;right: 10px;">
                             <img style="border: 3px solid black;" src="<?php echo base_url('uploads/photo/'.$value->img_source.'')?>" alt="" width="100px" height="130px">
                         </div>
-                        <br>
+                        <!-- <br> -->
                         <br> 
-                        <p><span>শ্রমিকের স্বাক্ষর:</span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <span>মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর:</span></p>
+                        <div style="display: flex; justify-content: space-between">
+                            <img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px;width:70px;margin-left: 0px">
+                            <img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px;margin-right: 100px">
+                        </div>
+                        <p><span>শ্রমিকের স্বাক্ষর:</span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <span>মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর:</span></p>
                     </div>
                 
                 </div>
@@ -128,9 +141,8 @@
                                 <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
                                 <td><?php echo $value->left_date=='' ? 'বর্তমান': '<span style="font-family:sutonnyMJ;font-size:15px">'.date('d-m-Y',strtotime($value->left_date)).' Bs </span>'?> </td>
                                 <td><?php echo $value->left_date=='' ? '-': $value->resign_reason?> </td>
-                                <!-- <td>    </td> -->
-                                <td>    </td>
-                                <td>    </td>
+                                <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px"></td>
+                                <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px;width:70px"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -229,7 +241,8 @@
                                 <td> </td>
                                 <td> </td>
                                 <td> </td>
-                                <td> </td>
+                                <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
+                                <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -239,25 +252,36 @@
             
             <div class="d-flex">
                 <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
-                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঘ)</p>
                     <h6 class="text-center" style="font-weight:700;"> চতুর্থ ভাগ</h6>
                     <p style="padding: 5px 0px 0px 5px;font-weight:600;"> ছুটির রেকর্ডঃ </p>
                     <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                         <thead>
                             <tr class="text-center">
                                 <th colspan="4">ভোগকৃত বার্ষিক ছুটির বিবরণ</th>
+                                <th colspan="3">নগদায়নকৃত ছুটির বিবরণ</th>
+                                <th rowspan="2">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                                <th rowspan="2">শ্রমিকের স্বাক্ষর/টিপসই </th>
                             </tr>
                             <tr  class="text-center" >
                                 <th>হইতে</th>
                                 <th>পর্যন্ত</th>
                                 <th>মোট</th>
-                                <th>অভোগকৃত পাওনা ছুটি</th>
+                                <th>অভোগকৃত পাওনা <br>ছুটি</th>
+                                <th>মোট</th>
+                                <th>তারিখ</th>
+                                <th>অবশিষ্ট পাওনা ছুটি</th>
                             </tr>
                             <tr  class="text-center" >
                                 <th>১</th>
                                 <th>২</th>
                                 <th>৩</th>
                                 <th>৪</th>
+                                <th>৫</th>
+                                <th>৬</th>
+                                <th>৭</th>
+                                <th>৮</th>
+                                <th>৯</th>
                             </tr>
                         </thead>
                         <?php 
@@ -277,22 +301,27 @@
                         <tbody>
                             <?php
                                 $earn_leave_balance=0;
-                            foreach($leaves as $row){?>
-                                <tr>
-                                    <td class="text-center" style="font-family:sutonnyMJ;font-size:15px"><?php echo $row->leave_start==''?'-': date('d-m-Y',strtotime($row->leave_start)).' Bs'?> </td>
-                                    <td class="text-center" style="font-family:sutonnyMJ;font-size:15px"><?php echo $row->leave_end =='' ? '-' : date('d-m-Y',strtotime($row->leave_end)).' Bs'?> </td>
-                                    <td class="text-center" style="font-family:sutonnyMJ;font-size:15px"><?php $qty = ( date_diff(date_create($row->leave_start),date_create($row->leave_end))->format("%a") +1 );echo $qty;?></td>
-                                    <td class="text-center" style="font-family:sutonnyMJ;font-size:15px"><?php $earn_leave_balance += $qty ;  echo $earn_leave->earn_leave - $earn_leave_balance  ;?></td>
-                                </tr>
-                            <?php }?>
-                            
+                                foreach($leaves as $row){?>
+                                    <tr>
+                                        <td class="text-center" style="font-family:sutonnyMJ;font-size:15px"><?php echo $row->leave_start==''?'-': date('d-m-Y',strtotime($row->leave_start)).' Bs'?> </td>
+                                        <td class="text-center" style="font-family:sutonnyMJ;font-size:15px"><?php echo $row->leave_end =='' ? '-' : date('d-m-Y',strtotime($row->leave_end)).' Bs'?> </td>
+                                        <td class="text-center" style="font-family:sutonnyMJ;font-size:15px"><?php $qty = ( date_diff(date_create($row->leave_start),date_create($row->leave_end))->format("%a") +1 );echo $qty;?></td>
+                                        <td class="text-center" style="font-family:sutonnyMJ;font-size:15px"><?php $earn_leave_balance += $qty ;  echo $earn_leave->earn_leave - $earn_leave_balance  ;?></td>
+                                        <td style="font-family:sutonnyMJ;font-size:15px"><?php echo ""?></td>
+                                        <td style="font-family:sutonnyMJ;font-size:15px;white-space: nowrap"><?php echo $earn_leave->earn_month ?></td>
+                                        <td style="font-family:sutonnyMJ;font-size:15px"><?php echo "" ?></td>
+                                        <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
+                                        <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+                                    </tr>   
+                                <?php }?>
+                                
                         </tbody>
                     </table>
             
                 </div>
                 <div style="width:1% !important"></div>
-                <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
-                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                <!-- <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঘ)</p>
                     <h6 class="text-center" style="font-weight:700;"> চতুর্থ ভাগ</h6>
                     <p style="padding: 5px 0px 0px 5px;font-weight:600;"> ছুটির রেকর্ডঃ </p>
                     <table class="table-sm" style="font-size: 0.8em;width: 100%;" border="1">
@@ -320,18 +349,19 @@
                                 <td style="font-family:sutonnyMJ;font-size:15px"><?php $a = round(($earn_leave->gross_sal/30)); $b = round($earn_leave->pay_leave/$a);echo $b; ?></td>
                                 <td style="font-family:sutonnyMJ;font-size:15px;white-space: nowrap"><?php echo $earn_leave->earn_month ?></td>
                                 <td style="font-family:sutonnyMJ;font-size:15px"><?php echo ($earn_leave->earn_leave-$earn_leave->el)-$b; ?></td>
-                                <td><?php echo '' ?></td>
-                                <td><?php echo '' ?></td>
+                                <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
+                                <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> -->
 
             </div>
             <div style="margin-bottom: 20px;page-break-after: always;"></div>
             <div class="d-flex">
                 <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
-                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঙ)</p>
                     <h6 class="text-center" style="font-weight:700;"> পঞ্চম ভাগ</h6>
                     <p style="padding: 5px 0px 0px 5px;font-weight:600;"> আচরণের রেকর্ডঃ </p>
                     <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
@@ -354,8 +384,9 @@
 
                                 <td>-</td>
                                 <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
+                                <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+
                             </tr>
                             
                         </tbody>
@@ -364,7 +395,7 @@
                 </div> 
                 <div style="width:1% !important"></div>
                 <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
-                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
+                    <p style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঙ)</p>
                     <h6 class="text-center" style="font-weight:700;"> পঞ্চম ভাগ</h6>
                     <p style="padding: 5px 0px 0px 5px;font-weight:600;"> আচরণের রেকর্ডঃ </p>
                     <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
@@ -384,11 +415,10 @@
                         </thead>
                         <tbody>
                             <tr>
-
                                 <td>-</td>
                                 <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
+                                <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
                             </tr>
                             
                         </tbody>

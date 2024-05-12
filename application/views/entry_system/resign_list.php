@@ -213,7 +213,7 @@
                                 <td style="border: 1px solid #d6d1d1 !important;"><span class="total_extra_payoff" style="font-size: 15px;font-family: SutonnyMJ;"></td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #d6d1d1 !important;">জমাকৃত অর্জিত ছুটির দিন ( ৫৬৩) উপস্থিতি</td>
+                                <td style="border: 1px solid #d6d1d1 !important;">জমাকৃত অর্জিত ছুটির দিন (<span id="earn_leave_days" style="font-family:SutonnyMJ;font-size: 15px;" class=""></span>) উপস্থিতি</td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><input type="number" style="font-family:SutonnyMJ;font-size: 15px;" class="earn_leave form-control"></td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="per_day_rate"></span></td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="total_earn_leave"></span></td>
@@ -368,55 +368,29 @@
                     var end = new Date(endDate);
                     var duration = end - start;
                     var days = duration / (1000 * 60 * 60 * 24);
-                    var years = Math.floor(days / 365);
+                    // var years = Math.floor(days / 365);
+                    var years = 18;
                     days = days % 365;
-                    var months = Math.floor(days / 30);
+                    // var months = Math.floor(days / 30);
+                    var months = 5;
+                    console.log(months);
+                    
                     days = days % 30;
-                    if (years == 5 && months < 11) {
-                        return 14*5;
-                    }else if (years == 5 && months > 11) {
-                        return 14*6;
-                    }else if (years == 6 && months  < 11) {
-                        return 14*6;
-                    }else if (years == 6 && months  > 11) {
-                        return 14*7;
-                    } else if (years == 7 && months  < 11) {
-                        return 14*7;
-                    }else if (years == 7 && months  > 11) {
-                        return 14*8;
-                    }else if (years == 8 && months  > 11) {
-                        return 14*9;
-                    }else if (years == 8 && months  < 11) {
-                        return 14*8;
-                    } else if (years == 9 && months  > 11) {
-                        return 14*10;
-                    } else if (years == 9 && months  < 11) {
-                        return 14*9;
-                    } else if (years == 10 && months < 11) {
-                        return 14*10;
-                    } else if (years == 10 && months > 11) {
-                        return 30*11;
-                    } else if (years == 11 && months < 11) {
-                        return 30*11;
-                    }else if (years == 11 && months > 11) {
-                        return 30*12;
-                    }  else if (years == 12 && months < 11) {
-                        return 30*12;
-                    }else if (years == 12 && months > 11) {
-                        return 30*13;
-                    } else if (years == 13 && months < 11) {
-                        return 30*13;
-                    } else if (years == 13 && months > 11) {
-                        return 30*14;
-                    }  else if (years == 14 && months < 11) {
-                        return 30*14;
-                    } else if (years == 14 && months > 11) {
-                        return 30*15;
-                    } else if (years == 15 && months < 11) {
-                        return 30*15;
-                    } else if (years == 15 && months > 11) {
-                        return 30*16;
-                    } else{
+                    if (years >= 5) {
+                       if (months < 11) {
+                            if (years > 9) {
+                                return 30*years;
+                            }else{
+                                return 14*years;
+                            }
+                        }else if(months > 11) {
+                                if (years > 9) {
+                                return 30*(years++);
+                            }else{
+                                return 14*years;
+                            }
+                        } 
+                    }else{
                         return 0;
                     }
                 }
@@ -500,7 +474,7 @@
                 var total_get = 0;
                 $("#extra_payoff, #resign_pay_day, .another_deposit, .earn_leave").on("input", function(){
                     var total_get = 0;
-                    $("#total1, #total_ot_rate, .total_resign_pay_day, .total_extra_payoff, .total_service_benifit").each(function(){
+                    $("#total1, #total_ot_rate, .total_resign_pay_day, .total_extra_payoff, .total_service_benifit,.total_earn_leave").each(function(){
                         var html = $(this).html();
                             var value = parseFloat(html);
                             if (isNaN(value)) {
@@ -568,8 +542,17 @@
                     success: function (data) {
                         var dataObj = (typeof data == "string") ? JSON.parse(data) : data;
                         if(dataObj.success == true){
-                            alert('added');
+                           Swal.fire({
+                            icon: 'success',
+                            title: "Added Successfully"
+                            }).then((result) => {
+                                window.location.href = window.location.href;
+                                setTimeout(function(){ $('#myModal').modal('hide'); }, 500);
+                            });
+                               
+                            // }
                         }
+                       
                     },
                     error: function(jqXHR, exception) {
                         console.error('jqXHR:', jqXHR);
@@ -681,4 +664,8 @@
     //         }
     //     });
     // }
+
+    $(".earn_leave").on('input', function() {
+         $("#earn_leave_days").html(parseFloat($(this).val()/18).toFixed(2));
+    })
 </script>
