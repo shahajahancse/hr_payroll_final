@@ -1369,11 +1369,10 @@ class Entry_system_con extends CI_Controller
         } else {
             $year = date($_POST['year']);
             $emp_id = date($_POST['emp_id']);
-
         }
 
         if ($this->db->table_exists('pr_earn_'.$year)) {
-            $this->db->where('emp_id', $_POST['emp_id']);
+            $this->db->where('emp_id', $emp_id);
             $earn_l=$this->db->get('pr_earn_'.$year)->row();
             if (!empty($earn_l)) {
                 $earn_leave = $earn_l->earn_leave;
@@ -1386,11 +1385,11 @@ class Entry_system_con extends CI_Controller
 
 
         $this->db->select('pr_emp_per_info.name_en, pr_emp_per_info.img_source');
-        $this->db->where('emp_id', $_POST['emp_id']);
+        $this->db->where('emp_id', $emp_id);
         $data['epm_info']=$this->db->get('pr_emp_per_info')->row();
 
 
-        $this->db->where('emp_id', $_POST['emp_id']);
+        $this->db->where('emp_id', $emp_id);
         $unit_id=$this->db->get('pr_emp_com_info')->row()->unit_id;
         if($unit_id != ''){
             $this->db->where('unit_id', $unit_id);
@@ -1414,7 +1413,7 @@ class Entry_system_con extends CI_Controller
                 SUM(CASE WHEN leave_type = 'pl' THEN total_leave ELSE 0 END) AS pl,
                 SUM(CASE WHEN leave_type = 'el' THEN total_leave ELSE 0 END) AS el,
             ");
-        $this->db->where('emp_id', $_POST['emp_id']);
+        $this->db->where('emp_id', $emp_id);
         $this->db->where('leave_start >=', $first_date);
         $this->db->where('leave_end <=', $last_date);
         $value = $this->db->get('pr_leave_trans')->row();
@@ -1442,6 +1441,7 @@ class Entry_system_con extends CI_Controller
             return $data;
         } else {
             echo json_encode($data);
+            return;
         }
     }
 
@@ -1489,6 +1489,108 @@ class Entry_system_con extends CI_Controller
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/maternity_entry';
         $this->load->view('layout/template', $this->data);
+    }
+
+    public function change_date_ml()
+    {
+        $unit_id = $this->input->post('unit_id');
+        $probability = $this->input->post('probability');
+        $half_ml = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml / 2;
+        $start_date = date('d-m-Y', strtotime("-{$half_ml} days", strtotime($probability)));
+        $end_date = date('d-m-Y', strtotime("+{$half_ml} days", strtotime($probability)));
+        echo json_encode(['start_date' => $start_date, 'end_date' => $end_date]);
+    }
+
+    public function chack_ability($emp_id)
+    {
+        $this->db->select('pr_emp_com_info.emp_id');
+        $this->db->from('pr_emp_com_info');
+        $this->db->from('pr_emp_per_info');
+        $this->db->where('pr_emp_com_info.emp_id = pr_emp_per_info.emp_id');
+        $this->db->where('pr_emp_per_info.gender', 'Female');
+        $this->db->where('pr_emp_per_info.marital_status', 'Married');
+        $row = $this->db->where('pr_emp_com_info.emp_id', $emp_id)->get()->row();
+        if (!empty($row)) {
+           return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function save_maternity(){
+        if ($this->chack_ability($this->input->post('sql')) != true) {
+            echo 'Please check Emp information, Gender and Marital Status is not Match';
+            exit();
+        }
+        $inform_date=date('Y-m-d', strtotime($this->input->post('inform_date')));
+        $probability=date('Y-m-d', strtotime($this->input->post('probability')));
+        $start_date=date('Y-m-d', strtotime($this->input->post('start_date')));
+        $end_date=date('Y-m-d', strtotime($this->input->post('end_date')));
+        $first_pay=date('Y-m-d', strtotime($this->input->post('first_pay')));
+        $second_pay=date('Y-m-d', strtotime($this->input->post('second_pay')));
+        $unit_id    =$this->input->post('unit_id');
+        $emp_id     =$this->input->post('sql');
+        $pay_day    =$this->input->post('pay_day');
+        $half_ml = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml / 2;
+
+        $this->db->where('emp_id', $emp_id);
+        $this->db->where('salary_month', date('Y-m-01', strtotime("-1 month", strtotime($start_date))));
+        $payment = $this->db->get('pay_salary_sheet')->row();
+        if (empty($payment)) {
+            echo 'Previous Month salary not found';
+            exit();
+        }
+
+        $balance = $this->leave_balance_ajax($emp_id, $start_date, 1);
+
+        if ($balance['leave_balance_maternity'] <= 0) {
+            echo "This employee have not enough leave balance";
+            exit();
+        }
+
+        if ($balance['leave_balance_maternity'] < ($half_ml*2)) {
+            echo "This employee have not enough leave balance";
+            exit();
+        }
+
+        $formArray = array(
+            'emp_id' => $emp_id,
+            'unit_id' => $unit_id,
+            'start_date' => $start_date,
+            'leave_type' => 'ml',
+            'leave_start' => $start_date,
+            'leave_end' => $end_date,
+            'total_leave' => ($half_ml*2),
+        );
+        if ($this->db->insert('pr_leave_trans', $formArray)) {
+            $form_data=array(
+                'prev_month_salary'=> $payment->gross_sal,
+                'attn_bonus' => $payment->att_bonus,
+                'festival_bonus'=>$payment->festival_bonus,
+                'inform_date'=>$inform_date,
+                'probability'=>$probability,
+                'start_date'=>$start_date,
+                'end_date'=>$end_date,
+                'first_pay'=>$first_pay,
+                'second_pay'=>$second_pay,
+                'unit_id'=>$unit_id,
+                'emp_id'=>$emp_id,
+                'total_day'=>$half_ml,
+                'pay_day'=>$pay_day,
+                'created_at'=>date('Y-m-d'),
+            );
+
+            if ($this->db->insert('pr_maternity_entry_histry', $form_data)) {
+                echo 'Record successfully Inserted';
+                exit();
+            } else {
+                echo 'Record Not Inserted';
+                exit();
+            }
+        } else {
+            echo 'Record Not Inserted';
+            exit();
+        }
     }
     //------------------------------------------------------------------------------------------
     // end maternity entry to the Database

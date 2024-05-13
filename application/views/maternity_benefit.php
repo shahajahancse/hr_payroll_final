@@ -138,6 +138,9 @@ if($values->num_rows() == 0)
 	exit();
 }
 
+$ddddd = $values->result();
+$unit_id = $ddddd[0]->unit_id;
+
 foreach($values->result() as $row){ ?>
 
 
@@ -145,7 +148,7 @@ foreach($values->result() as $row){ ?>
   	
   	<table>
   		<tr>
-  			<?php $company_logo = $this->common_model->company_information($unit_id=4);?>
+  			<?php $company_logo = $this->common_model->company_info($unit_id);?>
   			<td width="100px">
   				<img width="80" height="60" src="<?php echo base_url(); ?>images/<?php echo $company_logo; ?>" />
   			</td>

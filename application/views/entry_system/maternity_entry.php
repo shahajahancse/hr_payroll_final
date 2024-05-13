@@ -7,7 +7,7 @@
 </style>
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
-    <?php
+<?php
 		$this->load->model('common_model');
 		$unit = $this->common_model->get_unit_id_name();
 	?>
@@ -109,12 +109,13 @@
         </div>
 
         <style>
-            .input-group .form-control {
-                width: 90% !important;
-            }
-            .input-group-btn .btn {
-                padding: 8px 10px !important;
-            }
+        .input-group .form-control {
+            width: 90% !important;
+        }
+
+        .input-group-btn .btn {
+            padding: 8px 10px !important;
+        }
         </style>
         <div class="row nav_head" style="flex-direction: column;">
             <div class="col-lg-12">
@@ -123,31 +124,63 @@
             <div class="col-md-12">
                 <br>
                 <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>প্রসব পূর্ববর্তী নোটিশ<span style="color: red;">*</span> </label>
+                            <input name="inform_date" id="inform_date" class="form-control input-sm date"
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>সম্ভাব্য প্রসবের তারিখ <span style="color: red;">*</span> </label>
+                            <input name="probability" onchange="change_date_ml()" id="probability"
+                                class="form-control input-sm date" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>ছুটি শুরুর তারিখ <span style="color: red;">*</span> </label>
+                            <input name="start_date" id="start_date" class="form-control date input-sm" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>ছুটি শেষের তারিখ <span style="color: red;">*</span> </label>
+                            <input name="end_date" id="end_date" class="form-control input-sm date" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>cÖme c~e©eZx© †bvwUk<span style="color: red;">*</span> </label>
-                            <input type="date" name="last_working_date" id="last_working_date" class="form-control input-sm">
+                            <label>প্রথম পেমেন্ট তারিখ <span style="color: red;">*</span> </label>
+                            <input name="first_pay" id="first_pay" class="form-control input-sm date" required>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>m¤¢ve¨ cÖm‡ei ZvwiL<span style="color: red;">*</span> </label>
-                            <input type="date" name="last_working_date" id="last_working_date" class="form-control input-sm">
+                            <label>দ্বিতীয় পেমেন্ট তারিখ <span style="color: red;">*</span> </label>
+                            <input name="second_pay" id="second_pay" class="form-control input-sm date" required>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Joining Date<span style="color: red;">*</span> </label>
-                            <input type="date" name="joining_date" id="joining_date" class="form-control input-sm">
+                            <label>পেমেন্ট দিন <span style="color: red;">*</span> </label>
+                            <input type="number" name="pay_day" id="pay_day" class="form-control input-sm" required>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" style="display: flex;justify-content: flex-end;padding: 4px 30px;">
-                <button type="button" class="btn btn-primary btn-sm" style="padding: 4px;" onclick="transfer_unit()">Transfer</button>
+            <div class="col-md-12" style="display: flex;justify-content: flex-end; padding: 4px 15px;">
+                <button id="delete_btn" type="button" class="btn btn-danger" style="padding:4px;"
+                    onclick="delete()">delete</button>&nbsp;&nbsp;
+                <button id="save_btn" type="button" class="btn btn-primary" style="padding:4px;"
+                    onclick="save()">save</button>
             </div>
         </div>
     </div>
+
 
     <div class="col-md-4 tablebox">
         <input type="text" id="searchi" class="form-control" placeholder="Search">
@@ -166,7 +199,8 @@
                                   foreach ($employees as $key => $emp) {
                               ?>
                     <tr class="removeTr">
-                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]"
+                                value="<?= $emp->emp_id ?>">
                         </td>
                         <td class="success"><?= $emp->emp_id ?></td>
                         <td class="warning "><?= $emp->name_en ?></td>
@@ -191,7 +225,6 @@
             $(".removeTrno").toggle($(".removeTr").length === 0);
         });
     });
-
 </script>
 <script>
     function loading_open() {
@@ -242,7 +275,6 @@
             }
         });
     }
-
 
     $(document).ready(function() {
         // select all item or deselect all item
@@ -356,241 +388,121 @@
 </script>
 
 
-
 <script>
-    function add_weekend() {
+function change_date_ml() {
 
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        if (sql == '') {
-            alert('Please select employee Id');
-            $("#loader").hide();
-            return false;
+    var probability = $('#probability').val();
+    // var start_date = $('#start_date').val();
+    // var end_date = $('#end_date').val();
+    var unit_id = $('#unit_id').val();
+    $.ajax({
+        type: "POST",
+        url: hostname + "entry_system_con/change_date_ml",
+        data: {
+            unit_id: unit_id,
+            probability: probability
+        },
+        success: function(data) {
+            var d = JSON.parse(data);
+            $('#start_date').val(d.start_date);
+            $('#end_date').val(d.end_date);
         }
-        var date = $('#date').val();
-        if (date == '') {
-            alert('Please select Date');
-            $("#loader").hide();
-            return false;
-        }
-        var unit_id = $('#unit_id').val();
-        if (unit_id == '') {
-            alert('Please select Unit');
-            $("#loader").hide();
-            return false;
-        }
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/weekend_add_ajax",
-            data: {
-                sql: sql,
-                date: date,
-                unit_id: unit_id
-            },
-            success: function(data) {
-                // console.log(data);
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Weekend Added Successfully');
-                } else {
-                    showMessage('error', 'Weekend Not Added');
-                }
-            }
-        })
-    }
+    })
+
+}
 </script>
 <script>
-    function get_leave_balance() {
+function save() {
+    var inform_date   = $('#inform_date').val();
+    var probability   = $('#probability').val();
+    var start_date    = $('#start_date').val();
+    var end_date      = $('#end_date').val();
+    var first_pay     = $('#first_pay').val();
+    var second_pay    = $('#second_pay').val();
+    var unit_id       = $('#unit_id').val();
+    var pay_day       = $('#pay_day').val();
+    if (unit_id == '') {
+        alert('Please select Unit');
+        return false;
+    }
 
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            alert('Please select employee Id');
+    var checkboxes = document.getElementsByName('emp_id[]');
+    var sql = "";
+    var count = 0;
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            count++;
+            sql = checkboxes[i].value;
+        }
+    }
+    if (count > 1) {
+        alert('Select only one employee');
+        return false;
+    } else if (count == 0) {
+        alert('Please select at least one employee');
+        return false;
+    }
+    if (sql == '') {
+        alert('Please select employee Id');
+        $("#loader").hide();
+        return false;
+    }
+    if (pay_day == '') {
+        alert('Please enter the pay day of the month');
+        $("#loader").hide();
+        return false;
+    }
+    if (second_pay == '') {
+        alert('Please select second pay date');
+        $("#loader").hide();
+        return false;
+    }
+    if (first_pay == '') {
+        alert('Please select first pay date');
+        $("#loader").hide();
+        return false;
+    }
+    if (inform_date == '') {
+        alert('Please select information date');
+        $("#loader").hide();
+        return false;
+    }
+    if (probability == '') {
+        alert('Please select probability date child born');
+        $("#loader").hide();
+        return false;
+    }
+    $("#loader").show();
+
+    $.ajax({
+        type: "POST",
+        url: hostname + "entry_system_con/save_maternity",
+        data: {
+            pay_day      : pay_day,
+            inform_date  : inform_date,
+            probability  : probability,
+            start_date   : start_date,
+            end_date     : end_date,
+            first_pay    : first_pay,
+            second_pay   : second_pay,
+            unit_id      : unit_id,
+            sql          : sql
+        },
+        success: function(data) {
+            alert(data);
+            
+        },
+        error: function(data) {
             $("#loader").hide();
-            setTimeout(() => {
-                $("#leave_balance_check").hide();
-            }, 500);
-        }
-        if (numbersArray.length > 1) {
-            alert('Please select max one employee');
-            $("#loader").hide();
-            setTimeout(() => {
-                $("#leave_balance_check").hide();
-            }, 100);
-        }
-        var bal_get_year = $('#bal_get_year').val();
-        if (bal_get_year == '') {
-            alert('Please select Year');
+            alert(data);
+        },
+        complete: function(data) {
             $("#loader").hide();
         }
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/leave_balance_ajax",
-            data: {
-                emp_id: numbersArray[0],
-                year: bal_get_year
-            },
-            success: function(d) {
-                var data = JSON.parse(d);
-                $("#loader").hide();
-                $("#leave_balance_check").show();
-                $('#profile_image').attr('src', hostname + 'uploads/photo/' + data.epm_info.img_source);
-                $('#emp_name').html(data.epm_info.name_en);
-                $('#leave_entitle_casual').html(data.leave_entitle_casual);
-                $('#leave_entitle_sick').html(data.leave_entitle_sick);
-                $('#leave_entitle_maternity').html(data.leave_entitle_maternity);
-                $('#leave_entitle_paternity').html(data.leave_entitle_paternity);
-                $('#leave_entitle_earn').html(data.leave_entitle_earn);
-                $('#leave_taken_casual').html(data.leave_taken_casual);
-                $('#leave_taken_sick').html(data.leave_taken_sick);
-                $('#leave_taken_maternity').html(data.leave_taken_maternity);
-                $('#leave_taken_paternity').html(data.leave_taken_paternity);
-                $('#leave_taken_earn').html(data.leave_taken_earn);
-                $('#leave_balance_casual').html(data.leave_balance_casual);
-                $('#leave_balance_sick').html(data.leave_balance_sick);
-                $('#leave_balance_maternity').html(data.leave_balance_maternity);
-                $('#leave_balance_paternity').html(data.leave_balance_paternity);
-                $('#leave_balance_earn').html(data.leave_balance_earn);
-            },
-            error: function() {
-                $("#loader").hide();
-                alert('Something went wrong');
-            }
-        })
-    }
+    })
+   
+
+
+
+}
 </script>
-<script>
-    function toggleSection(sectionId) {
-        console.log(sectionId);
-        if (sectionId == 'leave_entry') {
-            $("#leave_balance_check").hide();
-        } else {
-            $("#leave_entry").hide();
-            get_leave_balance();
-        }
-        $("#" + sectionId).slideToggle();
-        $('#from_date').val('');
-        $('#to_date').val('');
-    }
-    // Initial hiding of both sections
-    $("#leave_entry, #leave_balance_check, #leave_application").hide();
-</script>
-<script>
-    function leave_add(e) {
-        e.preventDefault();
-
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (numbersArray == '') {
-            alert('Please select employee Id');
-            return false;
-        }
-        if (numbersArray.length > 1) {
-            alert('Please select max one employee');
-            return false;
-        }
-        var unit_id = $('#unit_id').val();
-        if (unit_id == '') {
-            alert('Please select Unit');
-            return false;
-        }
-
-        var formdata = $("#leave_entry_form").serialize();
-        var data = "unit_id=" + unit_id + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
-        console.log(data);
-
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/leave_entry",
-            data: data,
-            success: function(data) {
-                $("#loader").hide();
-                if (data == 'success') {
-                    $('#from_date').val('');
-                    $('#to_date').val('');
-                    $('#reason').val('');
-                    showMessage('success', 'Leave Added Successfully');
-                } else {
-                    showMessage('error', data);
-                }
-            },
-            error: function(data) {
-                $("#loader").hide();
-                showMessage('error', 'Leave Not Added');
-            }
-        })
-    }
-
-
-    function leave_applications(e) {
-        var ajaxRequest;  // The variable that makes Ajax possible!
-        try{
-            // Opera 8.0+, Firefox, Safari
-        ajaxRequest = new XMLHttpRequest();
-        }catch (e){
-            // Internet Explorer Browsers
-            try{
-                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-            }catch (e) {
-                try{
-                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                }catch (e){
-                    // Something went wrong
-                    alert("Your browser broke!");
-                    return false;
-                }
-            }
-        }
-        var type = document.getElementById('leave_type').value;
-        // alert(type);
-        var reason = document.getElementById('reason').value;
-        var firstdate = document.getElementById('from_date').value;
-        if(firstdate ==''){
-            alert("Please select first date");
-            return false;
-        }
-        var seconddate = document.getElementById('to_date').value;
-        if(seconddate ==''){
-            alert("Please select second date");
-            return false;
-        }
-
-        var unit_id = document.getElementById('unit_id').value;
-        if(unit_id ==''){
-            alert("Please select unit !");
-            return false;
-        }
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        let numbersArray = sql.split(",");
-        if (sql == '') {
-            alert('Please select employee Id');
-            return false;
-        }
-
-        if (numbersArray.length > 1) {
-            alert('Please select max one employee');
-            return false;
-        }
-        var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&emp_id="+sql+"&unit_id="+unit_id+"&type="+type+"&reason="+reason;
-        url = hostname + "grid_con/leave_application/";
-        ajaxRequest.open("POST", url, true);
-        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-        ajaxRequest.send(queryString);
-        ajaxRequest.onreadystatechange = function () {
-            if(ajaxRequest.readyState == 4){
-                var resp = ajaxRequest.responseText;
-                if (resp == false) {
-                    alert("Sorry! You are not eligible to apply for this leave");
-                } else {
-                    daily_present_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-                    daily_present_report.document.write(resp);
-                }
-            }
-        }
-    }
-</script>
-
-
