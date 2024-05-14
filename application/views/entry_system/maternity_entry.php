@@ -27,10 +27,13 @@
     <!-- <div class="container-fluid">	 -->
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
-            <h3 style="font-weight: 600;"><?= $title ?></h3>
+            <div class="col-md-12"style="display: flex;flex-wrap: wrap;align-content: center;justify-content: space-between;align-items: center;">
+                <h3 style="font-weight: 600;"><?= $title ?></h3>
+                <a href="<?= base_url() ?>entry_system_con/maternity_list" class="btn btn-primary">Maternity list</a>
+            </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Unit <span style="color: red;">*</span> </label>
+                    <label>Unit <span style="color: red;">*</span></label>
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
                         <?php
@@ -141,13 +144,13 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>ছুটি শুরুর তারিখ <span style="color: red;">*</span> </label>
-                            <input name="start_date" id="start_date" class="form-control date input-sm" readonly>
+                            <input name="start_date" id="start_date" class="form-control input-sm" readonly>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>ছুটি শেষের তারিখ <span style="color: red;">*</span> </label>
-                            <input name="end_date" id="end_date" class="form-control input-sm date" readonly>
+                            <input name="end_date" id="end_date" class="form-control input-sm" readonly>
                         </div>
                     </div>
                 </div>
@@ -172,9 +175,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" style="display: flex;justify-content: flex-end; padding: 4px 15px;">
-                <button id="delete_btn" type="button" class="btn btn-danger" style="padding:4px;"
-                    onclick="delete()">delete</button>&nbsp;&nbsp;
+            <div class="col-md-12" style="display: flex;justify-content: flex-end; padding: 4px 15px;gap: 10px;">
                 <button id="save_btn" type="button" class="btn btn-primary" style="padding:4px;"
                     onclick="save()">save</button>
             </div>

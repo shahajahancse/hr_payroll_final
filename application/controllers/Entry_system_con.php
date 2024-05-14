@@ -1592,6 +1592,36 @@ class Entry_system_con extends CI_Controller
             exit();
         }
     }
+    public function maternity_list(){
+        $this->db->select('pr_maternity_entry_histry.*, pr_units.unit_name, pr_emp_per_info.name_en');
+        $this->db->from('pr_maternity_entry_histry');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_maternity_entry_histry.unit_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_maternity_entry_histry.emp_id');
+        $this->db->order_by('id', 'desc');
+        $this->data['results'] = $this->db->get()->result();
+        $this->data['title'] = 'Maternity List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/maternity_list';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function maternity_delete($id){
+        $this->db->where('id', $id);
+        $leave_data=$this->db->get('pr_maternity_entry_histry')->result();
+        $this->db->where('id', $id);
+        if ($this->db->delete('pr_maternity_entry_histry')) {
+            $this->db->where('emp_id', $leave_data[0]->emp_id);
+            $this->db->where('unit_id', $leave_data[0]->unit_id);
+            $this->db->where('leave_type', 'ml');
+            $this->db->where('leave_start', $leave_data[0]->start_date);
+            $this->db->where('leave_end', $leave_data[0]->end_date);
+            $this->db->delete('pr_leave_trans');
+            $this->session->set_flashdata('success', 'Record Deleted Successfully');
+            redirect('entry_system_con/maternity_list');
+        }else{
+            $this->session->set_flashdata('error', 'Record Not Deleted');
+            redirect('entry_system_con/maternity_list');
+        }    
+    }
     //------------------------------------------------------------------------------------------
     // end maternity entry to the Database
     //------------------------------------------------------------------------------------------
@@ -1727,6 +1757,35 @@ class Entry_system_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect(base_url('entry_system_con/resign_list'));
     }
+
+    public function add_final_satalment(){
+        $data = array(
+            'working_days' => $_POST['working_days'],
+            'per_day_rate' => $_POST['per_day_rate'],
+            'ot_eot' => $_POST['ot_eot'],
+            'ot_2pm' => $_POST['ot_2pm'],
+            'ot_eot_4pm' => $_POST['ot_eot_4pm'],
+            'ot_eot_12am' => $_POST['ot_eot_12am'],
+            'all_eot_woh' => $_POST['all_eot_woh'],
+            'ot_rate' => $_POST['ot_rate'],
+            'resign_pay_day' => $_POST['resign_pay_day'],
+            'service_benifit_rate' => $_POST['service_benifit_rate'],
+            'extra_payoff' => $_POST['extra_payoff'],
+            'earn_leave' => $_POST['earn_leave'],
+            'service_benifit' => $_POST['service_benifit'],
+            'another_deposit' => $_POST['another_deposit'],
+            'notice_deduct' => $_POST['notice_deduct'],
+            'absent' => $_POST['absent'],
+            'advanced_salary' => $_POST['advanced_salary'],
+            'total_deduct' => $_POST['total_deduct'],
+            'attn_bonus' => 0,
+            'net_pay' => $_POST['net_pay'],
+            'status' => $_POST['status'],
+        );
+        $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);
+        echo json_encode(array('success' => true));
+    }
+
     //---------------------------------------------------------------------------
     // Left/Resign end
     //----------------------------------------------------------------------------
@@ -2310,29 +2369,5 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'letter_notification';
         $this->load->view('layout/template', $this->data);
 
-    }
-
-    public function add_final_satalment(){
-        $data = array(
-            'working_days' => $_POST['working_days'],
-            'per_day_rate' => $_POST['per_day_rate'],
-            'ot_eot' => $_POST['ot_eot'],
-            'ot_rate' => $_POST['ot_rate'],
-            'resign_pay_day' => $_POST['resign_pay_day'],
-            'service_benifit_rate' => $_POST['service_benifit_rate'],
-            'extra_payoff' => $_POST['extra_payoff'],
-            'earn_leave' => $_POST['earn_leave'],
-            'service_benifit' => $_POST['service_benifit'],
-            'another_deposit' => $_POST['another_deposit'],
-            'notice_deduct' => $_POST['notice_deduct'],
-            'absent' => $_POST['absent'],
-            'advanced_salary' => $_POST['advanced_salary'],
-            'total_deduct' => $_POST['total_deduct'],
-            'net_pay' => $_POST['net_pay'],
-            'status' => $_POST['status'],
-            'total_get' => $_POST['total_get']
-        );
-        $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);
-        echo json_encode(array('success' => true));
     }
 }

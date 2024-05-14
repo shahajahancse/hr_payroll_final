@@ -138,7 +138,7 @@
                         <input type="date" name="last_working_date" id="last_working_date" class="form-control input-sm">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Joining Date<span style="color: red;">*</span> </label>
+                        <label>Unit Joining Date<span style="color: red;">*</span> </label>
                         <input type="date" name="joining_date" id="joining_date" class="form-control input-sm">
                     </div>
                 </div>

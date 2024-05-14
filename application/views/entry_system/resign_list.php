@@ -95,19 +95,52 @@
 
                   if (!empty($results)) {foreach ($results as $key => $r) {?>
                     <tr>
-                        <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $r->user_name ?></td>
-                        <td><?php echo $r->emp_id ?></td>
-                        <td><?php echo $r->unit_name ?></td>
-                        <td><?php echo date('d-m-Y', strtotime($r->resign_date))?></td>
-                        <td>
+                        <td style="padding: 1px !important;" ><?php echo $key + 1  ?></td>
+                        <td style="padding: 1px !important;" ><?php echo $r->user_name ?></td>
+                        <td style="padding: 1px !important;" ><?php echo $r->emp_id ?></td>
+                        <td style="padding: 1px !important;" ><?php echo $r->unit_name ?></td>
+                        <td style="padding: 1px !important;" ><?php echo date('d-m-Y', strtotime($r->resign_date))?></td>
+                        <!-- <td>
                             <?php if($r->status == 1){?>
                             <a href="#" style="padding: 3px 12px;" class="btn btn-sm btn-info" onclick="report(<?= $r->emp_id ?>)" >Report</a>
-                            <!-- <a href="#" class="btn btn-sm btn-success" role="button" data-toggle="modal" data-target="#myModal" onclick="edit(< ?= $r->emp_id ?>)" >Edit</a> -->
                             <?php }else{ ?>
-                            <a href="#" style="padding: 3px 12px;" class="btn btn-sm btn-info" role="button" data-toggle="modal" data-target="#myModal" onclick="final_satalment(<?= $r->emp_id ?>)" >Add Final Satalment</a>
+                            <a href="#" style="padding: 3px 12px;" class="btn btn-sm btn-info" role="button" data-toggle="modal" data-target="#myModal" onclick="final_satalment(< ?= $r->emp_id ?>)" >Add Final Satalment</a>
                             <?php }?>
                             <a href="<?=base_url('entry_system_con/resign_delete/'.$r->emp_id)?>"class="btn btn-sm btn-danger" style="padding: 3px 12px;" role="button">Delete</a>
+                        </td> -->
+                        <td style="padding: 1px !important;">
+                           <div class="btn-group">
+                               <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                   Action <span class="caret"></span>
+                                </button>
+                               <ul class="dropdown-menu" role="menu">
+                                    <?php
+                                        $user_id = $this->session->userdata('data')->id;
+                                        $acl = check_acl_list($user_id);
+                                    ?>
+                                    <?php if($r->status == 1){?>
+                                    <?php if(in_array(116,$acl)) { ?>
+                                    <li><a class="btn btn-sm" onclick="report(<?= $r->emp_id ?>, 1)">Satalement Acc</a></li>
+                                    <?php } ?>
+                                    <?php if(in_array(117,$acl)) { ?>
+                                        <li><a class="btn btn-sm" onclick="report(<?= $r->emp_id ?>, 2)">Final Satalement 7pm </a></li>
+                                    <?php } ?>
+                                    <?php if(in_array(118,$acl)) { ?>
+                                    <li><a class="btn btn-sm" onclick="report(<?= $r->emp_id ?>, 3)">Final Satalement 10pm</a></li>
+                                    <?php } ?>
+                                    <?php if(in_array(119,$acl)) { ?>
+                                    <li><a class="btn btn-sm" onclick="report(<?= $r->emp_id ?>, 4)">Satalement 12am</a></li>
+                                    <?php } ?>
+                                    <?php if(in_array(120,$acl)) { ?>
+                                    <li><a class="btn btn-sm" onclick="report(<?= $r->emp_id ?>, 5)">Satalement all</a></li>
+                                    <?php } ?>
+                                    <?php }else{ ?>
+                                    <li><a class="btn btn-sm" data-toggle="modal" data-target="#myModal" onclick="final_satalment(<?= $r->emp_id ?>)">Add Final Satalment</a></li>
+                                   <?php }?>
+                                    <li><a class="btn btn-sm" href="<?=base_url('entry_system_con/resign_delete/'.$r->emp_id)?>">Delete</a></li>
+                                </ul>
+                            </div>
+
                         </td>
                     </tr>
                     <?php }} else {?>
@@ -193,6 +226,10 @@
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="ot_eot"></span></td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" class="ot_rate"></td>
                                 <td style="border: 1px solid #d6d1d1 !important;"><span style="font-family:SutonnyMJ;font-size: 15px;" id="total_ot_rate"></td>
+                                <input type="hidden" id="ot_2pm">
+                                <input type="hidden" id="ot_eot_4pm">
+                                <input type="hidden" id="ot_eot_12am">
+                                <input type="hidden" id="all_eot_woh">
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #d6d1d1 !important;">হাজিরা বোনাস </td>
@@ -301,7 +338,7 @@
     function final_satalment(id) {
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url(); ?>index.php/grid_con/final_satalment",
+            url: "<?php echo base_url(); ?>grid_con/final_satalment",
             data: {id: id},
             success: function (data) {
                 var employeeData = JSON.parse(data);
@@ -329,6 +366,12 @@
                 $(".per_day_rate").html(calculatePerDayRate(employeeData.gross_sal));
                 $("#total1").html( parseFloat(employeeData.working_days* calculatePerDayRate(employeeData.gross_sal)).toFixed(2));
                 $("#ot_eot").html( (employeeData.ot_hour==="" || employeeData.ot_hour==null)? 0 : parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour) );
+
+                $("#ot_2pm").val( parseInt(employeeData.ot_hour) );
+                $("#ot_eot_4pm").val( parseInt(employeeData.ot_eot_4pm) );
+                $("#ot_eot_12am").val( parseInt(employeeData.ot_eot_12am) );
+                $("#all_eot_woh").val( parseInt(employeeData.all_eot_woh) );
+
                 $("#total_ot_rate").html(parseFloat((parseInt(employeeData.ot_hour) + parseInt(employeeData.eot_hour)) * calculateOtRate(employeeData.gross_sal)).toFixed(2));
                 $('.total_resign_pay_day').html(0);
                 $('.total_earn_leave').html(0);
@@ -368,10 +411,10 @@
                     var end = new Date(endDate);
                     var duration = end - start;
                     var days = duration / (1000 * 60 * 60 * 24);
-                    // var years = Math.floor(days / 365);
-                    var years = 18;
+                     var years = Math.floor(days / 365);
+                    //var years = 18;
                     days = days % 365;
-                    // var months = Math.floor(days / 30);
+                    var months = Math.floor(days / 30);
                     var months = 5;
                     console.log(months);
                     
@@ -512,62 +555,62 @@
             }
         });
 
-
         $('#save_button').on('click', function() {
-                var formData = {
-                    'emp_id'                : $("#card_no").html(),
-                    'working_days'          : $("#working_days").html(),
-                    'ot_eot'                : $("#ot_eot").html(),
-                    'per_day_rate'          : $(".per_day_rate").html(),
-                    'ot_rate'               : $(".ot_rate").html(),
-                    'resign_pay_day'        : $("#resign_pay_day").val(),
-                    'service_benifit_rate'  : $(".service_benifit_rate").html(),
-                    'extra_payoff'          : $("#extra_payoff").html(),
-                    'earn_leave'            : $(".earn_leave").val(),
-                    'service_benifit'       : $(".service_benifit").html(),
-                    'another_deposit'       : $(".another_deposit").val(),
-                    'notice_deduct'         : $("#notice_deduct").val(),
-                    'absent'                : $("#absent").html(),
-                    'advanced_salary'       : $("#advanced_salary").val(),
-                    'total_deduct'          : $(".total_deduct").html(),
-                    'net_pay'               : $("#net_pay").html(),
-                    'status'                : 1,
-                    'total_get'             : $("#total_get").html(),
-                };
-                $.ajax({
-                    url: "<?php echo base_url('entry_system_con/add_final_satalment'); ?>",
-                    type: 'POST',
-                    data: formData,
-                    dataType: 'json',
-                    success: function (data) {
-                        var dataObj = (typeof data == "string") ? JSON.parse(data) : data;
-                        if(dataObj.success == true){
-                           Swal.fire({
-                            icon: 'success',
-                            title: "Added Successfully"
-                            }).then((result) => {
-                                window.location.href = window.location.href;
-                                setTimeout(function(){ $('#myModal').modal('hide'); }, 500);
-                            });
-                               
-                            // }
-                        }
-                       
-                    },
-                    error: function(jqXHR, exception) {
-                        console.error('jqXHR:', jqXHR);
-                        console.error('exception:', exception);
+            var formData = {
+                'emp_id'                : $("#card_no").html(),
+                'working_days'          : $("#working_days").html(),
+                'ot_eot'                : $("#ot_eot").html(),
+                'ot_2pm'                : $("#ot_2pm").val(),
+                'ot_eot_4pm'            : $("#ot_eot_4pm").val(),
+                'ot_eot_12am'           : $("#ot_eot_12am").val(),
+                'all_eot_woh'           : $("#all_eot_woh").val(),
+                'per_day_rate'          : $(".per_day_rate").html(),
+                'ot_rate'               : $(".ot_rate").html(),
+                'resign_pay_day'        : $("#resign_pay_day").val(),
+                'service_benifit_rate'  : $(".service_benifit_rate").html(),
+                'extra_payoff'          : $("#extra_payoff").html(),
+                'earn_leave'            : $(".earn_leave").val(),
+                'service_benifit'       : $(".service_benifit").html(),
+                'another_deposit'       : $(".another_deposit").val(),
+                'notice_deduct'         : $("#notice_deduct").val(),
+                'absent'                : $("#absent").html(),
+                'advanced_salary'       : $("#advanced_salary").val(),
+                'total_deduct'          : $(".total_deduct").html(),
+                'net_pay'               : $("#net_pay").html(),
+                'status'                : 1,
+                'total_get'             : $("#total_get").html(),
+            };
+            $.ajax({
+                url: "<?php echo base_url('entry_system_con/add_final_satalment'); ?>",
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    var dataObj = (typeof data == "string") ? JSON.parse(data) : data;
+                    if(dataObj.success == true){
+                        Swal.fire({
+                        icon: 'success',
+                        title: "Added Successfully"
+                        }).then((result) => {
+                            window.location.href = window.location.href;
+                            setTimeout(function(){ $('#myModal').modal('hide'); }, 500);
+                        });
                     }
-                });
+                },
+                error: function(jqXHR, exception) {
+                    console.error('jqXHR:', jqXHR);
+                    console.error('exception:', exception);
+                }
+            });
         });
     }
 
-    function report(id){
+    function report(id, type){
         // alert(id);
         $.ajax({
-            url: "<?php echo base_url('Grid_con/grid_final_satalment'); ?>",
+            url: "<?php echo base_url('grid_con/grid_final_satalment'); ?>",
             type: 'POST',
-            data: {spl: id},
+            data: {spl: id, type: type},
             success: function (data) {
                 // console.log(data);/
                 var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10'); 
@@ -584,7 +627,7 @@
 
     //  function edit(id){
     //     $.ajax({
-    //         url: "< ?php echo base_url('Grid_con/grid_final_satalment_edit'); ?>",
+    //         url: "< ?php echo base_url('grid_con/grid_final_satalment_edit'); ?>",
     //         type: 'POST',
     //         data: {spl: id},
     //         success: function (data) {

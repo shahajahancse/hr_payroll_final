@@ -2228,6 +2228,7 @@ class Grid_con extends CI_Controller {
 		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		$data['total_value']= $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
 		$data['unit_id'] = $this->input->post('unit_id');
+		$data['type'] = $this->input->post('type');
 		$this->load->view('final_satalment',$data,false);
 	}
 	function grid_final_satalment_edit(){
@@ -2767,18 +2768,30 @@ class Grid_con extends CI_Controller {
 
 	public function final_satalment(){
 		$emp_ids = $this->input->post('id');
-		$d= $this->Grid_model->grid_employee_information($emp_ids);
+		$d = $this->Grid_model->grid_employee_information($emp_ids);
 		$get_all=[];
 		foreach($d as $key => $row){
 			$get_all[$key] = $row;
-			$dd = $this->db->select('SUM(ot) as ot_hour, SUM(eot) as eot_hour, COUNT(CASE WHEN present_status != "A" THEN 1 END) as working_days, COUNT(CASE WHEN present_status = "A" THEN 1 END) as status', FALSE)
-						->from('pr_emp_shift_log')
-						->where('pr_emp_shift_log.emp_id',$row->emp_id)
-						->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)))
-						->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)))
-						->get()->row();			
+			$this->db->select('
+					SUM(ot) as ot_hour, 
+					SUM(eot) as eot_hour, 
+					SUM(ot_eot_4pm) as ot_eot_4pm, 
+					SUM(ot_eot_12am) as ot_eot_12am, 
+					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
+					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
+					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
+					COUNT(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as status', FALSE
+			);
+			$this->db->from('pr_emp_shift_log');
+			$this->db->where('pr_emp_shift_log.emp_id',$row->emp_id);
+			$this->db->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)));
+			$this->db->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)));
+			$dd = $this->db->get()->row();			
 			$get_all[$key]->ot_hour = $dd->ot_hour;
 			$get_all[$key]->eot_hour = $dd->eot_hour;
+			$get_all[$key]->ot_eot_4pm = $dd->ot_eot_4pm + $dd->ot_hour;
+			$get_all[$key]->ot_eot_12am = $dd->ot_eot_12am + $dd->ot_hour;
+			$get_all[$key]->all_eot_woh = $dd->all_eot_wday + $dd->all_eot_hday;
 			$get_all[$key]->status = $dd->status;
 			$get_all[$key]->working_days = ($dd->working_days+$dd->status);
 		}
