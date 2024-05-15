@@ -404,6 +404,7 @@
 
 		<!-- right side of employee list -->
 		<div class="col-md-4 tablebox">
+			<input type="text" id="searchi" class="form-control" placeholder="Search">
 			<div style="height: 80vh; overflow-y: scroll;">
 				<table class="table table-hover" id="fileDiv">
 					<tr style="position: sticky;top: 0;z-index:1">
@@ -425,6 +426,18 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		$(document).ready(function() {
+			$("#searchi").on("keyup", function() {
+				var value = $(this).val().toLowerCase();
+				$("#tbody tr").filter(function() {
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+				});
+				$(".removeTrno").toggle($(".removeTr").length === 0);
+			});
+		});
+	</script>
 
 	<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
 	<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>

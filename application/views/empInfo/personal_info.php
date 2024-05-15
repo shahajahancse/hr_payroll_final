@@ -50,7 +50,7 @@ input[type="number"] {
                                 <label>Unit <span style="color: red;">*</span> </label>
                                 <select name="unit_id" id="unit_id" onchange='get_last_id()' id="unit_id"
                                     class="form-control input-sm" required>
-                                    <option value="" >Select Unit</option>
+                                    <option value="">Select Unit</option>
                                     <?php
 										foreach ($units as $row) {
 										if($row->unit_id == $user_data->unit_name){
@@ -76,7 +76,8 @@ input[type="number"] {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label> Punch Card No. <span style="color: red;">*</span> </label>
-                                <input type="text" name="proxi_id" id="proxi_id" readonly class="form-control input-sm"
+                                <input type="text" name="proxi_id" id="proxi_id" value="<?= set_value('proxi_id') ?>"
+                                    required readonly class="form-control input-sm"
                                     value="<?= isset($emp_info->proxi_id)?>" required>
                                 <?php echo form_error('proxi_id');?>
                             </div>
@@ -484,7 +485,7 @@ input[type="number"] {
                             </div>
                         </div>
 
-                        <?php $shifts = $this->db->where('unit_id',4)->get('pr_emp_shift')->result(); ?>
+                        <?php $shifts = $this->db->where('unit_id',$user_data->unit_name)->get('pr_emp_shift')->result(); ?>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Emp Shift <span style="color: red;">*</span> </label>
@@ -502,8 +503,8 @@ input[type="number"] {
                         <div class="col-md-3" style="padding-left: 0px !important;">
                             <div class="form-group">
                                 <label>Emp Joining Date <span style="color: red;">*</span> </label>
-                                <input type="text" name="emp_join_date" id="emp_join_date" class="date form-control input-sm"
-                                    required>
+                                <input type="text" name="emp_join_date" id="emp_join_date"
+                                    class="date form-control input-sm" required>
                                 <?php echo form_error('emp_join_date');?>
                             </div>
                         </div>
@@ -619,17 +620,21 @@ input[type="number"] {
                             <div class="form-group">
                                 <label> Food </label>
                                 <?php echo form_error('food');?>
-                                <input type="text" name="food" id="food" disabled class="form-control input-sm" required>
+                                <input type="text" name="food" id="food" disabled class="form-control input-sm"
+                                    required>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <label style="white-space: nowrap">Ot Entitle </label>
                             <?php echo form_error('ot_entitle');?>
-                            <input type="radio" name="ot_entitle" id="ot_entitle" value="0" class="form-check-input" style="display: inline; margin-right: 10px;" required>Yes
-                            <input type="radio" name="ot_entitle" id="ot_entitle" value="1" class="form-check-input" style="display: inline; margin-right: 10px;" required>No
+                            <input type="radio" name="ot_entitle" id="ot_entitle" value="0" class="form-check-input"
+                                style="display: inline; margin-right: 10px;" required>Yes
+                            <input type="radio" name="ot_entitle" id="ot_entitle" value="1" class="form-check-input"
+                                style="display: inline; margin-right: 10px;" required>No
                         </div>
                     </div>
-                    <div class="row" <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> >
+                    <div class="row"
+                        <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Salary <span style="color: red;">*</span> </label>
@@ -682,8 +687,10 @@ input[type="number"] {
                         <div class="col-md-2">
                             <label style="white-space: nowrap">Ot Entitle </label>
                             <?php echo form_error('ot_entitle');?>
-                            <input type="radio" name="com_ot_entitle" id="com_ot_entitle" value="0" class="form-check-input" style="display: inline; margin-right: 10px;" required>Yes
-                            <input type="radio" name="com_ot_entitle" id="com_ot_entitle" value="1" class="form-check-input" style="display: inline; margin-right: 10px;" required>No
+                            <input type="radio" name="com_ot_entitle" id="com_ot_entitle" value="0"
+                                class="form-check-input" style="display: inline; margin-right: 10px;" required>Yes
+                            <input type="radio" name="com_ot_entitle" id="com_ot_entitle" value="1"
+                                class="form-check-input" style="display: inline; margin-right: 10px;" required>No
                         </div>
                     </div>
                 </div>
@@ -748,7 +755,8 @@ input[type="number"] {
                             <div class="form-group">
                                 <label>Nominee DOB <span style="color: red;">*</span> </label>
                                 <?php echo form_error('nomi_age');?>
-                                <input type="text" name="nomi_age" id="nomi_age" class="date form-control input-sm" required>
+                                <input type="text" name="nomi_age" id="nomi_age" class="date form-control input-sm"
+                                    required>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -897,7 +905,8 @@ input[type="number"] {
                                 <div class="form-group">
                                     <label>Signature </label>
                                     <?php echo form_error('signature');?>
-                                    <input type="file" name="signature" id="signature" class="form-control input-sm" style="height: 35px !important; line-height: 20px !important;">
+                                    <input type="file" name="signature" id="signature" class="form-control input-sm"
+                                        style="height: 35px !important; line-height: 20px !important;">
                                 </div>
                             </div>
                         </div>
@@ -990,7 +999,7 @@ function set_desi_item() {
     }, 500)
 
     // Update emp_dept_id and trigger 'change'
-	$('#unit_id').trigger('change');
+    $('#unit_id').trigger('change');
     setTimeout(function() {
         $('#emp_dept_id').val(emp_dept_id).trigger('change');
         // Set a delay of 0.5 seconds before updating emp_sec_id
@@ -1048,7 +1057,7 @@ function emp_id_search(id = null) {
                     "bank_bkash_no", "unit_id", "emp_dept_id", "refer_village",
                     "emp_sec_id", "emp_line_id", "emp_desi_id", "emp_sal_gra_id",
                     "emp_cat_id", "proxi_id", "emp_shift", "gross_sal",
-                    "com_gross_sal", "ot_entitle","com_ot_entitle", "transport", "img_source",
+                    "com_gross_sal", "ot_entitle", "com_ot_entitle", "transport", "img_source",
                     "lunch", "att_bonus", "salary_draw", "salary_type", "emp_join_date",
                     "ref_district", "refer_village", "ref_thana", "ref_post"
                 ];
@@ -1062,7 +1071,8 @@ function emp_id_search(id = null) {
                             key == 'pre_district' || key == 'pre_thana' || key == 'per_district' ||
                             key == 'per_thana' || key == 'per_post' || key == 'pre_post' || key ==
                             'nomi_post' || key == 'ref_thana' || key == 'ref_post' || key ==
-                            'ref_district' || key== 'emp_dob' || key == 'nomi_age' || key== 'emp_join_date'
+                            'ref_district' || key == 'emp_dob' || key == 'nomi_age' || key ==
+                            'emp_join_date'
                         ) {
                             localStorage.setItem(key, data[key]);
                         } else if (key == 'img_source') {
@@ -1070,7 +1080,8 @@ function emp_id_search(id = null) {
                                 '<?php echo base_url("/uploads/photo/")?>' + data[key] : '');
                             $("#img_source").attr("src", data[key] != null ?
                                 '<?php echo base_url("/uploads/photo/")?>' + data[key] : '');
-                        } else if (key == 'nid_dob_check' || key == 'ot_entitle'|| key == 'com_ot_entitle') {
+                        } else if (key == 'nid_dob_check' || key == 'ot_entitle' || key ==
+                            'com_ot_entitle') {
                             var radioBtn = $('#' + key);
                             if (data[key] != null) {
                                 radioBtn.prop('checked', true);
@@ -1464,7 +1475,22 @@ function checkAndBlockSubmit(type, e) {
     e.preventDefault();
     $('#submit_type').val(type);
     if (type == 'edit') {
-        $('#form_id').submit();
+        var flag = true;
+        $('#form_id').find("input,select,textarea").each(function() {
+            $(this).siblings('.help-block').remove();
+            $(this).parent().removeClass('has-error');
+            if ($(this).prop('required') && $(this).val() == '') {
+                flag = false;
+                $(this).parent().append('<span class="help-block">This field is required</span>');
+                $(this).parent().addClass('has-error');
+            } else {
+                $(this).siblings('.help-block').remove();
+                $(this).parent().removeClass('has-error');
+            }
+        });
+        if (flag) {
+            $('#form_id').submit();
+        }
     } else {
         $.ajax({
             type: "POST",
@@ -1474,7 +1500,23 @@ function checkAndBlockSubmit(type, e) {
             },
             success: function(data) {
                 if (data == 'true') {
-                    $('#form_id').submit();
+                    var flag = true;
+                    $('#form_id').find("input,select,textarea").each(function() {
+                        $(this).siblings('.help-block').remove();
+                        $(this).parent().removeClass('has-error');
+                        if ($(this).prop('required') && $(this).val() == '') {
+                            flag = false;
+                            $(this).parent().append(
+                                '<span class="help-block">This field is required</span>');
+                            $(this).parent().addClass('has-error');
+                        } else {
+                            $(this).siblings('.help-block').remove();
+                            $(this).parent().removeClass('has-error');
+                        }
+                    });
+                    if (flag) {
+                        $('#form_id').submit();
+                    }
                 } else {
                     alert('Employee ID Already Exist');
                     return false;

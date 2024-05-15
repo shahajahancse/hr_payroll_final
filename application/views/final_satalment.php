@@ -81,10 +81,9 @@
                         <td>যোগদানের তারিখ</td>
                         <td style="font-size:19px;font-family:SutonnyMJ"> <?php echo $join_date = date('d-m-Y', strtotime($row->emp_join_date))?> Bs</td>
                     </tr>
-                    <?php $last_day = $this->db->select('left_date')->where('emp_id',$row->emp_id)->get('pr_emp_left_history')->row('left_date')?>
                     <tr>
                         <td>শেষ কর্মদিবস</td>
-                        <td style=" font-size:19px;font-family:SutonnyMJ"> <?php echo $last_day= date('d-m-Y', strtotime('-1 day'.$last_day))?> Bs</td>
+                        <td style=" font-size:19px;font-family:SutonnyMJ"> <?php echo $last_day = date('d-m-Y', strtotime($row->resign_date))?> Bs</td>
                     </tr>
                     <tr>
                         <td>চাকুরীকাল</td>

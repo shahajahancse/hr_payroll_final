@@ -942,7 +942,7 @@ class Entry_system_con extends CI_Controller
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_work_off.emp_id', 'left');
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         $this->db->where('attn_work_off.work_off_date >=', $date);
-        $this->db->order_by('attn_work_off.id', 'desc');
+        $this->db->order_by('attn_work_off.work_off_date', 'desc');
         $this->data['results'] = $this->db->get()->result();
 
         $this->data['title'] = 'Weekend List';
@@ -971,7 +971,7 @@ class Entry_system_con extends CI_Controller
     }
     public function weekend_add_ajax()
     {
-        $date = $this->input->post('date');
+        $date = date('Y-m-d', strtotime($this->input->post('date')));
         $sql = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
@@ -989,6 +989,7 @@ class Entry_system_con extends CI_Controller
             echo 'error';
         }
     }
+
     public function emp_weekend_del($id){
         $this->db->where('id', $id);
         $this->db->delete('attn_work_off');
@@ -1018,14 +1019,14 @@ class Entry_system_con extends CI_Controller
     // CRUD for holiday
     //-------------------------------------------------------------------------------------
     public function holiday_list(){
-        $date = date("Y-m-d", strtotime('-9 month', strtotime(date("Y-m-d"))));
+        $date = date("Y-m-d", strtotime('-8 month', strtotime(date("Y-m-d"))));
         $this->db->select('attn_holyday_off.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
         $this->db->from('attn_holyday_off');
         $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         $this->db->where('attn_holyday_off.work_off_date >=', $date);
-        $this->data['results'] = $this->db->get()->result();
+        $this->data['results'] = $this->db->order_by('attn_holyday_off.work_off_date', 'DESC')->get()->result();
 
         $this->data['title'] = 'Holiday List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1047,23 +1048,6 @@ class Entry_system_con extends CI_Controller
         $this->data['title'] = 'Holiday Add';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/emp_holiday_add';
-        $this->load->view('layout/template', $this->data);
-    }
-    public function inter_unit_transfer()
-    {
-        if ($this->session->userdata('logged_in') == false) {
-            redirect("authentication");
-        }
-        $this->data['employees'] = array();
-        $this->db->select('pr_units.*');
-        $this->data['dept'] = $this->db->get('pr_units')->result_array();
-        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
-        }
-
-        $this->data['title'] = 'Unit Transfer';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'entry_system/inter_unit_transfer';
         $this->load->view('layout/template', $this->data);
     }
     public function holiday_add_ajax(){
@@ -1113,18 +1097,7 @@ class Entry_system_con extends CI_Controller
             echo 'error';
         }
     }
-    public function inter_unit_transfer_add(){
-        $last_working_date = $this->input->post('last_working_date');
-        $joining_date = $this->input->post('joining_date');
 
-        $sql = $this->input->post('sql');
-        $new_unit_id = $this->input->post('new_unit_id');
-        $emp_ids = explode(',', $sql);
-        foreach ($emp_ids as $value) {
-            $this->unit_transfer($value, $new_unit_id,$last_working_date,$joining_date);
-        }
-        echo 1;
-    }
     function unit_transfer($id, $new_unit_id,$last_working_date,$joining_date){
         $this->db->where('emp_id', $id);
         $pr_emp_per_info=$this->db->get('pr_emp_per_info')->row();
@@ -1161,6 +1134,38 @@ class Entry_system_con extends CI_Controller
         );
         $this->db->insert('pr_unit_transfer', $data);
     }
+
+    public function inter_unit_transfer_add(){
+        $last_working_date = $this->input->post('last_working_date');
+        $joining_date = $this->input->post('joining_date');
+
+        $sql = $this->input->post('sql');
+        $new_unit_id = $this->input->post('new_unit_id');
+        $emp_ids = explode(',', $sql);
+        foreach ($emp_ids as $value) {
+            $this->unit_transfer($value, $new_unit_id,$last_working_date,$joining_date);
+        }
+        echo 1;
+    }
+
+    public function inter_unit_transfer()
+    {
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->data['employees'] = $this->get_emp_by_unit($this->data['user_data']->unit_name)->result();
+        }
+
+        $this->data['title'] = 'Unit Transfer';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'entry_system/inter_unit_transfer';
+        $this->load->view('layout/template', $this->data);
+    }
+
     function change_pr_emp_per_info($id, $new_unit_id, $pre_unit_id, $pr_emp_per_info){
         $this->db->where('unit_id', $new_unit_id);
         $this->db->order_by('emp_id', 'DESC');
