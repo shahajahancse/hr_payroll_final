@@ -19,6 +19,13 @@ function salary_structure_cal(){
    }
    var gsal = document.getElementById('gross_sal').value;
    var com_gsal = document.getElementById('com_gross_sal').value;
+
+
+  
+
+
+
+
    //==================================BGMEA Salary Rule=================================
    today = new Date().toISOString().slice(0, 10);
    if (today > '2023-12-01') {
@@ -51,7 +58,9 @@ function salary_structure_cal(){
       var com_hrent = Math.round(com_gsal - (mallow + trans_allow + lunch_allow + com_bsal));
       document.getElementById('house_rentt').value = com_hrent;
    }
-
+   $('#com_gross_sal').val($('#gross_sal').val())
+   $('#basic_sall').val($('#basic_sal').val())
+   $('#house_rentt').val($('#house_rent').val())
    //==================================LOCAL Salary Rule==================================
 }
 

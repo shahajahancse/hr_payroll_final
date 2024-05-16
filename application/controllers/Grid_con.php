@@ -22,7 +22,6 @@ class Grid_con extends CI_Controller {
 		$this->load->model('Common_model');
 	}
 
-
 	function daily_report(){
 		$date = date('Y-m-d', strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
@@ -89,8 +88,10 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
+		// dd($_POST);
 
 		$data["values"] = $this->Grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
+		// dd($data["values"]);
 
 		if($status =="A")
 		{
@@ -109,12 +110,9 @@ class Grid_con extends CI_Controller {
 			$status = "Late";
 		}
 
-		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
-		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
-
 		$data["status"] 	= $status;
-		$data["start_date"] = $sStartDate;
-		$data["end_date"] 	= $sEndDate;
+		$data["start_date"] = $grid_firstdate;
+		$data["end_date"] 	= $grid_seconddate;
 		$data["unit_id"] 	= $unit_id;
 		//print_r($data);
 		if(is_string($data["values"]))
@@ -125,8 +123,6 @@ class Grid_con extends CI_Controller {
 		{
 			$this->load->view('grid_con/continuous_report',$data);
 		}
-
-
 	}
 
 	// Increment Promotion Line Letter

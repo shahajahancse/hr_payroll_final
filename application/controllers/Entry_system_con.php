@@ -340,9 +340,9 @@ class Entry_system_con extends CI_Controller
         $date        = $_POST['date'];
         $in_time     = $_POST['in_time'];
         $out_time    = $_POST['out_time'];
-
+        
         // final process check
-		$slm = date("Y-m-01", strtotime($date));
+		$slm = date("Y-m-01", strtotime($date[0]));
 		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
@@ -360,6 +360,7 @@ class Entry_system_con extends CI_Controller
         $data = array();
         $data1 = array();
         foreach ($date as $key => $d) {
+            $d = date('Y-m-d', strtotime($d));
             //GET CURRENT SHIFT INFORMATION
             $emp_shift = $this->Attn_process_model->emp_shift_check_process($com_id, $shift_id, $schedule_id, $d);
             $schedule  = $this->Attn_process_model->get_emp_schedule($emp_shift->schedule_id);
@@ -1090,7 +1091,7 @@ class Entry_system_con extends CI_Controller
         $unit_id = $this->input->post('unit_id');
         $emp_ids = explode(',', $sql);
 
-        $this->db->where('holiday_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
+        $this->db->where('work_off_date ', date("Y-m-d", strtotime($date)))->where('unit_id ', $unit_id);
         if ( $this->db->where_in('emp_id', $emp_ids)->delete('attn_holyday_off') ) {
             echo 'success';
         }else{

@@ -356,9 +356,11 @@ $(document).ready(function() {
 			url: url,
 			data: data,
 			success: function(data) {
-				if (data == '1') {
+				if (data == true) {
 					showMessage('success', 'Training added successfully');
-				}
+				} else {
+					showMessage('error', 'Training info not added');
+                }
 			},
 			error: function(jqXHR, exception) {
 				console.error('jqXHR:', jqXHR);

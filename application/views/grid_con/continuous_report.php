@@ -46,24 +46,13 @@
 		<table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:13px;">
 
 			<?php
-				$section=array();
-				$i=0;
-				$r=0;
-				$per_page=35;
-				$count = count($values["empid"]);
-				for($i=0; $i<$count; $i++ )
-				{
-
-					if($section!=$values["sec_name_en"][$i]){
+				$section=0;
+				foreach ($values as $key => $row) { 
+					if($section != $row["emp_sec_id"]){
 					echo "<tr bgcolor='#CCCCCC'>";
-					$r++;
-					echo "<td colspan='7' style='font-size:16px'>Section :".$values["sec_name_en"][$i]."</td>";
-					echo "</tr>";
-
-					?>
-
+					echo "<td colspan='7' style='font-size:16px'>Section :".$row["sec_name_en"]."</td>";
+					echo "</tr>"; ?>
 						<tr>
-							<?php $r++;?>
 							<th>SL</th>
 							<th>Emp ID</th>
 							<th>Name</th>
@@ -74,43 +63,33 @@
 					<?php }
 
 					echo "<tr>";
-					$r++;
+						echo "<td>";
+						echo $key+1;
+						echo "</td>";
 
-					echo "<td>";
-					echo $i+1;
-					echo "</td>";
+						echo "<td>";
+						echo $row["emp_id"];
+						echo "</td>";
 
-					echo "<td>";
-					echo $values["empid"][$i];
-					echo "</td>";
-
-					echo "<td>";
-					echo $values["fullname"][$i];
-					echo "</td>";
+						echo "<td>";
+						echo $row["name_en"];
+						echo "</td>";
 
 
-					echo "<td>";
-					echo $values["line_name"][$i];
-					echo "</td>";
+						echo "<td>";
+						echo $row["line_name_en"];
+						echo "</td>";
 
-					echo "<td>";
-					echo $values["desig"][$i];
-					echo "</td>";
+						echo "<td>";
+						echo $row["desig_name"];
+						echo "</td>";
 
-					echo "<td style='text-align:center; font-weight:bold;'>";
-					echo $values["total"][$i];
-					echo "</td>";
-
+						echo "<td style='text-align:center; font-weight:bold;'>";
+						echo isset($row["total"]) ? $row["total"] : $row["totals"];
+						echo "</td>";
 					echo "<tr>";
-					$section=$values["sec_name_en"][$i];
-					// if ($r==$per_page) {
-						?>
-						<!-- <tr class="page_break" style="border: none;">
-							<td colspan="7" class="page_break"></td>
-						</tr> -->
-						<?php
-						// $per_page+=$per_page;
-					// }
+
+					$section=$row["emp_sec_id"];
 				}
 			?>
 		</table>

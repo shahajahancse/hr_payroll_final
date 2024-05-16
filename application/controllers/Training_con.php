@@ -163,17 +163,55 @@ class Training_con extends CI_Controller {
         $this->load->view('layout/template', $this->data);
 
 	}
+    
     function training_report_list()
-	{
-		$training_id = $this->input->post('training_id');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-        $data["emp_id"] = $grid_emp_id;
-        $data["training_id"] = $training_id;
-        $data["type"] = $this->input->post('type');
-        $data["unit_id"] = $this->input->post('unit_id');
-		$this->load->view('training/done_not_done',$data);
-	}
+    {
+        $training_id = $this->input->post('training_id');
+        $grid_data = $this->input->post('spl');
+        $emp_ids = array_filter(explode(',', trim($grid_data)));
+        $type = $this->input->post('type');
+        $unit_id = $this->input->post('unit_id');
+        $data = [
+            "emp_id" => $emp_ids,
+            "training_id" => $training_id,
+            "type" => $type,
+            "unit_id" => $unit_id,
+        ];
+
+        if ($type == 0) {
+            $data['done'] = $this->get_training_done($emp_ids, $training_id);
+        } else {
+            $data['not_done'] = $this->get_training_not_done($emp_ids, $training_id);
+        }
+
+        $this->load->view('training/done_not_done', $data);
+    }
+
+    private function get_training_done($emp_ids, $training_id)
+    {
+        $this->db->select('training_management.*, pr_units.unit_name, pr_emp_per_info.emp_id as emp_id2, training_type.title as training_name, pr_emp_per_info.name_en as emp_name');
+        $this->db->from('training_management');
+        $this->db->join('pr_units', 'pr_units.unit_id = training_management.unit_id');
+        $this->db->join('training_type', 'training_type.id = training_management.training_id');
+        $this->db->join('pr_emp_com_info', 'pr_emp_com_info.id = training_management.emp_id');
+        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+        $this->db->where_in('training_management.emp_id', $emp_ids);
+        $this->db->where('training_management.training_id', $training_id);
+        return $this->db->get()->result();
+    }
+
+    private function get_training_not_done($emp_ids, $training_id)
+    {
+        $this->db->select('per.emp_id as emp_id, per.name_en, lin.line_name_en, dg.desig_name, com.id as eeeid');
+        $this->db->from('pr_emp_com_info as com');
+        $this->db->join('training_management as tm', 'com.id = tm.emp_id AND tm.training_id = ' . $training_id, 'left');
+        $this->db->join('pr_emp_per_info as per', 'com.emp_id = per.emp_id', 'left');
+        $this->db->join('emp_line_num as lin', 'com.emp_line_id = lin.id', 'left');
+        $this->db->join('emp_designation as dg', 'com.emp_desi_id = dg.id', 'left');
+        $this->db->where_in('com.id', $emp_ids);
+        $this->db->where('tm.emp_id IS NULL');
+        return $this->db->get()->result();
+    }
 
 	function employee_training_add()
 	{
@@ -181,9 +219,10 @@ class Training_con extends CI_Controller {
 			echo '0';
 			exit;
 		}
+
 		$training_id = $_POST['training_id'];
 		$unit_id = $_POST['unit_id'];
-		$date = $_POST['date'];
+		$date = date('Y-m-d', strtotime($_POST['date']));
 
 		$time = $_POST['time'];
 		$status = 1;
@@ -193,9 +232,6 @@ class Training_con extends CI_Controller {
 		$emp_id = explode(',', trim($grid_data));
 		$data = [];
 		foreach ($emp_id as $key => $value) {
-			if (empty($value)) {
-				continue;
-			}
 
             $this->db->where('emp_id', $value);
             $this->db->where('training_id', $training_id);
@@ -216,9 +252,11 @@ class Training_con extends CI_Controller {
 			);
 		}
 		if (!empty($data)) {
-			$this->db->insert_batch('training_management', $data);
-		}
-		echo '1';
+            $this->db->insert_batch('training_management', $data);
+            echo true;
+		} else {
+            echo false;
+        }
 	}
 
 	function training_list(){
@@ -228,7 +266,7 @@ class Training_con extends CI_Controller {
         $this->db->join('training_type', 'training_type.id = training_management.training_id');
         $this->db->join('pr_emp_com_info', 'pr_emp_com_info.id = training_management.emp_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
-        $this->data['pr_line'] = $this->db->get()->result_array();
+        $this->data['pr_line'] = $this->db->order_by('training_management.date', 'DESC')->get()->result_array();
         $this->data['title'] = 'Employee Training List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'training/employee_training_list';
@@ -242,4 +280,3 @@ class Training_con extends CI_Controller {
         redirect(base_url() . 'training_con/training_list');
     }
 }
-

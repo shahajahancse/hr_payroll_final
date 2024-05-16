@@ -374,66 +374,40 @@ class Grid_model extends CI_Model{
 	// ==================  end actual salary report generate   ======================
 
 
-	function continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id){
+	function continuous_report($date1, $date2, $status, $grid_emp_id){
 		$data = array();
-		if (!empty($grid_emp_id)) {
-			if($status=='LA'){
-				$this->db->select('emp_line_num.line_name_en,
-									pr_emp_com_info.id,
-									pr_emp_com_info.emp_id,
-									pr_emp_com_info.proxi_id,
-									pr_emp_com_info.emp_join_date,
-									pr_emp_per_info.name_en,
-									emp_designation.desig_name,
-									emp_depertment.dept_name,
-									emp_section.sec_name_en,
-									COALESCE(SUM(CASE WHEN pr_emp_shift_log.late_status = 1 AND pr_emp_com_info.emp_join_date <= pr_emp_shift_log.shift_log_date THEN 1 ELSE 0 END), 0) AS total
-									');
-			}else{
-				$this->db->select('emp_line_num.line_name_en,
-									pr_emp_com_info.id,
-									pr_emp_com_info.emp_id,
-									pr_emp_com_info.proxi_id,
-									pr_emp_com_info.emp_join_date,
-									pr_emp_per_info.name_en,
-									emp_designation.desig_name,
-									emp_depertment.dept_name,
-									emp_section.sec_name_en,
-									COALESCE(SUM(CASE WHEN pr_emp_shift_log.present_status = "' . $status . '" AND pr_emp_com_info.emp_join_date <= pr_emp_shift_log.shift_log_date THEN 1 ELSE 0 END), 0) AS total
-									');
-			}
-			$this->db->from('pr_emp_com_info');
-			$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');
-			$this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id', 'LEFT');
-			$this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id', 'LEFT');
-			$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
-			$this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id', 'LEFT');
-			$this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.id', 'LEFT');
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$this->db->where('pr_emp_shift_log.shift_log_date >=', $grid_firstdate);
-			$this->db->where('pr_emp_shift_log.shift_log_date <=', $grid_seconddate);
-			$this->db->group_by('pr_emp_com_info.emp_id');
-			$this->db->order_by('pr_emp_com_info.emp_sec_id','ASC' );
 
-			$query = $this->db->get()->result_array();
+		$this->db->select('
+			emp_line_num.line_name_en,
+			pr_emp_com_info.id,
+			pr_emp_com_info.emp_id,
+			pr_emp_com_info.proxi_id,
+			pr_emp_com_info.emp_join_date,
+			pr_emp_com_info.emp_sec_id,
+			pr_emp_per_info.name_en,
+			emp_designation.desig_name,
+			emp_depertment.dept_name,
+			emp_section.sec_name_en,
+			COALESCE(SUM(CASE WHEN pr_emp_shift_log.late_status = 1 AND pr_emp_com_info.emp_join_date <= pr_emp_shift_log.shift_log_date THEN 1 ELSE 0 END), 0) AS total,
+			COALESCE(SUM(CASE WHEN pr_emp_shift_log.present_status = "' . $status . '" AND pr_emp_com_info.emp_join_date <= pr_emp_shift_log.shift_log_date THEN 1 ELSE 0 END), 0) AS totals
+		');
 
-			foreach ($query as $rows) {
-				if ($rows["total"] == 0) {
-					continue;
-				}
-				$data['empid'][] = $rows["emp_id"];
-				$data['proxid'][] = $rows["proxi_id"];
-				$data['fullname'][] = $rows["name_en"];
-				$data['jdate'][] = $rows["emp_join_date"];
-				$data['dept_name'][] = $rows["dept_name"];
-				$data['sec_name_en'][] = $rows["sec_name_en"];
-				$data['line_name'][] = $rows["line_name_en"];
-				$data['desig'][] = $rows["desig_name"];
-				$data['total'][] = $rows["total"];
-			}
-		}
-
-		return (!empty($data)) ? $data : 'No Data Found';
+		$this->db->from('pr_emp_com_info');
+		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+		$this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id', 'LEFT');
+		$this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id', 'LEFT');
+		$this->db->join('emp_section', 'emp_section.id = pr_emp_com_info.emp_sec_id', 'LEFT');
+		$this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id', 'LEFT');
+		$this->db->join('pr_emp_shift_log', 'pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+		$this->db->where('pr_emp_shift_log.shift_log_date >=', $date1);
+		$this->db->where('pr_emp_shift_log.shift_log_date <=', $date2);
+		$this->db->group_by('pr_emp_com_info.emp_id');
+		$this->db->order_by('pr_emp_com_info.emp_sec_id','ASC' );
+		
+		$query = $this->db->get()->result_array();
+		
+		return (!empty($query)) ? $query : 'No Data Found';
 	}
 	//-------------------------------------------------------------------------------------------------
 	// Daily Cost Sheet

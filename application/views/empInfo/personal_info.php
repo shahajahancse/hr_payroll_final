@@ -330,7 +330,7 @@ input[type="number"] {
                                 <label>District<span style="color: red;">*</span> </label>
                                 <?php echo form_error('pre_district');?>
                                 <select name="pre_district" id="pre_district" class="form-control input-sm" required>
-                                    <option>-- Select District --</option>
+                                    <option value="">-- Select District --</option>
                                     <?php foreach ($districts as $key => $row) { ?>
                                     <option value="<?= $row->id ?>"><?= $row->name_en.' >>'.$row->name_bn; ?></option>
                                     <?php } ?>
@@ -343,7 +343,7 @@ input[type="number"] {
                                 <?php echo form_error('pre_thana');?>
                                 <select name="pre_thana" id="pre_thana" class="pre_thana form-control input-sm"
                                     required>
-                                    <option>-- Select District --</option>
+                                    <option value="">-- Select District --</option>
                                 </select>
                             </div>
                         </div>
@@ -353,7 +353,7 @@ input[type="number"] {
                                 <label>Post Office<span style="color: red;">*</span> </label>
                                 <?php echo form_error('pre_post');?>
                                 <select name="pre_post" id="pre_post" class="pre_post form-control input-sm" required>
-                                    <option>-- Select District --</option>
+                                <option value="">-- Select District --</option>
                                 </select>
                             </div>
                         </div>
@@ -385,7 +385,7 @@ input[type="number"] {
                                 <label>District<span style="color: red;">*</span> </label>
                                 <?php echo form_error('per_district');?>
                                 <select name="per_district" id="per_district" class="form-control input-sm" required>
-                                    <option>-- Select District --</option>
+                                <option value="">-- Select one --</option>
                                     <?php foreach ($districts as $key => $row) { ?>
                                     <option value="<?= $row->id ?>"><?= $row->name_en.' >>'.$row->name_bn; ?></option>
                                     <?php } ?>
@@ -398,7 +398,7 @@ input[type="number"] {
                                 <?php echo form_error('per_thana');?>
                                 <select name="per_thana" id="per_thana" class="per_thana form-control input-sm"
                                     required>
-                                    <option>-- Select District --</option>
+                                    <option value='' >-- Select District --</option>
                                 </select>
                             </div>
                         </div>
@@ -407,7 +407,7 @@ input[type="number"] {
                                 <label>Post Office<span style="color: red;">*</span> </label>
                                 <?php echo form_error('per_post');?>
                                 <select name="per_post" id="per_post" class="per_post form-control input-sm" required>
-                                    <option>-- Select District --</option>
+                                <option value="">-- Select one --</option>
                                 </select>
                             </div>
                         </div>
@@ -429,7 +429,7 @@ input[type="number"] {
                                 <label>Department <span style="color: red;">*</span> </label>
                                 <?php echo form_error('emp_dept_id');?>
                                 <select name="emp_dept_id" id="emp_dept_id" class="form-control input-sm" required>
-                                    <option>-- Select Department --</option>
+                                    <option value="">-- Select one --</option>
                                     <?php foreach ($depts as $key => $row) { ?>
                                     <option value="<?= $row->dept_id ?>"><?= $row->dept_name.' >>'.$row->dept_bangla; ?>
                                     </option>
@@ -443,7 +443,7 @@ input[type="number"] {
                                 <?php echo form_error('emp_sec_id');?>
                                 <select name="emp_sec_id" id="emp_sec_id" class="emp_sec_id form-control input-sm"
                                     required>
-                                    <option>-- Select Section --</option>
+                                    <option value="">-- Select one --</option>
                                 </select>
                             </div>
                         </div>
@@ -453,7 +453,7 @@ input[type="number"] {
                                 <?php echo form_error('emp_line_id');?>
                                 <select name="emp_line_id" id="emp_line_id" class="emp_line_id form-control input-sm"
                                     required>
-                                    <option>-- Select Section --</option>
+                                    <option value="">-- Select one --</option>
                                 </select>
                             </div>
                         </div>
@@ -463,7 +463,7 @@ input[type="number"] {
                                 <?php echo form_error('emp_desi_id');?>
                                 <select name="emp_desi_id" id="emp_desi_id" class="emp_desi_id form-control input-sm">
                                     <!--desig  -->
-                                    <option>-- Select Section --</option>
+                                    <option value="">-- Select one --</option>
                                 </select>
                             </div>
                         </div>
@@ -476,7 +476,7 @@ input[type="number"] {
                                 <label>Emp Status <span style="color: red;">*</span> </label>
                                 <?php echo form_error('emp_cat_id');?>
                                 <select name="emp_cat_id" id="emp_cat_id" class="form-control input-sm" required>
-                                    <option>-- Select Emp Status --</option>
+                                    <option value="">-- Select one --</option>
                                     <?php foreach ($categorys as $key => $row) { ?>
                                     <option value="<?= $row->id ?>" <?php echo $row->id == 1 ? 'Selected':'';?>>
                                         <?= $row->status_type ?></option>
@@ -492,7 +492,7 @@ input[type="number"] {
                                 <?php echo form_error('emp_shift');?>
                                 <select name="emp_shift" id="emp_shift" class="form-control input-sm">
                                     <!-- emp shift -->
-                                    <option>-- Select Emp Shift --</option>
+                                    <option value="">-- Select one --</option>
                                     <?php foreach ($shifts as $key => $row) { ?>
                                     <option value="<?= $row->id?>" <?= $row->id ==13 ? 'selected' : '' ?>>
                                         <?= $row->shift_name; ?></option>
@@ -516,7 +516,7 @@ input[type="number"] {
                                 <?php echo form_error('emp_sal_gra_id');?>
                                 <select name="emp_sal_gra_id" id="emp_sal_gra_id" class="form-control input-sm"
                                     required>
-                                    <option>-- Select Salary Grade --</option>
+                                    <option value="">-- Select one --</option>
                                     <?php foreach ($sl_grade as $key => $row) { ?>
                                     <option value="<?= $row->gr_id ?>"><?= $row->gr_name; ?></option>
                                     <?php } ?>
@@ -532,7 +532,7 @@ input[type="number"] {
                                 <label>Salary Type <span style="color: red;">*</span> </label>
                                 <?php echo form_error('salary_type');?>
                                 <select name="salary_type" id="salary_type" class="form-control input-sm" required>
-                                    <option> Salary Type </option>
+                                    <option value="">-- Select one --</option>
                                     <option value="1" selected>Fixed</option>
                                     <option value="2">Production</option>
                                 </select>
@@ -543,7 +543,7 @@ input[type="number"] {
                                 <label>Salary Withdraw <span style="color: red;">*</span> </label>
                                 <?php echo form_error('salary_draw');?>
                                 <select name="salary_draw" id="salary_draw" class="form-control input-sm" required>
-                                    <option>Select</option>
+                                    <option value="">-- Select one --</option>
                                     <option value="1">cash</option>
                                     <option value="2">bank</option>
                                 </select>
@@ -555,7 +555,7 @@ input[type="number"] {
                                 <label>Lunch <span style="color: red;">*</span> </label>
                                 <?php echo form_error('lunch');?>
                                 <select name="lunch" id="lunch" class="form-control input-sm" required>
-                                    <option>Select</option>
+                                    <option value="">-- Select one --</option>
                                     <option value="0">Yes</option>
                                     <option selected value="1">No</option>
                                 </select>
@@ -566,7 +566,7 @@ input[type="number"] {
                                 <label>Transport <span style="color: red;">*</span> </label>
                                 <?php echo form_error('transport');?>
                                 <select name="transport" id="transport" class="form-control input-sm" required>
-                                    <option>Select </option>
+                                    <option value="">-- Select one --</option>
                                     <option value="0">Yes</option>
                                     <option selected value="1">No</option>
                                 </select>
@@ -630,7 +630,7 @@ input[type="number"] {
                             <input type="radio" name="ot_entitle" id="ot_entitle" value="0" class="form-check-input"
                                 style="display: inline; margin-right: 10px;" required>Yes
                             <input type="radio" name="ot_entitle" id="ot_entitle" value="1" class="form-check-input"
-                                style="display: inline; margin-right: 10px;" required>No
+                                style="display: inline; margin-right: 10px;" required checked>No
                         </div>
                     </div>
                     <div class="row"
@@ -690,7 +690,7 @@ input[type="number"] {
                             <input type="radio" name="com_ot_entitle" id="com_ot_entitle" value="0"
                                 class="form-check-input" style="display: inline; margin-right: 10px;" required>Yes
                             <input type="radio" name="com_ot_entitle" id="com_ot_entitle" value="1"
-                                class="form-check-input" style="display: inline; margin-right: 10px;" required>No
+                                class="form-check-input" style="display: inline; margin-right: 10px;" required checked>No
                         </div>
                     </div>
                 </div>
@@ -721,7 +721,7 @@ input[type="number"] {
                                 <label>District<span style="color: red;">*</span> </label>
                                 <?php echo form_error('nomi_district');?>
                                 <select name="nomi_district" id="nomi_district" class="form-control input-sm" required>
-                                    <option>-- Select District --</option>
+                                    <option value="">-- Select one --</option>
                                     <?php foreach ($districts as $key => $row) { ?>
                                     <option value="<?= $row->id ?>"><?= $row->name_en.' >>'.$row->name_bn; ?></option>
                                     <?php } ?>
@@ -734,7 +734,7 @@ input[type="number"] {
                                 <?php echo form_error('nomi_thana');?>
                                 <select name="nomi_thana" id="nomi_thana" class="nomi_thana form-control input-sm"
                                     required>
-                                    <option>-- Select District --</option>
+                                    <option value="">-- Select one --</option>
                                 </select>
                             </div>
                         </div>
@@ -747,7 +747,7 @@ input[type="number"] {
                                 <?php echo form_error('nomi_post');?>
                                 <select name="nomi_post" id="nomi_post" class="nomi_post form-control input-sm"
                                     required>
-                                    <option>-- Select Post Office --</option>
+                                    <option value="">-- Select one --</option>
                                 </select>
                             </div>
                         </div>
@@ -772,7 +772,7 @@ input[type="number"] {
                                 <label>Relation<span style="color: red;">*</span> </label>
                                 <?php echo form_error('nomi_relation');?>
                                 <select name="nomi_relation" id="nomi_relation" class="form-control input-sm" required>
-                                    <option>-- Select Relation --</option>
+                                    <option value="">-- Select one --</option>
                                     <?php foreach ($nominees as $key => $row) { ?>
                                     <option value="<?= $row->id ?>"><?= $row->nomini_relation; ?></option>
                                     <?php } ?>
@@ -809,7 +809,7 @@ input[type="number"] {
                                 <?php echo form_error('refer_relation');?>
                                 <select name="refer_relation" id="refer_relation" class="form-control input-sm"
                                     required>
-                                    <option>-- Select --</option>
+                                    <option value='' >-- Select --</option>
                                     <?php foreach ($nominees as $key => $row) { ?>
                                     <option value="<?= $row->id ?>"><?= $row->nomini_relation; ?></option>
                                     <?php } ?>
@@ -832,7 +832,7 @@ input[type="number"] {
                                 <label>District <span style="color: red;">*</span> </label>
                                 <?php echo form_error('ref_district');?>
                                 <select name="ref_district" id="ref_district" class="form-control input-sm" required>
-                                    <option>-- Select --</option>
+                                    <option value='' >-- Select --</option>
                                     <?php foreach ($districts as $key => $row) { ?>
                                     <option value="<?= $row->id ?>"><?= $row->name_en.' >>'.$row->name_bn; ?></option>
                                     <?php } ?>
@@ -845,7 +845,7 @@ input[type="number"] {
                                 <?php echo form_error('ref_thana');?>
                                 <select name="ref_thana" id="ref_thana" class="ref_thana form-control input-sm"
                                     required>
-                                    <option>-- Select --</option>
+                                    <option value='' >-- Select --</option>
                                 </select>
                             </div>
                         </div>
@@ -854,7 +854,7 @@ input[type="number"] {
                                 <label>Post Office<span style="color: red;">*</span> </label>
                                 <?php echo form_error('ref_post');?>
                                 <select name="ref_post" id="ref_post" class="ref_post form-control input-sm" required>
-                                    <option>-- Select --</option>
+                                    <option value='' >-- Select --</option>
                                 </select>
                             </div>
                         </div>
@@ -865,7 +865,7 @@ input[type="number"] {
                 <hr style="margin-bottom: 0px !important;">
                 <div style="background-color: white; padding: 15px !important;">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-7">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Exp. Factory Name </label>
@@ -914,6 +914,16 @@ input[type="number"] {
                             <div class="col-12">
                                 <label>Employee Photo</label>
                                 <img id="image" style="max-width: 59%;" src="" alt="image">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                        <div class="col-12">
+                                <label>Age</label>
+                                <span id="age" style="border: 1px solid #8b8b8b;padding: 2px 16px;width: fit-content;display: block;">-</span>
+                            </div>
+                            <div class="col-12">
+                                <label>Job Duration</label>
+                                <span id="job_duration" style="border: 1px solid #8b8b8b;padding: 2px 16px;width: fit-content;display: block;">-</span>
                             </div>
                         </div>
                     </div>
@@ -1033,6 +1043,8 @@ function emp_id_search(id = null) {
         },
         success: function(e) {
             var data = e.data;
+            $('#age').html(data.age)
+            $('#job_duration').html(data.job_duration)
             if (e.status == false) {
                 alert(e.data);
                 $("#form_id").trigger("reset");
@@ -1089,6 +1101,7 @@ function emp_id_search(id = null) {
                                 radioBtn.prop('checked', false);
                             }
                         } else {
+                            console.log(key);
                             $('#' + key).val(data[key] != null ? data[key] : '');
                         }
                     }
@@ -1473,13 +1486,16 @@ $(function() {
 <script>
 function checkAndBlockSubmit(type, e) {
     e.preventDefault();
+
+
+    console.log($('#per_district').val())
     $('#submit_type').val(type);
     if (type == 'edit') {
         var flag = true;
         $('#form_id').find("input,select,textarea").each(function() {
             $(this).siblings('.help-block').remove();
             $(this).parent().removeClass('has-error');
-            if ($(this).prop('required') && $(this).val() == '') {
+            if ($(this).val() == '' || $(this).val() == null) {
                 flag = false;
                 $(this).parent().append('<span class="help-block">This field is required</span>');
                 $(this).parent().addClass('has-error');
@@ -1504,7 +1520,7 @@ function checkAndBlockSubmit(type, e) {
                     $('#form_id').find("input,select,textarea").each(function() {
                         $(this).siblings('.help-block').remove();
                         $(this).parent().removeClass('has-error');
-                        if ($(this).prop('required') && $(this).val() == '') {
+                        if ($(this).val() == '' || $(this).val() == null) {
                             flag = false;
                             $(this).parent().append(
                                 '<span class="help-block">This field is required</span>');
