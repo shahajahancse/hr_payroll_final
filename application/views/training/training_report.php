@@ -109,8 +109,8 @@
             </div>
         </div>
         <br>
-        <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
-            <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
+        <div id='loaader' style="display: none;align-items: center;justify-content: center;z-index: 33333;background: #e9e9e966;position: absolute;" class="col-md-12">
+            <img  src="<?php echo base_url('loader.gif')?>" alt="loader">
         </div>
         <form id="add_emp_training">
             <div class="row nav_head" style="display: flex;flex-direction: column;">
@@ -361,8 +361,8 @@ function view_training(type) {
         alert('Please select employee Id');
         return false;
     }
-    $('#loader').show();
-
+    
+	document.getElementById('loaader').style.display = 'flex';
     var queryString = "spl=" + sql + "&training_id=" + training_id + "&unit_id=" + unit_id + "&type=" + type;
     url = hostname + "training_con/training_report_list/";
 
@@ -371,7 +371,7 @@ function view_training(type) {
     ajaxRequest.send(queryString);
 
     ajaxRequest.onreadystatechange = function() {
-        $('#loader').hide();
+		document.getElementById('loaader').style.display = 'none';
         if (ajaxRequest.readyState == 4) {
             var resp = ajaxRequest.responseText;
             continuous_costing_report = window.open('', '_blank',

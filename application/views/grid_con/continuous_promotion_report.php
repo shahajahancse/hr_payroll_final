@@ -274,3 +274,6 @@ for($counter = 1; $counter <= $page; $counter ++)
 } ?>
 </body>
 </html>
+<br><br><br>
+<?php exit(); ?>
+

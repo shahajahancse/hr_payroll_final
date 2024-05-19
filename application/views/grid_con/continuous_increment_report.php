@@ -249,3 +249,5 @@ $section=array();
 } ?>
 </body>
 </html>
+<br><br><br>
+<?php exit(); ?>

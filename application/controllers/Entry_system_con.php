@@ -1137,14 +1137,14 @@ class Entry_system_con extends CI_Controller
     }
 
     public function inter_unit_transfer_add(){
-        $last_working_date = $this->input->post('last_working_date');
-        $joining_date = $this->input->post('joining_date');
+        $last_working_date = date('Y-m-d', $this->input->post('last_working_date'));
+        $joining_date = date('Y-m-d', $this->input->post('joining_date'));
 
         $sql = $this->input->post('sql');
         $new_unit_id = $this->input->post('new_unit_id');
         $emp_ids = explode(',', $sql);
         foreach ($emp_ids as $value) {
-            $this->unit_transfer($value, $new_unit_id,$last_working_date,$joining_date);
+            $this->unit_transfer($value, $new_unit_id, $last_working_date, $joining_date);
         }
         echo 1;
     }
@@ -1285,6 +1285,7 @@ class Entry_system_con extends CI_Controller
         $leave_type = $_POST['leave_type'];
         $reason = $_POST['reason'];
         $unit_id = $_POST['unit_id'];
+        $start_date = date("Y-m-d", strtotime($_POST['apply_date']));
         $leave_start = date("Y-m-d", strtotime($from_date));
         $leave_end = date("Y-m-d", strtotime($to_date));
         $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a') + 1;
@@ -1354,7 +1355,7 @@ class Entry_system_con extends CI_Controller
         $formArray = array(
             'emp_id' => $emp_id,
             'unit_id' => $unit_id,
-            'start_date' => $leave_start,
+            'start_date' => $start_date,
             'leave_type' => $leave_type,
             'leave_start' => $leave_start,
             'leave_end' => $leave_end,

@@ -88,7 +88,7 @@
                        if (!empty($pr_line)) {foreach ($pr_line as $key => $pr_lines) {?>
                         <tr>
                             <td><?php echo $key + 1  ?></td>
-                            <td> <?php echo $pr_lines["emp_id"] ?></td>
+                            <td> <?php echo $pr_lines["emp_id2"] ?></td>
                             <td> <?php echo $pr_lines["emp_name"] ?></td>
                             <td> <?php echo $pr_lines["training_name"] ?></td>
                             <td> <?php echo $pr_lines["date"] ?></td>

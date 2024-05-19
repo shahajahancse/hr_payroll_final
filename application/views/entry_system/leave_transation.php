@@ -125,21 +125,28 @@
                 id="leave_entry_form">
                 <div class="col-md-12">
                     <div class="raw">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Apply Date</label>
+                                <input type="text" class="form-control input-sm date" id="apply_date" name="apply_date"
+                                    >
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">From Date</label>
                                 <input type="text" class="form-control input-sm date" id="from_date" name="from_date"
                                     >
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">To Date</label>
                                 <input type="text" class="form-control input-sm date" id="to_date" name="to_date"
                                    >
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">Leave Type</label>
                                 <select class="form-control select22" name='leave_type' id='leave_type'
@@ -460,50 +467,6 @@
     }
 </script>
 
-
-
-<script>
-    function add_weekend() {
-
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = get_checked_value(checkboxes);
-        if (sql == '') {
-            alert('Please select employee Id');
-            $("#loader").hide();
-            return false;
-        }
-        var date = $('#date').val();
-        if (date == '') {
-            alert('Please select Date');
-            $("#loader").hide();
-            return false;
-        }
-        var unit_id = $('#unit_id').val();
-        if (unit_id == '') {
-            alert('Please select Unit');
-            $("#loader").hide();
-            return false;
-        }
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/weekend_add_ajax",
-            data: {
-                sql: sql,
-                date: date,
-                unit_id: unit_id
-            },
-            success: function(data) {
-                // console.log(data);
-                $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Weekend Added Successfully');
-                } else {
-                    showMessage('error', 'Weekend Not Added');
-                }
-            }
-        })
-    }
-</script>
 <script>
     function get_leave_balance() {
 
@@ -602,6 +565,26 @@
             return false;
         }
 
+        if ($('#apply_date').val() == '') {
+            alert('Please select Apply Date');
+            return false;
+        }
+
+        if ($('#from_date').val() == '') {
+            alert('Please select From Date');
+            return false;
+        }
+
+        if ($('#to_date').val() == '') {
+            alert('Please select To Date');
+            return false;
+        }
+
+        if ($('#leave_type').val() == '') {
+            alert('Please select leave type');
+            return false;
+        }
+
         var formdata = $("#leave_entry_form").serialize();
         var data = "unit_id=" + unit_id + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
         console.log(data);
@@ -613,6 +596,7 @@
             success: function(data) {
                 $("#loader").hide();
                 if (data == 'success') {
+                    $('#apply_date').val('');
                     $('#from_date').val('');
                     $('#to_date').val('');
                     $('#reason').val('');
@@ -675,11 +659,17 @@
             return false;
         }
 
+        var apply_date = document.getElementById('apply_date').value;
+        if (apply_date == '') {
+            alert('Please select Apply Date');
+            return false;
+        }
+
         if (numbersArray.length > 1) {
             alert('Please select max one employee');
             return false;
         }
-        var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&emp_id="+sql+"&unit_id="+unit_id+"&type="+type+"&reason="+reason;
+        var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&apply_date="+apply_date+"&emp_id="+sql+"&unit_id="+unit_id+"&type="+type+"&reason="+reason;
         url = hostname + "grid_con/leave_application/";
         ajaxRequest.open("POST", url, true);
         ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");

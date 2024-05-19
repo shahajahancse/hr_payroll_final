@@ -29,17 +29,18 @@
             <div class="col-md-2">
                 <!-- <img src="< ?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;"> -->
             </div>
+            <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
             <div class="col-md-12">
-                <h1 class="text-center" style="margin-left: -420px;">হানিওয়েল গার্মেন্টস লিমিটেড</h1>
+                <h1 class="text-center" style="margin-left: -420px;"><?= $com_info->company_name_bangla ?></h1>
             </div>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-            <p class="text-center h5">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
+            <p class="text-center h5"><?= $com_info->company_add_bangla ?></p>
         </div>
         <br>
         <div>
             <h5 class="text-center" style="border-bottom: 2px solid black;width: 200px;margin: 0 auto;">ছুটির আবেদন পত্র</h5>
-            <p class="ml-3">তারিখঃ <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y')."</span>"?></p>
+            <p class="ml-3">তারিখঃ <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$apply_date."</span>"?></p>
         </div>
         <?php
            $data =  $this->db->select('leave_type,leave_start,leave_end,total_leave')->where('leave_start',date('Y-m-d',strtotime($first_date)))->where('emp_id',$values['emp_info']->emp_id)->order_by('leave_end','DESC')->get('pr_leave_trans')->row();
@@ -149,4 +150,5 @@
     </div>
 </body>
 </html>
+<br><br><br>
 <?php exit(); ?>

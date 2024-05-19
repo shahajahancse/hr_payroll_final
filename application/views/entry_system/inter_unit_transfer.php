@@ -135,11 +135,11 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label>Last Working Date<span style="color: red;">*</span> </label>
-                        <input type="date" name="last_working_date" id="last_working_date" class="form-control input-sm">
+                        <input name="last_working_date" id="last_working_date" class="form-control input-sm date">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Unit Joining Date<span style="color: red;">*</span> </label>
-                        <input type="date" name="joining_date" id="joining_date" class="form-control input-sm">
+                        <input name="joining_date" id="joining_date" class="form-control input-sm date">
                     </div>
                 </div>
                 <div class="col-md-12" style="display: flex;justify-content: flex-end;padding: 4px 30px;">

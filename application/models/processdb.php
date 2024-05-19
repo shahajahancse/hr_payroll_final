@@ -2303,8 +2303,15 @@ class Processdb extends CI_Model{
 					   ->where('com.emp_id',$emp_id)
 					   ->get()->row();
 		$d->emp_dob= date("d-m-Y", strtotime($d->emp_dob));
-		$d->age= date_diff(date_create($d->emp_dob), date_create())->y;
-		$d->job_duration=date_diff(date_create($d->emp_join_date), date_create())->y;
+		$date1 = new DateTime($d->emp_dob);
+		$date2 = new DateTime();
+		$interval = $date1->diff($date2);
+		$d->age = $interval->format("%y years %m months %d days");
+		$date1 = new DateTime($d->emp_join_date);
+		$date2 = new DateTime();
+		$interval = $date1->diff($date2);
+		$d->job_duration = $interval->format("%y years %m months %d days");
+
 
 		if ($d == null) {
 			return ['status'=>false,'data'=>'No data found'];

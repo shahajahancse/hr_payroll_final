@@ -53,43 +53,24 @@
 					echo "<td colspan='7' style='font-size:16px'>Section :".$row["sec_name_en"]."</td>";
 					echo "</tr>"; ?>
 						<tr>
-							<th>SL</th>
-							<th>Emp ID</th>
-							<th>Name</th>
-							<th> Line</th>
-							<th>Designation</th>
-							<th>Total <?php echo $status; ?></th>
+							<th style="padding:5px">SL</th>
+							<th style="padding:5px">Emp ID</th>
+							<th style="padding:5px">Name</th>
+							<th style="padding:5px"> Line</th>
+							<th style="padding:5px">Designation</th>
+							<th style="padding:5px">Total <?php echo $status; ?></th>
 						</tr>
-					<?php }
+					<?php } ?>
 
-					echo "<tr>";
-						echo "<td>";
-						echo $key+1;
-						echo "</td>";
-
-						echo "<td>";
-						echo $row["emp_id"];
-						echo "</td>";
-
-						echo "<td>";
-						echo $row["name_en"];
-						echo "</td>";
-
-
-						echo "<td>";
-						echo $row["line_name_en"];
-						echo "</td>";
-
-						echo "<td>";
-						echo $row["desig_name"];
-						echo "</td>";
-
-						echo "<td style='text-align:center; font-weight:bold;'>";
-						echo isset($row["total"]) ? $row["total"] : $row["totals"];
-						echo "</td>";
-					echo "<tr>";
-
-					$section=$row["emp_sec_id"];
+					<tr>
+						<td style="padding:2px 5px"> <?= $key+1 ?> </td>
+						<td style="padding:2px 5px"> <?= $row["emp_id"] ?> </td>
+						<td style="padding:2px 5px"> <?= $row["name_en"] ?> </td>
+						<td style="padding:2px 5px"> <?= $row["line_name_en"] ?> </td>
+						<td style="padding:2px 5px"> <?= $row["desig_name"] ?> </td>
+						<td style="padding:2px 5px"> <?= $row["total"] ?> </td>
+					<tr>
+				<?php  $section=$row["emp_sec_id"];
 				}
 			?>
 		</table>

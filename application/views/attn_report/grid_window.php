@@ -236,10 +236,10 @@
 							<button class="btn input-sm sbtn" onclick="grid_continuous_absent_report()">Absent Report</button>
 							<?php } ?>
 							<?php if(in_array(40,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_continuous_leave_report_new()">Leave Report</button>
+							<button class="btn input-sm sbtn" onclick="continuous_leave_report()">Leave Report</button>
 							<?php } ?>
 							<?php if(in_array(41,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_continuous_leave_report_old()">Leave Report (old)</button>
+							<!-- <button class="btn input-sm sbtn" onclick="grid_continuous_leave_report_old()">Leave Report (old)</button> -->
 							<?php } ?>
 
 							<?php if(in_array(42,$acl)) { ?>
@@ -473,7 +473,6 @@
 								items += '<td class="warning ">' + value.name_en + '</td>';
 								items += '</tr>';
 							});
-							// console.log(items);
 							$('#fileDiv tr:last').after(items);
 						} else {
 							$('#fileDiv #removeTr').remove();
@@ -604,8 +603,6 @@
 				 },
 				 success: function(data) {
 					var data = JSON.parse(data);
-					console.log(data);
-					console.log(data[1]);
 					$('#letter1_count').html(data[1]);
 					$('#letter2_count').html(data[2]);
 					$('#letter3_count').html(data[3]);

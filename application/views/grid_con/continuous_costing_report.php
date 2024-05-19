@@ -161,3 +161,5 @@ Grand Total
 </div>
 </body>
 </html>
+<br><br><br>
+<?php exit(); ?>

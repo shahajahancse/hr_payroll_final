@@ -82,15 +82,18 @@ class Grid_con extends CI_Controller {
 	}
 
 	function grid_continuous_report(){
-		$grid_firstdate = date("Y-m-d",strtotime($this->input->post('firstdate')));
-		$grid_seconddate = date("Y-m-d",strtotime($this->input->post('seconddate')));
+		$girstdate = date("Y-m-d",strtotime($this->input->post('firstdate')));
+		$seconddate = date("Y-m-d",strtotime($this->input->post('seconddate')));
 		$status = $this->input->post('status');
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
-		// dd($_POST);
 
-		$data["values"] = $this->Grid_model->continuous_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
+		if ($status == 'LA') { 
+			$data["values"] = $this->Grid_model->continuous_late_report($girstdate, $seconddate, $grid_emp_id);
+		} else {
+			$data["values"] = $this->Grid_model->continuous_report($girstdate, $seconddate, $status, $grid_emp_id);
+		}
 		// dd($data["values"]);
 
 		if($status =="A")
@@ -111,8 +114,8 @@ class Grid_con extends CI_Controller {
 		}
 
 		$data["status"] 	= $status;
-		$data["start_date"] = $grid_firstdate;
-		$data["end_date"] 	= $grid_seconddate;
+		$data["start_date"] = $girstdate;
+		$data["end_date"] 	= $seconddate;
 		$data["unit_id"] 	= $unit_id;
 		//print_r($data);
 		if(is_string($data["values"]))
@@ -122,6 +125,28 @@ class Grid_con extends CI_Controller {
 		else
 		{
 			$this->load->view('grid_con/continuous_report',$data);
+		}
+	}
+
+	function continuous_leave_report()
+	{
+		$firstdate = date("Y-m-d", strtotime($this->input->post('firstdate')));
+		$seconddate = date("Y-m-d", strtotime($this->input->post('seconddate')));
+		$status = $this->input->post('status');
+		$grid_data = $this->input->post('spl');
+		$emp_ids = explode(',', trim($grid_data));
+
+		$data["values"] = $this->Grid_model->continuous_leave_report($firstdate, $seconddate, $status, $emp_ids);
+		// dd($data["values"]);
+
+		$data["status"] = "Leave";
+		$data["start_date"] = $firstdate;
+		$data["end_date"] = $seconddate;
+
+		if(is_string($data["values"])) {
+			echo $data["values"];
+		} else {
+			$this->load->view('grid_con/continuous_leave_report',$data);
 		}
 	}
 
@@ -244,12 +269,15 @@ class Grid_con extends CI_Controller {
 	function leave_application(){
 		$first_date 		 = $this->input->post('firstdate');
 		$second_date		 = $this->input->post('seconddate');
+		$apply_date		     = $this->input->post('apply_date');
 		$unit_id    		 = $this->input->post('unit_id');
 		$emp_id     		 = $this->input->post('emp_id');
 		$data['type']    	 = $this->input->post('type');
 		$data['reason']    	 = $this->input->post('reason');
+		$data['unit_id']     = $unit_id ;
 		$data['first_date']  = $first_date;
 		$data['second_date'] = $second_date;
+		$data['apply_date']  = date('d/m/Y', strtotime($apply_date));
 		$data['values']      = $this->Grid_model->leave_application($first_date,$second_date,$emp_id,$unit_id);
 		$date1 = new DateTime($first_date);
 		$date2 = new DateTime($second_date);
@@ -506,23 +534,44 @@ class Grid_con extends CI_Controller {
 	}
 	function unit_transferred_list()
 	{
-		$firstdate= date('Y-m-d',strtotime($this->input->post('firstdate'))); //$this->input->post('firstdate'));
-		$seconddate= date('Y-m-d',strtotime($this->input->post('seconddate'))); // $this->input->post('seconddate');
-		 $type = $this->input->post('type');
+		if (!empty($this->input->post('firstdate')) && !empty($this->input->post('seconddate'))) {
+			$firstdate = date('Y-m-d',strtotime($this->input->post('firstdate'))); //$this->input->post('firstdate'));
+			$seconddate = date('Y-m-d',strtotime($this->input->post('seconddate'))); // $this->input->post('seconddate');
+		} else {
+			$firstdate = '';
+			$seconddate = '';
+		}
+
+		$type = $this->input->post('type');
 		$spl = $this->input->post('spl');
 		$emp_id= $grid_emp_id = explode(',', trim($spl));
 		$unit_id= $unit_id = $this->input->post('unit_id');
-		$sql = "SELECT DISTINCT transfer.*, com.emp_id, com.unit_id, com.emp_join_date, com.gross_sal, com.com_gross_sal, per.name_en, per.name_bn, per.personal_mobile, per.gender, desig.desig_bangla, dept.dept_bangla, sec.sec_name_bn, line.line_name_bn FROM pr_unit_transfer as transfer
-				LEFT JOIN pr_emp_com_info as com ON transfer.".($type == 1 ? 'new_emp_id' : 'old_emp_id')." = com.emp_id
-				LEFT JOIN pr_emp_per_info as per ON per.emp_id = com.emp_id
-				LEFT JOIN emp_designation as desig ON com.emp_desi_id = desig.id
-				LEFT JOIN emp_depertment as dept ON com.emp_dept_id = dept.dept_id
-				LEFT JOIN emp_section as sec ON com.emp_sec_id = sec.id
-				LEFT JOIN emp_line_num as line ON com.emp_line_id = line.id
-				WHERE transfer.joining_date BETWEEN '$firstdate' AND '$seconddate'
-				AND com.emp_id IN (".implode(',', $emp_id).")
-				AND com.unit_id = $unit_id
-				GROUP BY com.emp_id";
+
+		if (!empty($firstdate) && !empty($seconddate)) {
+			$sql = "SELECT DISTINCT transfer.*, com.emp_id, com.unit_id, com.emp_join_date, com.gross_sal, com.com_gross_sal, per.name_en, per.name_bn, per.personal_mobile, per.gender, desig.desig_bangla, dept.dept_bangla, sec.sec_name_bn, line.line_name_bn FROM pr_unit_transfer as transfer
+					LEFT JOIN pr_emp_com_info as com ON transfer.".($type == 1 ? 'new_emp_id' : 'old_emp_id')." = com.emp_id
+					LEFT JOIN pr_emp_per_info as per ON per.emp_id = com.emp_id
+					LEFT JOIN emp_designation as desig ON com.emp_desi_id = desig.id
+					LEFT JOIN emp_depertment as dept ON com.emp_dept_id = dept.dept_id
+					LEFT JOIN emp_section as sec ON com.emp_sec_id = sec.id
+					LEFT JOIN emp_line_num as line ON com.emp_line_id = line.id
+					WHERE transfer.joining_date BETWEEN '$firstdate' AND '$seconddate'
+					AND com.emp_id IN (".implode(',', $emp_id).")
+					AND com.unit_id = $unit_id
+					GROUP BY com.emp_id";
+		} else {
+			$sql = "SELECT DISTINCT transfer.*, com.emp_id, com.unit_id, com.emp_join_date, com.gross_sal, com.com_gross_sal, per.name_en, per.name_bn, per.personal_mobile, per.gender, desig.desig_bangla, dept.dept_bangla, sec.sec_name_bn, line.line_name_bn FROM pr_unit_transfer as transfer
+					LEFT JOIN pr_emp_com_info as com ON transfer.".($type == 1 ? 'new_emp_id' : 'old_emp_id')." = com.emp_id
+					LEFT JOIN pr_emp_per_info as per ON per.emp_id = com.emp_id
+					LEFT JOIN emp_designation as desig ON com.emp_desi_id = desig.id
+					LEFT JOIN emp_depertment as dept ON com.emp_dept_id = dept.dept_id
+					LEFT JOIN emp_section as sec ON com.emp_sec_id = sec.id
+					LEFT JOIN emp_line_num as line ON com.emp_line_id = line.id
+					WHERE com.emp_id IN (".implode(',', $emp_id).")
+					AND com.unit_id = $unit_id
+					GROUP BY com.emp_id";
+		}
+
 		$data["array"] = $this->db->query($sql)->result();
 		$this->load->view('grid_con/'.($type == 1 ? 'unit_transfer_list' : 'unit_transferred_list'), $data);
 	}
@@ -579,18 +628,23 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$emp_id = explode(',', trim($grid_data));
 		if($status == 1){
-			$firstdate  = date('Y-m-d',strtotime('-180 day',strtotime($this->input->post('firstdate'))));
-			$seconddate = date('Y-m-d',strtotime('-180 day',strtotime($this->input->post('seconddate'))));
+			if (!empty($this->input->post('firstdate'))) {		
+				$firstdate  = date('Y-m-d',strtotime('-180 day',strtotime($this->input->post('firstdate'))));
+			} else {
+				$firstdate  = date('Y-m-d',strtotime('-180 day',strtotime(date('Y-m-d'))));
+			}
 		} else if ($status == 2) {
-			$firstdate  = date('Y-m-d',strtotime('-90 day',strtotime($this->input->post('firstdate'))));
-			$seconddate = date('Y-m-d',strtotime('-90 day',strtotime($this->input->post('seconddate'))));
+			if (!empty($this->input->post('firstdate'))) {	
+				$firstdate  = date('Y-m-d',strtotime('-90 day',strtotime($this->input->post('firstdate'))));
+			} else {
+				$firstdate  = date('Y-m-d',strtotime('-90 day',strtotime(date('Y-m-d'))));
+			}
 		} else {
-			$firstdate  = date('Y-m-d',strtotime($this->input->post('firstdate')));
-			$seconddate = date('Y-m-d',strtotime($this->input->post('seconddate')));
+			$firstdate  = date('Y-m-d');
 			$status = null;
 		}
 
-		$data["values"] = $this->Grid_model->emp_conformation_list($emp_id, $firstdate, $seconddate, $unit_id, $status);
+		$data["values"] = $this->Grid_model->emp_conformation_list($emp_id, $firstdate, $unit_id, $status);
 		$data["status"]		= $status;
 		$data["unit_id"]	= $unit_id;
 
@@ -615,7 +669,7 @@ class Grid_con extends CI_Controller {
 			$days = 30;
 		}
 		$off_day = 'Fri';
-		$data['values'] 	= $this->Grid_model->grid_letter1_report($data['firstdate'], $unit_id, $off_day, $days);
+		$data['values'] 	= $this->Grid_model->grid_letter_report($data['firstdate'],$unit_id,$off_day,$days,$status);
 		$data['unit_id']	= $unit_id;
 		
 		if(empty($data)){
@@ -664,6 +718,105 @@ class Grid_con extends CI_Controller {
 		echo json_encode($v);
 	}
 	// ============================== end left letter Report ===============D
+
+	// ============================== start increment & prom  Report ===============D
+	function continuous_incre_report()
+	{
+		$sStartDate = date("Y-m-d", strtotime($this->input->post('firstdate')));
+		$sEndDate = date("Y-m-d", strtotime($this->input->post('seconddate')));
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+
+		$data["values"] = $this->Grid_model->continuous_incre_report($sStartDate,$sEndDate,$grid_emp_id);
+		$data["start_date"] = $sStartDate;
+		$data["end_date"] = $sEndDate;
+		$data["unit_id"] = $unit_id;
+		
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/continuous_increment_report',$data);
+		}
+	}
+	function continuous_prom_report()
+	{
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+
+		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
+		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
+
+		$data["values"] = $this->Grid_model->continuous_prom_report($sStartDate,$sEndDate,$grid_emp_id);
+
+		$data["start_date"] = $sStartDate;
+		$data["end_date"] = $sEndDate;
+		$data["unit_id"] = $unit_id;
+		//print_r($data);
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/continuous_promotion_report',$data);
+		}
+	}
+	// ============================== end increment & prom Report ===============D
+	function grid_continuous_ot_eot_report()
+	{
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+
+		$sStartDate = date("Y-m-d", strtotime($this->input->post('firstdate')));
+		$sEndDate = date("Y-m-d", strtotime($this->input->post('seconddate')));
+
+		$data["values"] = $this->Grid_model->continuous_ot_eot_report($sStartDate, $sEndDate, $grid_emp_id);
+
+		$data["start_date"] = $sStartDate;
+		$data["end_date"] 	= $sEndDate;
+		$data["unit_id"] 	= $unit_id;
+		//print_r($data);
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('continuous_ot_eot_report',$data);
+		}
+	}
+	function grid_continuous_costing_report()
+	{
+		$firstdate= $this->input->post('firstdate');
+		$seconddate = $this->input->post('seconddate');
+		$grid_unit = $this->input->post('grid_start');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+
+		$data["values"] 	= $this->Grid_model->grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id);
+		$data["firstdate"]	= date("d-M-Y",strtotime($firstdate));
+		$data["seconddate"]	= date("d-M-Y",strtotime($seconddate));
+		$data["unit_id"]	= $grid_unit;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/continuous_costing_report',$data);
+		}
+	}
+
+
 
 
 
@@ -1043,11 +1196,7 @@ class Grid_con extends CI_Controller {
 			$this->db->from('pr_emp_com_info');
 			$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 			$this->db->where('pr_emp_com_info.unit_id',$unit);
-		/*	if($get_session_user_unit != 0)
-			{
-				$this->db->where("unit_id",$get_session_user_unit);
-			}*/
-			//$this->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat_id);
+
 			$this->db->order_by("pr_emp_com_info.emp_id");
 			$query = $this->db->get();
 			// echo count($query->result_array()); exit();
@@ -1212,30 +1361,6 @@ class Grid_con extends CI_Controller {
 		//echo "$dept==$section==$line==$desig==$sex==$status===$salary_month";
 		$data = $this->Common_model->get_all_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit,$w_type,$position);
 
-		/*if($status == 1 )
-		{
-			$data = $this->Common_model->get_regular_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
-		}
-
-		if($status == 2)
-		{
-			$data = $this->Common_model->get_new_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
-		}
-
-		if($status == 3)
-		{
-			$data = $this->Common_model->get_left_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
-		}
-
-		if($status == 4)
-		{
-			$data = $this->Common_model->get_resign_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
-		}
-
-		if($status == "ALL")
-		{
-			$data = $this->Common_model->get_all_employee_for_selection($dept,$section,$line,$desig,$sex,$status,$salary_month,$unit);
-		}*/
 		$i = 0;
 		foreach($data->result_array() as $row)
 		{
@@ -1275,31 +1400,6 @@ class Grid_con extends CI_Controller {
 		else
 		{
 			$this->load->view('daily_absent_report',$data);
-		}
-	}
-
-
-	function grid_continuous_costing_report()
-	{
-		$firstdate= $this->input->post('firstdate');
-		$seconddate = $this->input->post('seconddate');
-		//list($date, $month, $year) = explode('-', trim($grid_date));
-		$grid_unit = $this->input->post('grid_start');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-
-		$data["values"] 	= $this->Grid_model->grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id);
-		$data["firstdate"]	= date("d-M-Y",strtotime($firstdate));
-		$data["seconddate"]	= date("d-M-Y",strtotime($seconddate));
-		$data["unit_id"]	= $grid_unit;
-
-		if(is_string($data["values"]))
-		{
-			echo $data["values"];
-		}
-		else
-		{
-			$this->load->view('continuous_costing_report',$data);
 		}
 	}
 
@@ -1537,38 +1637,6 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-
-	function grid_continuous_report_new()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$status = $this->input->post('status');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-
-
-		$data_2["values_2"] = $this->Grid_model->continuous_leave_report($grid_firstdate, $grid_seconddate, $status, $grid_emp_id);
-			$status = "Leave";
-
-			$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
-			$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
-
-			$data_2["status"] = $status;
-			$data_2["start_date"] = $sStartDate;
-			$data_2["end_date"] = $sEndDate;
-			//print_r($data);
-			if(is_string($data_2["values_2"]))
-			{
-				echo $data_2["values_2"];
-			}
-			else
-			{
-				$this->load->view('continuous_leave_report',$data_2);
-			}
-		//}
-
-	}
-
 	function grid_continuous_late_report()
 	{
 		$grid_firstdate = $this->input->post('firstdate');
@@ -1602,63 +1670,6 @@ class Grid_con extends CI_Controller {
 
 
 
-	function grid_continuous_leave_report()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-
-		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
-		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
-		//$status="Present Report from date $start_date to date  $end_date";
-
-		$data["values"] = $this->Grid_model->grid_continuous_leave_report($sStartDate, $sEndDate, $grid_emp_id);
-
-
-
-		$data["start_date"] = $sStartDate;
-		$data["end_date"] 	= $sEndDate;
-		$data["unit_id"] 	= $unit_id;
-		//print_r($data);
-		if(is_string($data["values"]))
-		{
-			echo $data["values"];
-		}
-		else
-		{
-			$this->load->view('continuous_leave_report',$data);
-		}
-	}
-
-
-
-	function continuous_incre_report()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-
-		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
-		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
-		$data["values"] = $this->Grid_model->continuous_incre_report($sStartDate,$sEndDate,$grid_emp_id);
-		$data["start_date"] = $sStartDate;
-		$data["end_date"] = $sEndDate;
-		$data["unit_id"] = $unit_id;
-		//print_r($data);
-		if(is_string($data["values"]))
-		{
-			echo $data["values"];
-		}
-		else
-		{
-			$this->load->view('continuous_increment_report',$data);
-		}
-
-	}
 	function continuous_line_report()
 	{
 		$grid_firstdate = $this->input->post('firstdate');
@@ -1681,34 +1692,6 @@ class Grid_con extends CI_Controller {
 		else
 		{
 			$this->load->view('continuous_line_report',$data);
-		}
-
-	}
-
-	function continuous_prom_report()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-
-		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
-		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
-
-		$data["values"] = $this->Grid_model->continuous_prom_report($sStartDate,$sEndDate,$grid_emp_id);
-
-		$data["start_date"] = $sStartDate;
-		$data["end_date"] = $sEndDate;
-		$data["unit_id"] = $unit_id;
-		//print_r($data);
-		if(is_string($data["values"]))
-		{
-			echo $data["values"];
-		}
-		else
-		{
-			$this->load->view('continuous_promotion_report',$data);
 		}
 
 	}
@@ -1955,34 +1938,6 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_continuous_ot_eot_report()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_seconddate = $this->input->post('seconddate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-
-		//$status="Present Report from date $start_date to date  $end_date";
-
-		$data["values"] = $this->Grid_model->continuous_ot_eot_report($grid_firstdate, $grid_seconddate, $grid_emp_id);
-
-		$sStartDate = date("Y-m-d", strtotime($grid_firstdate));
-		$sEndDate = date("Y-m-d", strtotime($grid_seconddate));
-
-		$data["start_date"] = $sStartDate;
-		$data["end_date"] 	= $sEndDate;
-		$data["unit_id"] 	= $unit_id;
-		//print_r($data);
-		if(is_string($data["values"]))
-		{
-			echo $data["values"];
-		}
-		else
-		{
-			$this->load->view('continuous_ot_eot_report',$data);
-		}
-	}
 	function grid_monthly_att_register(){
 		// dd("KO");
 		// $grid_firstdate = $this->input->post('firstdate');

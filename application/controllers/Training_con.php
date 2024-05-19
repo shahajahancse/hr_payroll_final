@@ -260,7 +260,13 @@ class Training_con extends CI_Controller {
 	}
 
 	function training_list(){
-		$this->db->select('training_management.*,pr_units.unit_name,training_type.title as training_name,pr_emp_per_info.name_en as emp_name');
+		$this->db->select('
+                training_management.*,
+                pr_units.unit_name,
+                training_type.title as training_name,
+                pr_emp_per_info.name_en as emp_name,
+                pr_emp_per_info.emp_id as emp_id2,
+            ');
         $this->db->from('training_management');
         $this->db->join('pr_units', 'pr_units.unit_id = training_management.unit_id');
         $this->db->join('training_type', 'training_type.id = training_management.training_id');

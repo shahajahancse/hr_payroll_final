@@ -10,10 +10,9 @@
 <body>
     <div style=" margin:0 auto;  width:fit-content;">
         <?php 
-$emp_id = $values["emp_id"][1];
-$data['unit_id'] = $this->db->where("id",$emp_id)->get('pr_emp_com_info')->row()->unit_id;
-$this->load->view("head_english",$data);
-?>
+			$data['unit_id'] = $unit_id;
+			$this->load->view("head_english",$data);
+		?>
         <!--Report title goes here-->
         <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
             <span style="font-size:12px; font-weight:bold;">
@@ -25,13 +24,11 @@ $this->load->view("head_english",$data);
             <table class="sal" border="1" cellpadding="3" cellspacing="0" align="center" style="font-size:12px;">
                 <th>SL</th>
                 <th>Emp ID</th>
-                <th>Punch Card No.</th>
                 <th>Employee Name</th>
-                <!--<th>DOJ</th>-->
                 <th>Department</th>
                 <th>Section</th>
-                <th>Line No. </th>
                 <th>Designation</th>
+                <th>Line No. </th>
                 <th>Gross Sal</th>
                 <th>OT Rate</th>
                 <th>OT Hour</th>
@@ -48,7 +45,7 @@ $this->load->view("head_english",$data);
 					$total_ot_eot_amount = 0;
 
 
-					$count = count($values["emp_id"]);
+					$count = count($values);
 					for($i=0; $i<$count; $i++ )
 					{
 						echo "<tr>";
@@ -58,71 +55,65 @@ $this->load->view("head_english",$data);
 						echo "</td>";
 						
 						echo "<td>";
-						echo $values["emp_id"][$i];
-						echo "</td>";
-						
-						echo "<td>";
-						echo "&nbsp;";
-						echo $values["proxi_id"][$i];
+						echo $values[$i]["emp_id"];
 						echo "</td>";
 						
 						echo "<td width='150'  style='text-align:left;' >";
-						echo $values["emp_name"][$i];
+						echo $values[$i]["emp_name"];
 						echo "</td>";
 						
 						echo "<td  width='140'  style='text-align:left;'>";
-						echo $values["dept_name"][$i];
+						echo $values[$i]["dept_name"];
 						echo "</td>";
 						
 						echo "<td  width='140'  style='text-align:left;'>";
-						echo $values["sec_name"][$i];
+						echo $values[$i]["sec_name"];
 						echo "</td>";
 						
 						echo "<td  width='140'  style='text-align:left;'>";
-						echo $values["line_name"][$i];
-						echo "</td>";
-						
-						echo "<td  width='140'  style='text-align:left;'>";
-						echo $values["desig_name"][$i];
+						echo $values[$i]["desig_name"];
 						echo "</td>";
 
-						
+						echo "<td  width='140'  style='text-align:left;'>";
+						echo $values[$i]["line_name"];
+						echo "</td>";
+
 						echo "<td  width='40'  style='text-align:right;' >";
-						echo $values["gross_sal"][$i];
+						echo $gross_salary = $values[$i]["gross_sal"];
 						echo "</td>";
-						
-						echo "<td  style='text-align:right;' >";
-						echo $values["ot_rate"][$i];
-						echo "</td>";
-						
-						echo "<td  style='text-align:center;' >";
-						echo $values["ot_hour"][$i];
-						echo "</td>";
-						$total_ot_hour = $total_ot_hour + $values["ot_hour"][$i];
-						
-						echo "<td  style='text-align:center;' >";
-						echo $values["eot_hour"][$i];
-						echo "</td>";
-						$total_eot_hour = $total_eot_hour + $values["eot_hour"][$i];
-						
-						echo "<td  style='text-align:center;' >";
-						echo $values["total_ot_eot"][$i];
-						echo "</td>";
-						$total_ot_eot = $total_ot_eot + $values["total_ot_eot"][$i];
+
+						$allow 	= 600 + 350 + 900;
+						$ot_rate = round(((($gross_salary - $allow) / 1.5) * 2  / 208),2);
 
 						echo "<td  style='text-align:right;' >";
-						echo $values["total_ot_eot_amount"][$i];
+						echo $ot_rate;
 						echo "</td>";
-						$total_ot_eot_amount = $total_ot_eot_amount + $values["total_ot_eot_amount"][$i];
+						
+						echo "<td  style='text-align:center;' >";
+						echo $values[$i]["ot_hour"];
+						echo "</td>";
+						$total_ot_hour = $total_ot_hour + $values[$i]["ot_hour"];
+						
+						echo "<td  style='text-align:center;' >";
+						echo $values[$i]["eot_hour"];
+						echo "</td>";
+						$total_eot_hour = $total_eot_hour + $values[$i]["eot_hour"];
+						
+						echo "<td  style='text-align:center;' >";
+						echo ($values[$i]["ot_hour"] + $values[$i]["eot_hour"]);
+						echo "</td>";
+						$total_ot_eot = $total_ot_eot + $values[$i]["ot_hour"] + $values[$i]["eot_hour"];
+
+						echo "<td  style='text-align:right;' >";
+						echo ($values[$i]["ot_hour"] + $values[$i]["eot_hour"]) * $ot_rate;
+						echo "</td>";
+						$total_ot_eot_amount = $total_ot_eot_amount + ($values[$i]["ot_hour"] + $values[$i]["eot_hour"]) * $ot_rate;
 						
 						echo "</tr>";
 					}
-
 					?>
                 <tr>
-                    <td colspan="10" style="text-align:center; font-weight:bold;">
-                        Grand Total
-                    </td>
+                    <td colspan="9" style="text-align:center; font-weight:bold;"> Grand Total </td>
                     <td style="text-align:center; font-weight:bold;"><?php echo $total_ot_hour; ?></td>
                     <td style="text-align:center; font-weight:bold;"><?php echo $total_eot_hour; ?></td>
                     <td style="text-align:center; font-weight:bold;"><?php echo $total_ot_eot; ?></td>
@@ -132,5 +123,6 @@ $this->load->view("head_english",$data);
         </div>
     </div>
 </body>
-
+<br><br><br>
 </html>
+<?php exit(); ?>
