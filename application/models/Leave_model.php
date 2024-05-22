@@ -5,7 +5,7 @@ class Leave_model extends CI_Model{
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('earn_leave_model');
+		$this->load->model('Earn_leave_model');
 		$this->load->model('common_model');
 		
 		/* Standard Libraries */
@@ -91,8 +91,8 @@ class Leave_model extends CI_Model{
 			$result = count($days);	
 			if($leave_type == "el")
 			{
-				$earn_paid		= $this->earn_leave_model->get_earn_leave_paid($empid_leave,$earn_year);
-				$yearly_earn	= $this->earn_leave_model->get_yearly_earn_leave($empid_leave,$table_name);
+				$earn_paid		= $this->Earn_leave_model->get_earn_leave_paid($empid_leave,$earn_year);
+				$yearly_earn	= $this->Earn_leave_model->get_yearly_earn_leave($empid_leave,$table_name);
 				$due_leave  = $yearly_earn - $earn_paid;
 
 			}
@@ -456,8 +456,8 @@ class Leave_model extends CI_Model{
 			$earn_leave_balance = 0;
 		}
 		*/
-		$earn_paid		= $this->earn_leave_model->get_earn_leave_paid($empid,$year);
-		$yearly_earn	= $this->earn_leave_model->get_yearly_earn_leave($empid,$table_name);
+		$earn_paid		= $this->Earn_leave_model->get_earn_leave_paid($empid,$year);
+		$yearly_earn	= $this->Earn_leave_model->get_yearly_earn_leave($empid,$table_name);
 		$earn_leave_balance = $yearly_earn - $total_earn_leave - $earn_paid;
 				
 		$data2=array(
