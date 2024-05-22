@@ -273,7 +273,7 @@ foreach($values->result() as $row){ ?>
   		</tr>
   	</table>
   	<div style="width: 100%;height: 10px;clear: both;"></div>
-  	<?php $three_month_back = $this->leave_model->three_month_back_record($row->emp_id,$row->start_date);?>
+  	<?php $three_month_back = $this->Leave_model->three_month_back_record($row->emp_id,$row->start_date);?>
 	<div style="width:100%;">
 	  <table class="sal" width="100%" cellpadding="1" cellspacing="1">
 		<tr>
@@ -318,7 +318,7 @@ foreach($values->result() as $row){ ?>
 			  ?>  
 			</td>
 
-			<?php $salary_data = $this->leave_model->get_salary_info_for_ml_leave($row->emp_id,$month); ?>
+			<?php $salary_data = $this->Leave_model->get_salary_info_for_ml_leave($row->emp_id,$month); ?>
 			<?php foreach($salary_data->result() as $rowItem){ ?>
 			<?php $other_leave = $rowItem->e_l +  $rowItem->s_l + $rowItem->c_l + $rowItem->m_l;?>
         	<td style="text-align:center;"> <?php echo $rowItem->total_days;?></td>

@@ -7,7 +7,7 @@ class Salary_report_con extends CI_Controller {
 
 		/* Standard Libraries */
 		$this->load->model('Grid_model');
-		$this->load->model('leave_model');
+		$this->load->model('Leave_model');
 		$this->load->model('Acl_model');
 		$this->load->model('Salary_process_model');
 		$access_level = 8;
@@ -843,7 +843,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_year = date('Y', strtotime($this->input->post('date')));
 		$grid_data = $this->input->post('sql');
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);
+		$data["values"] = $this->Leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);
 		$this->load->view('maternity_benefit',$data);
 	}
 

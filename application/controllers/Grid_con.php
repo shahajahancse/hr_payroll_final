@@ -816,11 +816,11 @@ class Grid_con extends CI_Controller {
 		}
 	}
 	function grid_maternity_benefit(){
-		$this->load->model('leave_model');
+		$this->load->model('Leave_model');
 		$grid_year = date('Y', strtotime($this->input->post('date')));
 		$grid_data = $this->input->post('sql');
 		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);
+		$data["values"] = $this->Leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);
 		$this->load->view('maternity_benefit',$data);
 	}
 	function ddddgrid_continuous_costing_report() //not used
