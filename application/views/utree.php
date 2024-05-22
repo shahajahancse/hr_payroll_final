@@ -185,12 +185,12 @@
           <div class="document">
             
            
-            <a style="background-color: transparent;" class="header" href="<?php echo base_url();?>index.php/setup_con/dashboard_date_setup" title="Employee All Info" target="right" id="dp11" onClick="MakeColoredBack('11');">Date SetUp</a>
+            <a style="background-color: transparent;" class="header" href="<?php echo base_url();?>setup_con/dashboard_date_setup" title="Employee All Info" target="right" id="dp11" onClick="MakeColoredBack('11');">Date SetUp</a>
            </div>
            <div class="document">
             
            
-            <a style="background-color: transparent;" class="header" href="<?php echo base_url();?>index.php/emp_info_con/at_a_glance_info_view" title="Employee All Info" target="right" id="dp12" onClick="MakeColoredBack('12');">At A Glance</a>
+            <a style="background-color: transparent;" class="header" href="<?php echo base_url();?>emp_info_con/at_a_glance_info_view" title="Employee All Info" target="right" id="dp12" onClick="MakeColoredBack('12');">At A Glance</a>
           </div>
           
         </div>
@@ -205,7 +205,7 @@
 		   <div class="document">
             
            
-            <a style="background-color: transparent;" class="header" href="<?php echo base_url();?>index.php/emp_info_con/personal_info_view1" title="Employee All Info" target="right" id="dp3" onClick="MakeColoredBack('3');">Emp Info</a>
+            <a style="background-color: transparent;" class="header" href="<?php echo base_url();?>emp_info_con/personal_info_view1" title="Employee All Info" target="right" id="dp3" onClick="MakeColoredBack('3');">Emp Info</a>
           </div>
 		  
         </div>
@@ -221,117 +221,117 @@
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/company_info_setup" title="Company Information" target="right" id="dp65" onClick="MakeColoredBack('65');">Company Information</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/company_info_setup" title="Company Information" target="right" id="dp65" onClick="MakeColoredBack('65');">Company Information</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/floor" title="Line" target="right" id="dp99" onClick="MakeColoredBack('99');">Floor</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/floor" title="Line" target="right" id="dp99" onClick="MakeColoredBack('99');">Floor</a>
           </div>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/department" title="Department" target="right" id="dp67" onClick="MakeColoredBack('67');">Department</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/department" title="Department" target="right" id="dp67" onClick="MakeColoredBack('67');">Department</a>
           </div>
 		     <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/section" title="Section" target="right" id="dp68" onClick="MakeColoredBack('68');">Section</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/section" title="Section" target="right" id="dp68" onClick="MakeColoredBack('68');">Section</a>
           </div>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/line" title="Line" target="right" id="dp69" onClick="MakeColoredBack('69');">Line</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/line" title="Line" target="right" id="dp69" onClick="MakeColoredBack('69');">Line</a>
           </div>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/designation" title="Designation" target="right" id="dp70" onClick="MakeColoredBack('70');">Designation</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/designation" title="Designation" target="right" id="dp70" onClick="MakeColoredBack('70');">Designation</a>
           </div>
 		     <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/address" title="Address" target="right" id="dp700" onClick="MakeColoredBack('700');">Addresses</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/address" title="Address" target="right" id="dp700" onClick="MakeColoredBack('700');">Addresses</a>
           </div>
     		  <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/position" title="Position" target="right" id="dp71" onClick="MakeColoredBack('71');">Height</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/position" title="Position" target="right" id="dp71" onClick="MakeColoredBack('71');">Height</a>
           </div>  
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/operation" title="Operation" target="right" id="dp72" onClick="MakeColoredBack('72');">Weight</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/operation" title="Operation" target="right" id="dp72" onClick="MakeColoredBack('72');">Weight</a>
           </div>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/job_desc" title="Job Description" target="right" id="dp79" onClick="MakeColoredBack('79');">Job Description</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/job_desc" title="Job Description" target="right" id="dp79" onClick="MakeColoredBack('79');">Job Description</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/nid_wk_typ" title="N.id & Work Type" target="right" id="dp790" onClick="MakeColoredBack('790');">Working Type</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/nid_wk_typ" title="N.id & Work Type" target="right" id="dp790" onClick="MakeColoredBack('790');">Working Type</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/work_process_type" title="N.id & Work Type" target="right" id="dp7999" onClick="MakeColoredBack('7999');">Work Process Type</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/work_process_type" title="N.id & Work Type" target="right" id="dp7999" onClick="MakeColoredBack('7999');">Work Process Type</a>
           </div>
           <?php if(!in_array($user_id,$usr_arr_2)){  ?>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/staff_id_entry" title="N.id & Work Type" target="right" id="dp79999" onClick="MakeColoredBack('79999');">Entry Staff Id</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/staff_id_entry" title="N.id & Work Type" target="right" id="dp79999" onClick="MakeColoredBack('79999');">Entry Staff Id</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/proxi_id_entry" title="N.id & Work Type" target="right" id="dp799999" onClick="MakeColoredBack('799999');">Proxi Id Update</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/proxi_id_entry" title="N.id & Work Type" target="right" id="dp799999" onClick="MakeColoredBack('799999');">Proxi Id Update</a>
           </div>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/attendance_bonus" title="Attendance Bonus" target="right" id="dp73" onClick="MakeColoredBack('73');">Attendance Bonus</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/attendance_bonus" title="Attendance Bonus" target="right" id="dp73" onClick="MakeColoredBack('73');">Attendance Bonus</a>
           </div>
     		  <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/salary_grade" title="Salary Grade" target="right" id="dp74" onClick="MakeColoredBack('74');">Salary Grade</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/salary_grade" title="Salary Grade" target="right" id="dp74" onClick="MakeColoredBack('74');">Salary Grade</a>
           </div>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/shift_schedule" title="Shift Schedules" target="right" id="dp75" onClick="MakeColoredBack('75');">Shift Schedules</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/shift_schedule" title="Shift Schedules" target="right" id="dp75" onClick="MakeColoredBack('75');">Shift Schedules</a>
           </div>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/shift_management" title="Shift Manage" target="right" id="dp76" onClick="MakeColoredBack('76');">Shift Manage</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/shift_management" title="Shift Manage" target="right" id="dp76" onClick="MakeColoredBack('76');">Shift Manage</a>
           </div>
       		<div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/leave_setup" title="Leave Setup" target="right" id="dp77" onClick="MakeColoredBack('77');">Leave Setup</a>
+            <a class="header" href="<?php echo base_url();?>setup_con/leave_setup" title="Leave Setup" target="right" id="dp77" onClick="MakeColoredBack('77');">Leave Setup</a>
           </div>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/bonus_setup" title="Bonus Setup" target="right" id="dp79000" onClick="MakeColoredBack('79000');">Bonus Setup</a></div>
+            <a class="header" href="<?php echo base_url();?>setup_con/bonus_setup" title="Bonus Setup" target="right" id="dp79000" onClick="MakeColoredBack('79000');">Bonus Setup</a></div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/weekend_allowance_setup" title="Weekend Allowance Setup" target="right" id="dp80" onClick="MakeColoredBack('80');">Weekend Allowance Setup</a></div>
+            <a class="header" href="<?php echo base_url();?>setup_con/weekend_allowance_setup" title="Weekend Allowance Setup" target="right" id="dp80" onClick="MakeColoredBack('80');">Weekend Allowance Setup</a></div>
 			    <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/night_allowance_setup" title="Night Allowance Setup" target="right" id="dp82" onClick="MakeColoredBack('82');">Night Allowance Setup</a></div>
+            <a class="header" href="<?php echo base_url();?>setup_con/night_allowance_setup" title="Night Allowance Setup" target="right" id="dp82" onClick="MakeColoredBack('82');">Night Allowance Setup</a></div>
             
             
             <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/setup_con/holiday_allowance_setup" title="Holiday Allowance" target="right" id="dp83" onClick="MakeColoredBack('83');">Holiday Allowance</a></div>
+            <a class="header" href="<?php echo base_url();?>setup_con/holiday_allowance_setup" title="Holiday Allowance" target="right" id="dp83" onClick="MakeColoredBack('83');">Holiday Allowance</a></div>
           <?php } ?>       
         </div>
 		 <div class="nodeheader">
@@ -342,13 +342,13 @@
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/grid_entry_system" title="All Entry" target="right" id="dp13001" onClick="MakeColoredBack('13001');">All Entry</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/grid_entry_system" title="All Entry" target="right" id="dp13001" onClick="MakeColoredBack('13001');">All Entry</a>
           </div>
           <?php if(!in_array($user_id,$usr_arr_2)){  ?>
            <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/tax_others_deduction" title="Tax & Others Deduction<" target="right" id="dp13013" onClick="MakeColoredBack('13013');">Tax & Others Deduction</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/tax_others_deduction" title="Tax & Others Deduction<" target="right" id="dp13013" onClick="MakeColoredBack('13013');">Tax & Others Deduction</a>
           </div>
           <?php } ?>
       <?php
@@ -359,68 +359,68 @@
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/weekend_delete" title="Weekend" target="right" id="dp13011" onClick="MakeColoredBack('13011');">Weeked Delete</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/weekend_delete" title="Weekend" target="right" id="dp13011" onClick="MakeColoredBack('13011');">Weeked Delete</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/holiday_delete" title="Holiday" target="right" id="dp13012" onClick="MakeColoredBack('13012');">Holiday Delete</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/holiday_delete" title="Holiday" target="right" id="dp13012" onClick="MakeColoredBack('13012');">Holiday Delete</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/stop_salary" title="Stop Salary Entry" target="right" id="dp13016" onClick="MakeColoredBack('13016');">Stop Salary</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/stop_salary" title="Stop Salary Entry" target="right" id="dp13016" onClick="MakeColoredBack('13016');">Stop Salary</a>
           </div>
        <?php } ?>   
 	     <?php } ?>	  
 		    <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/leave_transation" title="Leave Transaction" target="right" id="dp13002" onClick="MakeColoredBack('13002');">Leave Transaction</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/leave_transation" title="Leave Transaction" target="right" id="dp13002" onClick="MakeColoredBack('13002');">Leave Transaction</a>
           </div>
         <?php if(!in_array($user_id,$usr_arr_2)){  ?>
 		    <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/leave_delete" title="Leave Delete" target="right" id="dp13017" onClick="MakeColoredBack('13017');">Leave Delete</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/leave_delete" title="Leave Delete" target="right" id="dp13017" onClick="MakeColoredBack('13017');">Leave Delete</a>
           </div>
 		  <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/advance_loan" title="Advance Loan" target="right" id="dp13003" onClick="MakeColoredBack('13003');">Advance Loan</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/advance_loan" title="Advance Loan" target="right" id="dp13003" onClick="MakeColoredBack('13003');">Advance Loan</a>
           </div>
 		  <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/due_amt_entry" title="Resign Entry" target="right" id="dp13994" onClick="MakeColoredBack('13994');">Add Due Amt.</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/due_amt_entry" title="Resign Entry" target="right" id="dp13994" onClick="MakeColoredBack('13994');">Add Due Amt.</a>
           </div>
 		     <?php } ?>
 		  	<div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/left_resign_con/left_resign_entry" title="Resign Entry" target="right" id="dp13005" onClick="MakeColoredBack('13005');">Left/Resign Entry</a>
+            <a class="header" href="<?php echo base_url();?>left_resign_con/left_resign_entry" title="Resign Entry" target="right" id="dp13005" onClick="MakeColoredBack('13005');">Left/Resign Entry</a>
           </div>
 		      <?php if(!in_array($user_id,$usr_arr_2)){  ?>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/new_to_regular" title="New To Regular" target="right" id="dp13007" onClick="MakeColoredBack('13007');">New To Regular</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/new_to_regular" title="New To Regular" target="right" id="dp13007" onClick="MakeColoredBack('13007');">New To Regular</a>
           </div>
 		      <?php } ?>
 		    <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/emp_increment_con/increment_info" title="Increment Entry" target="right" id="dp13008" onClick="MakeColoredBack('13008');">Increment Entry</a>
+            <a class="header" href="<?php echo base_url();?>emp_increment_con/increment_info" title="Increment Entry" target="right" id="dp13008" onClick="MakeColoredBack('13008');">Increment Entry</a>
           </div>
 		   <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/emp_increment_con/promotion_info" title="Promotion Entry" target="right" id="dp13009" onClick="MakeColoredBack('13009');">Promotion Entry</a>
+            <a class="header" href="<?php echo base_url();?>emp_increment_con/promotion_info" title="Promotion Entry" target="right" id="dp13009" onClick="MakeColoredBack('13009');">Promotion Entry</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/entry_system_con/proximity_card_edit" title="Proximity Card Edit" target="right" id="dp13015" onClick="MakeColoredBack('13015');">Proximity Card Edit</a>
+            <a class="header" href="<?php echo base_url();?>entry_system_con/proximity_card_edit" title="Proximity Card Edit" target="right" id="dp13015" onClick="MakeColoredBack('13015');">Proximity Card Edit</a>
           </div>
         </div>
 		  <div class="nodeheader">
@@ -432,7 +432,7 @@
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/attn_process_con/attn_process_form" title="Attendance Process" target="right" id="dp5071" onClick="MakeColoredBack('5071');">Attendance Process</a>
+            <a class="header" href="<?php echo base_url();?>attn_process_con/attn_process_form" title="Attendance Process" target="right" id="dp5071" onClick="MakeColoredBack('5071');">Attendance Process</a>
           </div>
 		  </div>
       <?php } ?>
@@ -446,19 +446,19 @@
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/grid_con/grid_window" title="All Repor" target="right" id="dp501" onClick="MakeColoredBack('501');">All Report</a>
+            <a class="header" href="<?php echo base_url();?>grid_con/grid_window" title="All Repor" target="right" id="dp501" onClick="MakeColoredBack('501');">All Report</a>
           </div>
           <?php if(!in_array($user_id,$usr_arr_2)){  ?>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/grid_con/grid_window_auto_notify" title="All Repor" target="right" id="dp997755" onClick="MakeColoredBack('997755');">Auto Notify Board</a>
+            <a class="header" href="<?php echo base_url();?>grid_con/grid_window_auto_notify" title="All Repor" target="right" id="dp997755" onClick="MakeColoredBack('997755');">Auto Notify Board</a>
           </div>
           <?php } ?>
 		      <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/mars_con/others_report_front_end" title="Others Report" target="right" id="dp5072" onClick="MakeColoredBack('5072');">Others Report</a>
+            <a class="header" href="<?php echo base_url();?>mars_con/others_report_front_end" title="Others Report" target="right" id="dp5072" onClick="MakeColoredBack('5072');">Others Report</a>
           </div>
 		  </div>
       </div>
@@ -477,17 +477,17 @@
     		  <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/salary_process_con/salary_process_form" title="Salary Process" target="right" id="dp5030" onClick="MakeColoredBack('5030');">Salary Process</a>
+            <a class="header" href="<?php echo base_url();?>salary_process_con/salary_process_form" title="Salary Process" target="right" id="dp5030" onClick="MakeColoredBack('5030');">Salary Process</a>
           </div>          
           <div class="document">
             
            
-          <a class="header" href="<?php echo base_url();?>index.php/salary_process_con/festival_bonus_form" title="Festival Process" target="right" id="dp5031" onClick="MakeColoredBack('5031');">Festival Process</a>
+          <a class="header" href="<?php echo base_url();?>salary_process_con/festival_bonus_form" title="Festival Process" target="right" id="dp5031" onClick="MakeColoredBack('5031');">Festival Process</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/earn_leave_con/earn_process_form" title="Earn Leave Process" target="right" id="dp5032" onClick="MakeColoredBack('5032');">Earn Leave Process</a>
+            <a class="header" href="<?php echo base_url();?>earn_leave_con/earn_process_form" title="Earn Leave Process" target="right" id="dp5032" onClick="MakeColoredBack('5032');">Earn Leave Process</a>
           </div>          
          </div>
 		    <div class="nodeheader">
@@ -498,12 +498,12 @@
 		    <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/salary_report_con/grid_salary_report" title="Salary Report" target="right" id="dp5073" onClick="MakeColoredBack('5073');">Salary Report</a>
+            <a class="header" href="<?php echo base_url();?>salary_report_con/grid_salary_report" title="Salary Report" target="right" id="dp5073" onClick="MakeColoredBack('5073');">Salary Report</a>
           </div>
           <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/earn_leave_con/grid_earn_report" title="Earn Leave Report" target="right" id="dp5076" onClick="MakeColoredBack('5076');">Earn Leave Report</a>
+            <a class="header" href="<?php echo base_url();?>earn_leave_con/grid_earn_report" title="Earn Leave Report" target="right" id="dp5076" onClick="MakeColoredBack('5076');">Earn Leave Report</a>
           </div>
 		  </div>
 		</div>
@@ -521,7 +521,7 @@
 		  <div class="document">
             
            
-            <a class="header" href="<?php echo base_url();?>index.php/maintainance_con/database_backup_form" title="Database Back" target="right" id="dp5074" onClick="MakeColoredBack('5074');">Backup</a></div>
+            <a class="header" href="<?php echo base_url();?>maintainance_con/database_backup_form" title="Database Back" target="right" id="dp5074" onClick="MakeColoredBack('5074');">Backup</a></div>
 		</div>
 		<div class="nodeheader">
           <b id="name14001" name="User">
@@ -533,7 +533,7 @@
 		  <div class="document">
           
          
-          <a class="header" href="<?php echo base_url();?>index.php/acl_con/acl" title="Access Control List" target="right" id="dp5075" onClick="MakeColoredBack('5075');">ACL</a>
+          <a class="header" href="<?php echo base_url();?>acl_con/acl" title="Access Control List" target="right" id="dp5075" onClick="MakeColoredBack('5075');">ACL</a>
       </div>
       <?php } ?>
 		</div>

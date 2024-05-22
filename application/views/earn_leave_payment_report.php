@@ -96,7 +96,7 @@ Earn Leave Payment Report of <?php echo $year	= date("Y",strtotime($year_month))
 
 <table class="bordered" border="1"  style="font-size:12px; width:700px; text-align:center;">
 <th>SL</th><th>Emp ID</th><th>Name</th><th>Desig.</th><th>DOJ</th><th>Salary</th><th>Totat Earn</th> <th>Entitle</th> <th>Paid</th> <th>Balance</th><th>Leave Pay</th><th>Paid Amount</th>
-<form action="<?php echo base_url();?>index.php/earn_leave_con/earn_leave_payment" method="post" >
+<form action="<?php echo base_url();?>earn_leave_con/earn_leave_payment" method="post" >
 <?php
 $count = count($values["emp_id"]);
 ?>

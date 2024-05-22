@@ -11,9 +11,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/salary_grade') ?>">
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/salary_grade') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -51,7 +51,7 @@
 <div class="tablebox">
   <h3>Create Salary Grade</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="creatsalarygrade" action="<?php echo base_url().'index.php/crud_con/salgrd_add'?>">
+  <form enctype="multipart/form-data" method="post" name="creatsalarygrade" action="<?php echo base_url().'crud_con/salgrd_add'?>">
 	  <div class="row">
 	    <div class="col-md-6">
 	      <div class="form-group">

@@ -32,7 +32,7 @@ if($this->session->userdata('logged_in')==true)
 		<?php
 		echo "Welcome, ";
 		echo "<b>".$this->session->userdata('username')." ! "."</b> ";
-		$url = base_url().'index.php/logout_FE';
+		$url = base_url().'logout_FE';
 		echo " <a  href='$url'  target='_top' style='text-decoration:none; color:black;'>";
 		?>
 		<img src="<?php echo base_url(); ?>/images/exit.png" alt="Exit" />

@@ -33,7 +33,7 @@ if($validation_errors != '')
 	echo "<SCRIPT LANGUAGE=\"JavaScript\">alert(document.getElementById('error_id').innerHTML);</SCRIPT>";
 }
 ?>
-<form class="form-group" name='cominfo' class="cominfo"  enctype="multipart/form-data" method="post" action="<?php echo base_url();?>index.php/emp_increment_con/promotion_info" >
+<form class="form-group" name='cominfo' class="cominfo"  enctype="multipart/form-data" method="post" action="<?php echo base_url();?>emp_increment_con/promotion_info" >
   <fieldset style="background:#F2F2E6;"><legend style="font-size:28px; font-weight:bold;">Promotion Entry</legend>
     <table class="table sal" border="0" style=" border-collapse:collapse; margin-bottom:20px; width:820px;" cellpadding="3">
       <tr>

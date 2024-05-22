@@ -11,9 +11,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/company_info_setup') ?>">
+                    <a class="btn btn-info" href="<?php echo base_url('
+                    setup_con/company_info_setup') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('
+                            payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -38,7 +40,8 @@
     <div class="tablebox">
         <h3>Create Company Unit</h3>
         <form enctype="multipart/form-data" method="post" name="creatcompanyunit"
-            action="<?php echo base_url().'index.php/setup_con/company_add'?>">
+            action="<?php echo base_url().'
+            setup_con/company_add'?>">
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">

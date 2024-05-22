@@ -21,7 +21,7 @@
                                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="<?php echo base_url() ?>">CodeIgniter integration with php excel</a>
                 </div>
                             <ul class="nav navbar-nav pull-right">
-                                <li class="active"><a href="<?php echo base_url()?>index.php/home/excel"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Export Excel</a></li>
+                                <li class="active"><a href="<?php echo base_url()?>home/excel"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Export Excel</a></li>
                             </ul>
                  
                  

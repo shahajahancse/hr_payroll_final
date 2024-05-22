@@ -45,7 +45,7 @@
 
 <body style="margin:0 2px;">
 	<div style="position:absolute; right:0" class="noprint">
-		<form action="<?php echo base_url();?>index.php/salary_report_con/grid_actual_monthly_salary_sheet_excel" method="post">
+		<form action="<?php echo base_url();?>salary_report_con/grid_actual_monthly_salary_sheet_excel" method="post">
 			<input type="hidden" name="salary_month" value="<?php echo $salary_month; ?>"></input>
 			<input type="hidden" name="grid_emp_id" value="<?php echo implode(",",$grid_emp_id); ?>"></input>
 			<input type="hidden" name="grid_status" value="<?php echo $grid_status; ?>"></input>

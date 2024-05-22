@@ -153,14 +153,14 @@
         <ul class="sub-menu">
           <li class="start "> <a href="javascript:;"><span class="title">Process</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
-              <li class="start "> <a href="<?=base_url()?>index.php/salary_process_con/salary_process_form" class="anchor_cls">Salary Process</a> </li>
-              <li class="start"><a href="<?=base_url()?>index.php/earn_leave_con/earn_process_form" class="anchor_cls">Earn Leave Process</a></li>
+              <li class="start "> <a href="<?=base_url()?>salary_process_con/salary_process_form" class="anchor_cls">Salary Process</a> </li>
+              <li class="start"><a href="<?=base_url()?>earn_leave_con/earn_process_form" class="anchor_cls">Earn Leave Process</a></li>
             </ul>
           </li>
           <li class="start "> <a href="javascript:;"><span class="title">Reports</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
-              <li class="start "> <a href="<?=base_url()?>index.php/salary_report_con/grid_salary_report" class="anchor_cls">Salary Report</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/earn_leave_con/grid_earn_report"class="anchor_cls" >Earn Leave Report</a> </li>
+              <li class="start "> <a href="<?=base_url()?>salary_report_con/grid_salary_report" class="anchor_cls">Salary Report</a> </li>
+              <li class="start "> <a href="<?=base_url()?>earn_leave_con/grid_earn_report"class="anchor_cls" >Earn Leave Report</a> </li>
             </ul>
           </li>
         </ul>
@@ -175,11 +175,11 @@
       <!-- <li class="start ">
         <a href="javascript:;" > <i class=""></i> <span class="title">Payroll</span> <span class="selected"></span> <span class="arrow"></span> </a>
         <ul class="sub-menu">
-          <li class="start"><a href="<?=base_url()?>index.php/earn_leave_con/earn_process_form" class="anchor_cls">Earn Leave Process</a></li>
+          <li class="start"><a href="<?=base_url()?>earn_leave_con/earn_process_form" class="anchor_cls">Earn Leave Process</a></li>
           <li class="start "> <a href="javascript:;"><span class="title">Reports</span> <span class="selected"></span> <span class="arrow"></span> </a>
             <ul class="sub-menu">
-              <li class="start "> <a href="<?=base_url()?>index.php/salary_report_con/grid_salary_report" class="anchor_cls">Salary Report</a> </li>
-              <li class="start "> <a href="<?=base_url()?>index.php/earn_leave_con/grid_earn_report"class="anchor_cls" >Earn Leave Report</a> </li>
+              <li class="start "> <a href="<?=base_url()?>salary_report_con/grid_salary_report" class="anchor_cls">Salary Report</a> </li>
+              <li class="start "> <a href="<?=base_url()?>earn_leave_con/grid_earn_report"class="anchor_cls" >Earn Leave Report</a> </li>
             </ul>
           </li>
         </ul>

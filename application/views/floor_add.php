@@ -24,11 +24,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?=base_url('index.php/setup_con/floor')?>">Back To List</a>
+            <a class="navbar-brand" href="<?=base_url('setup_con/floor')?>">Back To List</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="<?=base_url('index.php/payroll_con')?>">Home</a></li>
+              <li class="active"><a href="<?=base_url('payroll_con')?>">Home</a></li>
             </ul>
 
           </div><!--/.nav-collapse -->
@@ -56,7 +56,7 @@
 
   <h3>Create Floor</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="creatfloor" action="<?php echo base_url().'index.php/crud_con/floor_add'?>">
+  <form enctype="multipart/form-data" method="post" name="creatfloor" action="<?php echo base_url().'crud_con/floor_add'?>">
 	  <div class="row">
 	    <div class="col-md-6">
 	      <div class="form-group">

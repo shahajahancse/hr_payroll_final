@@ -45,7 +45,7 @@ if($validation_errors != '')
 	echo "<SCRIPT LANGUAGE=\"JavaScript\">alert(document.getElementById('error_id').innerHTML);</SCRIPT>";
 }
 ?>
-  <form class="form-group" name='cominfo' class="cominfo"  enctype="multipart/form-data" method="post" action="<?php echo base_url();?>index.php/emp_increment_con/increment_info" >
+  <form class="form-group" name='cominfo' class="cominfo"  enctype="multipart/form-data" method="post" action="<?php echo base_url();?>emp_increment_con/increment_info" >
   <fieldset style="background:#F2F2E6;"><legend style="font-size:28px; font-weight:bold;">Increment Entry</legend>
     <table class="table"  border="0" cellpadding="0" cellspacing="5">
       <tr>

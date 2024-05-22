@@ -32,8 +32,8 @@
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/attn_bonus_add') ?>">Add Attendence Bonus</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/attn_bonus_add') ?>">Add Attendence Bonus</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -95,11 +95,11 @@
                                 <td><?php echo $pr_lines['rule'] ?></td>
                                 <td><?php echo $pr_lines['unit_name'] ?></td>
                                 <td>
-                                    <a href="<?=base_url('index.php/setup_con/attn_bonus_edit') . '/' . $pr_lines["id"]?>"
+                                    <a href="<?=base_url('setup_con/attn_bonus_edit') . '/' . $pr_lines["id"]?>"
                                     class="btn btn-primary center-text" role="button">Edit</a>
                                 </td>
                                 <td>
-                                    <a href="<?=base_url('index.php/setup_con/attn_bonus_delete') . '/' . $pr_lines["id"]?>"
+                                    <a href="<?=base_url('setup_con/attn_bonus_delete') . '/' . $pr_lines["id"]?>"
                                     class="btn btn-danger center-text" role="button">Delete</a>
                                 </td>
                             </tr>

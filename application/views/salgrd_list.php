@@ -32,8 +32,8 @@
     <div class="container-fluid nav_head">
       <div class="navbar-header col-md-5" style="padding: 7px;">
         <div>
-          <a class="btn btn-info"href="<?=base_url('index.php/crud_con/salgrd_add')?>">Add Salary Grade</a>
-          <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+          <a class="btn btn-info"href="<?=base_url('crud_con/salgrd_add')?>">Add Salary Grade</a>
+          <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
         </div>
       </div>
       <div class="col-md-7">
@@ -87,10 +87,10 @@
                     <td class="text-center"><?php echo $i++ ?></td>
                     <td class="text-center"><?php echo $pr_grades['gr_name'] ?></td>
                     <td class="text-center" >
-                      <a href="<?=base_url('index.php/crud_con/salgrd_edit').'/'.$pr_grades["gr_id"]?>"target='_blank' class="btn btn-primary input-sm center-text" role="button">Edit</a>
+                      <a href="<?=base_url('crud_con/salgrd_edit').'/'.$pr_grades["gr_id"]?>"target='_blank' class="btn btn-primary input-sm center-text" role="button">Edit</a>
                     </td>
                     <td class="text-center">
-                      <a href="<?=base_url('index.php/crud_con/salgrd_delete').'/'.$pr_grades["gr_id"]?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
+                      <a href="<?=base_url('crud_con/salgrd_delete').'/'.$pr_grades["gr_id"]?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
                     </td>
                   </tr>
               <?php } }else{?>

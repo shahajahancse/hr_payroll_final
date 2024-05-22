@@ -274,7 +274,7 @@ class Grid_con extends CI_Controller {
 		$emp_id     		 = $this->input->post('emp_id');
 		$data['type']    	 = $this->input->post('type');
 		$data['reason']    	 = $this->input->post('reason');
-		$data['unit_id']     = $unit_id ;
+		$data['unit_id']     = $unit_id;
 		$data['first_date']  = $first_date;
 		$data['second_date'] = $second_date;
 		$data['apply_date']  = date('d/m/Y', strtotime($apply_date));
@@ -815,7 +815,36 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/continuous_costing_report',$data);
 		}
 	}
+	function grid_maternity_benefit(){
+		$this->load->model('leave_model');
+		$grid_year = date('Y', strtotime($this->input->post('date')));
+		$grid_data = $this->input->post('sql');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);
+		$this->load->view('maternity_benefit',$data);
+	}
+	function ddddgrid_continuous_costing_report() //not used
+	{
+		$firstdate= $this->input->post('firstdate');
+		$seconddate = $this->input->post('seconddate');
+		$grid_unit = $this->input->post('grid_start');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
 
+		$data["values"] 	= $this->Grid_model->grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id);
+		$data["firstdate"]	= date("d-M-Y",strtotime($firstdate));
+		$data["seconddate"]	= date("d-M-Y",strtotime($seconddate));
+		$data["unit_id"]	= $grid_unit;
+
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_con/continuous_costing_report',$data);
+		}
+	}
 
 
 

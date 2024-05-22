@@ -10,8 +10,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/attendance_bonus') ?>">< < Back</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/attendance_bonus') ?>">< < Back</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -35,7 +35,7 @@
     </div>
     <div class="tablebox">
     <h3>Create Attendance Bonus</h3>
-    <form action="<?= base_url('index.php/setup_con/attn_bonus_add')?>" enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('setup_con/attn_bonus_add')?>" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-12">
                 <div class="row">

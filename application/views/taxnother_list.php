@@ -5,8 +5,8 @@
     <div class="container-fluid nav_head">
       <div class="navbar-header col-md-5" style="padding: 7px;">
           <div>
-          <a href="<?=base_url('index.php/crud_con/taxnother_add')?>" class="btn btn-info" role="button">Add Tax & Others Deduct</a>
-          <a href="<?php echo base_url('index.php/payroll_con')?>" class="btn btn-primary">Home</a>
+          <a href="<?=base_url('crud_con/taxnother_add')?>" class="btn btn-info" role="button">Add Tax & Others Deduct</a>
+          <a href="<?php echo base_url('payroll_con')?>" class="btn btn-primary">Home</a>
           </div>
       </div>
       <div class="col-md-7">
@@ -67,7 +67,7 @@
                 <td><?php echo $pr_deducts['others_deduct'] ?></td>
                 <td><?php echo $pr_deducts['deduct_month'] ?></td>
                 <td>
-                    <a href="<?=base_url('index.php/crud_con/taxnother_delete').'/'.$pr_deducts["deduct_id"]?>" class="btn btn-danger" role="button">Delete</a>
+                    <a href="<?=base_url('crud_con/taxnother_delete').'/'.$pr_deducts["deduct_id"]?>" class="btn btn-danger" role="button">Delete</a>
                 </td>
               </tr>
             <?php } }else{?>

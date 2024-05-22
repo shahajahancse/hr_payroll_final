@@ -24,7 +24,7 @@ width:265px;
 
 <body bgcolor="#ECE9D8">
 <fieldset style='width:95%;'><legend><font size='+1'><b>Full database backup</b></font></legend>
-<a href="<?php echo base_url(); ?>index.php/maintainance_con/database_backup" ><input type="button" name="db_bk" value="Backup" /></a>
+<a href="<?php echo base_url(); ?>maintainance_con/database_backup" ><input type="button" name="db_bk" value="Backup" /></a>
 </fieldset>
 </body>
 </html>

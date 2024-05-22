@@ -154,7 +154,7 @@
                <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">          
                   <li><a href="<?=base_url()?>change_password"><i class="fa fa-lock"></i>&nbsp;&nbsp;Change Password</a></li>
                   <!-- <li><a href="<?=base_url()?>general_setting/single_office_update"><i class="fa fa-building-o " aria-hidden="true"></i>&nbsp;&nbsp; অফিস হালনাগাদ</a></li> -->
-                  <li><a href="<?=base_url()?>index.php/logout_FE"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+                  <li><a href="<?=base_url()?>logout_FE"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
                 </ul>
               </li>
             </ul>
@@ -185,8 +185,8 @@
             </li>
             <li class="start "> <a href="javascript:;" > <i class="fa fa-tachometer"></i> <span class="title">Dash Board</span> <span class="selected"></span> <span class="arrow"></span> </a> 
               <ul class="sub-menu">
-                <li> <a href="<?=base_url()?>index.php/setup_con/dashboard_date_setup" target="body_load"> Date Setup </a></li>
-                <li> <a href="<?=base_url()?>index.php/emp_info_con/at_a_glance_info_view" target="body_load"> At A Glance </a></li>
+                <li> <a href="<?=base_url()?>setup_con/dashboard_date_setup" target="body_load"> Date Setup </a></li>
+                <li> <a href="<?=base_url()?>emp_info_con/at_a_glance_info_view" target="body_load"> At A Glance </a></li>
               </ul>
             </li>                                        
           </ul>
@@ -426,7 +426,7 @@
     <div class="clearfix"></div>
     <div class="content">
       <div id="container" style="margin-bottom: 100px;">
-        <iframe id="idIframe" width="100%" src="<?= base_url()?>index.php/payroll_con/first_body" name="body_load" style="border:0px solid;" scrolling="no" onload="iframeLoaded()"></iframe>
+        <iframe id="idIframe" width="100%" src="<?= base_url()?>payroll_con/first_body" name="body_load" style="border:0px solid;" scrolling="no" onload="iframeLoaded()"></iframe>
       </div>
     </div>
   </div></div>

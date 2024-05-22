@@ -10,7 +10,7 @@
 <body>
 	<div class="container-fluid">
 	<!-- <div style="position:absolute; right:0" class="noprint">
-		<form action="<?php echo base_url();?>index.php/grid_con/general_info_excel" method="post">
+		<form action="<?php echo base_url();?>grid_con/general_info_excel" method="post">
 			<input type="hidden" name="grid_emp_id" value="<?php echo implode(",",$grid_emp_id); ?>"></input>
 			<button type="submit" style="border: 0; background-color:#eeffcc; cursor:pointer;" alt="XLS Export">XLS Export</button>
 		</form>

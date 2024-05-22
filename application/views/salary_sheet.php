@@ -49,7 +49,7 @@ echo $date_format;
 
 <body style="margin:0 2px;">
 
-<form action="<?php echo base_url();?>index.php/salary_report_con/grid_monthly_salary_sheet_xl" method="post">
+<form action="<?php echo base_url();?>salary_report_con/grid_monthly_salary_sheet_xl" method="post">
 <input type="hidden" name="sal_year_month" value="<?php echo $salary_month;?>"></input>
 <input type="hidden" name="custom_salarydate" value="<?php echo $custom_salarydate;?>"></input>
 <input type="hidden" name="grid_status" value="<?php echo $grid_status;?>"></input>

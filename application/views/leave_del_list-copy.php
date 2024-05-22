@@ -52,7 +52,7 @@ a:hover
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
+                  <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
                 </ul>
 
               </div><!--/.nav-collapse -->
@@ -92,7 +92,7 @@ a:hover
 
 
                   <div>
-                    <form method='post' action="<?= base_url() ?>index.php/entry_system_con/leave_delete/" >
+                    <form method='post' action="<?= base_url() ?>entry_system_con/leave_delete/" >
                           <input type='text' name='search' value='<?= $search ?>'><input type='submit' name='submit' value='Submit'>
                        </form>
                        <br/>
@@ -133,7 +133,7 @@ a:hover
 
 
                                     <td>
-                                        <a href="<?=base_url('index.php/crud_con/leave_delete').'/'.$pr_leave_transs["id"]?>" class="btn btn-danger" role="button">Delete</a>
+                                        <a href="<?=base_url('crud_con/leave_delete').'/'.$pr_leave_transs["id"]?>" class="btn btn-danger" role="button">Delete</a>
 
                                     </td>
                                 </tr>

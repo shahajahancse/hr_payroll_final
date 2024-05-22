@@ -36,8 +36,8 @@
     <div class="container-fluid nav_head">
       <div class="navbar-header col-md-5" style="padding: 7px;">
           <div>
-          <a href="<?=base_url('index.php/entry_system_con/add_left')?>" class="btn btn-info" role="button">Add Left</a>
-          <a href="<?php echo base_url('index.php/payroll_con')?>" class="btn btn-primary">Home</a>
+          <a href="<?=base_url('entry_system_con/add_left')?>" class="btn btn-info" role="button">Add Left</a>
+          <a href="<?php echo base_url('payroll_con')?>" class="btn btn-primary">Home</a>
           </div>
       </div>
       <div class="col-md-7">

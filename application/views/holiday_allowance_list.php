@@ -76,7 +76,7 @@ table.dataTable.no-footer {
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  <li class="active"><a href="<?php echo base_url('index.php/payroll_con')?>">Home</a></li>
+                  <li class="active"><a href="<?php echo base_url('payroll_con')?>">Home</a></li>
                 </ul>
                 <div class="pull-right">
                   <form class="navbar-form pull-right" role="search">

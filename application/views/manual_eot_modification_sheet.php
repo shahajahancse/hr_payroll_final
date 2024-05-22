@@ -130,7 +130,7 @@ function time_validation(i)
 	echo "<br />";
 	echo "<table width='480' border='1' bordercolor='#000000' cellspacing='0' cellpadding='2' style='text-align:center; font-size:13px; '> <th>Date</th><th>In Time</th><th>Out Time</th><th>Status</th><th>OT</th><th>EOT</th>";
 	?>
-	<form action="<?php echo base_url();?>index.php/entry_system_con/manual_eot_modify_entry" method="post" id="ot_modify" name="ot_modify">
+	<form action="<?php echo base_url();?>entry_system_con/manual_eot_modify_entry" method="post" id="ot_modify" name="ot_modify">
 	<input type="hidden" name="count" id="count"  value="<?php 	echo $count1; ?>"/>
 	<input type="hidden" name="emp_id" id="emp_id"  value="<?php echo $values["emp_id"]; ?>"/>
 	<input type="hidden" name="proxi" id="proxi"  value="<?php echo $values["proxi_id"]; ?>"/>
@@ -209,7 +209,7 @@ function time_validation(i)
 
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url(); ?>/index.php/entry_system_con/check_out_time_value",
+            url: "<?php echo base_url(); ?>/entry_system_con/check_out_time_value",
             data:{
             	emp_id : emp_id,
                 manual_date: manual_date,

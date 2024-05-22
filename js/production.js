@@ -30,7 +30,7 @@ function yarn_type_find()
 	// alert(queryString);
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url = hostname + "index.php/product_con/yarn_type/";
+	url = hostname + "product_con/yarn_type/";
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -88,7 +88,7 @@ function yarn_type_color()
 	 var queryString="yarn_type="+yarn_type;
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/product_con/yarn_type_color/";
+	url =  hostname + "product_con/yarn_type_color/";
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -151,7 +151,7 @@ function yarn_qty()
 
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/product_con/yarn_color/";
+	url =  hostname + "product_con/yarn_color/";
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -217,7 +217,7 @@ function button_save()
 	
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/product_con/required_winding/";
+	url =  hostname + "product_con/required_winding/";
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 

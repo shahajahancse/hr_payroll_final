@@ -11,83 +11,101 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family:SutonnyMJ;
+            font-size:20px;
         }
         .table-bordered td, .table-bordered th {
             border: 1px solid #000000;
             padding:2px;
         }
+
     </style>
 </head>
 <body>
     <div class="container w-75">
+        <?php if ($unit_id == 1) { ?>
         <div class="d-flex flex-row justify-content-between">
-            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 03.10.2020 </p>
             <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/009 </p>
         </div>
-        <div class="d-flex">
-            <div class="col-md-2">
-                <!-- <img src="< ?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;"> -->
-            </div>
-            <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
-            <div class="col-md-12">
-                <h1 class="text-center" style="margin-left: -420px;"><?= $com_info->company_name_bangla ?></h1>
-            </div>
+        <?php } else if ($unit_id == 2) { ?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 01-01-2020 </p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : LSAL/HR/03/091 </p>
         </div>
+        <?php } else { ?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022 </p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/009</p>
+        </div>
+        <?php } ?>  
+        <div class="d-flex justify-content-between">
+             <div class="col-md-2">
+                <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="max-width: 40%;">
+             </div>
+          <div class="col-md-10 text-center">
+              <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+              <h3><?= $com_info->company_name_bangla ?></h3>
+          <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+             </div>
+         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
             <p class="text-center h5"><?= $com_info->company_add_bangla ?></p>
         </div>
-        <br>
+        <!-- <br> -->
         <div>
-            <h5 class="text-center" style="border-bottom: 2px solid black;width: 200px;margin: 0 auto;">ছুটির আবেদন পত্র</h5>
-            <p class="ml-3">তারিখঃ <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$apply_date."</span>"?></p>
+            <h3 class="text-center" style="border-bottom: 2px solid black;width: 200px;margin: 0 auto;">QywUi Av‡e`b cÎ</h3>
+            <p class="ml-3">ZvwiLt <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'> <strong> ".$apply_date." </strong></span>"?></p>
         </div>
         <?php
            $data =  $this->db->select('leave_type,leave_start,leave_end,total_leave')->where('leave_start',date('Y-m-d',strtotime($first_date)))->where('emp_id',$values['emp_info']->emp_id)->order_by('leave_end','DESC')->get('pr_leave_trans')->row();
             // dd($this->db->last_query());
         ?>
         <div class="ml-3">
-                <p>বরাবর,</p>
-                <p>ব্যবস্থাপনা পরিচালক সাহেব/ মহাব্যবস্থাপক,</p>
+                <p>eivei,</p>
+                <p>e¨e¯’vcbv cwiPvjK mv‡ne/ gnve¨e¯’vcK,</p>
 
-                <p>বিনীত নিবেদন এই যে, অনুগ্রহ পূর্বক <span style="border-bottom: 2px dotted black"><?php echo $reason?></span>  কারনে
-                    <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হইতে <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> তারিখ পর্যন্ত
-                    মোট <?php  $date1 = new DateTime($first_date);
+                <p>webxZ wb‡e`b GB ‡h, AbyM«n c~e©K <span style="border-bottom: 2px dotted black"><?php echo $reason?></span>  Kvi‡Y
+                    <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> ZvwiL nB‡Z <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> ZvwiL পর্যন্ত  ‡gvU <?php  $date1 = new DateTime($first_date);
                     $date2 = new DateTime($second_date);
                     $interval = $date2->diff($date1);
                     $interval->d += 1;
                                 echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%d ')."</span>";
-                        ?>  দিন আমাকে <?php
+                        ?>  w`b Avgv‡K <?php
                         if($type == 'cl'){
-                            echo 'নৈমিত্তিক';
+                            echo '‰bwgwËK';
                         }elseif($type == 'el') {
-                            echo 'অর্জিত';
+                            echo 'AwR©Z';
                         }elseif($type == 'sl') {
-                            echo 'অসুস্থতার';
+                            echo 'Amy¯’Zvi';
                         }elseif($type == 'ml') {
-                            echo 'মাতৃত্ব জনিত';
+                            echo 'gvZ…Z¡ RwbZ';
                         }else{
                             echo '........................................';
                         }
                         ?>
-                         ছুটি মঞ্জুরের জন্য আবেদন জানাচ্ছি।
+                         QywU gÄy‡ii Rb¨ Av‡e`b Rvbvw”Q|
                 </p><br>
-                <p>আবেদন কারীর স্বাক্ষর .............................................................................</p>
+                <p>Av‡e`b Kvixi ¯^v¶i .............................................................................</p>
                 <br>
 
                 <div style="line-height:10px">
-                    <p>নাম: <?php echo $values['emp_info']->name_bn?></p>
-                    <p>কার্ডনং: <?php echo $values['emp_info']->emp_id?></p>
-                    <p>বিভাগ :<?php echo $values['emp_info']->dept_bangla?></p>
-                    <p>পদবি : <?php echo $values['emp_info']->desig_bangla?></p>
-                    <p>লাইন:<?php echo $values['emp_info']->line_name_bn?></p>
-                    <p>অফিস রেকর্ড:</p>
+                    <p>Av‡e`bKvixi bvg : <?php echo $values['emp_info']->name_bn?></p>
+                    <p>‡hvM`v‡bi ZvwiL : <?php echo  "<span style='font-size:20px'>".date('d/m/Y',strtotime($values['emp_info']->emp_join_date))."</span>" ?></p>
+                    <p>KvW© bs : <?php echo "<span style='font-size:20px'>".$values['emp_info']->emp_id."</span>"?></p>
+                    <p>c`we : <?php echo $values['emp_info']->desig_bangla?></p>
+                    <p>‡mKkb/jvBb : <?php echo $values['emp_info']->line_name_bn?></p>
                 </div>
-                <br>
-                <p>আবেদন কারীর কাজে যোগদানের তারিখঃ <span style="font-family:SutonnyMJ;font-size:18px"><?php echo  date('d/m/Y',strtotime($values['emp_info']->emp_join_date))."</span>"?></span></p>
 
-                <p style="font-family:SutonnyMJ;font-size:">১। নৈমিত্তিক ছুটি মোট প্রাপ্য ১০ দিন, ভোগকৃত ছুটি <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_taken_casual']."</span>"?> দিন, অবশিষ্ট <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_balance_casual']."</span>"?> দিন </p>
-                <p style="font-family:SutonnyMJ;font-size:">২। অসুস্থতা <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_entitle_sick']."</span>"?> দিন, ভোগকৃত ছুটি <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_taken_sick']."</span>"?> দিন, অবশিষ্ট <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_balance_sick']."</span>"?> দিন </p>
+
+
+                <br>
+                <p>Awdm ‡iKW©:</p>
+                <p style="font-family:SutonnyMJ;font-size:">1| ‰bwgwËK QywU ‡gvU c«vc¨ 10 w`b, ‡fvMK…Z QywU <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_taken_casual']."</span>"?> w`b, Aewkó <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_balance_casual']."</span>"?> w`b </p>
+                <p style="font-family:SutonnyMJ;font-size:">2| Amy¯’Zv <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_entitle_sick']."</span>"?> w`b, ‡fvMK…Z QywU <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_taken_sick']."</span>"?> w`b, Aewkó <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".$values['leave_balance_sick']."</span>"?> w`b </p>
                 <?php
 
                 $year = date('Y', strtotime($first_date));
@@ -118,34 +136,33 @@
                     }
                 }
                 $leave_ba_earn = $earn_leave - $leave_taken_earn;
-
                 ?>
 
-                <p>৩। অর্জিত <?= $earn_leave ?> দিন, ভোগকৃত ছুটি  <?= $leave_taken_earn ?> দিন, অবশিষ্ট <?= $leave_ba_earn ?> দিন </p>
+                <p>3| AwR©Z <?= $earn_leave ?> w`b, ‡fvMK…Z QywU  <?= $leave_taken_earn ?> w`b, Aewkó <?= $leave_ba_earn ?> w`b </p>
                 <br>
                 <br>
                 <br>
                 <br>
-                <p><span style="border-top: 1px solid black;">অফিস কর্তৃক যাচাইকৃত ও স্বাক্ষরীত</span> <span style="float: inline-end;border-top: 1px solid black;">প্রশাসনিক কর্মকর্তার স্বাক্ষর</span></p>
+                <p><span style="border-top: 1px solid black;">Awdm KZ©…K hvPvBK…Z I ¯^v¶ixZ</span> <span style="float: inline-end;border-top: 1px solid black;display:none">প্রশাসনিক কর্মকর্তার স্বাক্ষর</span></p>
                <br>
                <br>
                <br>
-                <p class="text-justify">আবেদনকারীকে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> তারিখ হতে  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> পর্যন্ত মোট <?php  $date1 = new DateTime($first_date);
+                <p class="text-justify">Av‡e`bKvix‡K  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?> ZvwiL n‡Z  <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> পর্যন্ত ‡gvU <?php  $date1 = new DateTime($first_date);
                                 $date2 = new DateTime($second_date);
                                 $interval = $date2->diff($date1);
                                 $interval->d += 1;
                                 echo  "<span style='font-family:SutonnyMJ;font-size:20px'>".$interval->format('%d ')."</span>";
-                        ?>   দিন  <?php echo $type == 'cl' ? ' নৈমিত্তিক': 'অসুস্থতা' ?> ছুটি মঞ্জুর করা যেতে পারে।</p>
-                <p>উক্ত সুপারিশ মোতাবেক ছুটি মঞ্জুর করা হইল।</p>
+                        ?>   w`b  <?php echo $type == 'cl' ? ' ‰bwgwËK': 'অসুস্থতা' ?> QywU gÄyi Kiv ‡h‡Z cv‡i|</p>
+                <p>D³ mycvwik ‡gvZv‡eK QywU <span style="font-size:23px ; font-family:SutonnyMJ">gÄyi</span> Kiv nBj|</p>
             </div>
             <br>
             <br>
             <br>
             <div class="ml-3 d-flex justify-content-between">
-                <p style="border-top:1px solid black">বিভাগীয় প্রধান</p>
-                <p style="border-top:1px solid black">প্রশাসনিক বিভাগ</p>
-                <p style="border-top:1px solid black">মহাব্যবস্থাপক</p>
-                <p style="border-top:1px solid black">পরিচালক</p>
+                <p style="border-top:1px solid black">wefvMxh় c«avb</p>
+                <p style="border-top:1px solid black">c«kvmwbK wefvM</p>
+                <p style="border-top:1px solid black">gnve¨e¯’vcK</p>
+                <p style="border-top:1px solid black">cwiPvjK</p>
             </div>
     </div>
 </body>

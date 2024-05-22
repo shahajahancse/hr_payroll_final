@@ -10,7 +10,7 @@
 <?php //print_r($values); 
 //echo $daily_status;
 $base_url = base_url();
-$url = $base_url."index.php/payroll_con/salary_summary_report_export";
+$url = $base_url."payroll_con/salary_summary_report_export";
 ?>
 <div>
 <div id="no_print" style="float:right;">

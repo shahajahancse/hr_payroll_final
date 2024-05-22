@@ -38,7 +38,7 @@ if(isset($data))
 <div align="center" style=" width:100%; overflow:hidden;" >
 <div class="perinfo" style="width:80%; float:left;">
 
-<form  name='com_per_info' enctype="multipart/form-data" method="post" action="<?php echo base_url();?>index.php/payroll_con/personal_info_view" >
+<form  name='com_per_info' enctype="multipart/form-data" method="post" action="<?php echo base_url();?>payroll_con/personal_info_view" >
 <table width='100%' border='0' align='center' style='padding:10px'>
 <tr><td width='40%'>Emp Id</td><td><input type='text' size='40px' name='empid' id='empid' ></td>
 <td width='20%'>Full Name</td><td><input type='text' size='40px' id='name' name="name"></td></tr>

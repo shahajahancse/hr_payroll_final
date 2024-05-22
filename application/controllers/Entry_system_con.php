@@ -1425,18 +1425,30 @@ class Entry_system_con extends CI_Controller
         $this->db->where('leave_end <=', $last_date);
         $value = $this->db->get('pr_leave_trans')->row();
 
+        $this->db->select("
+                SUM(CASE WHEN leave_type = 'ml' THEN total_leave ELSE 0 END) AS ml,
+            ");
+        $this->db->where('emp_id', $emp_id);
+        $this->db->where('leave_start >=', $first_date);
+        $this->db->where('leave_start <=', $last_date);
+        $met = $this->db->get('pr_leave_trans')->row();
+
+        if (!empty($met)) {
+            $data['leave_taken_maternity'] = $met->ml;
+        } else {
+            $data['leave_taken_maternity'] = 0;
+        }
+
         if (!empty($value)) {
             $data['leave_taken_casual'] = $value->cl;
             $data['leave_taken_sick'] = $value->sl;
-            $data['leave_taken_maternity'] = $value->ml;
             $data['leave_taken_paternity'] = $value->pl;
             $data['leave_taken_earn'] = $value->el;
         } else {
-            $leave_taken_casual =0;
-            $leave_taken_sick =0;
-            $leave_taken_maternity =0;
-            $leave_taken_paternity =0;
-            $leave_taken_earn =0;
+            $data['leave_taken_casual'] = 0;
+            $data['leave_taken_sick'] = 0;
+            $data['leave_taken_paternity'] = 0;
+            $data['leave_taken_earn'] = 0;
         }
 
         $data['leave_balance_casual'] = $data['leave_entitle_casual'] - $data['leave_taken_casual'];
@@ -1503,7 +1515,8 @@ class Entry_system_con extends CI_Controller
         $unit_id = $this->input->post('unit_id');
         $probability = $this->input->post('probability');
         $half_ml = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml / 2;
-        $start_date = date('d-m-Y', strtotime("-{$half_ml} days", strtotime($probability)));
+        $mhl = $half_ml-1;
+        $start_date = date('d-m-Y', strtotime("-{$mhl} days", strtotime($probability)));
         $end_date = date('d-m-Y', strtotime("+{$half_ml} days", strtotime($probability)));
         echo json_encode(['start_date' => $start_date, 'end_date' => $end_date]);
     }
@@ -1548,15 +1561,16 @@ class Entry_system_con extends CI_Controller
             exit();
         }
 
-        $balance = $this->leave_balance_ajax($emp_id, $start_date, 1);
+        $year=date('Y-m-d', strtotime($start_date));
+        $balance = $this->leave_balance_ajax($emp_id, $year, 1);
 
         if ($balance['leave_balance_maternity'] <= 0) {
-            echo "This employee have not enough leave balance";
+            echo "This employee have not enough leave";
             exit();
         }
 
         if ($balance['leave_balance_maternity'] < ($half_ml*2)) {
-            echo "This employee have not enough leave balance";
+            echo "This employee have not enough leave";
             exit();
         }
 
@@ -2237,7 +2251,7 @@ class Entry_system_con extends CI_Controller
         // $start = ($this->uri->segment(2)) ? ($this->uri->segment(2)+1) : 0 ;
         // print_r($start);exit('ali');
         $limit = 25;
-        $config['base_url'] = base_url() . "index.php/entry_system_con/proximity_card_edit/";
+        $config['base_url'] = base_url() . "entry_system_con/proximity_card_edit/";
         $config['per_page'] = $limit;
         /*$config['num_links'] = 5;*/
         $config['total_rows'] = $this->db->get('pr_id_proxi')->num_rows();

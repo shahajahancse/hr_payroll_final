@@ -69,7 +69,7 @@ $(function() {
 	$('#search_empid').keydown(function(){
 		$(this).autocomplete(
 		{
-			source: "<?php echo base_url(); ?>index.php/left_resign_con/search_empid_for_resign_left",
+			source: "<?php echo base_url(); ?>left_resign_con/search_empid_for_resign_left",
 			minLength: 0,
 			autoFocus: false,
 			select:function(event,ui){
@@ -79,7 +79,7 @@ $(function() {
 			};
 			 $.ajax({
 				type: "POST",
-				url: "<?php echo base_url(); ?>index.php/left_resign_con/get_left_resign_info",
+				url: "<?php echo base_url(); ?>left_resign_con/get_left_resign_info",
 				data: search_data,
 				cache: false,
 				success: function(data){
@@ -118,7 +118,7 @@ $(function() {
 						document.getElementById("left_resign_to_regular").disabled 	= true;
 					}
 					//alert(left_res_info);
-					$('#auto_gen1').load('<?php echo base_url();?>index.php/left_resign_con/get_left_resign_employee_basic_info/'+left_res_info[0]);
+					$('#auto_gen1').load('<?php echo base_url();?>left_resign_con/get_left_resign_employee_basic_info/'+left_res_info[0]);
 					$('#auto_gen1').show();
 					return false;
 				}
@@ -138,12 +138,12 @@ $(function() {
 		};
 		$.ajax({
 			type: "POST",
-			url: "<?php echo base_url(); ?>index.php/left_resign_con/left_resign_and_regular_action",
+			url: "<?php echo base_url(); ?>left_resign_con/left_resign_and_regular_action",
 			data: button_data,
 			cache: false,
 			success: function(data){
 				alert(data);
-				window.location.href = "<?php echo base_url();?>index.php/left_resign_con/left_resign_entry";
+				window.location.href = "<?php echo base_url();?>left_resign_con/left_resign_entry";
 				return false;
 			}
 		});
@@ -165,12 +165,12 @@ $(function() {
 		};
 		$.ajax({
 			type: "POST",
-			url: "<?php echo base_url(); ?>index.php/left_resign_con/left_resign_and_regular_action",
+			url: "<?php echo base_url(); ?>left_resign_con/left_resign_and_regular_action",
 			data: button_data,
 			cache: false,
 			success: function(data){
 				alert(data);
-				window.location.href = "<?php echo base_url();?>index.php/left_resign_con/left_resign_entry";
+				window.location.href = "<?php echo base_url();?>left_resign_con/left_resign_entry";
 				return false;
 			}
 		});

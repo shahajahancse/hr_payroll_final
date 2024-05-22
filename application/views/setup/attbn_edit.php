@@ -10,9 +10,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/attendance_bonus') ?>">
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/attendance_bonus') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -32,7 +32,7 @@
     <?php $failuer = $this->session->flashdata('failure');?>
     <div class="tablebox">
         <h3>Update Attendance Bonus</h3>
-        <form action="<?= base_url('index.php/setup_con/attn_bonus_edit').'/'.$attbn->id?> "
+        <form action="<?= base_url('setup_con/attn_bonus_edit').'/'.$attbn->id?> "
             enctype="multipart/form-data" method="post">
             <div class="row">
                 <div class="col-md-12">
@@ -68,7 +68,7 @@
 
                     <div class="form-group footer_button">
                         <button type="submit" class="btn btn-primary ">Submit</button></button>
-                        <a href="<?php echo base_url('index.php/setup_con/attendance_bonus') ?>"
+                        <a href="<?php echo base_url('setup_con/attendance_bonus') ?>"
                             class="btn-warning btn">Cancel</a>
                     </div>
                 </div>

@@ -4,9 +4,9 @@
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-3" style="padding: 7px;">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/department') ?>">
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/department') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">

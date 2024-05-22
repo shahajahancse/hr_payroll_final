@@ -19,7 +19,7 @@ function daily_attendance_summary_old(){
 	
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/mars_con/daily_attendance_summary/"+firstdate+"/"+category+"/"+unit_id;
+	url =  hostname + "mars_con/daily_attendance_summary/"+firstdate+"/"+category+"/"+unit_id;
 	
 	daily_att_sum = window.open(url,'daily_att_sum',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	daily_att_sum.moveTo(0,0);
@@ -43,7 +43,7 @@ function daily_attendance_summary_test(){
 	}
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/mars_con/daily_attendance_summary_test/"+firstdate+"/"+category+"/"+unit_id;
+	url =  hostname + "mars_con/daily_attendance_summary_test/"+firstdate+"/"+category+"/"+unit_id;
 	daily_att_sum = window.open(url,'daily_att_sum',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	daily_att_sum.moveTo(0,0);
 }*/
@@ -66,7 +66,7 @@ function daily_attendance_summary_test(){
 	
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/mars_con/daily_attendance_summary_test/"+firstdate+"/"+category+"/"+unit_id;
+	url =  hostname + "mars_con/daily_attendance_summary_test/"+firstdate+"/"+category+"/"+unit_id;
 	daily_att_sum = window.open(url,'daily_att_sum',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	daily_att_sum.moveTo(0,0);
 }
@@ -89,7 +89,7 @@ function daily_ot_summary(){
 	}
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/mars_con/daily_ot_summary/"+firstdate+"/"+category+"/"+unit_id;
+	url =  hostname + "mars_con/daily_ot_summary/"+firstdate+"/"+category+"/"+unit_id;
 	daily_att_sum = window.open(url,'daily_att_sum',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
 	daily_att_sum.moveTo(0,0);
 }

@@ -115,7 +115,7 @@ document.image.width = 150;
 
  var queryString="empid="+empid+"&name="+name+"&mname="+mname+"&fname="+fname+"&dob="+dob+"&reli="+reli+"&sex="+sex+"&ms="+ms+"&bgroup="+bgroup+"&img="+img+"&padd="+padd+"&fadd="+fadd;
  
- ajaxRequest.open("POST", "index.php/payroll_con/per_info/", true);
+ ajaxRequest.open("POST", "payroll_con/per_info/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -161,7 +161,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
  
  var queryString="linename="+linename;
  
- ajaxRequest.open("POST", "index.php/payroll_con/save_linename/", true);
+ ajaxRequest.open("POST", "payroll_con/save_linename/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -206,7 +206,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
  
  var queryString="deptname="+deptname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/save_deptname/", true);
+ ajaxRequest.open("POST", "payroll_con/save_deptname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -252,7 +252,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
  
  var queryString="sectionname="+sectionname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/save_sectionname/", true);
+ ajaxRequest.open("POST", "payroll_con/save_sectionname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -298,7 +298,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
  
  var queryString="designationname="+designationname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/save_designationname/", true);
+ ajaxRequest.open("POST", "payroll_con/save_designationname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -361,7 +361,7 @@ if(okyes==false) return;
  var fadd 	= document.getElementById('fadd').value;
  var queryString="empid="+empid+"&name="+name+"&mname="+mname+"&fname="+fname+"&dob="+dob+"&reli="+reli+"&sex="+sex+"&ms="+ms+"&bgroup="+bgroup+"&img="+img+"&padd="+padd+"&fadd="+fadd;
  
- ajaxRequest.open("POST", "index.php/payroll_con/per_update/", true);
+ ajaxRequest.open("POST", "payroll_con/per_update/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -422,7 +422,7 @@ if(okyes==false) return;
 
  var queryString="deptid="+deptid+"&deptname="+deptname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/update_deptname/", true);
+ ajaxRequest.open("POST", "payroll_con/update_deptname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -484,7 +484,7 @@ if(okyes==false) return;
  
  var queryString="sectionid="+sectionid+"&sectionname="+sectionname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/update_sectionname/", true);
+ ajaxRequest.open("POST", "payroll_con/update_sectionname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -545,7 +545,7 @@ if(okyes==false) return;
 
  var queryString="positionid="+positionid+"&positionname="+positionname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/update_positionname_co/", true);
+ ajaxRequest.open("POST", "payroll_con/update_positionname_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -604,7 +604,7 @@ if(okyes==false) return;
 
  var queryString="designationid="+designationid+"&designationname="+designationname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/update_designationname/", true);
+ ajaxRequest.open("POST", "payroll_con/update_designationname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -665,7 +665,7 @@ if(okyes==false) return;
 
  var queryString="lineid="+lineid+"&linename="+linename;
  
- ajaxRequest.open("POST", "index.php/payroll_con/update_linename/", true);
+ ajaxRequest.open("POST", "payroll_con/update_linename/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -726,7 +726,7 @@ function ajaxDelete(){
 
  var queryString="empid="+empid;
  
- ajaxRequest.open("POST", "index.php/payroll_con/per_delete/", true);
+ ajaxRequest.open("POST", "payroll_con/per_delete/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -780,7 +780,7 @@ function delete_deptname(){
 
  var queryString="deptname="+deptname;
 
- ajaxRequest.open("POST", "index.php/payroll_con/delete_deptname/", true);
+ ajaxRequest.open("POST", "payroll_con/delete_deptname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -834,7 +834,7 @@ function delete_sectionname(){
 
  var queryString="sectionname="+sectionname;
 
- ajaxRequest.open("POST", "index.php/payroll_con/delete_sectionname/", true);
+ ajaxRequest.open("POST", "payroll_con/delete_sectionname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -889,7 +889,7 @@ function delete_positionname(){
 
  var queryString="positionname="+positionname;
 
- ajaxRequest.open("POST", "index.php/payroll_con/delete_positionname_co/", true);
+ ajaxRequest.open("POST", "payroll_con/delete_positionname_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -943,7 +943,7 @@ function delete_designationname(){
 
  var queryString="designationname="+designationname;
 
- ajaxRequest.open("POST", "index.php/payroll_con/delete_designationname/", true);
+ ajaxRequest.open("POST", "payroll_con/delete_designationname/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -986,7 +986,7 @@ document.Att_bonus.attb_save.disabled = true;
  
  var queryString="check_attn_name="+check_attn_name;
  
- ajaxRequest.open("POST", "index.php/payroll_con/search_attenb_name/", true);
+ ajaxRequest.open("POST", "payroll_con/search_attenb_name/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1052,7 +1052,7 @@ function enable_shiftchange()
 	document.getElementById('sh_name').value="";
  
  //var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/shift_change_co/", true);
+ ajaxRequest.open("POST", "payroll_con/shift_change_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send();
  
@@ -1127,7 +1127,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
  
  var queryString="ab_rul_name="+ab_rul_name+"&ab_rule="+ab_rule;
  
- ajaxRequest.open("POST", "index.php/payroll_con/save_atttbname_con/", true);
+ ajaxRequest.open("POST", "payroll_con/save_atttbname_con/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1194,7 +1194,7 @@ if(okyes==false) return;
 
  var queryString="attn_b_id="+attn_b_id+"&ab_rul_name="+ab_rul_name+"&ab_rule="+ab_rule;
  
- ajaxRequest.open("POST", "index.php/payroll_con/update_attnbname_con/", true);
+ ajaxRequest.open("POST", "payroll_con/update_attnbname_con/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1261,7 +1261,7 @@ function delete_attnbname()
 
  var queryString="ab_rul_name="+ab_rul_name;
 
- ajaxRequest.open("POST", "index.php/payroll_con/delete_attnbname_co/", true);
+ ajaxRequest.open("POST", "payroll_con/delete_attnbname_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1312,7 +1312,7 @@ function delete_linename(){
 
  var queryString="linename="+linename;
 
- ajaxRequest.open("POST", "index.php/payroll_con/delete_linename/", true);
+ ajaxRequest.open("POST", "payroll_con/delete_linename/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1357,7 +1357,7 @@ function ajaxSearch(){
 
  var queryString="empid="+empid;
  
- ajaxRequest.open("POST", "index.php/payroll_con/search/", true);
+ ajaxRequest.open("POST", "payroll_con/search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1432,7 +1432,7 @@ document.department.pi_save.disabled = true;
  
  var queryString="deptname="+deptname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/search_dept_name/", true);
+ ajaxRequest.open("POST", "payroll_con/search_dept_name/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1482,7 +1482,7 @@ document.section.pi_save.disabled = true;
  
  var queryString="sectionname="+sectionname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/search_section_name/", true);
+ ajaxRequest.open("POST", "payroll_con/search_section_name/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1556,7 +1556,7 @@ document.designation.designation_save.disabled = true;
  
  var queryString="designationname="+designationname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/search_designation_name/", true);
+ ajaxRequest.open("POST", "payroll_con/search_designation_name/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1616,7 +1616,7 @@ document.line_form.line_save.disabled = true;
 //alert(linename);
  var queryString="linename="+linename;
  
- ajaxRequest.open("POST", "index.php/payroll_con/search_line_name/", true);
+ ajaxRequest.open("POST", "payroll_con/search_line_name/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1680,7 +1680,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
  
  var queryString="positionname="+positionname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/save_positionname_co/", true);
+ ajaxRequest.open("POST", "payroll_con/save_positionname_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1726,7 +1726,7 @@ function find_position_name(){
  
  var queryString="positionname="+positionname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/search_position_name/", true);
+ ajaxRequest.open("POST", "payroll_con/search_position_name/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -1913,7 +1913,7 @@ if(attbonus=='Select' || attbonus==''){
 	 
 	var queryString="com_empid="+com_empid+"&idcard="+idcard+"&dept="+dept+"&sec="+sec+"&line="+line+"&desig="+desig+"&operation="+operation+"&position="+position+"&salg="+salg+"&empstat="+empstat+"&empshift="+empshift+"&gsal="+gsal+"&otentitle="+otentitle+"&transport="+transport+"&lunch="+lunch+"&attbonus="+attbonus+"&ejd="+ejd;
 	//alert(desig);
-	ajaxRequest.open("POST", "index.php/payroll_con/com_info_insert/", true);
+	ajaxRequest.open("POST", "payroll_con/com_info_insert/", true);
  	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  	ajaxRequest.send(queryString);
  
@@ -2051,7 +2051,7 @@ if(attbonus=='Select' || attbonus==''){
 	
 	var queryString="com_empid="+com_empid+"&idcard="+idcard+"&dept="+dept+"&sec="+sec+"&line="+line+"&desig="+desig+"&operation="+operation+"&position="+position+"&salg="+salg+"&empstat="+empstat+"&empshift="+empshift+"&gsal="+gsal+"&otentitle="+otentitle+"&transport="+transport+"&lunch="+lunch+"&attbonus="+attbonus+"&ejd="+ejd;
 	//alert(queryString);
-	ajaxRequest.open("POST", "index.php/payroll_con/com_info_edit/", true);
+	ajaxRequest.open("POST", "payroll_con/com_info_edit/", true);
  	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  	ajaxRequest.send(queryString);
  
@@ -2101,7 +2101,7 @@ ajaxRequest.onreadystatechange = function(){
 	
 	var queryString="com_empid="+com_empid;
 
-	ajaxRequest.open("POST", "index.php/payroll_con/com_info_delete/", true);
+	ajaxRequest.open("POST", "payroll_con/com_info_delete/", true);
  	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  	ajaxRequest.send(queryString);
  
@@ -2174,7 +2174,7 @@ function com_info_Search(){
 
  var queryString="empid="+empid;
  
- ajaxRequest.open("POST", "index.php/payroll_con/com_info_search/", true);
+ ajaxRequest.open("POST", "payroll_con/com_info_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -2464,7 +2464,7 @@ function com_info_dept(){
 	 else{
 
  var queryString="dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/dept_search/", true);
+ ajaxRequest.open("POST", "payroll_con/dept_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -2529,7 +2529,7 @@ function com_info_section(){
 	 else{
 	
  var queryString="sec="+sec+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/section_search/", true);
+ ajaxRequest.open("POST", "payroll_con/section_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -2603,7 +2603,7 @@ function com_info_desig(dept_id){
 	
 	
  var queryString="dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/desig_search/", true);
+ ajaxRequest.open("POST", "payroll_con/desig_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -2663,7 +2663,7 @@ if(desig=='Select'){
 	 else{
 	
  var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/grade_search/", true);
+ ajaxRequest.open("POST", "payroll_con/grade_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -2723,7 +2723,7 @@ if(salg=='Select'){
 	 else{
 	
  var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/empstat_search/", true);
+ ajaxRequest.open("POST", "payroll_con/empstat_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -2783,7 +2783,7 @@ if(empstat=='Select'){
 	 else{
 	
  var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/empshift_search/", true);
+ ajaxRequest.open("POST", "payroll_con/empshift_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -2995,7 +2995,7 @@ if(lunch=='Select'){
  var attbonus = document.getElementById('attbonus').value;
 
  var queryString="attbonus="+attbonus;
- ajaxRequest.open("POST", "index.php/payroll_con/attbonus_search/", true);
+ ajaxRequest.open("POST", "payroll_con/attbonus_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -3130,7 +3130,7 @@ function enable_save(){
    }
  }
 // var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/dept/", true);
+ ajaxRequest.open("POST", "payroll_con/dept/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send();
  
@@ -3375,7 +3375,7 @@ function intime()
    }
  }
  var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/manual_atten_co/", true);
+ ajaxRequest.open("POST", "payroll_con/manual_atten_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -3465,7 +3465,7 @@ function attendence_get_data()
    }
  }
  //var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/manual_atten_co/", true);
+ ajaxRequest.open("POST", "payroll_con/manual_atten_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send();
  
@@ -3555,7 +3555,7 @@ function salary_get_data()
    }
  }
  //var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/manual_atten_co/", true);
+ ajaxRequest.open("POST", "payroll_con/manual_atten_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send();
  
@@ -3644,7 +3644,7 @@ function other_get_data()
    }
  }
  //var queryString="desig="+desig+"&dept="+dept;
- ajaxRequest.open("POST", "index.php/payroll_con/manual_atten_co/", true);
+ ajaxRequest.open("POST", "payroll_con/manual_atten_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send();
  
@@ -3802,7 +3802,7 @@ function section_manual()
 
  var queryString="desig="+desig+"&dept="+dept;
 
- ajaxRequest.open("POST", "index.php/payroll_con/section_manual/", true);
+ ajaxRequest.open("POST", "payroll_con/section_manual/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -3874,7 +3874,7 @@ function ajax_edu_skill_Insert(){
 
  var queryString="edu_empid="+edu_empid+"&edu_last_dg="+edu_last_dg+"&edu_pass_year="+edu_pass_year+"&edu_istitute="+edu_istitute+"&edu_skil_dept="+edu_skil_dept+"&edu_skill_year="+edu_skill_year+"&edu_skill_company="+edu_skill_company;
  
- ajaxRequest.open("POST", "index.php/payroll_con/edu_skill_insert/", true);
+ ajaxRequest.open("POST", "payroll_con/edu_skill_insert/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -3936,7 +3936,7 @@ ajaxRequest.onreadystatechange = function(){
 
  var queryString="edu_empid="+edu_empid;
  
- ajaxRequest.open("POST", "index.php/payroll_con/ajax_edu_delete/", true);
+ ajaxRequest.open("POST", "payroll_con/ajax_edu_delete/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -3984,7 +3984,7 @@ function ajaxSearch_edu_skill(){
 
  var queryString="edu_empid="+empid;
  
- ajaxRequest.open("POST", "index.php/payroll_con/ajaxSearch_edu_skill/", true);
+ ajaxRequest.open("POST", "payroll_con/ajaxSearch_edu_skill/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -4058,7 +4058,7 @@ if(edu_empid=='' || edu_empid==null){
 
  var queryString="edu_empid="+edu_empid+"&edu_last_dg="+edu_last_dg+"&edu_pass_year="+edu_pass_year+"&edu_istitute="+edu_istitute+"&edu_skil_dept="+edu_skil_dept+"&edu_skill_year="+edu_skill_year+"&edu_skill_company="+edu_skill_company;
  
- ajaxRequest.open("POST", "index.php/payroll_con/edu_update/", true);
+ ajaxRequest.open("POST", "payroll_con/edu_update/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -4124,7 +4124,7 @@ var okyes;
 
  var queryString="gr_name="+gr_name+"&gr_str_basic="+gr_str_basic+"&gr_end_basic="+gr_end_basic+"&gr_incr1="+gr_incr1+"&gr_1st_phase="+gr_1st_phase+"&gr_incr2="+gr_incr2+"&gr_2nd_phase="+gr_2nd_phase;
  
- ajaxRequest.open("POST", "index.php/payroll_con/grade_insert/", true);
+ ajaxRequest.open("POST", "payroll_con/grade_insert/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
 ajaxRequest.onreadystatechange = function(){
@@ -4204,7 +4204,7 @@ function ajax_grade_update(){
  var queryString="gr_name="+gr_name+"&gr_str_basic="+gr_str_basic+"&gr_end_basic="+gr_end_basic+"&gr_incr1="+gr_incr1+"&gr_1st_phase="+gr_1st_phase+"&gr_incr2="+gr_incr2+"&gr_2nd_phase="+gr_2nd_phase;
  
  
- ajaxRequest.open("POST", "index.php/payroll_con/grade_update/", true);
+ ajaxRequest.open("POST", "payroll_con/grade_update/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -4242,7 +4242,7 @@ function ajaxSearch_grade(){
  }
  var gr_name 	= document.getElementById('gr_name').value;
  var queryString="gr_name="+gr_name;
- ajaxRequest.open("POST", "index.php/payroll_con/ajaxSearch_con_grade/", true);
+ ajaxRequest.open("POST", "payroll_con/ajaxSearch_con_grade/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
 ajaxRequest.onreadystatechange = function(){
@@ -4296,7 +4296,7 @@ function ajax_grade_Delete()
 
  var queryString="gr_name="+gr_name;
  
- ajaxRequest.open("POST", "index.php/payroll_con/ajax_grade_delete/", true);
+ ajaxRequest.open("POST", "payroll_con/ajax_grade_delete/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -4371,7 +4371,7 @@ okyes=confirm('Are you sure you want to Insert this?');
 
  var queryString="dpt_name="+dpt_name;
  
- ajaxRequest.open("POST", "index.php/payroll_con/department_insert/", true);
+ ajaxRequest.open("POST", "payroll_con/department_insert/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  ajaxRequest.onreadystatechange = function(){
@@ -4430,14 +4430,14 @@ report_month= document.getElementById('report_month').value;
 report_year= document.getElementById('report_year').value;
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/absent_report/"+report_year+"/"+report_month;
+url =  "http://"+hostname+"/payroll/payroll_con/absent_report/"+report_year+"/"+report_month;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=500");
 myRef.moveTo(0,0);
 
 /* var queryString="null";
  
- ajaxRequest.open("POST", "index.php/payroll_con/find_late/", true);
+ ajaxRequest.open("POST", "payroll_con/find_late/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -4483,14 +4483,14 @@ report_month= document.getElementById('report_month').value;
 report_year= document.getElementById('report_year').value;
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/late_commer_report/"+report_year+"/"+report_month;
+url =  "http://"+hostname+"/payroll/payroll_con/late_commer_report/"+report_year+"/"+report_month;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=500");
 myRef.moveTo(0,0);
 
 /* var queryString="null";
  
- ajaxRequest.open("POST", "index.php/payroll_con/find_late/", true);
+ ajaxRequest.open("POST", "payroll_con/find_late/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -4573,7 +4573,7 @@ month= document.getElementById('report_month').value;
 year= document.getElementById('report_year').value;
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/monthly_att_register/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;;
+url =  "http://"+hostname+"/payroll/payroll_con/monthly_att_register/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -4648,7 +4648,7 @@ year= document.getElementById('report_year').value;
 var status = "A";
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -4723,7 +4723,7 @@ year= document.getElementById('report_year').value;
 var status = "P";
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -4802,7 +4802,7 @@ if(dept !='Select')
 
  
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/left_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/left_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -4881,7 +4881,7 @@ if(dept !='Select')
 
  
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/resign_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/resign_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -4959,7 +4959,7 @@ if(dept !='Select')
 
  
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/new_join_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/new_join_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -4993,7 +4993,7 @@ document.shift_change.schange_save.disabled = true;
  
  var queryString="sh_name="+sh_name;
  
- ajaxRequest.open("POST", "index.php/payroll_con/shift_change_search/", true);
+ ajaxRequest.open("POST", "payroll_con/shift_change_search/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -5109,7 +5109,7 @@ year= document.getElementById('report_year').value;
 var status = "L";
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -5182,8 +5182,8 @@ month= document.getElementById('report_month').value;
 year= document.getElementById('report_year').value;
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/daily_late_report/"+year+"/"+month+"/"+date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
-//url =  "http://"+hostname+"/payroll/index.php/payroll_con/daily_late_report/"+year+"/"+month+"/"+date;
+url =  "http://"+hostname+"/payroll/payroll_con/daily_late_report/"+year+"/"+month+"/"+date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+//url =  "http://"+hostname+"/payroll/payroll_con/daily_late_report/"+year+"/"+month+"/"+date;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -5256,8 +5256,8 @@ month= document.getElementById('report_month').value;
 year= document.getElementById('report_year').value;
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
-//url =  "http://"+hostname+"/payroll/index.php/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date;
+url =  "http://"+hostname+"/payroll/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+//url =  "http://"+hostname+"/payroll/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -5297,8 +5297,8 @@ month= document.getElementById('report_month').value;
 year= document.getElementById('report_year').value;
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/manpower_report/"+year+"/"+month+"/"+date;
-//url =  "http://"+hostname+"/payroll/index.php/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date;
+url =  "http://"+hostname+"/payroll/payroll_con/manpower_report/"+year+"/"+month+"/"+date;
+//url =  "http://"+hostname+"/payroll/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -5370,7 +5370,7 @@ month= document.getElementById('report_month_sal').value;
 year= document.getElementById('report_year_sal').value;
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/monthly_salary_sheet/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all+"/"+emp_status;
+url =  "http://"+hostname+"/payroll/payroll_con/monthly_salary_sheet/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all+"/"+emp_status;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -5445,7 +5445,7 @@ year= document.getElementById('report_year_sal').value;
 
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/salary_summary_report/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all+"/"+emp_status;
+url =  "http://"+hostname+"/payroll/payroll_con/salary_summary_report/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all+"/"+emp_status;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -5491,7 +5491,7 @@ end_id   = document.getElementById('end_id').value;
 	}
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/id_card/"+start_id+"/"+end_id;
+url =  "http://"+hostname+"/payroll/payroll_con/id_card/"+start_id+"/"+end_id;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -5537,7 +5537,7 @@ end_id   = document.getElementById('end_id').value;
 	}
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/appointment_letter/"+start_id+"/"+end_id;
+url =  "http://"+hostname+"/payroll/payroll_con/appointment_letter/"+start_id+"/"+end_id;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=800");
 myRef.moveTo(300,50);
@@ -5621,7 +5621,7 @@ if(dept !='Select')
 }
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/payslip_report/"+start_id+"/"+end_id+"/"+sal_month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/payslip_report/"+start_id+"/"+end_id+"/"+sal_month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=800");
 myRef.moveTo(300,50);
@@ -5652,13 +5652,13 @@ if(okyes==false) return;
 p_start_date= document.getElementById('p_start_date').value;
 month= document.getElementById('report_month').value;
 year= document.getElementById('report_year').value;
-//url = "http://localhost/payroll/index.php/payroll_con/daily_absent/"+month+"/"+year;
+//url = "http://localhost/payroll/payroll_con/daily_absent/"+month+"/"+year;
 //myRef = window.open(url,'mywin',"menubar=1,resizable=1,width=1100,height=600");
 //myRef.moveTo(0,0);
 
 	var queryString="year="+year+"&month="+month+"&p_start_date="+p_start_date;
 	
-	ajaxRequest.open("POST", "index.php/payroll_con/daily_absent/", true);
+	ajaxRequest.open("POST", "payroll_con/daily_absent/", true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
@@ -5690,13 +5690,13 @@ alert("Process start?");
 
 month= document.getElementById('report_month_sal').value;
 year= document.getElementById('report_year_sal').value;
-//url = "http://localhost/payroll/index.php/payroll_con/daily_absent/"+month+"/"+year;
+//url = "http://localhost/payroll/payroll_con/daily_absent/"+month+"/"+year;
 //myRef = window.open(url,'mywin',"menubar=1,resizable=1,width=1100,height=600");
 //myRef.moveTo(0,0);
 
 	var queryString="year="+year+"&month="+month;
 	
-	ajaxRequest.open("POST", "index.php/payroll_con/process/", true);
+	ajaxRequest.open("POST", "payroll_con/process/", true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
@@ -5772,7 +5772,7 @@ end_date= document.getElementById('end_date').value;
 
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(0,0);
@@ -5850,7 +5850,7 @@ end_date= document.getElementById('end_date').value;
 
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(0,0);
@@ -5924,7 +5924,7 @@ end_date= document.getElementById('end_date').value;
 
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(0,0);
@@ -5995,7 +5995,7 @@ end_date= document.getElementById('end_date').value;
 
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/continuous_late_report/"+start_date+"/"+end_date+"/"+year_month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  "http://"+hostname+"/payroll/payroll_con/continuous_late_report/"+start_date+"/"+end_date+"/"+year_month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(0,0);
@@ -6048,7 +6048,7 @@ var queryString="empid_leave="+empid_leave+"&start_leave_date="+start_leave_date
 
 //alert(empid_leave);
  
- ajaxRequest.open("POST", "index.php/payroll_con/save_leave_co/", true);
+ ajaxRequest.open("POST", "payroll_con/save_leave_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -6142,7 +6142,7 @@ function search_year()
 
 // var queryString="edu_empid="+empid;
  var queryString="empid="+empid+"&year="+year; 
- ajaxRequest.open("POST", "index.php/payroll_con/leave_transaction_co/", true);
+ ajaxRequest.open("POST", "payroll_con/leave_transaction_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -6266,7 +6266,7 @@ function manual_entry_save()
 	
 	var queryString="column="+column+"&column_value="+column_value+"&startdate="+startdate+"&enddate="+enddate+"&time="+time+"&empid="+empid;
    
-    ajaxRequest.open("POST", "index.php/payroll_con/manual_att_entry_co/", true);
+    ajaxRequest.open("POST", "payroll_con/manual_att_entry_co/", true);
  	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  	ajaxRequest.send(queryString);
  
@@ -6314,7 +6314,7 @@ function find_operation_name(){
  
  var queryString="operationname="+operationname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/search_operation_name/", true);
+ ajaxRequest.open("POST", "payroll_con/search_operation_name/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -6398,7 +6398,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
  
  var queryString="operationname="+operationname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/save_operationname_co/", true);
+ ajaxRequest.open("POST", "payroll_con/save_operationname_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -6457,7 +6457,7 @@ if(okyes==false) return;
   
  var queryString="shift_name="+shift_name+"&shift_id="+shift_id;
  
- ajaxRequest.open("POST", "index.php/payroll_con/update_shift_time/", true);
+ ajaxRequest.open("POST", "payroll_con/update_shift_time/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -6521,7 +6521,7 @@ if(okyes==false) return;
 
  var queryString="operationid="+operationid+"&operationname="+operationname;
  
- ajaxRequest.open("POST", "index.php/payroll_con/update_operationname_co/", true);
+ ajaxRequest.open("POST", "payroll_con/update_operationname_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -6581,7 +6581,7 @@ function delete_operationname(){
 
  var queryString="operationname="+operationname;
 
- ajaxRequest.open("POST", "index.php/payroll_con/delete_operationname_co/", true);
+ ajaxRequest.open("POST", "payroll_con/delete_operationname_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -6696,7 +6696,7 @@ function add_deduction_add()
  }
 
  var queryString="add_deduction="+add_deduction;
- ajaxRequest.open("POST", "index.php/payroll_con/manual_atten_co/", true);
+ ajaxRequest.open("POST", "payroll_con/manual_atten_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send();
  
@@ -6789,7 +6789,7 @@ function add_payment_add()
 
  //var queryString="add_payment="+add_payment;
 //alert(queryString);
- ajaxRequest.open("POST", "index.php/payroll_con/add_payment_add_co/", true);
+ ajaxRequest.open("POST", "payroll_con/add_payment_add_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send();
  
@@ -6921,7 +6921,7 @@ function save_add_payment()
 	
 	var queryString="column_add_payment="+column_add_payment+"&column_value_add_payment="+column_value_add_payment+"&add_payment_year="+add_payment_year+"&add_payment_month="+add_payment_month+"&add_payment_id="+add_payment_id+"&add_payment_empid="+add_payment_empid;
   // alert(queryString);
-    ajaxRequest.open("POST", "index.php/payroll_con/save_add_payment_co/", true);
+    ajaxRequest.open("POST", "payroll_con/save_add_payment_co/", true);
 	//var in_time =entryname.in_time.value;
 	//var in_time = document.entryname.elements.in_time.value;
 //	var in_time = document.getElementById('in_time').value;
@@ -7003,7 +7003,7 @@ function save_add_deduction()
 	
 	var queryString="column_ad="+column_ad+"&column_value_ad="+column_value_ad+"&year_ad="+year_ad+"&deduction_ad="+deduction_ad+"&tex_ad="+tex_ad+"&empid_ad="+empid_ad+"&month_ad="+month_ad;
    
-    ajaxRequest.open("POST", "index.php/payroll_con/tex_add_deduct_co/", true);
+    ajaxRequest.open("POST", "payroll_con/tex_add_deduct_co/", true);
 	//var in_time =entryname.in_time.value;
 	//var in_time = document.entryname.elements.in_time.value;
 //	var in_time = document.getElementById('in_time').value;
@@ -7058,7 +7058,7 @@ function manual_entry_Delete()
 
  var queryString="empid_present_absent="+empid_present_absent+"&startdate_present_absent="+startdate_present_absent;
  
- ajaxRequest.open("POST", "index.php/payroll_con/manual_entry_Delete_co/", true);
+ ajaxRequest.open("POST", "payroll_con/manual_entry_Delete_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -7108,7 +7108,7 @@ function work_off_delete_function()
 
  var queryString="work_off_day="+work_off_day;
  
- ajaxRequest.open("POST", "index.php/payroll_con/work_off_delete_function_co/", true);
+ ajaxRequest.open("POST", "payroll_con/work_off_delete_function_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -7168,7 +7168,7 @@ function save_schange()
 		 
 	var queryString="sh_nam="+sh_nam+"&shift_time="+shift_time;
 	//alert(desig);
-	ajaxRequest.open("POST", "index.php/payroll_con/save_schange_co/", true);
+	ajaxRequest.open("POST", "payroll_con/save_schange_co/", true);
  	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  	ajaxRequest.send(queryString);
  
@@ -7222,7 +7222,7 @@ var queryString="holiday_start_day="+holiday_start_day+"&holiday_end_date="+holi
 
 //alert(empid_leave);
  
- ajaxRequest.open("POST", "index.php/payroll_con/holiday_co/", true);
+ ajaxRequest.open("POST", "payroll_con/holiday_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -7282,7 +7282,7 @@ var queryString="work_off_day="+work_off_day;
 
 //alert(empid_leave);
  
- ajaxRequest.open("POST", "index.php/payroll_con/work_off_save_function_co/", true);
+ ajaxRequest.open("POST", "payroll_con/work_off_save_function_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -7377,7 +7377,7 @@ function save_work_off()
 	
 	var queryString="work_off_date="+work_off_date+"&work_off_empid="+work_off_empid+"&column_work_off="+column_work_off+"&column_value_work_off="+column_value_work_off+"&work_off_start="+work_off_start;
 
-	ajaxRequest.open("POST", "index.php/payroll_con/save_work_off_co/", true);
+	ajaxRequest.open("POST", "payroll_con/save_work_off_co/", true);
 	//var in_time =entryname.in_time.value;
 	//var in_time = document.entryname.elements.in_time.value;
 //	var in_time = document.getElementById('in_time').value;
@@ -7423,7 +7423,7 @@ function add_work_off()
 
  //var queryString="add_payment="+add_payment;
 //alert(queryString);
- ajaxRequest.open("POST", "index.php/payroll_con/add_work_off_co/", true);
+ ajaxRequest.open("POST", "payroll_con/add_work_off_co/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send();
  
@@ -7527,14 +7527,14 @@ start_date = report_year+"-"+report_month+"-"+job_start_date;
 end_date = report_year+"-"+report_month+"-"+job_end_date;
 
 hostname = window.location.hostname;
-url =  "http://"+hostname+"/payroll/index.php/payroll_con/job_card/"+start_date+"/"+end_date+"/"+emp_id;
+url =  "http://"+hostname+"/payroll/payroll_con/job_card/"+start_date+"/"+end_date+"/"+emp_id;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=800");
 myRef.moveTo(0,0);
 
 /* var queryString="null";
  
- ajaxRequest.open("POST", "index.php/payroll_con/find_late/", true);
+ ajaxRequest.open("POST", "payroll_con/find_late/", true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
  
@@ -7822,7 +7822,7 @@ MyDesktop.AccordionWindow = Ext.extend(Ext.app.Module, {
             text: 'Accordion Window',
             iconCls:'accordion',
           //  handler : this.createWindow,
-			//url = "http://localhost/payroll/index.php/payroll_con/find_late/";
+			//url = "http://localhost/payroll/payroll_con/find_late/";
 			//myRef = window.open(url,'mywin',"menubar=1,resizable=1,width=900,height=300");
 		//	myRef.moveTo(0,0);
             scope: this

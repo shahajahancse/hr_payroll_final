@@ -501,9 +501,5 @@ function save() {
             $("#loader").hide();
         }
     })
-   
-
-
-
 }
 </script>

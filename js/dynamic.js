@@ -2244,7 +2244,7 @@ function com_info_next_Search1()
  var queryString="id_skill="+id_skill;
  hostname = window.location.href;
  hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
- var url = hostname + "index.php/emp_info_con/com_info_next_Search1/";
+ var url = hostname + "emp_info_con/com_info_next_Search1/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -2703,7 +2703,7 @@ function com_info_prev_Search1()
  var queryString="id_skill="+id_skill;
  hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
- var url = hostname + "index.php/emp_info_con/com_info_prev_Search1/";
+ var url = hostname + "emp_info_con/com_info_prev_Search1/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -3153,7 +3153,7 @@ function com_info_Search1()
 
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	var url =  hostname + "index.php/emp_info_con/com_info_search1/";
+	var url =  hostname + "emp_info_con/com_info_search1/";
 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -3545,7 +3545,7 @@ function com_info_Search1_old(){
 
  hostname = window.location.href;
  hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
- url =  hostname+"/index.php/emp_info_con/com_info_search1/";
+ url =  hostname+"/emp_info_con/com_info_search1/";
 
  // alert(url);
 
@@ -6211,7 +6211,7 @@ report_year= document.getElementById('report_year').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/absent_report/"+report_year+"/"+report_month;
+url =  hostname + "payroll_con/absent_report/"+report_year+"/"+report_month;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=500");
 myRef.moveTo(0,0);
@@ -6265,7 +6265,7 @@ report_year= document.getElementById('report_year').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/late_commer_report/"+report_year+"/"+report_month;
+url =  hostname + "payroll_con/late_commer_report/"+report_year+"/"+report_month;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=500");
 myRef.moveTo(0,0);
@@ -6356,7 +6356,7 @@ year= document.getElementById('report_year').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/monthly_att_register/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;;
+url =  hostname + "payroll_con/monthly_att_register/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -6393,7 +6393,7 @@ var year_month = year+"-"+month;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/salary_summary/"+year_month;
+url =  hostname + "payroll_con/salary_summary/"+year_month;
 
 sal_rep = window.open(url,'sal_rep',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 sal_rep.moveTo(50,50);
@@ -6469,7 +6469,7 @@ var status = "A";
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -6545,7 +6545,7 @@ var status = "P";
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -6625,7 +6625,7 @@ if(dept !='Select')
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/left_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/left_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -6705,7 +6705,7 @@ if(dept !='Select')
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/resign_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/resign_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -6784,7 +6784,7 @@ if(dept !='Select')
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/new_join_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/new_join_emp_report/"+other_start_date+"/"+other_end_date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -6935,7 +6935,7 @@ var status = "L";
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/daily_report/"+year+"/"+month+"/"+date+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -7009,8 +7009,8 @@ year= document.getElementById('report_year').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/daily_late_report/"+year+"/"+month+"/"+date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
-//url =  hostname + "index.php/payroll_con/daily_late_report/"+year+"/"+month+"/"+date;
+url =  hostname + "payroll_con/daily_late_report/"+year+"/"+month+"/"+date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+//url =  hostname + "payroll_con/daily_late_report/"+year+"/"+month+"/"+date;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -7084,8 +7084,8 @@ year= document.getElementById('report_year').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
-//url =  hostname + "index.php/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date;
+url =  hostname + "payroll_con/out_punch_miss/"+year+"/"+month+"/"+date+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+//url =  hostname + "payroll_con/out_punch_miss/"+year+"/"+month+"/"+date;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -7126,8 +7126,8 @@ year= document.getElementById('report_year').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/manpower_report/"+year+"/"+month+"/"+date;
-//url =  hostname + "index.php/payroll_con/out_punch_miss/"+year+"/"+month+"/"+date;
+url =  hostname + "payroll_con/manpower_report/"+year+"/"+month+"/"+date;
+//url =  hostname + "payroll_con/out_punch_miss/"+year+"/"+month+"/"+date;
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
 }
@@ -7200,7 +7200,7 @@ year= document.getElementById('report_year_sal').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/monthly_salary_sheet/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all+"/"+emp_status;
+url =  hostname + "payroll_con/monthly_salary_sheet/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all+"/"+emp_status;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -7276,7 +7276,7 @@ year= document.getElementById('report_year_sal').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/salary_summary_report/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all+"/"+emp_status;
+url =  hostname + "payroll_con/salary_summary_report/"+year+"/"+month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all+"/"+emp_status;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -7323,7 +7323,7 @@ end_id   = document.getElementById('end_id').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/id_card/"+start_id+"/"+end_id;
+url =  hostname + "payroll_con/id_card/"+start_id+"/"+end_id;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(50,50);
@@ -7370,7 +7370,7 @@ end_id   = document.getElementById('end_id').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/appointment_letter/"+start_id+"/"+end_id;
+url =  hostname + "payroll_con/appointment_letter/"+start_id+"/"+end_id;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=800");
 myRef.moveTo(300,50);
@@ -7455,7 +7455,7 @@ if(dept !='Select')
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/payslip_report/"+start_id+"/"+end_id+"/"+sal_month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/payslip_report/"+start_id+"/"+end_id+"/"+sal_month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=900,height=800");
 myRef.moveTo(300,50);
@@ -7509,7 +7509,7 @@ function attn_process_month()
    $("#loader").show();
    hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-   url =  hostname + "index.php/attn_process_con/attn_process_month/";
+   url =  hostname + "attn_process_con/attn_process_month/";
 
    var queryString="p_start_date="+p_start_date+"&unit_id="+unit_id+"&spl="+spl;
 
@@ -7548,7 +7548,7 @@ year= document.getElementById('report_year_sal').value;
 process_check = i;
    hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-   url =  hostname + "index.php/salary_process_con/salary_process/";
+   url =  hostname + "salary_process_con/salary_process/";
    var queryString="spl="+spl+"&year="+year+"&month="+month+"&process_check="+process_check;
    ajaxRequest.open("POST",url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -7558,7 +7558,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
       var resp = ajaxRequest.responseText;
       $("#loader").hide();
       alert(resp);
-      //window.location.href = hostname + "index.php/salary_process_con/salary_process_form/";
+      //window.location.href = hostname + "salary_process_con/salary_process_form/";
    }
  }
 }
@@ -7591,7 +7591,7 @@ year= document.getElementById('report_year_sal').value;
 process_check = i;
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/salary_process_con/festival_process/";
+	url =  hostname + "salary_process_con/festival_process/";
 	var queryString="year="+year+"&month="+month+"&process_check="+process_check;
 
 	ajaxRequest.open("POST",url, true);
@@ -7602,7 +7602,7 @@ hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostnam
 		var resp = ajaxRequest.responseText;
 		$("#loader").hide();
 		alert(resp);
-		//window.location.href = hostname + "index.php/salary_process_con/salary_process_form/";
+		//window.location.href = hostname + "salary_process_con/salary_process_form/";
 	}
 	}
 }
@@ -7673,7 +7673,7 @@ end_date= document.getElementById('end_date').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(0,0);
@@ -7752,7 +7752,7 @@ end_date= document.getElementById('end_date').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(0,0);
@@ -7827,7 +7827,7 @@ end_date= document.getElementById('end_date').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/continuous_report/"+start_date+"/"+end_date+"/"+year_month+"/"+status+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(0,0);
@@ -7899,7 +7899,7 @@ end_date= document.getElementById('end_date').value;
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/payroll_con/continuous_late_report/"+start_date+"/"+end_date+"/"+year_month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
+url =  hostname + "payroll_con/continuous_late_report/"+start_date+"/"+end_date+"/"+year_month+"/"+col_desig+"/"+col_line+"/"+col_section+"/"+col_dept+"/"+col_all;
 
 myRef = window.open(url,'mywin',"menubar=1,resizable=1,scrollbars=1,width=1500,height=800");
 myRef.moveTo(0,0);
@@ -7958,7 +7958,7 @@ var queryString="empid_leave="+empid_leave+"&start_leave_date="+start_leave_date
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/entry_system_con/save_leave_co/";
+url =  hostname + "entry_system_con/save_leave_co/";
 
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -8079,7 +8079,7 @@ function search_year()
  }
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/entry_system_con/leave_transaction_co/";
+url =  hostname + "entry_system_con/leave_transaction_co/";
 
  var queryString="empid="+empid+"&year="+year;
  ajaxRequest.open("POST", url, true);
@@ -8180,7 +8180,7 @@ function search_emp_loan()
  }
  hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/entry_system_con/search_emp_loan_db/";
+url =  hostname + "entry_system_con/search_emp_loan_db/";
 
  var queryString="empid="+empid;
  ajaxRequest.open("POST", url, true);
@@ -8681,7 +8681,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/entry_system_con/advance_loan_insert/";
+url =  hostname + "entry_system_con/advance_loan_insert/";
 var queryString="emp_id="+emp_id+"&loan_amt="+loan_amt+"&pay_amt="+pay_amt+"&loan_date="+loan_date;
 
  ajaxRequest.open("POST",url, true);
@@ -8756,7 +8756,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
 
 hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-url =  hostname + "index.php/entry_system_con/due_amt_insert/";
+url =  hostname + "entry_system_con/due_amt_insert/";
 var queryString="emp_id="+emp_id+"&due_amt="+due_amt+"&due_pay_amt="+due_pay_amt+"&due_pay_date="+due_pay_date;
 
  ajaxRequest.open("POST",url, true);
@@ -9073,7 +9073,7 @@ function find_style_winding()
   var article_name 	= document.getElementById('article_no').value;
   var queryString="article_name="+article_name;
  //alert(queryString);
- url =  hostname + "index.php/winding_con/find_style_name_winding/";
+ url =  hostname + "winding_con/find_style_name_winding/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -9140,7 +9140,7 @@ function find_style_knitting()
 	  }
   var queryString="article_name="+article_name;
  //alert(queryString);
- url =  hostname + "index.php/knitting_con/find_style_name_knitting/";
+ url =  hostname + "knitting_con/find_style_name_knitting/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -9191,7 +9191,7 @@ function find_style_linking()
  //alert(queryString);
  hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
- url =  hostname + "index.php/linking_con/find_style_name_linking/";
+ url =  hostname + "linking_con/find_style_name_linking/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -9240,7 +9240,7 @@ function find_style_trimming()
 	  }
   var queryString="article_name="+article_name;
  //alert(queryString);
- url =  hostname + "index.php/trimming_con/find_style_name_trimming/";
+ url =  hostname + "trimming_con/find_style_name_trimming/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -9288,7 +9288,7 @@ function find_style_mending()
 	  }
   var queryString="article_name="+article_name;
  //alert(queryString);
- url =  hostname + "index.php/mending_con/find_style_name_mending/";
+ url =  hostname + "mending_con/find_style_name_mending/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -9336,7 +9336,7 @@ function find_style_zipper()
 	  }
   var queryString="article_name="+article_name;
  //alert(queryString);
- url =  hostname + "index.php/zipper_con/find_style_name_zipper/";
+ url =  hostname + "zipper_con/find_style_name_zipper/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -9384,7 +9384,7 @@ function find_style_iron()
 	  }
   var queryString="article_name="+article_name;
  //alert(queryString);
- url =  hostname + "index.php/iron_con/find_style_name_iron/";
+ url =  hostname + "iron_con/find_style_name_iron/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -9450,7 +9450,7 @@ function price_code_save_winding()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name+"&style_type_id="+style_type_id+"&style_price="+style_price+"&style_type="+style_type;
 //	alert(queryString);
-    url=hostname + "index.php/winding_con/price_code_winding_save/" ;
+    url=hostname + "winding_con/price_code_winding_save/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9519,7 +9519,7 @@ function price_code_save_mending()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name+"&style_type_id="+style_type_id+"&style_price="+style_price;
 //	alert(queryString);
-    url=hostname + "index.php/mending_con/price_code_mending_save/" ;
+    url=hostname + "mending_con/price_code_mending_save/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9587,7 +9587,7 @@ function price_code_save_zipper()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name+"&style_type_id="+style_type_id+"&style_price="+style_price;
 //	alert(queryString);
-    url=hostname + "index.php/zipper_con/price_code_zipper_save/" ;
+    url=hostname + "zipper_con/price_code_zipper_save/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9650,7 +9650,7 @@ function price_code_save_iron()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name+"&style_type_id="+style_type_id+"&style_price="+style_price;
 //	alert(queryString);
-    url=hostname + "index.php/iron_con/price_code_iron_save/" ;
+    url=hostname + "iron_con/price_code_iron_save/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9711,7 +9711,7 @@ function price_code_save_trimming()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name+"&style_type_id="+style_type_id+"&style_price="+style_price;
 //	alert(queryString);
-    url=hostname + "index.php/trimming_con/price_code_trimming_save/" ;
+    url=hostname + "trimming_con/price_code_trimming_save/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9777,7 +9777,7 @@ function price_code_knitting_save()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name+"&style_type_id="+style_type_id+"&style_price="+style_price;
 //	alert(queryString);
-    url=hostname + "index.php/knitting_con/price_code_knitting_save/" ;
+    url=hostname + "knitting_con/price_code_knitting_save/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9834,7 +9834,7 @@ function show_table_winding()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/winding_con/show_table_winding/" ;
+    url=hostname + "winding_con/show_table_winding/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9893,7 +9893,7 @@ function show_table_mending()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/mending_con/show_table_mending/" ;
+    url=hostname + "mending_con/show_table_mending/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9943,7 +9943,7 @@ function show_table_zipper()
 	style_name =   document.getElementById('style_name').value ;
 	var queryString="article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/zipper_con/show_table_zipper/" ;
+    url=hostname + "zipper_con/show_table_zipper/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -9993,7 +9993,7 @@ function show_table_iron()
 	style_name =   document.getElementById('style_name').value ;
 	var queryString="article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/iron_con/show_table_iron/" ;
+    url=hostname + "iron_con/show_table_iron/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10051,7 +10051,7 @@ function show_table_trimming()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/trimming_con/show_table_trimming/" ;
+    url=hostname + "trimming_con/show_table_trimming/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10112,7 +10112,7 @@ function show_table_knitting()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/knitting_con/show_table_knitting/" ;
+    url=hostname + "knitting_con/show_table_knitting/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10160,7 +10160,7 @@ function price_code_edit_mending(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/mending_con/style_type_price_edit_mending/" ;
+    url=hostname + "mending_con/style_type_price_edit_mending/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10203,7 +10203,7 @@ function price_code_edit_winding(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/winding_con/style_type_perice_edit_winding/" ;
+    url=hostname + "winding_con/style_type_perice_edit_winding/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10249,7 +10249,7 @@ function price_code_edit_zipper(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/zipper_con/style_type_price_edit_zipper/" ;
+    url=hostname + "zipper_con/style_type_price_edit_zipper/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10293,7 +10293,7 @@ function price_code_edit_iron(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/iron_con/style_type_price_edit_iron/" ;
+    url=hostname + "iron_con/style_type_price_edit_iron/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10337,7 +10337,7 @@ function price_code_edit_trimming(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/product_con/style_type_perice_edit_trimming/" ;
+    url=hostname + "product_con/style_type_perice_edit_trimming/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10387,7 +10387,7 @@ function price_code_edit_knitting(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/knitting_con/style_type_price_edit_knitting/" ;
+    url=hostname + "knitting_con/style_type_price_edit_knitting/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10430,7 +10430,7 @@ function price_code_edit_trimming(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/trimming_con/style_type_price_edit_trimming/" ;
+    url=hostname + "trimming_con/style_type_price_edit_trimming/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10478,7 +10478,7 @@ function price_code_delete_mending(i)
 
 	var queryString="i="+i+"&article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/mending_con/price_code_delete_mending/" ;
+    url=hostname + "mending_con/price_code_delete_mending/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10525,7 +10525,7 @@ function price_code_delete_winding(i)
 	var queryString="i="+i+"&article_name="+article_name+"&style_name="+style_name;
 
 	//alert(queryString);
-    url=hostname + "index.php/winding_con/price_code_delete_winding/" ;
+    url=hostname + "winding_con/price_code_delete_winding/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10572,7 +10572,7 @@ function price_code_delete_zipper(i)
 
 	var queryString="i="+i+"&article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/zipper_con/price_code_delete_zipper/" ;
+    url=hostname + "zipper_con/price_code_delete_zipper/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10619,7 +10619,7 @@ function price_code_delete_iron(i)
 
 	var queryString="i="+i+"&article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/iron_con/price_code_delete_iron/" ;
+    url=hostname + "iron_con/price_code_delete_iron/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10668,7 +10668,7 @@ function price_code_delete_trimming(i)
 
 	var queryString="i="+i+"&article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/product_con/style_type_perice_delete_trimming/" ;
+    url=hostname + "product_con/style_type_perice_delete_trimming/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10713,7 +10713,7 @@ function price_code_delete_knitting(i)
 
 	var queryString="i="+i+"&article_name="+article_name+"&style_name="+style_name ;
 
-	url=hostname + "index.php/knitting_con/price_code_delete_knitting/" ;
+	url=hostname + "knitting_con/price_code_delete_knitting/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10757,7 +10757,7 @@ function price_code_delete_trimming(i)
 
 	var queryString="i="+i+"&article_name="+article_name+"&style_name="+style_name ;
 
-	url=hostname + "index.php/trimming_con/price_code_delete_trimming/" ;
+	url=hostname + "trimming_con/price_code_delete_trimming/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10803,7 +10803,7 @@ function price_code_update_mending(i)
 
 	var queryString="i="+i+"&get_style_price="+get_style_price;
 	//alert(queryString);
-    url=hostname + "index.php/mending_con/price_code_update_mending/" ;
+    url=hostname + "mending_con/price_code_update_mending/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10851,7 +10851,7 @@ function price_code_update_winding(i)
 
 	var queryString="i="+i+"&get_style_price="+get_style_price+"&article_name="+article_name+"&style_name="+style_name ;
 	//alert(queryString);
-    url=hostname + "index.php/winding_con/price_code_update_winding/" ;
+    url=hostname + "winding_con/price_code_update_winding/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10901,7 +10901,7 @@ function price_code_update_zipper(i)
 	var queryString="i="+i+"&get_style_price="+get_style_price+"&article_name="+article_name+"&style_name="+style_name ;
 
 	//alert(queryString);
-    url=hostname + "index.php/zipper_con/price_code_update_zipper/" ;
+    url=hostname + "zipper_con/price_code_update_zipper/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10951,7 +10951,7 @@ function price_code_update_iron(i)
 	var queryString="i="+i+"&get_style_price="+get_style_price+"&article_name="+article_name+"&style_name="+style_name ;
 
 	//alert(queryString);
-    url=hostname + "index.php/iron_con/price_code_update_iron/" ;
+    url=hostname + "iron_con/price_code_update_iron/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -10997,7 +10997,7 @@ function price_code_update_trimming(i)
 
 	var queryString="i="+i+"&get_style_price="+get_style_price;
 	//alert(queryString);
-    url=hostname + "index.php/product_con/style_type_perice_update_trimming/" ;
+    url=hostname + "product_con/style_type_perice_update_trimming/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -11049,7 +11049,7 @@ function price_code_update_knitting(i)
 
 	var queryString="i="+i+"&get_style_price="+get_style_price+"&article_name="+article_name+"&style_name="+style_name ;
 	//alert(queryString);
-    url=hostname + "index.php/knitting_con/price_code_update_knitting/" ;
+    url=hostname + "knitting_con/price_code_update_knitting/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -11097,7 +11097,7 @@ function price_code_update_trimming(i)
 
 	var queryString="i="+i+"&get_style_price="+get_style_price+"&article_name="+article_name+"&style_name="+style_name ;
 	//alert(queryString);
-    url=hostname + "index.php/trimming_con/price_code_update_trimming/" ;
+    url=hostname + "trimming_con/price_code_update_trimming/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -11159,7 +11159,7 @@ function price_code_save_linking()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name+"&style_type_id="+style_type_id+"&style_price="+style_price;
 //	alert(queryString);
-    url=hostname + "index.php/linking_con/price_code_linking_save/" ;
+    url=hostname + "linking_con/price_code_linking_save/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -11204,7 +11204,7 @@ function price_code_linking_edit(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/linking_con/style_type_price_linking_edit/" ;
+    url=hostname + "linking_con/style_type_price_linking_edit/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -11254,7 +11254,7 @@ function price_code_linking_update(i)
 
 	var queryString="i="+i+"&get_style_price="+get_style_price+"&article_name="+article_name+"&style_name="+style_name ;
 	//alert(queryString);
-    url=hostname + "index.php/linking_con/style_type_price_linking_update/" ;
+    url=hostname + "linking_con/style_type_price_linking_update/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -11300,7 +11300,7 @@ function price_code_linking_delete(i)
 
  var queryString="i="+i;
 	//alert(queryString);
-    url=hostname + "index.php/product_con/style_type_perice_linking_delete/" ;
+    url=hostname + "product_con/style_type_perice_linking_delete/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -11360,7 +11360,7 @@ function show_table_linking()
 
 	var queryString="article_name="+article_name+"&style_name="+style_name;
 	//alert(queryString);
-    url=hostname + "index.php/linking_con/show_table_linking_co/" ;
+    url=hostname + "linking_con/show_table_linking_co/" ;
 	ajaxRequest.open("POST" ,url , true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -11406,7 +11406,7 @@ if(okyes==false) return;
 
 month= document.getElementById('report_month_sal').value;
 year= document.getElementById('report_year_sal').value;
-//url = "http://localhost/payroll/index.php/payroll_con/daily_absent/"+month+"/"+year;
+//url = "http://localhost/payroll/payroll_con/daily_absent/"+month+"/"+year;
 //myRef = window.open(url,'mywin',"menubar=1,resizable=1,width=1100,height=600");
 //myRef.moveTo(0,0);
 
@@ -11469,7 +11469,7 @@ var ajaxRequest;  // The variable that makes Ajax possible!
  //alert(queryString);
  hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/product_con/bdt_save_co/";
+	url =  hostname + "product_con/bdt_save_co/";
 	ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -11518,7 +11518,7 @@ function com_incre_prom_search()
  var queryString="empid="+empid;
  hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
- var url = hostname + "index.php/emp_increment_con/com_incre_prom_search/";
+ var url = hostname + "emp_increment_con/com_incre_prom_search/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);
@@ -11775,7 +11775,7 @@ function grid_get_all_data_for_unit()
 	 var queryString="start="+start;
  hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
- url =  hostname + "index.php/payroll_con/manual_atten_co/";
+ url =  hostname + "payroll_con/manual_atten_co/";
  ajaxRequest.open("POST", url, true);
  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  ajaxRequest.send(queryString);

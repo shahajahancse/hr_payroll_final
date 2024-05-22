@@ -53,7 +53,7 @@ a:hover
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
+                  <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
                 </ul>
                 
               </div><!--/.nav-collapse -->
@@ -115,7 +115,7 @@ a:hover
                                     
                                    
                                     <td >
-                                        <a href="<?=base_url('index.php/crud_con/proxi_edit').'/'.$pr_id_proxis["emp_id"]?>"target='_blank' class="btn btn-primary" role="button">Edit</a>
+                                        <a href="<?=base_url('crud_con/proxi_edit').'/'.$pr_id_proxis["emp_id"]?>"target='_blank' class="btn btn-primary" role="button">Edit</a>
                                     </td>
                                         
                                     

@@ -35,19 +35,13 @@
         <div class="col-md-12">
             <?php
                 $success = $this->session->flashdata('success');
-                if ($success != "") {
-                    ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php
-                }
+                if ($success != "") { ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php }
                 $failuer = $this->session->flashdata('failuer');
-                if ($failuer) {
-                    ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-            <?php
-                }
-                ?>
-
+                if ($failuer) { ?>
+                <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            <?php } ?>
         </div>
     </div>
     <!-- <br> -->
@@ -77,12 +71,8 @@
                     </tr>
                 </thead>
 
-                </thead>
-
                 <tbody>
-
                     <?php if (!empty($results)) {foreach ($results as $key => $r) {?>
-
                     <tr>
                         <td style="white-space: nowrap;"><?php echo $key + 1  ?></td>
                         <td style="white-space: nowrap;"><?php echo $r->name_en ?></td>
@@ -98,7 +88,7 @@
                         <td style="white-space: nowrap;"><?php echo $r->first_pay ?></td>
                         <td style="white-space: nowrap;"><?php echo $r->second_pay ?></td>
                         <td style="white-space: nowrap;"><?php echo $r->pay_day ?></td>
-                        <td style="white-space: nowrap;"><?php echo $r->total_day ?></td>
+                        <td style="white-space: nowrap;"><?php echo $r->total_day * 2?></td>
                         <td style="white-space: nowrap;"><?php echo $r->unit_name ?></td>
                         <td>
                             <a href="<?=base_url('entry_system_con/maternity_delete/'.$r->id)?>"
@@ -110,7 +100,6 @@
                         <td colspan="12">Records not Found</td>
                     </tr>
                     <?php }?>
-
                 </tbody>
             </table>
         </div>

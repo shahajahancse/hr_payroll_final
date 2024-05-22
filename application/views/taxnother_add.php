@@ -3,8 +3,8 @@
     <div class="container-fluid nav_head">
       <div class="navbar-header col-md-5" style="padding: 7px;">
           <div>
-          <a href="<?=base_url('index.php/entry_system_con/tax_others_deduction')?>" class="btn btn-info" role="button">Back</a>
-          <a href="<?php echo base_url('index.php/payroll_con')?>" class="btn btn-primary">Home</a>
+          <a href="<?=base_url('entry_system_con/tax_others_deduction')?>" class="btn btn-info" role="button">Back</a>
+          <a href="<?php echo base_url('payroll_con')?>" class="btn btn-primary">Home</a>
           </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
   </div>
   <div class="tablebox">
     <h4 ><b>Create Tax & Other Deduct </b></h4>
-    <form enctype="multipart/form-data" method="post" name="creattaxnother" action="<?php echo base_url().'index.php/crud_con/taxnother_add'?>">
+    <form enctype="multipart/form-data" method="post" name="creattaxnother" action="<?php echo base_url().'crud_con/taxnother_add'?>">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">

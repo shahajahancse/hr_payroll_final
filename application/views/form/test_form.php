@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<form action="<?php echo base_url();?>index.php/payroll_con/company_info_view" method="post" >
+<form action="<?php echo base_url();?>payroll_con/company_info_view" method="post" >
 <input type="text" name="name"  value="" />
 <input type="submit" name="submit" value="Submit" />
 </form>

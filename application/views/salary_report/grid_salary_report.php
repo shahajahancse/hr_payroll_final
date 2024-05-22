@@ -222,9 +222,6 @@
                             <button class="btn input-sm sbtn" onclick="grid_comprative_salary_statement()">Comparative Statement</button>
                             <?php } ?>
                             <?php if(in_array(92,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_maternity_benefit()">Maternity Benefit Report</button>
-                            <?php } ?>
-                            <?php if(in_array(92,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="act_advance_salary_sheet()">Act. Adv. Sal. Sheet</button>
                             <?php } ?>
                         </div>

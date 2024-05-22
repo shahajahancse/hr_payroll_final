@@ -28,7 +28,7 @@ elseif($daily_status == "L")
 <?php //print_r($values); 
 //echo $daily_status;
 $base_url = base_url();
-$url = $base_url."index.php/payroll_con/daily_report_export/$year/$month/$date/$daily_status/$col_desig/$col_line/$col_section/$col_dept/$col_all/$unit_id";
+$url = $base_url."payroll_con/daily_report_export/$year/$month/$date/$daily_status/$col_desig/$col_line/$col_section/$col_dept/$col_all/$unit_id";
 ?>
 <div style=" margin:0 auto;  width:800px;">
 <div id="no_print" style="float:right;">

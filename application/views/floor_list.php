@@ -72,11 +72,11 @@ table.dataTable.no-footer {
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?=base_url('index.php/crud_con/floor_add')?>">Add Floor</a>
+                <a class="navbar-brand" href="<?=base_url('crud_con/floor_add')?>">Add Floor</a>
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  <li class="active"><a href="<?=base_url('index.php/payroll_con')?>">Home</a></li>
+                  <li class="active"><a href="<?=base_url('payroll_con')?>">Home</a></li>
                 </ul>
                 <div class="pull-right">
                   <form class="navbar-form pull-right" role="search">
@@ -114,7 +114,7 @@ table.dataTable.no-footer {
           <div class="col-md-8">
               <div class="col-md-6"><h3 style="margin-top: 0px; margin-bottom: 8px;">Floor List</h3></div>
               <div class="col-md-6 text-right">
-                  <a href="<?=base_url('index.php/crud_con/floor_add')?>" class="btn btn-info" role="button">Add Floor</a>
+                  <a href="<?=base_url('crud_con/floor_add')?>" class="btn btn-info" role="button">Add Floor</a>
               </div>
          </div>
       </div>
@@ -149,11 +149,11 @@ table.dataTable.no-footer {
 
 
                                     <td >
-                                        <a href="<?=base_url('index.php/crud_con/floor_edit').'/'.$pr_floors["id"]?>"target='_blank' class="btn btn-primary" role="button">Edit</a>
+                                        <a href="<?=base_url('crud_con/floor_edit').'/'.$pr_floors["id"]?>"target='_blank' class="btn btn-primary" role="button">Edit</a>
                                     </td>
 
                                     <td>
-                                        <a href="<?=base_url('index.php/crud_con/floor_delete').'/'.$pr_floors["id"]?>" class="btn btn-danger" role="button">Delete</a>
+                                        <a href="<?=base_url('crud_con/floor_delete').'/'.$pr_floors["id"]?>" class="btn btn-danger" role="button">Delete</a>
 
                                     </td>
                                 </tr>

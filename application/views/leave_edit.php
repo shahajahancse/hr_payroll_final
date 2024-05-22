@@ -28,7 +28,7 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
+              <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
             </ul>
             
           </div><!--/.nav-collapse -->
@@ -37,7 +37,7 @@
 
   <h3>Update Leave Management</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="editleave" action="<?php echo base_url().'index.php/crud_con/leave_edit/'.$pr_leave->lv_id;?>">
+  <form enctype="multipart/form-data" method="post" name="editleave" action="<?php echo base_url().'crud_con/leave_edit/'.$pr_leave->lv_id;?>">
   <div class="row">
     <div class="col-md-6">
       <input type="hidden" name="id"value="<?=$pr_leave->lv_id;?>" class="form-control"> 

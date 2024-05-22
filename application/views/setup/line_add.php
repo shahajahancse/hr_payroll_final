@@ -11,9 +11,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/line') ?>">
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/line') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -39,7 +39,7 @@
 
         <h3>Create Line</h3>
         <hr>
-        <form action="<?= base_url('index.php/setup_con/line_add')?>" enctype="multipart/form-data" method="post">
+        <form action="<?= base_url('setup_con/line_add')?>" enctype="multipart/form-data" method="post">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group col-md-4">
@@ -96,7 +96,7 @@
 function getDepertment(unit_id) {
     $.ajax({
 
-        url: "<?php echo base_url('index.php/setup_con/get_department') ?>",
+        url: "<?php echo base_url('setup_con/get_department') ?>",
         method: "POST",
         data: {
             unit_id: unit_id
@@ -117,7 +117,7 @@ function getDepertment(unit_id) {
 function get_section(depertment_id) {
     $.ajax({
 
-        url: "<?php echo base_url('index.php/setup_con/get_section') ?>",
+        url: "<?php echo base_url('setup_con/get_section') ?>",
         method: "POST",
         data: {
             depertment_id: depertment_id

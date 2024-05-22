@@ -10,9 +10,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/bonus_setup') ?>">
+                    <a class="btn btn-info" href="<?php echo base_url('
+                    setup_con/bonus_setup') ?>">
                         << Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('
+                            payroll_con') ?>">Home</a>
                 </div>
             </div>
             <!--/.nav-collapse -->
@@ -26,7 +28,8 @@
     </div>
     <div class="tablebox">
         <h3>Update  Bonus</h3>
-        <form action="<?= base_url('index.php/setup_con/bonus_edit').'/'.$pr_bonus_rules->id?>" enctype="multipart/form-data" method="post">
+        <form action="<?= base_url('
+        setup_con/bonus_edit').'/'.$pr_bonus_rules->id?>" enctype="multipart/form-data" method="post">
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">

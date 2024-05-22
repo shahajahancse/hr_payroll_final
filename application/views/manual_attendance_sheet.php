@@ -128,7 +128,7 @@ function time_validation(i)
 		echo "<br />";
 	echo "<table width='480' border='1' bordercolor='#000000' cellspacing='0' cellpadding='2' style='text-align:center; font-size:13px; '> <th>Date</th><th>In Time</th><th>Out Time</th><th>In Time [HH:MM:SS]</th><th>Out Time [HH:MM:SS]</th>";
 	?>
-	<form action="<?php echo base_url();?>index.php/entry_system_con/manual_attendance_sheet_entry" method="post" >
+	<form action="<?php echo base_url();?>entry_system_con/manual_attendance_sheet_entry" method="post" >
 	<input type="hidden" name="count" id="count"  value="<?php 	echo $count1; ?>"/>
 	<input type="hidden" name="emp_id" id="emp_id"  value="<?php echo $values["emp_id"]; ?>"/>
 	<input type="hidden" name="proxi" id="proxi"  value="<?php echo $values["proxi_id"]; ?>"/>

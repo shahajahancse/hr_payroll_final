@@ -64,7 +64,7 @@ for($counter = 1; $counter <= $page; $counter ++)
 </table>
 
 <table align="center" height="auto"  class="sal" border="1" cellspacing="0" cellpadding="2" style="font-size:12px; width:750px;margin-bottom:40px;">
-	<form action="<?php echo base_url();?>index.php/entry_system_con/ot_abstract" method="post" >
+	<form action="<?php echo base_url();?>entry_system_con/ot_abstract" method="post" >
 		<input type="hidden" name="grid_firstdate" id="grid_firstdate" value="<?php echo $grid_firstdate; ?>"/>
 		<input type="hidden" name="grid_emp_id" id="grid_emp_id" value="<?php echo implode(",",$emp_id_arr); ?>"/>
 		<input type="hidden" name="proxi" id="proxi"  value="<?php echo $values["proxi_id"]; ?>"/>

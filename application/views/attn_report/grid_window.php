@@ -394,6 +394,9 @@
 								<!-- eot all with out off day and holiday -->
 							<button class="btn input-sm sbtn" onclick="grid_extra_ot_all()">Job Card!</button>
 							<?php } ?>
+							<?php if(in_array(92,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_maternity_benefit()">Maternity Benefit Report</button>
+                            <?php } ?>
 						</div>
 						<!-- Other Reports end -->
 					</div>

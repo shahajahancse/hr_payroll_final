@@ -36,7 +36,7 @@
 
 
                       <td>
-                          <a href="<?=base_url('index.php/crud_con/leave_delete').'/'.$pr_leave_transs["id"]?>" class="btn btn-danger" role="button">Delete</a>
+                          <a href="<?=base_url('crud_con/leave_delete').'/'.$pr_leave_transs["id"]?>" class="btn btn-danger" role="button">Delete</a>
 
                       </td>
                   </tr>

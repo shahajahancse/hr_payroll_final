@@ -421,7 +421,7 @@ border:1px #000000 solid;
 
 <body>
 <div style="position:absolute; right:0" class="noprint">
-<form action="<?php echo base_url();?>index.php/salary_report_con/grid_actual_monthly_salary_sheet_with_eot_xl" method="post">
+<form action="<?php echo base_url();?>salary_report_con/grid_actual_monthly_salary_sheet_with_eot_xl" method="post">
 <input type="hidden" name="sal_year_month" value="<?php echo $salary_month;?>"></input>
 <input type="hidden" name="custom_salarydate" value="<?php echo $custom_salarydate;?>"></input>
 <input type="hidden" name="grid_status" value="<?php echo $grid_status;?>"></input>

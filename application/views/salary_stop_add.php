@@ -28,7 +28,7 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
+              <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
             </ul>
             
           </div><!--/.nav-collapse -->
@@ -56,7 +56,7 @@
 
   <h3>Create Tax & Other Deduct</h3>
   <hr>
-  <form enctype="multipart/form-data" method="post" name="creatsalarystop" action="<?php echo base_url().'index.php/crud_con/salarystop_add'?>">
+  <form enctype="multipart/form-data" method="post" name="creatsalarystop" action="<?php echo base_url().'crud_con/salarystop_add'?>">
 	  <div class="row">
 	    <div class="col-md-6">
 	      
