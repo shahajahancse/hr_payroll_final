@@ -2907,7 +2907,7 @@ function grid_maternity_benefit(){
 	var status = "P";
 	document.getElementById('loaader').style.display = 'flex';
 
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
    	url =  hostname+"grid_con/grid_maternity_benefit/";
 
 	ajaxRequest.open("POST", url, true);

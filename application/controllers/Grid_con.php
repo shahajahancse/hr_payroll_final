@@ -694,9 +694,9 @@ class Grid_con extends CI_Controller {
 		$days3 = 30;
 		$off_day = 'Fri';
 
-		$data['values'] = $this->Grid_model->grid_letter1_report($data['firstdate'], $unit_id, $off_day, $days1);
-		$data['values2'] = $this->Grid_model->grid_letter1_report($data['firstdate'], $unit_id, $off_day, $days2);
-		$data['values3'] = $this->Grid_model->grid_letter1_report($data['firstdate'], $unit_id, $off_day, $days3);
+		$data['values'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days1);
+		$data['values2'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days2);
+		$data['values3'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days3);
 
 		if (!empty($data['values'])) {
 			$v['1'] = count($data['values']);
@@ -795,13 +795,13 @@ class Grid_con extends CI_Controller {
 	}
 	function grid_continuous_costing_report()
 	{
-		$firstdate= $this->input->post('firstdate');
+		$firstdate  = $this->input->post('firstdate');
 		$seconddate = $this->input->post('seconddate');
-		$grid_unit = $this->input->post('grid_start');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
+		$grid_unit  = $this->input->post('grid_start');
+		$grid_data  = $this->input->post('spl');
+		$emp_ids    = explode(',', trim($grid_data));
 
-		$data["values"] 	= $this->Grid_model->grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id);
+		$data["values"] 	= $this->Grid_model->grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$emp_ids);
 		$data["firstdate"]	= date("d-M-Y",strtotime($firstdate));
 		$data["seconddate"]	= date("d-M-Y",strtotime($seconddate));
 		$data["unit_id"]	= $grid_unit;
@@ -816,8 +816,10 @@ class Grid_con extends CI_Controller {
 		}
 	}
 	function grid_maternity_benefit(){
+		dd($_POST);
 		$this->load->model('Leave_model');
 		$grid_year = date('Y', strtotime($this->input->post('date')));
+		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('sql');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);

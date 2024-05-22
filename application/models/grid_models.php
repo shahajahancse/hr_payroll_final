@@ -1163,7 +1163,7 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
-	function grid_letter_report($current_date, $unit_id, $off_day, $days, $status){
+	function grid_letter_report($current_date, $unit_id, $off_day, $days, $status = null){
 
 		$get_date = $this->grid_letter_day_count($off_day, $days, $current_date, $unit_id);
 
@@ -4460,47 +4460,6 @@ class Grid_model extends CI_Model{
 		//print_r($query->result_array());
 
 	}
-
-	function grid_letter1_report_old($grid_emp_id){
-
-		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en, pr_emp_per_info.bangla_nam , pr_emp_per_info.emp_fname,pr_emp_per_info.emp_fname_bn,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, pr_emp_com_info.emp_sal_gra_id, emp_depertment.dept_name, emp_section.sec_name_en, pr_emp_add.emp_par_add_ban,pr_emp_add.emp_pre_add_ban,emp_section.sec_name_en_bn, pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('emp_designation');
-		$this->db->from('emp_depertment');
-		$this->db->from('emp_section');
-		$this->db->from('pr_id_proxi');
-		$this->db->from('pr_emp_add');
-		//$this->db->from('pr_district');
-		//$this->db->from('pr_upazila');
-		$this->db->or_where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_id_proxi.emp_id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_add.emp_id');
-		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
-		//$this->db->where('pr_emp_com_info.district_id = pr_district.district_id');
-		//$this->db->where('pr_emp_com_info.upazila_id = pr_upazila.upz_id');
-
-		$this->db->order_by("pr_emp_com_info.emp_id");
-		$query = $this->db->get();
-
-		if($query->num_rows() == 0)
-		{
-			return "Employee ID range does not exist!";
-
-		}
-		else
-		{
-			return $query;
-		}
-		//print_r($query->result_array());
-
-	}
-
-
-
 
 
 	function get_absent_start_date($emp_id,$firstdate,$limit){

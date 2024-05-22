@@ -839,14 +839,6 @@ class Salary_report_con extends CI_Controller {
 		}
 	}
 
-	function grid_maternity_benefit(){
-		$grid_year = date('Y', strtotime($this->input->post('date')));
-		$grid_data = $this->input->post('sql');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->Leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);
-		$this->load->view('maternity_benefit',$data);
-	}
-
 	function grid_earn_leave()
 	{
 		$sal_year_month = $this->uri->segment(3);
