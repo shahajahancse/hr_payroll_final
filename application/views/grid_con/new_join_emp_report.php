@@ -2,31 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>
-	New Join Report
-</title>
-<!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/print.css" media="print" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" /> -->
+<title>New Join Report</title>
+
 <style>
-.bottom_txt_design
-{
-	 border-top:1px solid;
-	 width:160px;
-	 font-weight:bold;
-}
-.bottom_txt_manager_design
-{
-	border-top:1px solid;
-	width:170px;
-}
-table.main_table{
-	border-collapse: collapse;
-}
+	.bottom_txt_design
+	{
+		border-top:1px solid;
+		width:160px;
+		font-weight:bold;
+	}
+	.bottom_txt_manager_design
+	{
+		border-top:1px solid;
+		width:170px;
+	}
+	table.main_table{
+		border-collapse: collapse;
+	}
 
-table.main_table tr,table.main_table tr td,table.main_table tr th{
- border: 1px solid #000000;
+	table.main_table tr,table.main_table tr td,table.main_table tr th{
+	border: 1px solid #000000;
 
-}
+	}
 </style>
 
 </head>
@@ -90,7 +87,6 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 <th>SL</th>
 <th>Emp ID</th>
 <th>Emp Name</th>
-<!--<th>Section</th>-->
 <th>Designation</th>
 <th>Line</th>
 <th>Grade</th>

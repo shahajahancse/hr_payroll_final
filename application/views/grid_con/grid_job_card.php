@@ -7,11 +7,11 @@
 	</head>
 
 	<body>
-		<div align="center" style="height:100%; width:100%; overflow:hidden;" >
+		<div align="center" style="height:auto; width:100%; overflow:hidden;" >
 			<?php
 				$this->load->model('job_card_model');
 				foreach ($values as $key => $value) {
-					echo "<div style='min-height:1000px; overflow:hidden;'>";
+					echo "<div style=' overflow:hidden;'>";
 					$present_count = 0;
 					$absent_count = 0;
 					$leave_count = 0;
@@ -370,14 +370,11 @@
 
 					echo "</tr>";
 					echo "</table>";
-					echo "<br /><br />";
-
 					echo "</div>";
-					echo "<br>";
+					echo "<div style='page-break-after: always;'></div>";
 				}
 			?>
 		</div>
-		<br><br>
 	</body>
 </html>
 <?php exit(); ?>

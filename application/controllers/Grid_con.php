@@ -192,6 +192,7 @@ class Grid_con extends CI_Controller {
 	function grid_resign_report(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
+		$status = $this->input->post('status');
 		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
 		$data['values'] = $this->Grid_model->grid_resign_report($grid_firstdate, $grid_seconddate);
@@ -200,8 +201,7 @@ class Grid_con extends CI_Controller {
 		$data['unit_id'] = $this->input->post('unit_id');
 		if(is_string($data['values'])){
 			echo $data['values'];
-		}
-		else{
+		}else{
 			$this->load->view('grid_con/resign_emp_report',$data);
 		}
 	}
@@ -284,7 +284,7 @@ class Grid_con extends CI_Controller {
 		$interval = $date2->diff($date1);
 		$interval->d += 1;
 		if($data['values']['leave_entitle_casual'] >= $interval->format('%d')){
-			$this->load->view('grid_con/leave_application_report',$data);
+			$this->load->view('grid_con/leave_application',$data);
 		}else{
 			echo false;
 		}
@@ -816,41 +816,149 @@ class Grid_con extends CI_Controller {
 		}
 	}
 	function grid_maternity_benefit(){
-		dd($_POST);
-		$this->load->model('Leave_model');
-		$grid_year = date('Y', strtotime($this->input->post('date')));
-		$unit_id = $this->input->post('unit_id');
-		$grid_data = $this->input->post('sql');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->Leave_model->grid_maternity_benefit($grid_emp_id,$grid_year);
-		$this->load->view('maternity_benefit',$data);
-	}
-	function ddddgrid_continuous_costing_report() //not used
-	{
-		$firstdate= $this->input->post('firstdate');
-		$seconddate = $this->input->post('seconddate');
-		$grid_unit = $this->input->post('grid_start');
+		$firstdate = date('Y-m-d', strtotime($this->input->post('firstdate')));
+		$seconddate = date('Y-m-d', strtotime($this->input->post('seconddate')));
+		$unit_id   = $this->input->post('unit_id');
 		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-
-		$data["values"] 	= $this->Grid_model->grid_continuous_costing_report($firstdate,$seconddate,$grid_unit,$grid_emp_id);
+		$emp_ids = explode(',', trim($grid_data));
+		$data["values"] = $this->Grid_model->grid_maternity_benefit($emp_ids, $firstdate, $seconddate);
+		// dd($data["values"]);
 		$data["firstdate"]	= date("d-M-Y",strtotime($firstdate));
 		$data["seconddate"]	= date("d-M-Y",strtotime($seconddate));
-		$data["unit_id"]	= $grid_unit;
+		$data["unit_id"]	= $unit_id;
+		$this->load->view('grid_con/grid_maternity_benefit',$data);
+	}
+	function grid_final_satalment(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
+		$data['total_value']= $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
+		$data['unit_id'] = $this->input->post('unit_id');
+		$data['type'] = $this->input->post('type');
+		$this->load->view('grid_con/final_satalment',$data,false);
+	}
+	public function final_satalment(){
+		$emp_ids = $this->input->post('id');
+		$d = $this->Grid_model->grid_employee_information($emp_ids);
+		$get_all=[];
+		foreach($d as $key => $row){
+			$get_all[$key] = $row;
+			$this->db->select('
+					SUM(ot) as ot_hour, 
+					SUM(eot) as eot_hour, 
+					SUM(ot_eot_4pm) as ot_eot_4pm, 
+					SUM(ot_eot_12am) as ot_eot_12am, 
+					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
+					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
+					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
+					COUNT(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as status', FALSE
+			);
+			$this->db->from('pr_emp_shift_log');
+			$this->db->where('pr_emp_shift_log.emp_id',$row->emp_id);
+			$this->db->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)));
+			$this->db->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)));
+			$dd = $this->db->get()->row();	
+			$ssss = $this->common_model->salary_structure($row->gross_sal);
 
-		if(is_string($data["values"]))
+			$get_all[$key]->ot_hour = $dd->ot_hour;
+			$get_all[$key]->eot_hour = $dd->eot_hour;
+			$get_all[$key]->status = $dd->status;
+			$get_all[$key]->working_days = ($dd->working_days+$dd->status);
+			$get_all[$key]->basic_sal = $ssss['basic_sal'];
+			$get_all[$key]->ot_rate = $ssss['ot_rate'];
+		}
+		echo json_encode($get_all[0]);
+	}
+	function grid_monthly_att_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_att_registerr($grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_reportt',$data);
+		}
+	}
+	function grid_monthly_att_register_ot(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_att_register($year_month, $grid_emp_id);
+		// dd($query);
+		if(is_string($query)){
+			echo $query;
+		}
+		else{
+			$year_month = date("M-Y", strtotime($grid_firstdate));
+			$data["value"]=$query;
+			$data['unit_id'] = $unit_id ;
+			$data["year_month"] = $year_month;
+			$this->load->view('monthly_report_ot',$data);
+		}
+	}
+	function grid_monthly_ot_register()
+	{
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
+
+		$data['values'] = $this->Grid_model->grid_monthly_ot_register($grid_firstdate, $grid_emp_id);
+		$data['unit_id'] = $this->input->post('unit_id');
+
+		$data['start_date']= $grid_firstdate;
+
+		if(is_string($data['values']))
 		{
-			echo $data["values"];
+			echo $data['values'];
 		}
 		else
 		{
-			$this->load->view('grid_con/continuous_costing_report',$data);
+			$this->load->view('monthly_ot_register',$data);
 		}
 	}
 
+	function grid_monthly_eot_register()
+	{
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
 
+		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
 
+		$data['values'] = $this->Grid_model->grid_monthly_eot_register($grid_firstdate, $grid_emp_id);
+		$data['unit_id'] = $this->input->post('unit_id');
+		$data['start_date']= $grid_firstdate;
 
+		if($data['values'] == 'Requested list is empty' )
+		{
+			echo $data['values'];
+		}
+		else
+		{
+			$this->load->view('monthly_eot_register',$data);
+		}
+	}
+	function grid_emp_job_application(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+		$query['unit_id'] = $this->input->post('unit_id');
+		$query['values'] = $this->Grid_model->grid_emp_job_application($grid_emp_id);
+		if(is_string($query['values'])){
+			echo $query['values'];
+		}
+		else{
+			$this->load->view('worker_personal_info',$query);
+		}
+	}
 
 
 
@@ -1050,13 +1158,10 @@ class Grid_con extends CI_Controller {
 			}
 		}
 
-		if($data)
-		{
-
+		if($data){
 			return $data;
 		}
-		else
-		{
+		else{
 			return "Requested list is empty";
 		}
 
@@ -1770,19 +1875,6 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_emp_job_application(){
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$query['unit_id'] = $this->input->post('unit_id');
-		$query['values'] = $this->Grid_model->grid_emp_job_application($grid_emp_id);
-		if(is_string($query['values'])){
-			echo $query['values'];
-		}
-		else{
-			$this->load->view('worker_personal_info',$query);
-		}
-	}
 
 	function grid_join_letter(){
 		$grid_data = $this->input->post('spl');
@@ -1948,88 +2040,7 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_monthly_att_register_ot(){
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$unit_id = $this->input->post('unit_id');
-		$year_month = date("Y-m", strtotime($grid_firstdate));
 
-		$query=$this->Grid_model->grid_monthly_att_register($year_month, $grid_emp_id);
-		// dd($query);
-		if(is_string($query)){
-			echo $query;
-		}
-		else{
-			$year_month = date("M-Y", strtotime($grid_firstdate));
-			$data["value"]=$query;
-			$data['unit_id'] = $unit_id ;
-			$data["year_month"] = $year_month;
-			$this->load->view('monthly_report_ot',$data);
-		}
-	}
-
-	function grid_monthly_att_register(){
-		// dd("KO");
-		// $grid_firstdate = $this->input->post('firstdate');
-		// $status = $this->input->post('status');
-		// $grid_data = $this->input->post('spl');
-		// $grid_emp_id = explode(',', trim($grid_data));
-		// $data['unit_id'] = $this->input->post('unit_id');
-		// $year_month = date("Y-m", strtotime($grid_firstdate));
-		// if($status==1){
-		// 	$query=$this->Grid_model->grid_monthly_att_register($year_month, $grid_emp_id);
-		// 	if(is_string($query)){
-		// 		echo $query;
-		// 	}
-		// 	else{
-		// 		$year_month = date("M-Y", strtotime($grid_firstdate));
-		// 		$data["value"]=$query;
-		// 		$data["year_month"] = $year_month;
-		// 		$this->load->view('monthly_report',$data);
-		// 	}
-		// 	}elseif($status==2){
-		// 		$query=$this->Grid_model->grid_monthly_att_register_blank($year_month, $grid_emp_id);
-		// 		if(is_string($query)){
-		// 			echo $query;
-		// 		}
-		// 		else{
-		// 			$year_month = date("M-Y", strtotime($grid_firstdate));
-		// 			$data["value"]=$query;
-		// 			$data["year_month"] = $year_month;
-		// 			$this->load->view('monthly_report_blank',$data);
-		// 		}
-		// 	}else{
-		// 		$query=$this->Grid_model->grid_monthly_att_register_blank($year_month, $grid_emp_id);
-		// 		// dd($query);
-		// 		if(is_string($query)){
-		// 			echo $query;
-		// 		}
-		// 		else{
-		// 			$year_month = date("M-Y", strtotime($grid_firstdate));
-		// 			$data["value"]=$query;
-		// 			$data["year_month"] = $year_month;
-		// 			$this->load->view('monthly_report_blank_without_name',$data);
-		// 		}
-
-		// 	}
-
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$data['unit_id'] = $this->input->post('unit_id');
-		$year_month = date("Y-m", strtotime($grid_firstdate));
-		$query=$this->Grid_model->grid_monthly_att_registerr($year_month, $grid_emp_id);
-		if(is_string($query)){
-			echo $query;
-		}
-		else{
-			$year_month = date("M-Y", strtotime($grid_firstdate));
-			$data["value"]=$query;
-			$data["year_month"] = $year_month;
-			$this->load->view('monthly_reportt',$data);
-		}
-	}
 
 	function grid_extra_ot_mix()
 	{
@@ -2204,15 +2215,7 @@ class Grid_con extends CI_Controller {
 		$data['unit_id'] = $this->input->post('unit_id');
 		$this->load->view('service_book',$data);
 	}
-	function grid_final_satalment(){
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
-		$data['total_value']= $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
-		$data['unit_id'] = $this->input->post('unit_id');
-		$data['type'] = $this->input->post('type');
-		$this->load->view('final_satalment',$data,false);
-	}
+
 	function grid_final_satalment_edit(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
@@ -2553,50 +2556,6 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-	function grid_monthly_ot_register()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
-
-		$data['values'] = $this->Grid_model->grid_monthly_ot_register($grid_firstdate, $grid_emp_id);
-		$data['unit_id'] = $this->input->post('unit_id');
-
-		$data['start_date']= $grid_firstdate;
-
-		if(is_string($data['values']))
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('monthly_ot_register',$data);
-		}
-	}
-
-	function grid_monthly_eot_register()
-	{
-		$grid_firstdate = $this->input->post('firstdate');
-		$grid_data = $this->input->post('spl');
-		$grid_emp_id = explode(',', trim($grid_data));
-
-		$grid_firstdate  = date("Y-m", strtotime($grid_firstdate));
-
-		$data['values'] = $this->Grid_model->grid_monthly_eot_register($grid_firstdate, $grid_emp_id);
-		$data['unit_id'] = $this->input->post('unit_id');
-		$data['start_date']= $grid_firstdate;
-
-		if($data['values'] == 'Requested list is empty' )
-		{
-			echo $data['values'];
-		}
-		else
-		{
-			$this->load->view('monthly_eot_register',$data);
-		}
-	}
-
 	function grid_monthly_allowance_register()
 	{
 		$grid_firstdate = $this->input->post('firstdate');
@@ -2746,38 +2705,6 @@ class Grid_con extends CI_Controller {
 		}
 		echo "done";
 
-	}
-
-	public function final_satalment(){
-		$emp_ids = $this->input->post('id');
-		$d = $this->Grid_model->grid_employee_information($emp_ids);
-		$get_all=[];
-		foreach($d as $key => $row){
-			$get_all[$key] = $row;
-			$this->db->select('
-					SUM(ot) as ot_hour, 
-					SUM(eot) as eot_hour, 
-					SUM(ot_eot_4pm) as ot_eot_4pm, 
-					SUM(ot_eot_12am) as ot_eot_12am, 
-					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
-					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
-					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
-					COUNT(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as status', FALSE
-			);
-			$this->db->from('pr_emp_shift_log');
-			$this->db->where('pr_emp_shift_log.emp_id',$row->emp_id);
-			$this->db->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)));
-			$this->db->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)));
-			$dd = $this->db->get()->row();			
-			$get_all[$key]->ot_hour = $dd->ot_hour;
-			$get_all[$key]->eot_hour = $dd->eot_hour;
-			$get_all[$key]->ot_eot_4pm = $dd->ot_eot_4pm + $dd->ot_hour;
-			$get_all[$key]->ot_eot_12am = $dd->ot_eot_12am + $dd->ot_hour;
-			$get_all[$key]->all_eot_woh = $dd->all_eot_wday + $dd->all_eot_hday;
-			$get_all[$key]->status = $dd->status;
-			$get_all[$key]->working_days = ($dd->working_days+$dd->status);
-		}
-		echo json_encode($get_all[0]);
 	}
 }
 ?>

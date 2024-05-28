@@ -29,34 +29,44 @@
 </head>
 
 <body style="margin: 0px auto">
+        <?php foreach($values as $value){?>
     <!-- niog -->
     <div class="container break_page">
+        <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/006</p>
+        </div>
+        <?php } else if($unit_id == 2){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code :  LSAL/HR/03/083</p>
+        </div>
+        <?php }else if($unit_id == 4){?>
         <div class="d-flex flex-row justify-content-between">
             <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
             <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/006</p>
         </div>
-
-        <?php 
-            $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;
-        ?>
-
-        <div class="d-flex justify-content-between mt-3">
-                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 8%">
-            <!-- <div class="col-md-12"> -->
-                <h1 class="">Honeywell Garments Ltd. </h1>
-            <!-- </div> -->
-            <br>
+        <?php }?>
+        <div class="mt-3">
+            <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+            <div class="d-flex">
+                <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_english ?></h4>
+            </div>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-            <p class="text-center h5">799,(Old Plot No-1010/1011) Ambag,Mouza Baghia, Konabari, Gazipur -1700</p>
+            <p class="text-center h6"><?= $com_info->company_add_english ?></p>
         </div>
         <div>
 
         <div class="d-flex mt-2">
         <div class="col-md-4 ">
-            <p>Ref: HGL/HRD/AL/10069</p>
-            <p>Date :</p>
+            <p>Ref: <?php echo $unit_id == 1? 'AJFL': ($unit_id == 2?'LSAL': ($unit_id == 4? 'HGL':'') ) ?>/HRD/AL/10069</p>
+            <p>Date : <?php echo date('d/m/Y',strtotime($value->emp_join_date))?></p>
         </div>
 
         <div class="col-md-8">
@@ -64,7 +74,7 @@
         </div>
         </div>
         <br>
-        <?php foreach($values as $value){?>
+
         <div style="margin-left:15px ;">
             <p>To,</p> 
             <p><b> <?php echo $value->gender == 'Male' ? 'Mr.':'Mrs.'?>  <?php echo $value->name_en?></b></p>
@@ -156,37 +166,46 @@
         </div>
         <?php }?>
     </div>
-      <br>      
+      <br> 
+      
+    <?php foreach($values as $value){?>
+      
     <div class="container break_page">
+       <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/006</p>
+        </div>
+        <?php } else if($unit_id == 2){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code :  LSAL/HR/03/083</p>
+        </div>
+        <?php }else if($unit_id == 4){?>
         <div class="d-flex flex-row justify-content-between">
             <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
             <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/006</p>
         </div>
-
-        <?php 
-            $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;
-        ?>
-
-        <div class="d-flex justify-content-between mt-3">
-            <!-- <div class="col-md-2 "> -->
-                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 8%;">
-            <!-- </div> -->
-            <!-- <div class="col-md-9"> -->
-                <h1 class="">Honeywell Garments Ltd. </h1>
-            <!-- </div> -->
-            <!-- <div class="col-md-1"></div> -->
-            <br>
+        <?php }?>
+        <div class="mt-3">
+            <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+            <div class="d-flex">
+                <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_english ?></h4>
+            </div>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-            <p class="text-center h5">799,(Old Plot No-1010/1011) Ambag,Mouza Baghia, Konabari, Gazipur -1700</p>
+            <p class="text-center h6"><?= $com_info->company_add_english ?></p>
         </div>
         <div>
 
         <div class="d-flex mt-2">
         <div class="col-md-4 ">
-            <p>Ref: HGL/HRD/AL/10069</p>
-            <p>Date :</p>
+            <p>Ref: <?php echo $unit_id == 1? 'AJFL': ($unit_id == 2?'LSAL': ($unit_id == 4? 'HGL':'') ) ?>/HRD/AL/10069</p>
+            <p>Date : <?php echo date('d/m/Y',strtotime($value->emp_join_date))?></p>
         </div>
 
         <div class="col-md-8">
@@ -194,7 +213,6 @@
         </div>
         </div>
         <br>
-        <?php foreach($values as $value){?>
         <div style="margin-left:15px ;">
             <p>To,</p> 
             <p><b> <?php echo $value->gender == 'Male' ? 'Mr.':'Mrs.'?>  <?php echo $value->name_en?></b></p>

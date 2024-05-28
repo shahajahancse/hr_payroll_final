@@ -7,11 +7,11 @@
 	</head>
 
 	<body>
-		<div align="center" style="height:100%; width:100%; overflow:hidden;" >
+		<div align="center" style="height:auto; width:100%; overflow:hidden;" >
 			<?php
 				$this->load->model('job_card_model');
 				foreach ($values as $key => $value) {
-					echo "<div style='min-height:1000px; overflow:hidden;'>";
+					echo "<div style=' overflow:hidden;'>";
 					$present_count = 0;
 					$absent_count = 0;
 					$leave_count = 0;
@@ -178,7 +178,7 @@
 						}
 
 						echo "<tr>";
-							echo "<td>&nbsp;";
+							echo "<td style='white-space:nowrap'> &nbsp;";
 							echo $shift_log_date;
 							echo "&nbsp;</td>";
 
@@ -204,11 +204,11 @@
 							}
 							echo "&nbsp;</td>";
 
-							echo "<td>&nbsp;";
+							echo "<td style='white-space:nowrap'>&nbsp;";
 							echo $row->shift_name;
 							echo "&nbsp;</td>";
 
-							echo "<td style='text-transform:uppercase;'>&nbsp;";
+							echo "<td style='text-transform:uppercase;white-space:nowrap'>&nbsp;";
 							echo $att_status;
 							echo "&nbsp;</td>";
 
@@ -377,14 +377,12 @@
 
 					echo "</tr>";
 					echo "</table>";
-					echo "<br /><br />";
+					echo "<div style='page-break-after:always;'></div>";
 
 					echo "</div>";
-					echo "<br>";
 				}
 			?>
 		</div>
-		<br><br>
 	</body>
 </html>
 <?php exit(); ?>

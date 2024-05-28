@@ -41,9 +41,8 @@ class Setup_con extends CI_Controller
             $query = $this->input->get('request');
             $condition = "(pr_units.unit_name LIKE '" . $query . "%' OR emp_depertment.dept_name LIKE '%" . $query . "%' OR emp_depertment.dept_bangla LIKE '%" . $query . "%')";
         }
-
         $this->load->model('Crud_model');
-        $pr_dept = $this->Crud_model->dept_infos($limit, $start, $condition);
+        $pr_dept = $this->Crud_model->dept_infos($limit, $start, $condition, $this->data['user_data']->unit_name);
         $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
         $config['total_rows'] = $total;
         $config["uri_segment"] = 3;
@@ -287,6 +286,7 @@ class Setup_con extends CI_Controller
         $this->db->from('emp_section');
         $this->db->join('emp_depertment', 'emp_depertment.dept_id=emp_section.depertment_id');
         $this->db->join('pr_units', 'pr_units.unit_id=emp_section.unit_id');
+        $this->db->where('emp_section.unit_id', $this->data['user_data']->unit_name);
         $this->data['pr_sec'] = $this->db->get()->result_array();
         $this->data['title'] = 'Section List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -431,6 +431,7 @@ class Setup_con extends CI_Controller
         $this->db->join('emp_depertment', 'emp_depertment.dept_id = emp_line_num.dept_id');
         $this->db->join('pr_units', 'pr_units.unit_id = emp_line_num.unit_id');
         $this->db->join('emp_section', 'emp_section.id = emp_line_num.section_id');
+        $this->db->where('emp_line_num.unit_id', $this->data['user_data']->unit_name);
         $this->data['pr_line'] = $this->db->get()->result_array();
         $this->data['title'] = 'Line List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -553,6 +554,7 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_attn_bonus.*,pr_units.unit_name');
         $this->db->from('allowance_attn_bonus');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_attn_bonus.unit_id');
+        $this->db->where('allowance_attn_bonus.unit_id', $this->data['user_data']->unit_name);
         $this->data['attendance_bonus'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -655,6 +657,7 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_holiday_weekend_rules.*,pr_units.unit_name');
         $this->db->from('allowance_holiday_weekend_rules');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_holiday_weekend_rules.unit_id');
+        $this->db->where('allowance_holiday_weekend_rules.unit_id', $this->data['user_data']->unit_name);
         $this->data['allowance_holiday_weekend_rules'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -756,6 +759,7 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_tiffin_bill.*,pr_units.unit_name');
         $this->db->from('allowance_tiffin_bill');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_tiffin_bill.unit_id');
+        $this->db->where('allowance_tiffin_bill.unit_id', $this->data['user_data']->unit_name);
         $this->data['allowance_tiffin_bill'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -854,6 +858,7 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_iftar_bill.*,pr_units.unit_name');
         $this->db->from('allowance_iftar_bill');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_iftar_bill.unit_id');
+        $this->db->where('allowance_iftar_bill.unit_id', $this->data['user_data']->unit_name);
         $this->data['allowance_iftar_bill'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -952,6 +957,7 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_night_rules.*,pr_units.unit_name');
         $this->db->from('allowance_night_rules');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_night_rules.unit_id');
+        $this->db->where('allowance_night_rules.unit_id', $this->data['user_data']->unit_name);
         $this->data['allowance_night_rules'] = $this->db->get()->result_array();
         $this->data['title'] = 'Night Allowance List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1047,6 +1053,7 @@ class Setup_con extends CI_Controller
     // CRUD for Designation manage  Start
     //----------------------------------------------------------------------------------
     public function designation(){
+        $this->data['unit_id'] = $this->data['user_data']->unit_name;
         $this->db->select(' emp_designation.*,
                             IFNULL(pr_units.unit_name, "none") as unit_name,
                             IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
@@ -1062,8 +1069,9 @@ class Setup_con extends CI_Controller
         $this->db->join('allowance_iftar_bill', 'allowance_iftar_bill.id=emp_designation.iftar_id', 'left');
         $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
         $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
+        $this->db->where('emp_designation.unit_id', $this->data['unit_id']);
         $this->data['emp_designation'] = $this->db->get()->result_array();
-        $this->data['unit_id']= $this->data['user_data']->unit_name;
+
         // dd($this->data);
         $this->data['title'] = 'Designation List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1240,6 +1248,9 @@ class Setup_con extends CI_Controller
     public function manage_designation()
     {
         $this->db->select('pr_units.*');
+        if(!empty($this->data['user_data']->unit_name)){
+            $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['units'] = $this->db->get('pr_units')->result();
         $this->data['title'] = 'Manage Designation';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1306,7 +1317,7 @@ class Setup_con extends CI_Controller
     //-------------------------------------------------------------------------------------------------------
     public function shift_schedule()
     {
-        $pr_emp_shift_schedule = $this->Crud_model->shiftschedule_infos();
+        $pr_emp_shift_schedule = $this->Crud_model->shiftschedule_infos($this->data['user_data']->unit_name);
         $this->data['pr_emp_shift_schedule'] = $pr_emp_shift_schedule;
         $this->data['title'] = 'Shift Schedule List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1318,7 +1329,7 @@ class Setup_con extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('Crud_model');
         $data['shiftscheduleinfo'] = $this->Crud_model->shiftschedule_fetch();
-        // print_r($data);exit();
+        
         $this->form_validation->set_rules('stype', 'shiftschedule Shift Type', 'trim|required');
         $this->form_validation->set_rules('instrt', 'shiftschedule In Start', 'trim|required');
         $this->form_validation->set_rules('intime', 'shiftschedule In Time', 'trim|required');
@@ -1332,15 +1343,12 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('twohrottime', 'shiftschedule Two Hour Ot Time', 'trim|required');
 
         if ($this->form_validation->run() == false) {
-
             $this->data['title'] = 'Shift Schedule Add';
             $this->data['allUnit'] = $this->Crud_model->getallUnit();
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/shiftschedule_add';
             $this->load->view('layout/template', $this->data);
         } else {
-            // print_r($_FILES['logoAAAAA']);
-            // print_r($_POST);exit();
             $formArray = array();
             $formArray['unit_id'] = $this->input->post('uname');
             $formArray['sh_type'] = $this->input->post('stype');
@@ -1354,12 +1362,18 @@ class Setup_con extends CI_Controller
             $formArray['ot_minute_to_one_hour'] = $this->input->post('otminute');
             $formArray['one_hour_ot_out_time'] = $this->input->post('onehrottime');
             $formArray['two_hour_ot_out_time'] = $this->input->post('twohrottime');
+            $formArray['lunch_start'] = $this->input->post('lunch_start');
+            $formArray['lunch_minute'] = $this->input->post('lunch_minute');
+            $formArray['tiffin_break'] = $this->input->post('tiffin_break');
+            $formArray['tiffin_minute'] = $this->input->post('tiffin_minute');
+            $formArray['tiffin_break2'] = $this->input->post('tiffin_break2');
+            $formArray['tiffin_minute2'] = $this->input->post('tiffin_minute2');
+            $formArray['random_minute'] = $this->input->post('random_minute');
 
             $this->Crud_model->shiftschedule_add($formArray);
             $this->session->set_flashdata('success', 'Record add successfully!');
             redirect(base_url() . 'setup_con/shift_schedule');
         }
-
     }
 
     public function shiftschedule_edit($shiftscheduleId){
@@ -1425,6 +1439,7 @@ class Setup_con extends CI_Controller
         $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
         $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
+        $this->db->where('pr_emp_shift.unit_id', $this->data['user_data']->unit_name);
         $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result_array();
         $this->data['title'] = 'Shift Management List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1714,6 +1729,7 @@ class Setup_con extends CI_Controller
         $this->db->select('pr_leave.*,pr_units.unit_name');
         $this->db->from('pr_leave');
         $this->db->join('pr_units','pr_units.unit_id = pr_leave.unit_id');
+        $this->db->where('pr_leave.unit_id', $this->data['user_data']->unit_name);
         $this->data['pr_leave'] = $this->db->get()->result_array();
         $this->data['title'] = 'Leave Setup';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1826,6 +1842,7 @@ public function bonus_setup()
     $this->db->select('pr_bonus_rules.*,pr_units.unit_name');
     $this->db->from('pr_bonus_rules');
     $this->db->join('pr_units','pr_units.unit_id = pr_bonus_rules.unit_id');
+    $this->db->where('pr_bonus_rules.unit_id', $this->data['user_data']->unit_name);
     $this->data['pr_bonus_rules'] = $this->db->get()->result_array();
     $this->data['title'] = 'Bonus Setup';
     $this->data['username'] = $this->data['user_data']->id_number;
@@ -1946,10 +1963,9 @@ public function emp_roster_shift() {
     $this->db->select('rs.*, pr_units.unit_name');
     $this->db->from('pr_emp_roster_shift as rs');
     $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
-
-    // if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-    //     $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
-    // }
+    if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+        $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+    }
     $this->db->order_by('rs.id', 'DESC');
     $this->data['results'] = $this->db->get()->result();
     $this->data['title'] = 'Roster Shift List';
@@ -1963,9 +1979,13 @@ public function roster_entry() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->session->set_flashdata('failure', $this->form_validation->error_array());
         }
+        // dd($this->data['user_data']);
         $this->db->select('pr_units.*');
+        $this->db->where('unit_id', $this->data['user_data']->unit_name);
         $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
         $this->db->select('pr_emp_shift.*');
+        $this->db->where('unit_id', $this->data['user_data']->unit_name);
         $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result();
         $this->data['title'] = 'Roster Shift Add';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1998,6 +2018,7 @@ public function roster_edit($id) {
         }
 
         $this->db->select('pr_units.*');
+        $this->db->where('unit_id', $this->data['user_data']->unit_name);
         $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
         $this->db->select('pr_emp_roster_shift.*');
@@ -2005,6 +2026,7 @@ public function roster_edit($id) {
         $this->data['pr_emp_roster_shift'] = $this->db->get('pr_emp_roster_shift')->row();
 
         $this->db->select('pr_emp_shift.*');
+        $this->db->where('unit_id', $this->data['user_data']->unit_name);
         $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result();
 
         $this->data['title'] = 'Roster Shift Edit';

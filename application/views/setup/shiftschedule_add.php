@@ -1,5 +1,5 @@
 <div class="content">
-        <nav class="navbar navbar-inverse bg_none">
+    <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-3" style="padding: 7px;">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -10,8 +10,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/shift_schedule') ?>">Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/shift_schedule') ?>">Back</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -33,20 +33,14 @@
     <div class="row">
         <div class="col-md-12">
             <?php
-          $success = $this->session->flashdata('success');
-          if ($success != "") {
-           ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php
-            }
-            $failuer = $this->session->flashdata('failuer');
-            if ($failuer) {
-             ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-            <?php
-            }
-            ?>
-
+            $success = $this->session->flashdata('success');
+            if ($success != "") { ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php }
+                $failuer = $this->session->flashdata('failuer');
+            if ($failuer) { ?>
+                <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            <?php } ?>
         </div>
     </div>
 
@@ -55,7 +49,7 @@
     <div class="tablebox">
 
         <form enctype="multipart/form-data" method="post" name="creatshiftschedule"
-        action="<?php echo base_url().'index.php/setup_con/shiftschedule_add'?>">
+        action="<?php echo base_url().'setup_con/shiftschedule_add'?>">
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -125,10 +119,8 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
-
-
-
             <div class="col-md-3">
                 <div class="form-group">
                     <label>OT Start</label>
@@ -159,6 +151,65 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Lunch Start</label>
+                    <input type="text" name="lunch_start" value="" class="form-control input-sm">
+                    <?php echo form_error('lunch_start');?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Lunch Minute</label>
+                    <input type="text" name="lunch_minute" value="" class="form-control input-sm">
+                    <?php echo form_error('lunch_minute');?>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Tiffin Break (Evening)</label>
+                    <input type="text" name="tiffin_break" value="" class="form-control input-sm">
+                    <?php echo form_error('tiffin_break');?>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Tiffin Minute (Evening)</label>
+                    <input type="text" name="tiffin_minute" value="" class="form-control input-sm">
+                    <?php echo form_error('tiffin_minute');?>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Tiffin Break Two</label>
+                    <input type="text" name="tiffin_break2" value="" class="form-control input-sm">
+                    <?php echo form_error('tiffin_break2');?>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Tiffin Minute Two</label>
+                    <input type="text" name="tiffin_minute2" value="" class="form-control input-sm">
+                    <?php echo form_error('tiffin_minute2');?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Random Minute</label>
+                    <input type="text" name="random_minute" value="" class="form-control input-sm">
+                    <?php echo form_error('random_minute');?>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <button class="btn btn-primary">Create</button>
             <a href="" class="btn btn-warning">Cancel</a>

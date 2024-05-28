@@ -10,6 +10,21 @@ class Leave_model extends CI_Model{
 		
 		/* Standard Libraries */
 	}
+
+	function three_month_back_record($emp_id,$leave_start_date)
+   	{
+		$data = array();
+		$date = new DateTime($leave_start_date);
+		$date->sub(new DateInterval('P1M'));
+		$data['first_month'] = $date->format('Y-m');
+		$date->sub(new DateInterval('P1M'));
+		$data['second_month'] = $date->format('Y-m');   
+		$date->sub(new DateInterval('P1M'));
+		$data['third_month'] = $date->format('Y-m');
+		//print_r($data); exit;
+		return($data);
+	}
+
 	function save_leave_db()
 	{	
 		$unit_id = $this->common_model->get_session_unit_id_name();
@@ -518,48 +533,6 @@ class Leave_model extends CI_Model{
 			}
 		}
 		return $total_present;
-	}
-	
-	function grid_maternity_benefit($grid_emp_id, $grid_year){
-		//echo $grid_year;exit;
-		$this->db->select('pr_emp_com_info.*, 
-			               pr_emp_per_info.*,
-						   pr_leave_trans.*,
-						   emp_designation.desig_bangla,
-						   emp_section.sec_name_bn,
-						   pr_grade.gr_name'
-						);
-		$this->db->from('pr_emp_com_info');
-		$this->db->from('pr_emp_per_info');
-		$this->db->from('emp_section');
-		$this->db->from('emp_designation');
-		$this->db->from('pr_grade');
-		$this->db->from('pr_leave_trans');
-		$this->db->where_in("pr_emp_com_info.emp_id", $grid_emp_id);
-		$this->db->where("pr_emp_com_info.emp_id = pr_emp_per_info.emp_id");
-		$this->db->where("pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id");
-		$this->db->where("emp_section.id = pr_emp_com_info.emp_sec_id");	
-		$this->db->where("emp_designation.id = pr_emp_com_info.emp_desi_id");	
-		$this->db->where('pr_emp_per_info.emp_sex', 2);
-		$this->db->where("pr_emp_com_info.emp_id = pr_leave_trans.emp_id");
-        $this->db->where("pr_leave_trans.leave_type = 'ml'");
-		$this->db->where("substr(pr_leave_trans.start_date,1,4)='$grid_year'");	
-		$query = $this->db->get();
-		return $query;
-	}
-
-	function three_month_back_record($emp_id,$leave_start_date)
-   	{
-		$data = array();
-		$date = new DateTime($leave_start_date);
-		$date->sub(new DateInterval('P1M'));
-		$data['first_month'] = $date->format('Y-m');
-		$date->sub(new DateInterval('P1M'));
-		$data['second_month'] = $date->format('Y-m');   
-		$date->sub(new DateInterval('P1M'));
-		$data['third_month'] = $date->format('Y-m');
-		//print_r($data); exit;
-		return($data);
 	}
 
 	function get_salary_info_for_ml_leave($emp_id,$salary_month)

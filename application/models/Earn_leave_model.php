@@ -15,7 +15,9 @@ class Earn_leave_model extends CI_Model{
 		if($date > $current_year_month){
 			return "Failed ! You Are In $current_year_month";
 		}
-        $current_date = $date."-01";
+        // $current_date = $date."-01";
+        $current_date = date('Y-m-t',strtotime($month_year));
+		// dd($current_date);
 	    $past_year_date = date("Y-m-d",strtotime("-1 year",strtotime($current_date)));
 		$result = $this->db->select('
 			id, 
@@ -33,6 +35,7 @@ class Earn_leave_model extends CI_Model{
 		->where('emp_join_date <=',$past_year_date)
 		->get('pr_emp_com_info');
 		$rows = $result->result();
+		// dd($rows);
 		if(count($rows) > 0){
 			foreach($rows as $row){
 				$id = $row->id;
@@ -46,20 +49,21 @@ class Earn_leave_model extends CI_Model{
 				$year  = $working_month->y;
 				$month = $working_month->m;
 				$day = $working_month->d;
-				if($month == '0'){
+				if($month == 0){
 					$first_year =  date("Y-m-d",strtotime("- $day days",strtotime($current_date)));
 					$last_year =  date("Y-m-d",strtotime("+ $day days",strtotime($past_year_date)));
-					$cl = $sl = $el =$ml = 0;
+					$cl = $sl = $el =$ml = 0;	
 					$leaves = $this->all_leave_cal($first_year, $last_year, $emp_id);
+					// dd($leaves);
 					if (!empty($leaves)) {
 						$cl = ($leaves->cl != null || $leaves->ml != '') ? $leaves->cl:0;
 						$sl = ($leaves->sl != null || $leaves->sl != '') ? $leaves->sl:0;
 						$el = ($leaves->el != null || $leaves->el != '') ? $leaves->el:0;
 						$ml = ($leaves->ml != null || $leaves->ml !=  '') ? $leaves->ml:0;
 					}
-					$present = $this->count_earn_leave($first_year, $last_year, $row->id); 
+					$present = $this->count_earn_leave($first_year, $last_year, $row->emp_id); 
 					$total_earn_leave = round($present->present/18);
-					// dd($total_earn_leave);
+					// dd($present);
 					if ($year > 1) {
 						$last_leave = $this->db->select('el, earn_leave, pay_leave')
 											->where('emp_id',$emp_id)
@@ -79,10 +83,10 @@ class Earn_leave_model extends CI_Model{
 							'basic_sal'  => round(($gross_sal-2450)/1.5,2),
 							'unit_id'    => $row->unit_id,
 							'line_id'    => $row->emp_line_id,
-							'P' 	 	 => $present->present,
-							'A' 	 	 => $present->absent,
-							'H' 	 	 => $present->holiday,
-							'W' 	 	 => $present->weekend,
+							'P' 	 	 => isset($present->present)?$present->present:0,
+							'A' 	 	 => isset($present->absent)?$present->absent:0,
+							'H' 	 	 => isset($present->holiday)?$present->holiday:0,
+							'W' 	 	 => isset($present->weekend)?$present->weekend:0,
 							'cl' 		 => $cl,
 							'sl' 		 => $sl,
 							'el' 	 	 => $el,
@@ -101,10 +105,10 @@ class Earn_leave_model extends CI_Model{
 							'basic_sal'  => round(($gross_sal-2450)/1.5,2),
 							'unit_id'    => $row->unit_id,
 							'line_id'    => $row->emp_line_id,
-							'P' 	 	 => $present->present,
-							'A' 	 	 => $present->absent,
-							'H' 	 	 => $present->holiday,
-							'W' 	 	 => $present->weekend,
+							'P' 	 	 => isset($present->present)?$present->present:0,
+							'A' 	 	 => isset($present->absent)?$present->absent:0,
+							'H' 	 	 => isset($present->holiday)?$present->holiday:0,
+							'W' 	 	 => isset($present->weekend)?$present->weekend:0,
 							'cl' 		 => $cl,
 							'sl' 		 => $sl,
 							'el' 	 	 => $el,
@@ -138,8 +142,7 @@ class Earn_leave_model extends CI_Model{
 
 
 	function all_leave_cal($first_year, $last_year, $emp_id){
-	 // echo "<pre>"; print_r($emp_id.' '.$last_year.' '.$first_year); exit; 
-
+	//  echo "<pre>"; print_r($emp_id.' '.$last_year.' '.$first_year); exit; 
 		$this->db->select("
 				SUM(CASE WHEN leave_type = 'cl' THEN 1 ELSE 0 END ) AS cl,
 				SUM(CASE WHEN leave_type = 'sl' THEN 1 ELSE 0 END ) AS sl,
@@ -155,16 +158,20 @@ class Earn_leave_model extends CI_Model{
 	}
 
 	function count_earn_leave($current_date, $past_year_date, $emp_id){
-		$this->db->select('
-				SUM(CASE WHEN present_status = "P" THEN 1 ELSE 0 END ) AS present,
-				SUM(CASE WHEN present_status = "A" THEN 1 ELSE 0 END ) AS absent,
-				SUM(CASE WHEN present_status = "H" THEN 1 ELSE 0 END ) AS holiday,
-				SUM(CASE WHEN present_status = "W" THEN 1 ELSE 0 END ) AS weekend,
-		');
+		// dd(gettype($past_year_date).'==='.$current_date);
+		$this->db->select("
+			SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ) AS present,
+			SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ) AS absent,
+			SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
+			SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ) AS weekend,
+		");
 		$this->db->from('pr_emp_shift_log');
 		$this->db->where('emp_id',$emp_id);
 		$this->db->where("shift_log_date BETWEEN '$past_year_date' and '$current_date'");
+		//  $this->db->get()->row();
+		//  dd($this->db->last_query());  
 		return $this->db->get()->row();  
+
 	}
 
 

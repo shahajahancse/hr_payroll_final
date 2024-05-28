@@ -71,8 +71,8 @@
 				<th style="padding:4px">Out Time</th>
 				<th style="padding:4px">OT Hour</th>
 				<th style="padding:4px">EOT Hour</th>
-				<th style="padding:4px">Modify EOT</th>
-				<th style="padding:4px">Deduct EOT</th>
+				<!-- <th style="padding:4px">Modify EOT</th>
+				<th style="padding:4px">Deduct EOT</th> -->
 				<th style="padding:4px">Total OT</th>
 			</tr>
 
@@ -97,9 +97,10 @@
 
 					<td style="text-align:center; padding:2px"><?php echo $row['ot']?></td>
 					<td style="text-align:center; padding:2px"><?php echo $row['eot']?></td>
-					<td style="text-align:center; padding:2px"><?php echo $row['modify_eot']?></td>
-					<td style="text-align:center; padding:2px"><?php echo $row['deduction_hour']?></td>
-					<?php $total_ot = $row['ot'] + $row['eot'] + ($row['modify_eot']) - $row['deduction_hour']; ?>
+					<!-- <td style="text-align:center; padding:2px">< ?php echo $row['modify_eot']?></td> -->
+					<!--  <td style="text-align:center; padding:2px">< ?php echo $row['deduction_hour']?></td> -->
+					<!-- <?php $total_ot = $row['ot'] + $row['eot'] + ($row['modify_eot']) - $row['deduction_hour']; ?> -->
+					<?php $total_ot = $row['ot'] + $row['eot']; ?>
 					<td style="text-align:center; padding:2px"><?php echo $total_ot; ?></td>
 				</tr>
 				<?php $emp_sec = $row['emp_sec_id']; ?>

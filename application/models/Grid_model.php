@@ -19,7 +19,7 @@ class Grid_model extends CI_Model{
 		$this->db->select('
 				pr_emp_per_info.name_en,
 				pr_emp_per_info.name_bn,
-				pr_emp_per_info.bank_bkash_no,
+				pr_emp_per_info.bank_bkash_no as mobile,
 				pr_emp_per_info.personal_mobile,
 
 				pr_emp_com_info.emp_join_date,
@@ -182,8 +182,12 @@ class Grid_model extends CI_Model{
                 COALESCE(SUM(log.eot), 0) AS eot,
                 COALESCE(SUM(log.ot_eot_4pm), 0) AS actual_eot_4pm,
                 COALESCE(SUM(log.ot_eot_12am), 0) AS actual_eot_12am,
-                COALESCE(SUM(CASE WHEN log.false_ot_4 IS NOT NULL THEN log.false_ot_4 ELSE log.ot_eot_4pm END ), 0) AS eot_4,
-                COALESCE(SUM(CASE WHEN log.false_ot_12 IS NOT NULL THEN log.false_ot_12 ELSE log.ot_eot_12am END ), 0) AS eot_12,
+                COALESCE(SUM(CASE WHEN log.false_ot_4 IS NOT NULL THEN log.false_ot_4 ELSE log.ot_eot_4pm END), 0) AS eot_4,
+                COALESCE(SUM(CASE WHEN log.false_ot_12 IS NOT NULL THEN log.false_ot_12 ELSE log.ot_eot_12am END), 0) AS eot_12,
+                COALESCE(SUM(CASE WHEN log.present_status = 'W' THEN log.ot ELSE 0 END), 0) AS w_ot,
+                COALESCE(SUM(CASE WHEN log.present_status = 'H' THEN log.ot ELSE 0 END), 0) AS h_ot,
+                COALESCE(SUM(CASE WHEN log.present_status = 'H' THEN log.eot ELSE 0 END), 0) AS h_eot,
+                COALESCE(SUM(CASE WHEN log.present_status = 'W' THEN log.eot ELSE 0 END), 0) AS w_eot,
             ");
 
 		$this->db->from('pr_emp_shift_log as log');
@@ -203,7 +207,7 @@ class Grid_model extends CI_Model{
 		$this->db->select('
 				pr_emp_per_info.name_en,
 				pr_emp_per_info.name_bn,
-				pr_emp_per_info.bank_bkash_no,
+				pr_emp_per_info.bank_bkash_no as mobile,
 				pr_emp_per_info.personal_mobile,
 
 				pr_emp_com_info.emp_join_date,
@@ -248,77 +252,78 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
-	function actual_summary_report($salary_month = null, $status = null, $grid_emp_id = null, $unit_id = null, $type=null)
+
+	function actual_summary_report($salary_month = null, $unit_id = null, $type=null)
 	{
-		// dd($unit_id);
-		$this->db->select("
-				num.id as line_id, num.line_name_en, num.line_name_bn,emp_section.sec_name_en,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END ) AS emp_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END ) AS emp_bank,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.gross_sal ELSE 0 END ) AS cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.gross_sal ELSE 0 END ) AS bank_sum,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.basic_sal ELSE 0 END ) AS cash_sum_basic_sal,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.basic_sal ELSE 0 END ) AS bank_sum_basic_sal,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.house_r ELSE 0 END ) AS cash_sum_house_r,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.house_r ELSE 0 END ) AS bank_sum_house_r,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.medical_a ELSE 0 END ) AS cash_sum_medical_a,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.medical_a ELSE 0 END ) AS bank_sum_medical_a,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.food_allow ELSE 0 END ) AS cash_sum_food_allow,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.food_allow ELSE 0 END ) AS bank_sum_food_allow,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.trans_allow ELSE 0 END ) AS cash_sum_trans_allow,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.trans_allow ELSE 0 END ) AS bank_sum_trans_allow,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.ot_hour ELSE 0 END ) AS cash_sum_ot_hour,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.ot_hour ELSE 0 END ) AS bank_sum_ot_hour,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_hour ELSE 0 END ) AS eot_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_hour ELSE 0 END ) AS eot_bank_sum,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.ot_amount ELSE 0 END ) AS cash_ot_amount,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.ot_amount ELSE 0 END ) AS bank_ot_amount,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_amount ELSE 0 END ) AS eot_amount_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_amount ELSE 0 END ) AS eot_amount_bank_sum,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_hr_for_sa ELSE 0 END ) AS eot_hr_for_sa_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_hr_for_sa ELSE 0 END ) AS eot_hr_for_sa_bank_sum,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_amt_for_sa ELSE 0 END ) AS eot_amt_for_sa_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_amt_for_sa ELSE 0 END ) AS eot_amt_for_sa_bank_sum,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.att_bonus ELSE 0 END ) AS cash_att_bonus,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.att_bonus ELSE 0 END ) AS bank_att_bonus,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.net_pay ELSE 0 END ) AS cash_sum_net_pay,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.net_pay ELSE 0 END ) AS bank_sum_net_pay,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.festival_bonus ELSE 0 END ) AS festival_bonus_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.festival_bonus ELSE 0 END ) AS festival_bonus_bank,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.adv_deduct ELSE 0 END ) AS adv_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.adv_deduct ELSE 0 END ) AS adv_deduct_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.abs_deduction ELSE 0 END ) AS abs_deduction_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.abs_deduction ELSE 0 END ) AS abs_deduction_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.late_deduct ELSE 0 END ) AS late_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.late_deduct ELSE 0 END ) AS late_deduct_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.others_deduct ELSE 0 END ) AS others_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.others_deduct ELSE 0 END ) AS others_deduct_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.tax_deduct ELSE 0 END ) AS tax_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.tax_deduct ELSE 0 END ) AS tax_deduct_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.stamp ELSE 0 END ) AS stam_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.stamp ELSE 0 END ) AS stam_deduct_bank,
-            ");
+ 		$this->db->distinct();
+ 		$this->db->select("
+ 				num.id as line_id, num.line_name_en, num.line_name_bn, sec.sec_name_en,
+ 				IFNULL(SUM(CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END), 0) AS emp_cash,
+ 				IFNULL(SUM(CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END), 0) AS emp_bank,
+ 				IFNULL(SUM(CASE WHEN com.salary_draw = 1 THEN ss.gross_sal ELSE 0 END), 0) AS cash_sum,
+ 				IFNULL(SUM(CASE WHEN com.salary_draw = 2 THEN ss.gross_sal ELSE 0 END), 0) AS bank_sum,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.basic_sal ELSE 0 END) AS cash_sum_basic_sal,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.basic_sal ELSE 0 END) AS bank_sum_basic_sal,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.house_r ELSE 0 END) AS cash_sum_house_r,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.house_r ELSE 0 END) AS bank_sum_house_r,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.medical_a ELSE 0 END) AS cash_sum_medical_a,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.medical_a ELSE 0 END) AS bank_sum_medical_a,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.food_allow ELSE 0 END) AS cash_sum_food_allow,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.food_allow ELSE 0 END) AS bank_sum_food_allow,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.trans_allow ELSE 0 END) AS cash_sum_trans_allow,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.trans_allow ELSE 0 END) AS bank_sum_trans_allow,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.ot_hour ELSE 0 END) AS cash_sum_ot_hour,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.ot_hour ELSE 0 END) AS bank_sum_ot_hour,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.eot_hour ELSE 0 END) AS eot_cash_sum,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.eot_hour ELSE 0 END) AS eot_bank_sum,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.ot_amount ELSE 0 END) AS cash_ot_amount,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.ot_amount ELSE 0 END) AS bank_ot_amount,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.eot_amount ELSE 0 END) AS eot_amount_cash_sum,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.eot_amount ELSE 0 END) AS eot_amount_bank_sum,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.eot_hr_for_sa ELSE 0 END) AS eot_hr_for_sa_cash_sum,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.eot_hr_for_sa ELSE 0 END) AS eot_hr_for_sa_bank_sum,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.eot_amt_for_sa ELSE 0 END) AS eot_amt_for_sa_cash_sum,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.eot_amt_for_sa ELSE 0 END) AS eot_amt_for_sa_bank_sum,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.att_bonus ELSE 0 END) AS cash_att_bonus,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.att_bonus ELSE 0 END) AS bank_att_bonus,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.net_pay ELSE 0 END) AS cash_sum_net_pay,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.net_pay ELSE 0 END) AS bank_sum_net_pay,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.festival_bonus ELSE 0 END) AS festival_bonus_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.festival_bonus ELSE 0 END) AS festival_bonus_bank,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.adv_deduct ELSE 0 END) AS adv_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.adv_deduct ELSE 0 END) AS adv_deduct_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.abs_deduction ELSE 0 END) AS abs_deduction_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.abs_deduction ELSE 0 END) AS abs_deduction_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.late_deduct ELSE 0 END) AS late_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.late_deduct ELSE 0 END) AS late_deduct_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.others_deduct ELSE 0 END) AS others_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.others_deduct ELSE 0 END) AS others_deduct_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.tax_deduct ELSE 0 END) AS tax_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.tax_deduct ELSE 0 END) AS tax_deduct_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.stamp ELSE 0 END) AS stam_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.stamp ELSE 0 END) AS stam_deduct_bank,
+ 			");
+			
 		$this->db->from('pay_salary_sheet as ss');
 		$this->db->from('pr_emp_com_info as com');
 		$this->db->from('emp_line_num as num');
-		$this->db->from('emp_section as emp_section');
+		$this->db->from('emp_section as sec');
 
+		$this->db->where("ss.line_id = num.id");
 		$this->db->where("ss.emp_id = com.emp_id");
-		$this->db->where("num.id = com.emp_line_id");
+		$this->db->where("ss.sec_id = sec.id");
 		$this->db->where("ss.salary_month", $salary_month);
 		$this->db->where("ss.unit_id", $unit_id);
 		if ($type != null) {
@@ -327,6 +332,7 @@ class Grid_model extends CI_Model{
 		}
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
+		
 		return $this->db->get()->result();
 
 	}
@@ -767,12 +773,16 @@ class Grid_model extends CI_Model{
 			pr_emp_com_info.emp_join_date,
 			pr_emp_com_info.emp_sec_id,
 			pr_emp_per_info.name_en,
+			pr_emp_per_info.name_bn,
 			pr_emp_per_info.personal_mobile,
 
 			emp_designation.desig_name,
+			emp_designation.desig_bangla,
 			emp_depertment.dept_name,
 			emp_section.sec_name_en,
+			emp_section.sec_name_bn,
 			emp_line_num.line_name_en,
+			emp_line_num.line_name_bn,
 			pr_emp_shift_log.ot,
 			pr_emp_shift_log.eot,
 			pr_emp_shift_log.deduction_hour,
@@ -1089,7 +1099,7 @@ class Grid_model extends CI_Model{
 		$this->db->join('allowance_iftar_bill', 'emp_designation.iftar_id = allowance_iftar_bill.id');
 		$this->db->where("pr_emp_com_info.emp_id",$emp_id);
 		$query = $this->db->get()->row();
-		return $query->allowance_amount;
+		return $query ? $query->allowance_amount : 0;
 	}
 	function get_desi_ifter_day($date1,$date2, $emp_id,){
 		$this->db->select('
@@ -1110,7 +1120,9 @@ class Grid_model extends CI_Model{
 				per.gender,
 				emp_designation.desig_name,
 				emp_depertment.dept_bangla,
+				emp_section.sec_name_en,
 				emp_section.sec_name_bn,
+				emp_line_num.line_name_en,
 				emp_line_num.line_name_bn,
 		');
 
@@ -1462,6 +1474,41 @@ class Grid_model extends CI_Model{
 		}
 	}
 	// ========================  end continuous report  ========================
+	// ========================  start maternity leave   ========================
+	function grid_maternity_benefit($emp_ids, $firstdate, $seconddate){
+		$this->db->select('
+					com.emp_join_date, 
+					per.name_en,
+					per.name_bn,
+					meh.*,
+					emp_designation.desig_bangla,
+					emp_line_num.line_name_bn,
+					emp_section.sec_name_bn,
+					pr_grade.gr_name'
+				);
+		$this->db->from('pr_maternity_entry_histry as meh');
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('pr_emp_per_info as per');
+		$this->db->from('emp_section');
+		$this->db->from('emp_line_num');
+		$this->db->from('emp_designation');
+		$this->db->from('pr_grade');
+		$this->db->where("meh.emp_id = com.emp_id");
+		$this->db->where("com.emp_id = per.emp_id");
+		$this->db->where("com.emp_sec_id = emp_section.id");	
+		$this->db->where("com.emp_line_id = emp_line_num.id");	
+		$this->db->where("com.emp_desi_id = emp_designation.id");	
+		$this->db->where("com.emp_sal_gra_id = pr_grade.gr_id");
+		$this->db->where('per.gender', 'Female');
+		$this->db->where_in("meh.emp_id", $emp_ids);
+		$this->db->where("meh.start_date >=", $firstdate);
+		$this->db->where("meh.end_date <=", $seconddate);
+		// $this->db->where("substr(meh.start_date,1,4)='$grid_year'");	
+		$query = $this->db->get()->result();
+		return $query;
+	}
+	// ========================  end maternity leave   ========================
+
 
 
 
@@ -4141,12 +4188,10 @@ class Grid_model extends CI_Model{
 	return $data;
 	}
 
-	function continuous_report_limit($grid_firstdate, $grid_seconddate, $status, $grid_emp_id, $limit)
-	{
+	function continuous_report_limit($grid_firstdate, $grid_seconddate, $status, $grid_emp_id, $limit){
 		$data = array();
 		$count = 0;
 		$date_array = $this->GetDays($grid_firstdate, $grid_seconddate);
-		//print_r($date);
 		$this->db->select('pr_emp_per_info.name_en,pr_emp_per_info.emp_id, pr_id_proxi.proxi_id, emp_designation.desig_name, emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en, pr_emp_com_info.emp_join_date ');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
@@ -4165,26 +4210,18 @@ class Grid_model extends CI_Model{
 			$this->db->where_in("pr_emp_com_info.emp_id",$grid_emp_id);
 			$this->db->order_by("emp_section.sec_name_en");
 			$query1 = $this->db->get();
-
-			foreach($query1->result_array() as $rows)
-			{
+			foreach($query1->result_array() as $rows){
 				$emp_id   = $rows["emp_id"];
 				$count = 0;
-				foreach($date_array as $date)
-				{
+				foreach($date_array as $date){
 					$present_check = $this->attendance_check($date, $emp_id, $status);
-					if($present_check == true)
-					{
+					if($present_check == true){
 						 $count++;
 					}
 				}
-
-				if($count < $limit)
-				{
+				if($count < $limit){
 					continue;
-
 				}
-
 				$emp_full_name=$rows["emp_full_name"];
 				$proxi_id=$rows["proxi_id"];
 				$desig_name=$rows["desig_name"];
@@ -4192,7 +4229,6 @@ class Grid_model extends CI_Model{
 				$sec_name_en=$rows["sec_name_en"];
 				$line_name=$rows["line_name"];
 				$emp_join_date=$rows["emp_join_date"];
-
 				$data['empid'][]=$emp_id ;
 				$data['proxid'][]=$proxi_id;
 				$data['fullname'][]=$emp_full_name;
@@ -4203,10 +4239,6 @@ class Grid_model extends CI_Model{
 				$data['desig'][]=$desig_name;
 				$data['total'][]=$count;
 			}
-
-
-
-		//print_r($data);
 		if($data)
 		{
 			return $data;
@@ -4215,7 +4247,6 @@ class Grid_model extends CI_Model{
 		{
 			return "Requested list is empty";
 		}
-
 	}
 
 	function continuous_line_report($grid_firstdate,$grid_seconddate,$grid_emp_id)
@@ -4734,6 +4765,7 @@ class Grid_model extends CI_Model{
 				emp_line_num.line_name_bn,
 				pr_emp_com_info.emp_sal_gra_id,
 				pr_emp_com_info.ot_entitle,
+				pr_emp_per_info.bank_bkash_no as mobile,
 				pr_emp_com_info.com_ot_entitle,
 				pr_id_proxi.proxi_id,
 				pr_grade.gr_name,
@@ -4814,8 +4846,7 @@ class Grid_model extends CI_Model{
 		//print_r($query->result_array());
 	}
 
-	function grid_pay_slip_com_non_com_mix($year_month, $grid_emp_id)
-	{
+	function grid_pay_slip_com_non_com_mix($year_month, $grid_emp_id){
 		$this->db->select('pr_emp_com_info.emp_id,pr_emp_com_info.gross_sal,pr_emp_per_info.name_en,pr_emp_per_info.emp_fname,pr_emp_per_info.emp_mname, emp_designation.desig_name, emp_designation.desig_bangla, pr_emp_com_info.emp_join_date, emp_depertment.dept_name, emp_depertment.dept_bangla, emp_section.sec_name_en, emp_section.sec_name_en_bn, emp_line_num.line_name_en ,emp_line_num.line_bangla,pr_emp_com_info.emp_sal_gra_id,pr_emp_com_info.ot_entitle,pr_id_proxi.proxi_id, pr_emp_add.emp_pre_add, pr_emp_add.emp_par_add, pr_emp_position.posi_name,pr_grade.gr_name, pay_salary_sheet_com.* ,pr_emp_per_info.bangla_nam');
 			$this->db->from('pr_emp_per_info');
 			$this->db->from('pr_emp_com_info');
@@ -5485,20 +5516,15 @@ class Grid_model extends CI_Model{
 			return "Soryy! Requested list is empty";
 		}
 	}
-	function grid_monthly_att_registerr($year_month, $grid_emp_id){
-		$year= trim(substr($year_month,0,4));
-		$month = trim(substr($year_month,5,2));
-		$att_month = "att_".$year."_".$month;
-		if(!$this->db->table_exists($att_month)){
-			return "Report month does not exist!";
-		}
+	function grid_monthly_att_registerr($grid_emp_id){
+
 		$this->db->select('
-						   pr_emp_com_info.emp_id,
-						   pr_emp_com_info.id,
-						   pr_emp_per_info.name_en,
-						   emp_designation.desig_name,
-						   emp_line_num.line_name_en,
-						');
+						pr_emp_com_info.emp_id,
+						pr_emp_com_info.id,
+						pr_emp_per_info.name_en,
+						emp_designation.desig_name,
+						emp_line_num.line_name_en,
+					');
 		$this->db->from('pr_emp_com_info');
 		$this->db->join('pr_emp_per_info','pr_emp_com_info.emp_id = pr_emp_per_info.emp_id','left');
 		$this->db->join('emp_section','emp_section.id = pr_emp_com_info.emp_sec_id','left');
@@ -5509,22 +5535,8 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("pr_emp_per_info.emp_id");
 		$query = $this->db->get();
 		if( $query->num_rows() > 0){
-			$data = array();
-			foreach( $query->result() as $row){
-				$newArray = array();
-				$first_day = date('Y-m-01', strtotime($year_month));
-				$last_day  = date('Y-m-t', strtotime($first_day));
-				$a =$this->db->select('present_status')->where('emp_id',$row->id)->where('shift_log_date BETWEEN "'.$first_day.'" AND "'.$last_day.'"')->get('pr_emp_shift_log')->result();
-				foreach ($a as $item) {
-					$newArray[] = $item->present_status;
-				}
-				$newArray = array_merge((array)$row,$newArray);
-				$data[] = $newArray;
-			}
-			// dd($data);
-			return $data;
-		}
-		else{
+			return $query->result_array();
+		}else{
 			return "Soryy! Requested list is empty";
 		}
 	}
@@ -6857,12 +6869,9 @@ class Grid_model extends CI_Model{
 		{ return false;}
 	}
 
-	function grid_comprative_salary_statement($salary_month,$salary_month2,$grid_status,$grid_unit,$stop_salary)
-	{
+	function grid_comprative_salary_statement($salary_month,$salary_month2,$grid_status,$grid_unit,$stop_salary){
 		$data["first_month"]= $this->salary_summary($salary_month,$grid_status,$grid_unit,$stop_salary);
-
 		$data["second_month"]= $this->salary_summary($salary_month2,$grid_status,$grid_unit,$stop_salary);
-
 		return $data;
 	}
 
@@ -8249,12 +8258,13 @@ class Grid_model extends CI_Model{
 			{
 				$result = 0;
 			}
-
 		return $result;
 	}
 
 
 	function festival_bonus_summary($salary_month,$emp_stat,$grid_unit){
+
+		// dd($grid_unit);
 		$all_data = array();
 
 		$salary_month = $salary_month;
@@ -8745,6 +8755,7 @@ class Grid_model extends CI_Model{
 							emp_designation.desig_bangla,
 							pr_emp_com_info.emp_join_date,
 							pr_grade.gr_name,
+							pr_grade.gr_str_basic,
 							pr_emp_com_info.gross_sal,
 							pr_emp_status.stat_type,
 							pr_emp_per_info.per_village,

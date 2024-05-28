@@ -11,9 +11,7 @@
 <body>
 
 <div style=" margin:0 auto;  width:750px;">
-<?php
-$this->load->view("head_english");
-?>
+<?php $this->load->view("head_english"); ?>
 <!--Report title goes here-->
 <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;"><span style="font-size:12px; font-weight:bold;">
 Monthly OT Report of <?php echo "$start_date"; ?></span>
@@ -22,7 +20,20 @@ Monthly OT Report of <?php echo "$start_date"; ?></span>
 
 
 <table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:12px;">
-<th>SL</th><th>Emp ID</th><th>Punch Card No.</th><th>Employee Name</th> <!--<th>DOJ</th>--> <th>Department</th> <!--<th>Section</th>--> <th>Line No. </th> <th>Designation</th> <th>Shift</th> <th>Gross Sal</th> <th>OT Rate</th> <th>Total OT Hour</th><th>Total OT Amount</th>
+	<tr>
+		<th>SL</th>
+		<th>Emp ID</th>
+		<th>Punch Card No.</th>
+		<th>Employee Name</th> 
+		<th>Department</th>
+		<th>Designation</th> 
+		<th>Line No. </th> 
+		<th>Shift</th> 
+		<th>Gross Sal</th> 
+		<th>OT Rate</th> 
+		<th>Total OT Hour</th>
+		<th>Total OT Amount</th>
+	</tr>
 
 
 <?php
@@ -52,28 +63,16 @@ for($i=0; $i<$count; $i++ )
 	echo $values["emp_name"][$i];
 	echo "</td>";
 
-	/*echo "<td>";
-	$year= trim(substr($values["doj"][$i],0,4));
-	$month = trim(substr($values["doj"][$i],5,2));
-	$tarik = trim(substr($values["doj"][$i],8,2));
-	$date_format = date("d-M-y", mktime(0, 0, 0, $month, $tarik, $year));
-	echo $date_format;
-	echo "</td>";*/
-
 	echo "<td  width='140'  style='text-align:left;'>";
 	echo $values["dept_name"][$i];
 	echo "</td>";
 
-	//echo "<td  width='140'  style='text-align:left;'>";
-	//echo $values["sec_name"][$i];
-	//echo "</td>";
-
 	echo "<td  width='140'  style='text-align:left;'>";
-	echo $values["line_name"][$i];
+	echo $values["desig_name"][$i];
 	echo "</td>";
 
 	echo "<td  width='140'  style='text-align:left;'>";
-	echo $values["desig_name"][$i];
+	echo $values["line_name"][$i];
 	echo "</td>";
 
 	echo "<td >";

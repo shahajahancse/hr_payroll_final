@@ -47,6 +47,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" style="justify-content: center!important; display: flex; flex-wrap: wrap;">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <h4 class="control-label" style="font-weight: bold;">Select Second Month </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input type="month" class="form-control" id="secondary_month" value="<?= date('Y-m') ?>">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row tablebox" style="display: block; margin-bottom: 10px;">
@@ -137,6 +149,10 @@
                 </div>
             </div>
             <!-- selection area -->
+
+            <div id='loaader' style="display: none;align-items: center;justify-content: center;z-index: 33333;background: #e9e9e966;position: absolute;" class="col-md-12">
+				<img  src="<?php echo base_url('loader.gif')?>" alt="loader">
+			</div>
 
             <!-- Report are -->
             <div class="row tablebox" style="margin-bottom: 15px;">
@@ -257,13 +273,13 @@
                         <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                     </tr>
                     <?php if (!empty($employees)) {
-                                foreach ($employees as $key => $emp) { ?>
-                    <tr id="removeTr">
-                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-                        </td>
-                        <td class="success"><?= $emp->emp_id ?></td>
-                        <td class="warning "><?= $emp->name_en ?></td>
-                    </tr>
+                        foreach ($employees as $key => $emp) { ?>
+                        <tr id="removeTr">
+                            <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+                            </td>
+                            <td class="success"><?= $emp->emp_id ?></td>
+                            <td class="warning "><?= $emp->name_en ?></td>
+                        </tr>
                     <?php } } ?>
                 </table>
             </div>

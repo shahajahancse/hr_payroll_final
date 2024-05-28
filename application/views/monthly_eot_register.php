@@ -37,7 +37,20 @@ $this->load->view("head_english");
 Monthly EOT Report of <?php echo "$start_date"; ?></span>
 <div style="clear:both;width: 100%;height: 20px;"></div>
 <table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:12px;">
-<th>SL</th><th>Emp ID</th><th>Punch Card No.</th><th>Employee Name</th> <!--<th>DOJ</th>--> <th>Department</th> <!--<th>Section</th>--> <th>Line No. </th> <th>Designation</th> <th>Shift</th> <th>Gross Sal</th> <th>OT Rate</th> <th>Total EOT Hour</th><th>Total EOT Amount</th>
+	<tr>
+		<th>SL</th>
+		<th>Emp ID</th>
+		<th>Punch Card No.</th>
+		<th>Employee Name</th>
+		<th>Department</th>
+		<th>Designation</th> 
+		<th>Line No. </th> 
+		<th>Shift</th> 
+		<th>Gross Sal</th> 
+		<th>OT Rate</th> 
+		<th>Total EOT Hour</th>
+		<th>Total EOT Amount</th>
+	</tr>
 
 
 <?php
@@ -90,13 +103,12 @@ $section=array();
 	echo $values["dept_name"][$k];
 	echo "</td>";
 
-
 	echo "<td  width='140'  style='text-align:left;'>";
-	echo $values["line_name"][$k];
+	echo $values["desig_name"][$k];
 	echo "</td>";
 
 	echo "<td  width='140'  style='text-align:left;'>";
-	echo $values["desig_name"][$k];
+	echo $values["line_name"][$k];
 	echo "</td>";
 
 	echo "<td >";

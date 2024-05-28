@@ -10,11 +10,11 @@ class Crud_model extends CI_Model{
 
 
     //==========================Department===============================//
-    function dept_infos($limit, $start, $condition = 0){
+    function dept_infos($limit, $start, $condition = 0, $unit_id = 0){
         $this->db->select('SQL_CALC_FOUND_ROWS emp_depertment.*, pr_units.unit_name', false);
         $this->db->from('emp_depertment');
         $this->db->join('pr_units','emp_depertment.unit_id = pr_units.unit_id', 'left');
-        // $this->db->where('emp_depertment.unit_id',$unit_id); 
+        $this->db->where('emp_depertment.unit_id',$unit_id); 
         if (!empty($condition)) {
             $this->db->where($condition);
         }
@@ -212,6 +212,7 @@ class Crud_model extends CI_Model{
     }
     function getallUnit()
     {
+        $this->db->where("unit_id", $this->data['user_data']->unit_name);
         return $this->db->get('pr_units')->result_array();
     }
 
@@ -733,11 +734,14 @@ class Crud_model extends CI_Model{
         return $this->db->get('pr_emp_shift_schedule')->row();
     }
 
-    function shiftschedule_infos()
+    function shiftschedule_infos($unit_id = null)
     {
         $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_shift_schedule.*,pr_units.unit_name', false);
         $this->db->from('pr_emp_shift_schedule');
         $this->db->join('pr_units','pr_units.unit_id = pr_emp_shift_schedule.unit_id');
+        if ($unit_id != null) {
+            $this->db->where('pr_emp_shift_schedule.unit_id', $unit_id);
+        }
         return $this->db->get()->result_array();
     }
 
@@ -747,60 +751,45 @@ class Crud_model extends CI_Model{
 
 
 
-     function shiftschedule_add($fromArray)
-        {
-            // print_r($fromArray);exit('ali');
-            // $comData = array(
-            //     'unit_name' => $this->input->post('uname'),
-            //     'sh_type' => $fromArray['stype'],
-            //     'in_start' => $fromArray['instrt'],
-            //     'in_time' => $fromArray['intime'],
-            //     'late_start' => $fromArray['ltstart'],
-            //     'in_end' => $fromArray['inend'],
-            //     'out_start' => $fromArray['outstart'],
-            //     'out_end' => $fromArray['outend'],
-            //     'ot_start' => $fromArray['otstart'],
-            //     'ot_minute_to_one_hour' => $fromArray['otminute'],
-            //     'one_hour_ot_out_time' => $fromArray['onehrottime'],
-            //     'two_hour_ot_out_time' => $fromArray['twohrottime'],
+    function shiftschedule_add($fromArray)
+    {
+        $this->db->insert('pr_emp_shift_schedule',$fromArray);
+    }
 
 
-            // );
-           // print_r($comData);exit('obaydullah');
+    function shiftschedule_edit($shiftscheduleId)
+    {
+        $formArray = array();
 
-              $this->db->insert('pr_emp_shift_schedule',$fromArray);
+        // $formArray['unit_name'] = $this->input->post('uname');
+        $formArray['sh_type'] = $this->input->post('stype');
+        $formArray['in_start'] = $this->input->post('instrt');
+        $formArray['in_time'] = $this->input->post('intime');
+        $formArray['late_start'] = $this->input->post('ltstart');
+        $formArray['in_end'] = $this->input->post('inend');
+        $formArray['out_start'] = $this->input->post('outstart');
+        $formArray['out_end'] = $this->input->post('outend');
+        $formArray['ot_start'] = $this->input->post('otstart');
+        $formArray['ot_minute_to_one_hour'] = $this->input->post('otminute');
+        $formArray['one_hour_ot_out_time'] = $this->input->post('onehrottime');
+        $formArray['two_hour_ot_out_time'] = $this->input->post('twohrottime');
+        $formArray['lunch_start'] = $this->input->post('lunch_start');
+        $formArray['lunch_minute'] = $this->input->post('lunch_minute');
+        $formArray['tiffin_break'] = $this->input->post('tiffin_break');
+        $formArray['tiffin_minute'] = $this->input->post('tiffin_minute');
+        $formArray['tiffin_break2'] = $this->input->post('tiffin_break2');
+        $formArray['tiffin_minute2'] = $this->input->post('tiffin_minute2');
+        $formArray['random_minute'] = $this->input->post('random_minute');
 
-        }
+        $this->db->where('id',$shiftscheduleId);
+        $this->db->update('pr_emp_shift_schedule',$formArray);
+    }
 
-
-     function shiftschedule_edit($shiftscheduleId)
-        {
-             $formArray = array();
-
-             // $formArray['unit_name'] = $this->input->post('uname');
-             $formArray['sh_type'] = $this->input->post('stype');
-             $formArray['in_start'] = $this->input->post('instrt');
-             $formArray['in_time'] = $this->input->post('intime');
-             $formArray['late_start'] = $this->input->post('ltstart');
-             $formArray['in_end'] = $this->input->post('inend');
-             $formArray['out_start'] = $this->input->post('outstart');
-             $formArray['out_end'] = $this->input->post('outend');
-             $formArray['ot_start'] = $this->input->post('otstart');
-             $formArray['ot_minute_to_one_hour'] = $this->input->post('otminute');
-             $formArray['one_hour_ot_out_time'] = $this->input->post('onehrottime');
-             $formArray['two_hour_ot_out_time'] = $this->input->post('twohrottime');
-
-
-             $this->db->where('id',$shiftscheduleId);
-             $this->db->update('pr_emp_shift_schedule',$formArray);
-
-        }
-
-     function shiftschedule_delete($shiftscheduleId)
-        {
-            $this->db->where('id',$shiftscheduleId);
-            $this->db->delete('pr_emp_shift_schedule');
-        }
+    function shiftschedule_delete($shiftscheduleId)
+    {
+        $this->db->where('id',$shiftscheduleId);
+        $this->db->delete('pr_emp_shift_schedule');
+    }
 
 
 

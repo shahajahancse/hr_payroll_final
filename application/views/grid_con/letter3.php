@@ -7,42 +7,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-      body{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000000;
+            padding:2px;
+        }
+        p{
+            font-size:19px
+        }
     </style>
-  </head>
-  <body>
-<?php foreach($values as $value){?>
+</head>
 
-  <div class="container w-75 mb-5">
-    <div class="d-flex flex-row justify-content-between">
-      <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
-      <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-      <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
-    </div>
-    <div class="d-flex">
-      <div class="col-md-3">
-        <?php $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;?>
-        <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+<body style="font-family: SutonnyMJ">
+  <?php foreach($values as $value){?>
+    <div class="container w-75">
+      <?php $unit_id =$this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+      <div class="d-flex flex-row justify-content-between">
+          <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/026</p>
       </div>
-      <div class="col-md-12">
-        <h1 class="text-center" style="margin-left: -420px;">হানিওয়েল গার্মেন্টস লিমিটেড</h1>
+      <?php } else if($unit_id == 2){?>
+      <div class="d-flex flex-row justify-content-between">
+          <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : LSAL/HR/03/168</p>
       </div>
-    </div>
-    <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-      <p class="text-center h6">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
-    </div>
-    <div class="d-flex">
-      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-সি</div>
-      <div class="col-md-6 text-right">তারিখঃ ২৫/০১/২০২৪</div>
-    </div>
+      <?php }else if($unit_id == 4){?>
+      <div class="d-flex flex-row justify-content-between">
+          <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/025</p>
+      </div>
+      <?php }?>
+      <div class="mt-3">
+          <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+          <div class="d-flex">
+              <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+              <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
+          </div>
+      </div>
+      <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+          <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+      </div>
 
-    <div>
-      <h5 class="text-center mt-5">"রেজিষ্ট্রি ডাক যোগে প্রেরিত" তৃতীয় চিঠি</h5>
-    </div>
+      
+      <div class="d-flex">
+        <div class="col-md-6">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-সি</div>
+        <div class="col-md-6 text-right">তারিখঃ <?php echo date('d/m/Y') ?></div>
+      </div>
+
+      <div>
+        <h5 class="text-center mt-5">"রেজিষ্ট্রি ডাক যোগে প্রেরিত" তৃতীয় চিঠি</h5>
+      </div>
 
       <div class="d-flex ml-3 mt-5">
         <div class="col-md-4 border" style="line-height: 10px;">
@@ -75,38 +97,39 @@
 
     
       <h6 class="ml-3 mt-5"><b>বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭ (৩ক) ধারা মোতাবেক শ্রমিক কর্তৃক সে¦চ্ছায় চাকুরী হইতে ইস্তফা প্রসঙ্গে।</b></h6>
-    <div class="ml-3 mt-5">
-      <p class="text-justify">
-        <span>জনাব/জনাবা,</span><br> 
-        আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ হতে অদ্যবদি পর্যন্ত কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত থাকার কারনে আপনাকে গত
-        <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y', strtotime($value->left_date . ' +10 days'));?></span></b> ইং তারিখে যার সূত্র নংঃ- <b>এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</b> এর একটি পত্রের মাধ্যেমে ১০ (দশ) দিনের সময় দিয়ে চাকুরীতে
-        যোগদান সহ ব্যাখ্যা প্রদান করতে বলা হয়েছিল। কিন্তু আপনি নির্ধারিত সময়ের মধ্যে কর্মস্থলে উপস্থিত হননি এবং কোন ব্যাখ্যা
-        প্রদান করেন নি। তথাপিও কর্তৃপক্ষ গত <b>১১/০২/২০২৪</b> ইং তারিখে যার সূত্র নংঃ-<b> এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-বি </b>এর আরও একটি পত্রর
-        মাধ্যেমে আপনাকে আরো ০৭ (সাত) কর্মদিবসের সময় দিয়ে আত্মপক্ষ সমর্থন সহ চাকুরীতে যোগদানের জন্য পূণরায় নির্দেশ প্রদান করেন।
-        তৎসত্বেও আপনি নির্ধারিত সময়ের মধ্যে আত্নপক্ষ সামর্থন করেননি এমনকি চাকুরীতেও যোগদান করেননি। সুতরাং বাংলাদেশ শ্রম আইন ২০০৬
-        এর ২৭ (৩ক) ধারা অনুযায়ী অনুপস্থিত দিন থেকে আপনি স্বেচ্ছায় চাকুরী হতে ইস্তফা গ্রহন করেছেন বলে গন্য করা হলো।
-        <br><br>
-        অতএব আপনার বকেয়া মজুরী ও আইনানুগ পাওনা (যদি থাকে) যে কোন কর্ম দিবসে অফিস চলাকালীন সময়ে কারখানার হিসাব বিভাগ থেকে গ্রহন
-        করার জন্য নির্দেশ দেওয়া গেল।
-      </p>
+      <div class="ml-3 mt-5">
+        <p class="text-justify">
+          <span>জনাব/জনাবা,</span><br> 
+          আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date))?></span></b> ইং তারিখ হতে অদ্যবদি পর্যন্ত কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত থাকার কারনে আপনাকে গত
+          <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y', strtotime($value->left_date . ' +10 days'));?></span></b> ইং তারিখে যার সূত্র নংঃ- <b>এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-এ</b> এর একটি পত্রের মাধ্যেমে ১০ (দশ) দিনের সময় দিয়ে চাকুরীতে
+          যোগদান সহ ব্যাখ্যা প্রদান করতে বলা হয়েছিল। কিন্তু আপনি নির্ধারিত সময়ের মধ্যে কর্মস্থলে উপস্থিত হননি এবং কোন ব্যাখ্যা
+          প্রদান করেন নি। তথাপিও কর্তৃপক্ষ গত <b>১১/০২/২০২৪</b> ইং তারিখে যার সূত্র নংঃ-<b> এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-বি </b>এর আরও একটি পত্রর
+          মাধ্যেমে আপনাকে আরো ০৭ (সাত) কর্মদিবসের সময় দিয়ে আত্মপক্ষ সমর্থন সহ চাকুরীতে যোগদানের জন্য পূণরায় নির্দেশ প্রদান করেন।
+          তৎসত্বেও আপনি নির্ধারিত সময়ের মধ্যে আত্নপক্ষ সামর্থন করেননি এমনকি চাকুরীতেও যোগদান করেননি। সুতরাং বাংলাদেশ শ্রম আইন ২০০৬
+          এর ২৭ (৩ক) ধারা অনুযায়ী অনুপস্থিত দিন থেকে আপনি স্বেচ্ছায় চাকুরী হতে ইস্তফা গ্রহন করেছেন বলে গন্য করা হলো।
+          <br><br>
+          অতএব আপনার বকেয়া মজুরী ও আইনানুগ পাওনা (যদি থাকে) যে কোন কর্ম দিবসে অফিস চলাকালীন সময়ে কারখানার হিসাব বিভাগ থেকে গ্রহন
+          করার জন্য নির্দেশ দেওয়া গেল।
+        </p>
 
-      <div class="mt-5">
-        <p style="margin-bottom: 117px !important;">ধন্যবাদান্তে,</p>
-        <p class="mt-5" style="border-top:2px solid black;width:200px;padding-top: 5px;">বিভাগীয় প্রধান</p>
-        <p>এইচআর, এডমিন এন্ড কমপ্লায়েন্স</p>
-        <p>হানিওয়েল গার্মেন্টস লিমিটেড।</p>
-        <p class="mt-5">অনুলিপিঃ</p>
-        <p>১ . কোম্পানীর সংশ্লিষ্ট বিভাগ সমূহ</p>
-        <p>২. কারখানার নোটিশ বোর্ড</p>
-        <p>৩. শ্রমিকের ব্যক্তিগত নথি।</p>
+        <div class="mt-5">
+          <p style="margin-bottom: 117px !important;">ধন্যবাদান্তে,</p>
+          <p class="mt-5" style="border-top:2px solid black;width:200px;padding-top: 5px;">বিভাগীয় প্রধান</p>
+          <p>এইচআর, এডমিন এন্ড কমপ্লায়েন্স</p>
+          <p>হানিওয়েল গার্মেন্টস লিমিটেড।</p>
+          <p class="mt-5">অনুলিপিঃ</p>
+          <p>১ . কোম্পানীর সংশ্লিষ্ট বিভাগ সমূহ</p>
+          <p>২. কারখানার নোটিশ বোর্ড</p>
+          <p>৩. শ্রমিকের ব্যক্তিগত নথি।</p>
+        </div>
       </div>
-    </div>
-  </div>    
+    </div>    
 
-<div style="page-break-after:always"></div>
+      <div style="page-break-after:always"></div>
   <?php }?>
   </body>
 </html>
 
 
-
+<br> <br>
+<?php exit(); ?>

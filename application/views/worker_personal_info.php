@@ -82,23 +82,35 @@
 
         ?>
         <div class="container break_page" style=" font-family: sutonnymj;">
+            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
             <div class="d-flex flex-row justify-content-between">
-                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
+            </div>
+            <?php } else if($unit_id == 2){?>
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;"> Document Code : LSAL/HR/03/084</p>
+            </div>
+            <?php }else if($unit_id == 4){?>
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
             </div>
-            <div class="d-flex">
-                <div class="col-md-2">
-                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+            <?php }?>
+            <div class="mt-3">
+                <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+                <div class="d-flex">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                    <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
                 </div>
-                <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
-                </div>
-                </div>
-                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-                </div>
-            <div>
+            </div>
+            <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+                <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+            </div>
             <div class="d-flex mt-2">
                 <div class="col-md-4">
                     <p style="font-size:21px !important;line-height:22px !important;">myÎt GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiLt <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</span></p>
@@ -268,25 +280,36 @@
             </div>
         </div>
 
-
         <div class="container break_page" style=" font-family: sutonnymj;">
+            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
             <div class="d-flex flex-row justify-content-between">
-                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
+            </div>
+            <?php } else if($unit_id == 2){?>
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;"> Document Code : LSAL/HR/03/084</p>
+            </div>
+            <?php }else if($unit_id == 4){?>
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
             </div>
-            <div class="d-flex">
-                <div class="col-md-2">
-                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+            <?php }?>
+            <div class="mt-3">
+                <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+                <div class="d-flex">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                    <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
                 </div>
-                <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
-                </div>
-                </div>
-                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-                </div>
-            <div>
+            </div>
+            <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+                <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+            </div>
             <div class="d-flex mt-2">
                 <div class="col-md-4">
                     <p style="font-size:21px !important;line-height:22px !important;">myÎt GBP.wR.Gj/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiLt <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</span></p>
@@ -458,23 +481,35 @@
 
         <!-- jogdan -->
         <div class="container break_page" style="font-family:sutonnymj;">
+            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
+            </div>
+            <?php } else if($unit_id == 2){?>
+            <div class="d-flex flex-row justify-content-between">
+                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : LSAL/HR/03/084</p>
+            </div>
+            <?php }else if($unit_id == 4){?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/002</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
             </div>
-            <div class="d-flex">
-                <div class="col-md-2">
-                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+            <?php }?>
+            <div class="mt-3">
+                <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+                <div class="d-flex">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                    <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
                 </div>
-                <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
-                </div>
-                </div>
-                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-                </div>
-            <div>
+            </div>
+            <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+                <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+            </div>
             <!-- <div class="row"> -->
                 <br>
 
@@ -529,23 +564,35 @@
 
         <!-- potovumi -->
         <div class="container break_page" style=" font-family: sutonnymj;">
-            <div class="d-flex flex-row justify-content-between">
-                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/005</p>
+            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/005</p>
+                </div>
+                <?php } else if($unit_id == 2){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code :  LSAL/HR/03/086</p>
+                </div>
+                <?php }else if($unit_id == 4){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/005</p>
+                </div>
+            <?php }?>
+            <div class="mt-3">
+                <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+                <div class="d-flex">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                    <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
+                </div>
             </div>
-            <div class="d-flex">
-                <div class="col-md-2">
-                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
-                </div>
-                <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
-                </div>
-                </div>
-                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-                </div>
-            <div>
+            <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+                <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+            </div>
             <br>
             <div class="title_box mt-2">
                 <h3 style="font-family:Arial;border-bottom:1px solid black;padding-left:2px;padding-right:2px">Background Check</h3>
@@ -617,24 +664,38 @@
         <!-- abedon -->
 
         <div class="container-fluid break_page" style=" font-family: sutonnymj;margin-left:-15px">
-            <div class="d-flex flex-row justify-content-between">
-                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/003</p>
-            </div>
-            <div class="d-flex">
-                <div class="col-md-2">
-                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/003</p>
                 </div>
-                <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
+                <?php } else if($unit_id == 2){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code :  LSAL/HR/03/087</p>
                 </div>
+                <?php }else if($unit_id == 4){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/003</p>
                 </div>
-                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
+            <?php }?>
+            <div>
+                <div class="mt-3">
+                    <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+                    <div class="d-flex">
+                        <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                        <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
+                    </div>
+                </div>
+                <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+                    <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
                 </div>
             <div>
-                <br>
+            <br>
             <!-- <div class="row"> -->
             <h2 class="text-center mt-2"><b style="border: 2px solid black;padding-left:4px;padding-right:4px;">Av‡e`b cÎ</b></h2>
             <!-- </div> -->
@@ -727,24 +788,36 @@
         <br>
         <!-- nominee -->
         <div class="container-fluid break_page" style="margin-left:-10px">
-            <div class="d-flex flex-row justify-content-between">
-                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/007</p>
+            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/007</p>
+                </div>
+                <?php } else if($unit_id == 2){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code :  LSAL/HR/03/080</p>
+                </div>
+                <?php }else if($unit_id == 4){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/007</p>
+                </div>
+            <?php }?>
+             <div class="mt-3">
+                <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+                <div class="d-flex">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                    <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
+                </div>
             </div>
-            <div class="d-flex">
-                <div class="col-md-2">
-                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
-                </div>
-                <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
-                </div>
-                </div>
-                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-                </div>
-            <div>
-                <br>
+            <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+                <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+            </div>
+            <br>
             <div class="d-flex flex-column align-items-center">
                 <h2 class="mt-2" style="border: 2px solid black;padding-left:4px;padding-right:4px;">dig bs-41</h2>
                 <p>[ aviv 19, 131 (1) (K), 155 (2), 234, 264, 265 I 273 Ges wewa 118 (1) 136, 232 (2), 262 (1), 289 (1) I 321
@@ -912,25 +985,36 @@
 
         <!-- account  -->
 
-        <div class="container break_page" style="margin-left:-10px">
-            <div class="d-flex flex-row justify-content-between p_screen">
-                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
-                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Document Code :HGL/HRD/HR/03/028</p>
+        <div class="container break_page w-100" style="margin-left:-10px">
+            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/002</p>
+                </div>
+                <?php } else if($unit_id == 2){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code :  LSAL/HR/03/122</p>
+                </div>
+                <?php }else if($unit_id == 4){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/028</p>
+                </div>
+            <?php }?>
+            <div class="mt-3">
+                <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+                <div class="d-flex">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                    <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
+                </div>
             </div>
-            <div class="d-flex">
-                <div class="col-md-2">
-                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
-                </div>
-                <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
-                </div>
-                </div>
-                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-                </div>
-            <div>
-
+            <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+                <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+            </div>
             <div>
                 <br>
                 <p>ZvwiL : <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</p><br><br>
@@ -957,29 +1041,41 @@
                         <p>KZ©„c‡ÿi ¯^vÿi</p>
                    </div>
                 </div>
-
             </div>
         </div>
 
         <!-- job description -->
         <div class="container break_page" style="margin-left:-10px">
-            <div class="d-flex flex-row justify-content-between p_screen">
-                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
-                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p class="p_screen" style="font-family: Arial, Helvetica, sans-serif;">Document Code :HGL/HRD/HR/03/028</p>
+           <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/003</p>
+                </div>
+                <?php } else if($unit_id == 2){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code :  LSAL/HR/03/090</p>
+                </div>
+                <?php }else if($unit_id == 4){?>
+                <div class="d-flex flex-row justify-content-between">
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/002</p>
+                </div>
+            <?php }?>
+                        
+            <div class="mt-3">
+                <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+                <div class="d-flex">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                    <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
+                </div>
             </div>
-            <div class="d-flex">
-                <div class="col-md-2">
-                    <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
-                </div>
-                <div class="col-md-12">
-                 <h1 class="text-center" style="margin-left: -420px;;"> <?= $company_name_bangla; ?> </h1>
-                </div>
-                </div>
-                <div class="col-md-12"  style="border-bottom: 1px solid black!important;">
-                    <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi-1700|</p>
-                </div>
-            <div>
+            <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+                <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+            </div>
 
             <div>
                 <br><br>

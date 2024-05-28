@@ -45,34 +45,36 @@
 		<br />
 		<table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:13px;">
 
-			<?php
-				$section=0;
-				foreach ($values as $key => $row) { 
-					if($section != $row["emp_sec_id"]){
-					echo "<tr bgcolor='#CCCCCC'>";
-					echo "<td colspan='7' style='font-size:16px'>Section :".$row["sec_name_en"]."</td>";
-					echo "</tr>"; ?>
+
+					<!-- // if($section != $row["emp_sec_id"]){
+					// echo "<tr bgcolor='#CCCCCC'>";
+					// echo "<td colspan='7' style='font-size:16px'>Section :".$row["sec_name_en"]."</td>";
+					// echo "</tr>";  -->
+		
 						<tr>
 							<th style="padding:5px">SL</th>
 							<th style="padding:5px">Emp ID</th>
 							<th style="padding:5px">Name</th>
-							<th style="padding:5px"> Line</th>
 							<th style="padding:5px">Designation</th>
+							<th style="padding:5px"> Line</th>
 							<th style="padding:5px">Total <?php echo $status; ?></th>
 						</tr>
-					<?php } ?>
-
+					<!-- < ?php } ?> -->
+				<?php $i=1; foreach ($values as $key => $row) {
+					
+					if ($row["total"] == 0){ 
+						continue; 
+					}else{
+				?>
 					<tr>
-						<td style="padding:2px 5px"> <?= $key+1 ?> </td>
+						<td style="padding:2px 5px"> <?= $i++ ?> </td>
 						<td style="padding:2px 5px"> <?= $row["emp_id"] ?> </td>
 						<td style="padding:2px 5px"> <?= $row["name_en"] ?> </td>
-						<td style="padding:2px 5px"> <?= $row["line_name_en"] ?> </td>
 						<td style="padding:2px 5px"> <?= $row["desig_name"] ?> </td>
+						<td style="padding:2px 5px"> <?= $row["line_name_en"] ?> </td>
 						<td style="padding:2px 5px"> <?= $row["total"] ?> </td>
 					<tr>
-				<?php  $section=$row["emp_sec_id"];
-				}
-			?>
+				<?php }}?>
 		</table>
 	</div>
 	<br><br>

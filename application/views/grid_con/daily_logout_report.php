@@ -87,7 +87,7 @@
                         ?>
                         <tr>
                             <th width="30"><?php  echo $i++?></th>
-                            <th width="120"><?php echo $row->line_name_en?></th>
+                            <th width="120" style="white-space:nowrap"><?php echo $row->line_name_en?></th>
                             <th width="120"><?php echo $row->all_present?></th>
                             <th width="120"><?php echo $row->four_pm?></th>
                             <th width="120"><?php echo $row->five_pm?></th>

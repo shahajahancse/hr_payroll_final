@@ -26,25 +26,39 @@
 <body>
       <?php foreach($values as $row){?>
     <div class="container w-75">
+        <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/033</p>
+        </div>
+        <?php } else if($unit_id == 2){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : LSAL/HR/03/127</p>
+        </div>
+        <?php }else if($unit_id == 4){?>
         <div class="d-flex flex-row justify-content-between">
             <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
             <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
             <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
         </div>
-        <div class="d-flex">
-            <div class="col-md-2">
-                <?php $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo?>
-                <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
-            </div>
-            <div class="col-md-12">
-                <h1 class="text-center" style="margin-left: -420px;">nvwbI‡qj Mv‡g©›Um wjwg‡UW</h1>
+        <?php }?>
+        <div class="mt-3">
+            <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+            <div class="d-flex">
+                <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+                <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
             </div>
         </div>
         <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-            <p class="text-center h5">799, (cyivZb cøU bs- 1010/1011), AvgevM, ‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi -1700|</p>
+            <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
         </div>
         <div class="d-flex">
-            <div class="col-md-6">m~Ît GBPwRGj/GBPAviwWt <?php echo date('Y')?>/ <?php echo $row->letter_id?></div>
+              <div class="col-md-6">
+                  <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/GBPAviwW/cÖ†j/<?php echo date('m/Y')?>/ <?php echo $row->letter_id?>
+              </div>
             <div class="col-md-6 text-right">ZvwiLt <?php echo date('d/m/Y')?> Bs</div>
         </div>
 
@@ -54,27 +68,27 @@
 
         <div class="ml-3" style="line-height: 10px;">
                 <p class="mt-3">cÖwZ,</p>
-                <p>bvgt <?php echo $row->name_bn?></p>
-                <p>c`ext <?php echo $row->new_desig_name?></p>
+                <p>bvgt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->name_bn.'</span>'?></p>
+                <p>c`ext <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_desig_name.'</span>'?></p>
                 <p>KvWt <?php echo $row->emp_id?></p>
-                <p>‡mKkbt <?php echo $row->new_sec_name?></p>
-                <p>jvBbt <?php echo $row->new_line_name?></p>
-                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('m/Y',strtotime($row->effective_month))?></span> ইং</p>
+                <p>‡mKkbt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_sec_name.'</span>'?></p>
+                <p>jvBbt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_line_name.'</span>'?></p>
+                <p>‡hvM`vbt <span style="font-family:SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($row->effective_month))?></span> Bs</p>
         </div>
         <br>
-        <h6 class="ml-3"><b>welq t c‡`vbœwZ cÖm‡½|</b></h6>
+        <h5 class="ml-3"><b>welq t c‡`vbœwZ cÖm‡½|</b></h5>
         <br>
         <div class="ml-3">
             <p class="text-justify">
                 <span><?php echo $row->gender == "Male"? 'Rbve':'Rbvev'?>,</span><br>
-                Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q ‡h, ‡Kv¤úvbx KZ©…c¶ Avcbvi Kg©`¶Zvq mš‘ó n‡q Avcbv‡K <?php echo $row->prev_desig_name?> c`, ‡M«Wt <?php echo $row->prev_grade_name;?>  ‡_‡K
-                <?php echo $row->new_desig_name?> c‡`, jvBbt <?php echo $row->new_line_name?> , ‡M«Wt <?php echo $row->new_grade_name;?> G c‡`vbœwZ ‡`Iqvi wm×všÍ M…nxZ n‡q‡Q| Avcbvi c~‡e©i ‡eZb <?php echo $row->prev_salary?>
+                Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q ‡h, ‡Kv¤úvbx KZ©…c¶ Avcbvi Kg©`¶Zvq mš‘ó n‡q Avcbv‡K <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->prev_desig_name.'</span>'?> c`, ‡M«Wt <?php echo '<span style="font-family:SutonnyMJ;font-size:19px">'.$row->prev_grade_name.'</span>';?>  ‡_‡K
+                <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_desig_name.'</span>'?> c‡`, jvBbt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_line_name.'</span>'?> , ‡M«Wt <?php echo '<span style="font-family:SutonnyMJ;font-size:19px">'.$row->new_grade_name.'</span>';?> G c‡`vbœwZ ‡`Iqvi wm×všÍ M…nxZ n‡q‡Q| Avcbvi c~‡e©i ‡eZb <?php echo $row->prev_salary?>
                 UvKvi mv‡_ AviI<?php echo ($row->new_salary - $row->prev_salary)?> UvKv e…w× K‡i ‡gvU ‡eZb <?php echo $row->new_salary?> UvKv avh© Kiv nBj| hv A`¨  <?php echo $row->effective_month?> Bs ZvwiL n‡Z Kvh©Ki Kiv n‡e|
                 Avcbvi ‡eZb e…w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zyjbvg~jK Z_¨ejx wbgœiæc|
             </p>
 
             <div>
-               <table class="table table table-bordered text-center p-0">
+               <table class="table table table-bordered text-center p-0" style="font-size: 19px">
                     <tr>
                         <th>weeib </th>
                         <th>‡eZb e„w×i c~‡e©i gRyix KvVv‡gv</th>
@@ -82,8 +96,8 @@
                     </tr>
                     <tr>
                         <td>c`ex</td>
-                        <td><?php echo $row->prev_desig_name?></td>
-                        <td><?php echo $row->new_desig_name?></td>
+                        <td><?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->prev_desig_name.'</span>'?></td>
+                        <td><?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_desig_name.'</span>'?></td>
                     </tr>
                     <tr>
                         <td>‡MÖW</td>
@@ -142,11 +156,12 @@
                 <p>3| wefvMxq c«avb</p>
                 <p>4| e¨w³MZ bw_</p>
                 <!-- <p class="text-justify">cÖvwß ¯^xKvit Avwg GB c‡Îi mKj welq mg~n c‡o, ey‡S Ges ‡g‡b wb‡q ¯^-Áv‡b wb‡¤œ Gi Abywjwc‡Z ¯^vÿi K‡i 1 (GK) Kwc MÖnb Kwi |</p> -->
-                <p class="text-right mt-5">MÖnbKvixi ¯^vÿi.......................................................................</p>
+                <p class="text-right mt-5">MÖnbKvixi ¯^vÿi............................................</p>
             </div>
             </div>
         </div>
     </div>
+    <div style="page-break-after: always"></div>
     <?php }?>
 </body>
 </html>

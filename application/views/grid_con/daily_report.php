@@ -93,7 +93,7 @@
             <?php echo date("d/m/Y",strtotime($date)); ?>
         </span>
         <br><br>
-        <table border="1" cellpadding="0" cellspacing="0" style="font-size:12px; width:600px; margin-bottom:20px;">
+        <table border="1" cellpadding="0" cellspacing="0" style="font-size:12px; width:700px; margin-bottom:20px;">
             <?php $this->load->model('Grid_model'); $i=1;
 			$groupedData = array();
 			foreach ($values as $employee) {
@@ -130,16 +130,16 @@
 				<?php if($daily_status == 6){ ?>
 					<th>OT Hour</th>
 					<th>EOT Hour</th>
-					<th>Modify EOT</th>
-					<th>Deduct EOT</th>
-					<th>Final EOT</th>
+					<!-- <th>Modify EOT</th>
+					<th>Deduct EOT</th> -->
+					<!-- <th>Final EOT</th> -->
 					<th>Total OT</th>
                 <?php } ?>
 
-				<?php if($daily_status != 8){?>
+				<!-- < php if($daily_status != 8){?> -->
+					<!-- <th style="padding:0 4px">Status</th> -->
+				<?php  if($daily_status != 8) { ?>
 					<th style="padding:0 4px">Status</th>
-				<?php } else { ?>
-					<th style="padding:0 4px">Remark</th>
 				<?php } ?>
 
                 <?php if($daily_status == 2){?>
@@ -181,10 +181,10 @@
                 <?php }if($daily_status == 6){?>
                 <td style="text-align:center"><?php echo $employee['ot']?></td>
                 <td style="text-align:center"><?php echo $employee['eot']?></td>
-                <td style="text-align:center"><?php echo $employee['modify_eot']?></td>
-                <td style="text-align:center"><?php echo $employee['deduction_hour']?></td>
-                <td style="text-align:center">
-                    <?php echo ($employee['eot']+ $employee['modify_eot']+$employee['deduction_hour'])?></td>
+                <!-- <td style="text-align:center"> ?php echo $employee['modify_eot']?></td>
+                <td style="text-align:center">< ?php echo $employee['deduction_hour']?></td> -->
+                <!-- <td style="text-align:center">
+                    < ?php echo ($employee['eot']+ $employee['modify_eot']+$employee['deduction_hour'])?></td> -->
                 <td style="text-align:center">
                     <?php echo ($employee['ot']+$employee['eot']+ $employee['modify_eot']+$employee['deduction_hour'])?>
                 </td>
@@ -200,9 +200,10 @@
 									( $employee['leave_type'] =='el'? 'Earn Leave': 'Leave'))));
 							}else if($daily_status == 2){
 								echo  $emp_num_rows;
-							}else{
-								echo  $daily_status != 4 ? $employee['present_status'] : "P(Late)";
 							}
+							// else{
+								// echo  $daily_status != 4 ? $employee['present_status'] : "P(Late)";
+							// }
 						?>
 					</td>
 				<?php } else { ?>

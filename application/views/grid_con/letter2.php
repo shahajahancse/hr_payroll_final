@@ -7,37 +7,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-      body{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-    </style>
-  </head>
-  <body>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
 
-<?php foreach($values as $value){?>
-  <div class="container w-75 mb-5">
-    <div class="d-flex flex-row justify-content-between">
-      <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
-      <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-      <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
-    </div>
-    <div class="d-flex">
-      <div class="col-md-2">
-        <?php $image = $this->db->select('company_logo')->get('company_infos')->row()->company_logo;?>
-        <img src="<?php echo base_url('/images'.'/'.$image)?>" alt="Logo" style="max-width: 50%;">
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000000;
+            padding:2px;
+        }
+        p{
+            font-size:19px
+        }
+    </style>
+</head>
+
+<body style="font-family: SutonnyMJ">
+  <?php foreach($values as $value){?>
+    <div class="container w-75">
+      <?php $unit_id =$this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+      <div class="d-flex flex-row justify-content-between">
+          <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/026</p>
       </div>
-      <div class="col-md-12">
-        <h1 class="text-center" style="margin-left: -420px;">হানিওয়েল গার্মেন্টস লিমিটেড</h1>
+      <?php } else if($unit_id == 2){?>
+      <div class="d-flex flex-row justify-content-between">
+          <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : LSAL/HR/03/168</p>
       </div>
-    </div>
-    <div class="col-md-12" style="border-bottom: 1px solid black!important;">
-      <p class="text-center h6">৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১), আমবাগ, মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর-১৭০০।</p>
-    </div>
+      <?php }else if($unit_id == 4){?>
+      <div class="d-flex flex-row justify-content-between">
+          <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+          <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/025</p>
+      </div>
+      <?php }?>
+      <div class="mt-3">
+          <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+          <div class="d-flex">
+              <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 60px;height: 50px;position: absolute;">
+              <h4 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h4>
+          </div>
+      </div>
+      <div class="col-md-12" style="border-bottom: 1px solid black!important;">
+          <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
+      </div>
+
+
     <div class="d-flex">
-      <div class="col-md-6">সূত্রঃ- এইচজিএল/অনু <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?>/<?php echo date('m/Y')?></span>-বি</div>
-      <div class="col-md-6 text-right">তারিখঃ ২৫/০১/২০২৪</div>
+      <div class="col-md-6">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby  <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?>/<?php echo date('m/Y')?></span>-বি</div>
+      <div class="col-md-6 text-right">তারিখঃ <?php echo date('d/m/Y') ?></div>
     </div>
 
     <div>
@@ -105,6 +127,9 @@
   <?php }?>
   </body>
 </html>
+
+<br> <br>
+<?php exit(); ?>
 
 
 

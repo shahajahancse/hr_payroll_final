@@ -42,6 +42,7 @@ class Salary_report_con extends CI_Controller {
 
 		$this->load->view('salary_report/salary_sheet_com', $data);
 	}
+	
 	function pay_slip_com()
 	{
         $salary_month = date('Y-m-01', strtotime($this->input->post('salary_month')));
@@ -95,6 +96,7 @@ class Salary_report_con extends CI_Controller {
 		$this->load->model('Common_model');
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
 		$data["values"] = $this->Grid_model->get_emp_info($grid_emp_id,$first_date);
+
 		$data["salary_month"] = $first_date;
 		$data["second_date"] = $second_date;
 		$data["grid_emp_id"]  = $grid_emp_id;
@@ -237,6 +239,7 @@ class Salary_report_con extends CI_Controller {
 
 	function actual_eot_sheet($type = null){
 		$salary_month = date('Y-m-01', strtotime($this->input->post('salary_month')));
+		$second_date  = date('Y-m-t', strtotime($this->input->post('salary_month')));
 		$unit_id 	  = $this->input->post('unit_id');
 		$grid_unit	  = $this->input->post('grid_unit');
 		$stop_salary  = $this->input->post('stop_salary');
@@ -246,9 +249,10 @@ class Salary_report_con extends CI_Controller {
     	$this->load->model('Common_model');
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
 
-		$data["value"] = $this->Grid_model->actual_salary_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id,1);
+		$data["values"] = $this->Grid_model->actual_salary_sheet($salary_month, $stop_salary, $grid_emp_id, $unit_id,1);
 
 		$data["salary_month"] = $salary_month;
+		$data["second_date"]  = $second_date;
 		$data["grid_emp_id"]  = $grid_emp_id;
 		$data["grid_status"]  = $status;
 		$data["unit_id"]      = $unit_id;
@@ -259,15 +263,12 @@ class Salary_report_con extends CI_Controller {
 		$salary_month = date('Y-m-01', strtotime($this->input->post('salary_month')));
 		$unit_id 	  = $this->input->post('unit_id');
 		$grid_unit	  = $this->input->post('grid_unit');
-		$stop_salary  = $this->input->post('stop_salary');
-		$status 	  = $this->input->post('status');
-		$sql 		  = $this->input->post('sql');
-		$grid_emp_id  = explode(',', trim($sql));
+		$status	      = $this->input->post('status');
+		// dd($_POST);
 
-		$data["values"] = $this->Grid_model->actual_summary_report($salary_month, $stop_salary, $grid_emp_id, $unit_id,1);
-		// dd($data["values"]);
+		$data["values"] = $this->Grid_model->actual_summary_report($salary_month, $unit_id,1);
+
 		$data["salary_month"] = $salary_month;
-		$data["grid_emp_id"]  = $grid_emp_id;
 		$data["grid_status"]  = $status;
 		$data["unit_id"]      = $unit_id;
 
@@ -338,7 +339,46 @@ class Salary_report_con extends CI_Controller {
 		}
 	}
 	// ================== actual salary report generate  ======================
+	function grid_comprative_salary_statement(){
 
+		$first_year     = date('Y-m-01', strtotime($this->input->post('salary_month')));
+		$second_month      = date('Y-m-01', strtotime($this->input->post('second_month')));
+		$grid_status 	= $this->input->post('status');
+		$grid_unit   	= $this->input->post('unit_id');
+		$stop_salary 	= null;
+
+		// $data["values"] = $this->Grid_model->grid_comprative_salary_statement($first_year,$second_month,$grid_status,$grid_unit,$stop_salary);
+		$data["results"]  = $this->Grid_model->actual_summary_report($first_year,$grid_unit, null);
+		$data["results1"] = $this->Grid_model->actual_summary_report($second_month,$grid_unit, null);
+
+		$data["first_month"] = date('F-Y', strtotime($first_year));
+		$data["second_month"] = date('F-Y', strtotime($second_month));
+		$data["unit_id"] = $grid_unit;
+		$data["grid_status"] = $grid_status;
+		
+		$this->load->view('comprative_salary_statement_summary',$data);
+	}
+
+	function grid_salary_sheet_with_eot_bank()
+	{
+		$grid_data 		= $this->input->post('sql');//$this->uri->segment(5);
+		$grid_emp_id    = explode(',', trim($grid_data));
+		$salary_month   = date('Y-m-01', strtotime($this->input->post('salary_month')));
+		$status 		= $this->input->post('status');
+		$grid_unit   	= $this->input->post('unit_id');
+
+
+
+		$this->load->model('Common_model');
+		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
+
+		$data["value"] = $this->Grid_model->grid_monthly_salary_sheet($salary_month, $status, $grid_emp_id);
+		$data["salary_month"] = $sal_year_month;
+		$data["grid_status"]  = $grid_status;
+		$data["unit_id"]  = $grid_unit;
+
+		$this->load->view('salary_sheet_actual_with_eot',$data);
+	}
 
 
 
@@ -486,24 +526,6 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('salary_sheet_actual_with_eot_new_xl',$data);
 	}
 
-	function grid_actual_monthly_salary_sheet_with_eot()
-	{
-		$sal_year_month = $this->input->post('sal_year_month');
-		$grid_status 	= $this->input->post('grid_status');//$this->uri->segment(4);
-		$grid_data 		= $this->input->post('spl');//$this->uri->segment(5);
-		$grid_emp_id = explode(',', trim($grid_data));
-		$grid_unit		= $this->input->post('unit_id');
-		$this->load->model('Common_model');
-		//print_r($grid_emp_id);
-		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
-
-		$data["value"] = $this->Grid_model->grid_monthly_salary_sheet($sal_year_month, $grid_status, $grid_emp_id);
-		$data["salary_month"] = $sal_year_month;
-		$data["grid_status"]  = $grid_status;
-		$data["unit_id"]  = $grid_unit;
-
-		$this->load->view('salary_sheet_actual_with_eot',$data);
-	}
 
 	function  grid_monthly_allowance_with_eot()
 	{
@@ -617,7 +639,8 @@ class Salary_report_con extends CI_Controller {
 
 	function grid_festival_bonus_summary(){
 		$salary_month 	= $this->input->post('sal_year_month');
-		$grid_status 	= $this->input->post('grid_status');
+		$grid_status 	= $this->input->post('status');
+		// dd($grid_status);
 		$grid_unit 	= $this->input->post('unit_id');
 		$data["values"] = $this->Grid_model->festival_bonus_summary($salary_month,$grid_status,$grid_unit);
 		$data["salary_month"] = $salary_month;
@@ -640,28 +663,6 @@ class Salary_report_con extends CI_Controller {
 		$this->load->view('festival_bonus_summary_sec_wise',$data);
 	}
 
-	function grid_comprative_salary_statement(){
-
-		$salary_month 	= $this->input->post('sal_year_month');
-		$first_year     = date('Y-m-d', strtotime($salary_month));
-		$next_year		= date('Y-m-d', strtotime("+1 year", strtotime($first_year)));
-		$grid_status 	= $this->input->post('grid_status');
-		$grid_unit 	= $this->input->post('unit_id');
-		$stop_salary 	= null;
-
-		// dd($first_year.'==='.$next_year);
-
-		$data["values"] = $this->Grid_model->grid_comprative_salary_statement($first_year,$next_year,$grid_status,$grid_unit,$stop_salary);
-		// dd($data);
-		$salary_month = date('F-Y', strtotime($first_year));
-		$salary_month2 = date('F-Y', strtotime($next_year));
-		$data["unit_id"] = $grid_unit;
-		$data["first_month"] = $salary_month;
-		$data["second_month"] = $salary_month2;
-		$data["grid_status"] = $grid_status;
-		//print_r($data);
-		$this->load->view('comprative_salary_statement_summary',$data);
-	}
 
 	function act_advance_salary_sheet(){
 		$sal_year_month = $this->input->post('sal_year_month');

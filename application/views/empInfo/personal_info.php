@@ -1492,7 +1492,7 @@ function checkAndBlockSubmit(type, e) {
     $('#submit_type').val(type);
     if (type == 'edit') {
         var flag = true;
-        $('#form_id').find("input,select,textarea").each(function() {
+         $('#form_id').find("input:not([type='file']),select,textarea").each(function() {
             $(this).siblings('.help-block').remove();
             $(this).parent().removeClass('has-error');
             if ($(this).val() == '' || $(this).val() == null) {
@@ -1517,7 +1517,7 @@ function checkAndBlockSubmit(type, e) {
             success: function(data) {
                 if (data == 'true') {
                     var flag = true;
-                    $('#form_id').find("input,select,textarea").each(function() {
+                    $('#form_id').find("input:not([type='file']),select,textarea").each(function() {
                         $(this).siblings('.help-block').remove();
                         $(this).parent().removeClass('has-error');
                         if ($(this).val() == '' || $(this).val() == null) {

@@ -50,8 +50,8 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 <table>
 <?php 
 $date = date('d-m-Y');
-$section_name = $value[$k]->sec_name_bn;
-echo "সেকশন : $section_name<br>";
+$section_name = isset($value[$k]->sec_name_bn) ? $value[$k]->sec_name_bn : "";
+echo "<span style='white-space:nowrap;'>সেকশন : ".$section_name."</span><br>";
  ?>
 </table>
 </div>
@@ -103,20 +103,18 @@ echo '</span>';
 
 
   <tr height="20px">
-    <td  width="15" height="20px"><div align="center"><strong>ক্রমিক নং</strong></div></td>
-    <td width="14" ><div align="center"><strong>কার্ড নং</strong></div></td>
-    <td width="30" ><div align="center"><strong>কর্মচারীর নাম</strong></div></td>
-	
+    <td  width="15" height="20px" style='white-space:nowrap;'><div align="center"><strong>ক্রমিক নং</strong></div></td>
+    <td width="14" style='white-space:nowrap;'><div align="center"><strong>কার্ড নং</strong></div></td>
+    <td width="30" style='white-space:nowrap;'><div align="center"><strong>কর্মচারীর নাম</strong></div></td>
     <td width="25" ><div align="center"><strong>পদবী</strong></div></td>
-	 <td width="30" ><div align="center"><strong>লাইন</strong></div></td>
-    <td width="25" ><div align="center"><strong>যোগদানের তারিখ</strong></div></td>
-	<td width="25" ><div align="center"><strong>গ্রেড</strong></div></td>
-    <td width="20" > <div align="center"><strong>মূল বেতন</strong></div></td>
-
-    <td width="35" ><div align="center"><strong>মোট বেতন</strong></div></td>
-    <td width="40" ><div align="center"><strong>কর্ম মাস</strong></div></td>
-    <td width="35" ><div align="center"><strong>ভাতা%</strong></div></td>
-    <td width="22" ><div align="center"><strong>উৎসব ভাতা</strong></div></td> 
+	<td width="30" ><div align="center"><strong>লাইন</strong></div></td>
+    <td width="25" style='white-space:nowrap;'><div align="center"><strong>যোগদানের তারিখ</strong></div></td>
+	<td width="25" style='white-space:nowrap;'><div align="center"><strong>গ্রেড</strong></div></td>
+    <td width="20" style='white-space:nowrap;'> <div align="center"><strong>মূল বেতন</strong></div></td>
+    <td width="35" style='white-space:nowrap;'><div align="center"><strong>মোট বেতন</strong></div></td>
+    <td width="40" style='white-space:nowrap;'><div align="center"><strong>কর্ম মাস</strong></div></td>
+    <td width="35" style='white-space:nowrap;'><div align="center"><strong>ভাতা%</strong></div></td>
+    <td width="22" style='white-space:nowrap;'><div align="center"><strong>উৎসব ভাতা</strong></div></td> 
 
 	<td  width="80"><div align="center"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;স্বাক্ষর&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></div></td>
   </tr>

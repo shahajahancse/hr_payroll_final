@@ -28,13 +28,13 @@
       flex-wrap: wrap;
     }
     p{
-      margin: 1px;
-      padding: 1px;
-      font-size: 15px;
+      margin: 0px;
+      /* padding: 1px; */
+      font-size: 13px;
     }
     .box-img{
       width: 100px;
-      height: 110px;
+      height: 100px;
       border: 1px solid black;
       margin: 0 75px;
     }
@@ -66,7 +66,7 @@
           font-size: 22px !important;
         }
         p{
-          font-size: 15px;
+          font-size: 13px;
         }
          .left_content{
           width: 93%;
@@ -95,23 +95,34 @@
           <p><img src="<?php echo base_url('/images'.'/'.$image)?>" style="height: 30px;width: 50px;margin-top:5px"></p>
           <h6>Honeywell Garments Ltd.</h6>
           <img src="<?php echo base_url('/uploads/photo'.'/'.$value->img_source)?>" alt="" class="box-img">
-          <p><b><?php echo $value->name_en?></b></p>
-          <p><b><?php echo $value->line_name_en?></b></p>
-          <div class="left_content">
-            <p>Department : <b><?php echo $value->dept_name?></b></p>
-            <p>ID Card No : <b><?php echo $value->emp_id?></b></p>
-            <p>Join Date : <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?></b></p>
-            <p>Blood Group: <b><?php echo $value->blood_name?></b></p>
+          <div class="left_content" style="line-height: 16px;margin:0px">
+          <p style="margin:0 auto"><b><?php echo $value->name_en?></b></p>
+          <p style="margin:0 auto"><b><?php echo $value->line_name_en?></b></p>
+             <p>Department : <b><?php echo $value->dept_name?></b></p>
+             <p>ID Card No : <b><?php echo $value->emp_id?></b></p>
+             <p>Join Date : <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?></b></p>
+             <p>Blood Group: <b><?php echo $value->blood_name?></b></p>
           </div>
 
           <div class="d_flex">
-            <p>Card Holder</p>
-            <p> Authorized Signature</p>
+            <p style="border-top:1px solid black;width:fit-content"><b>Card Holder</b></p>
+            <p style="border-top:1px solid black;width:fit-content"><b>Authorized Signature</b></p>
           </div>
           <p class="text-center bg-info" style="width:100% ; border-radius: 10px 10px 0 0;position: absolute;bottom: -1px;left: -1px;">www.ajgroupbd.com</p>
         </div>
         <div class="box text-center p_padding" style="line-height: 18px;">
-          <p style="margin-top: 10px;"><b>Document Code : HGL/HRD/HR/03/051</b></p>
+          <p style="margin-top: 10px;">
+            <?php 
+              $unit_id= $this->session->userdata('data')->unit_name;
+              if($unit_id == 1){
+                echo " Document Code : AJFL/HRAC(HR)/03/021 ";
+              }else if($unit_id == 2){
+                echo "Document Code : LSAL/HR/03/174";
+              }else if($unit_id == 4){
+                echo "Document Code : HGL/HRD/HR/03/051";
+              }
+            ?>
+          </p>
           <p><b>Validity: Till The Time of Employement</b></p>
           <p>Issue Date: <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?></b></p>
           <p>Type of Work: <b><?php echo $value->emp_cat_id == 1 ? 'Permanent':'New'?></b></p>
