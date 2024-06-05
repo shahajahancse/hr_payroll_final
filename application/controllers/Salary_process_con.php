@@ -191,48 +191,31 @@ class Salary_process_con extends CI_Controller {
 		//$crud->set_rules('block_month','Block Month','required|callback_block_month_check');
 		//$crud->change_field_type('username','hidden');
 		//$crud->change_field_type('date_time','hidden');
-		$crud->unset_columns('status');
-		$crud->unset_delete();
-		$crud->unset_add();
-		$crud->unset_edit();
-		$output = $crud->render();
-		$this->load->view('form/salary_process',$output);
+		// $crud->unset_columns('status');
+		// $crud->unset_delete();
+		// $crud->unset_add();
+		// $crud->unset_edit();
+		// $output = $crud->render();
+		$this->load->view('form/salary_process',);
 
 	}
 	
 	////////////////////////Festival Bonus///////////
-	function festival_bonus_form()
-	{
+	// function festival_bonus_form()
+	// {
 
-		if($this->session->userdata('logged_in')==FALSE)
-		$this->load->view('login_message');
-		else
-		$crud = new grocery_CRUD();
-		$get_session_user_unit = $this->Common_model->get_session_unit_id_name();
-		if($get_session_user_unit != 0)
-		{
-			$crud->where('pr_salary_festival_block.unit_id',$get_session_user_unit);
-		}
-		$crud->set_table('pr_salary_festival_block');
-		$crud->set_subject('Salary Block');
-		$crud->display_as('block_month','Final Month');
-		if($get_session_user_unit != 0)
-		{
-			$crud->set_relation( 'unit_id' , 'pr_units','unit_name',array('unit_id' => $get_session_user_unit) );
-		}
-		else
-		{
-			$crud->set_relation( 'unit_id' , 'pr_units','unit_name' );
-		}
-		$crud->order_by('block_month','desc');
-		$crud->unset_columns('status');
-		$crud->unset_delete();
-		$crud->unset_add();
-		$crud->unset_edit();
-		$output = $crud->render();
-		$this->load->view('form/festival_process',$output);
+	// 	if($this->session->userdata('logged_in')==FALSE){
+	// 		$this->load->view('login_message');
+	// 	}
+	// 	else{
+	// 		$this->data['username'] = $this->data['user_data']->id_number;
+	// 		$this->data['title'] = 'Salary Process';
+	// 		$this->data['subview'] = 'form/festival_process';
+	// 		$this->load->view('layout/template', $this->data);
+	// 	}
+		
 
-	}
+	// }
 	
 	//////////////Festival Process////////////
 	function festival_process()

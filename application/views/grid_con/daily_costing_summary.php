@@ -49,12 +49,15 @@ $num_of_days 	= date("t",strtotime($grid_date));
   <tbody>
     <?php
     $sl = 1;
+    $grand_total=0;
     foreach ($values as $item) {
       // dd($item);
-      $total_salary = $item->present_gross_salary - $item->absent_gross_salary + ($item->ot) + ($item->eot );
+     
 	  if($item->line_name_en == "Security"){
 			continue;
 	  }else{
+      $total_salary = $item->present_gross_salary - $item->absent_gross_salary + ($item->ot) + ($item->eot );
+      $grand_total += $total_salary;
     ?>
       <tr>
         <td style="padding:5px;text-align:center"><?php echo $sl++; ?></td>
@@ -88,7 +91,7 @@ $num_of_days 	= date("t",strtotime($grid_date));
         <td colspan="1" style="text-align:center"><?php echo @$total_night_amount?></td>
         <td colspan="1" style="text-align:center"><?php echo @$total_holiday_amount?></td>
         <td colspan="1" style="text-align:center"><?php echo @$total_ifter_amount?></td>
-        <td colspan="1" style="text-align:center"><?php echo ""?></td>
+        <td colspan="1" style="text-align:center"><?php echo @$grand_total?></td>
     </tr>
   </tfoot>
 </table>

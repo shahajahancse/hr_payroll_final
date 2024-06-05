@@ -42,7 +42,7 @@
                 <th>Holi.</th>
                 <th>Leave</th>
                 <th>T. Day</th>
-                <th>Deduct</th>
+                <!-- <th>Deduct</th> -->
                 <th>OT Hour</th>
             </tr>
             <?php 
@@ -103,7 +103,7 @@
 
                             $total_ot = $total_ot + $logs[$k]['ot'];
                             $total_eot = $total_eot + $logs[$k]['eot'];	
-                            $total_meot = $total_meot + $logs[$k]['modify_eot'];	
+                            // $total_meot = $total_meot + $logs[$k]['modify_eot'];	
                         }
 
                         if($logs[$k]['present_status'] == "P")
@@ -140,10 +140,10 @@
                 $t_day = $p+ $a+  $w + $h +$l;
                 echo "<td style='text-align: center;'> $t_day </td>";
 
-                echo "<td style='text-align: center;'> $total_meot </td>";
+                // echo "<td style='text-align: center;'> $total_meot </td>";
                 echo "<td style='text-align: center;'>";
                 echo "$total_ot+$total_eot =";
-                echo  $total_ot + $total_eot - $total_meot; 
+                echo  $total_ot + $total_eot; 
                 echo "</td>";
                 echo "</tr>";
                 $i++;

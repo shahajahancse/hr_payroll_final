@@ -27,9 +27,11 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
 		$type = $this->input->post('report_type');
+		//dd($type);
 		// dd($_POST);
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Grid_model->grid_daily_report($date,$grid_emp_id,$type);
+		//dd($data["values"]);
 
 		$data["unit_id"] 		= $unit_id;
 		$data['daily_status']   = $type;
@@ -159,7 +161,7 @@ class Grid_con extends CI_Controller {
 		$ids = $this->input->post('spl');
 		$type = $this->input->post('type');
 		$emp_id = explode(',', trim($ids));
-		// dd($type);
+		// dd($emp_id);
 		$data["values"] = $this->Grid_model->incre_prom_report($first_date,$second_date,$emp_id,$type);
         if($type == 1){
 			$this->load->view('grid_con/increment_letter',$data);
@@ -207,14 +209,19 @@ class Grid_con extends CI_Controller {
 	}
     // left report
 	function grid_left_report(){
+
 		$grid_firstdate     = $this->input->post('firstdate');
 		$grid_seconddate    = $this->input->post('seconddate');
+		$sql    = $this->input->post('sql');
+
+		$emp_id = explode(',', $sql);
+		$unit_id    = $this->input->post('unit_id');
 		$grid_firstdate     = date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate    = date("Y-m-d", strtotime($grid_seconddate));
-		$data['values']     = $this->Grid_model->grid_left_report($grid_firstdate, $grid_seconddate);
+		$data['values']     = $this->Grid_model->grid_left_report($grid_firstdate, $grid_seconddate, $emp_id);
 		$data['start_date'] = $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
-		$data['unit_id']    = $this->input->post('grid_start');
+		$data['unit_id']    = $unit_id;
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}
@@ -237,8 +244,7 @@ class Grid_con extends CI_Controller {
 		$query['values'] = $this->Grid_model->id_card($emp_id,$status);
 		if(is_string($query['values'])){
 			echo $query['values'];
-		}
-		else{
+		}else{
 			// $this->load->view('id_card',$query);
 			if($status == 1){
 				$this->load->view('grid_con/id_card_bangla',$query);
@@ -656,6 +662,31 @@ class Grid_con extends CI_Controller {
 	}
 	// ============================== end last increment or promotion Report ===============
 	// ============================== start left letter Report ===============
+	function grid_letter_report_print(){
+		$emp_id = $this->input->post('emp_id');
+		$status = $this->input->post('status');
+		$unit_id = $this->session->userdata('data')->unit_name;
+		$id_number = $this->session->userdata('data')->id_number;
+		
+
+		$data['values'] 	= $this->Grid_model->grid_letter_report_print($emp_id);
+		$data['unit_id']	= $unit_id;
+		$data['unit_id']	= $id_number;
+		$data['no_change']	= 1;
+		
+		if(empty($data)){
+			echo "Not Found Data"; exit();
+		}else{
+			if ($status == 1) {
+				$this->load->view('grid_con/letter1',$data);
+			} else if ($status == 2) {
+				$this->load->view('grid_con/letter2',$data);
+			} else {
+				$this->load->view('grid_con/letter3',$data);
+			}
+		}
+	}
+
 	function grid_letter_report(){
 		$unit_id = $this->input->post('unit_id');
 		$status = $this->input->post('status');
@@ -671,6 +702,8 @@ class Grid_con extends CI_Controller {
 		$off_day = 'Fri';
 		$data['values'] 	= $this->Grid_model->grid_letter_report($data['firstdate'],$unit_id,$off_day,$days,$status);
 		$data['unit_id']	= $unit_id;
+		$data['no_change']	= 2;
+		
 		
 		if(empty($data)){
 			echo "Not Found Data"; exit();
@@ -694,9 +727,9 @@ class Grid_con extends CI_Controller {
 		$days3 = 30;
 		$off_day = 'Fri';
 
-		$data['values'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days1);
-		$data['values2'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days2);
-		$data['values3'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days3);
+		$data['values'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days1, 1);
+		$data['values2'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days2, 2);
+		$data['values3'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days3, 3);
 
 		if (!empty($data['values'])) {
 			$v['1'] = count($data['values']);
@@ -2705,6 +2738,17 @@ class Grid_con extends CI_Controller {
 		}
 		echo "done";
 
+	}
+		
+	function grid_service_book_info(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode('xxx', trim($grid_data));
+
+		$data["values"] = $this->Grid_model->service_book_info($grid_emp_id);
+		//dd($data);
+		$data['unit_id'] = $this->input->post('unit_id');
+				
+		$this->load->view('service_book_info',$data);
 	}
 }
 ?>

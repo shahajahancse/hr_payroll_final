@@ -80,7 +80,6 @@
 							<?php foreach ($dpts->result() as $key => $val) { ?>
 							<option value='<?= $val->dept_id ?>'><?= $val->dept_name ?></option>
 							<?php } } ?>
-							<option value=''>Select Department</option>
 						</select>
 					</div>
 				</div>
@@ -396,6 +395,9 @@
 							<?php } ?>
 							<?php if(in_array(92,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_maternity_benefit()">Maternity Benefit Report</button>
+                            <?php } ?>
+							<?php if(in_array(124,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_service_book_info()">Service Book Information</button>
                             <?php } ?>
 						</div>
 						<!-- Other Reports end -->

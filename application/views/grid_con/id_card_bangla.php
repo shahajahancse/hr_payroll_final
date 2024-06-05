@@ -40,7 +40,7 @@ body {
 p {
   margin: 0;
   padding: 0;
-  font-size: 20.6px;
+  font-size: 18px;
 }
 
 .box-top {
@@ -78,24 +78,24 @@ p {
     <div class="box">
       <div class="d-flex">
         <div class="col-md-3">
-          <?php $image =$this->db->select('company_logo,company_signature')->get('company_infos')->row();?>
+          <?php $image =$this->db->where('unit_id', $unit_id)->get('company_infos')->row();?>
           <img src="<?php echo base_url('/images'.'/'.$image->company_logo)?>" alt="logo" height="40px" width="60px" style="margin-top:5px">
         </div>
-        <div class="col-md-9 printt" >
-          <h3 style="margin-top:1px"><b>nvwbI‡qj Mv‡g©›Um wjwg‡UW</b></h3>
+        <div class="col-md-9 printt mt-2" >
+          <h6 style="margin-top:1px"><b><?= $image->company_name_bangla; ?></b></h6>
         </div>
       </div>
       <h4 class="col-md-12 text-center" style="margin-top:-18px"><b>cwiPq cÎ</b></h4>
-        <div>
+      <div>
           <img src="<?php echo base_url('/uploads'.'/photo/'.$value->img_source)?>" alt="" class="box-img" style="border:1px solid black">
-          <p class="box-top ">AvBwW KvW© bst <span style="font-size:19px"> <b><?php echo $value->emp_id?></b></span></p>
-          <p class="box-top"> Bmyy¨i ZvwiL t <span style="font-size:19px"> <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</b></span></p>
-          <p class="box-top">bvg t <span style="font-size:15px"><b><?php echo $value->name_bn?></b></span></p>
-          <p class="box-top">c`ex t <span style="font-size:15px"><b><?php echo $value->desig_bangla?></b></span></p>
-          <p class="box-top"> wefvM/kvLvt <span style="font-size:15px"><b><?php echo $value->sec_name_bn?></b></span></p>
-          <p class="box-top"> <span>Kv‡Ri aibt <span style="font-size:15px"><b><?php echo $value->emp_cat_id ==1 ? "স্থায়ী" : "SS"?></b></span></span></p>
-          <p class="box-top">jvBbt <span style="font-size:15px"><b><?php echo $value->line_name_bn?></b></span></p>
-          <p class="box-top">‡hvM`v‡bi ZvwiLt <b style="font-size:19px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</b></p>
+          <p class="box-top ">AvBwW KvW© bst <span style="font-size:17px"> <b><?php echo $value->emp_id?></b></span></p>
+          <p class="box-top"> Bmyy¨i ZvwiL t <span style="font-size:17px"> <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</b></span></p>
+          <p class="box-top">bvg t <span style="font-size:12px"><b><?php echo $value->name_bn?></b></span></p>
+          <p class="box-top">c`ex t <span style="font-size:12px"><b><?php echo $value->desig_bangla?></b></span></p>
+          <p class="box-top"> wefvM/kvLvt <span style="font-size:12px"><b><?php echo $value->sec_name_bn?></b></span></p>
+          <p class="box-top"> <span>Kv‡Ri aibt <span style="font-size:12px"><b><?php echo $value->emp_cat_id ==1 ? "স্থায়ী" : "SS"?></b></span></span></p>
+          <p class="box-top">jvBbt <span style="font-size:12px"><b><?php echo $value->line_name_bn?></b></span></p>
+          <p class="box-top">‡hvM`v‡bi ZvwiLt <b style="font-size:17px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</b></p>
           <img src="<?php echo base_url('/images/'.$image->company_signature)?>" style="width: 18%;position: absolute;margin-top: -34px;right: 20px;">
           <div class="d-flex justify-content-between" style="margin-top: 15px;">
             <p class="box-top mt-2" style="border-top:1px solid black;width:fit-content">MÖnbKvixi ¯^vÿi</p>
@@ -118,7 +118,7 @@ p {
         ?>
       </p>
       <p class="box-top text-center">‡gqv`t PvKzwi _vKvKvjxb ch©šÍ|</p>
-      <p class="box-top text-center">cÖwZôv‡bi wVKvbvt 799, (cyivZb cøU bs- 1010/1011), AvgevM,‡gŠRv evwNqv, ‡Kvbvevox, MvRxcyi -1700|</p>
+      <p style="font-size: 14px; padding: 4px;" class="box-top text-center"><?= $image->company_add_bangla; ?></p>
       <p class="box-top text-center">‡dvb bst 09611677670, 01749087002</p>
       <p class="box-top text-center">D³ cwiPq cÎ nvivBqv †M‡j ZvrÿwbK e¨e¯’vcbv KZ…©cÿ‡K RvbvB‡Z n‡e|</p>
       <p class="box-top text-center">i‡³i MÖæct <spans style="font-family: Arial, Helvetica, sans-serif; font-size:14px"> <b><?php echo $value->blood_name?></b></spans></p>

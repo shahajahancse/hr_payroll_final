@@ -13,11 +13,11 @@ class Common_model extends CI_Model{
 	{
 		$data = array();
 		$date = date('Y-m-d');
-		if($date > '2018-11-30')
+		if($date > '2018-11-31')
 		{
-			$data['medical_allow'] 	= 600;
-			$data['trans_allow'] 	= 350;
-			$data['food_allow'] 	= 900;
+			$data['medical_allow'] 	= 750;
+			$data['trans_allow'] 	= 450;
+			$data['food_allow'] 	= 1250;
 			$total_salary_allow 	= $data['medical_allow'] + $data['trans_allow'] + $data['food_allow'];
 			$data['gross_salary'] 	= $gross_salary;
 			$basic_salary 			= (($gross_salary - $total_salary_allow) / 1.5);
@@ -41,6 +41,7 @@ class Common_model extends CI_Model{
 			$data['stamp'] = 0;
 
 		}
+		// dd($basic_salary/71.15);
 
 
 		if($gross_salary == 0)
@@ -847,6 +848,7 @@ class Common_model extends CI_Model{
 
 	function get_dept_name($dept_id)
 	{
+		//dd($dept_id);
 		$this->db->select('dept_name');
 		$this->db->where('dept_id',$dept_id);
 		$query = $this->db->get('emp_depertment');
@@ -855,26 +857,30 @@ class Common_model extends CI_Model{
 	}
 	function get_section_name($sec_id)
 	{
-		$this->db->select('sec_name');
-		$this->db->where('sec_id',$sec_id);
-		$query = $this->db->get('pr_section');
+		$this->db->select('sec_name_en');
+		$this->db->where('id',$sec_id);
+		$query = $this->db->get('emp_section');
 		$row = $query->row();
-		return $row->sec_name;
+		return $row->sec_name_en;
 	}
 	function get_line_name($line_id)
 	{
-		$this->db->select('line_name');
-		$this->db->where('line_id',$line_id);
-		$query = $this->db->get('pr_line_num');
+		$this->db->select('line_name_en');
+		$this->db->where('id',$line_id);
+		$query = $this->db->get('emp_line_num');
 		$row = $query->row();
-		return $row->line_name;
+		return $row->line_name_en;
 	}
 	function get_desig_name($desig_id)
 	{
+		//dd($desig_id);
 		$this->db->select('desig_name');
-		$this->db->where('desig_id',$desig_id);
-		$query = $this->db->get('pr_designation');
+		$this->db->where('id',$desig_id);
+		$query = $this->db->get('emp_designation');
 		$row = $query->row();
+		if(empty($row)){
+			dd($desig_id);
+		}
 		return $row->desig_name;
 	}
 	function get_grade_name($gr_id)

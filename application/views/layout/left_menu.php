@@ -75,6 +75,9 @@
           <?php if(in_array(8,$acl)) { ?>
             <li class="start <?= activate_method('grid_salary_report') ?>"> <a href="<?=base_url('salary_process_con/grid_salary_report')?>" class="anchor_cls">Reports</a> </li>
           <?php } ?>
+          <?php if(in_array(125,$acl)) { ?>
+            <li class="start <?= activate_method('grid_salary_report') ?>"> <a href="<?=base_url('salary_process_con/festival_bonus_form')?>" class="anchor_cls">Festival Bonus</a> </li>
+          <?php } ?>
         </ul>
       </li>
       <?php } ?>
@@ -142,6 +145,7 @@
           <li class="start <?= activate_method('hide_designation_employee') ?>"> <a href="<?=base_url('setting_con/hide_designation_employee')?>" class="anchor_cls" id="acl">Hide Designation</a> </li>
           <li class="start <?= activate_method('line_wise_atn_desig') ?>"> <a href="<?=base_url('setting_con/line_wise_atn_desig')?>" class="anchor_cls" id="acl">line wise Designation</a> </li>
           <li class="start <?= activate_method('acl') ?>"> <a href="<?=base_url('setting_con/acl')?>" class="anchor_cls" id="acl">User ACL</a> </li>
+          <li class="start <?= activate_method('activity_log') ?>"> <a href="<?=base_url('setting_con/activity_log')?>" class="anchor_cls" id="activity_log">Activity Log</a> </li>
         </ul>
       </li>
       <?php } ?>

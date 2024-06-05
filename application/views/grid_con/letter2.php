@@ -57,6 +57,12 @@
       </div>
 
 
+        <?php 
+          if ($no_change == 2) {
+            $this->db->where('left_id', $value->left_id)->update('pr_emp_left_history', array('status' => 3));
+          }
+        ?>
+
     <div class="d-flex">
       <div class="col-md-6">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby  <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?>/<?php echo date('m/Y')?></span>-বি</div>
       <div class="col-md-6 text-right">তারিখঃ <?php echo date('d/m/Y') ?></div>

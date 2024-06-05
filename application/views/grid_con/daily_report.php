@@ -152,7 +152,10 @@
             </tr>
 
             <?php 	foreach ($employees as $key=>$employee) {
-				$emp_num_rows = $this->Grid_model->attendance_check_for_absent($employee['emp_id'],$date); ?>
+				$emp_num_rows = $this->Grid_model->attendance_check_for_absent($employee['emp_id'],$date);
+				//dd($emp_num_rows);
+				
+				?>
             <tr>
                 <td style="text-align:center"><?php echo $i++?></td>
                 <td style="text-align:center;padding:0 4px"><?php echo $employee['emp_id']?></td>
@@ -172,7 +175,18 @@
 						<?php echo $employee['in_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['in_time'])) : "P(ERROR)"?>
 					</td>
 					<td style="text-align:center; padding:0 4px">
-						<?php echo $employee['out_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['out_time'])) : "P(ERROR)"?>
+					<?php
+					//dd($daily_status);
+					if ($daily_status==5 &&  $employee['ot']>=2) {
+						//dd($employee['ot']);
+						$text= ($employee['out_time'] !='00:00:00')? date('7:i:s A',strtotime($employee['out_time'])) : "P(ERROR)";
+					}else{
+						$text= ($employee['out_time'] !='00:00:00')? date('h:i:s A',strtotime($employee['out_time'])) : "P(ERROR)";
+					}
+					?>
+
+
+						<?php echo $text ?>
 					</td>
                 <?php }?>
 

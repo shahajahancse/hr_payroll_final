@@ -104,10 +104,16 @@ if(!empty($value[0]->sec_name)){
 	$section_name = $value[0]->sec_name;
 	echo "Section : $section_name<br>";
 }
-$dom = $value[0]->total_days;
-echo "DOM : $dom<br>";
+if(!empty($value[0]->total_days)) {
+    $dom = $value[0]->total_days;
+	echo "DOM : $dom<br>";
+}else{
+	echo "DOM : <br>";
+}
+//  $dom = $value[0]->total_days;
 
-//echo "Payment Date : $date"; ?>
+//echo "Payment Date : $date"; 
+?>
 </table>
 </div>
  <div style="text-align:center; position:relative;padding-left:10px;width:50%; overflow:hidden; float:left; display:block;">
@@ -239,7 +245,8 @@ echo "Payment Date : $date";
    $total_tax_deduct		= 0;
    
 	for($p=0; $p<=$per_page_row;$p++)
-	{
+	{	
+		// dd($value[$k]);
 		echo "<tr height='70' style='text-align:center;' >";
 		echo "<td >";
 		echo $k+1;

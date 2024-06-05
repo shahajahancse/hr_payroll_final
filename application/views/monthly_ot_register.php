@@ -23,9 +23,9 @@ Monthly OT Report of <?php echo "$start_date"; ?></span>
 	<tr>
 		<th>SL</th>
 		<th>Emp ID</th>
-		<th>Punch Card No.</th>
+		<!-- <th>Punch Card No.</th> -->
 		<th>Employee Name</th> 
-		<th>Department</th>
+		<!-- <th>Department</th> -->
 		<th>Designation</th> 
 		<th>Line No. </th> 
 		<th>Shift</th> 
@@ -54,18 +54,18 @@ for($i=0; $i<$count; $i++ )
 	echo $values["emp_id"][$i];
 	echo "</td>";
 
-	echo "<td>";
-	echo "&nbsp;";
-	echo $values["proxi_id"][$i];
-	echo "</td>";
+	// echo "<td>";
+	// echo "&nbsp;";
+	// echo $values["proxi_id"][$i];
+	// echo "</td>";
 
 	echo "<td width='150'  style='text-align:left;' >";
 	echo $values["emp_name"][$i];
 	echo "</td>";
 
-	echo "<td  width='140'  style='text-align:left;'>";
-	echo $values["dept_name"][$i];
-	echo "</td>";
+	// echo "<td  width='140'  style='text-align:left;'>";
+	// echo $values["dept_name"][$i];
+	// echo "</td>";
 
 	echo "<td  width='140'  style='text-align:left;'>";
 	echo $values["desig_name"][$i];
@@ -109,7 +109,7 @@ for($i=0; $i<$count; $i++ )
 
 ?>
 <tr>
-<td  colspan="10" style="text-align:center; font-weight:bold;" >
+<td  colspan="8" style="text-align:center; font-weight:bold;" >
 Grand Total
 </td>
 <td style="text-align:center; font-weight:bold;" ><?php echo $total_ot_hour; ?></td>

@@ -29,11 +29,11 @@ class Entry_system_con extends CI_Controller
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-
         $this->db->select('loan.*, per.name_en, pr_units.unit_name');
         $this->db->from('pr_advance_loan loan');
         $this->db->join('pr_emp_per_info per', 'loan.emp_id = per.emp_id', 'left');
         $this->db->join('pr_units', 'loan.unit_id = pr_units.unit_id', 'left');
+        //$this->db->limit(10);
         $this->data['results'] = $this->db->get()->result();
 
         $this->data['title'] = 'Advance Loan';
@@ -457,7 +457,13 @@ class Entry_system_con extends CI_Controller
 
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $emp_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
+        $input_date = $first_date;
+        do {
+            $this->Attn_process_model->attn_process($input_date, $unit_id, $emp_ids);
+            $input_date = date("Y-m-d", strtotime("+1 day", strtotime($input_date)));
+        } while ($input_date <= $second_date);
             echo 'success';
+
         } else {
             echo 'Record Not Deleted';
         }
@@ -1276,7 +1282,14 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/leave_transation';
         $this->load->view('layout/template', $this->data);
     }
-
+ public function pr_units_get(){
+        $user_data=$this->session->userdata('data');
+        $this->db->select('pr_units.*');
+        if($user_data->level!='All'){
+            $this->db->where('unit_id', $user_data->unit_name);
+        }
+        return $this->db->get('pr_units')->result();
+    }
     public function leave_entry(){
         $emp_id = $_POST['emp_id'];
         $from_date = $_POST['from_date'];
@@ -1514,7 +1527,7 @@ class Entry_system_con extends CI_Controller
     {
         $unit_id = $this->input->post('unit_id');
         $probability = $this->input->post('probability');
-        $half_ml = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml / 2;
+        $half_ml = $this->db->select('lv_ml')->get('pr_leave')->row()->lv_ml / 2;
         $mhl = $half_ml-1;
         $start_date = date('d-m-Y', strtotime("-{$mhl} days", strtotime($probability)));
         $end_date = date('d-m-Y', strtotime("+{$half_ml} days", strtotime($probability)));
@@ -1675,6 +1688,7 @@ class Entry_system_con extends CI_Controller
         $date = date('Y-m-d', strtotime($_POST['date']));
         $type = $_POST['type'];
         $unit_id = $_POST['unit_id'];
+        $remark = $_POST['remark'];
         $emp_ids = explode(',', $sql);
 
         if ($type == 1) {
@@ -1687,10 +1701,10 @@ class Entry_system_con extends CI_Controller
             }else{
                 echo 'error';
             }
-        } else if ($type == 3 && !empty($date)) {
+        } else if ($type == 2 && !empty($date)) {
             $data = [];
             foreach ($emp_ids as $value) {
-                $data = array('unit_id' => $unit_id, 'emp_id' => $value, 'left_date' => $date);
+                $data = array('unit_id' => $unit_id, 'emp_id' => $value, 'left_date' => $date, 'remark' => $remark);
                 $dd = $this->db->where('unit_id', $unit_id)->where('emp_id', $value)->get('pr_emp_left_history');
                 if (empty($dd->row())) {
                     $this->db->insert('pr_emp_left_history', $data);
@@ -1699,7 +1713,7 @@ class Entry_system_con extends CI_Controller
             // $this->db->insert_batch('pr_emp_left_history', $data);
 
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 2))) {
                 echo 'success';
             }else{
                 echo 'error';
@@ -1708,14 +1722,14 @@ class Entry_system_con extends CI_Controller
             // dd("KO");
             $data = [];
             foreach ($emp_ids as $value) {
-                $data[] = array('unit_id' => $unit_id, 'emp_id' => $value, 'resign_date' => $date);
+                $data = array('unit_id' => $unit_id, 'emp_id' => $value, 'resign_date' => $date, 'remark' => $remark);
                 $dd = $this->db->where('unit_id', $unit_id)->where('emp_id', $value)->get('pr_emp_resign_history');
                 if (empty($dd->row())) {
                     $this->db->insert('pr_emp_resign_history', $data[0]);
                 }
             }
             $this->db->where('unit_id', $unit_id)->where_in('emp_id', $emp_ids);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 4))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3))) {
                 echo 'success';
             }else{
                 echo 'error';
@@ -1804,9 +1818,10 @@ class Entry_system_con extends CI_Controller
         $rpay                  = round($resign_pay_day * ($basic_salary / 30), 2);
         $extra_pay             = round($extra_payoff * ($basic_salary / 30), 2);
         $earn_pay              = round(($earn_leave_day / 18), 2) * round($gross_salary / 30, 2);
+        $emp_total_pay         = $rpay + $extra_pay + $earn_pay;
+        
         $absent                = ($get_info->absent * round($basic_salary / 30, 2));
         $ndeduct               = round($notice_deduct * ($basic_salary / 30), 2) + $absent;
-        $emp_total_pay         = $rpay + $extra_pay + $earn_pay + $service_benifit;
 
         $data = array(
             'working_days'          => $get_info->absent + $get_info->present,
@@ -1829,7 +1844,7 @@ class Entry_system_con extends CI_Controller
             'advanced_salary'       => $advanced_salary,
             'total_deduct'          => ($ndeduct + $advanced_salary),
             'attn_bonus'            => 0,
-            'net_pay'               => ($emp_total_pay - ($ndeduct + $advanced_salary)),
+            'net_pay'               => $emp_total_pay,
             'status'                => 1,
         );
         $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);

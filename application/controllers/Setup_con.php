@@ -286,7 +286,10 @@ class Setup_con extends CI_Controller
         $this->db->from('emp_section');
         $this->db->join('emp_depertment', 'emp_depertment.dept_id=emp_section.depertment_id');
         $this->db->join('pr_units', 'pr_units.unit_id=emp_section.unit_id');
+        if ($this->data['user_data']->unit_name!=0) {
         $this->db->where('emp_section.unit_id', $this->data['user_data']->unit_name);
+        }
+
         $this->data['pr_sec'] = $this->db->get()->result_array();
         $this->data['title'] = 'Section List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -341,7 +344,7 @@ class Setup_con extends CI_Controller
             $this->db->select('emp_depertment.*');
             $this->data['department'] = $this->db->get('emp_depertment')->result();
             $this->db->select('pr_units.*');
-            $this->data['unit'] = $this->db->get('pr_units')->result();
+            $this->data['unit'] = $this->pr_units_get();
             $this->data['title'] = 'Add Section';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/sec_add';
@@ -362,6 +365,15 @@ class Setup_con extends CI_Controller
             redirect(base_url() . 'setup_con/section');
         }
 
+    }
+
+    public function pr_units_get(){
+        $user_data=$this->session->userdata('data');
+        $this->db->select('pr_units.*');
+        if($user_data->level!='All'){
+            $this->db->where('unit_id', $user_data->unit_name);
+        }
+        return $this->db->get('pr_units')->result();
     }
 
     public function sec_edit($secId)
@@ -428,10 +440,12 @@ class Setup_con extends CI_Controller
     {
         $this->db->select('emp_line_num.*,emp_depertment.dept_name,pr_units.unit_name,emp_section.sec_name_en');
         $this->db->from('emp_line_num');
-        $this->db->join('emp_depertment', 'emp_depertment.dept_id = emp_line_num.dept_id');
-        $this->db->join('pr_units', 'pr_units.unit_id = emp_line_num.unit_id');
-        $this->db->join('emp_section', 'emp_section.id = emp_line_num.section_id');
+        $this->db->join('emp_depertment', 'emp_depertment.dept_id = emp_line_num.dept_id','left');
+        $this->db->join('pr_units', 'pr_units.unit_id = emp_line_num.unit_id','left');
+        $this->db->join('emp_section', 'emp_section.id = emp_line_num.section_id','left');
+        if ($this->data['user_data']->unit_name!=0) {
         $this->db->where('emp_line_num.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['pr_line'] = $this->db->get()->result_array();
         $this->data['title'] = 'Line List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -466,7 +480,7 @@ class Setup_con extends CI_Controller
             }
 
             $this->db->select('pr_units.*');
-            $this->data['unit'] = $this->db->get('pr_units')->result();
+            $this->data['unit'] =$this->pr_units_get();
             $this->data['title'] = 'Add Line';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/line_add';
@@ -575,8 +589,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['pr_units'] = $this->pr_units_get();
             $this->data['title'] = 'Add Attendance Bonus';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/attbn_add';
@@ -678,8 +691,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['pr_units'] =$this->pr_units_get();
             $this->data['title'] = 'Add Holyday/Weekend Allowance';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/weekend_allowance_add';
@@ -780,8 +792,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['pr_units'] = $this->pr_units_get();
             $this->data['title'] = 'Add Holyday/Weekend Allowance';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/tiffin_bill_add';
@@ -878,8 +889,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['pr_units'] = $this->pr_units_get();
             $this->data['title'] = 'Add Holyday/Weekend Allowance';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/iftar_bill_add';
@@ -977,8 +987,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['pr_units'] = $this->pr_units_get();
             $this->data['title'] = 'Add Night Allowance';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/night_allowance_add';
@@ -1069,7 +1078,10 @@ class Setup_con extends CI_Controller
         $this->db->join('allowance_iftar_bill', 'allowance_iftar_bill.id=emp_designation.iftar_id', 'left');
         $this->db->join('allowance_night_rules', 'allowance_night_rules.id=emp_designation.night_al_id', 'left');
         $this->db->join('allowance_tiffin_bill', 'allowance_tiffin_bill.id=emp_designation.tiffin_id', 'left');
+        if ($this->data['user_data']->unit_name!=0) {
+
         $this->db->where('emp_designation.unit_id', $this->data['unit_id']);
+        }
         $this->data['emp_designation'] = $this->db->get()->result_array();
 
         // dd($this->data);
@@ -1145,8 +1157,8 @@ class Setup_con extends CI_Controller
             redirect(base_url() . 'setup_con/designation');
         }
 
-        $this->db->select('pr_units.*');
-        $this->data['pr_units'] = $this->db->get('pr_units')->result();
+        
+        $this->data['pr_units'] = $this->pr_units_get();
         $this->data['title'] = 'Add Designation';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/desig_add';
@@ -1460,8 +1472,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
         if ($this->form_validation->run() == false) {
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['pr_units'] = $this->pr_units_get();
             $this->data['title'] = 'Shift Management Add';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/shiftmanagement_add';
@@ -1489,14 +1500,15 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
 
         if ($this->form_validation->run() == false) {
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['pr_units'] = $this->pr_units_get();
+
 
             $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type,pr_emp_shift_schedule.id');
-            $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
-            $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
+            $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id','left');
+            $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id','left');
             $this->db->where('pr_emp_shift.id', $shiftmanagementId);
             $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->row();
+            //dd($this->data['pr_emp_shift']);
 
             $unit_id = $this->data['pr_emp_shift']->unit_id;
             $this->db->where('unit_id', $unit_id);
@@ -1750,8 +1762,7 @@ class Setup_con extends CI_Controller
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
-            $this->db->select('pr_units.*');
-            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+            $this->data['pr_units'] = $this->pr_units_get();
             $this->data['title'] = 'Leave Add';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'setup/leave_add';
@@ -1867,8 +1878,7 @@ public function bonus_add()
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->session->set_flashdata('failure', $this->form_validation->error_array());
         }
-        $this->db->select('pr_units.*');
-        $this->data['pr_units'] = $this->db->get('pr_units')->result();
+        $this->data['pr_units'] = $this->pr_units_get();
         $this->data['title'] = 'Bonus Add';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/bonus_add';

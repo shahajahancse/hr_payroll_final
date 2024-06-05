@@ -70,24 +70,32 @@ table.dataTable thead th, table.dataTable thead td {
                 <thead>
                     <tr >
                         <th>Sl.No.</th></th>
-                        <th>Unit_Name </th>
-                        <th >Shift_Type</th>
-                        <th>IN_Start</th>
-                        <th>IN_Time</th>
-                        <th>Late_Start</th>
-                        <th>IN_End</th>
-                        <th>OUT_Start</th>
-                        <th>OUT_End</th>
-                        <th>OT_Start</th>
-                        <th>OT_Minute</th>
-                        <th >One_Hour_OT_Time</th>
-                        <th >Two_Hour_OT_Time</th>
+                        <th>Unit Name </th>
+                        <th >Shift Type</th>
+                        <th>IN Start</th>
+                        <th>IN Time</th>
+                        <th>Late Start</th>
+                        <th>IN End</th>
+                        <th>OUT Start</th>
+                        <th>OUT End</th>
+                        <th>OT Start</th>
+                        <th>OT Minute</th>
+                        <th >One Hour OT Time</th>
+                        <th >Two_Hour OT Time</th>
+                        <th>Lunch start</th>
+                        <th>Lunch minute</th>
+                        <th>Tiffin break</th>
+                        <th>Tiffin minute</th>
+                        <th>Tiffin break 2</th>
+                        <th>Tiffin minute 2</th>
+                        <th>Random minute</th>
                         <th style="width:80px !important">Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
+                   // dd($pr_emp_shift_schedule);
                         if(!empty($pr_emp_shift_schedule)){ $i=1; foreach($pr_emp_shift_schedule as $pr_emp_shift_schedules){  ?>
                     <tr>
                         <td><?php echo $i++ ?></td>
@@ -103,6 +111,15 @@ table.dataTable thead th, table.dataTable thead td {
                         <td><?php echo $pr_emp_shift_schedules['ot_minute_to_one_hour'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['one_hour_ot_out_time'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['two_hour_ot_out_time'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['lunch_start'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['lunch_minute'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['tiffin_break'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['tiffin_minute'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['tiffin_break2'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['tiffin_minute2'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['random_minute'] ?></td>
+
+           
                         <td>
                             <a href="<?=base_url('index.php/setup_con/shiftschedule_edit').'/'.$pr_emp_shift_schedules["id"]?>"
                                  class="btn btn-primary input-sm" role="button">Edit</a>

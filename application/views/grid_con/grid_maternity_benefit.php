@@ -133,11 +133,11 @@ $obj = new BanglaNumberToWord();
 </head>
 
 <body>
-    <div class="container w-75">
+    <div class="container">
         <?php
 		if(empty($values))
 		{
-			echo 'Requested list is empty';
+			echo '<span style="font-family: Arial, Helvetica, sans-serif;">Requested list is empty</span>';
 			exit();
 		}
 		foreach($values as $row){  $unit_id=$row->unit_id ?>
@@ -178,111 +178,69 @@ $obj = new BanglaNumberToWord();
                 <p style="font-family: Arial, Helvetica, sans-serif;">প্রথম কিস্তি</p>
             </div>
             <div style="width:1000px; margin:0 auto; overflow:hidden; font-family: Arial, Helvetica, sans-serif; font-size:12px; clear: both;">
-                <div style="width:50%;font-size:16px;">
-                    <table width="700" border="0" cellpadding="0" cellspacing="0" style="font-size:16px;">
+               <div style="width:50%;font-size:16px;">
+                    <table width="700" border="0" cellpadding="0" cellspacing="0" style="font-size:16px;font-family:SutonnyMJ;">
                         <tr>
                             <td width="310">নাম</td>
                             <td width="164">:</td>
-                            <td width="226">
-                                <span style="font-family:Arial, Helvetica, sans-serif;"><?php echo $row->name_bn; ?></span>
-                            </td>
+                            <td width="226"><?php echo $row->name_bn; ?></td>
                         </tr>
                         <tr>
                             <td>কার্ড নম্বর</td>
                             <td>:</td>
-                            <td>
-                                <span style="font-family:SutonnyMJ;">
-                                    <b>
-                                        <?php echo $row->emp_id;?>
-                                    </b>
-                                </span>
-                            </td>
+                            <td style='font-size:19px'><b><?php echo $row->emp_id;?></b></td>
                         </tr>
                         <tr>
                             <td>পদবী</td>
                             <td>:</td>
-                            <td>
-                                <span style="font-family:Arial, Helvetica, sans-serif;">
-                                        <?php echo $designation = $row->desig_bangla;?>
-                                </span>
-                            </td>
+                            <td style='font-size:19px'><?php echo $designation = $row->desig_bangla;?></td>
                         </tr>
                         <tr>
                             <td>সেকশন/লাইন</td>
                             <td>:</td>
-                            <td>
-                                <span style="">
-                                
-                                        <?php echo $gr_name = $row->line_name_bn;?>
-                                
-                                </span>
-                            </td>
+                            <td style='font-size:19px'><?php echo $gr_name = $row->line_name_bn;?></td>
                         </tr>
                         <tr>
                             <td>যোগদানের তারিখ</td>
                             <td>:</td>
-                            <td>
-                                <span style="font-family:SutonnyMJ;">
-                                        <?php echo $emp_join_date =  date('d/m/Y',strtotime($row->emp_join_date)); ?>
-                                </span>
-                            </td>
+                            <td style='font-size:19px'><?php echo date('d/m/Y',strtotime($row->emp_join_date)); ?></td>
                         </tr>
                         <tr>
                             <td>মোট চাকুরীর বয়স</td>
                             <td>:</td>
-                            <td>
-                                <span style="font-family:SutonnyMJ">
-                                    <?php echo jod_duration_cal($row->emp_join_date, $row->first_pay) ?>
-                                </span>
-                            </td>
+                            <td style='font-size:19px'><?php echo jod_duration_cal($row->emp_join_date, $row->first_pay) ?></td>
                         </tr>
                         <tr>
                             <td>প্রসব পূর্ববর্তী নোটিশ এর তারিখ</td>
                             <td>:</td>
-                            <td>
-                                <span style="font-family:SutonnyMJ">
-                                    <?php echo $start_leave_date =  date('d/m/Y',strtotime($row->inform_date)); ?>
-                                </span>
-                            </td>
+                            <td style='font-size:19px'><?php echo date('d/m/Y',strtotime($row->inform_date)); ?></td>
                         </tr>
                         <tr>
                             <td>সম্ভাব্য প্রসবের তারিখ</td>
                             <td>:</td>
-                            <td>
-                                <span style="font-family:SutonnyMJ;">
-                                    <?php echo $start_leave_date =  date('d/m/Y',strtotime($row->probability)); ?>
-                                </span>
-                            </td>
+                            <td style='font-size:19px'><?php echo date('d/m/Y',strtotime($row->probability)); ?></td>
                         </tr>
                         <tr>
                             <td>মাতৃত্বকালীন ছুটির সময়</td>
                             <td>:</td>
-                            <td>
-                                <span style="font-family:SutonnyMJ;"> 
-                                    <?php echo date('d/m/Y',strtotime($row->start_date)) .' ‡_‡K '. date('d/m/Y',strtotime($row->end_date)) .' w`b'; ?>
-                                </span>
-                            </td>
+                            <td style='font-size:19px;white-space:nowrap'><?php echo date('d/m/Y',strtotime($row->start_date)) .' ‡_‡K '. date('d/m/Y',strtotime($row->end_date)) .' w`b'; ?></td>
                         </tr>
                         <tr>
                             <td>ছুটির পরে সম্ভাব্য যোগদানের তারিখ</td>
                             <td>:</td>
-                            <td>
-                                <span style="font-family:SutonnyMJ;"> 
-                                    <?php echo date('d/m/Y', strtotime($row->end_date .' +1 day')); ?>
-                                </span>
-                            </td>
+                            <td style='font-size:19px;white-space:nowrap'><?php echo date('d/m/Y', strtotime($row->end_date .' +1 day')); ?></td>
                         </tr>
                     </table>
-                </div>
+               </div>
                 <br><br>
             </div>
             
             
             <div style="font-size:16px; font-family: Arial, Helvetica, sans-serif; clear: both; padding:0px 10px;">
-                <h4 style="font-family:SutonnyMJ;"> <?=$row->name_bn ?> Gi gvZ…Z¡Kvjxb myweavi wnmvewU wbgœiƒc:-</h4>
+                <h4 style="font-family:SutonnyMJ;"> <?= '<span style="font-size:18px">'.$row->name_bn.'</span>' ?> Gi gvZ…Z¡Kvjxb myweavi wnmvewU wbgœiƒc:-</h4>
                 <table style="width: 100%; padding:0px 10px; font-size:16px;" border="1" cellpadding="0" cellspacing="0">
                     <thead>
-                        <tr style="font-family:SutonnyMJ; font-size:18px; text-align:center">
+                        <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
                             <th style="padding:5px">gvm</th>
                             <th style="padding:5px">UvKv cwi‡kv‡ai we¯ÍvwiZ</th>
                             <th style="padding:5px">‡gvU †eZb/gRyix</th>
@@ -294,11 +252,11 @@ $obj = new BanglaNumberToWord();
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="font-size:16px; text-align:center">
-                            <td style="padding:5px; width:15%"> 
-                            <?php $a =  date('F Y', strtotime($row->start_date .' -1 month -1 day')); echo english_to_bangla_date_convert($a);?> 
+                        <tr style="font-size:16px; text-align:center;font-family:SutonnyMJ;font-size:19px">
+                            <td style="padding:5px; width:15%;font-family:arial"> 
+                            <?php echo $a =  date('F Y', strtotime($row->start_date .' -1 month -1 day')); ?> 
                             </td>
-                            <td style="font-family:SutonnyMJ;"><span>‡eZb</span></td>
+                            <td><span>‡eZb</span></td>
                             <td><?= $row->prev_month_salary ?></td>
                             <td><?= $row->attn_bonus ?></td>
                             <td><?= $row->attn_bonus + $row->prev_month_salary ?></td>
@@ -306,14 +264,14 @@ $obj = new BanglaNumberToWord();
                             <td><?= $row->ather_benifit ?></td>
                             <td><?= ($row->ather_benifit+$row->festival_bonus+$row->attn_bonus+$row->prev_month_salary) ?></td>
                         </tr>
-                        <tr style="font-size:16px; text-align:center">
-                            <td colspan="2" style="font-family:SutonnyMJ;" ><span>‡gvU</span></td>
-                            <td style="padding:5px" ><?= $row->prev_month_salary ?></td>
-                            <td style="padding:5px" ><?= $row->attn_bonus ?></td>
-                            <td style="padding:5px" ><?= $row->attn_bonus + $row->prev_month_salary ?></td>
-                            <td style="padding:5px" ><?= $row->festival_bonus ?></td>
-                            <td style="padding:5px" ><?= $row->ather_benifit ?></td>
-                            <td><?= ($row->ather_benifit+$row->festival_bonus+$row->attn_bonus+$row->prev_month_salary) ?></td>
+                        <tr style="text-align:center;font-family:SutonnyMJ">
+                            <td colspan="2" style="font-size:19px" ><span>‡gvU</span></td>
+                            <td style="padding:5px; font-size:19px" ><?= $row->prev_month_salary ?></td>
+                            <td style="padding:5px; font-size:19px" ><?= $row->attn_bonus ?></td>
+                            <td style="padding:5px; font-size:19px" ><?= $row->attn_bonus + $row->prev_month_salary ?></td>
+                            <td style="padding:5px; font-size:19px" ><?= $row->festival_bonus ?></td>
+                            <td style="padding:5px; font-size:19px" ><?= $row->ather_benifit ?></td>
+                            <td style="padding:5px; font-size:19px"><?= ($row->ather_benifit+$row->festival_bonus+$row->attn_bonus+$row->prev_month_salary) ?></td>
                         </tr>
                     </tbody>
                 </table>
@@ -322,25 +280,25 @@ $obj = new BanglaNumberToWord();
                 <table style="width: 100%; padding:0px 10px; font-size:16px;" border="1" cellpadding="0" cellspacing="0">
                     <thead>
                         <?php $total = $row->ather_benifit+$row->festival_bonus+$row->attn_bonus+$row->prev_month_salary; ?>
-                        <tr style="font-family:SutonnyMJ; font-size:18px; text-align:center">
+                        <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
                             <th style="padding:5px">weeiY</th>
                             <th style="padding:5px">UvKv</th>
                             <th style="padding:5px">cÖ_g wKw¯Íi myweav</th>
                             <th style="padding:5px"><?= round((($total / $row->pay_day) * $row->total_day), 2) ?></th>
                         </tr>
-                        <tr style="font-family:SutonnyMJ; font-size:18px; text-align:center">
+                        <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
                             <td style="padding:5px">c«wZw`‡bi Mo ‡eZb (‡gvU ‡eZb <?= $total ?> <span style="font-size: 12px;" >➗</span> <?= $row->pay_day ?> w`b)</td>
                             <td style="padding:5px"><?= round($total / $row->pay_day, 2) ?></td>
                             <td style="padding:5px">ivR¯ KZ©b</td>
                             <td style="padding:5px">10</td>
                         </tr>
-                        <tr style="font-family:SutonnyMJ; font-size:18px; text-align:center">
+                        <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
                             <td style="padding:5px">‡gvU c«‡`q UvKvi cwigvY ( c«wZw`‡bi Mo ‡eZb <?= round($total / $row->pay_day, 2) ?> &#10005; <?= $row->total_day * 2 ?> w`b) </td>
                             <td style="padding:5px"><?= round((($total / $row->pay_day) * ($row->total_day * 2)), 2) ?></td>
                             <td style="padding:5px">‡gvU UvKv </td>
                             <td style="padding:5px"><?= round((($total / $row->pay_day) * $row->total_day), 2) - 10 ?></td>
                         </tr>
-                        <tr style="font-family:SutonnyMJ; font-size:18px; text-align:center">
+                        <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
                             <td style="padding:5px">cÖ_g wKw¯Í ( c«wZw`‡bi Mo ‡eZb <?= round($total / $row->pay_day, 2) ?> &#10005; <?= $row->total_day ?> w`b) </td>
                             <td style="padding:5px"><?= round((($total / $row->pay_day) * $row->total_day), 2) ?></td>
                         </tr>
@@ -350,9 +308,9 @@ $obj = new BanglaNumberToWord();
 
             <div style="font-size:16px; font-family: Arial, Helvetica, sans-serif; clear: both; padding:20px 10px;">
                 <div style="width: 50%; font-family:; font-family:SutonnyMJ">
-                    <p><span>cÖvß UvKv </span> : <?= round((($total / $row->pay_day) * $row->total_day), 2) ?>  UvKv </p>
+                    <p style="font-size:19px"><span>cÖvß UvKv </span> : <?= round((($total / $row->pay_day) * $row->total_day), 2) ?>  UvKv </p>
                     <?php $totall = round((($total / $row->pay_day) * $row->total_day), 2); ?>
-                    <p><span>K_vq </span> : <?=  $obj->numToWord($totall) ?>  UvKv </p>
+                    <p style="font-size:19px"><span>K_vq </span> : <?=  $obj->numToWord($totall) ?>  UvKv </p>
                 </div>
                 <div style="width: 50%; font-family:SutonnyMJ;"></div>
             </div>

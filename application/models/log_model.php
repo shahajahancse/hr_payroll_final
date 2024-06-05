@@ -12,19 +12,43 @@ class Log_model extends CI_Model{
 	
 	function log_login_insert()
 	{
-		$log_username 	= $this->session->userdata('username');
+		$log_username 	= $user_data=$this->session->userdata('data')->id;
 		$log_ip_address = $_SERVER['REMOTE_ADDR'];
+		$geo = unserialize(file_get_contents("http://www.geoplugin.net/php.gp?ip=$log_ip_address"));
+		$location='www.google.com/maps?q='.$geo['geoplugin_latitude'].','.$geo['geoplugin_longitude'];
+
+		//dd($geo);
 		$user_agent 	= $_SERVER['HTTP_USER_AGENT'];
 		$log_message 	= "LOGIN : IN  --> [USERNAME : $log_username, has Login  from $log_ip_address, USER_AGENT : $user_agent]";
+		$form_data=array(
+			'member_id' => $log_username,
+			'ip' => $log_ip_address,
+			'location' => $location,
+			'address' => 'City : '.$geo['geoplugin_city'].', Division: ' .$geo['geoplugin_region'].', Country : '.$geo['geoplugin_countryName'],
+			'status' =>1
+		);
+
+		$this->db->where('member_id', $log_username);
+		if($this->db->get('active_log')->num_rows() > 0){
+			$this->db->where('member_id', $log_username);
+			$this->db->update('active_log', $form_data);
+		}else{
+			$this->db->insert('active_log', $form_data);
+		}
 		log_message('error', $log_message);	
 	}
 	
 	function log_login_out()
 	{
-		$log_username 	= $this->session->userdata('username');
+		$log_username 	=$user_data=$this->session->userdata('data')->id;
 		$log_ip_address = $_SERVER['REMOTE_ADDR'];
 		$user_agent 	= $_SERVER['HTTP_USER_AGENT'];
 		$log_message 	= "LOGIN : OUT --> [USERNAME : $log_username, has Logout from $log_ip_address, USER_AGENT : $user_agent]";
+		$form_data=array(
+			'status' =>0 
+		);
+		$this->db->where('member_id', $log_username);
+		$this->db->update('active_log', $form_data);
 		log_message('error', $log_message);	
 	}
 	
@@ -43,7 +67,7 @@ class Log_model extends CI_Model{
 	
 	function log_profile_resign($log_emp_id)
 	{
-		$log_username = $this->session->userdata('username');
+		$log_username =$user_data=$this->session->userdata('data')->id;
 		$log_message  = "PROFILE : RESIGN --> [USERNAME : $log_username, EMP ID: $log_emp_id]";
 		log_message('error', $log_message);	
 	}
@@ -92,21 +116,21 @@ class Log_model extends CI_Model{
 	
 	function log_leave_insert($empid_leave, $sStartDate, $sEndDate, $leave_type)
 	{
-		$log_username = $this->session->userdata('username');
+		$log_username =$user_data=$this->session->userdata('data')->id;
 		$log_message = "LEAVE : INSERT --> [USERNAME : $log_username, STARTDATE : $sStartDate, ENDDATE : $sEndDate, LEAVE_TYPE : $leave_type]";
 		log_message('error', $log_message);	
 	}
 	
 	function log_advance_loan_insert($emp_id, $loan_amt, $pay_amt, $loan_date)
 	{
-		$log_username = $this->session->userdata('username');
+		$log_username =$user_data=$this->session->userdata('data')->id;
 		$log_message = "ADVANCE LOAN : INSERT --> [USERNAME : $log_username, LOANDATE : $loan_date, LOAN_AMT : $loan_amt, PAY_AMT : $pay_amt, EMP_ID : $emp_id]";
 		log_message('error', $log_message);	
 	}
 	
 	function log_attn_process($input_date)
 	{
-		$log_username = $this->session->userdata('username');
+		$log_username =$user_data=$this->session->userdata('data')->id;
 		$log_message = "ATTENDANCE PROCESS --> [USERNAME : $log_username, PROCESS_DATE : $input_date]";
 		log_message('error', $log_message);	
 	}
@@ -120,7 +144,7 @@ class Log_model extends CI_Model{
 	
 	function log_new_to_regular($year, $month)
 	{
-		$log_username = $this->session->userdata('username');
+		$log_username =$user_data=$this->session->userdata('data')->id;
 		$log_message = "NEW TO REGULAR  --> [USERNAME : $log_username, NEW_TO_REGULAR_MONTH : $year-$month]";
 		log_message('error', $log_message);	
 	}

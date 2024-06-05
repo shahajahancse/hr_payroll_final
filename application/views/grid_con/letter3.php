@@ -56,6 +56,12 @@
           <p class="text-center h6"><?= $com_info->company_add_bangla ?></p>
       </div>
 
+
+        <?php 
+          if ($no_change == 2) {
+            $this->db->where('left_id', $value->left_id)->update('pr_emp_left_history', array('status' => 4));
+          }
+        ?>
       
       <div class="d-flex">
         <div class="col-md-6">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id_emp?>/<?php echo date('m/Y')?></span>-সি</div>

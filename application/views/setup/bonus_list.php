@@ -32,10 +32,7 @@
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('
-                    setup_con/bonus_add') ?>">Add Bonus</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('
-                    payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/bonus_add') ?>">Add Bonus</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -108,13 +105,11 @@
                         <td><?php echo $pr_bonus_rule['bonus_percent'] ?></td>
                         <td><?php echo $pr_bonus_rule['effective_date'] ?></td>
                         <td>
-                            <a href="<?=base_url('
-                            setup_con/bonus_edit').'/'.$pr_bonus_rule["id"]?>"
+                            <a href="<?=base_url('setup_con/bonus_edit').'/'.$pr_bonus_rule["id"]?>"
                                 target='_blank' class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>
                         <td>
-                            <a href="<?=base_url('
-                            setup_con/bonus_delete').'/'.$pr_bonus_rule["id"]?>"
+                            <a href="<?=base_url('setup_con/bonus_delete').'/'.$pr_bonus_rule["id"]?>"
                                 class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>

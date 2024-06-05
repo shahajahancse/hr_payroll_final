@@ -219,7 +219,7 @@ echo $date_format;
 		echo "</td>";
 		
 		echo "<td style='width:100px;'>";
-		print_r($value[$k]->emp_full_name);
+		print_r($value[$k]->name_en);
 		//echo '<br>';
 		if($grid_status == 4)
 		{
@@ -246,7 +246,7 @@ echo $date_format;
 		echo "</td>";
 		
 		echo "<td>";
-		print_r($value[$k]->sec_name);
+		print_r($value[$k]->sec_name_en);
 		//echo $row->desig_name;
 		echo "</td>";
 				

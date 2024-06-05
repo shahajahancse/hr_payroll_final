@@ -39,7 +39,7 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 <body>
 
 <?php
-$per_page_id = 46;
+$per_page_id = 40;
  $row_count=count($values["emp_name"]);
  $max = $row_count;
 if($row_count > $per_page_id)
@@ -77,7 +77,7 @@ $k = 0;
 			</span>
 		</td>
 		<td style="text-align:right;width: 30%">
-			<?php echo '<span style="font-family:SutonnyMJ;font-size:15px;">'."পাতা নং # $counter <br>".'</span>';?>
+			<?php //echo '<span style="font-family:SutonnyMJ;font-size:15px;">'."পাতা নং # $counter <br>".'</span>';?>
 		</td>
 	</tr>
 </table>
@@ -109,13 +109,13 @@ $k = 0;
 		{
 		$page=1;
 		}
-		echo "<tr bgcolor='#CCCCCC'>";
-		echo "<td colspan='10' style='font-size:11px'>Section :&nbsp".$values["sec_name_en"][$k]."</td>";
-		echo "</tr>";
+		// echo "<tr bgcolor='#CCCCCC'>";
+		// echo "<td colspan='10' style='font-size:11px'>Section :&nbsp".$values["sec_name_en"][$k]."</td>";
+		// echo "</tr>";
    	}
 
 	echo "<tr>";
-	echo "<td>";
+	echo "<td style='padding: 5px 3px;'>";
 	echo $k+1;
 	echo "</td>";
 
@@ -123,20 +123,20 @@ $k = 0;
 	echo $values["emp_id"][$k];
 	echo "</td>";
 
-	echo "<td >";
+	echo "<td style='padding: 5px 3px;'>";
 	echo $values["emp_name"][$k];
 	echo "</td>";
 
 
-	echo "<td >";
+	echo "<td style='padding: 5px 3px;'>";
 	echo $values["desig_name"][$k];
 	echo "</td>";
 
-	echo "<td >";
+	echo "<td style='padding: 5px 3px;'>";
 	echo $values["line_name"][$k];
 	echo "</td>";
 
-	echo "<td >";
+	echo "<td style='padding: 5px 3px;'>";
 	echo $values["sec_name_en"][$k];
 	echo "</td>";
 
@@ -176,7 +176,7 @@ $k = 0;
 		}
 	}
 	?>
-	<table width="750" height="60px" border="0" align="center" style="margin:0 auto 120px; font-family:Arial, Helvetica, sans-serif; font-size:10px;">
+		<!-- <table width="750" height="60px" border="0" align="center" style="margin:0 auto 120px; font-family:Arial, Helvetica, sans-serif; font-size:10px;">
 			<tr height="30%" >
 				<td colspan="28"></td>
 			</tr>
@@ -186,8 +186,9 @@ $k = 0;
 				<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Manager(Admin)</dt></td>
 		        <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >GM</dt></td>
 			</tr>
-		</table>
+		</table> -->
 	</table>
+	<br><br><br>
 	<div style="page-break-after: always;"></div>
 	<?php
 	if($max==$k){

@@ -97,7 +97,7 @@
                         <td style="padding: 1px !important;" ><?php echo $r->unit_name ?></td>
                         <td style="padding: 1px !important;" ><?php echo date('d-m-Y', strtotime($r->resign_date))?></td>
                         <td style="padding: 1px !important;">
-                           <div class="btn-group">
+                            <div class="btn-group">
                                <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                    Action <span class="caret"></span>
                                 </button>
@@ -128,7 +128,6 @@
                                     <li><a class="btn btn-sm" href="<?=base_url('entry_system_con/resign_delete/'.$r->emp_id)?>">Delete</a></li>
                                 </ul>
                             </div>
-
                         </td>
                     </tr>
                     <?php }} else {?>
@@ -289,6 +288,8 @@
         $(this).find("input,textarea,select").val('').end().find("input[type=checkbox], input[type=radio]").prop("checked", "").end().find("option:selected").removeAttr("selected");
     })
     function final_satalment(id) {
+        // $('#form').reset();
+         document.getElementById("form").reset();
         $.ajax({
             type: "POST",
             url: "<?php echo base_url(); ?>grid_con/final_satalment",
@@ -353,12 +354,11 @@
         var end = new Date(endDate);
         var duration = end - start;
         var days = duration / (1000 * 60 * 60 * 24);
-            var years = Math.floor(days / 365);
+        var years = Math.floor(days / 365);
         //var years = 18;
         days = days % 365;
         var months = Math.floor(days / 30);
         var months = 5;
-        console.log(months);
         
         days = days % 30;
         if (years >= 5) {

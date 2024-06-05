@@ -42,7 +42,7 @@
 
     <h3>Create Shift </h3>
     <hr>
-    <form action="<?= base_url(setup_con/shiftmanagement_add')?>" enctype="multipart/form-data" method="post"
+    <form action="<?= base_url('setup_con/shiftmanagement_add')?>" enctype="multipart/form-data" method="post"
         name="creatsection">
         <div class="row">
             <div class="col-md-6">
@@ -83,7 +83,7 @@ function get_data() {
     var unit_id = $('#unit_id').val();
     $.ajax({
 
-        url: "<?php echo base_url(setup_con/get_shift') ?>",
+        url: "<?php echo base_url('setup_con/get_shift') ?>",
         method: "POST",
         data: {
             unit_id: unit_id

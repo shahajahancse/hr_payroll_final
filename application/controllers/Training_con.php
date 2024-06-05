@@ -54,8 +54,8 @@ class Training_con extends CI_Controller {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
             }
 
-            $this->db->select('pr_units.*');
-            $this->data['unit'] = $this->db->get('pr_units')->result();
+            //$this->db->select('pr_units.*');
+            $this->data['unit'] = $this->pr_units_get();
             $this->data['title'] = 'Add Training';
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'training/training_add';
@@ -144,6 +144,14 @@ class Training_con extends CI_Controller {
         $this->load->view('layout/template', $this->data);
 
 	}
+    public function pr_units_get(){
+        $user_data=$this->session->userdata('data');
+        $this->db->select('pr_units.*');
+        if($user_data->level!='All'){
+            $this->db->where('unit_id', $user_data->unit_name);
+        }
+        return $this->db->get('pr_units')->result();
+    }
 	function training_report()
 	{
         if ($this->session->userdata('logged_in') == false) {

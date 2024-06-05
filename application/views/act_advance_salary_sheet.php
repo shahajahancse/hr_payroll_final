@@ -47,14 +47,12 @@ echo $date_format;
 
 <?php 
 // echo "<pre>";print_r($value);exit;
-$row_count=count($value);
-if($row_count > 43)
-{
-$page = ceil($row_count/43);
+$row_count=is_countable($value) ? count($value) : 0;
+if($row_count > 43){
+	$page = ceil($row_count/43);
 }
-else
-{
-$page=1;
+else{
+	$page=1;
 }
 
 $k = 0;
@@ -127,8 +125,16 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 <table>
 <?php 
 $date = date('d-m-Y');
-$section_name = $value[0]->sec_name_en;
-echo "Section : $section_name<br>";
+// <<<<<<<<<<<<<<  ✨ Codeium Command 🌟 >>>>>>>>>>>>>>>>
+if (is_object($value[0])) {
+    $section_name = $value[0]->sec_name_en;
+	echo "Section : $section_name<br>";
+}else {
+    echo "Section : <br>";
+}
+// -$section_name = $value[0]->sec_name_en;
+// <<<<<<<  b69a902f-d29f-4ca8-a5af-3d416fc5ae7a  >>>>>>>
+
  ?>
 </table>
 </div>

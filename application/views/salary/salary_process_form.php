@@ -189,6 +189,31 @@
             </div><!-- /.col-lg-4 -->
 
         </div>
+		<div class="row nav_head" style="margin-top:20px">
+            <div class="col-lg-3" style="padding-lef: 0px !important; padding-right: 0px !important;">
+                <span style="font-size: 20px;">Festival Bonus</span>
+            </div><!-- /.col-lg-4 -->
+
+            <style>
+            	.input-group .form-control {
+				    width: 90% !important;
+				}
+            	.input-group-btn .btn {
+				    padding: 8px 10px !important;
+				}
+            </style>	
+            <div class="col-lg-9" style="padding-left: 0px !important;">
+                <div class="input-group" style="display:flex">
+					<input type="month" class="form-control" id="bonus_process_month" >
+
+                    <!-- <span class="input-group-btn"> -->
+					<input style="margin-left: 8px !important;" class="btn btn-success" onclick='festival_bonus()' type="button" value='Process to Festival' />
+					<!-- </span> -->
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-4 -->
+
+        </div>
+		
     </div>
 
 
@@ -360,4 +385,79 @@
 	        grid_emp_list();
 	    });
 	});
+
+
+
+
+function festival_bonus(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+	var bonus_process_month = document.getElementById('bonus_process_month').value;
+		if (bonus_process_month == '')
+		{
+			alert("Please select Year Month");
+			return false;
+		}
+		
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Category options");
+		return false;
+	}
+	//alert('hello');
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+	// hostname = window. location.href;
+
+
+	var queryString="spl="+sql+"&unit_id="+unit_id;
+   	url =  hostname+"grid_con/grid_earn_leave_report/";
+
+	document.getElementById('loaader').style.display = 'flex';
+
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			extra_ot.document.write(resp);
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
 </script>

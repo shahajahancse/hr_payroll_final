@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Common extends CI_Controller {
 
     function grid_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
-
+        // dd($_GET['status']);
     	$data = array();
         $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
         $this->db->from('pr_emp_com_info as com');
@@ -40,12 +40,22 @@ class Common extends CI_Controller {
     }
 
     function salary_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
+
+       //dd($_GET);
+        $emp_ids = $this->db->select('emp_id')
+            ->where('unit_id', $unit)
+            ->get('pr_emp_com_info')
+            ->result();
+        $emp_id= array_column($emp_ids, 'emp_id');
+        // dd($emp_id);
+
         $data = array();
         $this->db->select('ss.emp_id, per.name_en, per.name_bn');
         $this->db->from('pay_salary_sheet as ss');
         $this->db->join('pr_emp_com_info as com', 'ss.emp_id = com.emp_id', 'left');
         $this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
         $this->db->where('ss.unit_id', $unit);
+        $this->db->where_in('ss.emp_id', $emp_id);
         $this->db->where('ss.salary_month', date('Y-m-01', strtotime($_GET['salary_month'])));
 
         if (!empty($dept)) {
@@ -70,6 +80,7 @@ class Common extends CI_Controller {
         $this->db->group_by('ss.emp_id');
         $this->db->order_by('ss.emp_id', 'asc');
         $result = $this->db->get()->result();
+        //dd($this->db->last_query());
 
         header('Content-Type: application/x-json; charset=utf-8');
         echo json_encode($result);

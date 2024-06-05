@@ -375,7 +375,7 @@ echo "Payment Date : ";
 		echo "</td>";
 		
 		$per_day_gross = $gross_salary/$last_day;
-
+		dd($per_day_gross);
 		$net_wages = round($per_day_gross * $pay_days);
 		$total_net_wages 		= $total_net_wages + $net_wages;
 		$grand_total_net_wages 	= $grand_total_net_wages + $net_wages;
@@ -406,6 +406,7 @@ echo "Payment Date : ";
 
 		$net_wages = $net_wages + $ot_amount;
 		echo "<td>";
+		// dd($ot_amount);
 		echo $net_wages;
 		echo "</td>";
 		

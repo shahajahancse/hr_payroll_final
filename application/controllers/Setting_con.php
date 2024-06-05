@@ -33,6 +33,19 @@ class Setting_con extends CI_Controller {
         $this->load->view('layout/template', $this->data);
 	}
 
+	function activity_log(){
+
+		$this->db->select('active_log.*, members.id_number');
+		$this->db->join('members', 'members.id = active_log.member_id', 'left');
+		$this->db->order_by('id', 'desc');
+		$this->data['data'] = $this->db->get('active_log')->result();
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title'] = 'Activity Log';
+        $this->data['subview'] = 'settings/activity_log';
+        $this->load->view('layout/template', $this->data);
+		
+	}
+
 	function acl_access_add(){
 		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
 			$this->session->set_flashdata('success', 'ACL Added Successfully');
@@ -488,10 +501,10 @@ class Setting_con extends CI_Controller {
     //-------------------------------------------------------------------------------------------------------
 	public function line_wise_atn_desig()
     {
-        $this->db->select('pr_emp_per_info.*,pr_emp_com_info.*,pr_units.unit_name,pr_line_num.line_name_en');
+        $this->db->select('pr_emp_per_info.*,pr_emp_com_info.*,pr_units.unit_name,emp_line_num.line_name_en');
         $this->db->from('pr_emp_com_info');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id');
-        $this->db->join('pr_line_num', 'pr_line_num.id = pr_emp_com_info.emp_line_id');
+        $this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
         $this->db->where('pr_emp_com_info.attn_sum_line_id IS NOT NULL');
         $this->data['pr_line'] = $this->db->get()->result_array();

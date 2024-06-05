@@ -47,6 +47,9 @@ td { padding:3px; height:30px;}
 </style>
 <body>
 <?php 
+if(empty($values)){
+	echo "No data found"; exit;
+}
 $row_count = count($values["emp_id"]);
 //print_r($values);
 if($row_count >6)

@@ -132,7 +132,7 @@
                         <select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
                             <option value="">All Employee</option>
                             <?php foreach ($categorys as $key => $row) { ?>
-                            <option value="<?= $row->id ?>"><?= $row->status_type; ?>
+                            <option  <?= ($row->id == 1) ? 'selected' : ''?> value="<?= $row->id ?>"><?= $row->status_type; ?>
                             </option>
                             <?php } ?>
                         </select>
@@ -204,7 +204,6 @@
                             <button class="btn input-sm sbtn" onclick="actual_eot_sheet_bank()">Actual EOT Bank</button>
                             <?php } ?>
 
-                            <!-- <button class="btn input-sm sbtn" onclick="grid_bank_note_req()">Montly Bank Req.</button> -->
                             <?php if(in_array(99,$acl)) { ?>
                                 <button class="btn input-sm sbtn" onclick="eot_sheet_com_9()">EOT Sheet.</button>
                             <?php } ?>
@@ -216,6 +215,15 @@
                             <?php } ?>
                             <?php if(in_array(102,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_monthly_stop_sheet()">Stop Salary Sheet</button>
+                            <?php } ?>
+                            <?php if(in_array(121,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_salary_sheet_with_eot_bank()">Mobile Banking Report</button>
+                            <?php } ?>
+                            <?php if(in_array(122,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_monthly_allowance_sheet()">Monthly Night Bill Report</button>
+                            <?php } ?>
+                            <?php if(in_array(123,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_salary_sheet_with_eot_bank()">Monthly Weekend/Holiday Report</button>
                             <?php } ?>
                         </div>
                         <!-- salary report end  -->

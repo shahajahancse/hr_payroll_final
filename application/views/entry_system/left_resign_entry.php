@@ -1,13 +1,12 @@
 <script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
 <style>
-#fileDiv #removeTr td {
-    padding: 5px 10px !important;
-    font-size: 14px;
-}
+    #fileDiv #removeTr td {
+        padding: 5px 10px !important;
+        font-size: 14px;
+    }
 </style>
-<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-
-<?php
+    <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+    <?php
         $this->load->model('common_model');
         $unit = $this->common_model->get_unit_id_name();
     ?>
@@ -104,9 +103,21 @@
             </div>
         </div>
         <br>
+
         <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:10px;">
             <img src="<?php echo base_url('images/ajax-loader.gif');?>" />
         </div>
+
+        <style>
+            .nav_head {
+                box-shadow: 0px 0px;
+                -webkit-box-shadow: 0px 0px;
+                -moz-box-shadow: 0px 0px;
+                -ms-box-shadow: 0px 0px;
+                border: 1px solid #eeeef0;
+            }
+        </style>
+
         <div class="row nav_head">
             <div class="col-lg-3">
                 <span style="font-size: 20px;"><?= 'Left / Resign'; ?></span>
@@ -118,14 +129,17 @@
                     <select name="types" id="types">
                         <option value="">Type</option>
                         <!-- <option value="1">Regular</option> -->
-                        <option value="3">Left</option>
-                        <option value="4">Resign</option>
+                        <option value="2">Left</option>
+                        <option value="3">Resign</option>
                     </select>
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='add_left_regign()' type="button" value='Save' />
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+        <div class="row nav_head">
+            <input type="text" class="form-control" id="remark" placeholder="please enter commend">
         </div><!-- /.row -->
     </div>
 
@@ -367,6 +381,7 @@
       return false;
     }
 
+    var remark = document.getElementById('remark').value;
     $.ajax({
       type: "POST",
       url: hostname + "entry_system_con/add_left_regign",
@@ -374,7 +389,8 @@
         sql: sql,
         date: date,
         type: types,
-        unit_id: unit_id
+        unit_id: unit_id,
+        remark: remark,
       },
       success: function(data) {
         // console.log(data);

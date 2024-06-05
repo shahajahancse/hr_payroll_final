@@ -91,14 +91,18 @@
 						echo "</td>";
 					echo "</tr>";
 
-					echo "<tr>";
-						echo "<td >";
-						echo "<strong>Dept :</strong>";
-						echo "</td>";
-						echo "<td >";
-						echo  $this->db->select('shift_name')->where('unit_id',$value->unit_id)->where('schedule_id',$value->emp_shift)->get('pr_emp_shift')->row()->shift_name;;
-						echo "</td>";
-					echo "</tr>";
+					// echo "<tr>";
+					// 	echo "<td >";
+					// 	echo "<strong>Shift Name:</strong>";
+					// 	echo "</td>";
+					// 	echo "<td >";
+					// 	//dd($value);
+					// 	$shift_data=$this->db->select('shift_name')->where('unit_id',$value->unit_id)->where('schedule_id',$value->emp_shift)->get('pr_emp_shift')->row();
+					// 	if ($shift_data) {
+					// 		echo $shift_data->shift_name;
+					// 	}
+					// 	echo "</td>";
+					// echo "</tr>";
 					echo "<table>";
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
 					// dd($emp_data);

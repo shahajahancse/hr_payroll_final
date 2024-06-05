@@ -27,7 +27,10 @@
             <?php 
                 $session = $this->session->userdata('data'); 
             ?>
-			<?php foreach($values as $value){ 
+			<?php 
+            
+                // dd($values); 
+            foreach($values as $value){ 
                 // dd($value);
                 $emp_signature =$this->db->select('signature')->where('emp_id',$value->emp_id)->get('pr_emp_per_info')->row('signature');    
                 $register =$this->db->select('register')->where('unit_id',$unit_id)->get('company_infos')->row('register');    
@@ -77,7 +80,8 @@
                             <img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px;width:70px;margin-left: 0px">
                             <img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px;margin-right: 100px">
                         </div>
-                        <p><span>শ্রমিকের স্বাক্ষর:</span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <span>মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর:</span></p>
+                        <p><span>শ্রমিকের স্বাক্ষর:</span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
+                        <span style="margin-left: -60px;">মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর:</span></p>
                     </div>
                 
                 </div>
@@ -140,7 +144,7 @@
                                 <?php $image =  $this->db->select('*')->where('unit_id',1)->get('company_infos')->row()?>
                                 <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
                                 <td><?php echo $value->left_date=='' ? 'বর্তমান': '<span style="font-family:sutonnyMJ;font-size:15px">'.date('d-m-Y',strtotime($value->left_date)).' Bs </span>'?> </td>
-                                <td><?php echo $value->left_date=='' ? '-': $value->resign_reason?> </td>
+                                <td><?php echo $value->left_date=='' ? '-': cc($value->resign_reason)?> </td>
                                 <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px"></td>
                                 <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px;width:70px"></td>
                             </tr>
@@ -187,6 +191,7 @@
                                 <td>টাকা</td>
                             </tr>
                             <tr class="text-center">
+                                
                                 <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
                                 <td style="font-size:15px;font-family:sutonnyMJ"><?php echo '<span style="font-size:12px;">'.$value->desig_bangla.'</span>'.' '.$value->emp_id?></td>
                                 <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($value->gross_sal-2450)/1.5)?></td>
@@ -346,11 +351,11 @@
                         </thead>
                         <tbody>
                             <tr class="text-center">
-                                <td style="font-family:sutonnyMJ;font-size:15px"><?php $a = round(($earn_leave->gross_sal/30)); $b = round($earn_leave->pay_leave/$a);echo $b; ?></td>
-                                <td style="font-family:sutonnyMJ;font-size:15px;white-space: nowrap"><?php echo $earn_leave->earn_month ?></td>
-                                <td style="font-family:sutonnyMJ;font-size:15px"><?php echo ($earn_leave->earn_leave-$earn_leave->el)-$b; ?></td>
-                                <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                                <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+                                <td style="font-family:sutonnyMJ;font-size:15px">< ?php $a = round(($earn_leave->gross_sal/30)); $b = round($earn_leave->pay_leave/$a);echo $b; ?></td>
+                                <td style="font-family:sutonnyMJ;font-size:15px;white-space: nowrap">< ?php echo $earn_leave->earn_month ?></td>
+                                <td style="font-family:sutonnyMJ;font-size:15px">< ?php echo ($earn_leave->earn_leave-$earn_leave->el)-$b; ?></td>
+                                <td><img  src="< ?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
+                                <td><img  src="< ?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
 
                             </tr>
                         </tbody>
@@ -432,3 +437,5 @@
         </body>
     </body>
 </html>
+
+

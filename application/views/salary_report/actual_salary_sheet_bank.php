@@ -395,7 +395,7 @@
 				echo "</td>";
 
 				echo "<td>";
-				echo $value[$k]->bank_bkash_no;
+				echo $value[$k]->mobile;
 				echo "</td>";
 
 				$total_deduction	   = $value[$k]->total_deduct;

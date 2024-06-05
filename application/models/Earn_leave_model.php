@@ -177,7 +177,7 @@ class Earn_leave_model extends CI_Model{
 
 	//===================Earn Leave Report============================
 	function grid_earn_leave_general_info($year, $grid_emp_id){
-
+		$data = array();
 		$first_date = date("Y-01-01",  strtotime($year));
 		$last_date = date("Y-12-01",  strtotime($year));
 		$this->db->select(" pr_emp_per_info.name_en,
@@ -267,7 +267,7 @@ class Earn_leave_model extends CI_Model{
 		$this->db->group_by("pr_earn_leave.emp_id");
 		$query = $this->db->get();
 		// dd($query->result());
-		// $data = array();
+		$data = array();
 		foreach($query->result() as $rows){
 			$data['emp_id'][] 			= $rows->emp_id;
 			$data['emp_name'][] 		= $rows->name_en;

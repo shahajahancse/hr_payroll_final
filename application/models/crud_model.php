@@ -14,7 +14,11 @@ class Crud_model extends CI_Model{
         $this->db->select('SQL_CALC_FOUND_ROWS emp_depertment.*, pr_units.unit_name', false);
         $this->db->from('emp_depertment');
         $this->db->join('pr_units','emp_depertment.unit_id = pr_units.unit_id', 'left');
-        $this->db->where('emp_depertment.unit_id',$unit_id); 
+
+        if ($unit_id!=0) {
+            $this->db->where('emp_depertment.unit_id',$unit_id); 
+        }
+
         if (!empty($condition)) {
             $this->db->where($condition);
         }

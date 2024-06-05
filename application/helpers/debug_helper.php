@@ -28,6 +28,15 @@ if ( ! function_exists('dd'))
 		exit;
 	}
 }
+  if ( ! function_exists('cc'))
+  {
+ 	function cc(&$var, $default=null)
+  	{
+ 		return isset($var) && !empty($var) ? $var : $default;
+
+  	}
+ }
+
 
 // ------------------------------------------------------------------------
 

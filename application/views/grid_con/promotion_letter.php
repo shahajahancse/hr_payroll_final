@@ -69,7 +69,7 @@
         <div class="ml-3" style="line-height: 10px;">
                 <p class="mt-3">cÖwZ,</p>
                 <p>bvgt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->name_bn.'</span>'?></p>
-                <p>c`ext <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_desig_name.'</span>'?></p>
+                <p>c`ext <?php echo '<span style="font-family:Arial;font-size:14px">'.$row->new_desig_name.'</span>'?></p>
                 <p>KvWt <?php echo $row->emp_id?></p>
                 <p>‡mKkbt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_sec_name.'</span>'?></p>
                 <p>jvBbt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_line_name.'</span>'?></p>
@@ -81,8 +81,8 @@
         <div class="ml-3">
             <p class="text-justify">
                 <span><?php echo $row->gender == "Male"? 'Rbve':'Rbvev'?>,</span><br>
-                Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q ‡h, ‡Kv¤úvbx KZ©…c¶ Avcbvi Kg©`¶Zvq mš‘ó n‡q Avcbv‡K <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->prev_desig_name.'</span>'?> c`, ‡M«Wt <?php echo '<span style="font-family:SutonnyMJ;font-size:19px">'.$row->prev_grade_name.'</span>';?>  ‡_‡K
-                <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_desig_name.'</span>'?> c‡`, jvBbt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_line_name.'</span>'?> , ‡M«Wt <?php echo '<span style="font-family:SutonnyMJ;font-size:19px">'.$row->new_grade_name.'</span>';?> G c‡`vbœwZ ‡`Iqvi wm×všÍ M…nxZ n‡q‡Q| Avcbvi c~‡e©i ‡eZb <?php echo $row->prev_salary?>
+                Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q ‡h, ‡Kv¤úvbx KZ©…c¶ Avcbvi Kg©`¶Zvq mš‘ó n‡q Avcbv‡K <?php echo '<span style="font-family:Arial;font-size:14px">'.$row->prev_desig_name.'</span>'?> c`, ‡M«Wt <?php echo '<span style="font-family:SutonnyMJ;font-size:19px">'.$row->prev_grade_name.'</span>';?>  ‡_‡K
+                <?php echo '<span style="font-family:Arial;font-size:14px">'.$row->new_desig_name.'</span>'?> c‡`, jvBbt <?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_line_name.'</span>'?> , ‡M«Wt <?php echo '<span style="font-family:SutonnyMJ;font-size:19px">'.$row->new_grade_name.'</span>';?> G c‡`vbœwZ ‡`Iqvi wm×všÍ M…nxZ n‡q‡Q| Avcbvi c~‡e©i ‡eZb <?php echo $row->prev_salary?>
                 UvKvi mv‡_ AviI<?php echo ($row->new_salary - $row->prev_salary)?> UvKv e…w× K‡i ‡gvU ‡eZb <?php echo $row->new_salary?> UvKv avh© Kiv nBj| hv A`¨  <?php echo $row->effective_month?> Bs ZvwiL n‡Z Kvh©Ki Kiv n‡e|
                 Avcbvi ‡eZb e…w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zyjbvg~jK Z_¨ejx wbgœiæc|
             </p>
@@ -96,8 +96,8 @@
                     </tr>
                     <tr>
                         <td>c`ex</td>
-                        <td><?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->prev_desig_name.'</span>'?></td>
-                        <td><?php echo '<span style="font-family:SutonnyMJ;font-size:14px">'.$row->new_desig_name.'</span>'?></td>
+                        <td><?php echo '<span style="font-family:Arial;font-size:14px">'.$row->prev_desig_name.'</span>'?></td>
+                        <td><?php echo '<span style="font-family:Arial;font-size:14px">'.$row->new_desig_name.'</span>'?></td>
                     </tr>
                     <tr>
                         <td>‡MÖW</td>

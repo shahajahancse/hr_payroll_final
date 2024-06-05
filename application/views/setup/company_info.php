@@ -31,11 +31,9 @@
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-6">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('
-                    setup_con/company_add') ?>">Add Company
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/company_add') ?>">Add Company
                         Info</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('
-                    payroll_con') ?>">Home</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -108,12 +106,10 @@
                             src="<?=base_url()?>images/<?=$cominfos->register?>" />
                         </td>
                         <td>
-                            <a href="<?=base_url('
-                            setup_con/company_edit') . '/' . $cominfos->id?>" class="btn btn-primary input-sm center-text" role="button">Edit</a>
+                            <a href="<?=base_url('setup_con/company_edit') . '/' . $cominfos->id?>" class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>
                         <td>
-                            <a href="<?=base_url('
-                            setup_con/company_delete') . '/' . $cominfos->id?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
+                            <a href="<?=base_url('setup_con/company_delete') . '/' . $cominfos->id?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>
                     <?php }} else {?>

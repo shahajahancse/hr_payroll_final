@@ -70,54 +70,54 @@ class Emp_info_con extends CI_Controller {
 		$this->form_validation->set_rules('personal_mobile', 'Personal Mobile', 'trim|required');
 		$this->form_validation->set_rules('bank_bkash_no', 'Bank Account', 'trim|required');
 
-		$this->form_validation->set_rules('pre_home_owner', 'Home Owner Name', 'trim|required');
-		$this->form_validation->set_rules('holding_num', 'Holding No.', 'trim|required');
-		$this->form_validation->set_rules('home_own_mobile', 'Home Owner Mobile', 'trim|required');
-		$this->form_validation->set_rules('pre_village', 'Present Village', 'trim|required');
-		$this->form_validation->set_rules('pre_village_bn', 'Present Village Bangla', 'trim|required');
-		$this->form_validation->set_rules('pre_district', 'Present District', 'trim|required');
-		$this->form_validation->set_rules('pre_thana', 'Present Upazila', 'trim|required');
-		$this->form_validation->set_rules('pre_post', 'Present Post Office', 'trim|required');
+		// $this->form_validation->set_rules('pre_home_owner', 'Home Owner Name', 'trim|required');
+		// $this->form_validation->set_rules('holding_num', 'Holding No.', 'trim|required');
+		// $this->form_validation->set_rules('home_own_mobile', 'Home Owner Mobile', 'trim|required');
+		// $this->form_validation->set_rules('pre_village', 'Present Village', 'trim|required');
+		// $this->form_validation->set_rules('pre_village_bn', 'Present Village Bangla', 'trim|required');
+		// $this->form_validation->set_rules('pre_district', 'Present District', 'trim|required');
+		// $this->form_validation->set_rules('pre_thana', 'Present Upazila', 'trim|required');
+		// $this->form_validation->set_rules('pre_post', 'Present Post Office', 'trim|required');
 
-		$this->form_validation->set_rules('per_village', 'Parmanent Village', 'trim|required');
-		$this->form_validation->set_rules('per_village_bn', 'Parmanent Village Bangla', 'trim|required');
-		$this->form_validation->set_rules('per_district', 'Parmanent District', 'trim|required');
-		$this->form_validation->set_rules('per_thana', 'Parmanent Upazila', 'trim|required');
-		$this->form_validation->set_rules('per_post', 'Parmanent Post Office', 'trim|required');
+		// $this->form_validation->set_rules('per_village', 'Parmanent Village', 'trim|required');
+		// $this->form_validation->set_rules('per_village_bn', 'Parmanent Village Bangla', 'trim|required');
+		// $this->form_validation->set_rules('per_district', 'Parmanent District', 'trim|required');
+		// $this->form_validation->set_rules('per_thana', 'Parmanent Upazila', 'trim|required');
+		// $this->form_validation->set_rules('per_post', 'Parmanent Post Office', 'trim|required');
 
 
-		$this->form_validation->set_rules('emp_dept_id', 'Department Name', 'trim|required');
-		$this->form_validation->set_rules('emp_sec_id', 'Section Name', 'trim|required');
-		$this->form_validation->set_rules('emp_line_id', 'Line Name', 'trim|required');
-		$this->form_validation->set_rules('emp_desi_id', 'Designation Name', 'trim|required');
-		$this->form_validation->set_rules('emp_cat_id', 'Employee Status', 'trim|required');
-		// $this->form_validation->set_rules('emp_shift', 'Employee Shift', 'trim|required');
-		$this->form_validation->set_rules('emp_join_date', 'Date of Joining', 'trim|required');
-		$this->form_validation->set_rules('emp_sal_gra_id', 'Salary Grade ', 'trim|required');
-		$this->form_validation->set_rules('salary_type', 'Salary Type', 'trim|required');
-		$this->form_validation->set_rules('salary_draw', 'Salary Withdraw', 'trim|required');
-		$this->form_validation->set_rules('ot_entitle', 'OT Entitle', 'trim|required');
-		$this->form_validation->set_rules('gross_sal', 'Gross Salary', 'trim|required');
-		$this->form_validation->set_rules('lunch', 'Lunch', 'trim');
-		$this->form_validation->set_rules('transport', 'Transport', 'trim');
+		// $this->form_validation->set_rules('emp_dept_id', 'Department Name', 'trim|required');
+		// $this->form_validation->set_rules('emp_sec_id', 'Section Name', 'trim|required');
+		// $this->form_validation->set_rules('emp_line_id', 'Line Name', 'trim|required');
+		// $this->form_validation->set_rules('emp_desi_id', 'Designation Name', 'trim|required');
+		// $this->form_validation->set_rules('emp_cat_id', 'Employee Status', 'trim|required');
+		// // $this->form_validation->set_rules('emp_shift', 'Employee Shift', 'trim|required');
+		// $this->form_validation->set_rules('emp_join_date', 'Date of Joining', 'trim|required');
+		// $this->form_validation->set_rules('emp_sal_gra_id', 'Salary Grade ', 'trim|required');
+		// $this->form_validation->set_rules('salary_type', 'Salary Type', 'trim|required');
+		// $this->form_validation->set_rules('salary_draw', 'Salary Withdraw', 'trim|required');
+		// $this->form_validation->set_rules('ot_entitle', 'OT Entitle', 'trim|required');
+		// $this->form_validation->set_rules('gross_sal', 'Gross Salary', 'trim|required');
+		// $this->form_validation->set_rules('lunch', 'Lunch', 'trim');
+		// $this->form_validation->set_rules('transport', 'Transport', 'trim');
 
-		$this->form_validation->set_rules('nominee_name', 'Nominee Name', 'trim|required');
-		$this->form_validation->set_rules('nominee_vill', 'Nominee Village', 'trim|required');
-		$this->form_validation->set_rules('nomi_district', 'Nominee District', 'trim|required');
-		$this->form_validation->set_rules('nomi_thana', 'Nominee Upazila', 'trim|required');
-		$this->form_validation->set_rules('nomi_post', 'Nominee Post Office', 'trim|required');
-		$this->form_validation->set_rules('nomi_age', 'Nominee DOB', 'trim|required');
-		$this->form_validation->set_rules('nomi_mobile', 'Nominee Mobile', 'trim|required');
-		$this->form_validation->set_rules('nomi_relation', 'Nominee Relation', 'trim|required');
+		// $this->form_validation->set_rules('nominee_name', 'Nominee Name', 'trim|required');
+		// $this->form_validation->set_rules('nominee_vill', 'Nominee Village', 'trim|required');
+		// $this->form_validation->set_rules('nomi_district', 'Nominee District', 'trim|required');
+		// $this->form_validation->set_rules('nomi_thana', 'Nominee Upazila', 'trim|required');
+		// $this->form_validation->set_rules('nomi_post', 'Nominee Post Office', 'trim|required');
+		// $this->form_validation->set_rules('nomi_age', 'Nominee DOB', 'trim|required');
+		// $this->form_validation->set_rules('nomi_mobile', 'Nominee Mobile', 'trim|required');
+		// $this->form_validation->set_rules('nomi_relation', 'Nominee Relation', 'trim|required');
 
-		$this->form_validation->set_rules('refer_name', 'Referance Name', 'trim');
-		$this->form_validation->set_rules('refer_mobile', 'Referance Mobile', 'trim');
-		$this->form_validation->set_rules('refer_relation', 'Referance Relation', 'trim');
+		// $this->form_validation->set_rules('refer_name', 'Referance Name', 'trim');
+		// $this->form_validation->set_rules('refer_mobile', 'Referance Mobile', 'trim');
+		// $this->form_validation->set_rules('refer_relation', 'Referance Relation', 'trim');
 
-		$this->form_validation->set_rules('refer_village', 'Referance Village', 'trim');
-		$this->form_validation->set_rules('ref_district', 'Referance District', 'trim');
-		$this->form_validation->set_rules('ref_thana', 'Referance Thana/Upazila', 'trim');
-		$this->form_validation->set_rules('ref_post', 'Referance Post Office', 'trim');
+		// $this->form_validation->set_rules('refer_village', 'Referance Village', 'trim');
+		// $this->form_validation->set_rules('ref_district', 'Referance District', 'trim');
+		// $this->form_validation->set_rules('ref_thana', 'Referance Thana/Upazila', 'trim');
+		// $this->form_validation->set_rules('ref_post', 'Referance Post Office', 'trim');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$this->form_validation->run()) {
 			$this->load->view('empInfo/personal_info');
 		}

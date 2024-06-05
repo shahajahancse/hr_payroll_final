@@ -45,6 +45,9 @@
 	</style>
 <body>
 	<?php 
+		if(empty($values)){
+			echo "No data found"; exit;
+		}
 		$row_count = count($values["emp_id"]);
 		if($row_count >6){
 			$page=ceil($row_count/6);
@@ -325,6 +328,6 @@
 			</table>
 		</div>
 	</div>
-<?php } ?>
+<?php  } exit; ?>
 </body>
 </html>

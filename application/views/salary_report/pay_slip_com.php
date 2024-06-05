@@ -34,6 +34,7 @@
     <table align="left" border="0" cellpadding="0" cellspacing="0">
         <!-- <tr> -->
             <?php
+                // dd($values);
                 $row_count=count($values);
                 if($row_count >3)
                 {
@@ -47,6 +48,9 @@
                 $k = 0;
                 foreach($values as $rows)
                 {
+                    // $salary_structure = json_decode($rows->salary_structure);
+                    // $rows = json_decode($rows->rows);
+                    // dd($rows);
                 echo "<tr>";
             ?>
             <td style="width:450px; height:300px;">
@@ -56,7 +60,7 @@
                             $k = $k + 1;
                             echo "&nbsp";
                             echo "&nbsp";
-                         } 
+                        } 
                     ?>
                     <div class="content"  style="width:350px; height:auto; overflow:hidden; font-size:9px; font-family: SolaimanLipi; border:1px solid black;">
                         <div style="width:280px; height:32px; margin:0 auto; text-align:center; line-height: 16px;padding-bottom:20px;padding-top: 3px">
@@ -187,6 +191,23 @@
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
                                             <?php 
+                                            //  [total_days] => 30
+    // [num_of_workday] => 27
+    // [att_days] => 27
+    // [absent_days] => 0
+    // [ba_absent] => 0
+    // [c_l] => 0
+    // [s_l] => 0
+    // [e_l] => 0
+    // [m_l] => 0
+    // [wp] => 0
+    // [total_leave] => 0
+    // [pay_leave] => 0
+    // [holiday] => 0
+    // [weekend] => 3
+    // [total_holiday] => 3
+    // [pay_days] => 30
+
                                                 $c_l = $rows->c_l;  
                                                 $s_l = $rows->s_l;  
                                                 $e_l = $rows->e_l;   
@@ -607,7 +628,7 @@
                                     </tr>
                                     <tr>
                                         <td width="152">ষ্ট্যাম্প</td>
-                                
+                
                                     <td style="font-family: SutonnyMJ; font-size:12px;">
                                                 : <?php  echo $rows->stamp;     ?>
                                         </td>

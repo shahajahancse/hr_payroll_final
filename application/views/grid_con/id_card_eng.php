@@ -91,9 +91,9 @@
     <?php foreach($values as $value){?>
       <div class="page_break" style="margin-left:-10px">
         <div class="box">
-          <?php $image =$this->db->select('company_logo')->get('company_infos')->row()->company_logo;?>
-          <p><img src="<?php echo base_url('/images'.'/'.$image)?>" style="height: 30px;width: 50px;margin-top:5px"></p>
-          <h6>Honeywell Garments Ltd.</h6>
+          <?php $image = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+          <p><img src="<?php echo base_url('/images'.'/'.$image->company_logo)?>" style="height: 30px;width: 50px;margin-top:5px"></p>
+          <h6><?= $image->company_name_english; ?></h6>
           <img src="<?php echo base_url('/uploads/photo'.'/'.$value->img_source)?>" alt="" class="box-img">
           <div class="left_content" style="line-height: 16px;margin:0px">
           <p style="margin:0 auto"><b><?php echo $value->name_en?></b></p>

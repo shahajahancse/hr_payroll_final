@@ -43,6 +43,8 @@ class Processdb extends CI_Model{
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
 			'emp_join_date'		=> $ejd,
+			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'symbol'		=> $this->input->post('symbol'),
 		);
 		// dd($data);
 
@@ -104,6 +106,8 @@ class Processdb extends CI_Model{
 			'exp_dasignation'	=> $this->input->post('exp_dasignation'),
 			'personal_mobile'	=> $this->input->post('personal_mobile'),
 			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
+			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'symbol'		=> $this->input->post('symbol'),
 		);
 
 		if($this->db->insert('pr_emp_com_info', $data)){
@@ -714,6 +718,9 @@ class Processdb extends CI_Model{
 	// }
 	function updatedb1()
 	{
+
+		//dd($_POST);
+		//dd($this->input->post('pre_thana'));
 		$id = $this->input->post('emp_id');
 		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
 		$data = array(
@@ -728,7 +735,7 @@ class Processdb extends CI_Model{
 			'proxi_id'			=> $this->input->post('proxi_id'),
 			'emp_shift'  		=> $this->input->post('emp_shift'),
 			'gross_sal'			=> $this->input->post('gross_sal'),
-			'com_gross_sal'		=> $this->input->post('gross_sal'),
+			'com_gross_sal'		=> $this->input->post('com_gross_sal'),
 
 			'ot_entitle'		=> $this->input->post('ot_entitle'),
 			'com_ot_entitle'		=> $this->input->post('com_ot_entitle'),
@@ -737,7 +744,10 @@ class Processdb extends CI_Model{
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
 			'emp_join_date'		=> $ejd,
+			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'symbol'		=> $this->input->post('symbol'),
 		);
+		//dd($data);
 
 		$dob = date("Y-m-d", strtotime($this->input->post('emp_dob')));
 		$per_data = array(
@@ -776,7 +786,7 @@ class Processdb extends CI_Model{
 			'nomi_thana'		=> $this->input->post('nomi_thana'),
 			'nomi_district'		=> $this->input->post('nomi_district'),
 
-			'nomi_age'			=> $this->input->post('nomi_age'),
+			'nomi_age'			=> date("Y-m-d", strtotime($this->input->post('nomi_age'))),
 			'nomi_mobile'		=> $this->input->post('nomi_mobile'),
 			'nomi_relation'		=> $this->input->post('nomi_relation'),
 			'refer_name'		=> $this->input->post('refer_name'),
@@ -796,10 +806,14 @@ class Processdb extends CI_Model{
 			'exp_dasignation'	=> $this->input->post('exp_dasignation'),
 			'personal_mobile'	=> $this->input->post('personal_mobile'),
 			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
+			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'symbol'		=> $this->input->post('symbol'),
+
 		);
 
 		if($this->db->where('emp_id',$id)->update('pr_emp_com_info', $data))
-		{   
+		{  
+			
 			$ids = $this->db->where('emp_id',$id)->get('pr_emp_com_info')->row()->emp_id;
 			$per_data['emp_id'] =$ids;
 			$img ="";
@@ -854,12 +868,21 @@ class Processdb extends CI_Model{
 				}
 
 			}
+			//dd($ids);
 
-			$this->db->where('emp_id',$ids)->update('pr_emp_per_info', $per_data);
+			if($this->db->where('emp_id',$ids)->update('pr_emp_per_info', $per_data)){
+				//dd('ok');
+				echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Update Successfully.'); window.location='personal_info';</SCRIPT>";
 
-			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Update Successfully.'); window.location='personal_info';</SCRIPT>";
+			}else{
+				//dd('failed');
+				echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Update Failed.'); window.location='personal_info';</SCRIPT>";
+
+			}
+
+			//echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Update Successfully.'); window.location='personal_info';</SCRIPT>";
 		} else {
-		  echo "FAILED" ;
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Update Failed.'); window.location='personal_info';</SCRIPT>";
 		  return ;
 		}
 	}
@@ -957,6 +980,8 @@ class Processdb extends CI_Model{
 			'img_source'		=> $img,
 			'emp_n_id'			=> $this->input->post('n_id'),
 			'bank_ac_no'		=> $this->input->post('bank_ac_no'),
+			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'symbol'		=> $this->input->post('symbol'),
 			);
 
 		$this->db->insert('pr_emp_per_info', $data);
@@ -1000,9 +1025,6 @@ class Processdb extends CI_Model{
 			'wk_type_id'		=> $this->input->post('working_type'),
 			'work_process_id'	=> $this->input->post('work_process'),
 			'ot_show_in'	    => $this->input->post('ot_define')
-
-
-
 			);
 
 		$pr_id_proxi = array(
@@ -1054,7 +1076,7 @@ class Processdb extends CI_Model{
 		  return ;
 		}
 	}
-	function emp_id_existance_check($emp_id)
+function emp_id_existance_check($emp_id)
 	{
 		$this->db->select('emp_id');
 		$this->db->where('emp_id',$emp_id);
@@ -2299,11 +2321,17 @@ class Processdb extends CI_Model{
 					   ->from('pr_emp_com_info as com')
 					   ->join('pr_emp_per_info as per','com.emp_id = per.emp_id', 'left')
 					   ->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left')
-					   ->where('deg.hide_status', 1)
+					   //->where('deg.hide_status', 1)
 					   ->where('com.emp_id',$emp_id)
 					   ->get()->row();
-		$d->emp_dob= date("d-m-Y", strtotime($d->emp_dob));
-		$date1 = new DateTime($d->emp_dob);
+					   //dd($d);
+					   //dd($d);
+		$date1 = new DateTime(date("d-m-Y", strtotime($d->emp_dob)));
+		//dd($date1);
+		$d->emp_dob= date("m-d-Y", strtotime($d->emp_dob));
+		//dd($d->nomi_age);
+		$d->nomi_age= date("m-d-Y", strtotime($d->nomi_age));
+		
 		$date2 = new DateTime();
 		$interval = $date1->diff($date2);
 		$d->age = $interval->format("%y years %m months %d days");
@@ -2311,11 +2339,20 @@ class Processdb extends CI_Model{
 		$date2 = new DateTime();
 		$interval = $date1->diff($date2);
 		$d->job_duration = $interval->format("%y years %m months %d days");
+		
+		if ($d->hight != '') {
+			$d->ft=isset(explode('-', $d->hight)[0]) ? explode('-', $d->hight)[0] : 0; 
+			$d->inches= isset(explode('-', $d->hight)[1]) ? explode('-', $d->hight)[1] : 0; 
+		}else{
+			$d->ft = 0;
+			$d->inches = 0;
+		}
 
 
 		if ($d == null) {
 			return ['status'=>false,'data'=>'No data found'];
 		}else{
+			// dd($d);
 			return ['status'=>true,'data'=>$d];
 		}
 	}
@@ -2326,6 +2363,7 @@ class Processdb extends CI_Model{
 		{
 			return ;
 		}
+		// dd($_POST);
 
 		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
 		$data = array(

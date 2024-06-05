@@ -21,7 +21,7 @@ class Command extends CI_Controller {
 		// $this->load->library('grocery_CRUD');
 		// $this->load->model('acl_model');
 		$this->load->dbforge();
-		exit('only for developer');
+		// exit('only for developer');
 	}
 
 	function dpt_sec_lin_udate()
@@ -603,7 +603,8 @@ class Command extends CI_Controller {
 	// Delete all temp table  done
 	public function temp()
 	{
-		echo "hello, ci";
+		exit('only for developer');
+		//echo "hello, ci";
 		$results = $this->db->select('emp_id')->get('pr_emp_com_info')->result(); //->where('unit_id',4)
 
 		foreach ($results as $key => $row) {
@@ -619,12 +620,36 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
+	public function com_dsl()
+	{
+		exit('only for developer');
+		//echo "hello, ci";
+		$results = $this->db->select('emp_id')->where('unit_id', 4)->get('pr_emp_com_info')->result(); //->where('unit_id',4)
+		
+		foreach ($results as $key => $row) {
+			$r = $this->db->where('emp_id', $row->emp_id)->get('pr_emp_com_info_c')->row(); 
+			if (!empty($r)) {
+				$data = array(
+					'emp_dept_id' => $r->emp_dept_id,
+					'emp_sec_id' => $r->emp_sec_id,
+					'emp_line_id' => $r->emp_line_id,
+				);
+				$this->db->where('emp_id', $row->emp_id)->update('pr_emp_com_info', $data); 	
+				echo "<pre> Id = $row->emp_id  done";
+			} else {
+				echo "<pre> Id = $row->emp_id not done";
+			}
+		}
+		dd('exit');
+	}
+
 
 
 
 
 
 	function file_read(){
+		exit('only for developer');
 		// exit('this function create to manual data insert in to db');
 		$file_name = "import/aj_add.txt";
 

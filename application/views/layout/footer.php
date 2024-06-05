@@ -71,7 +71,7 @@
   <script>
    function alert(d) {
         Swal.fire({
-            icon: "warning",
+            icon: "success",
             title: d,
         });
     }
@@ -86,7 +86,17 @@
           todayHighlight: true,
           fridayHighlight: true
         });
-        $('.date').attr("placeholder", "dd-mm-yyyy");
+        $('.date').on('change', function() {
+            var date = $(this).datepicker('getDate');
+            $(this).attr("placeholder", $.datepicker.formatDate('dd-mm-yyyy', date));
+        }).datepicker({
+          format: "dd-mm-yyyy",
+          autoclose: true,
+          autocomplete: false,
+          todayHighlight: true,
+          fridayHighlight: true
+        });
+         $('.date').attr("placeholder", "dd-mm-yyyy");
       });
   </script>
 

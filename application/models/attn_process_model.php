@@ -261,7 +261,7 @@ class Attn_process_model extends CI_Model{
 				 	$holiday_allo = 1;
 				}
 				// week and holiday end
-
+				// dd($ot_entitle);
 				$data = array(
 					'in_time' 			=> $in_time,
 					'out_time' 			=> $out_time,
