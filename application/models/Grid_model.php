@@ -1215,10 +1215,10 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 	function grid_letter_report($current_date, $unit_id, $off_day, $days, $status = null){
 
 		// $end = date("Y-m-d", strtotime("-$get_date days".$current_date));
-		// dd($days);
-
+		
 		$get_date = $this->grid_letter_day_count($off_day, $days, $current_date, $unit_id);
 		// dd($get_date);
+		dd($get_date);
 
 		$this->db->select('
 			per.*,
@@ -1270,7 +1270,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 	}
 
 	function grid_letter_day_count($off_day, $days, $firstdate, $unit_id){
-		// dd($days);
+		// dd($firstdate);
 		$seconddate = $firstdate;
 		$check_day = date("D", strtotime($firstdate));
 		$num = ($check_day != $off_day)? 1:0;
@@ -1280,7 +1280,6 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 			$seconddate = date("Y-m-d", strtotime('-1 days'.$seconddate));
 			// echo $seconddate."<br>";
 		}
-		// dd("Done");
 		// gov. holiday
 		$this->db->where('date BETWEEN "'.$seconddate.'" AND "'.$firstdate.'"');
 		$gd = $this->db->where('unit_id',$_SESSION['data']->unit_name)->group_by('date')->get('pr_gov_holiday')->result();
@@ -1288,18 +1287,20 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		if ($gday > 0) {
 			$seconddate = date("Y-m-d", strtotime("-$gday days".$seconddate));
 		} 
-		
 		// work off day
 		$this->db->where('unit_id', $unit_id)->where('work_off_date BETWEEN "'.$seconddate.'" AND "'.$firstdate.'"');
 		$rs = $this->db->group_by('work_off_date')->get('attn_holyday_off')->result();
 		$tday = count($rs);
-		// dd($firstdate.' === '.$seconddate);
 		if ($tday > 0) {
 			$seconddate = date("Y-m-d", strtotime("-$tday days".$seconddate));
-			// dd($seconddate);
+			if(date('D',strtotime($seconddate) == 'Sat')){
+				$seconddate = date("Y-m-d", strtotime("-1 days".$seconddate));
+			}
 			return $seconddate;
-		} else {
-			// dd($seconddate.'ko');
+		}else{
+			if(date('D',strtotime($seconddate) == 'Sat')){
+				$seconddate = date("Y-m-d", strtotime("-1 days".$seconddate));
+			}
 			return $seconddate;
 		}
 	}

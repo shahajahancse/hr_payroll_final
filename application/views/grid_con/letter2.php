@@ -72,7 +72,7 @@
           <div class="col-md-6" style="font-family: SutonnyMJ;font-size:23px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:23px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date . '+1 days'))?></span><span style="font-family: SutonnyMJ;font-size:23px">-we</span></div>
       <div class="col-md-6 text-right">তারিখঃ <span style="font-family: SutonnyMJ;font-size:23px">
             <?php 
-              $l_date =  add_days_skipping_fridays($value->left_date, 22,$value->emp_id);
+              $l_date =  add_days_skipping_fridays($value->left_date, 21,$value->emp_id);
              
 
               // Convert the date string to the correct format
@@ -98,8 +98,6 @@
                   // Add one day
                   $date_timestamp = strtotime('+1 day', $date_timestamp);
               }
-
-
               // Format the new date in yyyy-mm-dd
               $new_date_str = date('d/m/Y', $date_timestamp);
 
