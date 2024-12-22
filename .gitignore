@@ -6,16 +6,13 @@ application/cache/*
 application/logs/*
 !application/logs/index.html
 
-!application/*/.htaccess
 
-composer.lock
 tests/mocks/database/ci_test.sqlite
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
-/vendor/
 
 # IDE Files
 #-------------------------
@@ -31,8 +28,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/tests/
 /tests/results/
 
-application/views/layout/left_menu.php
-application/config/database.php
-!application/config/database.php
-/application/config/database.php
 
