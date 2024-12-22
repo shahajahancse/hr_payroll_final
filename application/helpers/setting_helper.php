@@ -62,14 +62,19 @@ if ( ! function_exists('add_days_skipping_fridays'))
 				}
 			}
 		}
-
-
-			
-	
+		$dayss  = date('Y-m-d', strtotime($date. ' +'.$days.' days'));
+		$gov_holiday= $CI->db->where('date >=',$date)->where('date <=',$dayss)->where('unit_id',$_SESSION['data']->unit_name)->get('pr_gov_holiday')->result();
+		// dd($gov_holiday);
+		$count = count($gov_holiday);
+		if($count > 0) {
+			$current_date = strtotime('+' . $count . ' days', strtotime($current_date));
+		}
 		return date('d/m/Y', $current_date);
 	}
 
 }
+
+
 
 // ------------------------------------------------------------------------
 

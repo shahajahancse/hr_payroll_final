@@ -67,40 +67,30 @@
             $this->db->where('left_id', $value->left_id)->update('pr_emp_left_history', array('status' => 3));
           }
         ?>
-
     <div class="d-flex">
           <div class="col-md-6" style="font-family: SutonnyMJ;font-size:23px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:23px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date . '+1 days'))?></span><span style="font-family: SutonnyMJ;font-size:23px">-we</span></div>
       <div class="col-md-6 text-right">তারিখঃ <span style="font-family: SutonnyMJ;font-size:23px">
             <?php 
               $l_date =  add_days_skipping_fridays($value->left_date, 21,$value->emp_id);
-             
-
-              // Convert the date string to the correct format
-              // Parse the date string
+              $date = DateTime::createFromFormat('d/m/Y', $l_date);
+              $date->modify('+1 day');
+              $l_date = $date->format('d/m/Y');
+              // dd($l_date);
+              // $l_date =  date('');
               list($day, $month, $year) = explode('/', $l_date);
-
-              // Create a date string in yyyy-mm-dd format for strtotime
               $formatted_date_str = "$year-$month-$day";
-
-              // Convert the formatted date string to a timestamp
               $date_timestamp = strtotime($formatted_date_str);
-
-              // Check if the timestamp is valid
               if ($date_timestamp === false) {
-                  throw new Exception("Failed to parse date string");
+                throw new Exception("Failed to parse date string");
               }
-
-              // Determine the day of the week (1 = Monday, 7 = Sunday)
               $day_of_week = date('N', $date_timestamp);
-
-              // Check if the day is Friday (5) or Saturday (6)
-              if ($day_of_week == 5 || $day_of_week == 6) {
-                  // Add one day
-                  $date_timestamp = strtotime('+1 day', $date_timestamp);
+              if ($day_of_week == 5) {
+                $date_timestamp = strtotime('+1 day', $date_timestamp);
               }
-              // Format the new date in yyyy-mm-dd
+              if($day_of_week == 6){
+                $date_timestamp = strtotime('+1 day', $date_timestamp);
+              }
               $new_date_str = date('d/m/Y', $date_timestamp);
-
               echo $new_date_str;
             ?></span> ইং</div>
      
@@ -147,7 +137,19 @@
         <span class='unicode-to-bijoy' style='font-size:23px'>জনাব/জনাবা,</span><br> 
         <p class="text-justify unicode-to-bijoy" style='font-size:23px'>
         আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date . '+1 days'))?></span></b> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত i‡q‡Qb। এ প্রেক্ষিতে কারখানার
-        কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo add_days_skipping_fridays($value->left_date, 11,$value->emp_id);?></span></b> ইং তারিখে যার <b><span style="font-family: SutonnyMJ;font-size:19px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date . '+1 days'))?></span><span style="font-family: SutonnyMJ;font-size:19px">-G</span></span></b> এর বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে।
+        কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <b><span style="font-family: SutonnyMJ;font-size:19px">
+          <?php 
+          $second_date = add_days_skipping_fridays($value->left_date, 11,$value->emp_id);
+          if(date('D',strtotime($second_date)) == 'Sat'){
+            $date = DateTime::createFromFormat('d/m/Y', $second_date);
+            $date->modify('+1 day');
+            echo $date->format('d/m/Y');
+          }else{
+            echo $second_date;
+          }
+
+        
+        ?></span></b> ইং তারিখে যার <b><span style="font-family: SutonnyMJ;font-size:19px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date . '+1 days'))?></span><span style="font-family: SutonnyMJ;font-size:19px">-G</span></span></b> এর বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে।
         কিন্তু অদ্যবদি আপনি উপরোক্ত বিষয়ে লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।
         <br><br>
         অতএব, অত্র পত্র প্রাপ্তির ০৮ (AvU) কর্ম দিবসের মধ্যে আত্মপক্ষ সমর্থন সহ কাজে যোগদান করিতে আপনাকে নির্দেশ দেওয়া হলো।
@@ -176,6 +178,5 @@
   </body>
 </html>
 <?php exit(); ?>
-
 
 

@@ -61,7 +61,7 @@
 <body>
 <div class="container">
         <div class="text-center" style="line-height: 10px;margin-top:20px">
-            <p class="unicode-to-bijoy">বাংলাদেশ গেজেট,অতিরিক্ত,সেপ্টেম্বর ১৫,২০১৫ 123</p>
+            <p class="unicode-to-bijoy">বাংলাদেশ গেজেট,অতিরিক্ত,সেপ্টেম্বর ১৫,২০১৫ </p>
             <p class="unicode-to-bijoy">ফরম-৯</p>
             <p class="unicode-to-bijoy">[ধারা ১০,১১৫,১১৬ ও ১১৭ এবং বিধি ২৪ ও ১০৮(১) দ্রষ্টব্য]</p>
             <p  class="unicode-to-bijoy">ছুটির রেজিস্টার ও ছুটির বহি</p>
@@ -78,7 +78,7 @@
             <p class="unicode-to-bijoy">কারখানা/প্রতিষ্ঠানের নাম ঠিকানাঃ <?php echo $com_info->company_add_bangla?>।</p>
             <p class="unicode-to-bijoy">শ্রমিকের নামঃ <?php echo $values['emp_info']->name_bn?> <span style="margin-left: 20px">কার্ড নংঃ <?php echo $values['emp_info']->emp_id?></span> <span style="margin-left: 20px">পদবীঃ <?php echo $values['emp_info']->desig_bangla?></span></p>
             <p class="unicode-to-bijoy">শ্রমিক রেজিস্টারের ক্রমিক নংঃ <?php echo $values['emp_info']->id?></p>
-            <p class="unicode-to-bijoy">শ্রমিকের শ্রেণী বিভাগঃ<?php echo $values['emp_info']->dept_bangla?> <span class="unicode-to-bijoy" style="margin-left: 20px">নিয়োগের তারিখঃ <?php echo date('d/m/Y',strtotime($values['emp_info']->emp_join_date))?></span></p>
+            <p class="unicode-to-bijoy">বিভাগ বা শাখার নামঃ  <?php echo $values['emp_info']->dept_bangla?> <span class="unicode-to-bijoy" style="margin-left: 20px">নিয়োগের তারিখঃ <?php echo date('d/m/Y',strtotime($values['emp_info']->emp_join_date))?></span></p>
         </div>
         <table class="tg">
             <thead>

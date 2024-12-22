@@ -241,13 +241,13 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->from('pr_grade');
 
 		$this->db->where_in('pay_salary_sheet.emp_id', $emp_id);
-		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_per_info.emp_id');
-		$this->db->where('pay_salary_sheet.emp_id 		 = pr_emp_com_info.emp_id');
+		$this->db->where('pay_salary_sheet.emp_id 	  = pr_emp_per_info.emp_id');
+		$this->db->where('pay_salary_sheet.emp_id     = pr_emp_com_info.emp_id');
 		$this->db->where('pay_salary_sheet.dept_id    = emp_depertment.dept_id');
-		$this->db->where('pay_salary_sheet.desig_id    = emp_designation.id');
+		$this->db->where('pay_salary_sheet.desig_id   = emp_designation.id');
 		$this->db->where('pay_salary_sheet.sec_id     = emp_section.id');
 		$this->db->where('pay_salary_sheet.line_id    = emp_line_num.id');
-		$this->db->where('pay_salary_sheet.gr_id = pr_grade.gr_id');
+		$this->db->where('pay_salary_sheet.gr_id 	  = pr_grade.gr_id');
 		$this->db->where("pay_salary_sheet.salary_month  = '$salary_month'");
 		if ($type != null) {
 			$this->db->where("pay_salary_sheet.eot_amount   != ",0);
@@ -1218,7 +1218,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		
 		$get_date = $this->grid_letter_day_count($off_day, $days, $current_date, $unit_id);
 		// dd($get_date);
-		dd($get_date);
+		// dd($get_date);
 
 		$this->db->select('
 			per.*,
@@ -1280,6 +1280,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 			$seconddate = date("Y-m-d", strtotime('-1 days'.$seconddate));
 			// echo $seconddate."<br>";
 		}
+		// dd("ko");
 		// gov. holiday
 		$this->db->where('date BETWEEN "'.$seconddate.'" AND "'.$firstdate.'"');
 		$gd = $this->db->where('unit_id',$_SESSION['data']->unit_name)->group_by('date')->get('pr_gov_holiday')->result();
@@ -1293,14 +1294,8 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$tday = count($rs);
 		if ($tday > 0) {
 			$seconddate = date("Y-m-d", strtotime("-$tday days".$seconddate));
-			if(date('D',strtotime($seconddate) == 'Sat')){
-				$seconddate = date("Y-m-d", strtotime("-1 days".$seconddate));
-			}
 			return $seconddate;
 		}else{
-			if(date('D',strtotime($seconddate) == 'Sat')){
-				$seconddate = date("Y-m-d", strtotime("-1 days".$seconddate));
-			}
 			return $seconddate;
 		}
 	}

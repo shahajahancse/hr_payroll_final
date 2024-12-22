@@ -147,6 +147,7 @@
 					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Designation</strong></div></th>
 					<th rowspan="2" width="50" height="20px"><div align="center"><strong>Line</strong></div></th>
 					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Joining Date</strong></div></th>
+					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Grade</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>Gross Salary</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>OT</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>EOT</strong></div></th>
@@ -237,6 +238,11 @@
 				$day=trim(substr($date,8,2));
 				$date_format = date("d-M-y", mktime(0, 0, 0, $month, $day, $year));
 				echo $date_format;
+				echo "</td>";
+
+
+				echo "<td>";
+				print_r($values[$k]->gr_name);
 				echo "</td>";
 
 				echo "<td style='font-weight:bold;'>";

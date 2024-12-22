@@ -147,6 +147,7 @@
 					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Designation</strong></div></th>
 					<th rowspan="2" width="50" height="20px"><div align="center"><strong>Line</strong></div></th>
 					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Joining Date</strong></div></th>
+					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Grade</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>Gross Salary</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>OT</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>EOT</strong></div></th>
@@ -240,11 +241,18 @@
 				echo $date_format;
 				echo "</td>";
 
+				echo "<td>";
+				echo $values[$k]->gr_name;
+				echo "</td>";
+
 				echo "<td style='font-weight:bold;'>";
 				print_r ($values[$k]->gross_sal);
 				$gross_sal = $gross_sal + $values[$k]->gross_sal;
 				$total_gross_sal_per_page = $total_gross_sal_per_page + $values[$k]->gross_sal;
 				echo "</td>";
+
+
+
 
 				$ot_data = $this->Grid_model->cal_eot_com($values[$k]->emp_id, $salary_month, $second_date);
 
