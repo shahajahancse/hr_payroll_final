@@ -6,8 +6,6 @@ application/cache/*
 application/logs/*
 !application/logs/index.html
 
-!application/*/.htaccess
-
 composer.lock
 tests/mocks/database/ci_test.sqlite
 
@@ -32,8 +30,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/results/
 /uploads
 
-application/views/layout/left_menu.php
-application/config/database.php
-!application/config/database.php
-/application/config/database.php
 
