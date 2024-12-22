@@ -1925,24 +1925,23 @@ function grid_new_join_report(){
 }
 function grid_resign_report()
 {
-
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
-	// Opera 8.0+, Firefox, Safari
-	ajaxRequest = new XMLHttpRequest();
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
 	}catch (e){
-	// Internet Explorer Browsers
-	try{
-		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-	}catch (e) {
+		// Internet Explorer Browsers
 		try{
-			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-		}catch (e){
-			// Something went wrong
-			alert("Your browser broke!");
-			return false;
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
 		}
-	}
 	}
 
 	var firstdate = document.getElementById('firstdate').value;
@@ -1960,11 +1959,11 @@ function grid_resign_report()
 	}
 
 	var unit_id = document.getElementById('unit_id').value;
-	// if(unit_id =='Select')
-	// {
-	// 	alert("Please select unit !");
-	// 	return false;
-	// }
+	if(unit_id =='Select')
+	{
+		alert("Please select unit !");
+		return false;
+	}
 
 	var status = document.getElementById('status').value;
 	if(status != 3)
@@ -2028,30 +2027,20 @@ function grid_left_report(){
 	}
 
 	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
+	if(unit_id == 'Select')
 	{
 		alert("Please select Category options");
 		return false;
 	}
 
 	var status = document.getElementById('status').value;
-	if(status != 3)
+	if(status != 2)
 	{
 		alert("Please select category status to Left");
 		return false;
 	}
 
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-
-	
-
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
-
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&sql="+sql+"&status="+status;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&status="+status;
    	url =  hostname+"grid_con/grid_left_report/";
 
 	document.getElementById('loaader').style.display = 'flex';
@@ -2881,7 +2870,7 @@ function grid_continuous_ot_eot_report()
 	}
 }
 
-function grid_maternity_benefit(){
+function grid_maternity_benefit(type){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
 		ajaxRequest = new XMLHttpRequest();
@@ -2898,18 +2887,6 @@ function grid_maternity_benefit(){
 			}
 		}
 	}
-	// var firstdate = document.getElementById('firstdate').value;
-	// if(firstdate =='')
-	// {
-	// 	alert("Please select First date");
-	// 	return false;
-	// }
-	// var seconddate = document.getElementById('seconddate').value;
-	// if(seconddate =='')
-	// {
-	// 	alert("Please select Second date");
-	// 	return false;
-	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -2929,7 +2906,7 @@ function grid_maternity_benefit(){
 	var status = "P";
 	document.getElementById('loaader').style.display = 'flex';
 
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
+	var queryString="type="+type+"&unit_id="+unit_id+"&spl="+sql;
    	url =  hostname+"grid_con/grid_maternity_benefit/";
 
 	ajaxRequest.open("POST", url, true);
@@ -4851,7 +4828,7 @@ function grid_continuous_leave_report_old()
 
 }
 
-function grid_continuous_line_report()
+function grid_continuous_line_report(type)
 {
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
@@ -4900,7 +4877,7 @@ function grid_continuous_line_report()
 		return false;
 	}
 		document.getElementById('loaader').style.display = 'flex';
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+"&unit_id="+unit_id+"&type="+type;
 
 
     url =  hostname+"grid_con/continuous_line_report/";
@@ -7008,38 +6985,31 @@ function grid_monthly_allowance_with_eot()
 }
 function grid_festival_bonus()
 {
-	 var ajaxRequest;  // The variable that makes Ajax possible!
+	var ajaxRequest;  // The variable that makes Ajax possible!
 
- try{
-   // Opera 8.0+, Firefox, Safari
-   ajaxRequest = new XMLHttpRequest();
- }catch (e){
-   // Internet Explorer Browsers
-   try{
-      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-   }catch (e) {
-      try{
-         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch (e){
-         // Something went wrong
-         alert("Your browser broke!");
-         return false;
-      }
-   }
- }
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	// Internet Explorer Browsers
+	try{
+		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch (e) {
+		try{
+			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch (e){
+			// Something went wrong
+			alert("Your browser broke!");
+			return false;
+		}
+	}
+	}
 	var report_month_sal = document.getElementById('salary_month').value;
 	if(report_month_sal =='')
 	{
-		alert("Please select month");
+		alert("Please select Secondary Month");
 		return false;
 	}
-
-	// var report_year_sal = document.getElementById('report_year_sal').value;
-	// if(report_year_sal =='')
-	// {
-	// 	alert("Please select year");
-	// 	return false;
-	// }
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -7047,13 +7017,6 @@ function grid_festival_bonus()
 		alert("Please select Category options");
 		return false;
 	}
-
-	// var grid_section = document.getElementById('grid_section').value;
-	// if(grid_section =='Select')
-	// {
-	// 	alert("Please select Section.");
-	// 	return false;
-	// }
 
 	var status = document.getElementById('status').value;
 
@@ -7065,34 +7028,25 @@ function grid_festival_bonus()
 		return false;
 	}
     var sal_year_month = report_month_sal+"-"+"01";
-	/*
-
-
-	url =  hostname + "salary_report_con/grid_festival_bonus/"+sal_year_month+"/"+status+"/"+sql;
-
-	festival_bonus = window.open(url,'festival_bonus',"menubar=1,resizable=1,scrollbars=1,width=1600,height=800");
-	festival_bonus.moveTo(0,0);
-	*/
-
+	document.getElementById('loader').style.display = 'block';
 
 	var queryString="sal_year_month="+sal_year_month+"&status="+status+"&unit_id="+unit_id+"&spl="+sql;
-   url =  hostname+"salary_report_con/grid_festival_bonus/";
+   	url =  hostname+"salary_report_con/grid_festival_bonus/";
 
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
-
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loader').style.display = 'none';
 		if(ajaxRequest.readyState == 4){
 			var resp = ajaxRequest.responseText;
-
-			festival_bonus = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			festival_bonus = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=1600');
 			festival_bonus.document.write(resp);
-			//festival_bonus.stop();
+			festival_bonus.stop();
 		}
 	}
-
 }
+
 function grid_advance_salary_sheet(){
 	 var ajaxRequest;  // The variable that makes Ajax possible!
 
@@ -9502,7 +9456,7 @@ function grid_service_book_info()
 	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
 	
 	var queryString="spl="+sql+"&unit_id="+unit_id;
-	url =  hostname+"index.php/grid_con/grid_service_book_info/";
+	url =  hostname+"grid_con/grid_service_book_info/";
 	// $(".").dialog("open");
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");

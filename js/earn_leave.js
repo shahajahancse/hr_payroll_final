@@ -34,8 +34,8 @@ function earn_leave_process(i) {
 	var okyes;
 	okyes=confirm('Are you sure you want to start process?');
 	if(okyes==false) return;
-	$("#loader").show();
-	
+
+	loading_open();
 	var queryString='month_year='+month_year+'&unit_id='+unit_id+'&emp_ids='+sql+"&type="+i;
 	url = hostname+"earn_leave_con/earn_leave_process/";
     
@@ -44,13 +44,15 @@ function earn_leave_process(i) {
 	ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
-		$("#loader").hide();
 		if(ajaxRequest.readyState == 4){
+			loading_close();
 			var resp = ajaxRequest.responseText;
 			alert(resp);
 		}
 	}
 }
+
+
 function grid_earn_leave_general_info(){
 	var ajaxRequest;
 	try{
@@ -248,7 +250,7 @@ function grid_earn_leave_payment(){
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
-	url =  hostname+"index.php/earn_leave_con/grid_earn_leave_payment/";
+	url =  hostname+"earn_leave_con/grid_earn_leave_payment/";
 	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -309,7 +311,7 @@ function earn_leave_pay(){
 
 	// var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	var queryString="year="+year+"&pay_date="+pay_date+"&spl="+sql+"&unit_id="+unit_id;
-	url =  hostname+"index.php/grid_con/earn_leave_pay/";
+	url =  hostname+"grid_con/earn_leave_pay/";
 	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -368,7 +370,7 @@ function earn_leave_list(){
 	}
 	// var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 	var queryString="year="+year+"&pay_date="+pay_date+"&spl="+sql+"&unit_id="+unit_id;
-	url =  hostname+"index.php/grid_con/earn_leave_list/";
+	url =  hostname+"grid_con/earn_leave_list/";
 	 
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -447,7 +449,7 @@ var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
 hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
 	var queryString="sal_year_month="+sal_year_month+"&grid_status="+grid_status+"&spl="+spl+"&unit_id="+unit_id;
-   url =  hostname+"index.php/earn_leave_con/grid_earn_leave_payment_at_atime/";
+   url =  hostname+"earn_leave_con/grid_earn_leave_payment_at_atime/";
     
    ajaxRequest.open("POST", url, true);
    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -501,8 +503,8 @@ function all_search(){
 	
 	hostname = window.location.href;
 hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/earn_leave_con/all_search/"+dept+"/"+section+"/"+line+"/"+designation+"/"+sex+"/"+status+"/"+start;
-	//var url = "http://localhost/payroll/index.php/grid_con/grid_all_search/"+dept+"/"+section+"/"+line+"/"+designation;
+	url =  hostname + "earn_leave_con/all_search/"+dept+"/"+section+"/"+line+"/"+designation+"/"+sex+"/"+status+"/"+start;
+	//var url = "http://localhost/payroll/grid_con/grid_all_search/"+dept+"/"+section+"/"+line+"/"+designation;
 	main_grid(url)
 }
 function main_grid(url){
@@ -560,7 +562,7 @@ function get_all_data(){
 	var queryString="start="+start;
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/payroll_con/manual_atten_co/";
+	url =  hostname + "payroll_con/manual_atten_co/";
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	ajaxRequest.send(queryString);
@@ -655,8 +657,8 @@ function get_all_data(){
 	
 	hostname = window.location.href;
 	hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length : hostname.indexOf("index.php"));
-	url =  hostname + "index.php/earn_leave_con/get_all_data/"+start;
-	//var url = "http://localhost/payroll/index.php/grid_con/grid_get_all_data";
+	url =  hostname + "earn_leave_con/get_all_data/"+start;
+	//var url = "http://localhost/payroll/grid_con/grid_get_all_data";
 	main_grid(url)
 	
 	
