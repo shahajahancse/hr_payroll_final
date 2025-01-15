@@ -99,17 +99,17 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 							<th>Effective Date</th>
 						</tr> 
 					<?php } else if(isset($values["new_section_id"][$k]) && $section_id != $values["new_section_id"][$k]){
-					// < ?php } else if($section_id != $values["new_section_id"][$k]){
-						// dd($section_id);
 						$i=$i+1;
 						$row_count = $row_count+1;
 						if($row_count > $per_page_id)
 						{
 							$page=ceil($row_count/$per_page_id);
+							$page2=ceil($row_count/$per_page_id);
 						}
 						else
 						{
 							$page=1;
+							$page2=1;
 						}
 						echo "<tr bgcolor='#CCCCCC'>";
 						echo "<td colspan='10' style='font-size:16px'>Section :&nbsp".$values["new_section"][$k]."</td>";
@@ -129,6 +129,8 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 						</tr>
 					<?php } 
 
+					// dd($values);
+
 					echo "<tr>";
 						echo "<td style='padding:5px;'>";
 						echo $s = $k+1;
@@ -137,65 +139,51 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 						echo "<td style='background:; padding:5px;font-weight:bold;'> ";
 						$emp_id = isset($values["ref_id"][$k]) ? $values["ref_id"][$k] : '';
 						echo $emp_id;
-						// echo $emp_id = $values["ref_id"][$k];
 						echo "</td>";
 						
 						$emp_info = $this->db->where('emp_id', $emp_id)->get('pr_emp_per_info')->row();
 						$emp_name = (isset($emp_info->name_en)) ? $emp_info->name_en : '';
-						// $emp_name = $this->db->where('emp_id', $emp_id)->get('pr_emp_per_info')->row()->name_en;
 						echo "<td style='padding:5px; width:170px;'> ";
 						echo $emp_name;
 						echo "</td>";
 						
 						echo "<td style='text-align:left; padding:5px;'>";
 						echo (isset($values["new_desig"][$k])) ? $values["new_desig"][$k] : '';
-						// echo $values["new_desig"][$k];
 						echo "</td>";
 						
 						echo "<td style='text-align:left; padding:5px;'>";
 						echo (isset($values["new_line"][$k])) ? $values["new_line"][$k] : '';
-						// echo $values["new_line"][$k];
 						echo "</td>";
 						$grade_id = (isset($values["new_grade"][$k])) ? $values["new_grade"][$k] : '';
-						// $grade_name = $values["new_grade"][$k];
 						$grade_row = $this->db->where('gr_id',$grade_id)->get('pr_grade')->row();
 						$grade_name = (isset($grade_row->gr_name)) ? $grade_row->gr_name : '';
-						// $grade_name = $this->db->where('gr_id',$values["new_grade"][$k])->get('pr_grade')->row()->gr_name;
 						echo "<td style='text-align:center; padding:5px;'>";
 						echo $grade_name;
 						echo "</td>";
 						
 						echo "<td style='text-align:right; padding:5px;' >";
 						echo (isset($values["prev_salary"][$k])) ? $values["prev_salary"][$k] : '';
-						// echo $values["prev_salary"][$k];
 						echo "</td>";
 						
 						$inc_amount = (isset($values["new_salary"][$k]) && isset($values["prev_salary"][$k])) ? $values["new_salary"][$k] - $values["prev_salary"][$k] : 0;
-						// $inc_amount = $values["new_salary"][$k] - $values["prev_salary"][$k];
 						echo "<td style='text-align:right; padding:5px;' >";
 						echo $inc_amount;
 						echo "</td>";
 						
 						echo "<td style='text-align:right; padding:5px;' >";
 						echo (isset($values["new_salary"][$k])) ? $values["new_salary"][$k] : '';
-						// echo $values["new_salary"][$k];
 						echo "</td>";
 						
 						$sub_total_prev_salary += isset($values["prev_salary"][$k]) ? $values["prev_salary"][$k] : 0;
-						// $sub_total_prev_salary = $sub_total_prev_salary + $values["prev_salary"][$k];
 						$sub_total_inc_amount = $sub_total_inc_amount + $inc_amount;
 						$sub_total_new_salary += isset($values["new_salary"][$k]) ? $values["new_salary"][$k] : 0;
-						// $sub_total_new_salary = $sub_total_new_salary + $values["new_salary"][$k];
 						
 						$grand_total_prev_salary += isset($values["prev_salary"][$k]) ? $values["prev_salary"][$k] : 0;
-						// $grand_total_prev_salary = $grand_total_prev_salary + $values["prev_salary"][$k];
 						$grand_total_inc_amount = $grand_total_inc_amount + $inc_amount;
 						$grand_total_new_salary += isset($values["new_salary"][$k]) ? $values["new_salary"][$k] : 0;
 						$grand_total_new_salary += (isset($values["new_salary"][$k]) ? $values["new_salary"][$k] : 0);
-						// $grand_total_new_salary = $grand_total_new_salary + $values["new_salary"][$k];
 						
-					$sStartDate = isset($values["effective_month"][$k]) ? date("d-M-Y", strtotime($values["effective_month"][$k])) : '';
-						// $sStartDate = date("d-M-Y", strtotime($values["effective_month"][$k])); 
+					    $sStartDate = isset($values["effective_month"][$k]) ? date("d-M-Y", strtotime($values["effective_month"][$k])) : '';
 						
 						echo "<td  style='text-align:center;' >";
 						echo $sStartDate;
@@ -203,8 +191,6 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 					echo "</tr>";
 					$section_id = isset($values["new_section_id"][$k]) ? $values["new_section_id"][$k] : null;
 					$line 	= isset($values["new_line"][$k]) ? $values["new_line"][$k] : null;
-					// $section_id = $values["new_section_id"][$k];
-					// $line 	= $values["new_line"][$k];
 
 					if($max==$k){
 						break;

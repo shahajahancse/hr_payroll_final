@@ -19,7 +19,15 @@ class Processdb extends CI_Model{
 		{
 			return ;
 		}
-		// dd($_POST);
+
+		// Check for duplicate emp_id
+		$this->db->select('emp_id');
+		$this->db->where('emp_id', $this->input->post('emp_id'));
+		$query = $this->db->get('pr_emp_com_info');
+		if($query->num_rows() > 0) {
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Employee ID already exists.'); window.location='personal_info';</SCRIPT>";
+			return ;
+		}
 
 		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
 		$data = array(
@@ -126,12 +134,12 @@ class Processdb extends CI_Model{
 				$ext = end($imgs);
 
 				$config['upload_path']    = './uploads/photo';
-	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['allowed_types']  = 'jpg|png|jpeg';
 				$config['file_name'] 	  =  $id .'.'. $ext;
 				$config['max_size']	 	  = '4000';
 				$config['max_width']  	  = '5000';
 				$config['max_height']     = '7000';
-	        	$this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 				if ( ! $this->upload->do_upload('img_source'))
 				{
@@ -152,12 +160,12 @@ class Processdb extends CI_Model{
 				$ext = end($imgs);
 
 				$config['upload_path']    = './uploads/photo';
-	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['allowed_types']  = 'jpg|png|jpeg';
 				$config['file_name'] 	  =  $id .'.'. $ext;
 				$config['max_size']	 	  = '4000';
 				// $config['max_width']  	  = '5000';
 				// $config['max_height']     = '7000';
-	        	$this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 				if (!$this->upload->do_upload('signature'))
 				{
@@ -192,7 +200,15 @@ class Processdb extends CI_Model{
 		{
 			return ;
 		}
-		// dd($_POST);
+
+		// Check for duplicate emp_id
+		$this->db->select('emp_id');
+		$this->db->where('emp_id', $this->input->post('emp_id'));
+		$query = $this->db->get('pr_emp_com_info');
+		if($query->num_rows() > 0) {
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Employee ID already exists.'); window.location='personal_info_short';</SCRIPT>";
+			return ;
+		}
 
 		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
 		$data = array(
@@ -2260,45 +2276,29 @@ class Processdb extends CI_Model{
 
 	function get_emp_info($emp_id){
 		// dd($emp_id);
-		$d = $this->db->select('com.*, per.*')
+		$d = $this->db->select('com.*, per.*,deg.*')
 					->from('pr_emp_com_info as com')
 					->join('pr_emp_per_info as per','com.emp_id = per.emp_id', 'left')
 					->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left')
-					//->where('deg.hide_status', 1)
+					->where('deg.hide_status', 1)
 					->where('com.emp_id',$emp_id)
 					->get()->row();
-					//    dd($d);
-					//    dd($d->emp_dob);
-					//dd($date1);
-		$d->emp_dob=$d->emp_dob=='0000-00-00'? date('Y-m-d'): $d->emp_dob;
-		// $date1 = $d->emp_dob;
-		$date1 = new DateTime(date("d-m-Y", strtotime($d->emp_dob)));
-		// $d->emp_dob= date("m-d-Y", strtotime($d->emp_dob));
-		//dd($d->nomi_age);
-		$d->nomi_age= $d->nomi_age=='0000-00-00'? date('Y-m-d'): $d->nomi_age;
-		// $d->nomi_age= date("m-d-Y", strtotime($d->nomi_age));
-		
-		$date2 = new DateTime();
-		$interval = $date1->diff($date2);
-		$d->age = $interval->format("%y years %m months %d days");
-		$date1 = new DateTime($d->emp_join_date);
-		$date2 = new DateTime();
-		$interval = $date1->diff($date2);
-		$d->job_duration = $interval->format("%y years %m months %d days");
-		
-		// if ($d->hight != '') {
-		// 	$d->ft=isset(explode('-', $d->hight)[0]) ? explode('-', $d->hight)[0] : 0; 
-		// 	$d->inches= isset(explode('-', $d->hight)[1]) ? explode('-', $d->hight)[1] : 0; 
-		// }else{
-		// 	$d->ft = 0;
-		// 	$d->inches = 0;
-		// }
 
-
+		// dd($d);
 		if ($d == null) {
 			return ['status'=>false,'data'=>'No data found'];
 		}else{
-			// dd($d);
+			$d->emp_dob = ($d->emp_dob == '0000-00-00' || $d->emp_dob == null) ? date('Y-m-d') : $d->emp_dob;
+			$d->emp_dob=$d->emp_dob=='0000-00-00'? date('Y-m-d'): $d->emp_dob;
+			$date1 = new DateTime(date("d-m-Y", strtotime($d->emp_dob)));
+			$d->nomi_age= $d->nomi_age=='0000-00-00'? date('Y-m-d'): $d->nomi_age;
+			$date2 = new DateTime();
+			$interval = $date1->diff($date2);
+			$d->age = $interval->format("%y years %m months %d days");
+			$date1 = new DateTime($d->emp_join_date);
+			$date2 = new DateTime();
+			$interval = $date1->diff($date2);
+			$d->job_duration = $interval->format("%y years %m months %d days");
 			return ['status'=>true,'data'=>$d];
 		}
 	}

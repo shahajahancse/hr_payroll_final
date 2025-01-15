@@ -89,7 +89,7 @@
                         <th>Company Signature</th>
                         <th>Register Signature</th>
                         <th>Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,7 +111,7 @@
                         <td>
                             <a href="<?=base_url('setup_con/company_edit') . '/' . $cominfos->id?>" class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>
-                        <td>
+                        <td <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
                             <a href="<?=base_url('setup_con/company_delete') . '/' . $cominfos->id?>" class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>

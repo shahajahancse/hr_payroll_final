@@ -477,13 +477,14 @@ class Entry_system_con extends CI_Controller
         $shift_id = $this->input->post('shift_id');
 
         $shift=$this->db->where('id',$shift_id)->get('pr_emp_shift')->row();
+        // dd($shift);
         $schedule_id=$shift->schedule_id;
 
         foreach($emp_ids as $emp_id){
             $this->db->where('emp_id',$emp_id)
             ->where('shift_log_date >=',$first_date)
             ->where('shift_log_date <=',$second_date)
-            ->update('pr_emp_shift_log',array('schedule_id'=>$schedule_id,'shift_id'=>$shift_id));
+            ->update('pr_emp_shift_log',array('schedule_id'=>$schedule_id,'shift_id'=>$shift->id));
         };
         echo 'success';
        
@@ -726,10 +727,9 @@ class Entry_system_con extends CI_Controller
                     'proxi_id'   => $proxi_id,
                     'device_id'  => 0,
                 );
-            } else {
+            }else {
                 $data1 = array();
             }
-
             $mm = $this->update_attn_log($data, $data1, $d, $emp_id, $unit_id, $proxi_id);
         }
 
@@ -781,10 +781,8 @@ class Entry_system_con extends CI_Controller
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
-        $seconde_dat = date("Y-m-d", strtotime('+ 1 day', strtotime($second_date)));
         $emp_ids     = explode(',', $sql);
         $att_table   = "att_" . date("Y_m", strtotime($first_date));
-        // $com_ids     = $this->get_com_emp_id($emp_ids);
 
         // final process check
 		$slm = date("Y-m-01", strtotime($first_date));
@@ -795,28 +793,50 @@ class Entry_system_con extends CI_Controller
 		} 
 		// final process check end
 
-        $first  = $first_date .' '. '06:30:00';
-        $second  = $seconde_dat .' '. '06:30:00';
-        if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
-            $new_table = "att_" . date("Y_m", strtotime($second_date));
-            $this->db->where("date_time BETWEEN '$first' and '$second' ");
-            $this->db->where_in('proxi_id', $emp_ids)->delete($new_table);
-        } else if (date('m', strtotime($first_date)) != date('m', strtotime($second_date))) {
-            $new_table = "att_" . date("Y_m", strtotime($second_date));
-            $this->db->where("date_time BETWEEN '$first' and '$second' ");
-            $this->db->where_in('proxi_id', $emp_ids)->delete($new_table);
-        }
-        $this->db->where("date_time BETWEEN '$first' and '$second' ");
-        $this->db->where_in('proxi_id', $emp_ids)->delete($att_table);
+        foreach ($emp_ids as $key => $emp_id) {
+            // get shift and schedule
+            $this->db->select('sc.*')->from('pr_emp_shift_log as log');
+            $this->db->join('pr_emp_shift_schedule as sc', 'log.schedule_id = sc.id', 'left');
+            $shift = $this->db->where('log.shift_log_date',$first_date)->where('log.emp_id',$emp_id)->get()->row();
+            if (empty($shift)) {
+                $this->db->select('sc.*')->from('pr_emp_com_info as com');
+                $this->db->join('pr_emp_shift as shift', 'com.emp_shift = shift.id', 'left');
+                $this->db->join('pr_emp_shift_schedule as sc', 'shift.schedule_id = sc.id', 'left');
+                $shift = $this->db->where('emp_id',$emp_id)->get()->row();
+            }
 
+            $modify_date = date("Y-m-d", strtotime('+ 1 day', strtotime($second_date)));
+            if ($shift->out_end >= '12:59:00' && $shift->in_start <= '12:00:00') {  // loader day
+                $first       = $first_date .' '. '00:00:01';
+                $second      = $seconde_dat .' '. '23:59:59';
+            }else if($shift->out_end == 'Night_shift(Loader)' && $shift->out_end <= '12:00:00' && $shift->in_start >= '12:59:00') {  // loader night
+                $first       = $first_date .' '. '12:00:01';
+                $second      = $modify_date .' '. '12:00:00';
+            }else if($shift->out_end <= '10:00:00' && $shift->in_start <= '10:00:00') { // general
+                $first       = $first_date .' '. $shift->in_start;
+                $second      = $modify_date .' '. $shift->out_end;
+            } else { // default
+                $first       = $first_date .' '. $shift->in_start;
+                $second      = $second_date .' '. $shift->out_end;
+            }
+            // get shift and schedule
+
+            // dynamic att_table and delete punch data
+            if (date('t', strtotime($second_date)) == date('d', strtotime($second_date))) {
+                $new_table = "att_" . date("Y_m", strtotime($second_date));
+                $this->db->where("date_time BETWEEN '$first' and '$second' ");
+                $this->db->where('proxi_id', $emp_id)->delete($new_table);
+            } else if (date('m', strtotime($first_date)) != date('m', strtotime($second_date))) {
+                $new_table = "att_" . date("Y_m", strtotime($second_date));
+                $this->db->where("date_time BETWEEN '$first' and '$second' ");
+                $this->db->where('proxi_id', $emp_id)->delete($new_table);
+            }
+            $this->db->where("date_time BETWEEN '$first' and '$second' ");
+            $this->db->where('proxi_id', $emp_id)->delete($att_table);
+        }
 
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $emp_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
-        $input_date = $first_date;
-        do {
-            $this->Attn_process_model->attn_process($input_date, $unit_id, $emp_ids);
-            $input_date = date("Y-m-d", strtotime("+1 day", strtotime($input_date)));
-        } while ($input_date <= $second_date);
             echo 'success';
         } else {
             echo 'Record Not Deleted';
@@ -1475,6 +1495,8 @@ class Entry_system_con extends CI_Controller
         $unit_id      = $this->input->post('unit_id');
         $emp_ids      = explode(',', $sql);
 
+        // dd($_POST);
+
         $this->db->where('work_off_date <=', date("Y-m-d", strtotime('-25 month', strtotime($date))));
         $this->db->delete('attn_holyday_off');
 
@@ -1788,52 +1810,64 @@ class Entry_system_con extends CI_Controller
         $leave_end = date("Y-m-d", strtotime($to_date));
         $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a') + 1;
         
+        // Check for duplicate entry
+        $duplicate_check = $this->db->where('emp_id', $emp_id)
+                        ->where('leave_start', $leave_start)
+                        ->where('leave_end', $leave_end)
+                        ->where('leave_type', $leave_type)
+                        ->get('pr_leave_trans')
+                        ->num_rows();
+        if ($duplicate_check > 0) {
+            echo "Duplicate leave entry found";
+            exit();
+        }
+
         $balance = $this->leave_balance_ajax($emp_id, $leave_start, 1);
 
         if ($leave_type == 'el') {
             if ($balance['leave_balance_earn'] <= 0) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
 
             if (($balance['leave_balance_earn']+1) <= $total_leave) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
         }
 
         if ($leave_type == 'cl') {
             if ($balance['leave_balance_casual'] <= 0) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
 
             if (($balance['leave_balance_casual']+1) <= $total_leave) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
         }
 
         if ($leave_type == 'sl') {
             if ($balance['leave_balance_sick'] <= 0) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
             if (($balance['leave_balance_sick']+1) <= $total_leave) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
         }
 
         if ($leave_type == 'ml' && $balance['epm_info']->gender == 'Female') {
             if ($balance['leave_balance_maternity'] <= 0) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
 
             if ($balance['leave_balance_maternity'] <= $total_leave) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
         } else if($leave_type == 'ml') {
             echo "This employee is not eligible to apply for leave";
@@ -1842,27 +1876,27 @@ class Entry_system_con extends CI_Controller
 
         if ($leave_type == 'sp') {
             if ($balance['leave_balance_paternity'] <= 0) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
 
             if ($balance['leave_balance_paternity'] < $total_leave) {
-                echo "This employee have not enough leave balance";
-                exit();
+            echo "This employee have not enough leave balance";
+            exit();
             }
         }
         // dd($balance);
 
         $formArray = array(
-            'emp_id' => $emp_id,
-            'unit_id' => $unit_id,
-            'start_date' => $apply_date,
-            'leave_type' => $leave_type,
-            'leave_start' => $leave_start,
-            'leave_end' => $leave_end,
-            'total_leave' => $total_leave,
-            'leave_descrip' => $reason,
-            'add_on_vacation' => $add_on_vacation,
+            'emp_id'            => $emp_id,
+            'unit_id'           => $unit_id,
+            'start_date'        => $apply_date,
+            'leave_type'        => $leave_type,
+            'leave_start'       => $leave_start,
+            'leave_end'         => $leave_end,
+            'total_leave'       => $total_leave,
+            'leave_descrip'     => $reason,
+            'add_on_vacation'   => $add_on_vacation,
         );
         if ($this->db->insert('pr_leave_trans', $formArray)) {
             echo "success";
@@ -1991,6 +2025,7 @@ class Entry_system_con extends CI_Controller
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_leave_trans.emp_id', 'left');
         $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         $this->db->order_by('pr_leave_trans.leave_start', 'DESC');
+        // $this->db->group_by('pr_leave_trans.start_date');
         if (!empty($deptSearch) && $deptSearch != '') {
             $this->db->group_start();
             $this->db->like('pr_leave_trans.leave_start', $deptSearch);
@@ -3054,3 +3089,6 @@ class Entry_system_con extends CI_Controller
 
     }
 }
+
+
+

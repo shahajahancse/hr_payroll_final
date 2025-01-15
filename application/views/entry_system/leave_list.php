@@ -66,7 +66,7 @@
                         <th>End Date</th>
                         <th>Total Day</th>
                         <th>Unit name</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> >Delete</th>
                     </tr>
                 </thead>
 
@@ -86,7 +86,7 @@
                         <td><?php echo $r->total_leave ?></td>
                         <td><?php echo $r->unit_name ?></td>
                         <td>
-                            <a href="<?=base_url('entry_system_con/emp_leave_del/'.$r->id)?>"
+                            <a  href="<?=base_url('entry_system_con/emp_leave_del/'.$r->id)?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
@@ -154,7 +154,7 @@ function get_data(offset=0) {
                 <td>${element.total_leave}</td>
                 <td>${element.unit_name}</td>
                 <td>
-                    <a href="<?=base_url('entry_system_con/emp_leave_del/')?>${element.id}" class="btn btn-danger" role="button">Delete</a>
+                    <a   <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(130,$acl)) {echo '';} else { echo 'style="display:none;"';}?>   href="<?=base_url('entry_system_con/emp_leave_del/')?>${element.id}" class="btn btn-danger" role="button">Delete</a>
                 </td>
             </tr>`)
             });

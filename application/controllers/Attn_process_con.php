@@ -112,10 +112,10 @@ class Attn_process_con extends CI_Controller {
 		// final process check
 		$slm = date("Y-m-01", strtotime($date1));
 		$check = $this->db->where('unit_id', $unit)->where('block_month',$slm)->get('pay_salary_block');
-		if ($check->num_rows() > 0) {
-			echo "Sorry! This Month Already Final Processed";
-			return false; exit();
-		}
+		// if ($check->num_rows() > 0) {
+		// 	echo "Sorry! This Month Already Final Processed";
+		// 	return false; exit();
+		// }
 		// final process check end
 
 		for ($i=0; $i < $days ; $i++) {

@@ -80,7 +80,7 @@
                         <th>Bonus percent</th>
                         <th>Effective date</th>
                         <th width="80">Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(146,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,7 +99,7 @@
                                 <a href="<?=base_url('setup_con/bonus_edit').'/'.$pr_bonus_rule["id"]?>"
                                     target='_blank' class="btn btn-primary input-sm center-text" role="button">Edit</a>
                             </td>
-                            <td>
+                            <td <?php if(in_array(146,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
                                 <a href="<?=base_url('setup_con/bonus_delete').'/'.$pr_bonus_rule["id"]?>"
                                     class="btn btn-danger input-sm center-text" role="button">Delete</a>
                             </td>

@@ -49,13 +49,15 @@ class Attn_process_model extends CI_Model{
 		//previous process check
 		$prev_date = date('Y-m-d', strtotime($process_date ." - 1 days"));
 		$prev_d = $this->db->where('unit_id', $unit)->where('shift_log_date', $prev_date)->get('pr_emp_shift_log');
-		if ($prev_d->num_rows() == 0) {
-			$data = array(
-				'success' => true,
-				'msg' => 'Please!, first process '.$prev_date, 
-			);
-			return $data;
-		}
+		// comment [2025-01-08]
+		
+		// if ($prev_d->num_rows() == 0) {
+		// 	$data = array(
+		// 		'success' => true,
+		// 		'msg' => 'Please!, first process '.$prev_date, 
+		// 	);
+		// 	return $data;
+		// }
 
 		// salary block/final process check
 		$block_date = date("Y-m-01",strtotime($process_date));

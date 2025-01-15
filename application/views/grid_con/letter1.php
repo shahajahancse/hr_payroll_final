@@ -84,7 +84,10 @@
                   throw new Exception("Failed to parse date string");
               }
               $day_of_week = date('N', $date_timestamp);
-              if ($day_of_week == 5 || $day_of_week == 6) {
+              if ($day_of_week == 5 ) {
+                $date_timestamp = strtotime('+1 day', $date_timestamp);
+              }
+              if ( $day_of_week == 6) {
                 $date_timestamp = strtotime('+1 day', $date_timestamp);
               }
 

@@ -74,23 +74,17 @@
           <?php 
 
             $second_date = add_days_skipping_fridays($value->left_date, 31,$value->emp_id);
-            // dd(date('D',strtotime(date('Y-m-d',strtotime($second_date)))));
-            // $days = date('D',strtotime($second_date));
-
-            if(date('D',strtotime($second_date)) == 'Sat'){
-              // dd("Sat");
-              $date = DateTime::createFromFormat('d/m/Y', $second_date);
+            $date = DateTime::createFromFormat('d/m/Y', $second_date);
+            if($date->format('D') == 'Sat'){
               $date->modify('+1 day');
-              $second_date = $date->format('d/m/Y');
+              echo $date->format('d/m/Y');
+            }else{
+              echo $second_date;
             }
-            if(date('D',strtotime($second_date)) == 'Fri'){
-              // dd("Fri");
-
-              $date = DateTime::createFromFormat('d/m/Y', $second_date);
+            if($date->format('D') == 'Fri'){
               $date->modify('+1 day');
-              $second_date =  $date->format('d/m/Y');
+            echo   $second_date =  $date->format('d/m/Y');
             }
-            echo $second_date;
             ?></span> ইং</div>
       </div>
 
@@ -138,13 +132,13 @@
           <b><span style="font-family: SutonnyMJ;font-size:19px">
           <?php 
               $second_date = add_days_skipping_fridays($value->left_date, 11,$value->emp_id);
-            if(date('D',strtotime($second_date)) == 'Sat'){
               $date = DateTime::createFromFormat('d/m/Y', $second_date);
-              $date->modify('+1 day');
-              echo $date->format('d/m/Y');
-            }else{
-              echo $second_date;
-            }
+              if($date->format('D') == 'Sat'){
+                $date->modify('+1 day');
+                echo $date->format('d/m/Y');
+              }else{
+                echo $second_date;
+              }
           ?>
           </span></b> ইং তারিখে যার <b><span  style="font-family: SutonnyMJ;font-size:19px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date))?></span><span style="font-family: SutonnyMJ;font-size:19px">-G</span></span></b> এর একটি পত্রের মাধ্যেমে ১০ (দশ) দিনের সময় দিয়ে চাকুরীতে
           যোগদান সহ ব্যাখ্যা প্রদান করতে বলা হয়েছিল। কিন্তু আপনি নির্ধারিত সময়ের মধ্যে কর্মস্থলে উপস্থিত হননি এবং কোন ব্যাখ্যা

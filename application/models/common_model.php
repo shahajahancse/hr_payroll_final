@@ -92,6 +92,9 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
@@ -116,6 +119,9 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
@@ -140,6 +146,9 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
@@ -164,6 +173,9 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
@@ -188,6 +200,9 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
@@ -212,6 +227,9 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
@@ -236,6 +254,9 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
@@ -288,6 +309,7 @@ class Common_model extends CI_Model{
                     pr_emp_shift_log.shift_log_date,
                     pr_emp_shift_log.ot,
                     pr_emp_shift_log.eot,
+                    pr_emp_shift_log.present_status,
 					pr_emp_shift_schedule.sh_type as shift_name
                 ');
             $this->db->from('pr_emp_shift_log');
@@ -301,12 +323,14 @@ class Common_model extends CI_Model{
                 $logs[$i]["in_time"] 	= $shift->in_time;
                 $logs[$i]["out_time"] 	= $shift->out_time;
                 $logs[$i]["shift_name"] = $shift->shift_name;
+                $logs[$i]["present_status"] = $shift->present_status;
             }
             else
             {
                 $logs[$i]["in_time"] 	= '';
                 $logs[$i]["out_time"] 	= '';
                 $logs[$i]["shift_name"] = '';
+                $logs[$i]["present_status"] = '';
             }
             $first_date = date("Y-m-d", strtotime("+1 day", strtotime($first_date)));
             $i = $i + 1;

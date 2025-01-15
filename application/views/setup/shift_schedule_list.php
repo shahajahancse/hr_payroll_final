@@ -90,7 +90,7 @@ table.dataTable thead th, table.dataTable thead td {
                         <th>Tiffin minute 2</th>
                         <th>Random minute</th>
                         <th style="width:80px !important">Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(148,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,7 +124,7 @@ table.dataTable thead th, table.dataTable thead td {
                             <a href="<?=base_url('setup_con/shiftschedule_edit').'/'.$pr_emp_shift_schedules["id"]?>"
                                  class="btn btn-primary input-sm" role="button">Edit</a>
                         </td>
-                        <td>
+                        <td <?php if(in_array(148,$acl)) {echo '';} else { echo 'style="display:none;"';}?> >
                             <a href="<?=base_url('setup_con/shiftschedule_delete').'/'.$pr_emp_shift_schedules["id"]?>"
                                 class="btn btn-danger input-sm" role="button">Delete</a>
                         </td>

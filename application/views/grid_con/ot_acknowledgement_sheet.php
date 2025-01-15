@@ -22,16 +22,25 @@
 <!-- heading  -->
     <?php if($status == 1){?>
 				<?php if($unit_id == 1){?>
+				<br>
 				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
 					<div>Effective Date: 01/08/2024</div>
 					<div>Revision: 00</div>
 					<div> Doc. Code: AJFL/HRAC(HR)/03/049</div>
 				</div>
-				<?php }elseif($unit_id == 2){?>
+				<?php }elseif($unit_id == 4){?>
+				<br>
 				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
 					<div>Effective Date: 15/01/2022</div>
 					<div>Revision: 00</div>
 					<div>Doc. Code: HGL/HRD(HR)/03/020</div>
+ 				</div>
+				 <?php }elseif($unit_id == 2){?>
+				<br>
+				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
+					<div>Effective Date: 01/02/2022</div>
+					<div>Revision: 00</div>
+					<div>Doc. Code: LSA/HRD(COM)/03/175</div>
  				</div>
 				<?php }?>
 	<?php $this->load->view("head_bangla"); }?>
@@ -39,12 +48,21 @@
 		<?php 
 			if ($status == 2) { ?> 
 				<?php if($unit_id == 1){?>
+				<br>	
 				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
 					<div>Effective Date: 01/08/2024</div>
 					<div>Revision: 00</div>
 					<div> Doc. Code: AJFL/HRAC(HR)/03/049</div>
 				</div>
 				<?php }elseif($unit_id == 2){?>
+				<br>
+				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
+					<div>Effective Date: 01/02/2022</div>
+					<div>Revision: 00</div>
+					<div>Doc. Code: LSA/HRD(COM)/03/175</div>
+ 				</div>
+				 <?php }elseif($unit_id == 4){?>
+				<br>
 				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
 					<div>Effective Date: 15/01/2022</div>
 					<div>Revision: 00</div>
@@ -90,9 +108,9 @@
 			<?php
 
 			if($status ==2){
-				$per_page=20;
+				$per_page=19;
 			}else{
-				$per_page=27;
+				$per_page=26;
 			}
 				
 			
@@ -125,7 +143,7 @@
 					<span style="font-family:SutonnyMJ;font-size:18px;text-align: center;">(gvbem¤ú` wefvM)</span>
 					<br>
 					<?php if ($status == 2) {?>
-						<span class="unicode-to-bijoy">তারিখঃ</span>
+						<span class="unicode-to-bijoy"></span>
 					<?php }?>
 				</div>
 			</div>
@@ -134,12 +152,21 @@
 			<!-- heading  -->
     <?php if($status != 2){?>
 				<?php if($unit_id == 1){?>
+				<br>
 				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
 					<div>Effective Date: 01/08/2024</div>
 					<div>Revision: 00</div>
 					<div> Doc. Code: AJFL/HRAC(HR)/03/049</div>
 				</div>
 				<?php }elseif($unit_id == 2){?>
+				<br>
+				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
+					<div>Effective Date: 15/01/2022</div>
+					<div>Revision: 00</div>
+					<div>Doc. Code: LSA/HRD(COM)/03/175</div>
+ 				</div>
+				 <?php }elseif($unit_id == 4){?>
+				<br>
 				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
 					<div>Effective Date: 15/01/2022</div>
 					<div>Revision: 00</div>
@@ -156,11 +183,17 @@
 					<div>Revision: 00</div>
 					<div> Doc. Code: AJFL/HRAC(HR)/03/049</div>
 				</div>
-				<?php }elseif($unit_id == 2){?>
+				<?php }elseif($unit_id == 4){?>
 				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
 					<div>Effective Date: 15/01/2022</div>
 					<div>Revision: 00</div>
 					<div>Doc. Code: HGL/HRD(HR)/03/020</div>
+ 				</div>
+				 <?php }elseif($unit_id == 2){?>
+				<div style="display:flex; justify-content:space-between;width:80%;margin:0 auto">
+					<div>Effective Date: 15/01/2022</div>
+					<div>Revision: 00</div>
+					<div>Doc. Code: LSA/HRD(COM)/03/175</div>
  				</div>
 				<?php }?>
 				<br>
@@ -212,7 +245,7 @@
 			<span style="font-family:SutonnyMJ;font-size:18px;">(gvbem¤ú` wefvM)</span>
 			<br>
 			<?php if ($status == 2) {?>
-				<span style="font-size:18px;" class="unicode-to-bijoy">তারিখঃ</span>
+				<span style="font-size:18px;" class="unicode-to-bijoy"></span>
 			<?php }?>
 		</div>
 	</div>

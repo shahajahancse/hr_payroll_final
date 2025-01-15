@@ -141,9 +141,10 @@
                                     <div class="input-group">
                                         <span class="input-group-btn" style="display: flex; gap: 15px;">
                                             <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
-                                            <input class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
-                                            <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
-                                            <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
+                                            <input <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
+                                            <input <?php  if(in_array(128,$acl)) {echo '';} else { echo 'style="display:none;"';}?>  class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
+
+                                            <input <?php  if(in_array(129,$acl)) {echo '';} else { echo 'style="display:none;"';}?>  class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
                                         </span>
                                     </div><!-- /input-group -->
                                 </div>
@@ -174,7 +175,7 @@
                                         <div class="input-group" style="top: 15px;">
                                             <span class="input-group-btn" style="display: flex; gap: 15px;">
                                                 <input class="btn btn-primary" onclick="stop_salary(event)" type="button" value="Save">
-                                                <input class="btn btn-danger" onclick="stop_delete(event)" type="button" value="Delete">
+                                                <input class="btn btn-danger" style="<?php  if(in_array(132,$acl)) {echo '';} else { echo 'display:none;"';}?>" onclick="stop_delete(event)" type="button" value="Delete">
                                             </span>
                                         </div>
                                     </div>

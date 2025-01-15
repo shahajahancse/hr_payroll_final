@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <!-- <meta name="viewport" content="width=device-width"> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
     body {
@@ -24,7 +22,6 @@
       width: 100px;
       height: 100px;
       border: 1px solid black;
-      /* margin: 0 75px; */
     }
     @media print{
       @page{
@@ -36,18 +33,12 @@
   </style>
   <title>Id Card English</title>
 </head>
-
 <body">
-
   <div class="container">
-    <!-- < ?php dd($values)?> -->
     <?php  $count =0; $unit_id= $this->session->userdata('data')->unit_name; foreach($values as $value){   $count++;?>
-    
-
       <div class='d-flex'>
         <div class='box'>
-            <div style="rotate:-90deg;margin: 0px 50px 0px;text-align: center">
-            <!-- <div style=""> -->
+            <div style="rotate:-90deg;margin: 0px <?php echo $unit_id == 2 ? '20px':'50px'?> 0px;text-align: center">
               <?php  $image = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
               <p>
                 <img src="<?php echo base_url('/images'.'/'.$image->company_logo)?>" style="height: 37px;width: 70px;">
@@ -57,31 +48,26 @@
               <?php } else{?>
                 <h5 style="" class='font-weight-bold'><?= $image->company_name_english; ?></h5>
               <?php }?>
-
-
-               <img src="<?php echo base_url('/uploads/photo'.'/'.$value->img_source)?>" alt="" class="box-img">
-
+              <img src="<?php echo base_url('/uploads/photo'.'/'.$value->img_source)?>" alt="" class="box-img">
               <div style="line-height: 30px;">
-                <p style="margin:0px auto; font-size:16px"><b><?php echo $value->name_en?></b></p>
+                <p style="margin:0px <?php echo ($unit_id == 1 && strlen($value->name_en) >= 17) ? "-14px": "auto"; ?> ;font-size:16px">
+                <b><?php echo $value->name_en?></b></p>
                 <p style="margin:0px auto;  line-height:6px; font-size:16px"><b><?php echo $value->desig_name?></b></p>
-                <p style="margin-left: -10px;text-align: left; line-height:6px;margin-top:15px; font-size:15px">Department : <b><?php echo $value->dept_name?></b></p>
-                <p style="margin-left: -10px;text-align: left; line-height:6px; font-size:15px">ID Card No : <b><?php echo $value->emp_id?></b></p>
-                <p style="margin-left: -10px;text-align: left; line-height:6px; font-size:15px">Join Date : <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?></b></p>
-                <p style="margin-left: -10px;text-align: left; line-height:6px; font-size:15px">Blood Group: <b><?php echo $value->blood?></b></p>
+                <p style="margin-left: <?php echo $unit_id == 2 ? '4px':($unit_id == 1?'-30px':'-10px')?>;text-align: left; line-height:6px;margin-top:15px; font-size:15px">Department : <b><?php echo $value->dept_name?></b></p>
+                <p style="margin-left: <?php echo $unit_id == 2 ? '4px':($unit_id == 1?'-30px':'-10px')?>;text-align: left; line-height:6px; font-size:15px">ID Card No : <b><?php echo $value->emp_id?></b></p>
+                <p style="margin-left: <?php echo $unit_id == 2 ? '4px':($unit_id == 1?'-30px':'-10px')?>;text-align: left; line-height:6px; font-size:15px">Join Date : <b><?php echo date('d-m-Y',strtotime($value->emp_join_date))?></b></p>
+                <p style="margin-left: <?php echo $unit_id == 2 ? '4px':($unit_id == 1?'-30px':'-10px')?>;text-align: left; line-height:6px; font-size:15px">Blood Group: <b><?php echo $value->blood?></b></p>
               </div>
-
-                <div class="d_flex">
-                <p style="border-top: 1px solid black;width: fit-content;position: absolute;margin-top: 60px;font-size: 14px;margin-left: -18px;"><b>Card Holder</b></p>
+              <div class="d_flex">
+                <p style="border-top: 1px solid black;width: fit-content;position: absolute;margin-top: <?= $unit_id == 2? "70px":($unit_id ==1? "72px":"60px")?>;font-size: 14px;margin-left: <?php echo $unit_id == 2 ? '4px':($unit_id == 1?'-30px':'-10px')?>;"><b>Card Holder</b></p>
                   <div style="display: flex; flex-direction: column; align-items: center;margin-top: -29px;">
                     <img style="position: absolute;margin-top: 25px;margin-left: 118px;" src="<?php echo base_url('/images'.'/'.$image->company_signature)?>" alt="Authorized Signature" height="30px">
-                    <p style="border-top: 1px solid black;width: 142px;margin-left: 102px;position: absolute;margin-top: 60px;font-size: 14px;">
+                    <p style="border-top: 1px solid black;width: 142px;margin-left: 102px;position: absolute;margin-top: <?= $unit_id == 2? "70px":($unit_id ==1? "72px":"60px")?>;font-size: 14px;">
                       <b>Authorized Signature</b>
                     </p>
                   </div>
-                </div>
-
-                <p class="text-center bg-info" style="width: 120%;border-radius: 10px 10px 0 0;position: relative;bottom: -87px;margin-left: -22px;">www.ajgroupbd.com</p>
-
+              </div>
+              <p class="text-center bg-info" style="width: <?php echo $unit_id == 2 ? '100%':($unit_id == 1 ? '141%':'120%')?>;border-radius: 10px 10px 0 0;position: relative;bottom: <?php echo $unit_id == 2 ? '-92px':($unit_id ==1 ? "-98px":'-87px')?>;margin-left: <?php echo $unit_id == 2 ? '0px':($unit_id == 1 ? '-38px' : '-22px')?>;">www.ajgroupbd.com</p>
             </div>
         </div>
         <div class='box'>
@@ -122,12 +108,9 @@
     <?php $count = 0; } }?>
   </div>
 
-
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 </body>
-
 </html>
 <?php exit(); ?>

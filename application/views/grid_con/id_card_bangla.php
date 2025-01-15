@@ -71,7 +71,7 @@
           <img src="<?php echo base_url('/images'.'/'.$image->company_logo)?>" alt="logo" height="40px" width="60px" style="margin-top:5px">
         </div>
         <div class="col-md-6 printt mt-2 text-center" >
-          <h4 style="margin-top:1px:text-align: center"><b><?= $image->company_name_bangla; ?></b></h4>
+          <h4 style="margin-top:1px:text-align: center"><b style="white-space:nowrap"><?= $image->company_name_bangla; ?></b></h4>
         </div>
       </div>
       <h4 class="col-md-12 text-center" style="margin-top:-18px"><b>cwiPq cÎ</b></h4>
@@ -135,7 +135,7 @@
       
       ?>
       <p class="box-top text-center">‡gqv`t PvKzwi _vKvKvjxb ch©šÍ|</p>
-      <p style="font-size: 19px; padding: 4px;" class="box-top text-center unicode-to-bijoy">প্রতিষ্ঠানের ঠিকানাঃ <?= $image->company_add_bangla; ?></p>
+      <p style="font-size: 19px; padding: <?php echo $unit_id == 4 ? '0px':'4px'?>;" class="box-top text-center unicode-to-bijoy">প্রতিষ্ঠানের ঠিকানাঃ <?= $image->company_add_bangla; ?></p>
       <p class="box-top text-center">‡dvb bst <?= $image->company_phone; ?></p><br>
       <p class="box-top text-center">D³ cwiPq cÎ nvivBqv †M‡j ZvrÿwbK e¨e¯’vcbv KZ…©cÿ‡K RvbvB‡Z</p><p class="box-top text-center"> n‡e|</p>
      <br> <p class="box-top text-center">i‡³i MÖæct <spans style="font-family: Arial, Helvetica, sans-serif; font-size:13px"> <b><?php echo $value->blood?></b></spans></p>

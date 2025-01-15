@@ -350,7 +350,7 @@ input[type="number"] {
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Gross Salary <span style="color: red;">*</span> </label>
@@ -409,8 +409,7 @@ input[type="number"] {
                                 style="display: inline; margin-right: 10px;" required checked>No
                         </div>
                     </div>
-                    <div class="row"
-                        <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
+                    <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Salary <span style="color: red;">*</span> </label>

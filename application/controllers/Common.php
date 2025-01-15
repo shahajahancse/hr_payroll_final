@@ -5,14 +5,12 @@ class Common extends CI_Controller {
 
     function grid_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
         // if (empty($_GET['status'])) {
-
         //     $this->db->select('emp_id');
         //     $this->db->from('pr_emp_resign_history');
         //     $this->db->where('unit_id', $unit);
         //     $this->db->where('resign_date <=',date('Y-m-d', strtotime('-360 days')));
         //     $emp_ids = $this->db->get()->result_array();
         //     $emp_id = array_column($emp_ids, 'emp_id');
-
         //     $this->db->select('emp_id');
         //     $this->db->from('pr_emp_left_history');
         //     $this->db->where('unit_id', $unit);
@@ -21,7 +19,8 @@ class Common extends CI_Controller {
         //     $emp_id2 = array_merge($emp_id, array_column($emp_ids, 'emp_id'));
         //     $emp_id_not = array_unique($emp_id2);
         // }
-
+        ini_set("pcre.backtrack_limit", 100000000000);
+        ini_set("pcre.recursion_limit", 10000000000);
     	$data = array();
         $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
         $this->db->from('pr_emp_com_info as com');

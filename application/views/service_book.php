@@ -6,14 +6,19 @@
     <title>Service Book</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
+        body{
+            @page {
+                size: A4 landscape;
+            }
+        }
         @media print {
             @page {
                 size: A4 landscape;
             }
         }
         p{
-            font-size: 20px;
-            line-height: 13px;
+            font-size: 16px;
+            line-height: 10px;
         }
         tr td{
             text-align: center;
@@ -29,7 +34,7 @@
         $register =$this->db->select('register')->where('unit_id',$unit_id)->get('company_infos')->row('register');
     ?>
     <div class="d-flex">
-        <div class="flex-fill" style="height:90vh;width:60vw;border: 3px solid black;">
+        <div class="flex-fill" style="height:90vh;width:70vw;border: 3px solid black;">
             <div class="text-center" >
                 <br><br><br><br><br><br>
                 <h5>Document Code-HGL/HRD(HR)/03/010</h5>
@@ -41,26 +46,16 @@
             </div>
         </div>
         <div style="width:10% !important"></div>
-        <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
-            <div style="padding: 10px 0px 0px 5px;position: relative;">
+        <div class="flex-fill" style="height:90vh;width:70vw;border: 1px solid black;">
+            <div style="padding: 10px 0px 0px 5px;position: relative;line-height: 10px">
                 <p class="unicode-to-bijoy">ফরম নং - ৭(ক)</p>
-                <p class="unicode-to-bijoy">প্রথম ভাগ</p>
-                <p class="unicode-to-bijoy">শ্রমিককে সনাক্তকরণের তথ্য:</p>
+                <p class="unicode-to-bijoy text-center">প্রথম ভাগ</p>
+                <p class="unicode-to-bijoy text-center">শ্রমিককে সনাক্তকরণের তথ্য:</p>
                 <p class="unicode-to-bijoy">১। শ্রমিকের নাম: <?php echo $value->name_bn?></p>
                 <p class="unicode-to-bijoy">২। পিতার নাম: <?php echo $value->father_name?></p>
                 <p class="unicode-to-bijoy">৩। মাতার নাম: <?php echo $value->mother_name?></p>
                 <p class="unicode-to-bijoy">৪। স্বামী/স্ত্রীর নাম (প্রযোজ্য ক্ষেত্রে): <?php echo $value->spouse_name?></p>
                 <p class="unicode-to-bijoy" style='line-height:24px'>৫। স্থায়ী ঠিকানা গ্রামঃ <?php echo $value->per_village_bn?>, ডাকঘরঃ <?php echo $value->per_post_name_bn?>, থানা ঃ <?php echo $value->per_upa_name_bn?>, জেলাঃ <?php echo $value->per_dis_name_bn?> </p>
-                <!-- রাস্তা .................. -->
-            <!-- </p> -->
-                <!-- <p class="unicode-to-bijoy">    -->
-                    <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
-                     
-                <!-- </p> -->
-                <!-- <p class="unicode-to-bijoy">    -->
-                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;  -->
-                   
-               
                 <p class="unicode-to-bijoy" style='line-height:24px'>৬। বর্তমান ঠিকানা: <?php echo $value->pre_village_bn.', '.$value->pre_post_name_bn.', '.$value->pre_upa_name_bn.', '.$value->pre_dis_name_bn?></p>
                 <p class="unicode-to-bijoy">৭। জন্ম তারিখ/বয়স: <?php echo $value->emp_dob?></p>
                 <p class="unicode-to-bijoy">৮। জাতীয় পরিচয় পত্র নং (যদি থাকে): <?php echo $value->nid_dob_id?></p>
@@ -71,19 +66,16 @@
                 <p class="unicode-to-bijoy">১৩। সনাক্ত করিবার জন্য বিশেষ কোনচিহ্ন (যদি থাকে): নাই</p>
                 <p class="unicode-to-bijoy">১৪। সার্ভিস বহি খুলিবার তারিখ: ইং</p>
                 <p class="unicode-to-bijoy">১৫। বাম হাতের বৃদ্ধাঙ্গুলীর ছাপ: </p>
-                <div style="position: absolute; top: 10px;right: 10px;">
-                    <img style="border: 3px solid black;" src="<?php echo base_url('uploads/photo/'.$value->img_source.'')?>" alt="" width="100px" height="130px">
+                <div style="position: absolute; top: 60px;right: 35px;">
+                    <img style="border: 3px solid black;" src="<?php echo base_url('uploads/photo/'.$value->img_source.'')?>" alt="" width="70px" height="100px">
                 </div>
-                <!-- <br> -->
-                <br> 
                 <div style="display: flex; justify-content: space-between">
-                    <img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px;width:70px;margin-left: 0px">
-                    <img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px;margin-right: 100px">
+                    <img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px;width:70px;margin-left: 0px;margin-top: 25px;">
+                    <img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px;margin-right: 60px;    margin-top: 25px;">
                 </div>
-                <div style="display:flex; justify-contant:space-between ">
-                <p  style="border-top:1px solid black;width:fit-content"><span class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর</span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>   
-                <p style="margin-left: -60px;border-top:1px solid black" class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর</p>
-
+                <div style="display:flex; justify-contant:space-between;position: fiexd ">
+                <p  style="width:fit-content;position: relative;bottom: -8px;"><span class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর</span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>   
+                <p style="position: relative;bottom: -8px;" class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর</p>
                 </div>
             </div>
         </div>
@@ -98,7 +90,7 @@
             <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                 <thead>
                     <tr class="text-center" >
-                        <th class="unicode-to-bijoy">কারখানা/প্রতিষ্ঠানেরনাম ও ঠিকানা </th>
+                        <th><span class="unicode-to-bijoy">কারখানা</span>/<br><span class="unicode-to-bijoy">প্রতিষ্ঠানেরনাম ও ঠিকানা </span></th>
                         <th class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষেরনাম</th>
                     </tr>
                     <tr class="text-center">
@@ -196,6 +188,20 @@
                         <td style="font-size:15px;font-family:sutonnyMJ">750</td>
                         <td>-</td>
                     </tr>
+                    <?php 
+                        $incProms = $this->db->where('new_emp_id',$value->emp_id)->get('pr_incre_prom_pun')->result();
+                        foreach($incProms as $incProm){
+                    ?>
+
+                    <tr>
+                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $incProm->effective_month?></td>
+                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $incProm->new_dept?></td>
+                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($incProm->new_salary-2450)/1.5)?></td>
+                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round((($incProm->new_salary-2450)/1.5/2))?></td>
+                        <td style="font-size:15px;font-family:sutonnyMJ">750</td>
+                        <td>-</td>
+                    </tr>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
@@ -236,14 +242,26 @@
                 </thead>
                 <tbody>
                     <tr class="text-center">
-                        <td style="    padding: 29px;">-</td>
-                        <td>-</td>
+                        <td class='unicode-to-bijoy' style="padding:6px;">1700</td>
+                        <td  style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($value->gross_sal))?> </td>
                         <td> </td>
                         <td> </td>
                         <td> </td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
                         <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>
+
+                    <?php  foreach($incProms as $incProm){?>
+                    <tr>
+                        <td class='unicode-to-bijoy'>1700</td>
+                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($incProm->new_salary))?> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
+                        <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+                    </tr>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
@@ -322,8 +340,8 @@
     <div style="margin-bottom: 20px;page-break-after: always;"></div>
     <div class="d-flex">
         <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
-            <p  class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঙ)</p>
-            <h6 class="text-center attendance_bonus" style="font-weight:700;"> পঞ্চম ভাগ</h6>
+            <p  class="unicode-to-bijoy " style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঙ)</p>
+            <h6 class="text-center attendance_bonus unicode-to-bijoy" style="font-weight:700;"> পঞ্চম ভাগ</h6>
             <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> আচরণের রেকর্ডঃ </p>
             <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                 <thead>

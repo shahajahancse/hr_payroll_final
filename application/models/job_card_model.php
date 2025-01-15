@@ -44,6 +44,7 @@ class Job_card_model extends CI_Model{
 		{
 			$holiday[] = $row->start_date;
 		}
+		// dd($this->db->last_query());
 		return $holiday;
 	}
 
@@ -87,16 +88,14 @@ class Job_card_model extends CI_Model{
 		return $query->result_array();
 	}
 
-   function get_leave_type($shift_log_date,$emp_id)
-   {	
-	
+   function get_leave_type($shift_log_date,$emp_id){	
    		$this->db->select('leave_type');
 		$this->db->where('emp_id', $emp_id);
 	    $this->db->where("leave_start <=", $shift_log_date);
         $this->db->where("leave_end >=", $shift_log_date);
 		$query = $this->db->get('pr_leave_trans');
 		$row = $query->row();
-		// dd($this);
+		// dd($this->db->last_query());
 		$leave_type = $row->leave_type;
 		return $leave_type;
    }
@@ -270,7 +269,7 @@ class Job_card_model extends CI_Model{
 		$data['leave'] = $this->leave_per_emp($start_date, $end_date, $emp_id);
 		$data['weekend'] = $this->check_weekend($start_date, $end_date, $emp_id);
 		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
-		//dd($data['holiday']);
+		// dd($data['weekend']);
 
 		// $id = $this->db->select('id')->where('emp_id',$emp_id)->get('pr_emp_com_info')->row()->id;
 		$this->db->select('

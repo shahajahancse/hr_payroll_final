@@ -119,14 +119,18 @@
              <h3 style="font-weight:bold">File List</h3>
          </div>
       <!-- <div class="container"> -->
+        <?php 
+          $user_id = $this->session->userdata('data')->id; 
+	        $acl = check_acl_list($user_id);   
+        ?>
         <table class="table" id="mytable">
           <thead>
             <tr>
               <th>SL.</th>
               <th>Unit Name </th>
               <th>Date</th>
-              <th>File Name </th>
-              <th>Delete</th>
+              <th  style="<?php if(!in_array(10,$acl)) {echo '';} else { echo 'display:none;';}?>" >File Name </th>
+              <th  style="<?php if(in_array(133,$acl)) {echo '';} else { echo 'display:none;';}?>">Delete</th>
             </tr>
           </thead>
 
@@ -136,8 +140,8 @@
                   <td><?php echo ++$i; ?></td>
                   <td><?php echo $row->unit_name; ?></td>
                   <td><?php echo $row->upload_date; ?></td>
-                  <td><a href="<?=base_url('data/'.$row->file_name)?>"><?php echo $row->file_name; ?></a></td>
-                  <td>
+                  <td style="<?php if(!in_array(10,$acl)) {echo '';} else { echo 'display:none;';}?>"><a href="<?=base_url('data/'.$row->file_name)?>"><?php echo $row->file_name; ?></a></td>
+                  <td style="<?php if(in_array(133,$acl)) {echo '';} else { echo 'display:none;';}?>"><a href="<?=base_url('data/'.$row->file_name)?>">
                     <a href="<?=base_url('attn_process_con/delete_attn_file/'.$row->id)?>" class="btn btn-danger btn-mini" role="button">Delete</a>
                   </td>
               </tr>

@@ -810,7 +810,7 @@ class Command extends CI_Controller {
 
 	public function leave_final(){
 		dd('only for developer');
-		$all_leave = $this->db->order_by('id','asc')->get('pr_leave_trans_copy1')->result();
+		$all_leave = $this->db->order_by('id','asc')->get('pr_leave_transs')->result();
 		$data = array();
 			$employee_id = '';
 			$unit_id 	 = '';

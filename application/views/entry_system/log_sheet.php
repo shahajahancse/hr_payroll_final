@@ -53,49 +53,53 @@
                 <td width=''><strong>Dept :</strong> </td>
                 <td width=''><?= $row->dept_name ?></td>
             </tr>
-            <table>
-                <br>
+        <table>
+        <br>
+        <table width="800" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2"
+            style="text-align:center; font-size:13px; ">
+            <tr>
+                <th style="width: 20%">Date</th>
+                <th style="width: 12%">In Time</th>
+                <th style="width: 12%">Out Time</th>
+                <th style="width: 30%">Shift</th>
+                <th style="width: 10%">In Time [HH:MM:SS]</th>
+                <th style="width: 10%">Out Time [HH:MM:SS]</th>
+            </tr>
+            <form method="post" id="log_form">
+                <input type="hidden" name="emp_id" id="emp_id" value="<?= $row->emp_id ?>">
+                <input type="hidden" name="proxi" id="proxi" value="<?= $row->proxi_id ?>">
+                <input type="hidden" name="unit_id" id="unit_id" value="<?= $unit_id ?>">
+                <?php foreach ($results as $key => $r) { ?>
+                <tr>
+                    <td style="">
+                        <?= date('d-m-Y', strtotime($r['date'])) ?>
+                        <input type="hidden" name="date[]" value="<?= $r['date'] ?>">
+                    </td>
+                    <?php if ($r['present_status'] == 'P') {
+                        $in_time = $r['in_time'];
+                        $out_time = $r['out_time'];
+                    } else {
+                        $in_time = '';
+                        $out_time = '';
+                    } ?>
+                    <td style=""> <?= $in_time ?> </td>
+                    <td style=""> <?= $out_time ?> </td>
+                    <td style=""> <?= $r['shift_name'] ?> </td>
 
-                <table width="800" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2"
-                    style="text-align:center; font-size:13px; ">
-                    <tr>
-                        <th style="width: 20%">Date</th>
-                        <th style="width: 12%">In Time</th>
-                        <th style="width: 12%">Out Time</th>
-                        <th style="width: 30%">Shift</th>
-                        <th style="width: 10%">In Time [HH:MM:SS]</th>
-                        <th style="width: 10%">Out Time [HH:MM:SS]</th>
-                    </tr>
-                    <form method="post" id="log_form">
-                        <input type="hidden" name="emp_id" id="emp_id" value="<?= $row->emp_id ?>">
-                        <input type="hidden" name="proxi" id="proxi" value="<?= $row->proxi_id ?>">
-                        <input type="hidden" name="unit_id" id="unit_id" value="<?= $unit_id ?>">
-                        <?php foreach ($results as $key => $r) { ?>
-                        <tr>
-                            <td style="">
-                                <?= date('d-m-Y', strtotime($r['date'])) ?>
-                                <input type="hidden" name="date[]" value="<?= $r['date'] ?>">
-                            </td>
-                            <td style=""> <?= $r['in_time'] ?> </td>
-                            <td style=""> <?= $r['out_time'] ?> </td>
-                            <td style=""> <?= $r['shift_name'] ?> </td>
+                    <td>
+                        <input style="font-weight:bold;" class="in_time" name="in_time[]" value="<?= $rin_time ?>" >
+                    </td>
+                    <td>
+                        <input style="font-weight:bold;" class="out_time" name="out_time[]" value="<?= $rout_time ?>">
+                    </td>
 
-                            <td>
-                                <input style="font-weight:bold;" class="in_time" name="in_time[]"
-                                    value="<?= $r['in_time']=="00:00:00"?"":$r['in_time']?>" >
-                            </td>
-                            <td>
-                                <input style="font-weight:bold;" class="out_time" name="out_time[]"
-                                    value="<?= $r['out_time']=="00:00:00"?"":$r['out_time'] ?>">
-                            </td>
-                        </tr>
-                        <?php } ?>
-                        <tr>
-                            <td colspan="6"><input class="btn btn-info" onclick="log_update(event)" type="button"
-                                    value="Attn. Sheet"></td>
-                        </tr>
-                    </form>
-                </table>
+                </tr>
+                <?php } ?>
+                <tr>
+                    <td colspan="6"><input class="btn btn-info" onclick="log_update(event)" type="button" value="Attn. Sheet"></td>
+                </tr>
+            </form>
+        </table>
     </div>
 </body>
 
@@ -159,7 +163,7 @@ function log_update(e) {
                     showConfirmButton: false,
                     timer: 3000
                 }).then((result) => {
-                    window.close();
+                  //  window.close();//
                 });
             },
             error: function(data) {
@@ -171,7 +175,7 @@ function log_update(e) {
                     showConfirmButton: false,
                     timer: 3000
                 }).then((result) => {
-                    window.close();
+                   // window.close();
                 });
             }
         })

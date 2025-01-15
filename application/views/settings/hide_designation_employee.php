@@ -40,8 +40,7 @@
                         } else {
                             $select_data = '';
                         }
-                        echo '<option ' . $select_data . '  value="' . $row['unit_id'] . '">' . $row['unit_name'] .
-                            '</option>';
+                        echo '<option ' . $select_data . '  value="' . $row['unit_id'] . '">' . $row['unit_name'] .'</option>';
                     }
                     ?>
                 </select>

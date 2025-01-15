@@ -892,5 +892,45 @@ class Import extends CI_Controller {
 		echo "Update successfully done!";
 		// dd($datas);
 	}
+
+	function update_incre_prom(){
+		$this->db->select('prev_emp_id');
+		$this->db->from('pr_incre_prom_pun');
+		$this->db->where('effective_month LIKE', '%2024%');
+		$this->db->where('status', 1);
+		$query = $this->db->get();
+		$incre_proms = $query->result();
+		$ids = array_column($incre_proms, 'prev_emp_id');
+		// dd($ids);
+		$res = array();
+		foreach($ids as $id){
+			$this->db->select('*');
+			$this->db->where('emp_id', $id);
+			$result = $this->db->get('pr_emp_com_info')->result();
+			$res = array_merge($res, $result);
+		}
+		// dd($result);
+		
+		foreach($res as $row){
+
+			$data = [
+				'prev_dept'       => $row->emp_dept_id,
+				'prev_section'    => $row->emp_sec_id,
+				'prev_line'       => $row->emp_line_id,
+				'prev_desig'      => $row->emp_desi_id,
+				'new_dept'        => $row->emp_dept_id,
+				'new_section'     => $row->emp_sec_id,
+				'new_line'        => $row->emp_line_id,
+				'new_desig'       => $row->emp_desi_id,
+			];
+
+			$this->db->where('prev_emp_id', $row->emp_id);
+			$this->db->where('effective_month LIKE', '%2024%');
+			$this->db->where('status', 1);
+			$this->db->update('pr_incre_prom_pun', $data);
+		}
+
+		echo "Success";exit;
+	}
 }
 ?>

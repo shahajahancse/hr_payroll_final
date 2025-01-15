@@ -97,7 +97,7 @@ class Setting_con extends CI_Controller {
         }
 		$id = $this->data['username'] = $this->data['user_data']->id;
 		$this->db->order_by('id', 'desc');
-		$this->db->where_in('type', [1,4]);
+		$this->db->where_in('type', [1,2,5]);
 		$this->data['access_list'] = $this->db->get('member_acl_list')->result();
 
 		$this->db->where('username_id', $id);
@@ -209,7 +209,7 @@ class Setting_con extends CI_Controller {
 
 		$this->db->order_by('id', 'desc');
 		if ($type == 1) {
-			$this->db->where_in('type', [1,4]);
+			$this->db->where_in('type', [1,2,5]);
 		} else {
 			$this->db->where('type', $type);
 		}
@@ -525,6 +525,7 @@ class Setting_con extends CI_Controller {
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
         $this->db->where('pr_emp_com_info.attn_sum_line_id IS NOT NULL');
         $this->data['pr_line'] = $this->db->get()->result_array();
+		// dd($this->data['pr_line']);
         $this->data['title'] = 'Line Wise Designation List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'settings/line_wise_atn_desig';

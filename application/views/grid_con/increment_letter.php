@@ -82,10 +82,10 @@
             ï‡f”Qv wb‡eb, 
             <?php if ($row->status == 1) { ?>
             
-            Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q †h, Avcbvi PvKzixi †gqv` GK ermi c~b© nIqvq ewb©Z welq ev¯Íevq‡bi j‡ÿ¨ KZ…©cÿ <span style="font-family:SutonnyMJ;font-size:19px;white-space:nowrap"><?php echo date('d/m/Y',strtotime($row->emp_join_date))?> Bs</span>  ZvwiL n‡Z Avcbvi eZ©gvb gvwmK ‡gvU †eZb  <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->prev_salary?></span> UvKvi m‡½ <span style="font-family:SutonnyMJ;font-size:19px"><?php echo ($row->new_salary - $row->prev_salary) ?></span> UvKv †hvM K‡i †gvU <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->new_salary?></span>
+            Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q †h, Avcbvi PvKzixi †gqv` GK ermi c~b© nIqvq ewb©Z welq ev¯Íevq‡bi j‡ÿ¨ KZ…©cÿ <span style="font-family:SutonnyMJ;font-size:19px;white-space:nowrap"><?php echo date('d/m/Y',strtotime($row->effective_month))?> Bs</span>  ZvwiL n‡Z Avcbvi eZ©gvb gvwmK ‡gvU †eZb  <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->prev_salary?></span> UvKvi m‡½ <span style="font-family:SutonnyMJ;font-size:19px"><?php echo ($row->new_salary - $row->prev_salary) ?></span> UvKv †hvM K‡i †gvU <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->new_salary?></span>
             UvKvq DbœxZ Kiv nj| 
             <br>
-            D‡jøL¨, c~e©eZx© eQi GB e„w× µge×©gvb nv‡i e„w× ‡c‡q Ges Avcbvi eZ©gvb †MÖW I c`ex, wb‡qvM c‡Îi gRyix As‡ki gRyix KvVv‡gv
+            D‡jøL¨, cieZx© eQi GB e„w× µge×©gvb nv‡i e„w× ‡c‡q Ges Avcbvi eZ©gvb †MÖW I c`ex, wb‡qvM c‡Îi gRyix As‡ki gRyix KvVv‡gv
             wb‡Pi †Uwe‡j wjwLZ cwiewZ©Z gRyix web¨vm Kjvg Abyhvqx n‡e| Av‡iv D‡jøL, _v‡K †h, wb‡qvM c‡Îi Ab¨vb¨ kZ©vejx AcwiewZ©Z _vK‡e<br>
             KZ©„cÿ Avkv K‡ib †h, Avcwb mZZv, AvšÍwiKZv I wbôvi mv‡_ KvR K‡i Av‡iv DbœwZ Ki‡eb| Avcbvi ‡eZb e„w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zzjbvg~jK Z_¨vejx wb¤œiƒct
             </p>
@@ -113,8 +113,8 @@
                     </tr>
                     <tr>
                         <td>‡MÖW</td>
-                        <td><?php echo $row->prev_grade_name =="None"? '<span style="font-family:SutonnyMJ;font-size:15px">'.'প্রযোজ্য নয়'.'</span>': $row->prev_grade_name?></td>
-                        <td><?php echo $row->new_grade_name =="None"? '<span style="font-family:SutonnyMJ;font-size:15px">'.'প্রযোজ্য নয়'.'</span>':  $row->new_grade_name?></td>
+                        <td><?php echo $row->prev_grade_name =="None"? '<span class="unicode-to-bijoy" style="font-family:SutonnyMJ;font-size:18px">'.'প্রযোজ্য নয়'.'</span>': $row->prev_grade_name?></td>
+                        <td><?php echo $row->new_grade_name =="None"? '<span class="unicode-to-bijoy" style="font-family:SutonnyMJ;font-size:18px">'.'প্রযোজ্য নয়'.'</span>':  $row->new_grade_name?></td>
                     </tr>
                     <tr>
                         <td>g~j gRyix</td>

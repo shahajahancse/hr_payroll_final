@@ -149,31 +149,90 @@ function englishToBengaliMonth($englishMonth) {
             font-size:19px;
         } */
     </style>
+        <style>
+        
+        .voucher-container {
+            border: 1px solid black;
+            padding: 20px;
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+        }
+        .header img {
+            width: 100px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .header p {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+        .voucher-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid black;
+            padding: 5px;
+            /* text-decoration: underline; */
+        }
+        .details, .footer {
+            margin-top: 10px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .details th, .details td, .footer td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .details th {
+            background-color: #f2f2f2;
+        }
+        .details td {
+            vertical-align: top;
+        }
+        .in-word {
+            font-weight: bold;
+        }
+        .signature {
+            margin-top: 20px;
+        }
+        .signature td {
+            border: none;
+            text-align: center;
+        }
+    </style>
+
 </head>
 
 <body>
         <!-- < ?php dd($values)?> -->
     <div class="container w-75">
         
- <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
-            <div class="d-flex flex-row justify-content-between">
-                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
-            </div>
-            <?php } else if($unit_id == 2){?>
-            <div class="d-flex flex-row justify-content-between">
-                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;"> Document Code : LSAL/HR/03/084</p>
-            </div>
-            <?php }else if($unit_id == 4){?>
-            <div class="d-flex flex-row justify-content-between">
-                <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/052</p>
-            </div>
-            <?php }?>
+    <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
+        </div>
+        <?php } else if($unit_id == 2){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;"> Document Code : LSAL/HR/03/084</p>
+        </div>
+        <?php }else if($unit_id == 4){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/052</p>
+        </div>
+    <?php }?>
             <div class="mt-3">
                 <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
                 <div class="d-flex">
@@ -274,7 +333,6 @@ function englishToBengaliMonth($englishMonth) {
                     ?> </td>
                    <td class="unicode-to-bijoy"> <?php echo isset($total_value->working_days) ? $total_value->working_days : 0 ?> </td>
                     <td class="unicode-to-bijoy"><?php echo $rptt =  $row->resign_date == null ? 0 : bcdiv($row->gross_sal ,date('t',strtotime($row->resign_date)),2) ?></td>
-                    <!-- <td>< ?php echo $rptt =  $row->resign_date == null ? 0 : round(($row->gross_sal / date('t', strtotime($row->resign_date))), 2) ?></td> -->
                    <td class="unicode-to-bijoy"><?php echo isset($total_value->ot_rate) ? $ptt =  $rptt * $total_value->working_days : 0 ?></td>
                 </tr>
                 <tr>
@@ -386,8 +444,91 @@ function englishToBengaliMonth($englishMonth) {
 
             <p style="font-size:19px" class="text-justify ml-3 unicode-to-bijoy">আমি  <?php echo $row->name_bn?>, পদবীঃ <?php echo $row->desig_bangla?>, র্কাড নম্বরঃ <?php echo $row->emp_id?>, সেকশন এন্ড লাইনঃ <?php $row->sec_name_bn.' ,'.$row->line_name_bn?>, চুড়ান্ত  নিষ্পত্তকিরন বাবদঃ <?php echo ceil($total_taka); ?> টাকা এর প্রাপ্তি স্বীকার করছি এবং এই প্রতিষ্ঠানে আমার আর কোন আর্থিক পাওনা কিংবা দাবী-দাওয়া নাই। </p>
             <p class="text-right unicode-to-bijoy" style="font-size:19px;margin-right:200px"> স্বাক্ষরঃ</p>
-        <?php }?>
+      
     </div>
+    <br>
+    <br>
+
+
+    <div class="voucher-container">
+
+        <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
+        </div>
+        <?php } else if($unit_id == 2){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-01-2020</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;"> Document Code : LSAL/HR/03/084</p>
+        </div>
+        <?php }else if($unit_id == 4){?>
+        <div class="d-flex flex-row justify-content-between">
+            <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :15.01.2022</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
+            <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/052</p>
+        </div>
+    <?php }?>
+    <div class="mt-3">
+        <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
+        <div class="d-flex">
+            <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="width: 80px;height: 50px;position: absolute;">
+            <h1 class="text-center  unicode-to-bijoy" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h1>
+        </div>
+    </div>
+    <div class="col-md-12" >
+        <p class="text-center h4 unicode-to-bijoy" ><?= $com_info->company_add_bangla ?></p>
+    </div>
+    <div class="d-flex justify-content-between">
+        <p>Voucher No:</p>
+        <p class="voucher-title">Payment Voucher</p>
+        <p style="margin-left: 20px;">Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    </div>
+  
+        
+        <table class="details">
+            <tr>
+                <td>Name:</td>
+                <td><?php echo $row->name_bn?></td>
+                <td>Card No:</td>
+                <td><?php echo $row->emp_id?></td>
+            </tr>
+            <tr>
+                <td>Designation:</td>
+                <td><?php echo $row->desig_bangla?></td>
+                <td>Section & Line:</td>
+                <td><?php echo $row->sec_name_bn?></td>
+            </tr>
+        </table>
+        <table class="details" style="margin-top: 10px;">
+            <tr>
+                <th>Description</th>
+                <th>Net Amount</th>
+            </tr>
+            <tr>
+                <td>জানুয়ারি - 2024 মাসের<br>ছুটাভিত্তি কাজ বাবদ পাওনাাদি</td>
+                <td><?php echo ceil($total_taka); ?></td>
+            </tr>
+            <tr>
+                <td class="in-word" colspan="1">In Word:</td>
+                <td><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা।</td>
+            </tr>
+            <tr>
+                <td>Payable Amount:</td>
+                <td><?php echo ceil($total_taka); ?></td>
+            </tr>
+        </table>
+        <div class="d-flex justify-content-between mt-5" style="margin-top: 70px !important">
+            <p>Prepared by</p>
+            <p>Accounts Ex.</p>
+            <p>Manager (HR & Comp.)</p>
+            <p>A.G.M (Ad. & Finance)</p>
+        </div>
+    </div>
+<?php }?>
+
 <script src="<?=base_url()?>js/unicode_to_bijoy.js" type="text/javascript"></script>
 <?php echo "<script>applyUnicodeToBijoy()</script>"?>
 </body>

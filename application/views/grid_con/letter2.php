@@ -75,8 +75,7 @@
               $date = DateTime::createFromFormat('d/m/Y', $l_date);
               $date->modify('+1 day');
               $l_date = $date->format('d/m/Y');
-              // dd($l_date);
-              // $l_date =  date('');
+
               list($day, $month, $year) = explode('/', $l_date);
               $formatted_date_str = "$year-$month-$day";
               $date_timestamp = strtotime($formatted_date_str);
@@ -138,17 +137,15 @@
         <p class="text-justify unicode-to-bijoy" style='font-size:23px'>
         আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date . '+1 days'))?></span></b> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত i‡q‡Qb। এ প্রেক্ষিতে কারখানার
         কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <b><span style="font-family: SutonnyMJ;font-size:19px">
-          <?php 
+        <?php 
           $second_date = add_days_skipping_fridays($value->left_date, 11,$value->emp_id);
-          if(date('D',strtotime($second_date)) == 'Sat'){
-            $date = DateTime::createFromFormat('d/m/Y', $second_date);
+          $date = DateTime::createFromFormat('d/m/Y', $second_date);
+          if($date->format('D') == 'Sat'){
             $date->modify('+1 day');
             echo $date->format('d/m/Y');
           }else{
             echo $second_date;
           }
-
-        
         ?></span></b> ইং তারিখে যার <b><span style="font-family: SutonnyMJ;font-size:19px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date . '+1 days'))?></span><span style="font-family: SutonnyMJ;font-size:19px">-G</span></span></b> এর বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে।
         কিন্তু অদ্যবদি আপনি উপরোক্ত বিষয়ে লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।
         <br><br>

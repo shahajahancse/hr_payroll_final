@@ -317,6 +317,14 @@ class Grid_con extends CI_Controller {
 		$data['grid_emp_id'] = $grid_emp_id;
 		$this->load->view('grid_con/general_info',$data);
 	}
+	function grid_general_eng(){
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"] = $this->Grid_model->grid_general_info($grid_emp_id);
+		$data['unit_id'] = $this->input->post('unit_id');
+		$data['grid_emp_id'] = $grid_emp_id;
+		$this->load->view('grid_con/grid_general_eng',$data);
+	}
 
 	function worker_register(){
 		$grid_data = $this->input->post('spl');

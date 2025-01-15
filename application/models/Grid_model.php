@@ -514,10 +514,12 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->select("log.emp_id");
 		// $this->db->from("pr_emp_shift_log as log");
 		$this->db->join('pr_emp_com_info as com', 'log.emp_id = com.emp_id', 'left');
+		$this->db->join('emp_designation as desig', 'desig.id = com.emp_desi_id', 'left');
 		$this->db->join('emp_line_num as num', 'com.emp_line_id = num.id', 'left');
 		$this->db->join('pr_emp_per_info as per', 'com.emp_id = per.emp_id', 'left');
 
 		$this->db->where("com.unit_id", $unit_id);
+		$this->db->where("desig.hide_status",1);
 		$this->db->where("log.shift_log_date", $date);
 		// $this->db->where("log.in_time !=", "00:00:00");
 		// $this->db->where("log.present_status !=", "W");
@@ -720,9 +722,9 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 			pr_emp_shift_log.eot,
 			pr_emp_shift_log.deduction_hour,
 			pr_emp_shift_log.modify_eot,
+			
 			'
 		);
-
 		$this->db->from('pr_emp_com_info');
 		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'LEFT');
 		$this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id', 'LEFT');
@@ -734,62 +736,46 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->where('pr_emp_shift_log.shift_log_date', $date);
 
 		if($type == 1){
-			// dd($grid_emp_id);
 			$this->db->where('pr_emp_shift_log.present_status', "P");
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		}
 
 		if($type == 2){
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
-			$this->db->select('pr_leave_trans.leave_type');
 			$this->db->where('pr_emp_shift_log.present_status', "A");
-			$this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
 		}
 
 		if($type == 3){
 			$this->db->select('pr_leave_trans.leave_type');
-			$this->db->where('pr_leave_trans.start_date',$date);
 			$this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+			$this->db->where('pr_leave_trans.leave_start',$date);
 			$this->db->where('pr_emp_shift_log.present_status', "L");
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		}
 
 		if($type == 4){
-			// dd($grid_emp_id);
 			$this->db->where('pr_emp_shift_log.late_status = 1');
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		}
 
 		if($type == 5){
 			$this->db->where('pr_emp_shift_log.ot > 0');
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		}
 
 		if($type == 6){
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where('pr_emp_shift_log.eot >= 2');
 		}
 		if($type == 7){
-			// dd($type);
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where("(pr_emp_shift_log.in_time = '00:00:00' OR pr_emp_shift_log.out_time = '00:00:00') AND pr_emp_shift_log.present_status = 'P'");
 		}
 
 		if($type == 8){
-			// dd($grid_emp_id);
-			$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 			$this->db->where("((pr_emp_shift_log.in_time = '00:00:00' OR pr_emp_shift_log.out_time = '00:00:00') AND (pr_emp_shift_log.present_status = 'P' OR pr_emp_shift_log.present_status = 'A'))");
-			//$this->db->where_not("(pr_emp_shift_log.in_time = '00:00:00' AND pr_emp_shift_log.out_time = '00:00:00')");
-
 		}
-
+		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->order_by('emp_line_num.line_name_en', 'ASC');
-		// $this->db->order_by('pr_emp_com_info.emp_id','ASC');
+		$this->db->order_by('pr_emp_com_info.emp_id','ASC');
 
 		// $this->db->order_by('emp_line_num.line_name_en','ASC');
-		// $this->db->group_by('pr_emp_com_info.emp_id');
+		$this->db->group_by('pr_emp_com_info.emp_id');
 		$query = $this->db->get()->result_array();
-		// dd($query);
+		// dd($this->db->last_query());
 		if(empty($query)){
 			echo "Requested list is empty";
 			exit;
@@ -1365,7 +1351,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->where_in("pr_leave_trans.emp_id", $emp_ids);
 		$this->db->where("pr_leave_trans.leave_start Between '$firstdate' and '$seconddate'");
 		$this->db->where_in("pr_emp_com_info.unit_id", $unit_id);
-		// $this->db->group_by("pr_leave_trans.emp_id");
+		// $this->db->group_by("pr_leave_trans.start_date");
 		$query = $this->db->get()->result();
 		//#dd($query );
 		if($query)
@@ -8772,9 +8758,13 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 			SELECT 
 				pr_emp_com_info.id,
 				pr_emp_com_info.emp_id,
+				pr_emp_com_info.ot_entitle,
+				pr_emp_com_info.com_ot_entitle,
 				pr_emp_com_info.emp_sal_gra_id,
 				pr_emp_com_info.emp_join_date,
 				pr_emp_com_info.gross_sal,
+				pr_emp_com_info.com_gross_sal,
+				pr_emp_com_info.att_bonus,
 				pr_emp_per_info.name_bn,
 				pr_emp_per_info.name_en,
 				pr_emp_per_info.emp_dob,
@@ -8799,6 +8789,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 				emp_section.sec_name_en,
 				emp_line_num.line_name_bn,
 				emp_line_num.line_name_en,
+				allowance_attn_bonus.rule,
 				per_dis.name_bn  as  per_dis_name_bn,
 				per_upa.name_bn  as  per_upa_name_bn,
 				per_post.name_bn as  per_post_name_bn,
@@ -8818,6 +8809,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 			FROM pr_emp_per_info
 			LEFT JOIN pr_emp_com_info ON pr_emp_per_info.emp_id = pr_emp_com_info.emp_id
 			LEFT JOIN emp_designation ON pr_emp_com_info.emp_desi_id = emp_designation.id
+			LEFT JOIN allowance_attn_bonus ON emp_designation.attn_id = allowance_attn_bonus.id
 			LEFT JOIN emp_depertment ON pr_emp_com_info.emp_dept_id = emp_depertment.dept_id
 			LEFT JOIN emp_section ON pr_emp_com_info.emp_sec_id = emp_section.id
 			LEFT JOIN emp_line_num ON pr_emp_com_info.emp_line_id = emp_line_num.id
@@ -9420,6 +9412,7 @@ function grid_emp_job_application($grid_emp_id){
 			pr_emp_com_info.emp_id,
 			pr_emp_com_info.proxi_id,
 			pr_emp_com_info.ot_entitle,
+			pr_emp_com_info.com_ot_entitle,
 			pr_emp_com_info.att_bonus,
 			pr_emp_per_info.name_en,
 			pr_grade.gr_name,
@@ -9469,8 +9462,9 @@ function grid_emp_job_application($grid_emp_id){
 			$data["line_name"][] 	= $rows->line_name_en;
 			$data["gr_name"][] 		= $rows->gr_name;
 			$data["ot_entitle"][] 	= $rows->ot_entitle;
+			$data["com_ot_entitle"][] 	= $rows->com_ot_entitle;
 			$data["att_bonus"][] 	= $rows->att_bonus;
-			$data["rule"][] 	= $rows->rule;
+			$data["rule"][] 	    = $rows->rule;
 		}
 		if($data){
 			return $data;

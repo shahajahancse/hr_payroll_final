@@ -94,7 +94,7 @@
 		echo "</td>";
 
 		echo "<td  style='text-align:center;'>";
-		if($values["ot_entitle"][$k] == 0){
+		if($values["com_ot_entitle"][$k] == 0){
 			echo "Yes";
 		}else{
 			echo "No";

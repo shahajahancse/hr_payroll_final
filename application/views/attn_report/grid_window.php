@@ -139,6 +139,9 @@
 						<li><a href="#monthly" data-toggle="tab">Monthly Reports</a></li>
 						<li><a href="#continuous" data-toggle="tab">Continuous Reports</a></li>
 						<li><a href="#other" data-toggle="tab">Other Reports</a></li>
+						<?php if($_SESSION['data']->unit_name == 4){?>
+						<li><a href="#roster" data-toggle="tab">Roster Employee List</a></li>
+						<?php }?>
 					</ul>
 					<div class="tab-content">
 						<?php
@@ -325,6 +328,7 @@
 							<?php } ?>
 							<?php if(in_array(56,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_general_info()">General Report</button>
+							<button class="btn input-sm sbtn" onclick="grid_general_eng()">General Report(Eng)</button>
 							<?php } ?>
 
 
@@ -407,7 +411,12 @@
                             <?php } ?>
 						</div>
 						<!-- Other Reports end -->
-					</div>
+						 <?php if($_SESSION['data']->unit_name == 4){?>
+						 <div class="tab-pane " id="roster">
+							<button class="btn input-sm sbtn" onclick="grid_roster_employee()">Roster List</button>
+						</div>  <!-- roster list end  -->
+						<?php }?>
+					</div> 
 				</div>
 			</div>
 			<!-- button area for report section end -->

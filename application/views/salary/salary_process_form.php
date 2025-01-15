@@ -11,10 +11,12 @@
 </style>
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
-	<?php
-		$this->load->model('common_model');
-		$unit = $this->common_model->get_unit_id_name();
-	?>
+<?php
+    $this->load->model('common_model');
+    $unit = $this->common_model->get_unit_id_name();
+    $user_id = $this->session->userdata('data')->id; 
+    $acl = check_acl_list($user_id); 
+?>
 <div class="content">
     <div class="row">
         <div class="col-md-8">
@@ -131,9 +133,9 @@
                 <div class="input-group" style="gap: 14px">
                     <input type="month" class="form-control" id="process_month" >
                     <span class="input-group-btn">
-                        <input class="btn btn-primary" onclick='salary_process()' type="button" value='Process' />
-                        <input class="btn btn-success" onclick='salary_process_block()' type="button" value='Final Process' style="margin: 0px 3px !important;" />
-                        <input class="btn btn-danger" onclick='salary_block_delete()' type="button" value='Final Delete' />
+                        <input class="btn btn-primary" style="<?php  if(in_array(131,$acl)) {echo '';} else { echo 'margin: 0px 3px !important;"';}?>" onclick='salary_process()' type="button" value='Process' />
+                        <input class="btn btn-success" onclick='salary_process_block()' type="button" value='Final Process' style="margin: 0px 3px !important; <?php  if(in_array(131,$acl)) {echo '';} else { echo 'display:none;"';}?>" />
+                        <input class="btn btn-danger" style="<?php if(in_array(133,$acl)) {echo '';} else { echo 'display:none;';}?>" onclick='salary_block_delete()' type="button" value='Final Delete' />
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-4 -->

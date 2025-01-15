@@ -220,7 +220,7 @@ input[type="number"] {
                             <div class="form-group">
                                 <label>Education </label>
                                 <input type="text" name="education" id="education" class="form-control input-sm">
-                                <!-- <?php echo form_error('education');?>
+                                <!-- < ?php echo form_error('education');?>
                                  <Select name="education" id="education" class="form-control input-sm required">
                                     <option value="">select</option>
                                     <option value="None">None</option>
@@ -535,7 +535,6 @@ input[type="number"] {
                                 </select>
                             </div>
                         </div>
-
                         <?php $shifts = $this->db->where('unit_id',$user_data->unit_name)->get('pr_emp_shift')->result(); ?>
                         <div class="col-md-3">
                             <div class="form-group">
@@ -625,7 +624,7 @@ input[type="number"] {
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row"  <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Gross Salary <span style="color: red;">*</span> </label>
@@ -684,8 +683,7 @@ input[type="number"] {
                                 style="display: inline; margin-right: 10px;" required checked>No
                         </div>
                     </div>
-                    <div class="row"
-                        <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
+                    <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Salary <span style="color: red;">*</span> </label>

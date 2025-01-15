@@ -91,9 +91,11 @@
                             <td><?php echo $pr_lines["line_name_en"] ?></td>
                             <td><?php echo $pr_lines["unit_name"] ?></td>
                             <td><?php
-                            $samari_line=$pr_lines["attn_sum_line_id"];
+                            // $samari_line=$pr_lines["attn_sum_line_id"];
+                            $samari_line=$pr_lines["emp_line_id"];
+                            // dd($samari_line);
                             $this->db->where('id', $samari_line);
-                            $query = $this->db->get('pr_line_num')->row();
+                            $query = $this->db->get('emp_line_num')->row();
                             echo $query->line_name_en
                             ?></td>
                             <td>

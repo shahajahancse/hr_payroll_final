@@ -60,7 +60,7 @@
            $data =  $this->db->select('leave_type,leave_start,leave_end,total_leave')->where('leave_start',date('Y-m-d',strtotime($first_date)))->where('emp_id',$values['emp_info']->emp_id)->order_by('leave_end','DESC')->get('pr_leave_trans')->row();
         ?>
         <div class="ml-3">
-            <p>Rbve,</p>
+            <p>Rbve/Rbvev,</p>
             <p>webxZ wb‡e`b GB ‡h, 
             Avwg <span style="font-family:SutonnyMJ;font-size:17px"><?php echo $values['emp_info']->name_bn?></span> 
             <?php echo date('d-m-Y',strtotime($first_date)) < date('d-m-Y')?"MZ":"AvMvgx"?> <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?>  Bs ZvwiL n‡Z <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> ZvwiL  <span style='font-family:sutonnyMJ;font-size:18px'>পর্যন্ত</span> ‡gvU
@@ -83,23 +83,23 @@
                         echo 'webv ‡eZ‡b';
                     }
                     ?>
-                    w`‡bi   QywUi Rb¨ Av‡e`b KiwQ|
+                    QywUi Rb¨ Av‡e`b KiwQ|
             </p><br>
             <div style="line-height:10px">
                 <span style='display: flex'>Av‡e`bKvixi bvg t 
-                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 17px;border-bottom: 3px dotted black;width: 82%;"> 
+                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 17px;border-bottom: 1px dotted black;width:75%;"> 
                         <?php echo $values['emp_info']->name_bn?>
                     </p>
                 </span>
 
                 <span style="display:flex">
                     <span style='display: flex;width: 50%;'>c`ex t 
-                        <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 17px;border-bottom: 3px dotted black;width:85%;">
+                        <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 17px;border-bottom: 1px dotted black;width:85%;">
                             <?php echo $values['emp_info']->desig_bangla?>
                         </p>
                     </span>
                     <span style='display: flex;width: 50%;'>KvW© bs t 
-                        <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 3px dotted black;width: 79%;">
+                        <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 66%;">
                             <?php echo $values['emp_info']->emp_id?>
                         </p>
                     </span>
@@ -107,31 +107,29 @@
 
                 <span style="display:flex">
                     <span style='display: flex;width: 50%;'>‡mKkb t 
-                        <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 17px;border-bottom: 3px dotted black;width:82%;">
+                        <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width:82%;">
                             <?php echo $values['emp_info']->sec_name_bn?>
                         </p>
                     </span>
                     <span style='display: flex;width: 50%;'>wefvM t 
-                        <p class='unicode-to-bijoy' style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 3px dotted black;width: 81%;">
+                        <p class='unicode-to-bijoy' style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 68%;">
                             <?php echo $values['emp_info']->dept_bangla?>
                         </p>
                     </span>
                 </span>
 
                 <span style='display: flex'>QzwUi KviY t 
-                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 17px;border-bottom: 3px dotted black;width: 87%;"> 
+                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 15px;border-bottom: 1px dotted black;width: 80%;"> 
                         <?php echo $reason?>
                     </p>
                 </span>
-                    <br>
                 <span style='display: flex'>QzwU‡Z Ae¯’vbiZ wVKvbv t 
-                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 17px;border-bottom: 3px dotted black;width: 76%;"> 
+                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 15px;border-bottom: 1px dotted black;width: 70%;"> 
                         <?php echo $add_on_vacation?>
                     </p>
                 </span>
-                    <br>
                 <span style='display: flex'>Av‡e`bKvixi Kv‡R †hvM`v‡bi/ wb‡qv‡Mi ZvwiL t 
-                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 3px dotted black;width: 62%;"> 
+                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 52%;"> 
                         <?php echo $values['emp_info']->emp_join_date?>
                     </p>
                 </span>
@@ -190,17 +188,17 @@
                 <td></td>
             </tr>
             <tr class="text-center">
-                <td>gvZ…Z¡Kvjxb QzwU</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr class="text-center">
                 <td>AwR©Z QzwU</td>
                 <td><?php echo $earn_leave?></td>
                 <td><?= $leave_taken_earn ?></td>
                 <td><?= $leave_ba_earn ?></td>
+                <td></td>
+            </tr>
+            <tr class="text-center">
+                <td>gvZ…Z¡Kvjxb QzwU</td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
             </tr>
             <tr class="text-center">
@@ -233,7 +231,6 @@
 
         <br>
         <br>
-        <br>
         <div class="ml-3 d-flex justify-content-between">
             <p style="border-top:1px dashed black">mycvwikKvix</p>
             <p style="border-top:1px dashed black">‡mKkb/wefvMxq cÖavb</p>
@@ -246,8 +243,8 @@
 
     <div class="container w-75">
     <h2 class="text-center mt-2" style="border-radius:4px;border: 1px solid #57cf77;width: 250px;margin: 0 auto;">Av‡e`bKvixi Ask</h2> <br>
-        <p>Av‡e`bKvixi bvg t <?php echo "<span style='font-size:17px'>".$values['emp_info']->name_bn.'</span>' ?>, c`ex t <?php echo "<span style='font-size:17px'>".$values['emp_info']->desig_bangla.'</span>'?>,
-KvW© bs t <?php echo $values['emp_info']->emp_id?>, ‡mKkb t <?php echo "<span style='font-size:17px'>".$values['emp_info']->sec_name_bn.'</span>'?>, wefvMt <?php echo "<span style='font-size:17px'>". $values['emp_info']->dept_bangla . '</span>'?> 
+        <p>Av‡e`bKvixi bvg t <?php echo "<span style='font-size:17px'>".$values['emp_info']->name_bn.'</span>' ?>, c`ex t <?php echo "<span style='font-size:18px'>".$values['emp_info']->desig_bangla.'</span>'?>,
+KvW© bs t <?php echo $values['emp_info']->emp_id?>, ‡mKkb t <?php echo "<span style='font-size:20px'>".$values['emp_info']->sec_name_bn.'</span>'?>, wefvMt <?php echo "<span style='font-size:22px'>". $values['emp_info']->dept_bangla . '</span>'?> 
  Avcbv‡K <?php echo date('d/m/Y',strtotime($f_date))?> Bs n‡Z <?php echo date('d/m/Y',strtotime($s_date))?> ch©šÍ †gvU <?php echo $interval->format('%a ') + 1?> w`b <?= $type == 'cl' ? '‰bwgwËK' : ($type == 'el' ? 'AwR©Z' : ($type == 'sl' ? 'Amy¯’Zvi' : ($type == 'ml' ? 'cªmywZKvjxb' : ($type == 'sp' ? '‡¯úwkqvj' : '........................................')))) ?> QzwU gÄyi Kiv nj|  D‡jøL¨ †h, KZ…©cÿ Riæix Ae¯’vi †cÖwÿ‡Z gÄyiK…Z QzwU ¯’wMZ wKsev 
 evwZj Ki‡Z cvi‡eb|</p>
     <div style='float: right; text-align: center;border-top:2px dashed black;'>
