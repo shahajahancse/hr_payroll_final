@@ -225,8 +225,9 @@ foreach($values as $i => $value){
 	<td >
 		
 	</td>
-	<td style="background: #DFDFFF">
-		<?php echo $value->emp_sex;?>
+	<td style="background: #DFDFFF;">
+		<?php echo $value->emp_sex == 1 ? "Male": 'Female';?>
+		<!-- < ?php echo $value->emp_sex == 1 ? "cyiæl": 'bvix';?> -->
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -271,7 +272,7 @@ foreach($values as $i => $value){
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $value->per_village.', '.$value->per_post_name_bn.', '.$value->per_upa_name_bn.', '.$value->per_dis_name_bn;?>
+		<?php echo $value->per_village.', '.$value->per_post_name_en.', '.$value->per_upa_name_en.', '.$value->per_dis_name_en;?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -286,7 +287,7 @@ foreach($values as $i => $value){
 		
 	</td>
 	<td style="background: #DFDFFF">
-				<?php echo $value->pre_village.', '.$value->pre_post_name_bn.', '.$value->pre_upa_name_bn.', '.$value->pre_dis_name_bn;?>
+				<?php echo $value->pre_village.', '.$value->pre_post_name_en.', '.$value->pre_upa_name_en.', '.$value->pre_dis_name_en;?>
 	</td>
 </tr>
 <tr height="50px;">
@@ -345,7 +346,7 @@ foreach($values as $i => $value){
 		
 	</td>
 	<td style="background: #BFDF7F">
-		<?php echo $value->sec_name_bn;?>
+		<?php echo $value->sec_name_en;?>
 	</td>
 </tr>
 <tr height="12px"></tr>

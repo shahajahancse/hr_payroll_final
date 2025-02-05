@@ -15,7 +15,13 @@
 </head>
 
 <body style="margin: 0px;">
-    <?php $this->load->view("head_english"); ?>
+
+    <?php 	
+		if($values == null){
+			exit('No Data Found');
+		}
+		$this->load->view("head_english"); 
+	?>
     <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
         <span style="font-size:12px; font-weight:bold;">
             <?= ($status == "2" ? "Employee" : "Staff") ?> Probation list, Date

@@ -22,8 +22,6 @@ class Salary_process_model extends CI_Model{
 		$end_date      = $process_month .'-'. $num_of_days;
 		$table_name    = "att_".date("Y_m", strtotime($process_month));
 
-		// dd($firstdayname .'=='. $firstday .'=='. $lastday);
-
 		//PROCESS MONTH EXISTANCE CHECK
 		if(!$this->db->table_exists($table_name))
 		{
@@ -44,46 +42,30 @@ class Salary_process_model extends CI_Model{
 			return "Please Finally Processed Previous Month..";
 		}
 		
-		// dd($grid_emp_id);
-		$arr = array('10','104','8','47','34','32');
-		$this->db->select("
-				id,
-				emp_id,
-				emp_dept_id,
-				emp_sec_id,
-				emp_line_id,
-				emp_desi_id,
-				emp_cat_id,
-				emp_join_date,
-				gross_sal,
-				com_gross_sal,
-				ot_entitle,
-			");
-		$this->db->where("unit_id", $unit_id);
-		$this->db->where_in("id", $grid_emp_id);
-		$this->db->order_by("id");
-		$query = $this->db->get("pr_emp_com_info");
-		
+		$dddd=implode(',', $grid_emp_id);
+		$query = $this->get_emp_info($dddd, $unit_id);
+
 		if($query->num_rows() == 0)
 		{
 			return "Employee information does not exist";
 		}
 		else
 		{
+			$attn_rule = $this->get_attn_bonus_rule($start_date, $unit_id);
 			$data = array();
 			$data_com 	= array();
 			foreach($query->result() as $rows)
 			{
 				set_time_limit(0) ;
 				ini_set("memory_limit","512M");
+				$before_after_absent = 0;
 				
 				//============ GENERAL INFORMATION ======================
 				//=================================================================
-				// $emp_name 		= $this->emp_name($rows->emp_id);
-				// $emp_desig 		= $this->emp_desig($rows->emp_desi_id);
 				$id 			= $rows->id; 
 				$emp_id 		= $rows->emp_id; 
 				$emp_dept_id	= $rows->emp_dept_id;
+				$emp_grade_id	= $rows->grade_id;
 				$emp_sec_id 	= $rows->emp_sec_id;
 				$emp_line_id	= $rows->emp_line_id;
 				$desi_id 		= $rows->emp_desi_id;
@@ -93,24 +75,53 @@ class Salary_process_model extends CI_Model{
 				$gross_sal 		= $rows->gross_sal;
 				$gross_sal_com 	= $rows->com_gross_sal;
 				$ot_check 		= $rows->ot_entitle;
+				$gender 		= $rows->gender;
 				
-				$sp_eligibility = $this->salary_process_eligibility($emp_id, $start_date, $gross_sal);
+				$sp_eligibility = $this->salary_process_eligibility($emp_id, $start_date);
+				// vardump($sp_eligibility);
 
 				if($sp_eligibility == true)
 				{
 					//========== FOR INCREMENT AND PROMOTION ================
 					//==========================================================
 					$where = "trim(substr(effective_month,1,7)) = '$start_date'";
-					$this->db->select("new_salary, new_com_salary");
+					$this->db->select("*");
 					$this->db->where("new_emp_id", $emp_id);
 					$this->db->where($where);
 					$inc_prom = $this->db->get("pr_incre_prom_pun");
-					if($inc_prom->num_rows() > 0 )
-					{
-						$inc_p = $inc_prom->row();
+					// dd($inc_prom->result());
+					if($inc_prom->num_rows() > 0 ) {
+						$inc_p 			= $inc_prom->row();
 						$gross_sal 		= $inc_p->new_salary;
 						$gross_sal_com 	= $inc_p->new_com_salary;
+					}else{
+						$where = "trim(substr(effective_month,1,7)) > '$start_date'";
+						$this->db->select("*");
+						$this->db->where("new_emp_id",$emp_id);
+						$this->db->where($where);
+						$this->db->limit(1);
+						$inc_prom = $this->db->get("pr_incre_prom_pun");
+						if($inc_prom->num_rows() > 0 )
+						{
+							foreach($inc_prom->result() as $row)
+							{
+								// dd($row->prev_dept);
+								$gross_sal 		= $row->prev_salary;
+								$gross_sal_com 	= $row->prev_salary;
+								$emp_dept_id	= $row->prev_dept;
+								$emp_grade_id	= $row->prev_grade ;
+								$emp_sec_id 	= $row->prev_section;
+								$emp_line_id	= $row->prev_line;
+								$desi_id 		= $row->prev_desig;
+							}
+						}
+						else
+						{
+							echo "";
+						}
+					
 					}
+
 					//============= END INCREMENT AND PROMOTION ===============
 					$stop_salary	= $this->stop_salary_check($emp_id,$start_date);
 					$ss 			= $this->common_model->salary_structure($gross_sal);
@@ -140,11 +151,11 @@ class Salary_process_model extends CI_Model{
 					$data["sec_id"] 			= $emp_sec_id;
 					$data["line_id"] 			= $emp_line_id;
 					$data["desig_id"] 			= $desi_id;
+					$data["gr_id"] 				= $emp_grade_id;
 					$data["stop_salary"] 		= $stop_salary;
 					$data["emp_status"] 		= $emp_cat_id;
 					$data["gross_sal"] 			= $gross_sal;
 					$data["salary_structure"] 	= json_encode($salary_structure);
-					
 
 					//COMPLIENCE
 					$data_com["emp_id"] 		= $emp_id;
@@ -153,39 +164,23 @@ class Salary_process_model extends CI_Model{
 					$data_com["sec_id"] 		= $emp_sec_id;
 					$data_com["line_id"] 		= $emp_line_id;
 					$data_com["desig_id"] 		= $desi_id;
+					$data_com["gr_id"] 				= $emp_grade_id;
+					$data_com["stop_salary"]	= 1;		
 					$data_com["emp_status"] 	= $emp_cat_id;
 					$data_com["gross_sal"] 		= $gross_sal_com;
-					$data_com["stop_salary"]	= 1;		
 
 					$ssc 		= $this->common_model->salary_structure($gross_sal_com);
-					$basic_sal_com 				= $ssc['basic_sal'];
-					$house_rent_com 			= $ssc['house_rent'];
-					$madical_allo_com 			= $ssc['medical_allow'];
-					$food_allow_com 			= $ssc['food_allow'];
-					$trans_allow_com 			= $ssc['trans_allow'];
-
-					$data_com["basic_sal"] 		= $basic_sal_com;
-					$data_com["house_r"] 		= $house_rent_com;
-					$data_com["medical_a"] 		= $madical_allo_com;
-					$data_com["food_allow"] 	= $food_allow_com;
-					$data_com["trans_allow"] 	= $trans_allow_com;
-					$salary_structure_com = array(
-						'basic_sal'   => $basic_sal_com,	
-						'house_r' 	  => $house_rent_com,	
-						'medical_a'   => $madical_allo_com,	
-						'food_allow'  => $food_allow_com,	
-						'trans_allow' => $trans_allow_com,
-					);
-					
-					$data_com["salary_structure"] = json_encode($salary_structure_com);
-
+					$data_com["basic_sal"] 		= $ssc['basic_sal'];
+					$data_com["house_r"] 		= $ssc['house_rent'];
+					$data_com["medical_a"] 		= $ssc['medical_allow'];
+					$data_com["food_allow"] 	= $ssc['food_allow'];
+					$data_com["trans_allow"] 	= $ssc['trans_allow'];
 					//=========== END GENERAL INFORMATION ==================
-				
 				
 					//========= PRESENT STATUS ========================
 					//==============================================================
-					$salary_month = trim(substr($end_date,0,7));
-		            $join_month = trim(substr($doj,0,7));
+					$salary_month  = date("Y-m-01", strtotime($end_date));
+					$join_month    = date("Y-m-01", strtotime($doj));
 		            if (strtotime($join_month) > strtotime($salary_month)) {
 		                continue;
 		            } 
@@ -193,7 +188,7 @@ class Salary_process_model extends CI_Model{
 		            $join_left_resign = 0;
 		            $resign_check   = $this->resign_check($emp_id, $start_date, $end_date);
 		            $left_check     = $this->left_check($emp_id, $start_date, $end_date);
-
+					$start_date     = date("Y-m-01", strtotime($process_month));
 		            if($resign_check != false and $salary_month == $join_month)
 		            {
 		                $resign_after_absent = $this->get_days($resign_check['resign_date'],$end_date);
@@ -237,29 +232,48 @@ class Salary_process_model extends CI_Model{
 		                $before_after_absent = 0;
 		            }
 	
-					// $absent = "A"; $absent = $this->attendance_check($rows->emp_id,$absent,$total_days, $search_date);
+					// attendance status check with out ml leave
 					$attendances = $this->attendance_check($emp_id, $start_date, $end_date);
 					$attend  =  $attendances->attend;
 					$absent  =  $attendances->absent;
 					$weekend =  $attendances->weekend;
 					$holiday =  $attendances->holiday;
+					$total_leave =  $attendances->total_leave;
 					
 					// dd($attendances);
 					$leaves = $this->leave_db($rows->emp_id, $start_date, $end_date);
-					// dd($leaves);
-					$cas_leave  = $leaves->cl;
-					$sick_leave = $leaves->sl;
-					$earn_leave = $leaves->el;
-					$m_leave    = $leaves->ml;
-					$wp_leave   = $leaves->wp;
-
-					$total_leave 		= $cas_leave + $sick_leave + $m_leave + $earn_leave + $wp_leave;//e + $do_leave;
-					$total_pay_leave 	= $cas_leave + $sick_leave + $m_leave + $earn_leave;// $wp_leave + $do_leave;
 					
+					$cas_leave  = isset($leaves['cl']) ? $leaves['cl'] : 0;
+					$sick_leave = isset($leaves['sl']) ? $leaves['sl'] : 0;
+					$earn_leave = isset($leaves['el']) ? $leaves['el'] : 0;
+					$m_leave    = 0;					
+					$wp_leave   = isset($leaves['wp']) ? $leaves['wp'] : 0;
+					$sp_leave   = isset($leaves['sp']) ? $leaves['sp'] : 0;
 
-					$num_working_days 	= $num_of_days - $holiday - $weekend - $before_after_absent;
-					$total_holiday 		= $weekend + $holiday;
-					$pay_days 			= $attend + $total_holiday + $total_pay_leave - $m_leave;
+					// attendance status check with out ml leave end
+					// maternity benefit calculation
+					$mls = array();
+					if ($gender == 'Female') {
+						$mls = $this->ml_leave_db($rows->emp_id, $start_date, $end_date, $gross_sal, $gross_sal_com);
+						if ($mls['ml_leave_day'] == 0) {
+							$ml_deduct 		= 0;
+							$ml_deduct_com 	= 0;
+						} else {
+							$m_leave	 	= $mls['ml_leave_day'];
+							$ml_deduct 		= $mls['deduct_gross'];
+							$ml_deduct_com  = $mls['deduct_g_com'];
+						}
+					} else {
+						$ml_deduct 		= 0;
+						$ml_deduct_com 	= 0;
+					}
+					// maternity benefit calculation end
+					
+					// pay days calculation
+					$total_pay_leave  = $cas_leave + $sick_leave + $earn_leave + $sp_leave; // $wp_leave + $do_leave;
+					$num_working_days = $num_of_days - $holiday - $weekend - $before_after_absent;
+					$pay_days 		  = $attend + $weekend + $holiday + $total_pay_leave;
+					// pay days calculation
 					
 					$attend_data = array(
 						'total_days' 	 => $num_of_days,	
@@ -272,96 +286,82 @@ class Salary_process_model extends CI_Model{
 						'e_l' 		 	 => $earn_leave,
 						'm_l' 		 	 => $m_leave,
 						'wp' 		 	 => $wp_leave,
+						'sp' 		 	 => $sp_leave,
 						'total_leave' 	 => $total_leave,
 						'pay_leave' 	 => $total_pay_leave,
 						'holiday' 		 => $holiday,
 						'weekend' 		 => $weekend,
-						'total_holiday'  => $total_holiday,
+						'total_holiday'  => $holiday + $weekend,
 						'pay_days' 		 => $pay_days,
 					);
-
-					$data_com = array(
-						'total_days' 	 => $num_of_days,	
-						'num_of_workday' => $num_working_days,	
-						'att_days' 		 => $attend,	
-						'absent_days' 	 => $absent,	
-						'c_l' 		 	 => $cas_leave,
-						's_l' 		 	 => $sick_leave,
-						'e_l' 		 	 => $earn_leave,
-						'm_l' 		 	 => $m_leave,
-						'wp' 		 	 => $wp_leave,
-						'total_leave' 	 => $total_leave,
-						'holiday' 		 => $holiday,
-						'weekend' 		 => $weekend,
-						'total_holiday'  => $total_holiday,
-						'pay_days' 		 => $pay_days,
-					);
-					
 					// dd($attend_data);
+
+					$data_com['total_days'] 	 = $num_of_days;	
+					$data_com['num_of_workday']  = $num_working_days;	
+					$data_com['att_days'] 		 = $attend;	
+					$data_com['absent_days'] 	 = $absent;	
+					$data_com['before_after_absent'] 	= $before_after_absent;	
+					$data_com['c_l']		 	 = $cas_leave;
+					$data_com['s_l']		 	 = $sick_leave;
+					$data_com['e_l']		 	 = $earn_leave;
+					$data_com['m_l']		 	 = $m_leave;
+					$data_com['wp' ]	 	 	 = $wp_leave;
+					$data_com['sp' ]	 	 	 = $sp_leave;
+					$data_com['total_leave'] 	 = $total_leave;
+					$data_com['holiday'] 		 = $holiday;
+					$data_com['weekend'] 		 = $weekend;
+					$data_com['total_holiday']   = $holiday + $weekend;
+					$data_com['pay_days'] 		 = $pay_days;
 					$data["day_info"] = json_encode($attend_data);
-					$data_com["day_info"] = $data["day_info"];
+
+					// attendance log insertion ot salary table
 					$log = $this->get_attendance_log($id, $start_date, $end_date);
 					$data["log_info"] = json_encode($log);
-					$data_com["log_info"] = $data["log_info"];
-
-					//==========END PRESENT sTATUS=================
+					//==========END PRESENT STATUS=================
 
 
 					//======== DEDUCTION STATUS =======================
 					//==============================================================
-
 					//ABSENT DEDUCTION FOR NON-COMPLIENCE		
-					if($attend_data["m_l"] !=0){
-						$num_of_days = date('t',strtotime($start_date));
-					} else {
-						$num_of_days = 30;
-					}
-					// dd($num_of_days);
-
-					$p_start_date = '2018-02-01';
-					if( $start_date > $p_start_date){
-
+					if( $start_date < '30-04-2024'){
+						$num_of_day=30;
 						if($pay_days != 0){
 							$absent = $absent + $wp_leave;
 							if($resign_check != false or $left_check != false){
-								$before_after_deduct = $gross_sal / $num_of_days * $before_after_absent;
-								$abs_deduction = $basic_sal / $num_of_days * $absent;
-								$ml_deduct = $gross_sal / $num_of_days * $m_leave;
+								$before_after_deduct = ($gross_sal / $num_of_days) * $before_after_absent;
+								$abs_deduction = ($basic_sal / $num_of_day) * $absent;
 								$abs_deduction = round($abs_deduction + $before_after_deduct + $ml_deduct);
 							}else if($salary_month == $join_month){
-								$before_after_deduct = $gross_sal / $num_of_days * $before_after_absent;
-								$abs_deduction = $basic_sal / $num_of_days * $absent;
-								$ml_deduct = $basic_sal / $num_of_days * $m_leave;
+								$before_after_deduct = ($gross_sal / $num_of_days) * $before_after_absent;
+								$abs_deduction = ($basic_sal / $num_of_day) * $absent;
 								$abs_deduction = round($abs_deduction + $before_after_deduct + $ml_deduct);
 							}else{
-								$abs_deduction = $basic_sal / $num_of_days * $absent;
-								$ml_deduct = $gross_sal / $num_of_days * $m_leave;
-								$abs_deduction = round($abs_deduction+$ml_deduct);
+								$abs_deduction = ($basic_sal / 30) * $absent;
+								$abs_deduction = round($abs_deduction + $ml_deduct);
 							}
 						} else{
 							$abs_deduction = $gross_sal;
 						}
-						
+						// dd($abs_deduction .' = '. $basic_sal .' / '. $num_of_days .' * '. $absent);
 						//ABSENT DEDUCTION FOR COMPLIANCE
-
 						if($pay_days != 0)
 						{ 
 							$absent = $absent + $wp_leave ;
 							if($resign_check != false or $left_check != false)
 							{
-								$before_after_deduct = $gross_sal_com / $num_of_days * $before_after_absent;
-								$abs_deduction_com = $gross_sal_com / $num_of_days * $absent;
+								$before_after_deduct = ($gross_sal_com / $num_of_days) * $before_after_absent;
+								$abs_deduction_com = ($basic_sal / $num_of_day) * $absent;
 								$abs_deduction_com = round($abs_deduction_com + $before_after_deduct);
 							}
 							else if($salary_month == $join_month)
 							{
-								$before_after_deduct = $gross_sal_com / $num_of_days * $before_after_absent;
-								$abs_deduction_com = $basic_sal_com / $num_of_days * $absent;
+								$before_after_deduct = ($gross_sal_com / $num_of_days) * $before_after_absent;
+								$abs_deduction_com = ($ssc['basic_sal'] / $num_of_day) * $absent;
 								$abs_deduction_com = round($abs_deduction_com + $before_after_deduct);
 							}
 							else
 							{
-								$abs_deduction_com = $basic_sal_com / $num_of_days * $absent;
+								$abs_deduction_com = ($ssc['basic_sal'] / $num_of_day) * $absent;
 								$abs_deduction_com = round($abs_deduction_com);
 							}
 						}
@@ -370,75 +370,24 @@ class Salary_process_model extends CI_Model{
 							$abs_deduction_com = $gross_sal_com;
 						}
 						// dd($num_of_days);
-
 					} else {
-						if($pay_days != 0)
-						{
-							$absent = $absent + $wp_leave ;
-							if($salary_month == $join_month or $resign_check != false or $left_check != false)
-							{
-								$before_after_deduct = $gross_sal / $num_of_days * $before_after_absent;
-								$abs_deduction = $gross_sal / $num_of_days * $absent;
-								$ml_deduct = $basic_sal / $num_of_days * $m_leave;
-								$abs_deduction = round($abs_deduction + $before_after_deduct + $ml_deduct);
-								if($salary_month != $join_month and ($resign_check != false or $left_check != false) and $pay_days >= 15)
-								{
-									$before_after_deduct = $basic_sal / $num_of_days * $before_after_absent;
-									$abs_deduction = $basic_sal / $num_of_days * $absent;
-									$ml_deduct = $basic_sal / $num_of_days * $m_leave;
-									$abs_deduction = round($abs_deduction + $before_after_deduct+$ml_deduct);	
-								}
-							}
-							else
-							{
-								$abs_deduction = $basic_sal / $num_of_days * $absent;
-								$ml_deduct = $basic_sal / $num_of_days * $m_leave;
-								$abs_deduction = round($abs_deduction+$ml_deduct);
-							}
-						} else {
-							$abs_deduction = $gross_sal;
-						}
-						
-						// dd($absent);
-						
-						//ABSENT DEDUCTION FOR COMPLIANCE
-						if($pay_days != 0)
-						{
-							$absent = $absent + $wp_leave ;
-							if($salary_month == $join_month or $resign_check != false or $left_check != false)
-							{
-								$before_after_deduct = $gross_sal_com / $num_of_days * $before_after_absent;
-								$abs_deduction_com = $basic_sal_com / $num_of_days * $absent;
-								$abs_deduction_com = round($abs_deduction_com + $before_after_deduct);
-							}
-							else
-							{
-								$abs_deduction_com = $basic_sal_com / $num_of_days * $absent;
-								$abs_deduction_com = round($abs_deduction_com);
-							}
-						}
-						else
-						{
-							$abs_deduction_com = $gross_sal_com;
-						}
-
+						return 'Soryy! Not allow to Process before 30-04-2024';
+						exit;
 					}
 					
-				
 					$advance_deduct = $this->advance_loan_deduction($emp_id, $salary_month);
 					//DEDUCTION
 
-					//****** deduct hour & amount *****************************************************************
+					//****** deduct hour & amount **************************************************
 					$deduct_hour = $attendances->deduction_hour;
 					$per_day_salary = $basic_sal / $num_of_days;
 					$per_hour_salary = $per_day_salary / 8;
 					$deduct_amount = $per_hour_salary * $deduct_hour;
-					//************************ end deduct ***************************************************** 
+					//************************ end deduct ******************************************* 
 				
 					//LATE DEDUCTION
 					$late_count = $attendances->late_status;
 					//STAMP
-					// dd($absent);
 					$stamp = $ss['stamp'];
 					$absent_plus_before_after_absent = $absent + $before_after_absent;
 					if($absent_plus_before_after_absent == $num_of_days)
@@ -477,25 +426,17 @@ class Salary_process_model extends CI_Model{
 					$data_com["tax_deduct"] 		= $tax_deduct;
 					$data_com["stamp"] 				= $stamp;
 					$data_com["total_deduct"] 		= $total_deduction_com;
-					
-					//=========================== END OF DEDUCTION STATUS ==================================
-					
-					
-					//============================ ALLOWANCES ========================================
-					//===============================================================================
-					$allowances = $this->get_emp_allowances($desi_id);
+					//=================== END OF DEDUCTION STATUS ====================
 
-					//ATTN. BONUS
-					$att_bouns_present_day = $attend + $weekend;	
-					$eligible_att_bonus_days = $num_of_days - $holiday;
-					if($att_bouns_present_day == $eligible_att_bonus_days && $late_count == 0)
-					{
-						$att_bouns = isset($allowances->attn_bonus) ? $allowances->attn_bonus : 0;
-					}
-					else
-					{
-						$att_bouns = 0;
-					}
+					
+					//============================ ALLOWANCES ===============================
+					$allowances = $this->get_emp_allowances($desi_id);
+					//=======================================================================
+
+					//======================= ATTN. BONUS ========================
+					$att_bouns = $this->get_attn_bonus($rows, $attendances, $salary_month, $attn_rule);
+					//======================= ATTN. BONUS END ========================
+					// dd($att_bouns);
 				
 					//HOLIDAY ALLOWANCE (APPLICABLE FOR OT = NO)
 					if (!empty($attendances->holiday_allo) && !empty($allowances->hw_bill)) {
@@ -507,7 +448,6 @@ class Salary_process_model extends CI_Model{
 						$holiday_allowance_rate 	= 0;
 						$holiday_allowance 			= 0;
 					}
-
 					
 					//HOLIDAY ALLOWANCE (APPLICABLE FOR OT = NO)
 					if (!empty($attendances->weekly_allo) && !empty($allowances->hw_bill)) {
@@ -554,8 +494,8 @@ class Salary_process_model extends CI_Model{
 					$data_com["night_allowance"] 		= $night_allowance;
 					$data_com["night_allowance_rate"] 	= $night_allowance_rate;
 					$data_com["total_allaw"] 			= $total_allaw;
-					//==================================== OVERTIME CALCULATION ==========================================
-					//==========================================================================================================
+					//==================== OVERTIME CALCULATION =======================
+					//=================================================================
 				
 					//OT CALCULATION
 					$ot_rate = $ss['ot_rate'];
@@ -571,13 +511,10 @@ class Salary_process_model extends CI_Model{
 					}
 
 					if (!empty($attendances->ot) && $rows->ot_entitle != 1) {
-					
 						$ot_hour = $attendances->ot;
 						$ot_amount = $attendances->ot * $ot_rate;
 					} else {
-							$ot_rate = 0;
-						// $ss['ot_rate'] = 0;
-
+						$ot_rate = 0;
 						$ot_hour = 0;
 						$ot_amount = 0;
 					}
@@ -588,7 +525,7 @@ class Salary_process_model extends CI_Model{
 						$ot_eot_12am_hour = $attendances->ot_eot_12am;
 						$ot_eot_4pm_hour  = $attendances->ot_eot_4pm;
 						$modify_eot_hour  = $attendances->modify_eot;
-						$eot_hour_for_sa  = $this->eot_without_holi_weekend($id, $start_date, $end_date);
+						$eot_hour_for_sa  = $this->eot_without_holi_weekend($emp_id, $start_date, $end_date);
 						$eot_hour 		  = $collect_eot_hour + $modify_eot_hour - $deduct_hour;
 
 						$eot_amount 		= round($eot_hour * $ot_rate);;
@@ -605,44 +542,73 @@ class Salary_process_model extends CI_Model{
 						$eot_amount 	  	= 0;
 						$ot_eot_12am_amount = 0;
 						$ot_eot_4pm_amount  = 0;
-						$eot_amount_for_sa  =0;
+						$eot_amount_for_sa  = 0;
     				}
 					//THIS EOT IS INTRODUCE FOR SUPER ADMIN PRIVILEGE IN ACL
 					//THIS EOT AMOUNT IS ALSO INTRODUCE FOR SUPER ADMIN PRIVILEGE IN ACL
+					$data["salary_month"] 		= $salary_month;
 
 					// dd($eot_hour_for_sa);
-					$data["ot_hour"] 			= $ot_hour;
-					$data["ot_amount"] 			= $ot_amount;
-					//dd($rows->ot_entitle);
-					$data["ot_rate"] 			= ($rows->ot_entitle == 1)?0:$ot_rate;
-					$data["collect_eot_hour"] 	= $collect_eot_hour;
-					$data["modify_eot_hour"] 	= $modify_eot_hour;
-					$data["eot_hour"] 			= $eot_hour;
-					$data["eot_amount"] 		= $eot_amount;
-					$data["ot_eot_12am_hour"] 	= $ot_eot_12am_hour;
-					$data["ot_eot_12am_amt"] 	= $ot_eot_12am_amount;
-					$data["ot_eot_4pm_hour"] 	= $ot_eot_4pm_hour;
-					$data["ot_eot_4pm_amt"] 	= $ot_eot_4pm_amount;
-					$data["salary_month"] 		= $start_date;
-					$data["eot_hr_for_sa"] 		= is_null($eot_hour_for_sa) ? 0 : $eot_hour_for_sa;
-					$data["eot_amt_for_sa"] 	= $eot_amount_for_sa;
-					// dd($start_date);
-					
+					if($rows->ot_entitle != 1){
+						$data["ot_hour"] 			= $ot_hour;
+						$data["ot_amount"] 			= $ot_amount;
+						$data["ot_rate"] 			= $ot_rate;
+						$data["collect_eot_hour"] 	= $collect_eot_hour;
+						$data["modify_eot_hour"] 	= $modify_eot_hour;
+						$data["eot_hour"] 			= $eot_hour;
+						$data["eot_amount"] 		= $eot_amount;
+						$data["ot_eot_12am_hour"] 	= $ot_eot_12am_hour;
+						$data["ot_eot_12am_amt"] 	= $ot_eot_12am_amount;
+						$data["ot_eot_4pm_hour"] 	= $ot_eot_4pm_hour;
+						$data["ot_eot_4pm_amt"] 	= $ot_eot_4pm_amount;
+						$data["eot_hr_for_sa"] 		= is_null($eot_hour_for_sa) ? 0 : $eot_hour_for_sa;
+						$data["eot_amt_for_sa"] 	= $eot_amount_for_sa;
+					}else{
+						$data["ot_hour"] 			= 0;
+						$data["ot_amount"] 			= 0;
+						$data["ot_rate"] 			= 0;
+						$data["collect_eot_hour"] 	= 0;
+						$data["modify_eot_hour"] 	= 0;
+						$data["eot_hour"] 			= 0;
+						$data["eot_amount"] 		= 0;
+						$data["ot_eot_12am_hour"] 	= 0;
+						$data["ot_eot_12am_amt"] 	= 0;
+						$data["ot_eot_4pm_hour"] 	= 0;
+						$data["ot_eot_4pm_amt"] 	= 0;
+						$data["eot_hr_for_sa"] 		= 0;
+						$data["eot_amt_for_sa"] 	= 0;
+					}
+
+					// dd($data);
+					$data_com["salary_month"] 		= $salary_month;
+
 					//COMPLIENCE
-					$data_com["ot_hour"] 			= $ot_hour;
-					$data_com["ot_amount"] 			= $ot_amount;
-					$data_com["ot_rate"] 			= $ot_rate;
+					if($rows->com_ot_entitle != 1){
+						$data_com["ot_hour"] 			= $ot_hour;
+						$data_com["ot_amount"] 			= $ot_amount;
+						$data_com["ot_rate"] 			= $ot_rate;
+						$data_com["collect_eot_hour"] 	= $collect_eot_hour;
+						$data_com["modify_eot_hour"] 	= $modify_eot_hour;
+						$data_com["eot_hour"] 			= $eot_hour;
+						$data_com["eot_amount"] 		= $eot_amount;
+						$data_com["ot_eot_12am_hour"] 	= $ot_eot_12am_hour;
+						$data_com["ot_eot_12am_amt"] 	= $ot_eot_12am_amount;
 
-					$data_com["collect_eot_hour"] 	= $collect_eot_hour;
-					$data_com["modify_eot_hour"] 	= $modify_eot_hour;
-					$data_com["eot_hour"] 			= $eot_hour;
-					$data_com["eot_amount"] 		= $eot_amount;
-					$data_com["ot_eot_12am_hour"] 	= $ot_eot_12am_hour;
-					$data_com["ot_eot_12am_amt"] 	= $ot_eot_12am_amount;
-
-					$data_com["ot_eot_4pm_hour"] 	= $ot_eot_4pm_hour;
-					$data_com["ot_eot_4pm_amt"] 	= $ot_eot_4pm_amount;
-					$data_com["salary_month"] 		= $start_date;
+						$data_com["ot_eot_4pm_hour"] 	= $ot_eot_4pm_hour;
+						$data_com["ot_eot_4pm_amt"] 	= $ot_eot_4pm_amount;
+					}else{
+						$data_com["ot_hour"] 			= 0;
+						$data_com["ot_amount"] 			= 0;
+						$data_com["ot_rate"] 			= 0;
+						$data_com["collect_eot_hour"] 	= 0;
+						$data_com["modify_eot_hour"] 	= 0;
+						$data_com["eot_hour"] 			= 0;
+						$data_com["eot_amount"] 		= 0;
+						$data_com["ot_eot_12am_hour"] 	= 0;
+						$data_com["ot_eot_12am_amt"] 	= 0;
+						$data_com["ot_eot_4pm_hour"] 	= 0;
+						$data_com["ot_eot_4pm_amt"] 	= 0;
+					}
 			
 					//***************************Festival bonus***********************
 
@@ -655,18 +621,19 @@ class Salary_process_model extends CI_Model{
 					$data_com["net_pay"] = $gross_sal_com + $att_bouns + $ot_amount - $total_deduction_com ;//Zuel 140420
 
 					
-					// dd($data);
+					// dd($data_com);
 
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
-					$this->db->where("salary_month", $start_date);
+					$this->db->where("salary_month", $salary_month);
 					$query = $this->db->get("pay_salary_sheet");
+					// dd($this->db->last_query());
 					
 					if($query->num_rows() > 0 )
 					{
-						//echo "hello";
+						// echo "hello"; exit;
 						$this->db->where("emp_id", $rows->emp_id);
-						$this->db->where("salary_month", $start_date);
+						$this->db->where("salary_month", $salary_month);
 						$this->db->update("pay_salary_sheet",$data);
 					}
 					else
@@ -674,20 +641,17 @@ class Salary_process_model extends CI_Model{
 						$this->db->insert("pay_salary_sheet",$data);
 					}
 				
-				
 					//COMPLIENCE
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
-					$this->db->where("salary_month", $start_date);
+					$this->db->where("salary_month", $salary_month);
 					$query = $this->db->get("pay_salary_sheet_com");
-
-					// echo "<pre>";print_r($data_com);exit;
 					
 					if($query->num_rows() > 0 )
 					{
 						//echo "hello";
 						$this->db->where("emp_id", $rows->emp_id);
-						$this->db->where("salary_month", $start_date);
+						$this->db->where("salary_month", $salary_month);
 						$this->db->update("pay_salary_sheet_com",$data_com);
 					}
 					else
@@ -696,14 +660,74 @@ class Salary_process_model extends CI_Model{
 					}
 				}
 			}
-			//$data["deduct_status"] = $deduct_status;
 			return "Process completed successfully";
 		}
 	}
 
+	// check attendance bonus 
+	function get_attn_bonus($rows, $attn, $salary_month, $rule)
+	{
+		// dd($rule->max_leave);
+		$n_day = date('t', strtotime($salary_month));
+		$w_day = $attn->attend + $attn->weekend + $attn->holiday + $attn->total_leave;
 
-		
-	
+		$this->db->select("ab.*");
+		$this->db->from("emp_designation as dg");
+		$this->db->join("allowance_attn_bonus as ab", 'dg.attn_id = ab.id', 'left');
+		$query = $this->db->where("dg.id", $rows->emp_desi_id)->get()->row();
+		// dd($query->rule1_end);
+		// check rule amt
+		if ($query->rule1_end <= $salary_month) {
+			$amt = $query->rule;
+		}else if ($query->prev_end >= $salary_month && $query->rule1_end <= $salary_month) {
+			$amt = $query->rule1;
+		} else {
+			$amt = $query->prev_rule;
+		}
+
+
+		// initialize bonus amt
+		if (($attn->absent <= $rule->max_absent) && ($attn->late_status <= $rule->max_late_day) && ($attn->late_time <= $rule->max_late_minute) && ($attn->total_leave <= $rule->max_leave) && ($w_day >= $n_day)) {
+			$bonus = $amt;
+		} else {
+			$bonus = 0;
+		}
+		// dd($bonus);
+		return $bonus;
+	}
+
+	function get_attn_bonus_rule($salary_month, $unit_id)
+	{
+		$this->db->where("start_date <=", $salary_month)->where("end_date >=", $salary_month);
+		$query = $this->db->where('unit_id', $unit_id)->get('allowance_attn_bonus_rules')->row();
+		return $query;
+	}
+	// check attendance bonus ens
+
+	function get_emp_info($dddd, $unit_id)
+	{
+		$sql = "SELECT 
+			pr_emp_com_info.id, 
+			pr_emp_com_info.emp_id, 
+			pr_emp_com_info.emp_sal_gra_id as grade_id, 
+			pr_emp_com_info.emp_dept_id,
+			pr_emp_com_info.emp_sec_id, 
+			pr_emp_com_info.emp_line_id, 
+			pr_emp_com_info.emp_desi_id, 
+			pr_emp_com_info.emp_cat_id,
+			pr_emp_com_info.emp_join_date, 
+			pr_emp_com_info.gross_sal, 
+			pr_emp_com_info.com_gross_sal, 
+			pr_emp_com_info.ot_entitle, 
+			pr_emp_com_info.com_ot_entitle,
+			pr_emp_per_info.gender
+		FROM pr_emp_com_info
+		LEFT JOIN pr_emp_per_info ON pr_emp_com_info.emp_id = pr_emp_per_info.emp_id
+		WHERE pr_emp_com_info.unit_id = ?
+		AND pr_emp_per_info.emp_id IN (".$dddd.")";
+		$query = $this->db->query($sql, array($unit_id));
+		return $query;
+	}
 
 	function get_emp_allowances($desi_id)
 	{
@@ -740,31 +764,36 @@ class Salary_process_model extends CI_Model{
 		return isset($query->pay_amount) ? $query->pay_amount : 0;
 	}
 
-	function salary_process_eligibility($emp_id, $salary_month, $gross_sal = null)
+	function salary_process_eligibility($emp_id, $salary_month)
 	{
-		$salary_year_month = date('Y-m', strtotime($salary_month));
+		$join_check 		= $this->join_range_check($emp_id, $salary_month);
+		$resign_check 		= $this->resign_range_check($emp_id, $salary_month);
+		$left_check 		= $this->left_range_check($emp_id, $salary_month);
+		// vardump($gross_sal);
 		
-		$join_check 		= $this->join_range_check($emp_id, $salary_year_month);
-		$resign_check 		= $this->resign_range_check($emp_id, $salary_year_month);
-		$left_check 		= $this->left_range_check($emp_id, $salary_year_month);
-		
-		if($join_check != false and $resign_check != false and $left_check != false and !empty($gross_sal))
+		// if($join_check != false and $resign_check != false and $left_check != false and !empty($gross_sal))
+		if($join_check != false && $resign_check != false && $left_check != false)
 		{
-				return true;
+			// dd('ddd');
+			return true;
 		}
 		else
 		{
+			// dd('fff');
 			return false;
 		}
 	}
 	
-	function join_range_check($emp_id, $salary_year_month)
+	function join_range_check($emp_id, $salary_month)
 	{
+		$salary_month  = date("Y-m-t", strtotime($salary_month));
 		$this->db->select('emp_join_date');
 		$this->db->where('emp_id', $emp_id);
-		$this->db->where("trim(substr(emp_join_date,1,7)) <= '$salary_year_month'");
+		$this->db->where("emp_join_date >", $salary_month);
+		// $this->db->where("trim(substr(emp_join_date,1,7)) <= '$salary_month'");
 		$query = $this->db->get('pr_emp_com_info');
-		if($query->num_rows() > 0)
+		// dd($query->result());
+		if($query->num_rows() <= 0)
 		{
 			return true;
 		}	
@@ -774,55 +803,35 @@ class Salary_process_model extends CI_Model{
 		}
 	}
 	
-	function resign_range_check($emp_id, $salary_year_month)
+	function resign_range_check($emp_id, $salary_month)
 	{
 		$this->db->select('resign_date');
 		$this->db->where('emp_id', $emp_id);
+		$this->db->where("resign_date <", $salary_month);
 		$query = $this->db->get('pr_emp_resign_history');
-		if($query->num_rows() == 0)
+		if($query->num_rows() <= 0)
 		{
 			return true;
 		}	
 		else
 		{
-			$this->db->select('resign_date');
-			$this->db->where('emp_id', $emp_id);
-			$this->db->where("trim(substr(resign_date,1,7)) >= '$salary_year_month'");
-			$query = $this->db->get('pr_emp_resign_history');
-			if($query->num_rows() > 0)
-			{
-				return true;
-			}	
-			else
-			{
-				return false;	
-			}
+			return false;	
 		}
 	}
 	
-	function left_range_check($emp_id, $salary_year_month)
+	function left_range_check($emp_id, $salary_month)
 	{
 		$this->db->select('left_date');
 		$this->db->where('emp_id', $emp_id);
+		$this->db->where("left_date <", $salary_month);
 		$query = $this->db->get('pr_emp_left_history');
-		if($query->num_rows() == 0)
+		if($query->num_rows() <= 0)
 		{
 			return true;
 		}	
 		else
 		{
-			$this->db->select('left_date');
-			$this->db->where('emp_id', $emp_id);
-			$this->db->where("trim(substr(left_date,1,7)) >= '$salary_year_month'");
-			$query = $this->db->get('pr_emp_left_history');
-			if($query->num_rows() > 0)
-			{
-				return true;
-			}	
-			else
-			{
-				return false;	
-			}
+			return false;	
 		}
 	}
 
@@ -894,13 +903,16 @@ class Salary_process_model extends CI_Model{
                 COALESCE(SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END ), 0) AS attend,
                 COALESCE(SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END ), 0) AS absent,
                 COALESCE(SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ), 0) AS weekend,
-                COALESCE(SUM(CASE WHEN holiday_allo = '1' THEN 1 ELSE 0 END ), 0) AS holiday,
+                COALESCE(SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ), 0) AS holiday,
+                COALESCE(SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ), 0) AS total_leave,
                 COALESCE(SUM(CASE WHEN late_status   = '1' THEN 1 ELSE 0 END ), 0) AS late_status,
+                COALESCE(SUM(CASE WHEN holiday_allo = '1' THEN 1 ELSE 0 END ), 0) AS holiday_allo,
                 COALESCE(SUM(CASE WHEN weekly_allo  = '1' THEN 1 ELSE 0 END ), 0) AS weekly_allo,
                 COALESCE(SUM(CASE WHEN night_allo   = '1' THEN 1 ELSE 0 END ), 0) AS night_allo,
                 COALESCE(SUM(CASE WHEN tiffin_allo  = '1' THEN 1 ELSE 0 END ), 0) AS tiffin_allo,
                 COALESCE(SUM(ot), 0) AS ot,
                 COALESCE(SUM(eot), 0) AS eot,
+                COALESCE(SUM(late_time), 0) AS late_time,
                 COALESCE(SUM(ot_eot_4pm), 0) AS ot_eot_4pm,
                 COALESCE(SUM(ot_eot_12am), 0) AS ot_eot_12am,
                 COALESCE(SUM(modify_eot), 0) AS modify_eot,
@@ -916,23 +928,229 @@ class Salary_process_model extends CI_Model{
         return $query;
     }
 
-    function leave_db($emp_id, $start_date, $end_date)
-    {
-
-        $this->db->select("
-                COALESCE(SUM(CASE WHEN leave_type = 'cl' THEN 1 ELSE 0 END ), 0) AS cl,
-                COALESCE(SUM(CASE WHEN leave_type = 'sl' THEN 1 ELSE 0 END ), 0) AS sl,
-                COALESCE(SUM(CASE WHEN leave_type = 'el' THEN 1 ELSE 0 END ), 0) AS el,
-                COALESCE(SUM(CASE WHEN leave_type = 'ml' THEN 1 ELSE 0 END ), 0) AS ml,
-                COALESCE(SUM(CASE WHEN leave_type = 'wp' THEN 1 ELSE 0 END ), 0) AS wp,
-                COALESCE(SUM(CASE WHEN leave_type = 'do' THEN 1 ELSE 0 END ), 0) AS do
+    function leave_db($emp_id, $start_date, $end_date){
+        
+	
+		$this->db->select("
+            SUM(CASE WHEN leave_type = 'cl' THEN total_leave ELSE 0 END ) AS cl,
+            SUM(CASE WHEN leave_type = 'sl' THEN total_leave ELSE 0 END ) AS sl,
+            SUM(CASE WHEN leave_type = 'el' THEN total_leave ELSE 0 END ) AS el,
+            SUM(CASE WHEN leave_type = 'ml' THEN total_leave ELSE 0 END ) AS ml,
+            SUM(CASE WHEN leave_type = 'wp' THEN total_leave ELSE 0 END ) AS wp,
+            SUM(CASE WHEN leave_type = 'sp' THEN total_leave ELSE 0 END ) AS sp
             ");
         $this->db->where("emp_id",$emp_id);
         $this->db->where("leave_start >=", $start_date);
         $this->db->where("leave_end <=", $end_date);
         $query = $this->db->get('pr_leave_trans')->row();
+		// dd(date($start_date));
+
+		$start_date_current_month = date($start_date); // Start of current month
+		$end_date_current_month   = date($end_date);   // End of current month
+
+
+		// Calculate overlapping leave days for the current month
+		$this->db->select("
+			leave_type,
+			SUM(CASE 
+				WHEN leave_start <= '{$end_date_current_month}' 
+				AND leave_end >= '{$start_date_current_month}' 
+				THEN
+					CASE 
+						WHEN leave_start < '{$start_date_current_month}' THEN
+							DATEDIFF(LEAST(leave_end, '{$end_date_current_month}'), '{$start_date_current_month}') + 1
+						ELSE
+							DATEDIFF(LEAST(leave_end, '{$end_date_current_month}'), leave_start) + 1
+					END
+				ELSE 0
+			END) AS total_leave_current_month
+		");
+		$this->db->where("emp_id", $emp_id);
+		$this->db->where("leave_start <= '{$end_date_current_month}'");
+		$this->db->where("leave_end >= '{$start_date_current_month}'");
+		$this->db->group_by("leave_type");
+		$this->db->order_by("leave_type", 'ASC');
+		$querys = $this->db->get('pr_leave_trans')->result();
+		if( !empty($querys) ){
+			$leave_counts = [
+				'cl' => 0,
+				'sl' => 0,
+				'el' => 0,
+				'ml' => 0,
+				'wp' => 0,
+				'sp' => 0,
+			];
+
+			// Process query results
+			foreach ($querys as $row) {
+				$leave_counts[$row->leave_type] = $row->total_leave_current_month;
+			}
+
+			return $leave_counts;
+
+		}
+
+
+		$cas_leave  = $query->cl;
+		$sick_leave = $query->sl;
+		$earn_leave = $query->el;
+		$wp_leave   = $query->wp;
+		$sp_leave   = $query->sp;
+		
+		if (!empty($cas_leave !=0 ||  $sick_leave !=0 || $earn_leave !=0 || $wp_leave !=0 ||   $sp_leave !=0 )) {
+            return (array)$query;
+        }else{
+			
+		$leaves2 = $this->leave_db2($emp_id, $start_date, $end_date);
+		$leaves3 = $this->leave_db3($emp_id, $start_date, $end_date);
+		// dd($query );
+
+			if($leaves2 !=null || !empty($leaves2)){
+
+				if (!empty($leaves2) && $leaves2['leave_type'] == 'sl') {
+					$sick_leave = $sick_leave + $leaves2['day'];
+				} elseif (!empty($leaves2) && $leaves2['leave_type'] == 'cl') {
+					$cas_leave = $cas_leave + $leaves2['day'];
+				} elseif (!empty($leaves2) && $leaves2['leave_type'] == 'el') {
+					$earn_leave = $earn_leave + $leaves2['day'];
+				} elseif (!empty($leaves2) && $leaves2['leave_type'] == 'wp') {
+					$wp_leave = $wp_leave + $leaves2['day'];
+				} elseif (!empty($leaves2) && $leaves2['leave_type'] == 'sp') {
+					$sp_leave = $sp_leave + $leaves2['day'];
+				}
+						
+				$leaves22 = [
+					"cl"=>	$cas_leave,
+					"sl"=>  $sick_leave,
+					"el"=>	$earn_leave,
+					"wp"=>  $wp_leave,
+					"sp"=>	$sp_leave
+				];
+
+				return $leaves22;
+			}
+			if($leaves3 !=null || !empty($leaves3)){
+				if (!empty($leaves3) && $leaves3['leave_type'] == 'sl') {
+					$sick_leave = $sick_leave + $leaves3['day'];
+				} elseif (!empty($leaves3) && $leaves3['leave_type'] == 'cl') {
+					$cas_leave = $cas_leave + $leaves3['day'];
+				} elseif (!empty($leaves3) && $leaves3['leave_type'] == 'el') {
+					$earn_leave = $earn_leave + $leaves3['day'];
+				} elseif (!empty($leaves3) && $leaves3['leave_type'] == 'wp') {
+					$wp_leave = $wp_leave + $leaves3['day'];
+				} elseif (!empty($leaves3) && $leaves3['leave_type'] == 'sp') {
+					$sp_leave = $sp_leave + $leaves3['day'];
+				}
+				$leaves= [
+					"cl"=>	$cas_leave,
+					"sl"=>  $sick_leave,
+					"el"=>	$earn_leave,
+					"wp"=>  $wp_leave,
+					"sp"=>	$sp_leave
+				];
+				return $leaves;
+			}
+
+		}
+
+    }
+
+	function leave_db2($emp_id, $start_date, $end_date)
+    {
+		$array = array();
+        $this->db->select("*");
+        $this->db->where("emp_id",$emp_id);
+        $this->db->where("leave_end >", $start_date);
+        $this->db->where("leave_end <=", $end_date);
+        $this->db->order_by("id", 'DESC');
+        $query = $this->db->get('pr_leave_trans')->row();
 		// dd($query);
-        return $query;
+		// dd($this->db->last_query());
+		if (!empty($query)) {
+			$end_date  = $query->leave_end;
+			$day_diff = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) +1;
+			$array = array(
+				'leave_type' => $query->leave_type,
+				'day' => $day_diff,
+			);
+		}
+        return $array;
+    }
+
+	function leave_db3($emp_id, $start_date, $end_date)
+    {
+		$array = array();
+        $this->db->select("*");
+        $this->db->where("emp_id",$emp_id);
+        $this->db->where("leave_start <", $end_date);
+        $this->db->where("leave_end >", $end_date);
+        $query = $this->db->get('pr_leave_trans')->row();
+		if (!empty($query)) {
+			$start_date = $query->leave_start;
+			$day_diff = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) + 1;
+			$array = array(
+				'leave_type' => $query->leave_type,
+				'day' => $day_diff,
+			);
+		}
+        return $array;
+    }
+
+	function ml_leave_db($emp_id, $start_date, $end_date, $gross_sal, $gross_sal_com)
+    {
+		$array = array();
+		$day_ml = 0;
+        $this->db->select("*");
+        $this->db->where("emp_id",$emp_id);
+        $this->db->where("leave_type",'ml');
+        $this->db->where("leave_start <", $end_date);
+        $this->db->where("leave_end >", $end_date);
+        $query = $this->db->get('pr_leave_trans')->row();
+		if (!empty($query)) {
+			$start_date = $query->leave_start;
+			$day_ml = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) + 1;
+		}
+
+        $this->db->select("*");
+        $this->db->where("emp_id",$emp_id);
+        $this->db->where("leave_type",'ml');
+        $this->db->where("leave_end >", $start_date);
+        $this->db->where("leave_end <=", $end_date);
+        $this->db->order_by("id", 'DESC');
+        $query = $this->db->get('pr_leave_trans')->row();
+
+		if (empty($day_ml) && !empty($query)) {
+			$end_date  = $query->leave_end;
+			$day_ml = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) + 1;
+		}
+
+        $this->db->select("*");
+        $this->db->where("emp_id",$emp_id);
+        $this->db->where("leave_type",'ml');
+        $this->db->where("leave_start <=", $start_date);
+        $this->db->where("leave_end >=", $end_date);
+        $this->db->order_by("id", 'DESC');
+        $query = $this->db->get('pr_leave_trans')->row();
+
+		if (empty($day_ml) && !empty($query)) {
+			$day_ml = date('t', strtotime($start_date));
+		}
+
+		if (!empty($day_ml)) {
+			$mll_d_d = date('t', strtotime($start_date));
+			$mlg   = round(($gross_sal / $mll_d_d), 2); 
+			$mlgc  = round(($gross_sal_com / $mll_d_d), 2); 
+			$array['ml_leave_day'] = $day_ml;
+			$array['deduct_gross'] = $mlg * $day_ml;
+			$array['deduct_g_com'] = $mlgc * $day_ml;
+			$array['status'] = true;
+		} else {
+			$array['ml_leave_day'] = 0;
+			$array['deduct_gross'] = 0;
+			$array['deduct_g_com'] = 0;
+			$array['status'] = false;
+		}
+        return $array;
     }
 
 	function eot_without_holi_weekend($emp_id, $start_date, $end_date)
@@ -944,6 +1162,7 @@ class Salary_process_model extends CI_Model{
 		$this->db->where("shift_log_date BETWEEN '$start_date' AND '$end_date'");
 		$query = $this->db->get("pr_emp_shift_log");
 		$row = $query->row();
+		// dd($this->db->last_query());
 		return $row->eot;
 	}
 

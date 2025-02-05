@@ -52,11 +52,15 @@
 </head>
 
 <body style="margin: 0px;">
+	<span id='massage'></span>
+	<div id='all_data'>
     <?php $this->load->view("head_english"); ?>
     <!--Report title goes here-->
-    <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
+    <div align="center"  style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
         <span style="font-size:12px; font-weight:bold;"> Daily
             <?php
+
+			//    dd($values);
 				if ($daily_status == 2)
 				{
 					echo "Absent";
@@ -96,7 +100,12 @@
         <table border="1" cellpadding="0" cellspacing="0" style="font-size:12px; width:700px; margin-bottom:20px;">
             <?php $this->load->model('Grid_model'); $i=1;
 			$groupedData = array();
+			
 			foreach ($values as $employee) {
+				if($employee['out_time'] == '00:00:00' && $employee['in_time'] == '00:00:00' && in_array($daily_status,array(7,8))) {
+					continue;
+				}
+				
 				$sectionName = $employee['sec_name_en'];
 				$groupedData[$sectionName][] = $employee;
 			} ?>
@@ -152,6 +161,7 @@
             </tr>
 
             <?php 	foreach ($employees as $key=>$employee) {
+				
 				$emp_num_rows = $this->Grid_model->attendance_check_for_absent($employee['emp_id'],$date);
 				//dd($emp_num_rows);
 				
@@ -172,16 +182,18 @@
 
                 <?php if($daily_status==1 || $daily_status== 5 || $daily_status==6 || $daily_status==7 || $daily_status==8){?>
 					<td style="text-align:center; padding:0 4px">
-						<?php echo $employee['in_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['in_time'])) : "P(ERROR)"?>
+						<?php 
+							echo $employee['in_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['in_time'])) : "";
+						?>
 					</td>
 					<td style="text-align:center; padding:0 4px">
 					<?php
 					//dd($daily_status);
 					if ($daily_status==5 &&  $employee['ot']>=2) {
 						//dd($employee['ot']);
-						$text= ($employee['out_time'] !='00:00:00')? date('7:i:s A',strtotime($employee['out_time'])) : "P(ERROR)";
+						$text= ($employee['out_time'] !='00:00:00')? date('7:i:s A',strtotime($employee['out_time'])) : "";
 					}else{
-						$text= ($employee['out_time'] !='00:00:00')? date('h:i:s A',strtotime($employee['out_time'])) : "P(ERROR)";
+						$text= ($employee['out_time'] !='00:00:00')? date('h:i:s A',strtotime($employee['out_time'])) : "";
 					}
 					?>
 
@@ -232,15 +244,27 @@
                 	<td style="padding-top:30px;padding-left:80px"> </td>
                 <?php }?>
             </tr>
-            <?php } } ?>
+            <?php } }
+				
+			
+			?>
             <tr style="border:none;font-size:14px;white-space:nowrap">
                 <td colspan="10" style="padding:0 4px">
-                    <?php echo "<style='float:left;'>Total : " . count($values)?>
+                    <?php echo  "<style='float:left;'>Total : " . $i-1?>
                 </td>
             </tr>
+
         </table>
 	</div>
 	<br><br>
+
+	</div>
+	<?php if($i-1 == 0){ ?>
+	<script>
+ 		document.getElementById('all_data').remove();
+ 		document.getElementById('massage').innerHTML = 'Requested list is empty';
+	</script>
+	<?php }?>
 </body>
 
 </html>

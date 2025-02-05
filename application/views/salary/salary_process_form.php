@@ -11,10 +11,12 @@
 </style>
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
-	<?php
-		$this->load->model('common_model');
-		$unit = $this->common_model->get_unit_id_name();
-	?>
+<?php
+    $this->load->model('common_model');
+    $unit = $this->common_model->get_unit_id_name();
+    $user_id = $this->session->userdata('data')->id; 
+    $acl = check_acl_list($user_id); 
+?>
 <div class="content">
     <div class="row">
         <div class="col-md-8">
@@ -42,7 +44,9 @@
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
-									continue;
+                                    if ($user_data->level != "All") {
+                                        continue;
+                                    }
 								}  
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
@@ -129,9 +133,9 @@
                 <div class="input-group" style="gap: 14px">
                     <input type="month" class="form-control" id="process_month" >
                     <span class="input-group-btn">
-                        <input class="btn btn-primary" onclick='salary_process()' type="button" value='Process' />
-                        <input class="btn btn-success" onclick='salary_process_block()' type="button" value='Final Process' style="margin: 0px 3px !important;" />
-                        <input class="btn btn-danger" onclick='salary_block_delete()' type="button" value='Final Delete' />
+                        <input class="btn btn-primary" style="<?php  if(in_array(131,$acl)) {echo '';} else { echo 'margin: 0px 3px !important;"';}?>" onclick='salary_process()' type="button" value='Process' />
+                        <input class="btn btn-success" onclick='salary_process_block()' type="button" value='Final Process' style="margin: 0px 3px !important; <?php  if(in_array(131,$acl)) {echo '';} else { echo 'display:none;"';}?>" />
+                        <input class="btn btn-danger" style="<?php if(in_array(133,$acl)) {echo '';} else { echo 'display:none;';}?>" onclick='salary_block_delete()' type="button" value='Final Delete' />
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-4 -->
@@ -207,257 +211,275 @@
 					<input type="month" class="form-control" id="bonus_process_month" >
 
                     <!-- <span class="input-group-btn"> -->
-					<input style="margin-left: 8px !important;" class="btn btn-success" onclick='festival_bonus()' type="button" value='Process to Festival' />
+					<input style="margin-left: 8px !important;" class="btn btn-success" onclick="festival_bonus()" type="button" value='Process to Festival' />
 					<!-- </span> -->
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-4 -->
-
-        </div>
-		
-    </div>
-
-
-
-    <div class="col-md-4 tablebox">
-        <div style="height: 80vh; overflow-y: scroll;">
-            <table class="table table-hover" id="fileDiv">
-                <tr style="position: sticky;top: 0;z-index:1">
-                    <th class="active" style="width:10%"><input type="checkbox" id="select_all"
-                            class="select-all checkbox" name="select-all"></th>
-                    <th class="" style="background:#0177bcc2;color:white">Id</th>
-                    <th class=" text-center" style="background:#0177bc;color:white">Name</th>
-                </tr>
-                <?php if (!empty($employees)) { 
-					  		foreach ($employees as $key => $emp) { ?>
-                <tr id="removeTr">
-                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
-                    </td>
-                    <td class="success"><?= $emp->emp_id ?></td>
-                    <td class="warning "><?= $emp->name_en ?></td>
-                </tr>
-                <?php } } ?>
-            </table>
         </div>
     </div>
-    <!-- </div> -->
+
+	<!-- employee list for right side -->
+	<div class="col-md-4 tablebox">
+		<input type="text" id="searchi" class="form-control" placeholder="Search">
+		<div style="height: 80vh; overflow-y: scroll;">
+			<table class="table table-hover" id="fileDiv">
+				<thead>
+					<tr style="position: sticky;top: 0;z-index:1">
+						<th class="active" style="width:10%"><input type="checkbox" id="select_all" class="select-all checkbox" name="select-all"></th>
+						<th class="" style="background:#0177bcc2;color:white">Id</th>
+						<th class=" text-center" style="background:#0177bc;color:white">Name</th>
+					</tr>
+				</thead>
+				<tbody id="tbody">
+					<?php if (!empty($employees)) {
+						foreach ($employees as $key => $emp) {
+					?>
+							<tr class="removeTr">
+								<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+								</td>
+								<td class="success"><?= $emp->emp_id ?></td>
+								<td class="warning "><?= $emp->name_en ?></td>
+							</tr>
+					<?php }
+					} ?>
+					<tr class="removeTrno">
+						<td colspan="3" class="text-center"> No data found</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 
-<script type="text/javascript">
-	// on load employee
-	function grid_emp_list() {
-	    var unit = document.getElementById('unit_id').value;
-	    var dept = document.getElementById('dept').value;
-	    var section = document.getElementById('section').value;
-	    var line = document.getElementById('line').value;
-	    var desig = document.getElementById('desig').value;
-	    var status = document.getElementById('status').value;
+	<script>
+		$(document).ready(function() {
+			$("#searchi").on("keyup", function() {
+				var value = $(this).val().toLowerCase();
+				$("#tbody tr").filter(function() {
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+				});
+				$(".removeTrno").toggle($(".removeTr").length === 0);
+			});
+		});
+	</script>
 
-	    url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
-	    $.ajax({
-	        url: url,
-	        type: 'GET',
-	        data: {
-	            "status": status
-	        },
-	        contentType: "application/json",
-	        dataType: "json",
+    <script type="text/javascript">
+        // on load employee
+        function grid_emp_list() {
+            var unit = document.getElementById('unit_id').value;
+            var dept = document.getElementById('dept').value;
+            var section = document.getElementById('section').value;
+            var line = document.getElementById('line').value;
+            var desig = document.getElementById('desig').value;
+            var status = document.getElementById('status').value;
 
-
-	        success: function(response) {
-	            $('#fileDiv #removeTr').remove();
-	            if (response.length != 0) {
-	                var items = '';
-	                $.each(response, function(index, value) {
-	                    items += '<tr id="removeTr">';
-	                    items +=
-	                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-	                        value.id + '" ></td>';
-	                    items += '<td class="success">' + value.emp_id + '</td>';
-	                    items += '<td class="warning ">' + value.name_en + '</td>';
-	                    items += '</tr>';
-	                });
-	                // console.log(items);
-	                $('#fileDiv tr:last').after(items);
-	            } else {
-	                $('#fileDiv #removeTr').remove();
-	            }
-	        }
-	    });
-	}
-
-	$(document).ready(function() {
-	    // select all item or deselect all item
-	    $("#select_all").click(function() {
-	        $('input:checkbox').not(this).prop('checked', this.checked);
-	    });
-
-	    //Designation dropdown
-	    $('#line').change(function() {
-	        $('.desig').addClass('form-control input-sm');
-	        $(".desig > option").remove();
-	        var id = $('#line').val();
-	        $.ajax({
-	            type: "POST",
-	            url: hostname + "common/ajax_designation_by_line_id/" + id,
-	            success: function(func_data) {
-	                $('.desig').append("<option value=''>-- Select District --</option>");
-	                $.each(func_data, function(id, name) {
-	                    var opt = $('<option />');
-	                    opt.val(id);
-	                    opt.text(name);
-	                    $('.desig').append(opt);
-	                });
-	            }
-	        });
-	        // load employee
-	        grid_emp_list();
-	    });
-
-	    //Line dropdown
-	    $('#section').change(function() {
-	        $('.line').addClass('form-control input-sm');
-	        $(".line > option").remove();
-	        $(".desig > option").remove();
-	        var id = $('#section').val();
-	        $.ajax({
-	            type: "POST",
-	            url: hostname + "common/ajax_line_by_sec_id/" + id,
-	            success: function(func_data) {
-	                $('.line').append("<option value=''>-- Select District --</option>");
-	                $.each(func_data, function(id, name) {
-	                    var opt = $('<option />');
-	                    opt.val(id);
-	                    opt.text(name);
-	                    $('.line').append(opt);
-	                });
-	            }
-	        });
-	        // load employee
-	        grid_emp_list();
-	    });
-
-	    //section dropdown
-	    $('#dept').change(function() {
-	        $('.section').addClass('form-control input-sm');
-	        $(".section > option").remove();
-	        $(".line > option").remove();
-	        $(".desig > option").remove();
-	        var id = $('#dept').val();
-	        $.ajax({
-	            type: "POST",
-	            url: hostname + "common/ajax_section_by_dept_id/" + id,
-	            success: function(func_data) {
-	                $('.section').append("<option value=''>-- Select District --</option>");
-	                $.each(func_data, function(id, name) {
-	                    var opt = $('<option />');
-	                    opt.val(id);
-	                    opt.text(name);
-	                    $('.section').append(opt);
-	                });
-	            }
-	        });
-	        // load employee
-	        grid_emp_list();
-	    });
-
-	    //Department dropdown
-	    $('#unit_id').change(function() {
-	        $('.dept').addClass('form-control input-sm');
-	        $(".dept > option").remove();
-	        $(".section > option").remove();
-	        $(".line > option").remove();
-	        $(".desig > option").remove();
-	        var id = $('#unit_id').val();
-	        $.ajax({
-	            type: "POST",
-	            url: hostname + "common/ajax_department_by_unit_id/" + id,
-	            success: function(func_data) {
-	                $('.dept').append("<option value=''>-- Select Department --</option>");
-	                $.each(func_data, function(id, name) {
-	                    var opt = $('<option />');
-	                    opt.val(id);
-	                    opt.text(name);
-	                    $('.dept').append(opt);
-	                });
-	            }
-	        });
-	        // load employee
-	        grid_emp_list();
-	    });
-	});
+            url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    "status": status
+                },
+                contentType: "application/json",
+                dataType: "json",
 
 
+                success: function(response) {
+                    $('.removeTr').remove();
+                    if (response.length != 0) {
+                        $('.removeTrno').hide();
+                        var items = '';
+                        $.each(response, function(index, value) {
+                            items += `
+                                <tr class="removeTr">
+                                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+                                    <td class="success">${value.emp_id}</td>
+                                    <td class="warning ">${value.name_en}</td>
+                                </tr>`
+                        });
+                        // console.log(items);
+                        $('#fileDiv tr:last').after(items);
+                    } else {
+                        $('.removeTrno').show();
+                        $('.removeTr').remove();
+                    }
+                }
+            });
+        }
 
+        $(document).ready(function() {
+            // select all item or deselect all item
+            $("#select_all").click(function() {
+                $('input:checkbox').not(this).prop('checked', this.checked);
+            });
 
-function festival_bonus(){
-	var ajaxRequest;  // The variable that makes Ajax possible!
-	try{
-		// Opera 8.0+, Firefox, Safari
-		ajaxRequest = new XMLHttpRequest();
-	}catch (e){
-		// Internet Explorer Browsers
-		try{
-			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-		}catch (e) {
+            //Designation dropdown
+            $('#line').change(function() {
+                $('.desig').addClass('form-control input-sm');
+                $(".desig > option").remove();
+                var id = $('#line').val();
+                $.ajax({
+                    type: "POST",
+                    url: hostname + "common/ajax_designation_by_line_id/" + id,
+                    success: function(func_data) {
+                        $('.desig').append("<option value=''>-- Select Designation --</option>");
+                        $.each(func_data, function(id, name) {
+                            var opt = $('<option />');
+                            opt.val(id);
+                            opt.text(name);
+                            $('.desig').append(opt);
+                        });
+                    }
+                });
+                // load employee
+                grid_emp_list();
+            });
+
+            //Line dropdown
+            $('#section').change(function() {
+                $('.line').addClass('form-control input-sm');
+                $(".line > option").remove();
+                $(".desig > option").remove();
+                var id = $('#section').val();
+                $.ajax({
+                    type: "POST",
+                    url: hostname + "common/ajax_line_by_sec_id/" + id,
+                    success: function(func_data) {
+                        $('.line').append("<option value=''>-- Select Line --</option>");
+                        $.each(func_data, function(id, name) {
+                            var opt = $('<option />');
+                            opt.val(id);
+                            opt.text(name);
+                            $('.line').append(opt);
+                        });
+                    }
+                });
+                // load employee
+                grid_emp_list();
+            });
+
+            //section dropdown
+            $('#dept').change(function() {
+                $('.section').addClass('form-control input-sm');
+                $(".section > option").remove();
+                $(".line > option").remove();
+                $(".desig > option").remove();
+                var id = $('#dept').val();
+                $.ajax({
+                    type: "POST",
+                    url: hostname + "common/ajax_section_by_dept_id/" + id,
+                    success: function(func_data) {
+                        $('.section').append("<option value=''>-- Select Section --</option>");
+                        $.each(func_data, function(id, name) {
+                            var opt = $('<option />');
+                            opt.val(id);
+                            opt.text(name);
+                            $('.section').append(opt);
+                        });
+                    }
+                });
+                // load employee
+                grid_emp_list();
+            });
+
+            //Department dropdown
+            $('#unit_id').change(function() {
+                $('.dept').addClass('form-control input-sm');
+                $(".dept > option").remove();
+                $(".section > option").remove();
+                $(".line > option").remove();
+                $(".desig > option").remove();
+                var id = $('#unit_id').val();
+                $.ajax({
+                    type: "POST",
+                    url: hostname + "common/ajax_department_by_unit_id/" + id,
+                    success: function(func_data) {
+                        $('.dept').append("<option value=''>-- Select Department --</option>");
+                        $.each(func_data, function(id, name) {
+                            var opt = $('<option />');
+                            opt.val(id);
+                            opt.text(name);
+                            $('.dept').append(opt);
+                        });
+                    }
+                });
+                // load employee
+                grid_emp_list();
+            });
+        });
+    </script>
+
+    <script>
+        function get_checked_value(checkboxes) {
+            var vals = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value)
+                .join(",");
+            return vals;
+        }
+    </script>
+
+    <script>
+		function festival_bonus(){
+			var ajaxRequest;  // The variable that makes Ajax possible!
 			try{
-				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				// Opera 8.0+, Firefox, Safari
+				ajaxRequest = new XMLHttpRequest();
 			}catch (e){
-				// Something went wrong
-				alert("Your browser broke!");
+				// Internet Explorer Browsers
+				try{
+					ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+				}catch (e) {
+					try{
+						ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+					}catch (e){
+						// Something went wrong
+						alert("Your browser broke!");
+						return false;
+					}
+				}
+			}
+
+			var bonus_process_month = document.getElementById('bonus_process_month').value;
+            if (bonus_process_month == '')
+            {
+                alert("Please select Year Month");
+                return false;
+            }
+
+			var unit_id = document.getElementById('unit_id').value;
+			if(unit_id =='Select')
+			{
+				alert("Please select Category options");
 				return false;
 			}
+			//alert('hello');
+			var checkboxes = document.getElementsByName('emp_id[]');
+			var sql = get_checked_value(checkboxes);
+
+			if (sql == '') {
+				alert('Please select employee Id');
+				return false;
+			}
+			// hostname = window. location.href;
+
+
+			var queryString="unit_id="+unit_id+'&date='+bonus_process_month+'&sql='+sql;
+			url =  hostname+"salary_process_con/festival_process";
+
+			document.getElementById('loader').style.display = 'block';
+
+			ajaxRequest.open("POST", url, true);
+			ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			ajaxRequest.send(queryString);
+
+			ajaxRequest.onreadystatechange = function(){
+				document.getElementById('loader').style.display = 'none';
+				if(ajaxRequest.readyState == 4){
+					var resp = ajaxRequest.responseText;
+					extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+					extra_ot.document.write(resp);
+				}
+			}
 		}
-	}
-	var bonus_process_month = document.getElementById('bonus_process_month').value;
-		if (bonus_process_month == '')
-		{
-			alert("Please select Year Month");
-			return false;
-		}
-		
-
-	var unit_id = document.getElementById('unit_id').value;
-	if(unit_id =='Select')
-	{
-		alert("Please select Category options");
-		return false;
-	}
-	//alert('hello');
-	var checkboxes = document.getElementsByName('emp_id[]');
-	var sql = get_checked_value(checkboxes);
-
-	if (sql == '') {
-		alert('Please select employee Id');
-		return false;
-	}
-	// hostname = window. location.href;
-
-
-	var queryString="spl="+sql+"&unit_id="+unit_id;
-   	url =  hostname+"grid_con/grid_earn_leave_report/";
-
-	document.getElementById('loaader').style.display = 'flex';
-
-	ajaxRequest.open("POST", url, true);
-	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-	ajaxRequest.send(queryString);
-
-	ajaxRequest.onreadystatechange = function(){
-		document.getElementById('loaader').style.display = 'none';
-		if(ajaxRequest.readyState == 4){
-			var resp = ajaxRequest.responseText;
-			extra_ot = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			extra_ot.document.write(resp);
-		}
-	}
-}
-
-
-
-
-
-
-
-
-
-</script>
+	</script>

@@ -16,7 +16,6 @@
 	elseif($grid_status == 6)
 	{ echo 'Promoted Employee '; }
 ?> Advance Salary Sheet of <?php ?>
-
 </title>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/print.css" media="print" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" />
@@ -123,6 +122,7 @@ echo '<span style="font-weight:bold;">';
 echo "Advance Salary Sheet for the month of  ";
 $sstartDate = date("d-M-Y", strtotime($first_date));
 $sEndDate = date("d-M-Y", strtotime($last_date));
+// dd($);
 echo "&nbsp;$sstartDate To $sEndDate";//$date_format;
 $sEndDate = date("d-M-Y", strtotime($last_date));
 //MANUALLY DEFINE SALARY DAYS
@@ -315,19 +315,19 @@ echo "Payment Date : ";
 		echo $gross_salary;
 		echo "</td>";
 
-				// dd('KO');
+				// dd($first_date.'=='.$last_date);
 		
-		$attend = "P";
-		$attend = $this->salary_process_model->attendance_check($emp_id,$attend,$first_date,$last_date);
+		// $attend = "P";
+		$attend = $this->salary_process_model->attendance_check($emp_id,$first_date,$last_date);
+		// dd($attend);
+		// $absent = "A";
+		// $absent = $this->salary_process_model->attendance_check($emp_id,$first_date,$last_date);
 		
-		$absent = "A";
-		$absent = $this->salary_process_model->attendance_check($emp_id,$absent,$first_date,$last_date);
+		// $weeked = "W";
+		// $weeked = $this->salary_process_model->attendance_check($emp_id,$first_date,$last_date);
 		
-		$weeked = "W";
-		$weeked = $this->salary_process_model->attendance_check($emp_id,$weeked,$first_date,$last_date);
-		
-		$holiday = $this->salary_process_model->attendance_check($emp_id,'H',$first_date,$last_date);
-		$total_holiday = $weeked->weekend +  $holiday->holiday;
+		// $holiday = $this->salary_process_model->attendance_check($emp_id,$first_date,$last_date);
+		$total_holiday = $attend->weekend +  $attend->holiday;
 		$holiday_or_weeked = $total_holiday;
 		$leave_type = "cl";
 		$cas_leave = $this->salary_process_model->leave_db($emp_id, $first_date, $last_date, $leave_type);
@@ -351,7 +351,7 @@ echo "Payment Date : ";
 		echo "</td>"; 
 		
 		echo "<td>";
-		echo $absent->absent;
+		echo $attend->absent;
 		echo "</td>";
 		
 		echo "<td>";
@@ -375,7 +375,7 @@ echo "Payment Date : ";
 		echo "</td>";
 		
 		$per_day_gross = $gross_salary/$last_day;
-		dd($per_day_gross);
+		// dd($per_day_gross);
 		$net_wages = round($per_day_gross * $pay_days);
 		$total_net_wages 		= $total_net_wages + $net_wages;
 		$grand_total_net_wages 	= $grand_total_net_wages + $net_wages;

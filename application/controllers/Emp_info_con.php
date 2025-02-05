@@ -24,11 +24,23 @@ class Emp_info_con extends CI_Controller {
 	function personal_info()
 	{
         $this->data['units'] = $this->db->select('pr_units.*')->get('pr_units')->result();
+		//dd($this->data['units']);
 
 		$this->data['title'] = 'Personal Information';
 		$this->data['username'] = $this->data['user_data']->id_number;
 
 		$this->data['subview'] = 'empInfo/personal_info';
+		$this->load->view('layout/template', $this->data);
+	}
+
+		function personal_info_short()
+	{
+        $this->data['units'] = $this->db->select('pr_units.*')->get('pr_units')->result();
+
+		$this->data['title'] = 'Personal Information';
+		$this->data['username'] = $this->data['user_data']->id_number;
+
+		$this->data['subview'] = 'empInfo/personal_info_short';
 		$this->load->view('layout/template', $this->data);
 	}
 	function get_last_id()
@@ -143,10 +155,28 @@ class Emp_info_con extends CI_Controller {
 		}
 	}
 
+
+		function personal_info_add_short() {
+	
+		// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		// 	$this->load->view('empInfo/personal_info');
+		// }
+		if(isset($_POST['save'])) {
+			$this->Processdb->insert_emp_info_short();
+		} elseif(isset($_POST['edit'])){
+			if($this->Processdb->updatedb_short()) {
+				echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated successfully'); window.location='personal_info_short';</SCRIPT>";
+			}
+		} else {
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Error Occurred'); window.location='personal_info_short';</SCRIPT>";
+		}
+	}
+
 	function get_employees_info(){
 
 		$emp_id = $_POST['id'];
 		$data = $this->Processdb->get_emp_info($emp_id);
+		// dd($data);
 		$this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($data));

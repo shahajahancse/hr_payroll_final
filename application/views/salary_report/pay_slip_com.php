@@ -85,15 +85,13 @@
                                     <td width="">
                                         <font style="font-family:'Times New Roman', Times, serif; font-size: 11px;">
                                             : <strong>
-                                                <?php echo $rows->name_bn;   ?>
+                                                <?php echo $rows->name_en;   ?>
                                             </strong> </font>
                                     </td>
                                     <?php if($unit_id !=4){?>
                                     <td width="72">গ্রেড</td>
-                                    <td width="75">
-                                        <font style="font-family: SutonnyMJ;font-size: 11px;">:
-                                            <?php echo $rows->gr_name;   ?>
-                                        </font>
+                                    <td width="75" style="font-family: SutonnyMJ;font-size: 11px;"> : 
+                                        <?php echo $rows->gr_name =='None'?'c«‡hvR¨ bq':$rows->gr_name;?> 
                                     </td>
                                     <?php }?>
                                 </tr>
@@ -107,10 +105,8 @@
                                     </td>
                                  <?php if($unit_id ==4){?>
                                     <td width="72">গ্রেড</td>
-                                    <td width="75">
-                                        <font style="font-family: SutonnyMJ;font-size: 11px;">:
-                                            <?php echo $rows->gr_name;   ?>
-                                        </font>
+                                    <td width="75" style="font-family: SutonnyMJ;font-size: 11px;"> : 
+                                        <?php echo $rows->gr_name =='None'?'c«‡hvR¨ bq':$rows->gr_name;?> 
                                     </td>
                                     <?php }?>
                                     <?php if($unit_id !=4 ){;?>
@@ -137,7 +133,7 @@
                                     </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->sec_name_bn;   ?>
+                                            <?php echo $rows->sec_name_en;   ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -160,7 +156,7 @@
                                     <td width="72" style="font-size: 10px;">&#2482;&#2494;&#2439;&#2472; </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->line_name_bn;   ?>
+                                            <?php echo $rows->line_name_en;   ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -418,15 +414,13 @@
                                     <td width="">
                                         <font style="font-family:'Times New Roman', Times, serif; font-size: 11px;">
                                             : <strong>
-                                                <?php echo $rows->name_bn;   ?>
+                                                <?php echo $rows->name_en;   ?>
                                             </strong> </font>
                                     </td>
                                     <?php if($unit_id !=4){?>
                                     <td width="72">গ্রেড</td>
-                                    <td width="75">
-                                        <font style="font-family: SutonnyMJ;font-size: 11px;">:
-                                            <?php echo $rows->gr_name;   ?>
-                                        </font>
+                                    <td width="75" style="font-family: SutonnyMJ;font-size: 11px;"> : 
+                                        <?php echo $rows->gr_name =='None'?'c«‡hvR¨ bq':$rows->gr_name;?> 
                                     </td>
                                     <?php }?>
                                 </tr>
@@ -440,10 +434,8 @@
                                     </td>
                                  <?php if($unit_id ==4){?>
                                     <td width="72">গ্রেড</td>
-                                    <td width="75">
-                                        <font style="font-family: SutonnyMJ;font-size: 11px;">:
-                                            <?php echo $rows->gr_name;   ?>
-                                        </font>
+                                    <td width="75" style="font-family: SutonnyMJ;font-size: 11px;"> : 
+                                        <?php echo $rows->gr_name =='None'?'c«‡hvR¨ bq':$rows->gr_name;?> 
                                     </td>
                                     <?php }?>
                                     <?php if($unit_id !=4 ){;?>
@@ -470,7 +462,7 @@
                                     </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->sec_name_bn;   ?>
+                                            <?php echo $rows->sec_name_en;   ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -493,7 +485,7 @@
                                     <td width="72" style="font-size: 12px;">&#2482;&#2494;&#2439;&#2472; </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->line_name_bn;   ?>
+                                            <?php echo $rows->line_name_en;   ?>
                                         </font>
                                     </td>
                                 </tr>

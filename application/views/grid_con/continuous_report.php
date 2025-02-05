@@ -26,6 +26,7 @@
             <span style="font-size:13px; font-weight:bold;">
 		<?php echo $status; ?> Report from
 		<?php
+			// dd($values);
 			$year= trim(substr($start_date,0,4));
 			$month = trim(substr($start_date,5,2));
 			$tarik = trim(substr($start_date,8,2));

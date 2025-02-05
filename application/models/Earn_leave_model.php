@@ -8,17 +8,32 @@ class Earn_leave_model extends CI_Model{
 		ini_set('memory_limit', '-1');
 	}
 
-	function earn_leave_process_db($grid_emp_id,$process_check,$month_year){   
+	function earn_leave_process_block($unit_id, $month_year){   
+        $blockYear = date('Y-12-t', strtotime($month_year));
+        $blockData = array(
+            'block_year' => $blockYear,
+            'unit_id' => $unit_id,
+            'username' => $this->session->userdata('username'),
+            'date_time' => date('Y-m-d H:i:s')
+        );
+		$ck = $this->db->where('unit_id', $unit_id)->where('block_year', $blockYear)->get('pr_earn_leave_block');
+        if (empty($ck->row())) {
+            $this->db->insert('pr_earn_leave_block', $blockData);
+        }
+        return 'Earn Leave Block Completed Successfully!';
+	}
+
+	function earn_leave_process_db($emp_ids, $process_check, $month_year){   
 		// dd($grid_emp_id);
-		$current_year_month= date("Y-m");
-		$date= $month_year;
-		if($date > $current_year_month){
-			return "Failed ! You Are In $current_year_month";
+		$current_year = date("Y");
+		$cal_year = date('Y',strtotime($month_year));
+		if($cal_year > $current_year){
+			return "Failed ! You Are In $cal_year";
 		}
-        // $current_date = $date."-01";
-        $current_date = date('Y-m-t',strtotime($month_year));
-		// dd($current_date);
-	    $past_year_date = date("Y-m-d",strtotime("-1 year",strtotime($current_date)));
+
+        $cal_year_end = date('Y-12-t',strtotime($month_year));
+	    $past_year_date = date("Y-m-d",strtotime("-1 year",strtotime($cal_year_end)));
+		// dd($cal_year_end .' = '. $past_year_date);
 		$result = $this->db->select('
 			id, 
 			emp_id, 
@@ -31,8 +46,8 @@ class Earn_leave_model extends CI_Model{
 			gross_sal,
 			com_gross_sal,
 		')
-		->where_in('id',$grid_emp_id)
-		->where('emp_join_date <=',$past_year_date)
+		->where_in('emp_id', $emp_ids)
+		->where('emp_join_date <=', $past_year_date)
 		->get('pr_emp_com_info');
 		$rows = $result->result();
 		// dd($rows);
@@ -41,108 +56,100 @@ class Earn_leave_model extends CI_Model{
 				$id = $row->id;
 				$emp_id = $row->emp_id;
 				$emp_join_date = $row->emp_join_date;
-				$gross_sal = $row->gross_sal;
+				$gross_sal 	   = $row->gross_sal;
 				$com_gross_sal = $row->com_gross_sal;
-				$d1=new DateTime($current_date); 
-				$d2=new DateTime($emp_join_date);                                  
+				$d1 = new DateTime($cal_year_end); 
+				$d2 = new DateTime($emp_join_date);                                  
 				$working_month = $d2->diff($d1); 
 				$year  = $working_month->y;
 				$month = $working_month->m;
 				$day = $working_month->d;
-				if($month == 0){
-					$first_year =  date("Y-m-d",strtotime("- $day days",strtotime($current_date)));
-					$last_year =  date("Y-m-d",strtotime("+ $day days",strtotime($past_year_date)));
-					$cl = $sl = $el =$ml = 0;	
-					$leaves = $this->all_leave_cal($first_year, $last_year, $emp_id);
-					// dd($leaves);
-					if (!empty($leaves)) {
-						$cl = ($leaves->cl != null || $leaves->ml != '') ? $leaves->cl:0;
-						$sl = ($leaves->sl != null || $leaves->sl != '') ? $leaves->sl:0;
-						$el = ($leaves->el != null || $leaves->el != '') ? $leaves->el:0;
-						$ml = ($leaves->ml != null || $leaves->ml !=  '') ? $leaves->ml:0;
-					}
-					$present = $this->count_earn_leave($first_year, $last_year, $row->emp_id); 
-					$total_earn_leave = round($present->present/18);
-					// dd($present);
-					if ($year > 1) {
-						$last_leave = $this->db->select('el, earn_leave, pay_leave')
-											->where('emp_id',$emp_id)
-											->where('earn_month <',$current_date)
-											->order_by('earn_month', 'DESC')
-											->get('pr_earn_leave')->row();	
-						if (!empty($last_leave)) {
-							$total_earn_leave = $total_earn_leave + ($last_leave->earn_leave - $last_leave->el); 
-						}
-					}					
-					$num_row = $this->db->where('emp_id',$emp_id)->where('earn_month',$current_date)->get('pr_earn_leave')->num_rows();
-					if($num_row == 0){
-						$data = array(
-							'emp_id'     => $emp_id,
-							'gross_sal'  => $gross_sal,
-							'com_gross_sal'  => $com_gross_sal,
-							'basic_sal'  => round(($gross_sal-2450)/1.5,2),
-							'unit_id'    => $row->unit_id,
-							'line_id'    => $row->emp_line_id,
-							'P' 	 	 => isset($present->present)?$present->present:0,
-							'A' 	 	 => isset($present->absent)?$present->absent:0,
-							'H' 	 	 => isset($present->holiday)?$present->holiday:0,
-							'W' 	 	 => isset($present->weekend)?$present->weekend:0,
-							'cl' 		 => $cl,
-							'sl' 		 => $sl,
-							'el' 	 	 => $el,
-							'ml' 	  	 => $ml,
-							't_days' 	 => 365,
-							'w_days' 	 => $present->present,
-							'net_pay'  => round($gross_sal/30,2)*$total_earn_leave,
-							'earn_leave' => $total_earn_leave,
-							'jod' 	 	 => $emp_join_date,
-							'earn_month' => $current_date,
-						);
-						$this->db->insert('pr_earn_leave', $data);
-					}else{			
-						$data = array(
-							'com_gross_sal'  => $com_gross_sal,
-							'basic_sal'  => round(($gross_sal-2450)/1.5,2),
-							'unit_id'    => $row->unit_id,
-							'line_id'    => $row->emp_line_id,
-							'P' 	 	 => isset($present->present)?$present->present:0,
-							'A' 	 	 => isset($present->absent)?$present->absent:0,
-							'H' 	 	 => isset($present->holiday)?$present->holiday:0,
-							'W' 	 	 => isset($present->weekend)?$present->weekend:0,
-							'cl' 		 => $cl,
-							'sl' 		 => $sl,
-							'el' 	 	 => $el,
-							'ml' 	  	 => $ml,
-							't_days' 	 => 365,
-							'w_days' 	 => $present->present,
-							'net_pay'  => round($gross_sal/30,2)*$total_earn_leave,
-							'earn_leave' => $total_earn_leave,
-						);
-						$this->db->where('emp_id', $emp_id)->where('earn_month', $current_date);
-						$this->db->update('pr_earn_leave', $data);
-					}
+
+				$first_year =  date("Y-m-d",strtotime("- $day days",strtotime($cal_year_end)));
+				$last_year =  date("Y-m-d",strtotime("+ $day days",strtotime($past_year_date)));
+				$cl = $sl = $el =$ml = 0;	
+				$leaves = $this->all_leave_cal($first_year, $last_year, $emp_id);
+				// dd($leaves);
+				if (!empty($leaves)) {
+					$cl = ($leaves->cl != null || $leaves->ml != '') ? $leaves->cl:0;
+					$sl = ($leaves->sl != null || $leaves->sl != '') ? $leaves->sl:0;
+					$el = ($leaves->el != null || $leaves->el != '') ? $leaves->el:0;
+					$ml = ($leaves->ml != null || $leaves->ml !=  '') ? $leaves->ml:0;
 				}
+				$present = $this->count_earn_leave($first_year, $last_year, $row->emp_id); 
+				$total_earn_leave = round($present->present/18);
+				// dd($present);
+				if ($year > 1) {
+					$last_leave = $this->db->select('el, earn_leave, pay_leave')
+										->where('emp_id',$emp_id)
+										->where('earn_month <', $cal_year_end)
+										->order_by('earn_month', 'DESC')
+										->get('pr_earn_leave')->row();	
+					if (!empty($last_leave)) {
+						$prev_leave = $last_leave->earn_leave - $last_leave->el; 
+					}
+				} else {
+					$prev_leave = 0;
+				}	
+
+				$num_row = $this->db->where('emp_id',$emp_id)->where('earn_month',$cal_year_end)->get('pr_earn_leave')->num_rows();
+				if($num_row == 0){
+					$data = array(
+						'emp_id'     => $emp_id,
+						'gross_sal'  => $gross_sal,
+						'com_gross_sal'  => $com_gross_sal,
+						'basic_sal'  => round(($gross_sal-2450)/1.5,2),
+						'unit_id'    => $row->unit_id,
+						'line_id'    => $row->emp_line_id,
+						'P' 	 	 => isset($present->present)?$present->present:0,
+						'A' 	 	 => isset($present->absent)?$present->absent:0,
+						'H' 	 	 => isset($present->holiday)?$present->holiday:0,
+						'W' 	 	 => isset($present->weekend)?$present->weekend:0,
+						'cl' 		 => $cl,
+						'sl' 		 => $sl,
+						'el' 	 	 => $el,
+						'ml' 	  	 => $ml,
+						't_days' 	 => 365,
+						'w_days' 	 => $present->present,
+						'net_pay'    => round($gross_sal/30,2)*$total_earn_leave,
+						'prev_leave' => $prev_leave,
+						'earn_leave' => $total_earn_leave,
+						'jod' 	 	 => $emp_join_date,
+						'earn_month' => $cal_year_end,
+					);
+					$this->db->insert('pr_earn_leave', $data);
+				}else{			
+					$data = array(
+						'com_gross_sal'  => $com_gross_sal,
+						'basic_sal'  => round(($gross_sal-2450)/1.5,2),
+						'unit_id'    => $row->unit_id,
+						'line_id'    => $row->emp_line_id,
+						'P' 	 	 => isset($present->present)?$present->present:0,
+						'A' 	 	 => isset($present->absent)?$present->absent:0,
+						'H' 	 	 => isset($present->holiday)?$present->holiday:0,
+						'W' 	 	 => isset($present->weekend)?$present->weekend:0,
+						'cl' 		 => $cl,
+						'sl' 		 => $sl,
+						'el' 	 	 => $el,
+						'ml' 	  	 => $ml,
+						't_days' 	 => 365,
+						'w_days' 	 => $present->present,
+						'net_pay'    => round($gross_sal/30,2)*$total_earn_leave,
+						'earn_leave' => $total_earn_leave,
+					);
+					$this->db->where('emp_id', $emp_id)->where('earn_month', $cal_year_end);
+					$this->db->update('pr_earn_leave', $data);
+				}
+
 			}
 			return "Earn Leave Process Completed Succesfully !";
+		} else {
+			return "Sorry, Earn Leave Process Failed !";
 		}
-	
-		
-		//INSERT BLOCK RECORD
-		/* if($process_check == "2")
-		{
-		  $block_year 				= "$process_year";
-		  $data_1['block_year'] 	= $block_year;
-		  $data_1['unit_id'] 		= $unit_id;
-		  $data_1['username'] 		= $this->session->userdata('username');
-		  $data_1['date_time'] 		= date("Y-m-d H:i:s");
-		  $this->db->insert('pr_earn_leave_block', $data_1); 
-		} */
-		
 	}
 
-
 	function all_leave_cal($first_year, $last_year, $emp_id){
-	//  echo "<pre>"; print_r($emp_id.' '.$last_year.' '.$first_year); exit; 
+		//  echo "<pre>"; print_r($emp_id.' '.$last_year.' '.$first_year); exit; 
 		$this->db->select("
 				SUM(CASE WHEN leave_type = 'cl' THEN 1 ELSE 0 END ) AS cl,
 				SUM(CASE WHEN leave_type = 'sl' THEN 1 ELSE 0 END ) AS sl,
@@ -173,7 +180,6 @@ class Earn_leave_model extends CI_Model{
 		return $this->db->get()->row();  
 
 	}
-
 
 	//===================Earn Leave Report============================
 	function grid_earn_leave_general_info($year, $grid_emp_id){
@@ -295,13 +301,14 @@ class Earn_leave_model extends CI_Model{
 		}
 		return $data;
 	}
+
 	function grid_earn_leave_summery($unit_id,$year){
 		$table_name = "pr_earn_leave";
 		$all_data = array();
 		$this->db->select("id,line_name_en");
 		$this->db->where("unit_id",$unit_id);
 		$this->db->order_by("line_name_en");
-		$query = $this->db->get("pr_line_num");
+		$query = $this->db->get("emp_line_num");
 
 		foreach($query->result() as $rows)
 		{
@@ -324,9 +331,9 @@ class Earn_leave_model extends CI_Model{
 		//print_r($all_data);
 	}
 
+	
 	// old code 01/11/2022
-
-		//UPDATED ON 23-04-2015 BY MD. KAMRUL HASAN TAREQ
+	//UPDATED ON 23-04-2015 BY MD. KAMRUL HASAN TAREQ
 	//========================Earn Leave Model (2014-01-17)=================================
 	//======================================================================================
 	function earn_leave_process_db_old_01_11_2022($year,$process_check){

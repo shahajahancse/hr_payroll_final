@@ -116,7 +116,7 @@ for($i = 0; $i<$count;$i++){
 	$count1 = count($values[$emp_id]["shift_log_date"]);
 	// dd($count1);
 	
-	echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0' style='text-align:center; font-size:13px; width:650px; '> <th>Date</th><th>Day</th><th>In Time</th><th>Out Time</th><th>Attn.Status</th><th>Overtime</th><th>Remarks</th>";
+	echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0' style='text-align:center; font-size:13px; width:650px; '> <th>Date</th><th>Day</th><th>In Time</th><th>Out Time</th><th>Attn.Status</th><th>Over Time</th><th>Remarks</th>";
 	for($k = 0; $k<$count1;$k++){
 		//echo $values[$emp_id]["shift_log_date"][$k];
 		//echo "<br>";

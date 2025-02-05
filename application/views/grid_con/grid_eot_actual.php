@@ -10,7 +10,29 @@
 		<div align="center" style="height:auto; width:100%; overflow:hidden;" >
 			<?php
 				$this->load->model('job_card_model');
-				foreach ($values as $key => $value) {
+				foreach ($values as $key => $value) {?>
+
+				<?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+					<div style="display: flex; justify-content: space-around;">
+						<p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
+						<p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
+						<p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
+					</div>
+					<?php } else if($unit_id == 2){?>
+					<div style="display: flex; justify-content: space-around;">
+						<p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
+						<p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
+						<p style="font-family: Arial, Helvetica, sans-serif;"> Document Code : LSAL/HR/03/084</p>
+					</div>
+					<?php }else if($unit_id == 4){?>
+					<div style="display: flex; justify-content: space-around;">
+						<p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
+						<p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
+						<p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/008</p>
+					</div> 
+				<?php }
+
+
 					echo "<div style=' overflow:hidden;'>";
 					$present_count = 0;
 					$absent_count = 0;
@@ -49,26 +71,11 @@
 					echo "</tr>";
 
 					echo "<tr>";
-						echo "<td >";
-						echo "<strong>Proxi NO. :</strong>";
-						echo "</td>";
-						echo "<td >";
-						echo $value->proxi_id;
-						echo "</td>";
-
 						echo "<td style:width:20px'>";
 						echo "<strong>Section :</strong>";
 						echo "</td>";
 						echo "<td width='30px'>";
 						echo $value->sec_name_en;
-						echo "</td>";
-					echo "</tr>";
-					echo "<tr>";
-						echo "<td>";
-						echo "<strong>Line :</strong>";
-						echo "</td>";
-						echo "<td>";
-						echo $value->line_name_en;
 						echo "</td>";
 						echo "<td>";
 						echo "<strong>Desig :</strong>";
@@ -79,18 +86,29 @@
 					echo "</tr>";
 					echo "<tr>";
 						echo "<td>";
-						echo "<strong>DOJ :</strong>";
+						echo "<strong>Line :</strong>";
 						echo "</td>";
 						echo "<td>";
-						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo $value->line_name_en;
 						echo "</td>";
 
+						
 						echo "<td >";
 						echo "<strong>Dept :</strong>";
 						echo "</td>";
 						echo "<td >";
 						echo $value->dept_name;
 						echo "</td>";
+
+					echo "</tr>";
+					echo "<tr>";
+						echo "<td>";
+						echo "<strong>DOJ :</strong>";
+						echo "</td>";
+						echo "<td>";
+						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo "</td>";
+
 					echo "</tr>";
 
 					// echo "<tr>";
@@ -121,7 +139,7 @@
 						</tr>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
 
-						if(in_array($row->shift_log_date,$emp_data['leave'])){
+						if($row->present_status == 'L'){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
 							$att_status = $leave_type;
@@ -335,7 +353,7 @@
 					echo "</td>";
 
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
-					echo "OVERTIME";
+					echo "OVER TIME";
 					echo "</td>";
 
 					echo "</tr>";

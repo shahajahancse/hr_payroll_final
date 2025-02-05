@@ -70,9 +70,9 @@
 
                 </thead>
 
-                <tbody>
+                <tbody id="tbody">
 
-                    <?php
+                    <!-- <?php
 
                   if (!empty($results)) {foreach ($results as $key => $r) {?>
 
@@ -94,7 +94,7 @@
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
-                    <?php }?>
+                    <?php }?> -->
 
                 </tbody>
             </table>
@@ -103,7 +103,7 @@
     <br><br>
 </div>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
     $("#mytable").dataTable();
     $('#mytable_filter').css({
@@ -118,4 +118,62 @@ $(document).ready(function() {
         oTable.search($(this).val()).draw();
     })
 });
+</script> -->
+
+
+<script>
+var offset = 0
+var limit = 15
+var i = 0
+$(document).ready(function() {
+    get_data(offset)
+})
+
+function get_data(offset=0) {
+    var deptSearch = $('#deptSearch').val()
+    $.ajax({
+        url:"<?php echo base_url('entry_system_con/holiday_list_ajax') ?>",
+        type:"post",
+        data:{
+            offset:offset,
+            limit:limit,
+            deptSearch:deptSearch
+        },
+        success:function(data){
+            var obj = JSON.parse(data)
+           
+            obj.forEach(element => {
+                var work_off_day = new Date(element.work_off_date).toLocaleString('en-US', { weekday: 'long' });
+
+                $('#tbody').append(`<tr>
+                <td>${++i}</td>
+                <td>${element.user_name}</td>
+                <td>${element.emp_id}</td>
+                <td>${element.unit_name}</td>
+                <td>${element.work_off_date}</td>
+                <td>${work_off_day}</td>
+                <td>${element.description}</td>
+                <td>
+                    <a href="<?=base_url('entry_system_con/emp_holiday_del/')?>${element.id}"
+                        class="btn btn-danger" role="button">Delete</a>
+                </td>
+            </tr>`)
+            });
+        }
+    })
+}
+window.onscroll = function() {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        offset += limit
+        get_data(offset)
+    }
+}
+
+$('#deptSearch').keyup(function() {
+     offset = 0
+     i = 0
+    get_data(offset)
+    $('#tbody').empty()
+})
+
 </script>

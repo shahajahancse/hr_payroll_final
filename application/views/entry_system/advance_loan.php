@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('entry_system_con/advance_loan_form') ?>">Add Loan / Tax</a>
+                    <a class="btn btn-info" href="<?php echo base_url('entry_system_con/advance_loan_form') ?>">Add Salary / Tax</a>
                     <a class="btn btn-success" href="<?php echo base_url('entry_system_con/tax_list') ?>">Go => Tax List</a>
                     <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
@@ -74,11 +74,11 @@
                         <td><?php echo $r->name_en ?></td>
                         <td><?php echo $r->emp_id ?></td>
                         <td><?php echo $r->loan_amount ?></td>
-                        <td><?php echo date('d-m-Y', strtotime($r->loan_month)) ?></td>
+                        <td><?php echo date('d-m-Y', strtotime($r->loan_date)) ?></td>
                         <td><?php echo ($r->effect_month)?date('d-m-Y', strtotime($r->effect_month)):'' ?></td>
-                        <td><?php echo $r->pay_amount ?></td>
+                        <td><?php echo $r->pay_amt ?></td>
                         <td><?php echo $r->unit_name ?></td>
-                        <td><?php echo ($r->status == 1)? "Not pay":(($r->status == 2)? "Full Pay":'Partial Pay'); ?></td>
+                        <td><?php echo ($r->loan_status == 1)? "Not pay":(($r->loan_status == 2)? "Full Pay":'Partial Pay'); ?></td>
                     </tr>
                     <?php }} else {?>
                     <tr>

@@ -147,6 +147,7 @@
 					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Designation</strong></div></th>
 					<th rowspan="2" width="50" height="20px"><div align="center"><strong>Line</strong></div></th>
 					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Joining Date</strong></div></th>
+					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Grade</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>Gross Salary</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>OT</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>EOT</strong></div></th>
@@ -157,6 +158,7 @@
 				<tr>
 			</tr>
 			<?php
+				// dd($values);
 				if($counter == $page)
 				{
 					$modulus = ($row_count-1) % 19;
@@ -202,7 +204,7 @@
 				echo "</td>";
 
 				echo "<td style='width:100px;'>";
-				print_r($values[$k]->name_bn);
+				print_r($values[$k]->name_en);
 				echo '<br>';
 				if($grid_status == 4)
 				{
@@ -219,7 +221,7 @@
 				echo "</td>";
 
 				echo "<td>";
-				print_r($values[$k]->name_en);
+				print_r($values[$k]->desig_name);
 				//echo $row->desig_name;
 				echo "</td>";
 
@@ -239,15 +241,22 @@
 				echo $date_format;
 				echo "</td>";
 
+				echo "<td>";
+				echo $values[$k]->gr_name;
+				echo "</td>";
+
 				echo "<td style='font-weight:bold;'>";
 				print_r ($values[$k]->gross_sal);
 				$gross_sal = $gross_sal + $values[$k]->gross_sal;
 				$total_gross_sal_per_page = $total_gross_sal_per_page + $values[$k]->gross_sal;
 				echo "</td>";
 
+
+
+
 				$ot_data = $this->Grid_model->cal_eot_com($values[$k]->emp_id, $salary_month, $second_date);
 
-				$ot_rate    = round(($values[$k]->basic_sal * 2  / 208), 2);
+				$ot_rate    = ceil($values[$k]->basic_sal * 2  / 208);
 
 				echo "<td>";
 				echo $ot_data->ot;
@@ -258,6 +267,7 @@
 				echo "</td>";
 				
 				$total_ot_eot_hour	= $ot_data->ot + $ot_data->eot;
+				// $total_ot_eot_hour	= $ot_data->ot + $ot_data->eot;
 
 				echo "<td>";
 				echo $total_ot_eot_hour;
@@ -277,7 +287,7 @@
 				echo "</td>";
 
 				echo "<td>";
-				echo $eot_amount = round(($total_ot_eot_hour * $ot_rate), 2);
+				echo $eot_amount = round(($ot_data->eot * $ot_rate), 2);
 				echo "</td>";
 
 				$total_ot_eot_amount_per_page = $total_ot_eot_amount_per_page + $eot_amount;

@@ -13,12 +13,13 @@ class Mars_model extends CI_Model{
 	// 29/10/23  shahajahan
 	function dashboard_summary($report_date, $unit_id)
 	{
-
+		// dd($unit_id);
 		$data = array();
-		if (empty($unit_id)) {
-			$unit_id = 1;
-		}
-		$all_id = get_all_emp_id(array(1,2), $unit_id);
+		// if (empty($unit_id)) {
+		// 	$unit_id = 1;
+		// }
+		$all_id = get_all_emp_id(array(1), $unit_id);
+		// dd($all_id);
 	 	$data = $this->weekly_attendance_summary($report_date,$all_id);
 
 	 	$data['monthly_join_id'] = $this->monthly_join_emp($report_date);
@@ -31,7 +32,7 @@ class Mars_model extends CI_Model{
 		$data['att_bonus'] = $lm_expense->att_bonus;
 
 		$attendance_summary = $this->attendance_summary($report_date, $all_id);
-
+		// dd($attendance_summary);
 		$data['all_emp'] = $attendance_summary['all_emp'];
 		$data['all_present'] = $attendance_summary['all_present'];
 		$data['all_absent'] = $attendance_summary['all_absent'];
@@ -73,6 +74,8 @@ class Mars_model extends CI_Model{
 		$date_7 = date('Y-m-d',strtotime('-6 day',strtotime($report_date)));
 		$day_7 = date('D', strtotime($date_7));
 		$data['day_7'] = $day_7;
+		$user_level=$this->session->userdata('data')->level;
+		$unit_name=$this->session->userdata('data')->unit_name;
 
 
 		$this->db->distinct();
@@ -84,7 +87,12 @@ class Mars_model extends CI_Model{
 				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
 			");
 		$this->db->from("pr_emp_shift_log");
-		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		// $this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		if($user_level!='All'){
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		}else{
+			$this->db->where("pr_emp_shift_log.unit_id", $unit_name);
+		}
 		$this->db->where("pr_emp_shift_log.shift_log_date", $date_2);
 		$data_2 = $this->db->get()->row();
 		$data['all_present_2'] = $data_2->present;
@@ -103,7 +111,12 @@ class Mars_model extends CI_Model{
 				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
 			");
 		$this->db->from("pr_emp_shift_log");
-		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		// $this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		if($user_level!='All'){
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		}else{
+			$this->db->where("pr_emp_shift_log.unit_id", $unit_name);
+		}
 		$this->db->where("pr_emp_shift_log.shift_log_date", $date_3);
 		$data_3 = $this->db->get()->row();
 		$data['all_present_3'] = $data_3->present;
@@ -122,7 +135,12 @@ class Mars_model extends CI_Model{
 				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
 			");
 		$this->db->from("pr_emp_shift_log");
-		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		// $this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		if($user_level!='All'){
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		}else{
+			$this->db->where("pr_emp_shift_log.unit_id", $unit_name);
+		}
 		$this->db->where("pr_emp_shift_log.shift_log_date", $date_4);
 		$data_4 = $this->db->get()->row();
 		$data['all_present_4'] = $data_4->present;
@@ -141,7 +159,12 @@ class Mars_model extends CI_Model{
 				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
 			");
 		$this->db->from("pr_emp_shift_log");
-		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		// $this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		if($user_level!='All'){
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		}else{
+			$this->db->where("pr_emp_shift_log.unit_id", $unit_name);
+		}
 		$this->db->where("pr_emp_shift_log.shift_log_date", $date_5);
 		$data_5 = $this->db->get()->row();
 		$data['all_present_5'] = $data_5->present;
@@ -160,7 +183,12 @@ class Mars_model extends CI_Model{
 				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
 			");
 		$this->db->from("pr_emp_shift_log");
-		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		// $this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		if($user_level!='All'){
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		}else{
+			$this->db->where("pr_emp_shift_log.unit_id", $unit_name);
+		}
 		$this->db->where("pr_emp_shift_log.shift_log_date", $date_6);
 		$data_6 = $this->db->get()->row();
 		$data['all_present_6'] = $data_6->present;
@@ -179,7 +207,12 @@ class Mars_model extends CI_Model{
 				SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ) AS holiday,
 			");
 		$this->db->from("pr_emp_shift_log");
-		$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		// $this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		if($user_level!='All'){
+			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+		}else{
+			$this->db->where("pr_emp_shift_log.unit_id", $unit_name);
+		}
 		$this->db->where("pr_emp_shift_log.shift_log_date", $date_7);
 		$data_7 = $this->db->get()->row();
 		$data['all_present_7'] = $data_7->present;
@@ -207,37 +240,10 @@ class Mars_model extends CI_Model{
 
 	function attendance_summary($report_date, $all_emp_id)
 	{
-
+		$user_level=$this->session->userdata('data')->level;
+		$unit_name=$this->session->userdata('data')->unit_name;
+		// dd($all_emp_id);
 		$data =array();
-
-		$this->db->select('pr_emp_com_info.emp_id');
-		$this->db->from("pr_emp_shift_log");
-		$this->db->from("pr_emp_com_info");
-
-		$this->db->where("pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id");
-		$this->db->where("pr_emp_shift_log.shift_log_date", $report_date);
-		$this->db->where_in("pr_emp_com_info.emp_id", $all_emp_id);
-		$this->db->where_not_in('pr_emp_shift_log.present_status', array('H','W'));
-		$this->db->group_by('pr_emp_com_info.emp_id');
-		$query = $this->db->get();
-
-
-		if($query->num_rows() == 0)
-		{
-			$data['all_emp'] 		= 0;
-			$data['all_present'] 	= 0;
-			$data['all_leave'] 		= 0;
-			$data['all_absent'] 	= 0;
-			$data['all_late'] 		= 0;
-			$data['all_male'] 		= 0;
-			$data['all_female'] 	= 0;
-		}
-		else
-		{
-			$data['all_emp'] = $query->num_rows();
-			$all_emp_id = $query->result_array();
-			$it =  new RecursiveIteratorIterator(new RecursiveArrayIterator($all_emp_id));
-			$all_emp_id = iterator_to_array($it, false);
 
 			$this->db->distinct();
 			$this->db->select("
@@ -249,9 +255,13 @@ class Mars_model extends CI_Model{
 					SUM(CASE WHEN late_status    = '1' THEN 1 ELSE 0 END ) AS late_status,
 				");
 			$this->db->from("pr_emp_shift_log");
-			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+			if($user_level!='All'){
+				$this->db->where("pr_emp_shift_log.unit_id", $unit_name);
+			}
 			$this->db->where("pr_emp_shift_log.shift_log_date", $report_date);
 			$atten_data = $this->db->get()->row();
+
+			//dd($this->db->last_query());
 
 			$data['all_present'] 	= $atten_data->present;
 			$data['all_absent'] 	= $atten_data->absent;
@@ -259,24 +269,33 @@ class Mars_model extends CI_Model{
 			$data['all_late'] 		= $atten_data->late_status;
 
 
-			$this->db->select("pr_emp_per_info.emp_id");
+
+
+			$this->db->select("
+					SUM(CASE WHEN gender = 'Male' THEN 1 ELSE 0 END ) AS male,
+					SUM(CASE WHEN gender = 'Female' THEN 1 ELSE 0 END ) AS female
+					");
 			$this->db->from('pr_emp_per_info');
-			$this->db->where_in("pr_emp_per_info.emp_id", $all_emp_id);
-			$this->db->where("pr_emp_per_info.gender", 'Male');
-			$data['all_male'] = $this->db->get()->num_rows();
-			$data['all_female'] = $data['all_emp'] - $data['all_male'];
-		}
+			$this->db->join('pr_emp_shift_log', 'pr_emp_per_info.emp_id = pr_emp_shift_log.emp_id');
+			if($user_level!='All'){
+				$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
+			}else{
+				$this->db->where("pr_emp_shift_log.unit_id", $unit_name);
+			}
+			$q=$this->db->get()->row();
+			$data['all_male'] = $q->male;
+			$data['all_female'] = $q->female;
+			$data['all_emp'] = $data['all_male']+$data['all_female'];
+		
 		return $data;
 	}
 
 	function monthly_join_emp($report_date)
 	{
-		$year = substr($report_date,0,4);
-		$month = substr($report_date,5,2);
-		$day = substr($report_date,8,2);
-		$days = date("t", mktime(0, 0, 0, $month, 1, $year));
-		$fromdate = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
-		$todate = date("Y-m-d", mktime(0, 0, 0, $month, $days, $year));
+		
+		$fromdate = date("Y-m-01", strtotime($report_date));
+		$todate = date("Y-m-t", strtotime($report_date));
+	
 
 		$emp_cat = array(1,2);
 

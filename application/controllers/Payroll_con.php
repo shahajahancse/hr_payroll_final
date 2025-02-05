@@ -20,10 +20,9 @@ class Payroll_con extends CI_Controller {
 	}
 
 	function index(){
-
 		$report_date = date("Y-m-d");
 
-		$this->data['values'] = $this->Mars_model->dashboard_summary($report_date, $this->data['user_data']->unit_name);
+		$this->data['values'] = $this->Mars_model->dashboard_summary($report_date,$this->session->userdata('data')->unit_name);
 
 		$this->data['title'] = 'Daily Attendance Summary';
 		$this->data['report_date'] = $report_date;

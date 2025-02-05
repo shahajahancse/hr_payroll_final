@@ -56,8 +56,8 @@
                 <table class="table table-striped" id="mytable">
                   <thead>
                     <tr>
+                        <th class="text-center">Sl.</th>
                         <th class="text-center">Username</th>
-                        <!-- <th class="text-center">Password</th> -->
                         <th class="text-center">Level</th>
                         <th class="text-center">Unit name</th>
                         <th class="text-center">Status</th>
@@ -70,8 +70,8 @@
                     if(!empty($members)){
                       foreach($members as $member){?>
                       <tr>
+                          <td class="text-center"><?php echo @$i=$i+1 ?></td>
                           <td class="text-center"><?php echo $member['id_number'] ?></td>
-                          <!-- <td class="text-center"><?php echo '******' ?></td> -->
                           <td class="text-center"><?php echo $member['level'] ?></td>
                           <td class="text-center"><?php echo $member['unit_name'] ?></td>
                           <td class="text-center"><?php echo $member['status'] ?></td>
@@ -82,7 +82,7 @@
                       </tr>
                     <?php } }else{?>
                         <tr>
-                            <td colspan="12">Records not Found</td>
+                          <td colspan="12">Records not Found</td>
                         </tr>
                     <?php }?>
                     </tbody>

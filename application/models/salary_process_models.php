@@ -60,13 +60,14 @@ class Salary_process_model extends CI_Model{
 		//$this->db->where("emp_cat_id","4");
 		$this->db->order_by("emp_id");
 		$query = $this->db->get("pr_emp_com_info");
-		
+		dd("KO");
 		if($query->num_rows() == 0)
 		{
 			return "Employee information does not exist";
 		}
 		else
 		{
+			// dd("KO");
 			$serial = 1;
 			$data = array();
 			$data_com 	= array();
@@ -677,7 +678,7 @@ class Salary_process_model extends CI_Model{
 				{
 					$att_bouns = 0;
 				}
-				
+
 				
 				//HOLIDAY ALLOWANCE (APPLICABLE FOR OT = NO)
 				$holiday_alo_count 			= 0;
@@ -938,7 +939,7 @@ class Salary_process_model extends CI_Model{
 				}
 
 				//print_r($data);
-				// echo "<pre>";print_r($data);exit;
+				echo "<pre>";print_r($data);exit;
 
 				$this->db->select("emp_id");
 				$this->db->where("emp_id", $rows->emp_id);

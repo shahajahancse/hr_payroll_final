@@ -1,12 +1,16 @@
- <!-- < ?php dd($emp_designation)?> -->
+<style>
+    p {
+        font-family: SutonnyMJ !important;
+    }
+</style>
+<!-- < ?php dd($emp_designation)?> -->
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-3" style="padding: 7px;">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/designation') ?>">
-                        Back</a>
-                        <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/designation') ?>">  Back</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -43,54 +47,103 @@
                     <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
                 </div>
             </div>
+            <?php
+                $this->db->select('allowance_attn_bonus.*');
+                if(!empty($this->data['user_data']->unit_name)){
+                    $this->db->where('unit_id', $this->data['user_data']->unit_name);
+                }
+                $attn_rules = $this->db->get('allowance_attn_bonus')->result();
+            ?>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="atttn_id">Attendance Bonus <span style="color: red;">*</span></label>
                     <select name="attn_id"  id="attn_id" class="form-control  ">
                         <option value="">Select Attendance Bonus</option>
-                        <option value="<?php echo $emp_designation->attn_id; ?>" selected><?= $emp_designation->allowance_attn_bonus ?></option>
+                        <?php foreach ($attn_rules as $key => $r) { ?>
+                            <option <?php echo $emp_designation->attn_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->rule ?></option>
+                        <?php } ?>
                     </select>
                     <?= (isset($failuer['attn_id'])) ? '<div class="alert alert-failuer">' . $failuer['attn_id'] . '</div>' : ''; ?>
                 </div>
             </div>
+
+            <?php
+                $this->db->select('allowance_holiday_weekend_rules.*');
+                if(!empty($this->data['user_data']->unit_name)){
+                    $this->db->where('unit_id', $this->data['user_data']->unit_name);
+                }
+                $offs_rules = $this->db->get('allowance_holiday_weekend_rules')->result();
+            ?>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="holiday_weekend_id">Holiday/Weekend <span style="color: red;">*</span></label>
                     <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control  ">
                         <option value="">Select Holyday/Weekend</option>
-                        <option value="<?php echo $emp_designation->holiday_weekend_id; ?>" selected><?= $emp_designation->allowance_holiday_weekend ?></option>
+                        <?php foreach ($offs_rules as $key => $r) { ?>
+                            <option <?php echo $emp_designation->holiday_weekend_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->allowance_amount ?></option>
+                        <?php } ?>
                     </select>
                     <?= (isset($failuer['holiday_weekend_id'])) ? '<div class="alert alert-failuer">' . $failuer['holiday_weekend_id'] . '</div>' : ''; ?>
                 </div>
             </div>
         </div>
+
         <div class="row">
+            <?php
+                $this->db->select('allowance_iftar_bill.*');
+                if(!empty($this->data['user_data']->unit_name)){
+                    $this->db->where('unit_id', $this->data['user_data']->unit_name);
+                }
+                $ifter_rules = $this->db->get('allowance_iftar_bill')->result();
+            ?>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select  Iftar Allowance <span style="color: red;">*</span></label>
                     <select name="iftar_id"  id="iftar_id" class="form-control  ">
                         <option value="">Select Iftar Allowance</option>
-                        <option value="<?php echo $emp_designation->iftar_id; ?>" selected><?= $emp_designation->allowance_iftar ?></option>
+                        <?php foreach ($ifter_rules as $key => $r) { ?>
+                            <option <?php echo $emp_designation->iftar_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->allowance_amount ?></option>
+                        <?php } ?>
                     </select>
                     <?= (isset($failuer['iftar_id'])) ? '<div class="alert alert-failuer">' . $failuer['iftar_id'] . '</div>' : ''; ?>
                 </div>
             </div>
+
+            <?php
+                $this->db->select('allowance_night_rules.*');
+                if(!empty($this->data['user_data']->unit_name)){
+                    $this->db->where('unit_id', $this->data['user_data']->unit_name);
+                }
+                $night_rules = $this->db->get('allowance_night_rules')->result();
+            ?>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select  Night Allowance <span style="color: red;">*</span></label>
                     <select name="night_al_id"  id="night_al_id" class="form-control  ">
                         <option value="">Select Night Allowance</option>
-                        <option value="<?php echo $emp_designation->night_al_id; ?>" selected><?= $emp_designation->allowance_night_rules ?></option>
+                        <?php foreach ($night_rules as $key => $r) { ?>
+                            <option <?php echo $emp_designation->night_al_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->night_allowance ?></option>
+                        <?php } ?>
                     </select>
                     <?= (isset($failuer['night_al_id'])) ? '<div class="alert alert-failuer">' . $failuer['night_al_id'] . '</div>' : ''; ?>
                 </div>
             </div>
+
+            <?php
+                $this->db->select('allowance_tiffin_bill.*');
+                if(!empty($this->data['user_data']->unit_name)){
+                    $this->db->where('unit_id', $this->data['user_data']->unit_name);
+                }
+                $tifin_rules = $this->db->get('allowance_tiffin_bill')->result();
+            ?>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select Tiffin Allowance  <span style="color: red;">*</span></label>
                     <select name="tiffin_id"  id="tiffin_id" class="form-control  ">
                         <option value="">Select Tiffin Allowance</option>
-                        <option value="<?php echo $emp_designation->tiffin_id; ?>" selected><?= $emp_designation->allowance_tiffin ?></option>
+                        <?php foreach ($tifin_rules as $key => $r) { ?>
+                            <option <?php echo $emp_designation->tiffin_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->allowance_amount ?></option>
+                        <?php } ?>
                     </select>
                     <?= (isset($failuer['tiffin_id'])) ? '<div class="alert alert-failuer">' . $failuer['tiffin_id'] . '</div>' : ''; ?>
                 </div>
@@ -108,7 +161,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Designation Name Bangla</label>
-                    <input type="text" name="desig_bangla" value="<?= $emp_designation->desig_bangla ?>" placeholder="Designation Name Bangla" class="form-control">
+                    <input type="text" name="desig_bangla" value="<?= $emp_designation->desig_bangla ?>" placeholder="Designation Name Bangla" class="form-control bfont">
                     <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
                 </div>
             </div>
@@ -117,7 +170,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Job Description</label>
-                            <textarea name="desig_desc" id="desig_desc" class="form-control" style="height: 200px;"><?= $emp_designation->desig_desc ?></textarea>
+                            <textarea name="desig_desc" id="desig_desc" class="form-control bangla_font" style="height: 200px;"><?= $emp_designation->desig_desc ?></textarea>
                             <?=(isset($failuer['desig_desc'])) ? '<div class="alert alert-failuer">' . $failuer['desig_desc'] . '</div>' : ''; ?>
                         </div>
                     </div>
@@ -125,29 +178,29 @@
             
                 <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
                 <script>
-                    ClassicEditor
-                        .create(document.querySelector('#desig_desc'), {
-                            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-                            heading: {
-                                options: [
-                                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-                                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' }
-                                ]
-                            }
-                        })
-                        .then(editor => {
-                            window.editor = editor;
-                        })
-                        .catch(error => {
-                            console.error(error); 
-                        });
+                    ClassicEditor.create(document.querySelector('#desig_desc'), {
+                        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                        heading: {
+                            options: [
+                                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' }
+                            ]
+                        }
+                    })
+                    .then(editor => {
+                        window.editor = editor;
+                    })
+                    .catch(error => {
+                        console.error(error); 
+                    });
                 </script>
         <br>
         <div class="form-group">
             <button type="submit" class="btn btn-primary ">Submit</button></button>
-            <a href="<?= base_url('index.php/setup_con/designation') ?>" class="btn-warning btn">Cancel</a>
+            <a href="<?= base_url('
+            setup_con/designation') ?>" class="btn-warning btn">Cancel</a>
         </div>
     </form>
 </div>
@@ -158,39 +211,40 @@
         console.log(unit_id);
         $.ajax({
             type: "POST",
-            url: "<?= base_url('index.php/setup_con/get_data_degi') ?>",
+            url: "<?= base_url('
+            setup_con/get_data_degi') ?>",
             data: {
                 unit_id: unit_id
             },
-           success: function(d) {
-             var data = JSON.parse(d);
-             var attn_bonus = data.attn_bonus;
-             var holiday_weekend = data.holiday_weekend;
-             var iftar = data.iftar;
-             var night = data.night;
-             var tiffin = data.tiffin;
+            success: function(d) {
+                var data = JSON.parse(d);
+                var attn_bonus = data.attn_bonus;
+                var holiday_weekend = data.holiday_weekend;
+                var iftar = data.iftar;
+                var night = data.night;
+                var tiffin = data.tiffin;
 
-             var attnIdSelect = $("#attn_id");
-             var holidayWeekendIdSelect = $("#holiday_weekend_id");
-             var iftarIdSelect = $("#iftar_id");
-             var nightAlIdSelect = $("#night_al_id");
-             var tiffinIdSelect = $("#tiffin_id");
-            if (if_lg !=null) {
-                attnIdSelect.empty()
-                holidayWeekendIdSelect.empty()
-                iftarIdSelect.empty()
-                nightAlIdSelect.empty()
-                tiffinIdSelect.empty()
-            }
-               attnIdSelect.empty().append("<option value='0'>Select Attendance Bonus</option>");
-               attn_bonus.forEach(function(item) {
-                if (item.id == <?= $emp_designation->attn_id?>) {
-                    var data ='selected';
-                }else{
-                    var data =''
+                var attnIdSelect = $("#attn_id");
+                var holidayWeekendIdSelect = $("#holiday_weekend_id");
+                var iftarIdSelect = $("#iftar_id");
+                var nightAlIdSelect = $("#night_al_id");
+                var tiffinIdSelect = $("#tiffin_id");
+                if (if_lg !=null) {
+                    attnIdSelect.empty()
+                    holidayWeekendIdSelect.empty()
+                    iftarIdSelect.empty()
+                    nightAlIdSelect.empty()
+                    tiffinIdSelect.empty()
                 }
-                 attnIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.rule}</option>`);
-               });
+                attnIdSelect.empty().append("<option value='0'>Select Attendance Bonus</option>");
+                attn_bonus.forEach(function(item) {
+                    if (item.id == <?= $emp_designation->attn_id?>) {
+                        var data ='selected';
+                    }else{
+                        var data =''
+                    }
+                    attnIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.rule}</option>`);
+                });
 
 
                holidayWeekendIdSelect.empty().append("<option value='0'>Select Holiday/Weekend</option>");
@@ -238,9 +292,8 @@
                 }
                  tiffinIdSelect.append(`<option ${data} value='${item.id}'>${item.rule_name} >> ${item.allowance_amount}</option>`);
                });
-
-           },
-            error: function(data) {
+            },
+                error: function(data) {
             }
         })
     }

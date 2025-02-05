@@ -76,7 +76,7 @@ for($i=0; $i<$count; $i++ )
 	echo "</td>";
 
 	echo "<td >";
-	echo $values["emp_shift"][$i];
+	echo ($values["emp_shift"][$i]== 'Template  (Night_shift)' || $values["emp_shift"][$i]== 'Template (Day_shift)')? 'HGL_Worker' : $values["emp_shift"][$i];
 	echo "</td>";
 
 	echo "<td  width='40'  style='text-align:right;' >";

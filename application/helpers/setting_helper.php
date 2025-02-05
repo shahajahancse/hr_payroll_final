@@ -21,16 +21,20 @@
  */
 if ( ! function_exists('get_all_emp_id'))
 {
-	function get_all_emp_id($emp_cat = array(), $unit_id = null)
+	function get_all_emp_id($emp_cat = array(), $unit_id = 0)
 	{
+
+		// dd($emp_cat.'---'.$unit_id);
+		
 		$CI =& get_instance();
       	$CI->db->select('emp_id');
       	$CI->db->from('pr_emp_com_info'); 
       	$CI->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat);
-		if ($unit_id != null) {
+		if ($unit_id != 0) {
 			$CI->db->where('pr_emp_com_info.unit_id',$unit_id);
 		}
 		$query = $CI->db->get()->result_array();
+
 
 		$data = array();
 		array_walk($query, function($entry) use (&$data) {
@@ -40,6 +44,38 @@ if ( ! function_exists('get_all_emp_id'))
 	}
 
 }
+if ( ! function_exists('add_days_skipping_fridays'))
+{
+	function add_days_skipping_fridays($date, $days,$emp_id) {
+		$current_date = strtotime($date);
+		$days_added = 0;
+		while ($days_added < $days) {
+			$current_date = strtotime('+1 day', $current_date);
+			// Check if the current day is not Friday
+			if (date('N', $current_date) != 5) {
+				$CI =& get_instance();
+				$holiday_date = $CI->db->where('emp_id',$emp_id)->where('holiday_date',$current_date)->get('pr_holiday')->row();
+				if(empty($holiday_date)){
+					$days_added++;
+				}
+			}
+		}
+		$dayss  = date('Y-m-d', strtotime($date. ' +'.$days.' days'));
+		$gov_holiday= $CI->db->where('date >=',$date)->where('date <=',$dayss)->where('unit_id',$_SESSION['data']->unit_name)->get('pr_gov_holiday')->result();
+		$count = count($gov_holiday);
+		if($count > 0) {
+			$current_date = strtotime('+' . $count . ' days', $current_date);
+			// $current_date = strtotime($current_date,'+' . $count . ' days');
+			// $current_date = strtotime('+' . $count . ' days', strtotime($current_date));
+		}
+		// dd(date('d/m/Y', $current_date));
+
+		return date('d/m/Y', $current_date);
+	}
+
+}
+
+
 
 // ------------------------------------------------------------------------
 
@@ -76,3 +112,6 @@ if ( ! function_exists('check_acl_list'))
 }
 
 // ------------------------------------------------------------------------
+
+
+

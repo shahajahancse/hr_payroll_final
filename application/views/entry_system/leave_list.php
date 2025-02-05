@@ -55,7 +55,7 @@
 
         <div class="col-md-12">
 
-            <table class="table table-striped" id="mytable">
+            <table class="table table-striped" id="">
                 <thead>
                     <tr>
                         <th>SL</th>
@@ -66,15 +66,15 @@
                         <th>End Date</th>
                         <th>Total Day</th>
                         <th>Unit name</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> >Delete</th>
                     </tr>
                 </thead>
 
                 </thead>
 
-                <tbody>
+                <tbody id="tbody">
 
-                    <?php if (!empty($results)) {foreach ($results as $key => $r) {?>
+                    <!-- <?php if (!empty($results)) {foreach ($results as $key => $r) {?>
 
                     <tr>
                         <td><?php echo $key + 1  ?></td>
@@ -86,7 +86,7 @@
                         <td><?php echo $r->total_leave ?></td>
                         <td><?php echo $r->unit_name ?></td>
                         <td>
-                            <a href="<?=base_url('entry_system_con/emp_leave_del/'.$r->id)?>"
+                            <a  href="<?=base_url('entry_system_con/emp_leave_del/'.$r->id)?>"
                                 class="btn btn-danger" role="button">Delete</a>
                         </td>
                     </tr>
@@ -95,7 +95,7 @@
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
-                    <?php }?>
+                    <?php }?> -->
 
                 </tbody>
             </table>
@@ -103,3 +103,76 @@
     </div>
     <br><br>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#mytable").dataTable();
+    $('#mytable_filter').css({
+        "display": "none"
+    })
+    $('#mytable_length').css({
+        "display": "none"
+    })
+    $("#mytable").dataTable();
+    oTable = $('#mytable').DataTable();
+    $('#deptSearch').keyup(function() {
+        oTable.search($(this).val()).draw();
+    })
+});
+</script>
+
+
+<script>
+var offset = 0
+var limit = 15
+var i = 0
+$(document).ready(function() {
+    get_data(offset)
+})
+
+function get_data(offset=0) {
+    var deptSearch = $('#deptSearch').val()
+    $.ajax({
+        url:"<?php echo base_url('entry_system_con/leave_list_ajax') ?>",
+        type:"post",
+        data:{
+            offset:offset,
+            limit:limit,
+            deptSearch:deptSearch
+        },
+        success:function(data){
+            var obj = JSON.parse(data)
+           
+            obj.forEach(element => {
+                $('#tbody').append(`<tr>
+                <td>${++i}</td>
+                <td>${element.user_name}</td>
+                <td>${element.emp_id}</td>
+                <td title="${element.leave_descrip}" ><a>${element.leave_type}</a></td>
+                <td>${element.leave_start}</td>
+                <td>${element.leave_end}</td>
+                <td>${element.total_leave}</td>
+                <td>${element.unit_name}</td>
+                <td>
+                    <a   <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(130,$acl)) {echo '';} else { echo 'style="display:none;"';}?>   href="<?=base_url('entry_system_con/emp_leave_del/')?>${element.id}" class="btn btn-danger" role="button">Delete</a>
+                </td>
+            </tr>`)
+            });
+        }
+    })
+}
+window.onscroll = function() {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        offset += limit
+        get_data(offset)
+    }
+}
+
+$('#deptSearch').keyup(function() {
+     offset = 0
+     i = 0
+    get_data(offset)
+    $('#tbody').empty()
+})
+
+</script>

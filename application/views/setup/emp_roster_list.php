@@ -311,7 +311,7 @@
     function final_satalment(id) {
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url(); ?>index.php/grid_con/final_satalment",
+            url: "<?php echo base_url('grid_con/final_satalment'); ?>",
             data: {id: id},
             success: function (data) {
                 var employeeData = JSON.parse(data);

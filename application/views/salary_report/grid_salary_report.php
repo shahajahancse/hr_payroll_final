@@ -26,7 +26,6 @@
     <?php
         $this->load->model('common_model');
         $unit = $this->common_model->get_unit_id_name();
-
         $user_id = $this->session->userdata('data')->id;
         $acl = check_acl_list($user_id);
     ?>
@@ -71,9 +70,11 @@
                             <?php
                                 foreach ($dept as $row) {
                                     if($row['unit_id'] == $user_data->unit_name){
-                                    $select_data="selected";
+                                        $select_data="selected";
                                     }else{
-                                        continue;
+                                        if ($user_data->level != "All") {
+                                            continue;
+                                        }
                                     }
                                     echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
                                     '</option>';
@@ -130,9 +131,11 @@
                     <div class="form-group">
                         <label class="control-label">Status </label>
                         <select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
-                            <option value="">All Employee</option>
+                            <option selected value="">All Employee</option>
                             <?php foreach ($categorys as $key => $row) { ?>
-                            <option  <?= ($row->id == 1) ? 'selected' : ''?> value="<?= $row->id ?>"><?= $row->status_type; ?>
+                                <?php if ($row->id != 5) { ?>
+                                    <option value="<?= $row->id ?>"><?= $row->status_type; ?>
+                                <?php } ?>
                             </option>
                             <?php } ?>
                         </select>
@@ -159,107 +162,82 @@
                 <div class='multitab-section'>
                     <ul class="nav nav-tabs" id="myTabs">
                         <li class="active"><a href="#daily" data-toggle="tab">Salary Reports</a></li>
-                        <li><a href="#other_benifits" data-toggle="tab">Others Benefit Reports</a></li>
                         <li><a href="#earn_leave" data-toggle="tab"> Earn Leave Reports</a></li>
                     </ul>
                     <div class="tab-content">
                         <!-- salary report  -->
                         <div class="tab-pane fade in active" id="daily">
-                            <?php if(in_array(77,$acl)) { ?>
+                            <?php if(in_array(180,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="salary_sheet_com()">Salary Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(78,$acl)) { ?>
+                            <?php if(in_array(181,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="pay_slip_com()">Pay Slip</button>
                             <?php } ?>
-                            <?php if(in_array(79,$acl)) { ?>
+                            <?php if(in_array(182,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="salary_summary_com()">Salary Summary</button>
                             <?php } ?>
-                            <?php if(in_array(80,$acl)) { ?>
+                            <?php if(in_array(183,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="sec_sal_summary_com()">Sec Wise Salary Summary</button>
                             <?php } ?>
 
-                            <?php if(in_array(81,$acl)) { ?>
+                            <?php if(in_array(184,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_salary_sheet()">Actual Salary Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(82,$acl)) { ?>
+                            <?php if(in_array(185,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_pay_slip()">Actual Pay Slip </button>
                             <?php } ?>
-                            <?php if(in_array(83,$acl)) { ?>
+                            <?php if(in_array(186,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_salary_summary()">Actual Salary Summary</button>
                             <?php } ?>
-                            <?php if(in_array(84,$acl)) { ?>
+                            <?php if(in_array(187,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_sec_sal_summary()">Actual Sec Salary Summary</button>
                             <?php } ?>
 
-                            <?php if(in_array(85,$acl)) { ?>
+                            <?php if(in_array(188,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_salary_sheet_bank()">Actual Salary Bank</button>
                             <?php } ?>
-                            <?php if(in_array(97,$acl)) { ?>
+                            <?php if(in_array(189,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_eot_sheet()">Actual EOT Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(98,$acl)) { ?>
+                            <?php if(in_array(190,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_eot_summary()">Actual EOT Summary</button>
                             <?php } ?>
-                            <?php if(in_array(86,$acl)) { ?>
+                            <?php if(in_array(191,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_eot_sheet_bank()">Actual EOT Bank</button>
                             <?php } ?>
 
-                            <?php if(in_array(99,$acl)) { ?>
+                            <?php if(in_array(192,$acl)) { ?>
                                 <button class="btn input-sm sbtn" onclick="eot_sheet_com_9()">EOT Sheet.</button>
                             <?php } ?>
-                            <?php if(in_array(100,$acl)) { ?>
+                            <?php if(in_array(193,$acl)) { ?>
                                 <button class="btn input-sm sbtn" onclick="eot_sheet_com_12()">EOT Sheet`</button>
                             <?php } ?>
-                            <?php if(in_array(101,$acl)) { ?>
+                            <?php if(in_array(194,$acl)) { ?>
                                 <button class="btn input-sm sbtn" onclick="eot_sheet_com_all()">EOT Sheet!</button>
                             <?php } ?>
-                            <?php if(in_array(102,$acl)) { ?>
+                            <?php if(in_array(195,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_monthly_stop_sheet()">Stop Salary Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(121,$acl)) { ?>
+                            <?php if(in_array(196,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_salary_sheet_with_eot_bank()">Mobile Banking Report</button>
                             <?php } ?>
-                            <?php if(in_array(122,$acl)) { ?>
+                            <?php if(in_array(197,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_monthly_allowance_sheet()">Monthly Night Bill Report</button>
                             <?php } ?>
-                            <?php if(in_array(123,$acl)) { ?>
+                            <?php if(in_array(198,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_salary_sheet_with_eot_bank()">Monthly Weekend/Holiday Report</button>
                             <?php } ?>
                         </div>
                         <!-- salary report end  -->
 
-                        <!-- Others Benefit Report -->
-                        <div class="tab-pane fade" id="other_benifits">
-                            <?php if(in_array(87,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_festival_bonus()">Festival Bonus</button>
-                            <?php } ?>
-                            <?php if(in_array(88,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_festival_bonus_summary()">Festival Bonus Summary</button>
-                            <?php } ?>
-                            <?php if(in_array(89,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_festival_bonus_summary_sec_wise()">Festival Bonus Summary(Sec)</button>
-                            <?php } ?>
-                            <?php if(in_array(90,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_advance_salary_sheet()">Advance Salary Sheet</button>
-                            <?php } ?>
-                            <?php if(in_array(91,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_comprative_salary_statement()">Comparative Statement</button>
-                            <?php } ?>
-                            <?php if(in_array(92,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="act_advance_salary_sheet()">Act. Adv. Sal. Sheet</button>
-                            <?php } ?>
-                        </div>
-                        <!-- Others Benefit Report end -->
-
-
                         <div class="tab-pane fade" id="earn_leave">
-                            <?php if(in_array(93,$acl)) { ?>
+                            <?php if(in_array(199,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_earn_leave_payment_buyer()">Earn Leave Payment Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(94,$acl)) { ?>
+                            <?php if(in_array(200,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_earn_leave_general_info()">Actual Earn Leave Payment Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(95,$acl)) { ?>
+                            <?php if(in_array(201,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_earn_leave_summery()">Earn Leave Summery Sheet</button>
                             <?php } ?>
                         </div>
@@ -270,32 +248,54 @@
         </div>
         <!-- Left side end -->
 
-        <!-- right side to select employee on list -->
+        <!-- employee list for right side -->
         <div class="col-md-4 tablebox">
+            <input type="text" id="searchi" class="form-control" placeholder="Search">
             <div style="height: 80vh; overflow-y: scroll;">
                 <table class="table table-hover" id="fileDiv">
-                    <tr style="position: sticky;top: 0;z-index:1">
-                        <th class="active" style="width:10%"><input type="checkbox" id="select_all"
-                        class="select-all checkbox" name="select-all"></th>
-                        <th class="" style="background:#0177bcc2;color:white">Id</th>
-                        <th class=" text-center" style="background:#0177bc;color:white">Name</th>
-                    </tr>
-                    <?php if (!empty($employees)) {
-                        foreach ($employees as $key => $emp) { ?>
-                        <tr id="removeTr">
-                            <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-                            </td>
-                            <td class="success"><?= $emp->emp_id ?></td>
-                            <td class="warning "><?= $emp->name_en ?></td>
+                    <thead>
+                        <tr style="position: sticky;top: 0;z-index:1">
+                            <th class="active" style="width:10%"><input type="checkbox" id="select_all" class="select-all checkbox" name="select-all"></th>
+                            <th class="" style="background:#0177bcc2;color:white">Id</th>
+                            <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                         </tr>
-                    <?php } } ?>
+                    </thead>
+                    <tbody id="tbody">
+                        <?php if (!empty($employees)) {
+                            foreach ($employees as $key => $emp) {
+                        ?>
+                                <tr class="removeTr">
+                                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+                                    </td>
+                                    <td class="success"><?= $emp->emp_id ?></td>
+                                    <td class="warning "><?= $emp->name_en ?></td>
+                                </tr>
+                        <?php }
+                        } ?>
+                        <tr class="removeTrno">
+                            <td colspan="3" class="text-center"> No data found</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
+        <!-- </div> -->
     </div>
 
     <script src="<?php echo base_url(); ?>js/earn_leave.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function() {
+            $("#searchi").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+                $(".removeTrno").toggle($(".removeTr").length === 0);
+            });
+        });
+    </script>
+
     <script type="text/javascript">
         // on load employee
         function grid_emp_list() {
@@ -311,35 +311,42 @@
             if (typeof unit === "undefined" || unit === '') {
                  alert('Please Select Unit First'); return;
             }
-
-            url = hostname + "common/salary_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+            
+            url = hostname + "common/salary_emp_list/";
             $.ajax({
                 url: url,
                 type: 'GET',
                 data: {
+                    "unit"        : unit,
+                    "dept"        : dept,
+                    "section"     : section,
+                    "line"        : line,
+                    "desig"       : desig,
                     "status"      : status,
                     "stop_salary" : stop_salary,
                     "salary_month": salary_month,
                 },
                 contentType: "application/json",
                 dataType: "json",
+
                 success: function(response) {
-                    $('#fileDiv #removeTr').remove();
+                    $('.removeTr').remove();
                     if (response.length != 0) {
+                        $('.removeTrno').hide();
                         var items = '';
                         $.each(response, function(index, value) {
-                            items += '<tr id="removeTr">';
-                            items +=
-                                '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                                value.emp_id + '" ></td>';
-                            items += '<td class="success">' + value.emp_id + '</td>';
-                            items += '<td class="warning ">' + value.name_en + '</td>';
-                            items += '</tr>';
+                            items += `
+                                <tr class="removeTr">
+                                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+                                    <td class="success">${value.emp_id}</td>
+                                    <td class="warning ">${value.name_en}</td>
+                                </tr>`
                         });
                         // console.log(items);
                         $('#fileDiv tr:last').after(items);
                     } else {
-                        $('#fileDiv #removeTr').remove();
+                        $('.removeTrno').show();
+                        $('.removeTr').remove();
                     }
                 }
             });

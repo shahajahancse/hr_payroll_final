@@ -87,7 +87,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 <table height="auto" class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:13px; width:13.5in; position: relative; font-family:SutonnyMJ, SolaimanLipi;">
 
 <tr height="90px">
-<td colspan="35" align="center">
+<td colspan="37" align="center">
 
 <div style="width:90%; font-family:Arial, Helvetica, sans-serif;">
 <?php 
@@ -105,7 +105,8 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 			$section_name = $value[0]->sec_name;
 			echo "Section : $section_name<br>";
 		}
-		$dom = $value[0]->total_days;
+		$dom = (isset($value[0]->total_days)) ? $value[0]->total_days : '';
+		// $dom = $value[0]->total_days;
 		echo "DOM : $dom<br>";
 	?>
 	</div>
@@ -152,7 +153,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
     <td rowspan="2" width="15" height="20px"><div align="center"><strong>খাদ্য ভাতা</strong></div></td>
     <td rowspan="2" width="35" height="20px"><div align="center"><strong>মোট বেতন</strong></div></td>
     <td colspan="4" width="30" height="20px"><div align="center"><strong>উপস্থিতি</strong></div></td>
-	<td colspan="4" height="20px"><div align="center"><strong>ছুটি</strong></div></td>
+	<td colspan="6" height="20px"><div align="center"><strong>ছুটি</strong></div></td>
     <td rowspan="2" width="25" height="20px"><div align="center"><strong>অনুস্পস্থিতি কর্তন</strong></div></td>
     <td rowspan="2" width="25" height="20px"><div align="center"><strong>পে ডে</strong></div></td>
     <td rowspan="2" width="25" height="20px"><div align="center"><strong>প্রদেয় বেতন</strong></div></td>
@@ -180,6 +181,8 @@ for ( $counter = 1; $counter <= $page; $counter ++){
     <!--<td width="15"><div align="center"><strong>F/L</strong></div></td>-->
 	<td width="15"><div align="center" style="font-family:Arial, Helvetica, sans-serif;"><strong>EL</strong></div></td>
 	<td width="15"><div align="center" style="font-family:Arial, Helvetica, sans-serif;"><strong>M/L</strong></div></td>
+	<td width="15"><div align="center" style="font-family:Arial, Helvetica, sans-serif;"><strong>SP/L</strong></div></td>
+	<td width="15"><div align="center" style="font-family:Arial, Helvetica, sans-serif;"><strong>WP/L</strong></div></td>
     
         
     <td width="37"><div align="center"><strong>ওটি ঘণ্টা</strong></div></td>
@@ -240,12 +243,12 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		
 		echo "<td colspan='6' style='font-family:Arial, Helvetica, sans-serif; text-align:left; padding-left:5px;'>";
 		echo "<span  style='font-weight:bold;'>";
-		print_r($value[$k]->name_bn);
+		print_r($value[$k]->name_en);
 		echo "</span>";
 		echo '<br>';
 		echo "<span  style='font-size:10px;'>";
 
-		print_r($value[$k]->desig_bangla);
+		print_r($value[$k]->desig_name);
 		echo '<br>';
 		$date = $value[$k]->emp_join_date;
 		$doj		= date('d-M-y', strtotime($date)); 
@@ -265,7 +268,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		echo "</td>"; 
 			
 		echo "<td style='font-family:arial; font-size:10px;'>";
-		echo  $value[$k]->line_name_bn;
+		echo  $value[$k]->line_name_en;
 		echo "</td>";
 			
 		$basic_salary 				= $value[$k]->basic_sal;
@@ -308,37 +311,64 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		echo "<td>";
 		echo $gross_salary;
 		echo "</td>";
-		
+
+	// 	   [total_days] => 31
+    // [num_of_workday] => 22
+    // [att_days] => 21
+    // [absent_days] => 1
+    // [ba_absent] => 8
+    // [c_l] => 0
+    // [s_l] => 0
+    // [e_l] => 0
+    // [m_l] => 0
+    // [wp] => 0
+    // [total_leave] => 0
+    // [pay_leave] => 0
+    // [holiday] => 0
+    // [weekend] => 1
+    // [total_holiday] => 1
+    // [pay_days] => 22
+	// dd($value);
+	$day_info =json_decode($value[$k]->day_info);
+	// dd($day_info);
 		echo "<td>";
-		print_r ($value[$k]->att_days);
+		print_r ($day_info->att_days);
 		echo "</td>"; 
 				
 		echo "<td>";
-		print_r ($value[$k]->total_holiday);
+		print_r ($day_info->total_holiday);
 		echo "</td>"; 
 		
 		echo "<td>";
-		print_r ($value[$k]->absent_days);
+		print_r ($day_info->absent_days);
 		echo "</td>";
 		
 		echo "<td>";
-		print_r ($value[$k]->before_after_absent);
+		print_r ($day_info->ba_absent);
 		echo "</td>";
 				
 		echo "<td>";
-		print_r ($value[$k]->c_l);
+		print_r ($day_info->c_l);
 		echo "</td>";
 			
 		echo "<td>";
-		print_r ($value[$k]->s_l);
+		print_r ($day_info->s_l);
 		echo "</td>";
 				
 		echo "<td>";
-		print_r ($value[$k]->e_l);
+		print_r ($day_info->e_l);
 		echo "</td>";
 				
 		echo "<td>";
-		print_r ($value[$k]->m_l);
+		print_r ($day_info->m_l);
+		echo "</td>";
+
+		echo "<td>";
+		print_r ($day_info->sp);
+		echo "</td>";
+
+		echo "<td>";
+		print_r ($day_info->wp);
 		echo "</td>";
 		
 		$abs_deduction 				= $value[$k]->abs_deduction;
@@ -349,7 +379,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		echo "</td>";		
 		
 		echo "<td>";
-		print_r ($value[$k]->pay_days);
+		print_r ($day_info->pay_days);
 		echo "</td>";
 		
 		$total_deduction		= $value[$k]->total_deduct;
@@ -449,7 +479,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 	}
 	?>
 	<tr>
-		<td align="center" colspan="9" style="font-size:13px;"><strong>প্রতি পৃষ্ঠার মোট </strong></td>
+		<td align="center" colspan="11" style="font-size:13px;"><strong>প্রতি পৃষ্ঠার মোট </strong></td>
          <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($total_basic_salary);?></strong></td>
          <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($total_house_rent);?></strong></td>
          <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($total_medical_allowance);?></strong></td>
@@ -479,9 +509,9 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 			<tr height="10">
             <?php //echo $deduct_status;?>
 			<?php if($deduct_status == "Yes"){?>
-			<td colspan="9" align="center">
+			<td colspan="11" align="center">
 			 <?php }else{ ?>
-			 <td colspan="9" align="center">
+			 <td colspan="11" align="center">
 			 <?php } ?>
 			<strong style="font-size:13px;">সর্বমোট বেতন</strong></td>
             <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_basic_salary);?></strong></td>
@@ -507,7 +537,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
             </tr>
 			<?php } ?>
 			<tr>
-				<td colspan="35">
+				<td colspan="37">
 					<?php 
 					$siginfo['unit_id'] = $unit_id;
 					$this->load->view("authorised_signature", $siginfo);?>

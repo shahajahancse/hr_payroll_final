@@ -25,14 +25,17 @@
         padding: 5px 10px;
         /* line-height: 40px; Should be equal to the button's height */
     }
+    .bangla_font {
+        font-family: SutonnyMJ !important;
+    }
 </style>
 
 <div class="content">
   <nav class="navbar navbar-inverse bg_none">
       <div class="container-fluid nav_head">
           <div class="navbar-header col-md-5">
-            <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/dept_add') ?>">Add Department</a>
-            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+            <a class="btn btn-info" href="<?php echo base_url('setup_con/dept_add') ?>">Add Department</a>
+            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
           </div>
           <div class="col-md-7">
             <div id="navbar" class="navbar-collapse collapse">
@@ -72,7 +75,8 @@
             <th>Departent Name Bangla </th>
             <th>Company Unit</th>
             <th width="80">Edit</th>
-            <th>Delete</th>
+            <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>
+            >Delete </th>
           </tr>
         </thead>
         <tbody>
@@ -80,12 +84,12 @@
             <tr>
                 <td><?php echo $i++ ?></td>
                 <td><?php echo $pr_depts['dept_name'] ?></td>
-                <td><?php echo $pr_depts['dept_bangla'] ?></td>
+                <td class="bangla_font"><?php echo $pr_depts['dept_bangla'] ?></td>
                 <td><?php echo $pr_depts['unit_name'] ?></td>
                 <td >
                   <a href="<?=base_url('setup_con/dept_edit/'.$pr_depts['dept_id'])?>" class="btn btn-primary center-text " role="button">Edit</a>
                 </td>
-                <td>
+                <td <?php if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>?>
                   <a href="<?=base_url('setup_con/dept_delete/'.$pr_depts["dept_id"])?>" class="btn btn-danger center-text" role="button">Delete</a>
                 </td>
             </tr>

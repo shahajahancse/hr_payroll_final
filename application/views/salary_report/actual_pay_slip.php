@@ -47,6 +47,8 @@
                 $k = 0;
                 foreach($values as $rows)
                 {
+                    $day_info = json_decode($rows->day_info);
+                    // dd($rows);
                 echo "<tr>";
             ?>
             <td style="width:450px; height:300px;">
@@ -81,7 +83,7 @@
                                     <td width="">
                                         <font style="font-family:'Times New Roman', Times, serif; font-size: 11px;">
                                             : <strong>
-                                                <?php echo $rows->name_bn;   ?>
+                                                <?php echo $rows->name_en;   ?>
                                             </strong> </font>
                                     </td>
                                     <?php if($unit_id !=4){?>
@@ -133,7 +135,7 @@
                                     </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->sec_name_bn;   ?>
+                                            <?php echo $rows->sec_name_en;   ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -156,7 +158,7 @@
                                     <td width="72" style="font-size: 10px;">&#2482;&#2494;&#2439;&#2472; </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->line_name_bn;   ?>
+                                            <?php echo $rows->line_name_en;   ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -165,7 +167,7 @@
                                         &#2470;&#2495;&#2472; </td>
                                     <td width="100">
                                         <font style="font-family: SutonnyMJ; font-size:12px;font-size: 11px;">:
-                                            <?php echo $rows->total_days;   ?>
+                                            <?php echo $day_info->total_days;   ?>
                                         </font>
                                     </td>
                                     <!-- <td width="72" style="font-size: 10px;">&#2474;&#2460;&#2495;&#2486;&#2472;</td>
@@ -180,16 +182,16 @@
                                         &#2453;&#2480;&#2509;&#2478; &#2470;&#2495;&#2476;&#2488; </td>
                                     <td width="100">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php echo $rows->num_of_workday;?>
+                                            <?php echo $day_info->num_of_workday;?>
                                         </font>
                                     </td>
                                     <td width="72" style="font-size: 10px;">&#2459;&#2497;&#2463;&#2495; </td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
                                             <?php 
-                                                $c_l = $rows->c_l;  
-                                                $s_l = $rows->s_l;  
-                                                $e_l = $rows->e_l;   
+                                                $c_l = $day_info->c_l;  
+                                                $s_l = $day_info->s_l;  
+                                                $e_l = $day_info->e_l;   
                                                 echo $total_leave = $c_l + $s_l + $e_l;
                                             ?>
                                         </font>
@@ -200,14 +202,14 @@
                                         &#2437;&#2472;&#2497;&#2474;&#2488;&#2509;&#2469;&#2495;&#2468;&#2495; </td>
                                     <td width="100">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php  echo $rows->absent_days;   ?>
+                                            <?php  echo $day_info->absent_days;   ?>
                                         </font>
                                     </td>
                                     <td width="72" style="font-size: 10px;">
                                         &#2441;&#2474;&#2488;&#2509;&#2469;&#2495;&#2468;&#2495; </td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php echo $rows->att_days;   ?>
+                                            <?php echo $day_info->att_days; ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -217,7 +219,7 @@
                                         &#2459;&#2497;&#2463;&#2495; </td>
                                     <td width="100">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php echo $rows->weekend;   ?>
+                                            <?php echo $day_info->weekend;?>
                                         </font>
                                     </td>
                                     <td width="72" style="font-size: 10px;">&#2451;&#2463;&#2495;
@@ -235,7 +237,7 @@
                                     </td>
                                     <td width="100" style="font-size: 10px;">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php  echo $rows->holiday;   ?>
+                                            <?php  echo $day_info->holiday;   ?>
                                         </font>
                                     </td>
                                     <td width="72" style="font-size: 10px;">&#2451;&#2463;&#2495;
@@ -397,7 +399,7 @@
                                     <td width="">
                                         <font style="font-family:'Times New Roman', Times, serif; font-size: 11px;">
                                             : <strong>
-                                                <?php echo $rows->name_bn;   ?>
+                                                <?php echo $rows->name_en;   ?>
                                             </strong> </font>
                                     </td>
                                     <?php if($unit_id !=4){?>
@@ -449,7 +451,7 @@
                                     </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->sec_name_bn;   ?>
+                                            <?php echo $rows->sec_name_en;   ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -472,65 +474,71 @@
                                     <td width="72" style="font-size: 12px;">&#2482;&#2494;&#2439;&#2472; </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->line_name_bn;   ?>
+                                            <?php echo $rows->line_name_en;   ?>
                                         </font>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="76" style="font-size: 12px;">&#2478;&#2507;&#2463;
+                                    <td width="76" style="font-size: 10px;">&#2478;&#2507;&#2463;
                                         &#2470;&#2495;&#2472; </td>
                                     <td width="100">
                                         <font style="font-family: SutonnyMJ; font-size:12px;font-size: 11px;">:
-                                            <?php echo $rows->total_days; ?>
+                                            <?php echo $day_info->total_days;   ?>
                                         </font>
                                     </td>
+                                    <!-- <td width="72" style="font-size: 10px;">&#2474;&#2460;&#2495;&#2486;&#2472;</td>
+                                    <td width="75">
+                                        <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
+                                            < ?php echo $rows->posi_name;   ?>
+                                        </font>
+                                    </td> -->
                                 </tr>
                                 <tr>
-                                    <td width="76" style="font-size: 12px;">&#2478;&#2507;&#2463;
+                                    <td width="76" style="font-size: 10px;">&#2478;&#2507;&#2463;
                                         &#2453;&#2480;&#2509;&#2478; &#2470;&#2495;&#2476;&#2488; </td>
                                     <td width="100">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php echo $rows->num_of_workday;?>
+                                            <?php echo $day_info->num_of_workday;?>
                                         </font>
                                     </td>
-                                    <td width="72" style="font-size: 12px;">&#2459;&#2497;&#2463;&#2495; </td>
+                                    <td width="72" style="font-size: 10px;">&#2459;&#2497;&#2463;&#2495; </td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
                                             <?php 
-                                                $c_l = $rows->c_l;  
-                                                $s_l = $rows->s_l;  
-                                                $e_l = $rows->e_l;   
+                                                $c_l = $day_info->c_l;  
+                                                $s_l = $day_info->s_l;  
+                                                $e_l = $day_info->e_l;   
                                                 echo $total_leave = $c_l + $s_l + $e_l;
                                             ?>
                                         </font>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="76" style="font-size: 12px;">&#2478;&#2507;&#2463;
+                                    <td width="76" style="font-size: 10px;">&#2478;&#2507;&#2463;
                                         &#2437;&#2472;&#2497;&#2474;&#2488;&#2509;&#2469;&#2495;&#2468;&#2495; </td>
                                     <td width="100">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php  echo $rows->absent_days;   ?>
+                                            <?php  echo $day_info->absent_days;   ?>
                                         </font>
                                     </td>
-                                    <td width="72" style="font-size: 12px;">
+                                    <td width="72" style="font-size: 10px;">
                                         &#2441;&#2474;&#2488;&#2509;&#2469;&#2495;&#2468;&#2495; </td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php echo $rows->att_days;   ?>
+                                            <?php echo $day_info->att_days; ?>
                                         </font>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="76" style="font-size: 12px;">
+                                    <td width="76" style="font-size: 10px;">
                                         &#2488;&#2494;&#2474;&#2509;&#2468;&#2494;&#2489;&#2495;&#2453;
                                         &#2459;&#2497;&#2463;&#2495; </td>
                                     <td width="100">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php echo $rows->weekend;   ?>
+                                            <?php echo $day_info->weekend;?>
                                         </font>
                                     </td>
-                                    <td width="72" style="font-size: 12px;">&#2451;&#2463;&#2495;
+                                    <td width="72" style="font-size: 10px;">&#2451;&#2463;&#2495;
                                         &#2456;&#2472;&#2509;&#2463;&#2494; </td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
@@ -539,16 +547,16 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="76" height="14" style="font-size: 12px;">
+                                    <td width="76" height="14" style="font-size: 10px;">
                                         &#2437;&#2472;&#2509;&#2479;&#2494;&#2472;&#2509;&#2479;
                                         &#2459;&#2497;&#2463;&#2495;
                                     </td>
-                                    <td width="100" style="font-size: 12px;">
+                                    <td width="100" style="font-size: 10px;">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php  echo $rows->holiday;   ?>
+                                            <?php  echo $day_info->holiday;   ?>
                                         </font>
                                     </td>
-                                    <td width="72" style="font-size: 12px;">&#2451;&#2463;&#2495;
+                                    <td width="72" style="font-size: 10px;">&#2451;&#2463;&#2495;
                                         &#2480;&#2503;&#2463; </td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:

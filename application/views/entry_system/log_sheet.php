@@ -11,6 +11,7 @@
 <!--/.data table-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
 <body>
     <div align="center" style="height:100%; width:100%; overflow:hidden;">
         <?php $this->load->view('head_english'); ?>
@@ -54,7 +55,6 @@
             </tr>
         <table>
         <br>
-
         <table width="800" border="1" bordercolor="#000000" cellspacing="0" cellpadding="2"
             style="text-align:center; font-size:13px; ">
             <tr>
@@ -66,7 +66,7 @@
                 <th style="width: 10%">Out Time [HH:MM:SS]</th>
             </tr>
             <form method="post" id="log_form">
-                <input type="hidden" name="emp_id" id="emp_id" value="<?= $row->id ?>">
+                <input type="hidden" name="emp_id" id="emp_id" value="<?= $row->emp_id ?>">
                 <input type="hidden" name="proxi" id="proxi" value="<?= $row->proxi_id ?>">
                 <input type="hidden" name="unit_id" id="unit_id" value="<?= $unit_id ?>">
                 <?php foreach ($results as $key => $r) { ?>
@@ -75,21 +75,28 @@
                         <?= date('d-m-Y', strtotime($r['date'])) ?>
                         <input type="hidden" name="date[]" value="<?= $r['date'] ?>">
                     </td>
-                    <td style=""> <?= $r['in_time'] ?> </td>
-                    <td style=""> <?= $r['out_time'] ?> </td>
+                    <?php if ($r['present_status'] == 'P') {
+                        $in_time = $r['in_time'];
+                        $out_time = $r['out_time'];
+                    } else {
+                        $in_time = '';
+                        $out_time = '';
+                    } ?>
+                    <td style=""> <?= $in_time ?> </td>
+                    <td style=""> <?= $out_time ?> </td>
                     <td style=""> <?= $r['shift_name'] ?> </td>
 
                     <td>
-                        <input style="font-weight:bold;" name="in_time[]" value="<?= $r['in_time'] ?>">
+                        <input style="font-weight:bold;" class="in_time" name="in_time[]" value="<?= $rin_time ?>" >
                     </td>
                     <td>
-                        <input style="font-weight:bold;" name="out_time[]" value="<?= $r['out_time'] ?>">
+                        <input style="font-weight:bold;" class="out_time" name="out_time[]" value="<?= $rout_time ?>">
                     </td>
+
                 </tr>
                 <?php } ?>
                 <tr>
-                    <td colspan="6"><input class="btn btn-info" onclick="log_update(event)" type="button"
-                            value="Attn. Sheet"></td>
+                    <td colspan="6"><input class="btn btn-info" onclick="log_update(event)" type="button" value="Attn. Sheet"></td>
                 </tr>
             </form>
         </table>
@@ -100,13 +107,49 @@
 
 
 <script>
-    function log_update(e) {
-        e.preventDefault();
-        emp_id = document.getElementById('emp_id').value;
-        proxi = document.getElementById('proxi').value;
+function log_update(e) {
+    e.preventDefault();
+    emp_id = document.getElementById('emp_id').value;
+    proxi = document.getElementById('proxi').value;
+    var formdata = $("#log_form").serialize();
+    var data = "emp_id=" + emp_id + "&proxi=" + proxi + "&" + formdata;
+    var valid = true;
+    $('.in_time').each(function() {
+        if ($(this).val() === "00:00:00") {
+            $(this).css('border', '1px solid red');
+            Swal.fire({
+                toast: true,
+                position: "top",
+                icon: "error",
+                title: "please fill the valid In Time",
+                showConfirmButton: false,
+                timer: 3000
+            })
+            valid = false;
+        } else {
+            $(this).css('border', '1px solid black');
+        }
+    });
 
-        var formdata = $("#log_form").serialize();
-        var data = "emp_id=" + emp_id + "&proxi=" + proxi + "&" + formdata;
+    $('.out_time').each(function() {
+        if ($(this).val() === "00:00:00") {
+            $(this).css('border', '1px solid red');
+            Swal.fire({
+                toast: true,
+                position: "top",
+                icon: "error",
+                title: "please fill the valid Out Time",
+                showConfirmButton: false,
+                timer: 3000
+            })
+            valid = false;
+            // return false; // Exit each function if a condition is met
+        } else {
+            $(this).css('border', '1px solid black');
+        }
+    });
+
+    if (valid == true) {
         $.ajax({
             type: "POST",
             url: "<?= base_url('entry_system_con/log_update/') ?>",
@@ -120,7 +163,7 @@
                     showConfirmButton: false,
                     timer: 3000
                 }).then((result) => {
-                    window.close();
+                  //  window.close();//
                 });
             },
             error: function(data) {
@@ -132,9 +175,10 @@
                     showConfirmButton: false,
                     timer: 3000
                 }).then((result) => {
-                    window.close();
+                   // window.close();
                 });
             }
         })
     }
+}
 </script>

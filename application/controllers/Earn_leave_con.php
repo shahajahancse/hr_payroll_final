@@ -4,8 +4,6 @@ class Earn_leave_con extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		
-		/* Standard Libraries */
 		$this->load->model('Earn_leave_model');
 		$this->load->model('Common_model');
 		set_time_limit(0);
@@ -18,11 +16,17 @@ class Earn_leave_con extends CI_Controller {
 	function earn_leave_process(){
 		// dd($_POST);
 		$month_year = $this->input->post('month_year');
-		$ids = explode(',', trim($this->input->post('emp_ids')));
-		$type = $this->input->post('type');
-		$result = $this->Earn_leave_model->earn_leave_process_db($ids,$type,$month_year);
+		$ids 		= explode(',', trim($this->input->post('emp_ids')));
+		$type 		= $this->input->post('type');
+		$unit_id 	= $this->input->post('unit_id');
+		if ($type == 1) {
+			$result 	= $this->Earn_leave_model->earn_leave_process_db($ids,$type,$month_year);
+		} else {
+			$result 	= $this->Earn_leave_model->earn_leave_process_block($unit_id,$month_year);
+		} 
 		echo $result;
 	}
+
 	function grid_earn_report()
 	{
 		$this->load->view('grid_earn_report');

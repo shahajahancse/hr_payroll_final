@@ -43,7 +43,11 @@
                       if($row['unit_id'] == $user_data->unit_name){
                         $select_data="selected";
                       }else{
-                        continue;
+                        if ($user_data->level != "All") {
+                            if ($user_data->level != "All") {
+                                continue;
+                            }
+                        }
                       }  
                        echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
                        '</option>';
@@ -63,7 +67,7 @@
 
                         <div class="form-group col-md-6">
                             <label>Department Name Bangla</label>
-                            <input type="text" name="dept_bangla" value="" class="form-control">
+                            <input type="text" name="dept_bangla" value="" class="form-control bfont">
                             <?php echo form_error('dept_bangla');?>
                         </div>
                     </div>

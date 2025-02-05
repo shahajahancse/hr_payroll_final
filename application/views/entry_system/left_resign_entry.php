@@ -37,7 +37,9 @@
                                 if($row['unit_id'] == $user_data->unit_name){
                                 $select_data="selected";
                                 }else{
-                                continue;
+                                    if ($user_data->level != "All") {
+                                        continue;
+                                    }
                                 }
                                 echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
                                 '</option>';
@@ -124,11 +126,11 @@
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-8">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <span style="font-size: 16px !important; width: 220px !important; line-height: 35px;"><?= 'Effect Date'; ?></span>
+                    <span style="font-size: 16px !important;white-space: nowrap; width: 220px !important; line-height: 35px;"><?= 'Last Working Date'; ?></span>
                     <input type="text" class="form-control date" id="date" placeholder="select date">
                     <select name="types" id="types">
                         <option value="">Type</option>
-                        <!-- <option value="1">Regular</option> -->
+                        <option value="1">Regular</option>
                         <option value="2">Left</option>
                         <option value="3">Resign</option>
                     </select>
@@ -139,7 +141,7 @@
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
         <div class="row nav_head">
-            <input type="text" class="form-control" id="remark" placeholder="please enter commend">
+            <input type="text" class="form-control" id="remark" placeholder="please enter comment">
         </div><!-- /.row -->
     </div>
 
@@ -227,7 +229,6 @@
                         items += '<td class="warning ">' + value.name_en + '</td>';
                         items += '</tr>';
                     });
-                    // console.log(items);
                     $('#fileDiv tr:last').after(items);
                 } else {
                     $('.removeTrno').show();
@@ -236,7 +237,6 @@
             }
         });
     }
-
 
     $(document).ready(function() {
         // select all item or deselect all item
@@ -351,13 +351,17 @@
 
 <script>
   function add_left_regign() {
-    $("#loader").show();
     var checkboxes = document.getElementsByName('emp_id[]');
     var sql = get_checked_value(checkboxes);
     if (sql =='') {
       alert('Please select employee Id');
       $("#loader").hide();
       return false;
+    }
+
+    if (sql.length > 7) {
+        showMessage('error', 'Please select max one employee Id');
+        return false;
     }
 
     var unit_id = document.getElementById('unit_id').value;
@@ -367,7 +371,7 @@
       return false;
     }
 
-     var types = document.getElementById('types').value;
+    var types = document.getElementById('types').value;
     if (types =='') {
       alert('Please select Type');
       $("#loader").hide();
@@ -382,6 +386,7 @@
     }
 
     var remark = document.getElementById('remark').value;
+    $("#loader").show();
     $.ajax({
       type: "POST",
       url: hostname + "entry_system_con/add_left_regign",
@@ -393,13 +398,16 @@
         remark: remark,
       },
       success: function(data) {
-        // console.log(data);
           $("#loader").hide();
           if (data == 'success') {
               showMessage('success', 'Updated Successfully');
           }else {
               showMessage('error', 'Sorry! Not Updated');
           }
+      } ,
+      error: function () {
+        $("#loader").hide();
+        showMessage('error', 'Sorry! Not Updated');
       }
     })
   }

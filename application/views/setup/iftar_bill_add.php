@@ -10,12 +10,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url('index.php/setup_con/iftar_bill_list')?>">Back To
+                <a class="navbar-brand" href="<?php echo base_url('setup_con/iftar_bill_list')?>">Back To
                     List</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con')?>">Home</a></li>
+                    <li class="active"><a href="<?php echo base_url('payroll_con')?>">Home</a></li>
                 </ul>
 
             </div>
@@ -39,7 +39,7 @@
 
     <h3>Create Iftar Bill Allowance</h3>
     <hr>
-    <form action="<?= base_url('index.php/setup_con/iftar_bill_add')?>" enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('setup_con/iftar_bill_add')?>" enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

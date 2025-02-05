@@ -73,7 +73,7 @@
 
                         <label>Line Name Bangla</label>
                         <input type="text" name="line_name_bn" value="" placeholder="Section Name Bangla"
-                            class="form-control">
+                            class="form-control bfont">
                         <?=(isset($failuer['line_name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['line_name_bn'] . '</div>' : ''; ?>
                     </div>
                     <div class="form-group col-md-6">

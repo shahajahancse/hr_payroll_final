@@ -26,6 +26,9 @@
         padding: 5px 10px;
         /* line-height: 40px; Should be equal to the button's height */
     }
+    .bangla_font {
+        font-family: SutonnyMJ !important;
+    }
 </style>
 
 <div class="content">
@@ -33,8 +36,8 @@
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5" style="padding: 7px;">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/sec_add') ?>">Add Section</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/sec_add') ?>">Add Section</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -83,7 +86,7 @@
                         <th style="white-space: nowrap;">Department</th>
                         <th style="white-space: nowrap;">Company Unit</th>
                         <th width="80">Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(137,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
 
                     </tr>
                 </thead>
@@ -92,16 +95,16 @@
                         if (!empty($pr_sec)) {foreach ($pr_sec as $key=>$pr_secs) {?>
                     <tr>
                         <td><?php echo $key+1  ?></td>
-                        <td style="white-space: nowrap;"><?php echo $pr_secs['sec_name_bn'] ?></td>
+                        <td class="bangla_font" style="white-space: nowrap;"><?php echo $pr_secs['sec_name_bn'] ?></td>
                         <td style="white-space: nowrap;"><?php echo $pr_secs['sec_name_en'] ?></td>
                         <td style="white-space: nowrap;"><?php echo $pr_secs['dept_name'] ?></td>
                         <td style="white-space: nowrap;"><?php echo $pr_secs['unit_name'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/sec_edit') . '/' . $pr_secs["id"]?>"
+                            <a href="<?=base_url('setup_con/sec_edit') . '/' . $pr_secs["id"]?>"
                                 class="btn btn-primary center-text" role="button">Edit</a>
                         </td>
-                        <td>
-                            <a href="<?=base_url('index.php/setup_con/sec_delete') . '/' . $pr_secs["id"]?>"
+                        <td <?php if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>?>
+                            <a href="<?=base_url('setup_con/sec_delete') . '/' . $pr_secs["id"]?>"
                                 class="btn btn-danger center-text" role="button">Delete</a>
 
                         </td>

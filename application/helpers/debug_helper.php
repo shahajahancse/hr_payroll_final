@@ -26,6 +26,7 @@ if ( ! function_exists('dd'))
 		$CI =& get_instance();
 		echo '<pre>' . print_r($var, TRUE) . '</pre>';
 		exit;
+		
 	}
 }
   if ( ! function_exists('cc'))
@@ -53,9 +54,8 @@ if ( ! function_exists('vardump'))
 	function vardump($var)
 	{
 		$CI =& get_instance();
-		echo '<pre>';
-		var_dump($var);
-		echo '</pre>';
+		echo '<pre>'; var_dump($var); echo '</pre>';
+		exit;
 	}
 }
 

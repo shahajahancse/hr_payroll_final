@@ -11,9 +11,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/department') ?>">
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/department') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -65,15 +65,13 @@
 
                       <div class="form-group col-md-6">
                           <label>Department Name</label>
-                          <input type="text" name="dept_name" value="<?=set_value('dept_name',$pr_dept->dept_name)?>"
-                              class="form-control">
+                          <input type="text" name="dept_name" value="<?=set_value('dept_name',$pr_dept->dept_name)?>" class="form-control">
                           <?php echo form_error('dept_name');?>
                       </div>
 
                       <div class="form-group col-md-6">
                           <label>Department Name Bangla</label>
-                          <input type="text" name="dept_bangla"
-                              value="<?=set_value('dept_bangla',$pr_dept->dept_bangla)?>" class="form-control">
+                          <input type="text" name="dept_bangla" value="<?=set_value('dept_bangla',$pr_dept->dept_bangla)?>" class="form-control bfont">
                           <?php echo form_error('dept_bangla');?>
                       </div>
                     </div>

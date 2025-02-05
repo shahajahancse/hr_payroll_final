@@ -10,9 +10,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/section') ?>">
-                        < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/section') ?>"> << Back</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -37,7 +36,7 @@
     <div class="tablebox">
         <h3>Update Section</h3>
         <hr>
-        <form action="<?= base_url('index.php/setup_con/sec_edit').'/'. $sec->id?>" enctype="multipart/form-data" method="post"
+        <form action="<?= base_url('setup_con/sec_edit').'/'. $sec->id?>" enctype="multipart/form-data" method="post"
             name="creatsection">
             <div class="row">
                 <div class="col-md-12">
@@ -67,8 +66,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Section Name Bangla</label>
-                        <input type="text" name="sec_name_bn" value="<?= $sec->sec_name_bn ?>" placeholder="Section Name Bangla"
-                            class="form-control">
+                        <input type="text" name="sec_name_bn" value="<?= $sec->sec_name_bn ?>" placeholder="Section Name Bangla" class="form-control bfont">
                         <?=(isset($failuer['sec_name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['sec_name_bn'] . '</div>' : ''; ?>
                     </div>
                     <br>
@@ -85,7 +83,7 @@
 function getDepertment(unit_id) {
     $.ajax({
 
-        url: "<?php echo base_url('index.php/setup_con/get_department') ?>",
+        url: "<?php echo base_url('setup_con/get_department') ?>",
         method: "POST",
         data: {
           unit_id: unit_id

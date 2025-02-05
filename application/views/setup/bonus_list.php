@@ -54,19 +54,13 @@
         <div class="col-md-12">
             <?php
                 $success = $this->session->flashdata('success');
-                if ($success != "") {
-                    ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php
-                }
+                if ($success != "") { ?>
+                    <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php }    
                 $failuer = $this->session->flashdata('failuer');
-                if ($failuer) {
-                    ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-            <?php
-                }
-                ?>
-
+                if ($failuer) { ?>
+                    <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+            <?php } ?>
         </div>
     </div>
     <!-- <br> -->
@@ -80,43 +74,40 @@
                         <th>Sl. No.</th>
                         <th>Unit Name</th>
                         <th>Emp type</th>
-                        <th>Bonus first month</th>
-                        <th>Bonus second month</th>
-                        <th>Bonus amount</th>
-                        <th>Bonus amount fraction</th>
+                        <th>Enabled Days</th>
+                        <th>Less Than Days</th>
+                        <th>Bonus Pay</th>
                         <th>Bonus percent</th>
                         <th>Effective date</th>
                         <th width="80">Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(146,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                         // print_r($pr_bonus_rules);exit('keno?');
-                            if(!empty($pr_bonus_rules)){ foreach($pr_bonus_rules as $pr_bonus_rule){?>
-                    <tr>
-                        <td><?php echo @++$i; ?></td>
-                        <td><?php echo $pr_bonus_rule['unit_name'] ?></td>
-                        <td><?php echo $pr_bonus_rule['emp_type'] ?></td>
-                        <td><?php echo $pr_bonus_rule['bonus_first_month'] ?></td>
-                        <td><?php echo $pr_bonus_rule['bonus_second_month'] ?></td>
-                        <td><?php echo $pr_bonus_rule['bonus_amount'] ?></td>
-                        <td><?php echo $pr_bonus_rule['bonus_amount_fraction'] ?></td>
-                        <td><?php echo $pr_bonus_rule['bonus_percent'] ?></td>
-                        <td><?php echo $pr_bonus_rule['effective_date'] ?></td>
-                        <td>
-                            <a href="<?=base_url('setup_con/bonus_edit').'/'.$pr_bonus_rule["id"]?>"
-                                target='_blank' class="btn btn-primary input-sm center-text" role="button">Edit</a>
-                        </td>
-                        <td>
-                            <a href="<?=base_url('setup_con/bonus_delete').'/'.$pr_bonus_rule["id"]?>"
-                                class="btn btn-danger input-sm center-text" role="button">Delete</a>
-                        </td>
-                    </tr>
+                    <?php if(!empty($pr_bonus_rules)){ foreach($pr_bonus_rules as $pr_bonus_rule){?>
+                        <tr>
+                            <td><?php echo @++$i; ?></td>
+                            <td><?php echo $pr_bonus_rule['unit_name'] ?></td>
+                            <td><?php echo ($pr_bonus_rule['emp_type'] == 1) ? "Worker" : "Staff" ?></td>
+                            <td><?php echo $pr_bonus_rule['bonus_first_month'] ?></td>
+                            <td><?php echo $pr_bonus_rule['bonus_second_month'] ?></td>
+                            <td><?php echo $pr_bonus_rule['bonus_amount'] ?></td>
+                            <!-- <td><?php echo $pr_bonus_rule['bonus_amount_fraction'] ?></td> -->
+                            <td><?php echo $pr_bonus_rule['bonus_percent'] ?></td>
+                            <td><?php echo $pr_bonus_rule['effective_date'] ?></td>
+                            <td>
+                                <a href="<?=base_url('setup_con/bonus_edit').'/'.$pr_bonus_rule["id"]?>"
+                                    target='_blank' class="btn btn-primary input-sm center-text" role="button">Edit</a>
+                            </td>
+                            <td <?php if(in_array(146,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
+                                <a href="<?=base_url('setup_con/bonus_delete').'/'.$pr_bonus_rule["id"]?>"
+                                    class="btn btn-danger input-sm center-text" role="button">Delete</a>
+                            </td>
+                        </tr>
                     <?php } }else{?>
-                    <tr>
-                        <td colspan="12">Records not Found</td>
-                    </tr>
+                        <tr>
+                            <td colspan="12">Records not Found</td>
+                        </tr>
                     <?php }?>
                 </tbody>
             </table>

@@ -20,6 +20,15 @@ class Processdb extends CI_Model{
 			return ;
 		}
 
+		// Check for duplicate emp_id
+		$this->db->select('emp_id');
+		$this->db->where('emp_id', $this->input->post('emp_id'));
+		$query = $this->db->get('pr_emp_com_info');
+		if($query->num_rows() > 0) {
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Employee ID already exists.'); window.location='personal_info';</SCRIPT>";
+			return ;
+		}
+
 		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
 		$data = array(
 			'emp_id'			=> $this->input->post('emp_id'),
@@ -43,7 +52,7 @@ class Processdb extends CI_Model{
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
 			'emp_join_date'		=> $ejd,
-			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'hight'		=> $this->input->post('hight'),
 			'symbol'		=> $this->input->post('symbol'),
 		);
 		// dd($data);
@@ -85,7 +94,9 @@ class Processdb extends CI_Model{
 			'nomi_thana'		=> $this->input->post('nomi_thana'),
 			'nomi_district'		=> $this->input->post('nomi_district'),
 
-			'nomi_age'			=> $this->input->post('nomi_age'),
+			'nomi_age'			=> date("Y-m-d", strtotime($this->input->post('nomi_age'))),
+			'nomi_nid'			=> $this->input->post('nomi_nid'),
+			'nomi_nid_bc_check' => $this->input->post('nomi_nid_bc_check'),
 			'nomi_mobile'		=> $this->input->post('nomi_mobile'),
 			'nomi_relation'		=> $this->input->post('nomi_relation'),
 			'refer_name'		=> $this->input->post('refer_name'),
@@ -106,7 +117,7 @@ class Processdb extends CI_Model{
 			'exp_dasignation'	=> $this->input->post('exp_dasignation'),
 			'personal_mobile'	=> $this->input->post('personal_mobile'),
 			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
-			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'hight'		=>  $this->input->post('hight'),
 			'symbol'		=> $this->input->post('symbol'),
 		);
 
@@ -123,12 +134,12 @@ class Processdb extends CI_Model{
 				$ext = end($imgs);
 
 				$config['upload_path']    = './uploads/photo';
-	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['allowed_types']  = 'jpg|png|jpeg';
 				$config['file_name'] 	  =  $id .'.'. $ext;
 				$config['max_size']	 	  = '4000';
 				$config['max_width']  	  = '5000';
 				$config['max_height']     = '7000';
-	        	$this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 				if ( ! $this->upload->do_upload('img_source'))
 				{
@@ -149,12 +160,12 @@ class Processdb extends CI_Model{
 				$ext = end($imgs);
 
 				$config['upload_path']    = './uploads/photo';
-	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['allowed_types']  = 'jpg|png|jpeg';
 				$config['file_name'] 	  =  $id .'.'. $ext;
 				$config['max_size']	 	  = '4000';
 				// $config['max_width']  	  = '5000';
 				// $config['max_height']     = '7000';
-	        	$this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 				if (!$this->upload->do_upload('signature'))
 				{
@@ -183,9 +194,121 @@ class Processdb extends CI_Model{
 	}
 
 
+	function insert_emp_info_short()
+	{
+		if($this->input->post('emp_id') == '')
+		{
+			return ;
+		}
 
+		// Check for duplicate emp_id
+		$this->db->select('emp_id');
+		$this->db->where('emp_id', $this->input->post('emp_id'));
+		$query = $this->db->get('pr_emp_com_info');
+		if($query->num_rows() > 0) {
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Employee ID already exists.'); window.location='personal_info_short';</SCRIPT>";
+			return ;
+		}
 
+		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
+		$data = array(
+			'emp_id'			=> $this->input->post('emp_id'),
+			'unit_id'			=> $this->input->post('unit_id'),
+			'emp_dept_id'  		=> $this->input->post('emp_dept_id'),
+			'emp_sec_id' 		=> $this->input->post('emp_sec_id'),
+			'emp_line_id' 		=> $this->input->post('emp_line_id'),
+			'emp_desi_id'  		=> $this->input->post('emp_desi_id'),
 
+			'emp_sal_gra_id'  	=> $this->input->post('emp_sal_gra_id'),
+			'emp_cat_id'		=> $this->input->post('emp_cat_id'),
+			'proxi_id'			=> $this->input->post('proxi_id'),
+			'emp_shift'  		=> $this->input->post('emp_shift'),
+			'gross_sal'			=> $this->input->post('gross_sal'),
+			'com_gross_sal'		=> $this->input->post('gross_sal'),
+
+			'ot_entitle'		=> $this->input->post('ot_entitle'),
+			'com_ot_entitle'    => $this->input->post('com_ot_entitle'),
+			'lunch'				=> $this->input->post('lunch'),
+			'transport'			=> $this->input->post('transport'),
+			'salary_draw'		=> $this->input->post('salary_draw'),
+			'salary_type'		=> $this->input->post('salary_type'),
+			'emp_join_date'		=> $ejd,
+
+		);
+		// dd($data);
+
+		$dob = date("Y-m-d", strtotime($this->input->post('emp_dob')));
+		$per_data = array(
+			'name_bn' 			=> $this->input->post('name_bn'),
+			'name_en' 			=> $this->input->post('name_bn'),
+			'emp_dob' 			=> $dob,
+			'gender' 			=> $this->input->post('gender'),
+			'personal_mobile'	=> $this->input->post('personal_mobile'),
+			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
+		);
+
+		if($this->db->insert('pr_emp_com_info', $data)){
+			$emp_id = $this->db->insert_id();
+			$id= $this->db->select('emp_id')->where('id',$emp_id)->get('pr_emp_com_info')->row()->emp_id;
+			$per_data['emp_id'] = $id;
+			$this->db->insert('pr_emp_per_info', $per_data);
+
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Inserted Successfully.'); window.location='personal_info_short';</SCRIPT>";
+		} else {
+		  echo "FAILED" ;
+		  return ;
+		}
+	}
+	function updatedb_short()
+	{
+		// dd($_POST);
+		if($this->input->post('emp_id') == '')
+		{
+			return ;
+		}
+		$ejd = date("Y-m-d", strtotime($this->input->post('emp_join_date')));
+		$data = array(
+			'unit_id'			=> $this->input->post('unit_id'),
+			'emp_id'			=> $this->input->post('emp_id'),
+			'proxi_id'			=> $this->input->post('proxi_id'),
+			'emp_dept_id'  		=> $this->input->post('emp_dept_id'),
+			'emp_sec_id' 		=> $this->input->post('emp_sec_id'),
+			'emp_line_id' 		=> $this->input->post('emp_line_id'),
+			'emp_desi_id'  		=> $this->input->post('emp_desi_id'),
+
+			'emp_cat_id'		=> $this->input->post('emp_cat_id'),
+			'emp_shift'  		=> $this->input->post('emp_shift'),
+			'emp_join_date'		=> $ejd,
+			'emp_sal_gra_id'  	=> $this->input->post('emp_sal_gra_id'),
+			'salary_type'		=> $this->input->post('salary_type'),
+			'salary_draw'		=> $this->input->post('salary_draw'),
+			'lunch'				=> $this->input->post('lunch'),
+			'transport'			=> $this->input->post('transport'),
+			'gross_sal'			=> $this->input->post('gross_sal'),
+			'ot_entitle'		=> $this->input->post('ot_entitle'),
+			'com_gross_sal'		=> $this->input->post('com_gross_sal'),
+			'com_ot_entitle'    => $this->input->post('com_ot_entitle'),
+
+		);
+
+		$dob = date("Y-m-d", strtotime($this->input->post('emp_dob')));
+		$per_data = array(
+			'name_bn' 			=> $this->input->post('name_bn'),
+			'name_en' 			=> $this->input->post('name_en'),
+			'emp_dob' 			=> $dob,
+			'gender' 			=> $this->input->post('gender'),
+			'personal_mobile'	=> $this->input->post('personal_mobile'),
+			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
+		);
+		$id = $this->input->post('emp_id');
+		if($this->db->where('emp_id',$id)->update('pr_emp_com_info', $data)){
+			$this->db->where('emp_id',$id)->update('pr_emp_per_info', $per_data);
+			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Updated Successfully.'); window.location='personal_info_short';</SCRIPT>";
+		} else {
+		  echo "FAILED" ;
+		  return ;
+		}
+	}
 
 	//==================================Employee Information View==============================
 	//=========================================================================================
@@ -395,7 +518,6 @@ class Processdb extends CI_Model{
 	//================================End Employee Information View=================================
 
 	function updatedb1_old_30_09_21()
-	// function updatedb1()
 	{
 		$id =  $this->input->post('empid');
 		$dob = $this->input->post('dob');
@@ -562,163 +684,8 @@ class Processdb extends CI_Model{
 		}
 	}
 
-	// function updatedb1(){
-	// 	// echo "<pre>"; print_r($_FILES); exit;
-	// 	$id =  $this->input->post('empid');
-	// 	$dob = $this->input->post('dob');
-	// 	$dob = date("Y-m-d", strtotime($dob));
-	// 	$ejd = $this->input->post('ejd');
-	// 	$ejd = date("Y-m-d", strtotime($ejd));
-	// 	if($_FILES["userfile"]["name"] != '')
-	// 	{
-	// 		$config['upload_path'] = './uploads/photo/';
-	// 		$config['allowed_types'] = '*';
-	// 		$config['max_size']	= '4000';
-	// 		$config['max_width']  = '5000';
-	// 		$config['max_height']  = '7000';
-	// 		$this->load->library('upload', $config);
-	// 		// echo "<br> <pre>"; print_r($this->upload->data()); exit;
-
-	// 		if ( ! $this->upload->do_upload())
-	// 		{
-	// 			$error = array('error' => $this->upload->display_errors());
-	// 			$img_error =  $error["error"];
-	// 			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert($img_error);</SCRIPT>";
-	// 			$data = array(
-	// 				'emp_full_name' 	=> $this->input->post('name'),
-	// 				'bangla_nam' 		=> $this->input->post('bname'),
-	// 				'emp_mname' 		=> $this->input->post('mname'),
-	// 				'emp_fname' 		=> $this->input->post('fname'),
-	// 				'spouse_name' 		=> $this->input->post('sname'),
-	// 				'emp_n_id'			=> $this->input->post('n_id'),
-	// 				'emp_dob'  			=> $dob,
-	// 				'emp_religion'  	=> $this->input->post('reli'),
-	// 				'emp_sex'  			=> $this->input->post('sex'),
-	// 				'emp_marital_status'=> $this->input->post('ms'),
-	// 				'emp_blood'			=> $this->input->post('bgroup'),
-	// 				// 'emp_nomini_name'	=> $this->input->post('emp_nomini_name'),
-	// 				// 'nomini_relation'	=> $this->input->post('nomini_relation'),
-	// 				// 'emp_child_no'		=> $this->input->post('emp_child_no')
-	// 			);
-	// 		}else{
-	// 			$data_up = array('upload_data' => $this->upload->data());
-	// 			//print_r($data);
-	// 			$img = $data_up["upload_data"]["file_name"];
-	// 			$data = array(
-	// 				'emp_full_name' 	=> $this->input->post('name'),
-	// 				'bangla_nam' 		=> $this->input->post('bname'),
-	// 				'emp_mname' 		=> $this->input->post('mname'),
-	// 				'emp_fname' 		=> $this->input->post('fname'),
-	// 				'spouse_name' 		=> $this->input->post('sname'),
-	// 				// 'emp_ident_mark'	=> $this->input->post('ident_marks'),
-	// 				'emp_n_id'			=> $this->input->post('n_id'),
-	// 				'bank_ac_no'  		=> $this->input->post('bank_ac_no'),
-	// 				'emp_dob'  			=> $dob,
-	// 				'emp_religion'  	=> $this->input->post('reli'),
-	// 				'emp_sex'  			=> $this->input->post('sex'),
-	// 				'emp_marital_status'=> $this->input->post('ms'),
-	// 				'emp_blood'			=> $this->input->post('bgroup'),
-	// 				// 'emp_nomini_name'	=> $this->input->post('emp_nomini_name'),
-	// 				// 'nomini_relation'	=> $this->input->post('nomini_relation'),
-	// 				// 'emp_child_no'		=> $this->input->post('emp_child_no'),
-	// 				'img_source'		=> $img
-	// 			);
-	// 		}
-	// 	}else{
-	// 		$data = array(
-	// 			'emp_full_name'  		=> $this->input->post('name'),
-	// 			'bangla_nam' 			=> $this->input->post('bname'),
-	// 			'emp_mname' 			=> $this->input->post('mname'),
-	// 			'emp_fname' 			=> $this->input->post('fname'),
-	// 			'spouse_name' 			=> $this->input->post('sname'),
-	// 			// 'emp_ident_mark'		=> $this->input->post('ident_marks'),
-	// 			'emp_n_id'				=> $this->input->post('n_id'),
-	// 			'bank_ac_no'  			=> $this->input->post('bank_ac_no'),
-	// 			'emp_dob'  				=> $dob,
-	// 			'emp_religion'  		=> $this->input->post('reli'),
-	// 			'emp_sex'  				=> $this->input->post('sex'),
-	// 			'emp_marital_status'	=> $this->input->post('ms'),
-	// 			'emp_blood'				=> $this->input->post('bgroup'),
-	// 			// 'emp_nomini_name'		=> $this->input->post('nomini_name'),
-	// 			// 'nomini_relation'		=> $this->input->post('nomini_relation'),
-	// 			// 'emp_child_no'			=> $this->input->post('child_no')
-	// 		);
-	// 	}
-
-	// 	//print_r($data);
-	// 	$this->db->where('emp_id',$id);
-	// 	$v1 = $this->db->update('pr_emp_per_info', $data);
-	// 	$adddata = array(
-	// 		'emp_pre_add' 	=> $this->input->post('padd'),
-	// 		'emp_par_add'	=> $this->input->post('fadd'),
-	// 		'mobile'	=> $this->input->post('mobile_no'),
-	// 	);
-	// 	//print_r(adddata);
-	// 	$this->db->where('emp_id',$id);
-	// 	$v2 = $this->db->update('pr_emp_add', $adddata);
-	// 	$data2 = array(
-	// 		'emp_dept_id'  		=> $this->input->post('dept'),
-	// 		'emp_sec_id' 		=> $this->input->post('sec'),
-	// 		'emp_line_id' 		=> $this->input->post('line'),
-	// 		'emp_desi_id'  		=> $this->input->post('desig'),
-	// 		'emp_operation_id'	=> $this->input->post('operation'),
-	// 		'emp_position_id'  	=> $this->input->post('position'),
-	// 		'floor_id'			=> $this->input->post('emp_floor'),
-	// 		// 'emp_process'  		=> $this->input->post('process'),
-	// 		// 'emp_process_qty'  	=> $this->input->post('process_qty'),
-	// 		'emp_sal_gra_id'	=> $this->input->post('salg'),
-	// 		'emp_sts_id'  		=> $this->input->post('emp_sts_id'),
-	// 		'emp_shift'  		=> $this->input->post('empshift'),
-	// 		'gross_sal'  		=> $this->input->post('text8'),
-	// 		'ot_entitle'  		=> $this->input->post('otentitle'),
-	// 		'transport'  		=> $this->input->post('transport'),
-	// 		'lunch'  			=> $this->input->post('lunch'),
-	// 		'att_bonus'  		=> $this->input->post('attbonus'),
-	// 		'emp_join_date'		=> $ejd,
-	// 		'salary_draw'		=> $this->input->post('saldraw'),
-	// 		'salary_type'		=> $this->input->post('saltype'),
-	// 		// 'district_id'		=> $this->input->post('emp_district'),
-	// 		// 'zone_id'			=> $this->input->post('zone')
-	// 	);
-
-	// 	//print_r(data2);
-	// 	//echo $this->input->post('emp_district');
-	// 	$this->db->where('emp_id',$id);
-	// 	$v3 = $this->db->update('pr_emp_com_info', $data2);
-
-	// 	$data_edu = array(
-	// 		'emp_degree'  => $this->input->post('text2'),
-	// 		'emp_pass_yr' => $this->input->post('text3'),
-	// 		'emp_ins' => $this->input->post('text4')
-	// 	);
-	// 	$this->db->where('emp_id',$id);
-	// 	$v4 =$this->db->update('pr_emp_edu', $data_edu);
-	// 	$data_skill = array(
-	// 		'emp_skill'  => $this->input->post('text5'),
-	// 		'emp_yr_skill' => $this->input->post('text6'),
-	// 		'emp_com_name' => $this->input->post('text7')
-	// 	);
-
-	// 	//print_r(data_skill);
-	// 	$this->db->where('emp_id',$id);
-	// 	$v5= $this->db->update('pr_emp_skill', $data_skill);
-	// 	$pr_id_proxi = array('proxi_id'  => $this->input->post('idcard'));
-	// 	$this->db->where('emp_id',$id);
-	// 	$v6 = $this->db->update('pr_id_proxi', $pr_id_proxi);
-	// 	if( $v1 or $v2 or $v3 or $v4 or $v5 or $v6){
-	// 		// PROFILE LOG Generate
-	// 		$log_username = $this->session->userdata('username');
-	// 		$log_emp_id   = $this->input->post('empid');
-	// 		$this->log_model->log_profile_update($log_username, $log_emp_id);
-	// 		//echo "Updated successfully";
-	// 		return true;
-	// 	}else{
-	// 		return false;
-	// 	}
-	// }
 	function updatedb1()
 	{
-
 		//dd($_POST);
 		//dd($this->input->post('pre_thana'));
 		$id = $this->input->post('emp_id');
@@ -744,7 +711,7 @@ class Processdb extends CI_Model{
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
 			'emp_join_date'		=> $ejd,
-			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'hight'		=> $this->input->post('hight'),
 			'symbol'		=> $this->input->post('symbol'),
 		);
 		//dd($data);
@@ -787,6 +754,7 @@ class Processdb extends CI_Model{
 			'nomi_district'		=> $this->input->post('nomi_district'),
 
 			'nomi_age'			=> date("Y-m-d", strtotime($this->input->post('nomi_age'))),
+			'nomi_nid'			=> $this->input->post('nomi_nid'),
 			'nomi_mobile'		=> $this->input->post('nomi_mobile'),
 			'nomi_relation'		=> $this->input->post('nomi_relation'),
 			'refer_name'		=> $this->input->post('refer_name'),
@@ -800,20 +768,20 @@ class Processdb extends CI_Model{
 			'education'			=> $this->input->post('education'),
 			'nid_dob_id'		=> $this->input->post('nid_dob_id'),
 			'nid_dob_check'		=> $this->input->post('nid_dob_check'),
+			'nomi_nid_bc_check'	=> $this->input->post('nomi_nid_bc_check'),
 			'exp_factory_name'	=> $this->input->post('exp_factory_name'),
 			'exp_duration'		=> $this->input->post('exp_duration'),
 
 			'exp_dasignation'	=> $this->input->post('exp_dasignation'),
 			'personal_mobile'	=> $this->input->post('personal_mobile'),
 			'bank_bkash_no'		=> $this->input->post('bank_bkash_no'),
-			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'hight'		=> $this->input->post('hight'),
 			'symbol'		=> $this->input->post('symbol'),
 
 		);
 
 		if($this->db->where('emp_id',$id)->update('pr_emp_com_info', $data))
 		{  
-			
 			$ids = $this->db->where('emp_id',$id)->get('pr_emp_com_info')->row()->emp_id;
 			$per_data['emp_id'] =$ids;
 			$img ="";
@@ -830,24 +798,20 @@ class Processdb extends CI_Model{
 				$config['max_height']     = '7000';
 	        	$this->load->library('upload', $config);
 				$this->upload->initialize($config);
-				if ( ! $this->upload->do_upload('img_source'))
-				{
+				if ( ! $this->upload->do_upload('img_source')){
 					$error = array('error' => $this->upload->display_errors());
 					echo $error["error"];
-				}
-				else
-				{
+				}else{
 					$img_upload = array('upload_data' => $this->upload->data());
 					$img = $img_upload["upload_data"]["file_name"];
 					$per_data['img_source'] = $img;
 				}
 			}
-			if($_FILES["signature"]["name"] != '')
-			{
+			if($_FILES["signature"]["name"] != ''){
 				$imgs = explode('.', $_FILES["signature"]["name"]);
 				$ext = end($imgs);
 
-				$config['upload_path']    = './uploads/photo';
+				$config['upload_path']    = './uploads/emp_signature';
 	            $config['allowed_types']  = 'jpg|png|jpeg';
 				$config['file_name'] 	  =  $per_data['emp_id'] .'.'. $ext;
 				$config['max_size']	 	  = '4000';
@@ -866,7 +830,6 @@ class Processdb extends CI_Model{
 					$signature = $img_upload["upload_data"]["file_name"];
 					$per_data['signature'] = $signature;
 				}
-
 			}
 			//dd($ids);
 
@@ -980,8 +943,8 @@ class Processdb extends CI_Model{
 			'img_source'		=> $img,
 			'emp_n_id'			=> $this->input->post('n_id'),
 			'bank_ac_no'		=> $this->input->post('bank_ac_no'),
-			'hight'		=> $this->input->post('ft').'-'.$this->input->post('inches'),
-			'symbol'		=> $this->input->post('symbol'),
+			'hight'				=> $this->input->post('ft').'-'.$this->input->post('inches'),
+			'symbol'			=> $this->input->post('symbol'),
 			);
 
 		$this->db->insert('pr_emp_per_info', $data);
@@ -1076,7 +1039,7 @@ class Processdb extends CI_Model{
 		  return ;
 		}
 	}
-function emp_id_existance_check($emp_id)
+	function emp_id_existance_check($emp_id)
 	{
 		$this->db->select('emp_id');
 		$this->db->where('emp_id',$emp_id);
@@ -1132,7 +1095,7 @@ function emp_id_existance_check($emp_id)
 		}
 		else
 		{
-		 	echo "Employee ID does not exist";
+			echo "Employee ID does not exist";
 		}
 	}
 
@@ -1151,8 +1114,8 @@ function emp_id_existance_check($emp_id)
 			$rename_id = "0".$id;
 			//echo $rename_id."<br>";
 			$data = array(
-               'emp_id' => $rename_id
-            );
+			'emp_id' => $rename_id
+			);
 			$this->db->where('emp_id',$id);
 			$this->db->update('pr_emp_com_info', $data);
 
@@ -1243,8 +1206,6 @@ function emp_id_existance_check($emp_id)
 		$wk_type = implode('***', $data2);
 		return $id."===".$wk_type;
 	}
-
-
 
 	function dept_search($unit_id)
 	{
@@ -1578,35 +1539,35 @@ function emp_id_existance_check($emp_id)
 				$ejd = date("d-m-Y", strtotime($ejd));
 
 				$data = array(
-				  'emp_id'		=> $row->emp_id,
-				  'proxi_id'  	=> $row->proxi_id,
-				  'dept_name'  	=> $row->dept_name,
-				  'sec_name' 	=> $row->sec_name,
-				  'line_name' 	=> $row->line_name,
-				  'desig_name'  => $row->desig_name,
-				  'ope_name'  	=> $row->ope_name,
-				  'posi_name'  	=> $row->posi_name,
-				  'gr_name'  	=> $row->gr_name,
-				  'stat_type'  	=> $row->stat_type,
-				  'shift_name'  => $row->shift_name,
-				  'gross_sal'  	=> $row->gross_sal,
-				  'ot_entitle'  => $row->ot_entitle,
-				  'transport'  	=> $row->transport,
-				  'lunch'  		=> $row->lunch,
-				  'att_bonus'  	=> $row->att_bonus,
-				  'emp_join_date' => $ejd,
-				  'salary_draw'	=> $row->salary_draw,
-				  'salary_type'	=> $row->salary_type,
-				  'com_gross_sal' => $row->com_gross_sal,
-				  'unit_name'  	=> $row->unit_name,
-				  'floor_name'	=> $row->floor_name,
-				  'wk_type' 	=> $row->wk_type,
-				  'desi_name_bn' => $row->desig_bangla,
-				  'sec_bangla' 	 => $row->sec_bangla,
-				  'emp_sts' 	 => $row->emp_sts,
-				  'work_process' => $row->process,
-				  'salary_name'  => $row->salary_name,
-				  'emp_sts_id'   => $row->emp_sts_id,
+				'emp_id'		=> $row->emp_id,
+				'proxi_id'  	=> $row->proxi_id,
+				'dept_name'  	=> $row->dept_name,
+				'sec_name' 	=> $row->sec_name,
+				'line_name' 	=> $row->line_name,
+				'desig_name'  => $row->desig_name,
+				'ope_name'  	=> $row->ope_name,
+				'posi_name'  	=> $row->posi_name,
+				'gr_name'  	=> $row->gr_name,
+				'stat_type'  	=> $row->stat_type,
+				'shift_name'  => $row->shift_name,
+				'gross_sal'  	=> $row->gross_sal,
+				'ot_entitle'  => $row->ot_entitle,
+				'transport'  	=> $row->transport,
+				'lunch'  		=> $row->lunch,
+				'att_bonus'  	=> $row->att_bonus,
+				'emp_join_date' => $ejd,
+				'salary_draw'	=> $row->salary_draw,
+				'salary_type'	=> $row->salary_type,
+				'com_gross_sal' => $row->com_gross_sal,
+				'unit_name'  	=> $row->unit_name,
+				'floor_name'	=> $row->floor_name,
+				'wk_type' 	=> $row->wk_type,
+				'desi_name_bn' => $row->desig_bangla,
+				'sec_bangla' 	 => $row->sec_bangla,
+				'emp_sts' 	 => $row->emp_sts,
+				'work_process' => $row->process,
+				'salary_name'  => $row->salary_name,
+				'emp_sts_id'   => $row->emp_sts_id,
 				);
 				// print_r($data);
 				$unit_id = $row->unit_id;
@@ -1628,7 +1589,7 @@ function emp_id_existance_check($emp_id)
 			$query2 = $this->db->get('pr_emp_com_info');
 			$row = $query2->row();
 			$dept_id = $row->emp_dept_id;
-   			//END
+			//END
 
 			$this->db->select('pr_emp_com_info.emp_id as empid,pr_emp_add.*,pr_emp_edu.* ,pr_emp_per_info.*,pr_emp_skill.*,ebg.blood_name');
 			$this->db->from('pr_emp_com_info');
@@ -1868,7 +1829,7 @@ function emp_id_existance_check($emp_id)
 
 	function find_week($year_v,$month_v,$day_of_week_v)
 	{
-        $result=array();
+		$result=array();
 		for ($year = $year_v; $year <= $year_v; $year++)
 					{
 						for ($month = $month_v; $month <= $month_v; $month++)
@@ -1902,7 +1863,7 @@ function emp_id_existance_check($emp_id)
 									else
 									$d = ($firstday - 1);
 									if ($lastday==29) // only 1 set of 5 occurences each in the month of
-								   $d -= 1;
+								$d -= 1;
 						}
 
 						$d += 28;    // jump to the 5th week and see if the day exists
@@ -1931,7 +1892,7 @@ function emp_id_existance_check($emp_id)
 				} // for $mth loop
 		} // for $year loop
 
- 	 return $result;
+	return $result;
 
 	}
 	//========================END Payscale Sheet Process=================
@@ -2013,7 +1974,7 @@ function emp_id_existance_check($emp_id)
 		// Add a day to the current date
 		$sCurrentDate = date("Y-m-d", strtotime("+1 day", strtotime($sCurrentDate)));
 		// Add this new day to the aDays array
-		  $aDays[] = $sCurrentDate;
+		$aDays[] = $sCurrentDate;
 		//print_r($aDays);
 		}
 		// Once the loop has finished, return the
@@ -2042,8 +2003,8 @@ function emp_id_existance_check($emp_id)
 		$sEndDate 		= date("Y-m-d", strtotime($sEndDate));
 
 		$this->db->select('leave_type');
-	    $where="emp_id = '$empid_leave' and leave_type = '$leave_type' and  start_date = '$sStartDate' ";
-    	$this->db->where($where);
+		$where="emp_id = '$empid_leave' and leave_type = '$leave_type' and  start_date = '$sStartDate' ";
+		$this->db->where($where);
 		$query = $this->db->get('pr_leave_trans');
 		$num_rows = $query->num_rows();
 		if ($num_rows > 0 )
@@ -2054,7 +2015,7 @@ function emp_id_existance_check($emp_id)
 		{
 			$days = $this->GetDays($sStartDate,$sEndDate);
 			foreach($days as $day)
-		    {
+			{
 				$data = array(
 						'emp_id'		=> $empid_leave,
 						'start_date'    => $day ,
@@ -2103,8 +2064,8 @@ function emp_id_existance_check($emp_id)
 		if ($data)
 		{
 			echo "Delete successfully";
-	 	}
-	 	else
+		}
+		else
 		{
 			echo "Delete failed";
 		}
@@ -2313,46 +2274,31 @@ function emp_id_existance_check($emp_id)
 	//==============Advance loan deduction function=======================<<
 
 
-
-
 	function get_emp_info($emp_id){
 		// dd($emp_id);
-		$d = $this->db->select('com.*, per.*')
-					   ->from('pr_emp_com_info as com')
-					   ->join('pr_emp_per_info as per','com.emp_id = per.emp_id', 'left')
-					   ->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left')
-					   //->where('deg.hide_status', 1)
-					   ->where('com.emp_id',$emp_id)
-					   ->get()->row();
-					   //dd($d);
-					   //dd($d);
-		$date1 = new DateTime(date("d-m-Y", strtotime($d->emp_dob)));
-		//dd($date1);
-		$d->emp_dob= date("m-d-Y", strtotime($d->emp_dob));
-		//dd($d->nomi_age);
-		$d->nomi_age= date("m-d-Y", strtotime($d->nomi_age));
-		
-		$date2 = new DateTime();
-		$interval = $date1->diff($date2);
-		$d->age = $interval->format("%y years %m months %d days");
-		$date1 = new DateTime($d->emp_join_date);
-		$date2 = new DateTime();
-		$interval = $date1->diff($date2);
-		$d->job_duration = $interval->format("%y years %m months %d days");
-		
-		if ($d->hight != '') {
-			$d->ft=isset(explode('-', $d->hight)[0]) ? explode('-', $d->hight)[0] : 0; 
-			$d->inches= isset(explode('-', $d->hight)[1]) ? explode('-', $d->hight)[1] : 0; 
-		}else{
-			$d->ft = 0;
-			$d->inches = 0;
-		}
+		$d = $this->db->select('com.*, per.*,deg.*')
+					->from('pr_emp_com_info as com')
+					->join('pr_emp_per_info as per','com.emp_id = per.emp_id', 'left')
+					->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left')
+					->where('deg.hide_status', 1)
+					->where('com.emp_id',$emp_id)
+					->get()->row();
 
-
+		// dd($d);
 		if ($d == null) {
 			return ['status'=>false,'data'=>'No data found'];
 		}else{
-			// dd($d);
+			$d->emp_dob = ($d->emp_dob == '0000-00-00' || $d->emp_dob == null) ? date('Y-m-d') : $d->emp_dob;
+			$d->emp_dob=$d->emp_dob=='0000-00-00'? date('Y-m-d'): $d->emp_dob;
+			$date1 = new DateTime(date("d-m-Y", strtotime($d->emp_dob)));
+			$d->nomi_age= $d->nomi_age=='0000-00-00'? date('Y-m-d'): $d->nomi_age;
+			$date2 = new DateTime();
+			$interval = $date1->diff($date2);
+			$d->age = $interval->format("%y years %m months %d days");
+			$date1 = new DateTime($d->emp_join_date);
+			$date2 = new DateTime();
+			$interval = $date1->diff($date2);
+			$d->job_duration = $interval->format("%y years %m months %d days");
 			return ['status'=>true,'data'=>$d];
 		}
 	}
@@ -2456,12 +2402,12 @@ function emp_id_existance_check($emp_id)
 				$ext = end($imgs);
 
 				$config['upload_path']    = './uploads/photo';
-	            $config['allowed_types']  = 'jpg|png|jpeg';
+				$config['allowed_types']  = 'jpg|png|jpeg';
 				$config['file_name'] 	  =  $per_data['emp_id'] .'.'. $ext;
 				$config['max_size']	 	  = '4000';
 				$config['max_width']  	  = '5000';
 				$config['max_height']     = '7000';
-	        	$this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 				if ( ! $this->upload->do_upload('img_source'))
 				{
@@ -2481,12 +2427,10 @@ function emp_id_existance_check($emp_id)
 
 			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Inserted Successfully.'); window.location='personal_info';</SCRIPT>";
 		} else {
-		  echo "FAILED" ;
-		  return ;
+		echo "FAILED" ;
+		return ;
 		}
 	}
-
-
 
 }
 ?>

@@ -88,9 +88,9 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label>পোস্ট অফিস</label>
+                <label>পোস্ট অফিস বাংলা</label>
                 <?php echo form_error('post_office'); ?>
-                <input type="text" name="post_office" class="form-control" value="<?= $post->name_bn ?>" required>
+                <input type="text" name="post_office" class="form-control bfont" value="<?= $post->name_bn ?>" required>
               </div>
             </div>
 

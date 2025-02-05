@@ -20,21 +20,24 @@
   <link rel="stylesheet" href="<?=base_url()?>awedget/assets/css/blue.css">
 
 </head>
-<body class="hold-transition login-page" style="height:0;background-repeat: no-repeat;background: url('<?=base_url()?>awedget/assets/img/pos-background.jpg') no-repeat center fixed">
+<style>
+
+</style>
+<body class="hold-transition login-page" style="background-position: center center; background-size: cover; background-image: url('<?=base_url()?>awedget/assets/img/pos-background.jpg')">
   <div class="login-box">
-  
+
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <div class="login-logo" style="border-bottom: 1px solid blue;padding-bottom: 25px;"> 
+    <div class="login-logo" style="border-bottom: 1px solid blue;padding-bottom: 25px;">
       <a href="http://mysoftheaven.com/" target="_blank">
         <img src="<?=base_url()?>awedget/assets/img/loopdot.png" width="" height="70px">
       </a>
-    </div>    
+    </div>
     <!-- <p class="login-box-msg" style="font-size: 20px;">MHL KORMOCHARI</p> -->
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Sign In</p>
      <div class="text-danger tex-center"></div>
      <div class="text-success tex-center"></div>
-         
+
     <?php  echo form_open('user_autentication');  ?>
     <!-- <form action="http://mysoftheaven.com/mipos-cloud/login/verify" method="post"> -->
     <!-- <form action="" method="post"> -->
@@ -51,7 +54,7 @@
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label style="padding-left: 20px;">
-              <input type="checkbox"> Remember Me 
+              <input type="checkbox"> Remember Me
             </label>
           </div>
         </div>

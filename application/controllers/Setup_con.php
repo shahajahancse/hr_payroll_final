@@ -148,7 +148,6 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     public function post_office($start = 0)
     {
-
         $this->load->library('pagination');
         $limit = 10;
         $config['base_url'] = base_url() . "setup_con/post_office/";
@@ -276,6 +275,272 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     // End CRUD Post Office
     //----------------------------------------------------------------------------------
+
+
+    //----------------------------------------------------------------------------------
+    // CRUD for Upazila / Thana
+    //----------------------------------------------------------------------------------
+    public function upazila($start = 0)
+    {
+        $this->load->library('pagination');
+        $limit = 10;
+        $config['base_url'] = base_url() . "setup_con/post_office/";
+        $config['per_page'] = $limit;
+
+        $condition = 0;
+        if ($this->input->get('request')) {
+            $query = $this->input->get('request');
+            $condition = "(pr_units.unit_name LIKE '" . $query . "%' OR emp_depertment.dept_name LIKE '%" . $query . "%' OR emp_depertment.dept_bangla LIKE '%" . $query . "%')";
+        }
+
+        $this->load->model('Crud_model');
+        $pr_dept = $this->Crud_model->get_post_office($limit, $start, $condition);
+        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
+        $config['total_rows'] = $total;
+        $config["uri_segment"] = 3;
+        // $this->load->library('pagination');
+
+        $this->pagination->initialize($config);
+        $this->data['links'] = $this->pagination->create_links();
+        $this->data['pr_dept'] = $pr_dept;
+
+        // dd($this->data);
+
+        $this->data['title'] = 'Post Office List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+
+        $this->data['subview'] = 'setup/post_office_list';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    // Upazila / Thana create
+    public function upazila_add(){
+        // dd($_POST);
+        $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
+        $this->form_validation->set_rules('district', 'District Name', 'trim|required');
+        $this->form_validation->set_rules('upazila', 'Upazila Bangla Name', 'trim|required');
+        $this->form_validation->set_rules('upazila_en', 'Upazila English Name', 'trim|required');
+        if ($this->form_validation->run() == true) {
+            $upazila = $this->input->post('upazila');
+            $upazila_en = $this->input->post('upazila_en');
+            $formArray = array(
+                'div_id' => $this->input->post('division'),
+                'dis_id' => $this->input->post('district'),
+                'name_bn' => $this->input->post('upazila'),
+                'name_en' => $this->input->post('upazila_en'),
+                'status' => 1,
+            );
+
+            $this->db->where('name_bn', $upazila);
+            $this->db->where('name_en', $upazila_en);
+            $query = $this->db->get('emp_upazilas');
+            if ($query->num_rows() > 0) {
+                $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            }else{
+                if ($this->db->insert('emp_upazilas', $formArray)) {
+                    $this->session->set_flashdata('success', 'Record add successfully!');
+                } else {
+                    $this->session->set_flashdata('failuer', 'Sorry!, Something wrong.');
+                }
+            }
+            // return false;
+            // redirect(base_url('setup_con/post_office'));
+        }
+
+        $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();
+        $this->data['title'] = 'Add Upazila / Thana';
+        $this->data['username'] = $this->data['user_data']->id_number;
+
+        $this->data['subview'] = 'setup/upazila_add';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    // Upazila / Thana update
+    public function upazila_edit($id){
+        $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
+        $this->form_validation->set_rules('district', 'District Name', 'trim|required');
+        $this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
+        $this->form_validation->set_rules('post_office', 'Post Office Bangla Name', 'trim|required');
+        $this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
+        if ($this->form_validation->run() == true) {
+            $post_bn = $this->input->post('post_office');
+            $post_en = $this->input->post('post_office_en');
+            $formArray = array(
+                'div_id' => $this->input->post('division'),
+                'dis_id' => $this->input->post('district'),
+                'up_zil_id' => $this->input->post('upazila'),
+                'name_bn' => $this->input->post('post_office'),
+                'name_en' => $this->input->post('post_office_en'),
+                'status' => 1,
+            );
+            $this->db->where('name_bn', $post_bn);
+            $this->db->or_where('name_en', $post_en);
+            $query = $this->db->get('emp_post_offices');
+            if ($query->num_rows()  >0) {
+                $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            }else{
+                $this->db->where('id', $id);
+                $this->db->update('emp_post_offices', $formArray);
+                $this->session->set_flashdata('success', 'Record Updated successfully!');
+            }
+            redirect('/setup_con/post_office');
+        }
+        $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();
+        $this->data['post'] = $this->db->where('id', $id)->get('emp_post_offices')->row();
+        $this->data['title'] = 'Update Post Office';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/post_office_edit';
+        $this->load->view('layout/template', $this->data);
+    }
+    // Upazila / Thana delete
+    public function upazila_delete($id)
+    {
+        $post = $this->db->where('id', $id)->get('emp_post_offices')->row();
+        if (empty($post)) {
+            $this->session->set_flashdata('failuer', 'Record Not Found in DataBase!');
+            redirect('setup_con/post_office');
+        }
+        $this->db->where('id', $id)->delete('emp_post_offices');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect('setup_con/post_office');
+    }
+    //----------------------------------------------------------------------------------
+    // End CRUD Upazila / Thana
+    //----------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------
+    // CRUD for district
+    //----------------------------------------------------------------------------------
+    public function district($start = 0)
+    {
+        $this->load->library('pagination');
+        $limit = 10;
+        $config['base_url'] = base_url() . "setup_con/post_office/";
+        $config['per_page'] = $limit;
+
+        $condition = 0;
+        if ($this->input->get('request')) {
+            $query = $this->input->get('request');
+            $condition = "(pr_units.unit_name LIKE '" . $query . "%' OR emp_depertment.dept_name LIKE '%" . $query . "%' OR emp_depertment.dept_bangla LIKE '%" . $query . "%')";
+        }
+
+        $this->load->model('Crud_model');
+        $pr_dept = $this->Crud_model->get_post_office($limit, $start, $condition);
+        $total = $this->db->query("SELECT FOUND_ROWS() as count")->row()->count;
+        $config['total_rows'] = $total;
+        $config["uri_segment"] = 3;
+        // $this->load->library('pagination');
+
+        $this->pagination->initialize($config);
+        $this->data['links'] = $this->pagination->create_links();
+        $this->data['pr_dept'] = $pr_dept;
+
+        // dd($this->data);
+
+        $this->data['title'] = 'Post Office List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+
+        $this->data['subview'] = 'setup/post_office_list';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    // district create
+    public function district_add(){
+
+        $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
+        $this->form_validation->set_rules('district', 'District Name', 'trim|required');
+        $this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
+        $this->form_validation->set_rules('post_office', 'Post Office Bangla Name', 'trim|required');
+        $this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
+        if ($this->form_validation->run() == true) {
+            $post_en = $this->input->post('post_office_en');
+            $upazila = $this->input->post('upazila');
+            $formArray = array(
+                'div_id' => $this->input->post('division'),
+                'dis_id' => $this->input->post('district'),
+                'up_zil_id' => $this->input->post('upazila'),
+                'name_bn' => $this->input->post('post_office'),
+                'name_en' => $this->input->post('post_office_en'),
+                'status' => 1,
+            );
+
+            $this->db->where('name_bn', $post_en);
+            $this->db->where('up_zil_id', $upazila);
+            $query = $this->db->get('emp_post_offices');
+            if ($query->num_rows() > 0) {
+                $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            }else{
+                if ($this->db->insert('emp_post_offices', $formArray)) {
+                    $this->session->set_flashdata('success', 'Record add successfully!');
+                } else {
+                    $this->session->set_flashdata('failuer', 'Sorry!, Something wrong.');
+                }
+            }
+            // return false;
+            // redirect(base_url('setup_con/post_office'));
+        }
+
+        $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();
+        $this->data['title'] = 'Add Post Office';
+        $this->data['username'] = $this->data['user_data']->id_number;
+
+        $this->data['subview'] = 'setup/post_office_add';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    // district update
+    public function district_edit($id){
+        $this->form_validation->set_rules('division', 'Division Name', 'trim|required');
+        $this->form_validation->set_rules('district', 'District Name', 'trim|required');
+        $this->form_validation->set_rules('upazila', 'Upazila Name', 'trim|required');
+        $this->form_validation->set_rules('post_office', 'Post Office Bangla Name', 'trim|required');
+        $this->form_validation->set_rules('post_office_en', 'Post Office English Name', 'trim|required');
+        if ($this->form_validation->run() == true) {
+            $post_bn = $this->input->post('post_office');
+            $post_en = $this->input->post('post_office_en');
+            $formArray = array(
+                'div_id' => $this->input->post('division'),
+                'dis_id' => $this->input->post('district'),
+                'up_zil_id' => $this->input->post('upazila'),
+                'name_bn' => $this->input->post('post_office'),
+                'name_en' => $this->input->post('post_office_en'),
+                'status' => 1,
+            );
+            $this->db->where('name_bn', $post_bn);
+            $this->db->or_where('name_en', $post_en);
+            $query = $this->db->get('emp_post_offices');
+            if ($query->num_rows()  >0) {
+                $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            }else{
+                $this->db->where('id', $id);
+                $this->db->update('emp_post_offices', $formArray);
+                $this->session->set_flashdata('success', 'Record Updated successfully!');
+            }
+            redirect('/setup_con/post_office');
+        }
+        $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();
+        $this->data['post'] = $this->db->where('id', $id)->get('emp_post_offices')->row();
+        $this->data['title'] = 'Update Post Office';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/post_office_edit';
+        $this->load->view('layout/template', $this->data);
+    }
+    // district delete
+    public function district_delete($id)
+    {
+        $post = $this->db->where('id', $id)->get('emp_post_offices')->row();
+        if (empty($post)) {
+            $this->session->set_flashdata('failuer', 'Record Not Found in DataBase!');
+            redirect('setup_con/post_office');
+        }
+        $this->db->where('id', $id)->delete('emp_post_offices');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect('setup_con/post_office');
+    }
+    //----------------------------------------------------------------------------------
+    // End CRUD district
+    //----------------------------------------------------------------------------------
+
 
     //----------------------------------------------------------------------------------
     // CRUD for Section
@@ -543,9 +808,7 @@ class Setup_con extends CI_Controller
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
             redirect(base_url() . 'setup_con/line');
-
         }
-
     }
 
     public function line_delete($line_id)
@@ -568,7 +831,9 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_attn_bonus.*,pr_units.unit_name');
         $this->db->from('allowance_attn_bonus');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_attn_bonus.unit_id');
-        $this->db->where('allowance_attn_bonus.unit_id', $this->data['user_data']->unit_name);
+        if ($this->data['user_data']->unit_name!=0) {
+          $this->db->where('allowance_attn_bonus.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['attendance_bonus'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -599,8 +864,13 @@ class Setup_con extends CI_Controller
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
                 'rule_name' => $this->input->post('rule_name'),
+                'prev_rule' => $this->input->post('prev_rule'),
+                'prev_end' => date('Y-m-d', strtotime($this->input->post('prev_end'))),
+                'rule1' => $this->input->post('rule1'),
+                'rule1_end' => date('Y-m-d', strtotime($this->input->post('rule1_end'))),
                 'rule' => $this->input->post('rule'),
             );
+
 
             if ($this->db->insert('allowance_attn_bonus', $formArray)) {
                 $this->session->set_flashdata('success', 'Record add successfully!');
@@ -636,8 +906,13 @@ class Setup_con extends CI_Controller
             $formArray = array(
                 'unit_id' => $this->input->post('unit_id'),
                 'rule_name' => $this->input->post('rule_name'),
+                'prev_rule' => $this->input->post('prev_rule'),
+                'prev_end' => date('Y-m-d', strtotime($this->input->post('prev_end'))),
+                'rule1' => $this->input->post('rule1'),
+                'rule1_end' => date('Y-m-d', strtotime($this->input->post('rule1_end'))),
                 'rule' => $this->input->post('rule'),
             );
+
             $this->db->where('id', $rule_id);
             if ($this->db->update('allowance_attn_bonus', $formArray)) {
                 $this->session->set_flashdata('success', 'Record Updated successfully!');
@@ -645,9 +920,7 @@ class Setup_con extends CI_Controller
                 $this->session->set_flashdata('failure', 'Record Update failed!');
             }
             redirect(base_url() . 'setup_con/attendance_bonus');
-
         }
-
     }
 
     public function attn_bonus_delete($line_id)
@@ -670,7 +943,9 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_holiday_weekend_rules.*,pr_units.unit_name');
         $this->db->from('allowance_holiday_weekend_rules');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_holiday_weekend_rules.unit_id');
+        if ($this->data['user_data']->unit_name!=0) {
         $this->db->where('allowance_holiday_weekend_rules.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['allowance_holiday_weekend_rules'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -771,7 +1046,9 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_tiffin_bill.*,pr_units.unit_name');
         $this->db->from('allowance_tiffin_bill');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_tiffin_bill.unit_id');
+        if ($this->data['user_data']->unit_name!=0) {
         $this->db->where('allowance_tiffin_bill.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['allowance_tiffin_bill'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -869,7 +1146,9 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_iftar_bill.*,pr_units.unit_name');
         $this->db->from('allowance_iftar_bill');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_iftar_bill.unit_id');
-        $this->db->where('allowance_iftar_bill.unit_id', $this->data['user_data']->unit_name);
+        if ($this->data['user_data']->unit_name!=0) {
+            $this->db->where('allowance_iftar_bill.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['allowance_iftar_bill'] = $this->db->get()->result_array();
         $this->data['title'] = 'Attendance Bonus List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -967,7 +1246,9 @@ class Setup_con extends CI_Controller
         $this->db->select('allowance_night_rules.*,pr_units.unit_name');
         $this->db->from('allowance_night_rules');
         $this->db->join('pr_units', 'pr_units.unit_id=allowance_night_rules.unit_id');
-        $this->db->where('allowance_night_rules.unit_id', $this->data['user_data']->unit_name);
+        if ($this->data['user_data']->unit_name!=0) {
+            $this->db->where('allowance_night_rules.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['allowance_night_rules'] = $this->db->get()->result_array();
         $this->data['title'] = 'Night Allowance List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1063,13 +1344,13 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     public function designation(){
         $this->data['unit_id'] = $this->data['user_data']->unit_name;
-        $this->db->select(' emp_designation.*,
+        $this->db->select('emp_designation.*,
                             IFNULL(pr_units.unit_name, "none") as unit_name,
-                            IFNULL(allowance_attn_bonus.rule_name, "none") as allowance_attn_bonus,
-                            IFNULL(allowance_holiday_weekend_rules.rule_name, "none") as allowance_holiday_weekend,
-                            IFNULL(allowance_iftar_bill.rule_name, "none") as allowance_iftar,
-                            IFNULL(allowance_night_rules.rule_name, "none") as allowance_night_rules,
-                            IFNULL(allowance_tiffin_bill.rule_name, "none") as allowance_tiffin'
+                            IFNULL(allowance_attn_bonus.rule, "none") as allowance_attn_bonus,
+                            IFNULL(allowance_holiday_weekend_rules.allowance_amount, "none") as allowance_holiday_weekend,
+                            IFNULL(allowance_iftar_bill.allowance_amount, "none") as allowance_iftar,
+                            IFNULL(allowance_night_rules.night_allowance, "none") as allowance_night_rules,
+                            IFNULL(allowance_tiffin_bill.allowance_amount, "none") as allowance_tiffin'
                         );
         $this->db->from('emp_designation');
         $this->db->join('pr_units', 'pr_units.unit_id=emp_designation.unit_id', 'left');
@@ -1157,13 +1438,11 @@ class Setup_con extends CI_Controller
             redirect(base_url() . 'setup_con/designation');
         }
 
-        
         $this->data['pr_units'] = $this->pr_units_get();
         $this->data['title'] = 'Add Designation';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/desig_add';
         $this->load->view('layout/template', $this->data);
-
     }
 
     public function designation_edit($id){
@@ -1451,8 +1730,12 @@ class Setup_con extends CI_Controller
         $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id');
         $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id');
-        $this->db->where('pr_emp_shift.unit_id', $this->data['user_data']->unit_name);
+        if ($this->data['user_data']->unit_name!=0) {
+            $this->db->where('pr_emp_shift.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result_array();
+        // dd($this->data['pr_emp_shift']);
+
         $this->data['title'] = 'Shift Management List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'setup/shift_management_list';
@@ -1468,6 +1751,7 @@ class Setup_con extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('Crud_model');
         $data['shiftmanagementinfo'] = $this->Crud_model->shiftmanagement_fetch();
+        // dd($data);
         $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
@@ -1493,24 +1777,25 @@ class Setup_con extends CI_Controller
     }
 
     public function shiftmanagement_edit($shiftmanagementId){
+        // dd($shiftmanagementId);
         $this->load->library('form_validation');
-        $this->load->model('Crud_model');
         $this->form_validation->set_rules('shift_name', 'Shift Name', 'trim|required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('shift_type', 'Shift Type', 'required');
 
         if ($this->form_validation->run() == false) {
-            $this->data['pr_units'] = $this->pr_units_get();
-
-
-            $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type,pr_emp_shift_schedule.id');
+            $this->db->select('pr_emp_shift.*,pr_units.unit_name,pr_emp_shift_schedule.sh_type');
             $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_shift.unit_id','left');
             $this->db->join('pr_emp_shift_schedule', 'pr_emp_shift_schedule.id = pr_emp_shift.schedule_id','left');
             $this->db->where('pr_emp_shift.id', $shiftmanagementId);
             $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->row();
-            //dd($this->data['pr_emp_shift']);
+            // dd($this->data['pr_emp_shift']);
+             $this->pr_units_get();
 
             $unit_id = $this->data['pr_emp_shift']->unit_id;
+            $this->db->where('unit_id', $unit_id);
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
             $this->db->where('unit_id', $unit_id);
             $this->data['shift_type'] = $this->db->get('pr_emp_shift_schedule')->result();
 
@@ -1523,7 +1808,6 @@ class Setup_con extends CI_Controller
                 'shift_name' => $this->input->post('shift_name'),
                 'unit_id' => $this->input->post('unit_id'),
                 'schedule_id' => $this->input->post('shift_type'),
-
             );
             $this->db->where('id', $shiftmanagementId);
             if ($this->db->update('pr_emp_shift', $formArray)) {
@@ -1548,9 +1832,9 @@ class Setup_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect('/setup_con/shift_management');
     }
-//-------------------------------------------------------------------------------------------------------
-// CRUD for Shift Management end
-//------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Shift Management end
+    //------------------------------------------------------------------------------------------------------
 
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Alter net day start
@@ -1560,7 +1844,9 @@ class Setup_con extends CI_Controller
         $this->db->from('attn_holyday_off');
         $this->db->join('pr_units', 'pr_units.unit_id = attn_holyday_off.unit_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = attn_holyday_off.emp_id');
-        $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        if ($this->data['user_data']->unit_name!=0) {
+            $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->db->where('attn_holyday_off.duty_on_day !=', NULL);
         $this->data['results'] = $this->db->get()->result();
 
@@ -1645,17 +1931,19 @@ class Setup_con extends CI_Controller
         $this->db->from('pr_emp_com_info');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id', 'left');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+        $this->db->join('emp_designation as deg', 'deg.id = pr_emp_com_info.emp_desi_id', 'left');
+        $this->db->where('deg.hide_status', 1);
         $this->db->where('pr_units.unit_id', $unit);
         $this->db->where('pr_emp_com_info.emp_cat_id', 1);
         return $this->db->get();
     }
-//-------------------------------------------------------------------------------------------------------
-// CRUD for alter net day end
-//------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for alter net day end
+    //------------------------------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------------------------------
-// CRUD for Company Info Setup
-//-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Company Info Setup
+    //-------------------------------------------------------------------------------------------------------
 
     public function company_info_setup()
     {
@@ -1729,19 +2017,21 @@ class Setup_con extends CI_Controller
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
         redirect('/setup_con/company_info_setup');
     }
-//-------------------------------------------------------------------------------------------------------
-// CRUD for Company Info Setup end
-//-------------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------------
-// CRUD for Leave Setup start
-//-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Company Info Setup end
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Leave Setup start
+    //-------------------------------------------------------------------------------------------------------
 
     public function leave_setup()
     {
         $this->db->select('pr_leave.*,pr_units.unit_name');
         $this->db->from('pr_leave');
         $this->db->join('pr_units','pr_units.unit_id = pr_leave.unit_id');
-        $this->db->where('pr_leave.unit_id', $this->data['user_data']->unit_name);
+        if ($this->data['user_data']->unit_name!=0) {
+            $this->db->where('pr_leave.unit_id', $this->data['user_data']->unit_name);
+        }
         $this->data['pr_leave'] = $this->db->get()->result_array();
         $this->data['title'] = 'Leave Setup';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -1776,7 +2066,7 @@ class Setup_con extends CI_Controller
                 'lv_sl' => $this->input->post('sick_leave'),
                 'lv_cl' => $this->input->post('casual_leave'),
                 'lv_ml' => $this->input->post('maternity_leave'),
-                'lv_pl' => $this->input->post('paternity_leave'),
+                'lv_pl' => $this->input->post('special_leave'),
             );
             if ($this->db->insert('pr_leave', $formArray)) {
                 $this->session->set_flashdata('success', 'Record add successfully!');
@@ -1795,7 +2085,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('sick_leave', 'Sick Leave', 'required');
         $this->form_validation->set_rules('casual_leave', 'Casual Leave', 'required');
         $this->form_validation->set_rules('maternity_leave', 'Maternity Leave', 'required');
-        $this->form_validation->set_rules('paternity_leave', 'Paternity Leave', 'required');
+        $this->form_validation->set_rules('special_leave', 'Special Leave', 'required');
 
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -1822,7 +2112,7 @@ class Setup_con extends CI_Controller
                 'lv_sl' => $this->input->post('sick_leave'),
                 'lv_cl' => $this->input->post('casual_leave'),
                 'lv_ml' => $this->input->post('maternity_leave'),
-                'lv_pl' => $this->input->post('paternity_leave'),
+                'lv_pl' => $this->input->post('special_leave'),
             );
             $this->db->where('lv_id', $shiftmanagementId);
             if ($this->db->update('pr_leave', $formArray)) {
@@ -1842,236 +2132,315 @@ class Setup_con extends CI_Controller
         redirect('/setup_con/leave_setup');
     }
 
-//-------------------------------------------------------------------------------------------------------
-// CRUD for Leave Setup end
-//-------------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------------
-// CRUD for Bonus Setup start
-//-------------------------------------------------------------------------------------------------------
-public function bonus_setup()
-{
-    $this->db->select('pr_bonus_rules.*,pr_units.unit_name');
-    $this->db->from('pr_bonus_rules');
-    $this->db->join('pr_units','pr_units.unit_id = pr_bonus_rules.unit_id');
-    $this->db->where('pr_bonus_rules.unit_id', $this->data['user_data']->unit_name);
-    $this->data['pr_bonus_rules'] = $this->db->get()->result_array();
-    $this->data['title'] = 'Bonus Setup';
-    $this->data['username'] = $this->data['user_data']->id_number;
-    $this->data['subview'] = 'setup/bonus_list';
-    $this->load->view('layout/template', $this->data);
-
-}
-
-public function bonus_add()
-{
-    $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-    $this->form_validation->set_rules('emp_type', 'Employee Type', 'required');
-    $this->form_validation->set_rules('bonus_first_month', 'Bonus First Month', 'required');
-    $this->form_validation->set_rules('bonus_second_month', 'Bonus Second Month', 'required');
-    $this->form_validation->set_rules('bonus_amount', 'Bonus Amount', 'required');
-    $this->form_validation->set_rules('bonus_amount_fraction', 'Bonus Amount Fraction', 'required');
-    $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
-    $this->form_validation->set_rules('festival', 'Festival', 'required');
-    $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
-
-    if ($this->form_validation->run() == false) {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $this->session->set_flashdata('failure', $this->form_validation->error_array());
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Leave Setup end
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Bonus Setup start
+    //-------------------------------------------------------------------------------------------------------
+    public function bonus_setup()
+    {
+        $this->db->select('pr_bonus_rules.*,pr_units.unit_name');
+        $this->db->from('pr_bonus_rules');
+        $this->db->join('pr_units','pr_units.unit_id = pr_bonus_rules.unit_id');
+        if($this->data['user_data']->unit_name!=0){
+            $this->db->where('pr_bonus_rules.unit_id', $this->data['user_data']->unit_name);
         }
-        $this->data['pr_units'] = $this->pr_units_get();
-        $this->data['title'] = 'Bonus Add';
+        $this->db->order_by('id', 'DESC');
+        $this->data['pr_bonus_rules'] = $this->db->get()->result_array();
+        $this->data['title'] = 'Bonus Setup';
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/bonus_add';
+        $this->data['subview'] = 'setup/bonus_list';
         $this->load->view('layout/template', $this->data);
-    } else {
 
-        $formArray = array(
-            'unit_id' => $this->input->post('unit_id'),
-            'emp_type' => $this->input->post('emp_type'),
-            'bonus_first_month' => $this->input->post('bonus_first_month'),
-            'bonus_second_month' => $this->input->post('bonus_second_month'),
-            'bonus_amount' => $this->input->post('bonus_amount'),
-            'bonus_amount_fraction' => $this->input->post('bonus_amount_fraction'),
-            'bonus_percent' => $this->input->post('bonus_percent'),
-            'festival' => $this->input->post('festival'),
-            'effective_date' => $this->input->post('effective_date')
-        );
-        if ($this->db->insert('pr_bonus_rules', $formArray)) {
-            $this->session->set_flashdata('success', 'Record add successfully!');
+    }
+    public function bonus_add()
+    {
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('emp_type', 'Employee Type', 'required');
+        $this->form_validation->set_rules('festival', 'Festival', 'required');
+        $this->form_validation->set_rules('bonus_first_month', 'Bonus First Month', 'required');
+        // $this->form_validation->set_rules('bonus_second_month', 'Bonus Second Month', 'required');
+        $this->form_validation->set_rules('bonus_amount', 'Bonus Amount', 'required');
+        // $this->form_validation->set_rules('bonus_amount_fraction', 'Bonus Amount Fraction', 'required');
+        $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
+        $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+            $this->data['pr_units'] = $this->pr_units_get();
+            $this->data['title'] = 'Bonus Add';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/bonus_add';
+            $this->load->view('layout/template', $this->data);
         } else {
-            $this->session->set_flashdata('failure', 'Record add failed!');
+            $formArray = array(
+                'unit_id' => $this->input->post('unit_id'),
+                'emp_type' => $this->input->post('emp_type'),
+                'religion_id' => $this->input->post('religion_id'),
+                'festival' => $this->input->post('festival'),
+                'bonus_first_month' => $this->input->post('bonus_first_month'),
+                'bonus_second_month' => $this->input->post('bonus_second_month'),
+                'bonus_amount' => $this->input->post('bonus_amount'),
+                // 'bonus_amount_fraction' => $this->input->post('bonus_amount_fraction'),
+                'bonus_percent' => $this->input->post('bonus_percent'),
+                'effective_date' => date('Y-m-d', strtotime($this->input->post('effective_date'))),
+            );
+            if ($this->db->insert('pr_bonus_rules', $formArray)) {
+                $this->session->set_flashdata('success', 'Record add successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record add failed!');
+            }
+            redirect(base_url() . 'setup_con/bonus_setup');
         }
-        redirect(base_url() . 'setup_con/bonus_setup');
     }
-}
+    public function bonus_edit($bonus_id)
+    {
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('emp_type', 'Employee Type', 'required');
+        $this->form_validation->set_rules('festival', 'Festival', 'required');
+        $this->form_validation->set_rules('bonus_first_month', 'Bonus First Month', 'required');
+        // $this->form_validation->set_rules('bonus_second_month', 'Bonus Second Month', 'required');
+        $this->form_validation->set_rules('bonus_amount', 'Bonus Amount', 'required');
+        // $this->form_validation->set_rules('bonus_amount_fraction', 'Bonus Amount Fraction', 'required');
+        $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
+        $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
 
-public function bonus_edit($shiftmanagementId)
-{
-    $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-    $this->form_validation->set_rules('emp_type', 'Employee Type', 'required');
-    $this->form_validation->set_rules('bonus_first_month', 'Bonus First Month', 'required');
-    $this->form_validation->set_rules('bonus_second_month', 'Bonus Second Month', 'required');
-    $this->form_validation->set_rules('bonus_amount', 'Bonus Amount', 'required');
-    $this->form_validation->set_rules('bonus_amount_fraction', 'Bonus Amount Fraction', 'required');
-    $this->form_validation->set_rules('bonus_percent', 'Bonus Percent', 'required');
-    $this->form_validation->set_rules('festival', 'Festival', 'required');
-    $this->form_validation->set_rules('effective_date', 'Effective Date', 'required');
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
 
-    if ($this->form_validation->run() == false) {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $this->session->set_flashdata('failure', $this->form_validation->error_array());
-        }
+            $this->db->select('pr_units.*');
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
 
-        $this->db->select('pr_units.*');
-        $this->data['pr_units'] = $this->db->get('pr_units')->result();
-
-        $this->db->select('pr_bonus_rules.*');
-        $this->db->where('id', $shiftmanagementId);
-        $this->data['pr_bonus_rules'] = $this->db->get('pr_bonus_rules')->row();
-
-        $this->data['title'] = 'Bonus Edit';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/bonus_edit';
-        $this->load->view('layout/template', $this->data);
-    } else {
-
-        $formArray = array(
-            'unit_id' => $this->input->post('unit_id'),
-            'emp_type' => $this->input->post('emp_type'),
-            'bonus_first_month' => $this->input->post('bonus_first_month'),
-            'bonus_second_month' => $this->input->post('bonus_second_month'),
-            'bonus_amount' => $this->input->post('bonus_amount'),
-            'bonus_amount_fraction' => $this->input->post('bonus_amount_fraction'),
-            'bonus_percent' => $this->input->post('bonus_percent'),
-            'festival' => $this->input->post('festival'),
-            'effective_date' => $this->input->post('effective_date')
-        );
-        $this->db->where('id', $shiftmanagementId);
-        if ($this->db->update('pr_bonus_rules', $formArray)) {
-            $this->session->set_flashdata('success', 'Record add successfully!');
+            $this->db->select('pr_bonus_rules.*');
+            $this->db->where('id', $bonus_id);
+            $this->data['row'] = $this->db->get('pr_bonus_rules')->row();
+            // dd($this->data['row']);
+            $this->data['title'] = 'Bonus Edit';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/bonus_edit';
+            $this->load->view('layout/template', $this->data);
         } else {
-            $this->session->set_flashdata('failure', 'Record add failed!');
+            $formArray = array(
+                'unit_id' => $this->input->post('unit_id'),
+                'emp_type' => $this->input->post('emp_type'),
+                'religion_id' => $this->input->post('religion_id'),
+                'festival' => $this->input->post('festival'),
+                'bonus_first_month' => $this->input->post('bonus_first_month'),
+                'bonus_second_month' => $this->input->post('bonus_second_month'),
+                'bonus_amount' => $this->input->post('bonus_amount'),
+                // 'bonus_amount_fraction' => $this->input->post('bonus_amount_fraction'),
+                'bonus_percent' => $this->input->post('bonus_percent'),
+                'effective_date' => date('Y-m-d', strtotime($this->input->post('effective_date')))
+            );        
+
+            $this->db->where('id', $bonus_id);
+            if ($this->db->update('pr_bonus_rules', $formArray)) {
+                $this->session->set_flashdata('success', 'Record add successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record add failed!');
+            }
+            redirect(base_url() . 'setup_con/bonus_setup');
         }
-        redirect(base_url() . 'setup_con/bonus_setup');
+
     }
-
-}
-
-public function bonus_delete($shiftmanagementId)
-{
-   $this->db->where('id', $shiftmanagementId);
-   if ($this->db->delete('pr_bonus_rules')) {
-       $this->session->set_flashdata('success', 'Record Deleted successfully!');
-
-   }else{
-       $this->session->set_flashdata('failure', 'Record Delete failed!');
-   };
-    redirect('/setup_con/bonus_setup');
-}
-
-public function emp_roster_shift() {
-    $this->db->select('rs.*, pr_units.unit_name');
-    $this->db->from('pr_emp_roster_shift as rs');
-    $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
-    if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-        $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
-    }
-    $this->db->order_by('rs.id', 'DESC');
-    $this->data['results'] = $this->db->get()->result();
-    $this->data['title'] = 'Roster Shift List';
-    $this->data['username'] = $this->data['user_data']->id_number;
-    $this->data['subview'] = 'setup/emp_roster_list';
-    $this->load->view('layout/template', $this->data);
-}
-public function roster_entry() {   
-    $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-    if ($this->form_validation->run() == false) {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $this->session->set_flashdata('failure', $this->form_validation->error_array());
-        }
-        // dd($this->data['user_data']);
-        $this->db->select('pr_units.*');
-        $this->db->where('unit_id', $this->data['user_data']->unit_name);
-        $this->data['pr_units'] = $this->db->get('pr_units')->result();
-
-        $this->db->select('pr_emp_shift.*');
-        $this->db->where('unit_id', $this->data['user_data']->unit_name);
-        $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result();
-        $this->data['title'] = 'Roster Shift Add';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/emp_roster_entry';
-        $this->load->view('layout/template', $this->data);
-    } else {
-        $shift_type[]=$this->input->post('shift_type');
-        $formArray = array(
-            'name' => $this->input->post('name'),
-            'unit_id' => $this->input->post('unit_id'),
-            'start_date' => date('Y-m-d', strtotime($this->input->post('start_date'))),
-            'duration' => $this->input->post('duration'),
-            'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))), 
-            'shift_type' =>  json_encode($shift_type),
-        );
-        if ($this->db->insert('pr_emp_roster_shift', $formArray)) {
-            $this->session->set_flashdata('success', 'Record add successfully!');
-        } else {
-            $this->session->set_flashdata('failure', 'Record add failed!');
-        }
-        redirect(base_url() . 'setup_con/emp_roster_shift');
-    }
-}
-public function roster_edit($id) {   
-    $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-    if ($this->form_validation->run() == false) {
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $this->session->set_flashdata('failure', $this->form_validation->error_array());
-        }
-
-        $this->db->select('pr_units.*');
-        $this->db->where('unit_id', $this->data['user_data']->unit_name);
-        $this->data['pr_units'] = $this->db->get('pr_units')->result();
-
-        $this->db->select('pr_emp_roster_shift.*');
-        $this->db->where('id', $id);
-        $this->data['pr_emp_roster_shift'] = $this->db->get('pr_emp_roster_shift')->row();
-
-        $this->db->select('pr_emp_shift.*');
-        $this->db->where('unit_id', $this->data['user_data']->unit_name);
-        $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result();
-
-        $this->data['title'] = 'Roster Shift Edit';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'setup/emp_roster_edit';
-        $this->load->view('layout/template', $this->data);
-    } else {
-        $shift_type[]=$this->input->post('shift_type');
-        $formArray = array(
-            'name' => $this->input->post('name'),
-            'unit_id' => $this->input->post('unit_id'),
-            'start_date' => date('Y-m-d', strtotime($this->input->post('start_date'))),
-            'duration' => $this->input->post('duration'),
-            'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))), 
-            'shift_type' =>  json_encode($shift_type),
-        );
-        $this->db->where('id', $id);
-        if ($this->db->update('pr_emp_roster_shift', $formArray)) {
-            $this->session->set_flashdata('success', 'Record Update successfully!');
-        } else {
-            $this->session->set_flashdata('failure', 'Record Update  failed!');
-        }
-        redirect(base_url() . 'setup_con/emp_roster_shift');
-    }
-}
-public function rester_delete($id)
-{
-    $this->db->where('id', $id);
-    if ($this->db->delete('pr_emp_roster_shift')) {
+    public function bonus_delete($shiftmanagementId)
+    {
+    $this->db->where('id', $shiftmanagementId);
+    if ($this->db->delete('pr_bonus_rules')) {
         $this->session->set_flashdata('success', 'Record Deleted successfully!');
-    } else {
+
+    }else{
         $this->session->set_flashdata('failure', 'Record Delete failed!');
+    };
+        redirect('/setup_con/bonus_setup');
     }
-    redirect(base_url() . 'setup_con/emp_roster_shift');
-}
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Bonus Setup start
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Roster schedule Setup start
+    //-------------------------------------------------------------------------------------------------------
+    public function emp_roster_shift() {
+        $this->db->select('rs.*, pr_units.unit_name');
+        $this->db->from('pr_emp_roster_shift as rs');
+        $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
+        if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
+            $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->db->order_by('rs.id', 'DESC');
+        $this->data['results'] = $this->db->get()->result();
+        $this->data['title'] = 'Roster Shift List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/emp_roster_list';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function roster_entry() {   
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+            // dd($this->data['user_data']);
+            $this->db->select('pr_units.*');
+            $this->db->where('unit_id', $this->data['user_data']->unit_name);
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
+            $this->db->select('pr_emp_shift.*');
+            $this->db->where('unit_id', $this->data['user_data']->unit_name);
+            $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result();
+            $this->data['title'] = 'Roster Shift Add';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/emp_roster_entry';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $shift_type[]=$this->input->post('shift_type');
+            $formArray = array(
+                'name' => $this->input->post('name'),
+                'unit_id' => $this->input->post('unit_id'),
+                'start_date' => date('Y-m-d', strtotime($this->input->post('start_date'))),
+                'duration' => $this->input->post('duration'),
+                'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))), 
+                'shift_type' =>  json_encode($shift_type),
+            );
+            if ($this->db->insert('pr_emp_roster_shift', $formArray)) {
+                $this->session->set_flashdata('success', 'Record add successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record add failed!');
+            }
+            redirect(base_url() . 'setup_con/emp_roster_shift');
+        }
+    }
+    public function roster_edit($id) {   
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        if ($this->form_validation->run() == false) {
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+
+            $this->db->select('pr_units.*');
+            $this->db->where('unit_id', $this->data['user_data']->unit_name);
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
+            $this->db->select('pr_emp_roster_shift.*');
+            $this->db->where('id', $id);
+            $this->data['roster_shift'] = $this->db->get('pr_emp_roster_shift')->row();
+
+            $this->db->select('pr_emp_shift.*');
+            $this->db->where('unit_id', $this->data['user_data']->unit_name);
+            $this->data['pr_emp_shift'] = $this->db->get('pr_emp_shift')->result();
+
+            $this->data['title'] = 'Roster Shift Edit';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/emp_roster_edit';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $shift_type[]=$this->input->post('shift_type');
+            $formArray = array(
+                'name' => $this->input->post('name'),
+                'unit_id' => $this->input->post('unit_id'),
+                'start_date' => date('Y-m-d', strtotime($this->input->post('start_date'))),
+                'duration' => $this->input->post('duration'),
+                'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))), 
+                'shift_type' =>  json_encode($shift_type),
+            );
+            $this->db->where('id', $id);
+            if ($this->db->update('pr_emp_roster_shift', $formArray)) {
+                $this->session->set_flashdata('success', 'Record Update successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record Update  failed!');
+            }
+            redirect(base_url() . 'setup_con/emp_roster_shift');
+        }
+    }
+    public function rester_delete($id)
+    {
+        $this->db->where('id', $id);
+        if ($this->db->delete('pr_emp_roster_shift')) {
+            $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        } else {
+            $this->session->set_flashdata('failure', 'Record Delete failed!');
+        }
+        redirect(base_url() . 'setup_con/emp_roster_shift');
+    }
+    public function roster_schedule_change() {   
+        $id = $this->input->post('id');
+        $row = $this->db->where('id', $id)->get('pr_emp_roster_shift')->row();
+        $unit_id = $row->unit_id;
+        $dd = json_decode($row->shift_type);
+        $shift_type = $dd[0];
+
+        // automatecally change employee shift
+        if (count($shift_type) == 3) {			
+            $morning_shift = $shift_type[0];
+            $evening_shift = $shift_type[1];
+            $night_shift   = $shift_type[2];
+
+            // get shift id wise employee in array 
+            $morning = $this->get_roster_shift_emp($morning_shift, $unit_id);
+            $evening = $this->get_roster_shift_emp($evening_shift, $unit_id);
+            $night   = $this->get_roster_shift_emp($night_shift, $unit_id);
+
+            if (!empty($morning)) {
+                $tr = $this->auto_change_roster_shift($morning, $night_shift, $unit_id);
+            }
+            if (!empty($evening)) {
+                $tr = $this->auto_change_roster_shift($evening, $morning_shift, $unit_id);
+            }
+            if (!empty($night)) {
+                $tr = $this->auto_change_roster_shift($night, $evening_shift, $unit_id);
+            }
+
+        } else if (count($shift_type) == 2) {
+            $day_shift 	 = $shift_type[0];
+            $night_shift = $shift_type[1];
+            $days 	= $this->get_roster_shift_emp($day_shift, $unit_id);
+            $night  = $this->get_roster_shift_emp($night_shift, $unit_id);
+
+            if (!empty($days)) {
+                $tr = $this->auto_change_roster_shift($days, $night_shift, $unit_id);
+            }
+
+            if (!empty($night)) {
+                $tr = $this->auto_change_roster_shift($night, $day_shift, $unit_id);
+            }
+        } 
+        // end auto employee shift change
+        if ($tr) {
+            echo 'Record successfully Inserted';
+            exit();
+        } else {
+            echo 'Record Not Inserted';
+            exit();
+        }
+    }
+	function auto_change_roster_shift($emp_array, $emp_shift, $unit_id)
+	{
+		$data = array(
+			'emp_shift' => $emp_shift
+		);
+
+		$this->db->where_in('emp_id', $emp_array)->where('unit_id', $unit_id)->update('pr_emp_com_info', $data);
+		return true;
+	}
+	function get_roster_shift_emp($emp_shift, $unit_id)
+	{
+		$rs=$this->db->select('emp_id')->where('emp_shift',$emp_shift)->where('unit_id',$unit_id)->get('pr_emp_com_info');
+		$result = $rs->result_array();
+		$output = array();
+
+		array_walk($result, function($entry) use (&$output) {
+		    $output[] = $entry["emp_id"];
+		});
+		return $output;
+	}
+    //-------------------------------------------------------------------------------------------------------
+    // CRUD for Roster schedule Setup start
+    //-------------------------------------------------------------------------------------------------------
 
 
 

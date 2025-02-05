@@ -16,18 +16,18 @@
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
-      white-space: nowrap;
-
     }
     table.dataTable tbody th, table.dataTable tbody td {
       padding: 4px !important;
-      white-space: nowrap;
+      
     }
     .center-text {
         vertical-align: center;
         padding: 5px 10px;
         /* line-height: 40px; Should be equal to the button's height */
-
+    }
+    .bangla_font {
+        font-family: SutonnyMJ !important;
     }
 </style>
 
@@ -36,8 +36,8 @@
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5" style="padding: 7px;">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/line_add') ?>">Add Line</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/line_add') ?>">Add Line</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -66,7 +66,8 @@
         <div class="alert alert-failuer"><?php echo $failuer; ?></div>
         <?php }  ?>
     </div>
-    <div id="target-div" class="row tablebox">
+
+    <div div id="target-div" class="row tablebox">
         <div class="col-md-6" style="margin-left:-16px">
              <h3 style="font-weight:bold">Line List</h3>
          </div>
@@ -81,7 +82,7 @@
                         <th>Department Name </th>
                         <th>Section Name</th>
                         <th width="80">Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(138,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,27 +91,24 @@
                         <tr>
                             <td><?php echo $key + 1  ?></td>
                             <td><?php echo $pr_lines['line_name_en'] ?></td>
-                            <td><?php echo $pr_lines['line_name_bn'] ?></td>
+                            <td class="bangla_font"><?php echo $pr_lines['line_name_bn'] ?></td>
                             <td><?php echo $pr_lines['unit_name'] ?></td>
                             <td><?php echo $pr_lines['dept_name'] ?></td>
                             <td><?php echo $pr_lines['sec_name_en'] ?></td>
                             <td>
-                                <a href="<?=base_url('index.php/setup_con/line_edit') . '/' . $pr_lines["id"]?>"
+                                <a href="<?=base_url('setup_con/line_edit/'.$pr_lines['id'])?>"
                                     class="btn btn-primary center-text" role="button">Edit</a>
                             </td>
-
-                            <td>
-                                <a href="<?=base_url('index.php/setup_con/line_delete') . '/' . $pr_lines["id"]?>"
+                            <td <?php if(in_array(138,$acl)) {echo '';} else { echo 'style="display:none;"';}?> >
+                                <a href="<?=base_url('setup_con/line_delete/'.$pr_lines['id'])?>"
                                     class="btn btn-danger center-text" role="button">Delete</a>
                             </td>
                         </tr>
                     <?php }} else {?>
-
                     <tr>
                         <td colspan="12">Records not Found</td>
                     </tr>
                     <?php }?>
-
                 </tbody>
             </table>
         <!-- </div> -->

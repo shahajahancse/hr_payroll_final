@@ -602,5 +602,357 @@ class Import extends CI_Controller {
 			echo "Upload successfully done";
 		}
 	}
+
+	function import_dep1_compleate(){
+		dd("import_dep1_compleate");
+		$ajdata=$this->db->get('ajfl_final')->result();
+		foreach($ajdata as $aj){
+			$emp_id=$aj->ID;
+			$dept=$aj->Department;
+			$sec=$aj->Section;
+			$line=$aj->Line;
+			$desi=$aj->Designation;
+
+			$this->db->where('dept_name', $dept);
+			$this->db->where('unit_id', 1);
+			$emp_depertment = $this->db->get('emp_depertment')->row();
+
+			if(!empty($emp_depertment)){
+				$dept_id = $emp_depertment->dept_id;
+			}else{
+				$this->db->insert('emp_depertment', array('dept_name' => $dept,'dept_bangla' => $dept, 'unit_id' => 1));
+				$dept_id = $this->db->insert_id();
+			}
+
+			$this->db->where('sec_name_en', $sec);
+			$this->db->where('unit_id', 1);
+			$emp_section = $this->db->get('emp_section')->row();
+			if(!empty($emp_section)){
+				$sec_id = $emp_section->id;
+			}else{
+				$this->db->insert('emp_section', array('depertment_id'=> $dept_id,'sec_name_en' => $sec, 'sec_name_bn' => $sec, 'unit_id' => 1));
+				$sec_id = $this->db->insert_id();
+			}
+
+			$this->db->where('line_name_en', $line);
+			$this->db->where('unit_id', 1);
+			$emp_line = $this->db->get('emp_line_num')->row();
+			if(!empty($emp_line)){
+				$line_id = $emp_line->id;
+			}else{
+				$this->db->insert('emp_line_num', array('section_id'=> $sec_id,'dept_id'=> $dept_id,'line_name_en' => $line,'line_name_bn' => $line, 'unit_id' => 1));
+				$line_id = $this->db->insert_id();
+			}
+
+			$this->db->where('desig_name', $desi);
+			$this->db->where('unit_id', 1);
+			$emp_designation = $this->db->get('emp_designation')->row();
+			if(!empty($emp_designation)){
+				$desig_id = $emp_designation->id;
+			}else{
+				$this->db->insert('emp_designation', array('desig_name' => $desi,'desig_bangla' => $desi,'unit_id' => 1 ,'attn_id' => 1,'holiday_weekend_id' => 1,'iftar_id' => 1,'night_al_id' => 1,'tiffin_id' => 1,'hide_status' => 1));
+				$desig_id = $this->db->insert_id();
+			}
+
+			// emp_dasignation_line_acl
+			// id	
+			// dept_id	
+			// section_id	
+			// line_id	
+			// designation_id
+			// unit_id	
+
+			$this->db->where('unit_id', 1);
+			$this->db->where('dept_id', $dept_id);
+			$this->db->where('section_id', $sec_id);
+			$this->db->where('line_id', $line_id);
+			$this->db->where('designation_id', $desig_id);
+			$emp_dasignation_line_acl = $this->db->get('emp_dasignation_line_acl')->row();
+
+			if(empty($emp_dasignation_line_acl)){
+				$this->db->insert('emp_dasignation_line_acl', array('dept_id' => $dept_id,'section_id' => $sec_id,'line_id' => $line_id,'designation_id' => $desig_id, 'unit_id' => 1));
+			}
+
+			$this->db->where('emp_id', $emp_id);
+			$this->db->update('pr_emp_com_info', array('emp_dept_id' => $dept_id,'emp_sec_id' => $sec_id,'emp_line_id' => $line_id,'emp_desi_id' => $desig_id));
+		}
+	}
+	function import_dep2(){
+		dd('import_dep2');
+		$ajdata=$this->db->get('lkfl_final')->result();
+		foreach($ajdata as $aj){
+			$emp_id=$aj->ID;
+			$dept=$aj->Department;
+			$sec=$aj->Section;
+			$line=$aj->Line;
+			$desi=$aj->Designation;
+
+			$this->db->where('dept_name', $dept);
+			$this->db->where('unit_id', 2);
+			$emp_depertment = $this->db->get('emp_depertment')->row();
+
+			if(!empty($emp_depertment)){
+				$dept_id = $emp_depertment->dept_id;
+			}else{
+				$this->db->insert('emp_depertment', array('dept_name' => $dept,'dept_bangla' => $dept, 'unit_id' => 2));
+				$dept_id = $this->db->insert_id();
+			}
+
+			$this->db->where('sec_name_en', $sec);
+			$this->db->where('unit_id', 2);
+			$emp_section = $this->db->get('emp_section')->row();
+			if(!empty($emp_section)){
+				$sec_id = $emp_section->id;
+			}else{
+				$this->db->insert('emp_section', array('depertment_id'=> $dept_id,'sec_name_en' => $sec, 'sec_name_bn' => $sec, 'unit_id' => 2));
+				$sec_id = $this->db->insert_id();
+			}
+
+			$this->db->where('line_name_en', $line);
+			$this->db->where('unit_id', 2);
+			$emp_line = $this->db->get('emp_line_num')->row();
+			if(!empty($emp_line)){
+				$line_id = $emp_line->id;
+			}else{
+				$this->db->insert('emp_line_num', array('section_id'=> $sec_id,'dept_id'=> $dept_id,'line_name_en' => $line,'line_name_bn' => $line, 'unit_id' => 2));
+				$line_id = $this->db->insert_id();
+			}
+
+			$this->db->where('desig_name', $desi);
+			$this->db->where('unit_id', 2);
+			$emp_designation = $this->db->get('emp_designation')->row();
+			if(!empty($emp_designation)){
+				$desig_id = $emp_designation->id;
+			}else{
+				$this->db->insert('emp_designation', array('desig_name' => $desi,'desig_bangla' => $desi,'unit_id' => 2 ,'attn_id' => 1,'holiday_weekend_id' => 1,'iftar_id' => 1,'night_al_id' => 1,'tiffin_id' => 1,'hide_status' => 1));
+				$desig_id = $this->db->insert_id();
+			}
+
+			// emp_dasignation_line_acl
+			// id	
+			// dept_id	
+			// section_id	
+			// line_id	
+			// designation_id
+			// unit_id	
+
+			$this->db->where('unit_id', 2);
+			$this->db->where('dept_id', $dept_id);
+			$this->db->where('section_id', $sec_id);
+			$this->db->where('line_id', $line_id);
+			$this->db->where('designation_id', $desig_id);
+			$emp_dasignation_line_acl = $this->db->get('emp_dasignation_line_acl')->row();
+
+			if(empty($emp_dasignation_line_acl)){
+				$this->db->insert('emp_dasignation_line_acl', array('dept_id' => $dept_id,'section_id' => $sec_id,'line_id' => $line_id,'designation_id' => $desig_id, 'unit_id' => 2));
+			}
+
+			$this->db->where('emp_id', $emp_id);
+			$this->db->update('pr_emp_com_info', array('emp_dept_id' => $dept_id,'emp_sec_id' => $sec_id,'emp_line_id' => $line_id,'emp_desi_id' => $desig_id));
+		}
+	}
+	function import_dep4(){
+		dd('import_dep4');
+		$ajdata=$this->db->get('hnfl')->result();
+		foreach($ajdata as $aj){
+			$emp_id=$aj->ID;
+			$dept=$aj->Department;
+			$sec=$aj->Section;
+			$line=$aj->Line;
+			$desi=$aj->Designation;
+
+			$this->db->where('dept_name', $dept);
+			$this->db->where('unit_id', 4);
+			$emp_depertment = $this->db->get('emp_depertment')->row();
+
+			if(!empty($emp_depertment)){
+				$dept_id = $emp_depertment->dept_id;
+			}else{
+				$this->db->insert('emp_depertment', array('dept_name' => $dept,'dept_bangla' => $dept, 'unit_id' => 4));
+				$dept_id = $this->db->insert_id();
+			}
+
+			$this->db->where('sec_name_en', $sec);
+			$this->db->where('unit_id', 4);
+			$emp_section = $this->db->get('emp_section')->row();
+			if(!empty($emp_section)){
+				$sec_id = $emp_section->id;
+			}else{
+				$this->db->insert('emp_section', array('depertment_id'=> $dept_id,'sec_name_en' => $sec, 'sec_name_bn' => $sec, 'unit_id' => 4));
+				$sec_id = $this->db->insert_id();
+			}
+
+			$this->db->where('line_name_en', $line);
+			$this->db->where('unit_id', 4);
+			$emp_line = $this->db->get('emp_line_num')->row();
+			if(!empty($emp_line)){
+				$line_id = $emp_line->id;
+			}else{
+				$this->db->insert('emp_line_num', array('section_id'=> $sec_id,'dept_id'=> $dept_id,'line_name_en' => $line,'line_name_bn' => $line, 'unit_id' => 4));
+				$line_id = $this->db->insert_id();
+			}
+
+			$this->db->where('desig_name', $desi);
+			$this->db->where('unit_id', 4);
+			$emp_designation = $this->db->get('emp_designation')->row();
+			if(!empty($emp_designation)){
+				$desig_id = $emp_designation->id;
+			}else{
+				$this->db->insert('emp_designation', array('desig_name' => $desi,'desig_bangla' => $desi,'unit_id' => 4 ,'attn_id' => 1,'holiday_weekend_id' => 1,'iftar_id' => 1,'night_al_id' => 1,'tiffin_id' => 1,'hide_status' => 1));
+				$desig_id = $this->db->insert_id();
+			}
+
+			// emp_dasignation_line_acl
+			// id	
+			// dept_id	
+			// section_id	
+			// line_id	
+			// designation_id
+			// unit_id	
+
+			$this->db->where('unit_id', 4);
+			$this->db->where('dept_id', $dept_id);
+			$this->db->where('section_id', $sec_id);
+			$this->db->where('line_id', $line_id);
+			$this->db->where('designation_id', $desig_id);
+			$emp_dasignation_line_acl = $this->db->get('emp_dasignation_line_acl')->row();
+
+			if(empty($emp_dasignation_line_acl)){
+				$this->db->insert('emp_dasignation_line_acl', array('dept_id' => $dept_id,'section_id' => $sec_id,'line_id' => $line_id,'designation_id' => $desig_id, 'unit_id' => 4));
+			}
+
+			$this->db->where('emp_id', $emp_id);
+			$this->db->update('pr_emp_com_info', array('emp_dept_id' => $dept_id,'emp_sec_id' => $sec_id,'emp_line_id' => $line_id,'emp_desi_id' => $desig_id));
+		}
+	}
+
+
+	function update_per_infos(){
+		$datas = $this->db->select('*')->get('new_pr_emp_per_info')->result();
+		foreach($datas as $data){
+			$per_info = [
+				'name_en'		=> $data->name_en,
+				'name_bn'		=> $data->name_bn, 
+				'father_name'	=> $data->father_name,
+				'mother_name'	=> $data->mother_name,
+				'spouse_name'	=> $data->spouse_name,
+				'emp_dob' 		=> $data->emp_dob,
+				'gender'		=> $data->gender,
+				'religion' 		=> $data->religion,
+				'blood' 		=> $data->blood,
+				'm_child' 		=> $data->m_child,
+				'f_child' 		=> $data->f_child,
+				'education' 	=> $data->education,
+				'nid_dob_check' => $data->nid_dob_check,
+				'nid_dob_id' 	=> $data->nid_dob_id,
+				'personal_mobile' => $data->personal_mobile,
+				'bank_bkash_no'   => $data->bank_bkash_no,
+				'pre_home_owner' 	=> $data->pre_home_owner,
+				'holding_num' 		=> $data->holding_num,
+				'home_own_mobile' 	=> $data->home_own_mobile,
+				'pre_village_bn' 	=> $data->pre_village_bn, 
+				'per_village_bn' 	=> $data->per_village_bn, 
+				'nominee_name' 		=> $data->nominee_name,  
+				'nominee_vill' 		=> $data->nominee_vill, 
+				'nomi_mobile' 		=> $data->nomi_mobiole, 
+				'nomi_relation'		=> $data->nomi_relation, 
+				'refer_name'		=> $data->refer_name,
+				'refer_mobile' 		=> $data->refer_mobile,
+				'refer_relation' 	=> $data->refer_relation, 
+				'refer_village'		=> $data->refer_village, 
+				'exp_factory_name' 	=> $data->exp_factory_name, 
+				'exp_duration' 		=> $data->exp_duration,
+				'exp_dasignation' 	=> $data->exp_dasignation,
+			];
+
+			$this->db->where('emp_id', $data->emp_id)->update('pr_emp_per_info', $per_info);
+		}
+		echo "Update successfully done!";
+		// dd($datas);
+	}
+
+		function update_dis(){
+		$datas = $this->db->select('per_nomi_post.emp_id,per_nomi_post.nomi_post,emp_post_offices.name_bn,emp_post_offices.id as post_id')
+						  ->from('per_nomi_post')
+						  ->join('emp_post_offices', 'emp_post_offices.name_bn = trim(per_nomi_post.nomi_post)')
+						  ->group_by('per_nomi_post.emp_id')->get()->result();
+
+		// echo "<pre>";print_r($datas);exit;
+
+		// $dis_array = array();
+		foreach($datas as $data){
+			$this->db->where('emp_id', $data->emp_id)->update('pr_emp_per_info', 
+						[
+							// 'refer_post'     => $data->nomi_post,
+							'ref_post' => $data->post_id,
+							// 'refer_post'    => $data->upa_id,
+						]);
+		}
+		// echo "<pre>";print_r($dis_array);exit;
+		echo "Update successfully done!";
+		// dd($datas);
+	}
+
+	function update_incre_prom(){
+		$this->db->select('prev_emp_id');
+		$this->db->from('pr_incre_prom_pun');
+		$this->db->where('effective_month LIKE', '%2024%');
+		$this->db->where('status', 1);
+		$query = $this->db->get();
+		$incre_proms = $query->result();
+		$ids = array_column($incre_proms, 'prev_emp_id');
+		// dd($ids);
+		$res = array();
+		foreach($ids as $id){
+			$this->db->select('*');
+			$this->db->where('emp_id', $id);
+			$result = $this->db->get('pr_emp_com_info')->result();
+			$res = array_merge($res, $result);
+		}
+		// dd($result);
+		
+		foreach($res as $row){
+
+			$data = [
+				'prev_dept'       => $row->emp_dept_id,
+				'prev_section'    => $row->emp_sec_id,
+				'prev_line'       => $row->emp_line_id,
+				'prev_desig'      => $row->emp_desi_id,
+				'new_dept'        => $row->emp_dept_id,
+				'new_section'     => $row->emp_sec_id,
+				'new_line'        => $row->emp_line_id,
+				'new_desig'       => $row->emp_desi_id,
+			];
+
+			$this->db->where('prev_emp_id', $row->emp_id);
+			$this->db->where('effective_month LIKE', '%2024%');
+			$this->db->where('status', 1);
+			$this->db->update('pr_incre_prom_pun', $data);
+		}
+
+		echo "Success";exit;
+	}
+
+
+	function incs(){
+		$datas = $this->db
+					->select('new_salary,new_com_salary,prev_emp_id,effective_month')
+					->where('effective_month LIKE','%2024%')
+					->where('prev_emp_id LIKE','50%')
+					->order_by('effective_month','DESC')
+					->group_by('prev_emp_id')
+					->get('pr_incre_prom_pun')->result();
+		// echo "<pre>";print_r($datas);exit;
+	
+		foreach($datas as $row){
+			$this->db->where('emp_id', $row->prev_emp_id)->update('pr_emp_com_info', 
+				[
+					'gross_sal'     => $row->new_salary,
+					'com_gross_sal' => $row->new_com_salary,
+				]);
+		}
+
+		echo "Update successfully done!";
+	}
 }
 ?>
