@@ -99,6 +99,7 @@ class Attn_process_model extends CI_Model{
 				}
 
 				//=================OT CALCULATION ========================
+				$tot_hour 		   = 0;
 				$ot_hour 		   = 0;
 				$eot_hour 		   = 0;
 				$ot_eot_12am 	   = 0;
@@ -211,6 +212,7 @@ class Attn_process_model extends CI_Model{
 							if ($minute % 60 >= $ot_last_hour) {
 								$ot_hour = $ot_hour + 1;
 							}
+							$tot_hour = $ot_hour;
 							// EOT Calculation
 							if ($ot_hour > 2) {
 								$eot_hour = $ot_hour - 2;
@@ -233,9 +235,7 @@ class Attn_process_model extends CI_Model{
 									$ot_eot_12am = $eot_hour;
 								}
 							}
-
 						}
-
 					}
 				}
 				//============ End  Working day/Weeked/Holiday OT Calculation =============
@@ -265,6 +265,7 @@ class Attn_process_model extends CI_Model{
 				$data = array(
 					'in_time' 			=> $in_time,
 					'out_time' 			=> $out_time,
+					'tot' 				=> $tot_hour,
 					'ot' 				=> $ot_hour,
 					'eot' 				=> $eot_hour,
 					'false_ot_4' 		=> null,
@@ -281,7 +282,6 @@ class Attn_process_model extends CI_Model{
 					'weekly_allo'		=> $weekly_allo,
 					'unit_id'			=> $unit,
 				);
-
 				$this->db->where('shift_log_date', $process_date);
 				$this->db->where('emp_id', $emp_id);
 				$this->db->update('pr_emp_shift_log', $data);

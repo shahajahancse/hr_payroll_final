@@ -91,7 +91,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 
-		if ($status == 'LA') { 
+		if ($status == 'LA') {
 			$data["values"] = $this->Grid_model->continuous_late_report($girstdate, $seconddate, $grid_emp_id);
 		} else {
 			$data["values"] = $this->Grid_model->continuous_report($girstdate, $seconddate, $status, $grid_emp_id);
@@ -634,13 +634,13 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$emp_id = explode(',', trim($grid_data));
 		if($status == 1){
-			if (!empty($this->input->post('firstdate'))) {		
+			if (!empty($this->input->post('firstdate'))) {
 				$firstdate  = date('Y-m-d',strtotime('-180 day',strtotime($this->input->post('firstdate'))));
 			} else {
 				$firstdate  = date('Y-m-d',strtotime('-180 day',strtotime(date('Y-m-d'))));
 			}
 		} else if ($status == 2) {
-			if (!empty($this->input->post('firstdate'))) {	
+			if (!empty($this->input->post('firstdate'))) {
 				$firstdate  = date('Y-m-d',strtotime('-90 day',strtotime($this->input->post('firstdate'))));
 			} else {
 				$firstdate  = date('Y-m-d',strtotime('-90 day',strtotime(date('Y-m-d'))));
@@ -667,13 +667,13 @@ class Grid_con extends CI_Controller {
 		$status = $this->input->post('status');
 		$unit_id = $this->session->userdata('data')->unit_name;
 		$id_number = $this->session->userdata('data')->id_number;
-		
+
 
 		$data['values'] 	= $this->Grid_model->grid_letter_report_print($emp_id);
 		$data['unit_id']	= $unit_id;
 		$data['unit_id']	= $id_number;
 		$data['no_change']	= 1;
-		
+
 		if(empty($data)){
 			echo "Not Found Data"; exit();
 		}else{
@@ -703,8 +703,8 @@ class Grid_con extends CI_Controller {
 		$data['values'] 	= $this->Grid_model->grid_letter_report($data['firstdate'],$unit_id,$off_day,$days,$status);
 		$data['unit_id']	= $unit_id;
 		$data['no_change']	= 2;
-		
-		
+
+
 		if(empty($data)){
 			echo "Not Found Data"; exit();
 		}else{
@@ -765,7 +765,7 @@ class Grid_con extends CI_Controller {
 		$data["start_date"] = $sStartDate;
 		$data["end_date"] = $sEndDate;
 		$data["unit_id"] = $unit_id;
-		
+
 		if(is_string($data["values"]))
 		{
 			echo $data["values"];
@@ -826,6 +826,33 @@ class Grid_con extends CI_Controller {
 			$this->load->view('continuous_ot_eot_report',$data);
 		}
 	}
+	// ============================== end grid continuous ot eot report ===============D
+	// ============================== grid continuous max ot day ===============D
+	function grid_continuous_max_ot_day()
+	{
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+		$max_ot = $this->input->post('max_ot');
+
+		$sStartDate = date("Y-m-d", strtotime($this->input->post('firstdate')));
+		$sEndDate = date("Y-m-d", strtotime($this->input->post('seconddate')));
+
+		$data["values"] = $this->Grid_model->grid_continuous_max_ot_day($sStartDate, $sEndDate, $grid_emp_id, $max_ot);
+
+		$data["start_date"] = $sStartDate;
+		$data["end_date"] 	= $sEndDate;
+		$data["unit_id"] 	= $unit_id;
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_continuous_max_ot_day',$data);
+		}
+	}
+	// ============================== end grid continuous max ot day ===============D
 	function grid_continuous_costing_report()
 	{
 		$firstdate  = $this->input->post('firstdate');
@@ -877,20 +904,20 @@ class Grid_con extends CI_Controller {
 		foreach($d as $key => $row){
 			$get_all[$key] = $row;
 			$this->db->select('
-					SUM(ot) as ot_hour, 
-					SUM(eot) as eot_hour, 
-					SUM(ot_eot_4pm) as ot_eot_4pm, 
-					SUM(ot_eot_12am) as ot_eot_12am, 
-					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
-					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
-					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
+					SUM(ot) as ot_hour,
+					SUM(eot) as eot_hour,
+					SUM(ot_eot_4pm) as ot_eot_4pm,
+					SUM(ot_eot_12am) as ot_eot_12am,
+					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday,
+					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday,
+					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days,
 					COUNT(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as status', FALSE
 			);
 			$this->db->from('pr_emp_shift_log');
 			$this->db->where('pr_emp_shift_log.emp_id',$row->emp_id);
 			$this->db->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)));
 			$this->db->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)));
-			$dd = $this->db->get()->row();	
+			$dd = $this->db->get()->row();
 			$ssss = $this->common_model->salary_structure($row->gross_sal);
 
 			$get_all[$key]->ot_hour = $dd->ot_hour;
@@ -2739,7 +2766,7 @@ class Grid_con extends CI_Controller {
 		echo "done";
 
 	}
-		
+
 	function grid_service_book_info(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode('xxx', trim($grid_data));
@@ -2747,7 +2774,7 @@ class Grid_con extends CI_Controller {
 		$data["values"] = $this->Grid_model->service_book_info($grid_emp_id);
 		//dd($data);
 		$data['unit_id'] = $this->input->post('unit_id');
-				
+
 		$this->load->view('service_book_info',$data);
 	}
 }

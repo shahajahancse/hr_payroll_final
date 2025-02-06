@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
+
 <style>
 	.sbtn {
 		background: #0c74bfeb !important; /*2393e3eb*/
@@ -33,16 +33,36 @@
 			<!-- selection area -->
 			<div class="row tablebox" style="margin-bottom: 10px;">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">First Date : </label>
 							<input value="<?= date('d-m-Y') ?>" onchange="count_l1()" class="form-control input-sm date" name="firstdate" id="firstdate" >
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Second Date : </label>
 							<input class= "form-control input-sm date" name="seconddate" id="seconddate" type="text" autocomplete="off">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Max OT </label>
+							<select class="form-control input-sm" id='max_ot' name='max_ot'>
+								<option value="">Select one</option>
+								<option value="1">1 hour ot</option>
+								<option value="2">2 hour ot</option>
+								<option value="3">3 hour ot</option>
+								<option value="4">4 hour ot</option>
+								<option value="5">5 hour ot</option>
+								<option value="6">6 hour ot</option>
+								<option value="7">7 hour ot</option>
+								<option value="8">8 hour ot</option>
+								<option value="9">9 hour ot</option>
+								<option value="10">10 hour ot</option>
+								<option value="11">11 hour ot</option>
+								<option value="12">12 hour ot</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -60,7 +80,9 @@
 									if($row['unit_id'] == $user_data->unit_name){
 									$select_data="selected";
 									}else{
-										continue;
+										if ($user_data->level != "All") {
+											continue;
+										}
 									}
 									echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 									'</option>';
@@ -145,47 +167,47 @@
 						?>
 						<!-- Daily Reports -->
 						<div class="tab-pane fade in active" id="daily">
-							<?php if(in_array(21,$acl)) { ?>
+							<?php if(in_array(61,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(1)">Present Report</button>
 							<?php } ?>
-							<?php if(in_array(22,$acl)) { ?>
+							<?php if(in_array(62,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(2)">Absent Report</button>
 							<?php } ?>
-							<?php if(in_array(23,$acl)) { ?>
+							<?php if(in_array(63,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(3)">Daily Leave Report</button>
 							<?php } ?>
-							<?php if(in_array(24,$acl)) { ?>
+							<?php if(in_array(64,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(4)">Late Report</button>
 							<?php } ?>
-							<?php if(in_array(25,$acl)) { ?>
+							<?php if(in_array(65,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(5)">OT Report</button>
 							<?php } ?>
-							<?php if(in_array(29,$acl)) { ?>
+							<?php if(in_array(66,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(6)">Daily EOT</button>
 							<?php } ?>
 
-							<?php if(in_array(26,$acl)) { ?>
+							<?php if(in_array(67,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(7)">Out & IN Report</button>
 							<?php } ?>
-							<?php if(in_array(27,$acl)) { ?>
+							<?php if(in_array(68,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_report(8)">Daily Out Punch Miss</button>
 							<?php } ?>
-							<?php if(in_array(28,$acl)) { ?>
+							<?php if(in_array(69,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="daily_costing_report()">Daily Costing</button>
 							<?php } ?>
 
 
 
-							<?php if(in_array(30,$acl)) { ?>
+							<?php if(in_array(70,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_actual_present_report()">Actual Present Report</button>
 							<?php } ?>
-							<?php if(in_array(31,$acl)) { ?>
+							<?php if(in_array(71,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_daily_actual_out_in_report()">Actual Out & IN Report</button>
 							<?php } ?>
-							<?php if(in_array(32,$acl)) { ?>
+							<?php if(in_array(72,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="holiday_weekend_attn_report('A')">Holiday / Weekend Absent</button>
 							<?php } ?>
-							<?php if(in_array(33,$acl)) { ?>
+							<?php if(in_array(73,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="holiday_weekend_attn_report('P')">Holiday / Weekend Present</button>
 							<?php } ?>
 
@@ -199,11 +221,13 @@
 							<?php if(in_array(76,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="daily_logout_report()">Daily Logout Report</button>
 							<?php } ?>
-							<?php if(in_array(105,$acl)) { ?>
+							<?php if(in_array(77,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="ot_acknowledgement_sheet(1)">OT Acknowledgement sheet</button>
+							<?php } ?>
+							<?php if(in_array(78,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="ot_acknowledgement_sheet(2)">OT Acknowledgement Female</button>
 							<?php } ?>
-							<?php if(in_array(107,$acl)) { ?>
+							<?php if(in_array(79,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="iftar_bill_list()">Iftar Bill List</button>
 							<?php } ?>
 						</div>
@@ -211,16 +235,16 @@
 
 						<!-- Monthly Reports -->
 						<div class="tab-pane fade" id="monthly">
-							<?php if(in_array(34,$acl)) { ?>
+							<?php if(in_array(80,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
 							<?php } ?>
-							<?php if(in_array(35,$acl)) { ?>
+							<?php if(in_array(81,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_monthly_ot_register()">OT Register</button>
 							<?php } ?>
-							<?php if(in_array(36,$acl)) { ?>
+							<?php if(in_array(82,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_eot_register()">EOT Register</button>
 							<?php } ?>
-							<?php if(in_array(37,$acl)) { ?>
+							<?php if(in_array(83,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register()">Attendance Register</button>
 							<?php } ?>
 						</div>
@@ -228,66 +252,63 @@
 
 						<!-- Continuous Reports -->
 						<div class="tab-pane fade" id="continuous">
-							<?php if(in_array(38,$acl)) { ?>
+							<?php if(in_array(84,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_present_report()">Present Report</button>
 							<?php } ?>
-							<?php if(in_array(39,$acl)) { ?>
+							<?php if(in_array(85,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_absent_report()">Absent Report</button>
 							<?php } ?>
-							<?php if(in_array(40,$acl)) { ?>
+							<?php if(in_array(86,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="continuous_leave_report()">Leave Report</button>
 							<?php } ?>
-							<?php if(in_array(41,$acl)) { ?>
-							<!-- <button class="btn input-sm sbtn" onclick="grid_continuous_leave_report_old()">Leave Report (old)</button> -->
-							<?php } ?>
 
-							<?php if(in_array(42,$acl)) { ?>
+							<?php if(in_array(87,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_late_report()">Late Report</button>
 							<?php } ?>
-							<?php if(in_array(43,$acl)) { ?>
+							<?php if(in_array(88,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_incre_report()">Increment Report</button>
 							<?php } ?>
-							<?php if(in_array(44,$acl)) { ?>
+							<?php if(in_array(89,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_prom_report()">Promotion Report</button>
 							<?php } ?>
-							<?php if(in_array(44,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_continuous_line_report()">Line Change Report</button>
+							<?php if(in_array(90,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_line_report('line')">Line Change Report</button>
 							<?php } ?>
-							<?php if(in_array(45,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_continuous_ot_eot_report()">OT / EOT Report</button>
+							<?php if(in_array(91,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_line_report('section')">Section Change Report</button>
 							<?php } ?>
 
-							<?php if(in_array(46,$acl)) { ?>
+							<?php if(in_array(92,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_ot_eot_report()">OT / EOT Report</button>
+							<button class="btn input-sm sbtn" onclick="grid_continuous_max_ot_day()">Max OT Day</button>
+							<?php } ?>
+
+							<?php if(in_array(93,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_costing_report()">Continuous Costing Report</button>
 							<?php } ?>
-							<?php if(in_array(47,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_continuous_report_limit(3)">Absent three</button>
-							<?php } ?>
-							<?php if(in_array(48,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_continuous_report_limit(10)">Absent ten</button>
-							<?php } ?>
-							<?php if(in_array(103,$acl)) { ?>
+
+							<?php if(in_array(94,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="last_increment_promotion(1)">Last Increment Check</button>
 							<?php } ?>
-							<?php if(in_array(104,$acl)) { ?>
+							<?php if(in_array(95,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="last_increment_promotion(2)">Last Promotion Check</button>
 							<?php } ?>
-							<?php if(in_array(106,$acl)) { ?>
+							<?php if(in_array(96,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="increment_able_employee()">Increment able employee</button>
 							<?php } ?>
-							<?php if(in_array(109,$acl)) { ?>
+							<?php if(in_array(97,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="unit_transferred_list(1)">Unit transfer list</button>
 							<?php } ?>
-							<?php if(in_array(110,$acl)) { ?>
+							<?php if(in_array(98,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="unit_transferred_list(2)">Unit transferred list</button>
 							<?php } ?>
-							<?php if(in_array(111,$acl)) { ?>
+							<?php if(in_array(99,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="emp_conformation_list(1)">Staff Conformation List</button>
 							<?php } ?>
-							<?php if(in_array(112,$acl)) { ?>
+							<?php if(in_array(100,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="emp_conformation_list(2)">Emp Conformation List</button>
 							<?php } ?>
-							<?php if(in_array(113,$acl)) { ?>
+							<?php if(in_array(101,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="emp_conformation_list(3)">Conformation Letter</button>
 							<?php } ?>
 						</div>
@@ -295,113 +316,115 @@
 
 						<!-- Other Reports -->
 						<div class="tab-pane fade" id="other">
-							<?php if(in_array(49,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_app_letter()">App. Letter</button>
-							<?php } ?>
-							<?php if(in_array(50,$acl)) { ?>
+							<?php if(in_array(102,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="id_card(1)">ID Card Bangla</button>
 							<?php } ?>
-							<?php if(in_array(51,$acl)) { ?>
+							<?php if(in_array(103,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="id_card(2)">ID Card English</button>
 							<?php } ?>
-							<?php if(in_array(52,$acl)) { ?>
+							<?php if(in_array(104,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_job_card()">Job Card</button>
 							<?php } ?>
 
 
-							<?php if(in_array(53,$acl)) { ?>
+							<?php if(in_array(105,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_new_join_report()">New Join Report</button>
 							<?php } ?>
-							<?php if(in_array(54,$acl)) { ?>
+							<?php if(in_array(106,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_resign_report()">Resign Report</button>
 							<?php } ?>
-							<?php if(in_array(55,$acl)) { ?>
+							<?php if(in_array(107,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_left_report()">Left Report</button>
 							<?php } ?>
-							<?php if(in_array(56,$acl)) { ?>
+							<?php if(in_array(108,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_general_info()">General Report</button>
 							<?php } ?>
+							<?php if(in_array(109,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_general_eng()">General Report(Eng)</button>
+							<?php } ?>
 
 
-							<?php if(in_array(57,$acl)) { ?>
+							<?php if(in_array(110,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_earn_leave()">Earn Leave Report</button>
 							<?php } ?>
-							<?php if(in_array(58,$acl)) { ?>
+							<?php if(in_array(111,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_yearly_leave_register()">Leave Register</button>
 							<?php } ?>
-							<?php if(in_array(96,$acl)) { ?>
+							<?php if(in_array(112,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="worker_register()">Worker Register</button>
 							<?php } ?>
-							<?php if(in_array(59,$acl)) { ?>
+							<?php if(in_array(113,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_emp_job_application()">Job Application</button>
 							<?php } ?>
-							<?php if(in_array(60,$acl)) { ?>
+							<?php if(in_array(114,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="join_letter()">Joining Letter</button>
 							<?php } ?>
 
 
-							<?php if(in_array(61,$acl)) { ?>
+							<?php if(in_array(115,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_letter_report(1)">Letter 1 <span class="badge bg-red " style="color:#fff !important" id="letter1_count">0</span></button>
 							<?php } ?>
-							<?php if(in_array(62,$acl)) { ?>
+							<?php if(in_array(116,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_letter_report(2)">Letter 2 <span class="badge bg-red" style="color:#fff !important" id="letter2_count">0</span></button>
 							<?php } ?>
-							<?php if(in_array(63,$acl)) { ?>
+							<?php if(in_array(117,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_letter_report(3)">Letter 3 <span class="badge bg-red" style="color:#fff !important" id="letter3_count">0</span></button>
 							<?php } ?>
-							<?php if(in_array(64,$acl)) { ?>
+							<?php if(in_array(118,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_employee_information()">Employee Information</button>
 							<?php } ?>
 
-
-							<?php if(in_array(65,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_nominee()">Nominee From</button>
-							<?php } ?>
-							<?php if(in_array(66,$acl)) { ?>
+							<?php if(in_array(119,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_incre_prom_report(1)">Increment Letter</button>
 							<?php } ?>
-							<?php if(in_array(67,$acl)) { ?>
+							<?php if(in_array(120,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_incre_prom_report(2)">Promotion Letter</button>
 							<?php } ?>
-							<?php if(in_array(67,$acl)) { ?>
+							<?php if(in_array(121,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_incre_prom_report(3)">Line Letter</button>
 							<?php } ?>
-							<?php if(in_array(68,$acl)) { ?>
+							<?php if(in_array(122,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_service_book()">Service Book</button>
 							<?php } ?>
 
-							<?php if(in_array(101,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_final_satalment()">Final Satalment</button>
+							<?php if(in_array(123,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_final_satalment()">Final Settlement</button>
 							<?php } ?>
 
-							<?php if(in_array(69,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_age_estimation()">Age estimation</button>
-							<?php } ?>
-							<?php if(in_array(70,$acl)) { ?>
-								<!-- actual job card -->
+							<!-- actual job card -->
+							<?php if(in_array(124,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_eot_actual()">Job Card Actual </button>
 							<?php } ?>
-							<?php if(in_array(72,$acl)) { ?>
-								<!-- max 2 eot -->
+							<!-- max 2 eot -->
+							<?php if(in_array(125,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_extra_ot_9pm()">Job Card.</button>
 							<?php } ?>
-							<?php if(in_array(73,$acl)) { ?>
-								<!-- max 5 eot -->
+							<!-- max 5 eot -->
+							<?php if(in_array(126,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_extra_ot_12am()">Job Card`</button>
 							<?php } ?>
-							<?php if(in_array(71,$acl)) { ?>
-								<!-- eot all with out off day and holiday -->
+							<!-- eot all with out off day and holiday -->
+							<?php if(in_array(127,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_extra_ot_all()">Job Card!</button>
 							<?php } ?>
-							<?php if(in_array(92,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_maternity_benefit()">Maternity Benefit Report</button>
-                            <?php } ?>
-							<?php if(in_array(124,$acl)) { ?>
+
+							<?php if(in_array(128,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_maternity_benefit(1)">Maternity Benefit Report 1</button>
+							<?php } ?>
+							<?php if(in_array(129,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_maternity_benefit(2)">Maternity Benefit Report 2</button>
+							<?php } ?>
+
+							<?php if(in_array(130,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_service_book_info()">Service Book Information</button>
                             <?php } ?>
+							<!-- Other Reports end -->
+							<?php if(in_array(131,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_roster_employee()">Roster List</button>
+                            <?php } ?>
+							<!-- roster list end  -->
 						</div>
-						<!-- Other Reports end -->
-					</div>
+					</div> 
 				</div>
 			</div>
 			<!-- button area for report section end -->
@@ -423,12 +446,12 @@
 						<?php if (!empty($employees)) {
 							foreach ($employees as $key => $emp) {
 						?>
-								<tr class="removeTr">
-									<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-									</td>
-									<td class="success"><?= $emp->emp_id ?></td>
-									<td class="warning "><?= $emp->name_en ?></td>
-								</tr>
+							<tr class="removeTr">
+								<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+								</td>
+								<td class="success"><?= $emp->emp_id ?></td>
+								<td class="warning "><?= $emp->name_en ?></td>
+							</tr>
 						<?php }
 						} ?>
 						<tr class="removeTrno">
@@ -439,6 +462,8 @@
 			</div>
 		</div>
 	</div>
+
+	<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
 
 	<script>
 		$(document).ready(function() {
@@ -586,9 +611,10 @@
 						$.each(func_data, function(id, name) {
 							var opt = $('<option />');
 							opt.val(id);
-							opt.text(name);
+							opt.html(name);
 							$('.dept').append(opt);
 						});
+						changeFontBn();
 					}
 				});
 				// load employee
@@ -598,7 +624,7 @@
 	</script>
 
 	<script>
-		 function count_l1() {
+		function count_l1() {
 		    var unit = document.getElementById('unit_id').value;
 			if (unit == '') {
 				return false;
@@ -608,25 +634,78 @@
 			if (first_date == '') {
 				return false;
 			}
-			 $.ajax({
-				 type: "POST",
-				 url: hostname + "grid_con/grid_letter_count",
-				 data: {
-					 "unit_id": unit,
-					 "firstdate": first_date
-				 },
-				 success: function(data) {
+			$.ajax({
+				type: "POST",
+				url: hostname + "grid_con/grid_letter_count",
+				data: {
+					"unit_id": unit,
+					"firstdate": first_date
+				},
+				success: function(data){
 					var data = JSON.parse(data);
 					$('#letter1_count').html(data[1]);
 					$('#letter2_count').html(data[2]);
 					$('#letter3_count').html(data[3]);
-					}
-					})
 				}
+			})
+		}
 
 	</script>
 	<script>
 		$(document).ready(function() {
 			count_l1();
 		});
+		function changeFontBn() {
+			setTimeout(() => {
+				// console.log('changeFontBn');
+				$('.changeFontBn').css('font-family', 'SutonnyMJ');
+			}, 5000);
+		}
 	</script>
+
+
+<script>
+function grid_roster_employee(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	// Internet Explorer Browsers
+	try{
+		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch (e) {
+		try{
+			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch (e){
+			// Something went wrong
+			alert("Your browser broke!");
+			return false;
+		}
+	}
+	}
+	var unit_id = document.getElementById('unit_id').value;
+	var first_date = document.getElementById('firstdate').value;
+	if(unit_id =='Select'){
+		alert("Please select unit !");
+		return;
+	}
+	
+	document.getElementById('loaader').style.display = 'flex';
+	var queryString="unit_id="+unit_id+"&first_date="+first_date;
+	url =  hostname+"grid_con/grid_roster_employee/";
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+		if (ajaxRequest.readyState == 4) {
+			document.getElementById('loaader').style.display = 'none';
+			var resp = ajaxRequest.responseText;	
+			service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			service_book.document.write(resp);
+			service_book.stop();			
+		}
+	}
+}
+</script>
