@@ -744,11 +744,16 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']	= $id_number;
 		$data['no_change']	= 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$data['status']	= $status;
 		
 =======
 
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 		if(empty($data)){
 			echo "Not Found Data"; exit();
 		}else{
@@ -842,11 +847,15 @@ class Grid_con extends CI_Controller {
 		$data["end_date"] = $sEndDate;
 		$data["unit_id"] = $unit_id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		// dd($data);
 		
 =======
 
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 		if(is_string($data["values"]))
 		{
 			echo $data["values"];
@@ -988,6 +997,7 @@ class Grid_con extends CI_Controller {
 			$get_all[$key] = $row;
 			$this->db->select('
 <<<<<<< HEAD
+<<<<<<< HEAD
 					SUM(ot) as ot_hour, 
 					SUM(eot) as eot_hour, 
 					SUM(ot_eot_4pm) as ot_eot_4pm, 
@@ -997,6 +1007,9 @@ class Grid_con extends CI_Controller {
 					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
 					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
 =======
+=======
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 					SUM(ot) as ot_hour,
 					SUM(eot) as eot_hour,
 					SUM(ot_eot_4pm) as ot_eot_4pm,
@@ -1004,7 +1017,11 @@ class Grid_con extends CI_Controller {
 					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday,
 					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday,
 					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days,
+<<<<<<< HEAD
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 					COUNT(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as status', FALSE
 			);
 			$this->db->from('pr_emp_shift_log');

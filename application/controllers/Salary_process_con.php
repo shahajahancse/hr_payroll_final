@@ -184,6 +184,30 @@ class Salary_process_con extends CI_Controller {
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        $this->data['employees'] = array();
+        if ($this->data['user_data']->level == 'Unit') {
+        	$this->db->select('ss.emp_id, per.name_en');
+        	$this->db->from('pay_salary_sheet as ss');
+        	$this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
+        	$this->db->where('ss.unit_id', $this->data['user_data']->unit_name);
+        	$this->db->where('ss.stop_salary', 1);
+        	$this->db->where('ss.salary_month', date('Y-m-01'));
+        	$this->db->group_by('ss.emp_id')->order_by('ss.emp_id', 'ASC');
+        	$this->data['employees'] = $this->db->get()->result();
+        }
+
+
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title'] = 'Salary Report';
+        $this->data['subview'] = 'salary_report/adv_salary_report';
+        $this->load->view('layout/template', $this->data);
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 	//////////////Festival Process////////////
 	function festival_process()
 	{
@@ -211,6 +235,7 @@ class Salary_process_con extends CI_Controller {
 			$result = $this->Festival_bonus_model->festival_bonus_process($emp_ids, $date, null);
 			echo "Process completed successfully";
 		}	
+<<<<<<< HEAD
 =======
         $this->data['employees'] = array();
         if ($this->data['user_data']->level == 'Unit') {
@@ -232,6 +257,8 @@ class Salary_process_con extends CI_Controller {
         $this->data['subview'] = 'salary_report/adv_salary_report';
         $this->load->view('layout/template', $this->data);
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 	}
 
 
@@ -303,8 +330,12 @@ class Salary_process_con extends CI_Controller {
 
 	// }
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 =======
+=======
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 
 	//////////////Festival Process////////////
 	function festival_process()
@@ -340,7 +371,10 @@ class Salary_process_con extends CI_Controller {
 
 	}
 
+<<<<<<< HEAD
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 	function test()
 	{
 		/*$service_month = 1;

@@ -59,6 +59,7 @@
 	<div id='all_data'>
     <?php $this->load->view("head_english"); ?>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!--Report title goes here-->
     <div align="center"  style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
 =======
@@ -66,6 +67,12 @@
     <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
     <!--Report title goes here-->
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+
+	<button style='position:absulate;margin-left:50px' id="btnExport">Download as Excel</button>
+    <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
+    <!--Report title goes here-->
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
         <span style="font-size:12px; font-weight:bold;"> Daily
             <?php
 
@@ -268,6 +275,7 @@
 	<br><br>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	</div>
 	<?php if($i-1 == 0){ ?>
 	<script>
@@ -276,6 +284,8 @@
 	</script>
 	<?php }?>
 =======
+=======
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -292,7 +302,11 @@
 		convert_excel('xlsx');
 		});
 </script>
+<<<<<<< HEAD
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 </body>
 
 </html>

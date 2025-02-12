@@ -12083,6 +12083,7 @@ function service_book_info($grid_emp_id){
 		// dd($grid_emp_id);
 	$this->db->select('
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pr_emp_com_info.id as com_id,
 		pr_emp_com_info.emp_id as empp_id,
 		pr_emp_per_info.*,
@@ -12175,6 +12176,9 @@ function service_book_info($grid_emp_id){
 		// print_r($data);
 		if($data){
 =======
+=======
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 							pr_emp_com_info.id as com_id,
 							pr_emp_com_info.emp_id as empp_id,
 							pr_emp_per_info.*,
@@ -12256,10 +12260,14 @@ function service_book_info($grid_emp_id){
 		}
 
 		// print_r($data);
+<<<<<<< HEAD
 		if($data)
 		{
 
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+		if($data){
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 			return $data;
 		}else{
 			return "Requested list is empty";

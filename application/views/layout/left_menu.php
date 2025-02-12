@@ -28,9 +28,14 @@
           <li class="start <?= activate_method('personal_info_short') ?>"> <a href="<?=base_url('emp_info_con/personal_info_short')?>" >Emp Short Information </a></li>
         <?php } ?>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
         </ul>
       </li>
       <?php } ?>
@@ -77,9 +82,15 @@
             <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
           <?php } ?>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           <li class="start <?= activate_method('missing_emp_info') ?>"> <a href="<?=base_url('entry_system_con/missing_emp_info')?>" >Missing Employee List</a></li>
 >>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
+=======
+
+          <li class="start <?= activate_method('missing_emp_info') ?>"> <a href="<?=base_url('entry_system_con/missing_emp_info')?>" >Missing Employee List</a></li>
+
+>>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
           <?php if(in_array(25,$acl)) { ?>
             <li class="start <?= activate_method('inter_unit_transfer') ?>"> <a href="<?=base_url('entry_system_con/inter_unit_transfer')?>" class="anchor_cls" id="acl">Unit Transfer</a> </li>
           <?php } ?>
@@ -120,6 +131,7 @@
         <ul class="sub-menu ">
           <?php if(in_array(31,$acl)) { ?>
             <li class="start <?= activate_method('salary_process_form') ?>"> <a href="<?=base_url('salary_process_con/salary_process_form')?>" class="anchor_cls" id="acl">Process</a> </li>
+
           <?php } ?>
           <?php if(in_array(32,$acl)) { ?>
             <li class="start <?= activate_method('adv_salary_report') ?>"> <a href="<?=base_url('salary_process_con/adv_salary_report')?>" class="anchor_cls">Adv. Salary</a> </li>
