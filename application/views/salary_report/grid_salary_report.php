@@ -311,7 +311,11 @@
             if (typeof unit === "undefined" || unit === '') {
                  alert('Please Select Unit First'); return;
             }
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
             url = hostname + "common/salary_emp_list/";
             $.ajax({
                 url: url,

@@ -33,16 +33,36 @@
 			<!-- selection area -->
 			<div class="row tablebox" style="margin-bottom: 10px;">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">First Date : </label>
 							<input value="<?= date('d-m-Y') ?>" onchange="count_l1()" class="form-control input-sm date" name="firstdate" id="firstdate" >
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Second Date : </label>
-							<input class= "form-control input-sm date" name="seconddate" id="seconddate" type="text" autocomplete="off">
+							<input onchange="hide_date2()" class="form-control input-sm date" name="seconddate" id="seconddate" type="text" autocomplete="off">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Max OT </label>
+							<select class="form-control input-sm" id='max_ot' name='max_ot'>
+								<option value="">Select one</option>
+								<option value="1">1 hour ot</option>
+								<option value="2">2 hour ot</option>
+								<option value="3">3 hour ot</option>
+								<option value="4">4 hour ot</option>
+								<option value="5">5 hour ot</option>
+								<option value="6">6 hour ot</option>
+								<option value="7">7 hour ot</option>
+								<option value="8">8 hour ot</option>
+								<option value="9">9 hour ot</option>
+								<option value="10">10 hour ot</option>
+								<option value="11">11 hour ot</option>
+								<option value="12">12 hour ot</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -217,15 +237,33 @@
 						<div class="tab-pane fade" id="monthly">
 							<?php if(in_array(80,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
+								<?php echo form_open(base_url('grid_con/att_register_ot_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Attendance Register Excel</button>
+								<?php echo form_close(); ?>
 							<?php } ?>
-							<?php if(in_array(81,$acl)) { ?>
+							<?php if(in_array(35,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_monthly_ot_register()">OT Register</button>
 							<?php } ?>
 							<?php if(in_array(82,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_eot_register()">EOT Register</button>
+								<?php echo form_open(base_url('grid_con/eot_register_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">EOT Register Excel</button>
+								<?php echo form_close(); ?>
 							<?php } ?>
 							<?php if(in_array(83,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register()">Attendance Register</button>
+								<?php echo form_open(base_url('grid_con/att_register_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Attendance Register Excel</button>
+								<?php echo form_close(); ?>
 							<?php } ?>
 						</div>
 						<!-- Monthly Reports end -->
@@ -234,9 +272,25 @@
 						<div class="tab-pane fade" id="continuous">
 							<?php if(in_array(84,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_present_report()">Present Report</button>
+								<?php echo form_open(base_url('grid_con/continuous_present_report_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_date2' name="hide_date2">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" value='P' name="hide_status">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc1()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Present Report Excel</button>
+								<?php echo form_close(); ?>
 							<?php } ?>
 							<?php if(in_array(85,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_absent_report()">Absent Report</button>
+								<?php echo form_open(base_url('grid_con/continuous_present_report_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_date2' name="hide_date2">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" value='A' name="hide_status">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc1()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Absent Report Excel</button>
+								<?php echo form_close(); ?>
 							<?php } ?>
 							<?php if(in_array(86,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="continuous_leave_report()">Leave Report</button>
@@ -402,7 +456,8 @@
                             <?php } ?>
 							<!-- roster list end  -->
 						</div>
-					</div> 
+						<!-- Other Reports end -->
+					</div>
 				</div>
 			</div>
 			<!-- button area for report section end -->
@@ -424,12 +479,12 @@
 						<?php if (!empty($employees)) {
 							foreach ($employees as $key => $emp) {
 						?>
-							<tr class="removeTr">
-								<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-								</td>
-								<td class="success"><?= $emp->emp_id ?></td>
-								<td class="warning "><?= $emp->name_en ?></td>
-							</tr>
+								<tr class="removeTr">
+									<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+									</td>
+									<td class="success"><?= $emp->emp_id ?></td>
+									<td class="warning "><?= $emp->name_en ?></td>
+								</tr>
 						<?php }
 						} ?>
 						<tr class="removeTrno">
@@ -440,8 +495,6 @@
 			</div>
 		</div>
 	</div>
-
-	<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
 
 	<script>
 		$(document).ready(function() {
@@ -502,6 +555,7 @@
 			// select all item or deselect all item
 			$("#select_all").click(function() {
 				$('input:checkbox').not(this).prop('checked', this.checked);
+				get_checked_emp();
 			});
 
 			//Designation dropdown
@@ -609,17 +663,18 @@
 			}
 
 		    var first_date = document.getElementById('firstdate').value;
+		    var unit_id = document.getElementById('unit_id').value;
 			if (first_date == '') {
 				return false;
 			}
-			$.ajax({
-				type: "POST",
-				url: hostname + "grid_con/grid_letter_count",
-				data: {
-					"unit_id": unit,
-					"firstdate": first_date
-				},
-				success: function(data){
+			 $.ajax({
+				 type: "POST",
+				 url: hostname + "grid_con/grid_letter_count",
+				 data: {
+					 "unit_id": unit,
+					 "firstdate": first_date
+				 },
+				 success: function(data) {
 					var data = JSON.parse(data);
 					$('#letter1_count').html(data[1]);
 					$('#letter2_count').html(data[2]);
@@ -633,19 +688,13 @@
 		$(document).ready(function() {
 			count_l1();
 		});
-		function changeFontBn() {
-			setTimeout(() => {
-				// console.log('changeFontBn');
-				$('.changeFontBn').css('font-family', 'SutonnyMJ');
-			}, 5000);
-		}
 	</script>
 
 
 <script>
 function grid_roster_employee(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
-	
+
 	try{
 	// Opera 8.0+, Firefox, Safari
 	ajaxRequest = new XMLHttpRequest();
@@ -669,7 +718,7 @@ function grid_roster_employee(){
 		alert("Please select unit !");
 		return;
 	}
-	
+
 	document.getElementById('loaader').style.display = 'flex';
 	var queryString="unit_id="+unit_id+"&first_date="+first_date;
 	url =  hostname+"grid_con/grid_roster_employee/";
@@ -679,10 +728,10 @@ function grid_roster_employee(){
 	ajaxRequest.onreadystatechange = function(){
 		if (ajaxRequest.readyState == 4) {
 			document.getElementById('loaader').style.display = 'none';
-			var resp = ajaxRequest.responseText;	
+			var resp = ajaxRequest.responseText;
 			service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			service_book.document.write(resp);
-			service_book.stop();			
+			service_book.stop();
 		}
 	}
 }

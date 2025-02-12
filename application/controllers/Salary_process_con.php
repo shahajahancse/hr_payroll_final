@@ -4,7 +4,7 @@ class Salary_process_con extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		
+
 		/* Standard Libraries */
 		$this->load->model('Salary_process_model');
 		$this->load->model('Festival_bonus_model');
@@ -29,7 +29,7 @@ class Salary_process_con extends CI_Controller {
         // }
 
 	}
-	
+
 	function salary_process_form(){
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -71,7 +71,7 @@ class Salary_process_con extends CI_Controller {
 		}
 		else
 		{
-			echo $result;		
+			echo $result;
 		}
 	}
 
@@ -97,11 +97,11 @@ class Salary_process_con extends CI_Controller {
 		}
 		else
 		{
-			echo "Sorry! something wrong";	
+			echo "Sorry! something wrong";
 		}
 
 	}
-	
+
 	////////////// salary process block ///////////////
 	function salary_block_delete()
 	{
@@ -115,7 +115,7 @@ class Salary_process_con extends CI_Controller {
 		}
 		else
 		{
-			echo "Sorry! something wrong";		
+			echo "Sorry! something wrong";
 		}
 
 	}
@@ -167,7 +167,7 @@ class Salary_process_con extends CI_Controller {
         	$this->db->group_by('ss.emp_id')->order_by('ss.emp_id', 'ASC');
         	$this->data['employees'] = $this->db->get()->result();
         }
-        
+
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
 
@@ -176,7 +176,14 @@ class Salary_process_con extends CI_Controller {
         $this->data['subview'] = 'salary_report/grid_salary_report';
         $this->load->view('layout/template', $this->data);
 	}
+	
+	function adv_salary_report()
+	{
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
 
+<<<<<<< HEAD
 	//////////////Festival Process////////////
 	function festival_process()
 	{
@@ -204,6 +211,27 @@ class Salary_process_con extends CI_Controller {
 			$result = $this->Festival_bonus_model->festival_bonus_process($emp_ids, $date, null);
 			echo "Process completed successfully";
 		}	
+=======
+        $this->data['employees'] = array();
+        if ($this->data['user_data']->level == 'Unit') {
+        	$this->db->select('ss.emp_id, per.name_en');
+        	$this->db->from('pay_salary_sheet as ss');
+        	$this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
+        	$this->db->where('ss.unit_id', $this->data['user_data']->unit_name);
+        	$this->db->where('ss.stop_salary', 1);
+        	$this->db->where('ss.salary_month', date('Y-m-01'));
+        	$this->db->group_by('ss.emp_id')->order_by('ss.emp_id', 'ASC');
+        	$this->data['employees'] = $this->db->get()->result();
+        }
+
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title'] = 'Salary Report';
+        $this->data['subview'] = 'salary_report/adv_salary_report';
+        $this->load->view('layout/template', $this->data);
+>>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
 	}
 
 
@@ -257,7 +285,7 @@ class Salary_process_con extends CI_Controller {
 		// $output = $crud->render();
 		$this->load->view('form/salary_process',);
 	}
-	
+
 	////////////////////////Festival Bonus///////////
 	// function festival_bonus_form()
 	// {
@@ -271,10 +299,48 @@ class Salary_process_con extends CI_Controller {
 	// 		$this->data['subview'] = 'form/festival_process';
 	// 		$this->load->view('layout/template', $this->data);
 	// 	}
-		
+
 
 	// }
+<<<<<<< HEAD
 	
+=======
+
+	//////////////Festival Process////////////
+	function festival_process()
+	{
+		$month = $this->input->post('month');
+		$year = $this->input->post('year');
+		$process_check = $this->input->post('process_check');
+
+		////////Month Check ///////////
+		$this->db->select('');
+		$this->db->like('effective_date', $month);
+		$query = $this->db->get('pr_bonus_rules');
+		//echo $this->db->last_query();
+		if($query->num_rows()==0)
+		{
+			echo "Sorry! This Month is not setup in Festival.";
+		}
+		else{
+
+			$result = $this->Festival_bonus_model->festival_bonus_process($year, $month, $process_check);
+			if($result == "Process completed successfully")
+			{
+				// SALARY PROCESS LOG Generate
+				$this->Log_model->log_salary_process($year, $month);
+				echo $result;
+			}
+			else
+			{
+				echo $result;
+			}
+
+		}
+
+	}
+
+>>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
 	function test()
 	{
 		/*$service_month = 1;
@@ -291,6 +357,6 @@ class Salary_process_con extends CI_Controller {
 		 $dates = $this->Salary_process_model->get_join_month_dates($doj);
 		 print_r($dates);
 	}
-	
+
 }
 
