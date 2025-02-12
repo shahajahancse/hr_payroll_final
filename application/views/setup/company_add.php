@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Company Name Bangla</label>
-                            <input type="text" name="bname" value="" class="form-control">
+                            <input type="text" name="bname" value="" class="form-control bfont">
                             <?php echo form_error('bname');?>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>Company Address Bangla</label>
-                            <input type="text" name="bn_add" value="" class="form-control">
+                            <input type="text" name="bn_add" value="" class="form-control bfont">
                             <?php echo form_error('bn_add');?>
                         </div>
                         <div class="form-group col-md-4">

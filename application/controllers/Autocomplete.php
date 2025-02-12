@@ -18,13 +18,18 @@ class Autocomplete extends CI_Controller {
 	}
     public function employee_id(){
         $id = $this->input->post('id');
-        $this->db->select('emp_id');
-        $this->db->like('emp_id', $id);
+        // dd($id);
+        $this->db->select('com.emp_id');
+        $this->db->from('pr_emp_com_info as com');
+        $this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
+        $this->db->like('com.emp_id', $id);
+        $this->db->where('deg.hide_status', 1);
         if ($this->data['user_data']->unit_name != 0 && $this->data['user_data']->unit_name != NULL) {
-            $this->db->where('unit_id', $this->data['user_data']->unit_name);
+            $this->db->where('com.unit_id', $this->data['user_data']->unit_name);
         }
         $this->db->limit(70);
-        $query = $this->db->get('pr_emp_com_info');
+        $query = $this->db->get();
+        // dd($query->result_array());
 
 
         $outputArray = array_map(function ($obj) {

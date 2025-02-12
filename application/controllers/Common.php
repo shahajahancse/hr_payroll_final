@@ -4,14 +4,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Common extends CI_Controller {
 
     function grid_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
-        // dd($_GET['status']);
+        // if (empty($_GET['status'])) {
+        //     $this->db->select('emp_id');
+        //     $this->db->from('pr_emp_resign_history');
+        //     $this->db->where('unit_id', $unit);
+        //     $this->db->where('resign_date <=',date('Y-m-d', strtotime('-360 days')));
+        //     $emp_ids = $this->db->get()->result_array();
+        //     $emp_id = array_column($emp_ids, 'emp_id');
+        //     $this->db->select('emp_id');
+        //     $this->db->from('pr_emp_left_history');
+        //     $this->db->where('unit_id', $unit);
+        //     $this->db->where('left_date <=',date('Y-m-d', strtotime('-360 days')));
+        //     $emp_ids = $this->db->get()->result_array();
+        //     $emp_id2 = array_merge($emp_id, array_column($emp_ids, 'emp_id'));
+        //     $emp_id_not = array_unique($emp_id2);
+        // }
+        ini_set("pcre.backtrack_limit", 100000000000);
+        ini_set("pcre.recursion_limit", 10000000000);
     	$data = array();
         $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
         $this->db->from('pr_emp_com_info as com');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
         $this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
+        // $this->db->join('pr_emp_left_history', 'pr_emp_left_history.emp_id = com.emp_id', 'left');
+        // $this->db->join('pr_emp_resign_history', 'pr_emp_resign_history.emp_id = com.emp_id', 'left');
+        // $this->db->where('pr_emp_left_history.left_date <=',date('Y-m-d', strtotime('-360 days')));
+        // $this->db->where('pr_emp_resign_history.resign_date <=',date('Y-m-d', strtotime('-360 days')));
         $this->db->where('com.unit_id', $unit);
-
+        if (isset($emp_id_not) && !empty($emp_id_not)) {
+            $this->db->where_not_in('com.emp_id', $emp_id_not);
+        }
         $this->db->where('deg.hide_status', 1);
 
         if (!empty($dept)) {
@@ -39,39 +61,65 @@ class Common extends CI_Controller {
         return;
     }
 
-    function salary_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
+    function salary_emp_list(){
+        $unit_id        = $_GET['unit'];
+        $dept           = $_GET['dept'];
+        $section        = $_GET['section'];
+        $line           = $_GET['line'];
+        $desig          = $_GET['desig'];
+        $status         = $_GET['status'];
+        $stop_salary    = $_GET['stop_salary'];
+        $salary_month   = date('Y-m-01', strtotime($_GET['salary_month']));
+        $end_month      = date('Y-m-t', strtotime($_GET['salary_month']));
+        // dd($_GET);
 
-       //dd($_GET);
-        $emp_ids = $this->db->select('emp_id')
-            ->where('unit_id', $unit)
-            ->get('pr_emp_com_info')
-            ->result();
-        $emp_id= array_column($emp_ids, 'emp_id');
+        if (!empty($status) && $status == 1) {
+            $this->db->select('lf.emp_id');
+            $this->db->from('pr_emp_com_info as lf');
+            $this->db->where('lf.emp_cat_id', 1);
+            $this->db->where('lf.unit_id', $unit_id);
+            $emp_ids = $this->db->get()->result();
+            $emp_id = array_column($emp_ids, 'emp_id');
+        } elseif (!empty($status) && $status == 2) {
+            $this->db->select('lf.emp_id');
+            $this->db->from('pr_emp_left_history as lf');
+            $this->db->where('lf.unit_id', $unit_id);
+            $this->db->where("lf.left_date BETWEEN '$salary_month' AND '$end_month'");
+            $emp_ids = $this->db->get()->result();
+            $emp_id = array_column($emp_ids, 'emp_id');
+        } elseif (!empty($status) && $status == 3) {
+            $this->db->select('lf.emp_id');
+            $this->db->from('pr_emp_resign_history as lf');
+            $this->db->where('lf.unit_id', $unit_id);
+            $this->db->where("lf.resign_date BETWEEN '$salary_month' AND '$end_month'");
+            $emp_ids = $this->db->get()->result();
+            $emp_id = array_column($emp_ids, 'emp_id');
+        } else {
+            $emp_id = array();
+        }
         // dd($emp_id);
-
-        $data = array();
         $this->db->select('ss.emp_id, per.name_en, per.name_bn');
         $this->db->from('pay_salary_sheet as ss');
-        $this->db->join('pr_emp_com_info as com', 'ss.emp_id = com.emp_id', 'left');
-        $this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
-        $this->db->where('ss.unit_id', $unit);
-        $this->db->where_in('ss.emp_id', $emp_id);
-        $this->db->where('ss.salary_month', date('Y-m-01', strtotime($_GET['salary_month'])));
+        $this->db->join('pr_emp_per_info as per', 'per.emp_id = ss.emp_id', 'left');
+        $this->db->join('emp_designation as deg', 'deg.id = ss.desig_id', 'left');
+        $this->db->where('ss.unit_id', $unit_id);
+        if (!empty($emp_id)) {
+            $this->db->where_in('ss.emp_id', $emp_id);
+        }
+        $this->db->where('ss.salary_month', $salary_month);
+        $this->db->where('deg.hide_status', 1);
 
         if (!empty($dept)) {
-            $this->db->where('com.emp_dept_id', $dept);
+            $this->db->where('ss.dept_id', $dept);
         }
         if (!empty($section)) {
-            $this->db->where('com.emp_sec_id', $section);
+            $this->db->where('ss.sec_id', $section);
         }
         if (!empty($line)) {
-            $this->db->where('com.emp_line_id', $line);
+            $this->db->where('ss.line_id', $line);
         }
         if (!empty($desig)) {
-            $this->db->where('com.emp_desi_id', $desig);
-        }
-        if (!empty($_GET['status'])) {
-            $this->db->where('com.emp_cat_id', $_GET['status']);
+            $this->db->where('ss.desig_id', $desig);
         }
         if (!empty($_GET['stop_salary'])) {
             $this->db->where('ss.stop_salary', $_GET['stop_salary']);
@@ -80,7 +128,8 @@ class Common extends CI_Controller {
         $this->db->group_by('ss.emp_id');
         $this->db->order_by('ss.emp_id', 'asc');
         $result = $this->db->get()->result();
-        //dd($this->db->last_query());
+        // dd($this->db->last_query());
+        // dd(count($result));
 
         header('Content-Type: application/x-json; charset=utf-8');
         echo json_encode($result);
@@ -96,8 +145,9 @@ class Common extends CI_Controller {
         $this->db->order_by('dept_name', 'ASC');
         $query = $this->db->get()->result();
 
-        foreach ($query as $row) {
-            $data[$row->dept_id] = $row->dept_name.' ('.$row->dept_bangla.')';
+        foreach ($query as $department) {
+            $data[$department->dept_id] = $department->dept_name;
+
         }
 
         header('Content-Type: application/x-json; charset=utf-8');
@@ -114,11 +164,11 @@ class Common extends CI_Controller {
         if (!empty($unit_id)) {
             $this->db->where('unit_id', $unit_id);
         }
-        $this->db->order_by('sec_name_bn', 'ASC');
+        $this->db->order_by('sec_name_en', 'ASC');
         $query = $this->db->get()->result();
 
         foreach ($query as $row) {
-            $data[$row->id] = $row->sec_name_bn;
+            $data[$row->id] = $row->sec_name_en;
         }
 
         header('Content-Type: application/x-json; charset=utf-8');

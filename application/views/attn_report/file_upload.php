@@ -10,7 +10,7 @@
       text-decoration: none;
       font-size: 14px;
   }
-  a:hover
+  a:hover{
   	text-decoration: underline;
   }
   .pagination a{
@@ -44,38 +44,61 @@
     border-bottom: none;
   }
 
+
+    #mytable {
+        border-collapse: collapse;
+    }
+
+    #mytable, th, td {
+        border: 1px solid #b0c0df;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+    .table td {
+        padding: 0px 3px !important;
+        font-size: 13px;
+      
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        border-bottom: none;
+      white-space: nowrap;
+
+    }
+    table.dataTable tbody th, table.dataTable tbody td {
+      padding: 4px !important;
+      white-space: nowrap;
+    }
+    .center-text {
+        vertical-align: center;
+        padding: 5px 10px;
+
+    }
+
 </style>
 
 
   <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
   <div class="content">
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand"  href="<?=base_url('attn_process_con/file_add')?>"><?= $title ?></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="<?=base_url('payroll_con')?>" >Home</a></li>
-          </ul>
-          <div class="pull-right">
-            <form class="navbar-form pull-right" role="search">
-              <div class="input-group">
-                <input id="deptSearch" type="text" class="form-control" placeholder="Search">
-                <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        <nav class="navbar navbar-inverse bg_none">
+        <div class="container-fluid nav_head">
+            <div class="navbar-header col-md-5" style="padding: 7px;">
+                <div>
+                    <a class="btn btn-info"  href="<?=base_url('attn_process_con/file_add')?>"><?= $title ?></a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
-              </div>
-            </form>
-          </div>
-        </div><!--/.nav-collapse -->
-      </div><!--/.container-fluid -->
+            </div>
+            <div class="col-md-7">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="">
+                      <form class="navbar-form pull-right" role="search">
+                        <div class="input-group">
+                          <input id="deptSearch" type="text" class="form-control" placeholder="Search">
+                        </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <div class="row">
@@ -91,16 +114,23 @@
       </div>
     </div>
 
-    <div id="target-div">
-      <div class="container-fluid">
-        <table class="table table-striped" id="mytable">
+    <div id="target-div" class="row tablebox">
+       <div class="col-md-6" style="margin-left:-16px">
+             <h3 style="font-weight:bold">File List</h3>
+         </div>
+      <!-- <div class="container"> -->
+        <?php 
+          $user_id = $this->session->userdata('data')->id; 
+	        $acl = check_acl_list($user_id);   
+        ?>
+        <table class="table" id="mytable">
           <thead>
             <tr>
               <th>SL.</th>
               <th>Unit Name </th>
               <th>Date</th>
-              <th>File Name </th>
-              <th>Delete</th>
+              <th  style="<?php if(!in_array(10,$acl)) {echo '';} else { echo 'display:none;';}?>" >File Name </th>
+              <th  style="<?php if(in_array(133,$acl)) {echo '';} else { echo 'display:none;';}?>">Delete</th>
             </tr>
           </thead>
 
@@ -110,8 +140,8 @@
                   <td><?php echo ++$i; ?></td>
                   <td><?php echo $row->unit_name; ?></td>
                   <td><?php echo $row->upload_date; ?></td>
-                  <td><a href="<?=base_url('data/'.$row->file_name)?>"><?php echo $row->file_name; ?></a></td>
-                  <td>
+                  <td style="<?php if(!in_array(10,$acl)) {echo '';} else { echo 'display:none;';}?>"><a href="<?=base_url('data/'.$row->file_name)?>"><?php echo $row->file_name; ?></a></td>
+                  <td style="<?php if(in_array(133,$acl)) {echo '';} else { echo 'display:none;';}?>"><a href="<?=base_url('data/'.$row->file_name)?>">
                     <a href="<?=base_url('attn_process_con/delete_attn_file/'.$row->id)?>" class="btn btn-danger btn-mini" role="button">Delete</a>
                   </td>
               </tr>
@@ -123,7 +153,7 @@
         	</tbody>
         </table>
           <!-- <div class="pagination"><?php //echo $this->pagination->create_links(); ?></div> -->
-      </div>
+      <!-- </div> -->
     </div>
 
   </div>

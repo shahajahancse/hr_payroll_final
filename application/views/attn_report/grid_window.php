@@ -237,6 +237,7 @@
 						<div class="tab-pane fade" id="monthly">
 							<?php if(in_array(80,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
+
 								<?php echo form_open(base_url('grid_con/att_register_ot_excel'), array('method' => 'post')); ?>
 								<input type="hidden" class='hide_date' name="hide_date">
 								<input type="hidden" class='hide_emp' name="hide_emp">
@@ -278,6 +279,7 @@
 						<div class="tab-pane fade" id="continuous">
 							<?php if(in_array(84,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_present_report()">Present Report</button>
+
 								<?php echo form_open(base_url('grid_con/continuous_present_report_excel'), array('method' => 'post')); ?>
 								<input type="hidden" class='hide_date' name="hide_date">
 								<input type="hidden" class='hide_date2' name="hide_date2">
@@ -462,6 +464,7 @@
                             <?php } ?>
 							<!-- roster list end  -->
 						</div>
+
 					</div>
 				</div>
 			</div>
@@ -485,7 +488,9 @@
 							foreach ($employees as $key => $emp) {
 						?>
 							<tr class="removeTr">
+
 								<td><input onclick="get_checked_emp()" type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+
 								</td>
 								<td class="success"><?= $emp->emp_id ?></td>
 								<td class="warning "><?= $emp->name_en ?></td>
@@ -502,6 +507,7 @@
 	</div>
 
 	<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
+
 
 	<script>
 		$(document).ready(function() {
@@ -723,6 +729,7 @@
 			if (first_date == '') {
 				return false;
 			}
+
 			$('.hide_date').val(first_date); // for excel on monthly report
 			$('.hide_unit').val(unit_id); // for excel on monthly report
 
@@ -753,6 +760,7 @@
 				$('.changeFontBn').css('font-family', 'SutonnyMJ');
 			}, 5000);
 		}
+
 	</script>
 	<script>
 		function grid_roster_employee(){
@@ -798,3 +806,50 @@
 			}
 		}
 	</script>
+
+
+<script>
+function grid_roster_employee(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	
+	try{
+	// Opera 8.0+, Firefox, Safari
+	ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	// Internet Explorer Browsers
+	try{
+		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	}catch (e) {
+		try{
+			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}catch (e){
+			// Something went wrong
+			alert("Your browser broke!");
+			return false;
+		}
+	}
+	}
+	var unit_id = document.getElementById('unit_id').value;
+	var first_date = document.getElementById('firstdate').value;
+	if(unit_id =='Select'){
+		alert("Please select unit !");
+		return;
+	}
+	
+	document.getElementById('loaader').style.display = 'flex';
+	var queryString="unit_id="+unit_id+"&first_date="+first_date;
+	url =  hostname+"grid_con/grid_roster_employee/";
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+	ajaxRequest.onreadystatechange = function(){
+		if (ajaxRequest.readyState == 4) {
+			document.getElementById('loaader').style.display = 'none';
+			var resp = ajaxRequest.responseText;	
+			service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			service_book.document.write(resp);
+			service_book.stop();			
+		}
+	}
+}
+</script>

@@ -83,9 +83,10 @@ table.dataTable tbody td {
                     <label for="acl_name">Type</label>
                     <select class="form-control input-sm" id="type" name ="type" required>
                         <option value="">Select type</option>
-                        <option value="1">9pm job card</option>
-                        <option value="2">12am job card</option>
-                        <option value="3">all wo week</option>
+                        <option value="1">7pm job card</option>
+                        <option value="3">9pm job card</option>
+                        <option value="3">12am job card</option>
+                        <option value="4">all wo week</option>
                     </select>
                 </div>
                 <div class="form-group col-md-2">

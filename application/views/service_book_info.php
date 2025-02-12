@@ -311,7 +311,7 @@ for($i=0;$i < $row_count;$i++)
 		
 	</td>
 	<td style="background: #DFDFFF">
-		<?php echo $values["emp_sex"][$i];?>
+		<?php echo $values["emp_sex"][$i]==1 ?"Male": "Female";?>
 	</td>
 </tr>
 <tr height="12px"></tr>
@@ -358,7 +358,6 @@ for($i=0;$i < $row_count;$i++)
 	<td style="background: #DFDFFF">
 		<?php
 		//dd($values);
-		
 		echo $values["emp_par_add"][$i];?>
 	</td>
 </tr>

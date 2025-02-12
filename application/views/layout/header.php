@@ -457,3 +457,10 @@ input {
     border: 1px solid #eeeef0;
 }
 </style>
+
+<style>
+    .bfont {
+        font-family: SutonnyMJ !important;
+        font-size: 15px !important;
+    }
+</style>

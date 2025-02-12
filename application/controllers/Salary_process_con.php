@@ -15,15 +15,18 @@ class Salary_process_con extends CI_Controller {
 		set_time_limit(0);
 		ini_set("memory_limit","512M");
 
+		
         if ($this->session->userdata('logged_in') == false) {
+			dd($this->session->userdata);
             redirect("authentication");
         }
         $this->data['user_data'] = $this->session->userdata('data');
-        if (!check_acl_list($this->data['user_data']->id, 7)) {
-            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
-            redirect("payroll_con");
-            exit;
-        }
+		// dd($this->data['user_data']);
+        // if (!check_acl_list($this->data['user_data']->id, 7)) {
+        //     echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+        //     redirect("payroll_con");
+        //     exit;
+        // }
 
 	}
 
@@ -70,7 +73,6 @@ class Salary_process_con extends CI_Controller {
 		{
 			echo $result;
 		}
-
 	}
 
 	////////////// salary process block ///////////////
@@ -119,7 +121,7 @@ class Salary_process_con extends CI_Controller {
 	}
 
 	////////////// salary report ///////////////
-	function grid_salary_report()
+	function adv_salary_report()
 	{
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
@@ -132,7 +134,36 @@ class Salary_process_con extends CI_Controller {
         	$this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
         	$this->db->where('ss.unit_id', $this->data['user_data']->unit_name);
         	$this->db->where('ss.stop_salary', 1);
-        	$this->db->where('ss.salary_month', date('2023-07-01'));
+        	$this->db->where('ss.salary_month', date('Y-m-01'));
+        	$this->db->group_by('ss.emp_id')->order_by('ss.emp_id', 'ASC');
+        	$this->data['employees'] = $this->db->get()->result();
+        }
+        
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['title'] = 'Salary Report';
+        $this->data['subview'] = 'salary_report/adv_salary_report';
+        $this->load->view('layout/template', $this->data);
+	}
+
+	function grid_salary_report()
+	{
+		// dd($this->session->userdata('logged_in'));
+
+        if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
+
+        $this->data['employees'] = array();
+        if ($this->data['user_data']->level == 'Unit') {
+        	$this->db->select('ss.emp_id, per.name_en');
+        	$this->db->from('pay_salary_sheet as ss');
+        	$this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
+        	$this->db->where('ss.unit_id', $this->data['user_data']->unit_name);
+        	$this->db->where('ss.stop_salary', 1);
+        	$this->db->where('ss.salary_month', date('Y-m-01'));
         	$this->db->group_by('ss.emp_id')->order_by('ss.emp_id', 'ASC');
         	$this->data['employees'] = $this->db->get()->result();
         }
@@ -164,6 +195,7 @@ class Salary_process_con extends CI_Controller {
         	$this->data['employees'] = $this->db->get()->result();
         }
 
+
         $this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();
 
@@ -171,6 +203,34 @@ class Salary_process_con extends CI_Controller {
         $this->data['title'] = 'Salary Report';
         $this->data['subview'] = 'salary_report/adv_salary_report';
         $this->load->view('layout/template', $this->data);
+
+	//////////////Festival Process////////////
+	function festival_process()
+	{
+		$date = $this->input->post('date');
+		$unit = $this->input->post('unit');
+		$emp_id 	   = $this->input->post('sql');
+		$emp_ids   = explode(',', $emp_id);
+
+		$date_array = explode('-', $date);
+		$year = $date_array[0];
+		$month = $date_array[1];
+
+		////////Month Check ///////////
+		$this->db->select('');
+		$this->db->like('effective_date', $month);
+		$this->db->where('unit_id', $this->session->userdata('data')->unit_name);
+		$query = $this->db->get('pr_bonus_rules');
+		// dd($query->result());
+		//echo $this->db->last_query();
+		if($query->num_rows()==0)
+		{
+			echo "Sorry! This Month is not setup in Festival.";
+		} else {
+			//dd($query->result());
+			$result = $this->Festival_bonus_model->festival_bonus_process($emp_ids, $date, null);
+			echo "Process completed successfully";
+		}	
 	}
 
 
@@ -223,7 +283,6 @@ class Salary_process_con extends CI_Controller {
 		// $crud->unset_edit();
 		// $output = $crud->render();
 		$this->load->view('form/salary_process',);
-
 	}
 
 	////////////////////////Festival Bonus///////////
@@ -242,6 +301,7 @@ class Salary_process_con extends CI_Controller {
 
 
 	// }
+
 
 	//////////////Festival Process////////////
 	function festival_process()

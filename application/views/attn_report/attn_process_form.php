@@ -7,7 +7,7 @@
 </style>
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
-<?php
+	<?php
 		$this->load->model('common_model');
 		$unit = $this->common_model->get_unit_id_name();
 	?>
@@ -16,11 +16,11 @@
         <div class="col-md-8">
             <?php $success = $this->session->flashdata('success');
 	        if ($success != "") { ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+           	 <div class="alert alert-success"><?php echo $success; ?></div>
             <?php } 
 	         $error = $this->session->flashdata('error');
-	         if ($error) { ?>
-            <div class="alert alert-failuer"><?php echo $error; ?></div>
+	        if ($error) { ?>
+           	 <div class="alert alert-failuer"><?php echo $error; ?></div>
             <?php } ?>
         </div>
     </div>
@@ -38,7 +38,9 @@
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
-									continue;
+									if ($user_data->level != "All") {
+										continue;
+									}
 								}  
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
@@ -114,7 +116,7 @@
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <input type="text" class="form-control date" id="process_date" >
+                    <input type="text" class="form-control date" id="process_date" autocomplete="off">
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='attendance_process()' type="button" value='Process' />
                     </span>
@@ -127,8 +129,8 @@
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-6">
                 <div class="input-group" style="display:flex; gap: 14px">
-                    <input type="text" placeholder="Start Date" class="form-control date" id="process_date1" >
-                    <input type="text" placeholder="End Date" class="form-control date" id="process_date2" >
+                    <input type="text" placeholder="Start Date" class="form-control date" id="process_date1" autocomplete="off">
+                    <input type="text" placeholder="End Date" class="form-control date" id="process_date2" autocomplete="off">
                     <span class="input-group-btn">
                         <input class="btn btn-primary" onclick='attendance_process2()' type="button" value='Process' />
                     </span>
@@ -136,71 +138,95 @@
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
     </div>
-    <div class="col-md-4 tablebox">
-        <div style="height: 80vh; overflow-y: scroll;">
-            <table class="table table-hover" id="fileDiv">
-                <tr style="position: sticky;top: 0;z-index:1">
-                    <th class="active" style="width:10%"><input type="checkbox" id="select_all"
-                            class="select-all checkbox" name="select-all"></th>
-                    <th class="" style="background:#0177bcc2;color:white">Id</th>
-                    <th class=" text-center" style="background:#0177bc;color:white">Name</th>
-                </tr>
-                <?php if (!empty($employees)) { 
-					  		foreach ($employees as $key => $emp) { ?>
-                <tr id="removeTr">
-                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->id ?>">
-                    </td>
-                    <td class="success"><?= $emp->emp_id ?></td>
-                    <td class="warning "><?= $emp->name_en ?></td>
-                </tr>
-                <?php } } ?>
-            </table>
-        </div>
-    </div>
-    <!-- </div> -->
+
+		<!-- employee list for right side -->
+	<div class="col-md-4 tablebox">
+		<input type="text" id="searchi" class="form-control" placeholder="Search">
+		<div style="height: 80vh; overflow-y: scroll;">
+			<table class="table table-hover" id="fileDiv">
+				<thead>
+					<tr style="position: sticky;top: 0;z-index:1">
+						<th class="active" style="width:10%"><input type="checkbox" id="select_all" class="select-all checkbox" name="select-all"></th>
+						<th class="" style="background:#0177bcc2;color:white">Id</th>
+						<th class=" text-center" style="background:#0177bc;color:white">Name</th>
+					</tr>
+				</thead>
+				<tbody id="tbody">
+					<?php if (!empty($employees)) {
+						foreach ($employees as $key => $emp) {
+					?>
+							<tr class="removeTr">
+								<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+								</td>
+								<td class="success"><?= $emp->emp_id ?></td>
+								<td class="warning "><?= $emp->name_en ?></td>
+							</tr>
+					<?php }
+					} ?>
+					<tr class="removeTrno">
+						<td colspan="3" class="text-center"> No data found</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- </div> -->
 </div>
+
+<script>
+	$(document).ready(function() {
+		$("#searchi").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			$("#tbody tr").filter(function() {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+			$(".removeTrno").toggle($(".removeTr").length === 0);
+		});
+	});
+</script>
 
 <script type="text/javascript">
 	// on load employee
 	function grid_emp_list() {
-	    var unit = document.getElementById('unit_id').value;
-	    var dept = document.getElementById('dept').value;
-	    var section = document.getElementById('section').value;
-	    var line = document.getElementById('line').value;
-	    var desig = document.getElementById('desig').value;
-	    var status = document.getElementById('status').value;
+		var unit = document.getElementById('unit_id').value;
+		var dept = document.getElementById('dept').value;
+		var section = document.getElementById('section').value;
+		var line = document.getElementById('line').value;
+		var desig = document.getElementById('desig').value;
+		var status = document.getElementById('status').value;
 
-	    url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
-	    $.ajax({
-	        url: url,
-	        type: 'GET',
-	        data: {
-	            "status": status
-	        },
-	        contentType: "application/json",
-	        dataType: "json",
+		url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+		$.ajax({
+			url: url,
+			type: 'GET',
+			data: {
+				"status": status
+			},
+			contentType: "application/json",
+			dataType: "json",
 
 
-	        success: function(response) {
-	            $('#fileDiv #removeTr').remove();
-	            if (response.length != 0) {
-	                var items = '';
-	                $.each(response, function(index, value) {
-	                    items += '<tr id="removeTr">';
-	                    items +=
-	                        '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-	                        value.id + '" ></td>';
-	                    items += '<td class="success">' + value.emp_id + '</td>';
-	                    items += '<td class="warning ">' + value.name_en + '</td>';
-	                    items += '</tr>';
-	                });
-	                // console.log(items);
-	                $('#fileDiv tr:last').after(items);
-	            } else {
-	                $('#fileDiv #removeTr').remove();
-	            }
-	        }
-	    });
+			success: function(response) {
+				$('.removeTr').remove();
+				if (response.length != 0) {
+					$('.removeTrno').hide();
+					var items = '';
+					$.each(response, function(index, value) {
+						items += `
+							<tr class="removeTr">
+								<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+								<td class="success">${value.emp_id}</td>
+								<td class="warning ">${value.name_en}</td>
+							</tr>`
+					});
+					// console.log(items);
+					$('#fileDiv tr:last').after(items);
+				} else {
+					$('.removeTrno').show();
+					$('.removeTr').remove();
+				}
+			}
+		});
 	}
 
 	$(document).ready(function() {

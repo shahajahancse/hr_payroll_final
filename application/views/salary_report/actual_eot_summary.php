@@ -265,7 +265,7 @@ $this->load->view("head_english",$data);
 			<td  align="center" style="width:15%;"><dt class="bottom_txt_design" >Prepared By</dt></td>
             <td align="center"  style="width:25%" ><dt class="bottom_txt_design" >Account Executive</dt></td>
 			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >HR/SR Manager</dt></td>
-			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >GM(HR,Admin & Comp.)</dt></td>
+			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >GM (HRD)</dt></td>
             <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >General Manager (GM)</dt></td>
             <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Director</dt></td>
 			</tr>

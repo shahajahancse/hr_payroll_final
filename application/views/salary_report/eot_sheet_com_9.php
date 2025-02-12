@@ -147,6 +147,7 @@
 					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Designation</strong></div></th>
 					<th rowspan="2" width="50" height="20px"><div align="center"><strong>Line</strong></div></th>
 					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Joining Date</strong></div></th>
+					<th rowspan="2" width="25" height="20px"><div align="center"><strong>Grade</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>Gross Salary</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>OT</strong></div></th>
 					<th rowspan="2" width="35" height="20px"><div align="center"><strong>EOT</strong></div></th>
@@ -202,7 +203,7 @@
 				echo "</td>";
 
 				echo "<td style='width:100px;'>";
-				print_r($values[$k]->name_bn);
+				print_r($values[$k]->name_en);
 				echo '<br>';
 				if($grid_status == 4)
 				{
@@ -219,7 +220,7 @@
 				echo "</td>";
 
 				echo "<td>";
-				print_r($values[$k]->name_en);
+				print_r($values[$k]->desig_name);
 				//echo $row->desig_name;
 				echo "</td>";
 
@@ -239,6 +240,11 @@
 				echo $date_format;
 				echo "</td>";
 
+
+				echo "<td>";
+				print_r($values[$k]->gr_name);
+				echo "</td>";
+
 				echo "<td style='font-weight:bold;'>";
 				print_r ($values[$k]->gross_sal);
 				$gross_sal = $gross_sal + $values[$k]->gross_sal;
@@ -254,21 +260,21 @@
 				echo "</td>";
 
 				echo "<td>";
-				echo $ot_data->eot_4;
+				echo $ot_data->actual_eot_4pm;
 				echo "</td>";
 				
-				$total_ot_eot_hour	= $ot_data->ot + $ot_data->eot_4;
+				$total_ot_eot_hour	= $ot_data->ot + $ot_data->actual_eot_4pm;
 
 				echo "<td>";
 				echo $total_ot_eot_hour;
 				echo "</td>";
 
 				$total_ot_per_page = $total_ot_per_page + $ot_data->ot;
-				$total_eot_per_page = $total_eot_per_page + $ot_data->eot_4;
+				$total_eot_per_page = $total_eot_per_page + $ot_data->actual_eot_4pm;
 				$total_ot_eot_per_page = $total_ot_eot_per_page + $total_ot_eot_hour;
 
 				$grand_total_ot_hour = $grand_total_ot_hour + $ot_data->ot;
-				$grand_total_eot_hour = $grand_total_eot_hour + $ot_data->eot_4;
+				$grand_total_eot_hour = $grand_total_eot_hour + $ot_data->actual_eot_4pm;
 				$grand_total_ot_eot_hour = $grand_total_ot_eot_hour + $total_ot_eot_hour;
 
 				echo "<td>";
@@ -277,7 +283,7 @@
 				echo "</td>";
 
 				echo "<td>";
-				echo $eot_amount = round(($total_ot_eot_hour * $ot_rate), 2);
+				echo $eot_amount = ceil($ot_data->actual_eot_4pm * $ot_rate);
 				echo "</td>";
 
 				$total_ot_eot_amount_per_page = $total_ot_eot_amount_per_page + $eot_amount;
@@ -320,10 +326,10 @@
 				<?php  if ($unit_id == 1) {?>
 					<div style="width: 95%; margin-top: 35px; height: 45px; font-family:Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-align: center;page-break-after: always;">
 						<div style="width: 12.5%; float: left;"><hr width="70%">Prepared By</div>
-						<div style="width: 12.5%; float: left;"><hr width="70%">Manager (HR,Admin &#38; Compl.)</div>
+						<div style="width: 12.5%; float: left;"><hr width="70%">Manager (HRD)</div>
 						<div style="width: 12.5%; float: left;"><hr width="70%">Audit</div>
 						<div style="width: 12.5%; float: left;"><hr width="70%">GM(Project Head)</div>
-						<div style="width: 12.5%; float: left;"><hr width="70%">Group GM(HR.Admin &#38; Compl.)</div>
+						<div style="width: 12.5%; float: left;"><hr width="70%">Group GM (HRD)</div>
 						<div style="width: 12.5%; float: left;"><hr width="70%">COO</div>
 						<div style="width: 12.5%; float: left;"><hr width="70%">DMD</div>
 						<div style="width: 12.5%; float: left;"><hr width="70%">Managing Director</div>

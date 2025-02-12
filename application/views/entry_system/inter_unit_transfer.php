@@ -39,7 +39,9 @@
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
-								continue;
+                                    if ($user_data->level != "All") {
+                                        continue;
+                                    }
 								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
@@ -148,24 +150,35 @@
             </div>
         </div>
     </div>
+
+    <!-- employee list for right side -->
     <div class="col-md-4 tablebox">
+        <input type="text" id="searchi" class="form-control" placeholder="Search">
         <div style="height: 80vh; overflow-y: scroll;">
             <table class="table table-hover" id="fileDiv">
-                <tr style="position: sticky;top: 0;z-index:1">
-                    <th class="active" style="width:10%"><input type="checkbox" id="select_all"
-                            class="select-all checkbox" name="select-all"></th>
-                    <th class="" style="background:#0177bcc2;color:white">Id</th>
-                    <th class=" text-center" style="background:#0177bc;color:white">Name</th>
-                </tr>
-                <?php if (!empty($employees)) {
-					foreach ($employees as $key => $emp) { ?>
-                    <tr id="removeTr">
-                        <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-                        </td>
-                        <td class="success"><?= $emp->emp_id ?></td>
-                        <td class="warning "><?= $emp->name_en ?></td>
+                <thead>
+                    <tr style="position: sticky;top: 0;z-index:1">
+                        <th class="active" style="width:10%"><input type="checkbox" id="select_all" class="select-all checkbox" name="select-all"></th>
+                        <th class="" style="background:#0177bcc2;color:white">Id</th>
+                        <th class=" text-center" style="background:#0177bc;color:white">Name</th>
                     </tr>
-                <?php } } ?>
+                </thead>
+                <tbody id="tbody">
+                    <?php if (!empty($employees)) {
+                        foreach ($employees as $key => $emp) {
+                    ?>
+                            <tr class="removeTr">
+                                <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+                                </td>
+                                <td class="success"><?= $emp->emp_id ?></td>
+                                <td class="warning "><?= $emp->name_en ?></td>
+                            </tr>
+                    <?php }
+                    } ?>
+                    <tr class="removeTrno">
+                        <td colspan="3" class="text-center"> No data found</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -176,6 +189,18 @@
     function loading_open() {
         $('#loader').css('display', 'block');
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#searchi").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+            $(".removeTrno").toggle($(".removeTr").length === 0);
+        });
+    });
 </script>
 
 <script type="text/javascript">
@@ -200,22 +225,23 @@
 
 
             success: function(response) {
-                $('#fileDiv #removeTr').remove();
+                $('.removeTr').remove();
                 if (response.length != 0) {
+                    $('.removeTrno').hide();
                     var items = '';
                     $.each(response, function(index, value) {
-                        items += '<tr id="removeTr">';
-                        items +=
-                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                            value.emp_id + '" ></td>';
-                        items += '<td class="success">' + value.emp_id + '</td>';
-                        items += '<td class="warning ">' + value.name_en + '</td>';
-                        items += '</tr>';
+                        items += `
+                            <tr class="removeTr">
+                                <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+                                <td class="success">${value.emp_id}</td>
+                                <td class="warning ">${value.name_en}</td>
+                            </tr>`
                     });
                     // console.log(items);
                     $('#fileDiv tr:last').after(items);
                 } else {
-                    $('#fileDiv #removeTr').remove();
+                    $('.removeTrno').show();
+                    $('.removeTr').remove();
                 }
             }
         });

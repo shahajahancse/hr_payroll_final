@@ -71,9 +71,18 @@
             <div class="heading" style="text-align: center;">
               <span class="count" data-value="" data-animation-duration="1200" >
                 <?php
-                  $this->db->select('*');
-                  $this->db->from('emp_depertment');
-                  echo $query = $this->db->get()->num_rows();
+
+                $user_level=$this->session->userdata('data')->level;
+                  if($user_level=='All'){
+                    $this->db->select('*');
+                    $this->db->from('emp_depertment');
+                    echo $query = $this->db->get()->num_rows();
+                  }else{
+                    
+                    $this->db->select('*');
+                    $this->db->from('emp_depertment');
+                    echo $query = $this->db->where('unit_id',$this->session->userdata('data')->unit_name)->get()->num_rows();
+                  }
                 ?>
               </span>
             </div>
@@ -89,9 +98,15 @@
             <div class="heading" style="text-align: center;">
             <span class="count" data-value="" data-animation-duration="1200" >
               <?php
-                $this->db->select('*');
-                $this->db->from('emp_section');
-                echo $query = $this->db->get()->num_rows();
+                if($user_level=='All'){
+                  $this->db->select('*');
+                  $this->db->from('emp_section');
+                  echo $query = $this->db->get()->num_rows();
+                }else{
+                  $this->db->select('*');
+                  $this->db->from('emp_section');
+                  echo $query = $this->db->where('unit_id',$this->session->userdata('data')->unit_name)->get()->num_rows();
+                }
               ?>
             </span>
             </div>
@@ -105,11 +120,19 @@
             <div class="tiles-title"> Total Designation </div>
             <div class="heading" style="text-align: center;">
             <span class="count" data-value="" data-animation-duration="1000">
+           
+
               <?php
-                $this->db->select('*');
-                $this->db->from('emp_designation');
-                echo $query = $this->db->get()->num_rows();
-               ?>
+                if($user_level=='All'){
+                  $this->db->select('*');
+                  $this->db->from('emp_designation');
+                  echo $query = $this->db->get()->num_rows();
+                }else{
+                  $this->db->select('*');
+                  $this->db->from('emp_designation');
+                  echo $query = $this->db->where('unit_id',$this->session->userdata('data')->unit_name)->get()->num_rows();
+                }
+              ?>
             </span>
             </div>
           </div>
@@ -122,12 +145,22 @@
             <div class="tiles-title">Total Line</div>
             <div class="heading" style="text-align: center;">
               <span class="count" data-value="" data-animation-duration="1200" >
-                <?php
+                
+
+
+              <?php
+                if($user_level=='All'){
                   $this->db->select('*');
                   $this->db->from('emp_line_num');
-                  $query = $this->db->get()->num_rows();
-                   echo $gtotal_line = $query - 1;
-                 ?>
+                  echo $query = $this->db->get()->num_rows();
+                }else{
+                  $this->db->select('*');
+                  $this->db->from('emp_line_num');
+                  echo $query = $this->db->where('unit_id',$this->session->userdata('data')->unit_name)->get()->num_rows();
+                }
+              ?>
+
+
               </span>
             </div>
           </div>

@@ -25,8 +25,8 @@
         </div>
     </div>
     <!-- <div class="container-fluid">	 -->
-    <div class="col-md-8">
-        <div class="row tablebox" style="display: block;">
+    <div class="col-md-8">  
+        <div class="row tablebox" style="display: block;">   <!-- dpt, section, line -->
             <h3 style="font-weight: 600;"><?= $title ?></h3>
             <div class="col-md-6">
                 <div class="form-group">
@@ -38,7 +38,9 @@
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
-								continue;
+                                    if ($user_data->level != "All") {
+                                        continue;
+                                    }
 								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
@@ -153,14 +155,21 @@
                                     style="padding: 1px 12px; height: 29px;">
                                     <option value='cl'>Casual</option>
                                     <option value='sl'>Sick</option>
-                                    <option value='pl'>Paternity</option>
+                                    <option value='sp'>Special</option>
                                     <option value='ml'>Maternity</option>
+                                    <option value='wp'>With Out Pay</option>
                                     <option value='el'>Earn</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin: 8px 16px;">
+                                <label class="control-label">Address on Vacation</label>
+                                <textarea class="form-control input-sm" id="add_on_vacation" name="add_on_vacation"></textarea>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group" style="margin: 8px 16px;">
                                 <label class="control-label">Description</label>
@@ -234,16 +243,16 @@
                                 <td id="leave_balance_sick"></td>
                             </tr>
                             <tr>
+                                <th>Special Leave</th>
+                                <td id="leave_entitle_paternity"></td>
+                                <td id="leave_taken_paternity"></td>
+                                <td id="leave_balance_paternity"></td>
+                            </tr>
+                            <tr>
                                 <th>Maternity Leave</th>
                                 <td id="leave_entitle_maternity"></td>
                                 <td id="leave_taken_maternity"></td>
                                 <td id="leave_balance_maternity"></td>
-                            </tr>
-                            <tr>
-                                <th>Paternity Leave</th>
-                                <td id="leave_entitle_paternity"></td>
-                                <td id="leave_taken_paternity"></td>
-                                <td id="leave_balance_paternity"></td>
                             </tr>
                             <tr>
                                 <th>Earn Leave</th>
@@ -303,13 +312,14 @@
             $(".removeTrno").toggle($(".removeTr").length === 0);
         });
     });
-
 </script>
+
 <script>
     function loading_open() {
         $('#loader').css('display', 'block');
     }
 </script>
+
 <script type="text/javascript">
     // on load employee
     function grid_emp_list() {
@@ -457,6 +467,7 @@
         });
     });
 </script>
+
 <script>
     function get_checked_value(checkboxes) {
         var vals = Array.from(checkboxes)
@@ -469,7 +480,6 @@
 
 <script>
     function get_leave_balance() {
-
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
@@ -528,6 +538,7 @@
         })
     }
 </script>
+
 <script>
     function toggleSection(sectionId) {
         console.log(sectionId);
@@ -544,6 +555,7 @@
     // Initial hiding of both sections
     $("#leave_entry, #leave_balance_check, #leave_application").hide();
 </script>
+
 <script>
     function leave_add(e) {
         e.preventDefault();
@@ -559,6 +571,8 @@
             alert('Please select max one employee');
             return false;
         }
+        var reason = $('#reason').val();
+        var add_on_vacation = $('#add_on_vacation').val();
         var unit_id = $('#unit_id').val();
         if (unit_id == '') {
             alert('Please select Unit');
@@ -585,6 +599,11 @@
             return false;
         }
 
+        if ($('#leave_type').val() == 'ml') {
+            alert('Please, use Maternity Entry menu option');
+            return false;
+        }
+
         var formdata = $("#leave_entry_form").serialize();
         var data = "unit_id=" + unit_id + "&emp_id=" + numbersArray[0] + "&" + formdata; // Merge the data
         console.log(data);
@@ -599,6 +618,7 @@
                     $('#apply_date').val('');
                     $('#from_date').val('');
                     $('#to_date').val('');
+                    $('#add_on_vacation').val('');
                     $('#reason').val('');
                     showMessage('success', 'Leave Added Successfully');
                 } else {
@@ -635,6 +655,7 @@
         var type = document.getElementById('leave_type').value;
         // alert(type);
         var reason = document.getElementById('reason').value;
+        var add_on_vacation = document.getElementById('add_on_vacation').value;
         var firstdate = document.getElementById('from_date').value;
         if(firstdate ==''){
             alert("Please select first date");
@@ -669,7 +690,7 @@
             alert('Please select max one employee');
             return false;
         }
-        var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&apply_date="+apply_date+"&emp_id="+sql+"&unit_id="+unit_id+"&type="+type+"&reason="+reason;
+        var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&apply_date="+apply_date+"&emp_id="+sql+"&unit_id="+unit_id+"&type="+type+"&reason="+reason+'&add_on_vacation='+add_on_vacation;
         url = hostname + "grid_con/leave_application/";
         ajaxRequest.open("POST", url, true);
         ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");

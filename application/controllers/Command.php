@@ -24,6 +24,77 @@ class Command extends CI_Controller {
 		// exit('only for developer');
 	}
 
+	public function iea()
+	{
+		// echo "hello, ci";
+		$i = '2024-06-06';
+
+		while ($i <= '2024-06-24') {
+			echo '<br> ' .$i;
+			$array = array(
+				'emp_id'		=> 5000462,
+				'unit_id'		=> 4,
+				'start_date'	=> $i,
+				'leave_type'	=> 'el',
+				'leave_start'	=> '2024-06-06',
+				'leave_end'		=> '2024-06-24',
+			);
+			// $rs = $this->db->insert($array, 'pr_leave_trans');
+
+			$i = date('Y-m-d', strtotime('+1 days'. $i));
+		}
+		dd('exit');
+	}
+
+	public function index()
+	{
+		// $this->db->where('emp_join_date <', '2024-07-01');
+		// $this->db->where('unit_id', 2);
+		// $this->db->group_by('emp_id');
+		$qsss = $this->db->get('pr_emp_com_info')->result();
+		$arr = array();
+		foreach ($qsss as $key => $r) {
+			$arr[$key] = $r->emp_id;
+		}
+		// dd($arr);
+		if (!empty($arr)) {
+			$this->db->where_not_in('emp_id', $arr)->delete('pr_holiday');
+			$this->db->where_not_in('emp_id', $arr)->delete('pr_id_proxi');
+			$this->db->where_not_in('ref_id', $arr)->delete('pr_incre_prom_pun');
+		}
+		dd('done');
+	}
+
+	public function get_ss_id()
+	{
+		dd("hello, ci");
+		// echo "hello, ci";
+		$this->db->select(' emp_id ');
+		$this->db->from('pay_salary_sheet');
+		$this->db->where('unit_id', 4);
+		$this->db->where('salary_month', '2024-05-01');
+		$this->db->group_by('emp_id');
+		$this->db->order_by('emp_id', 'asc');
+		$q = $this->db->get()->result_array();  // 707 get
+		$p = array_column($q, 'emp_id');
+
+
+		$this->db->select(' emp_id ');
+		$this->db->from('pay_salary_sheet_com');
+		$this->db->where('unit_id', 4);
+		//$this->db->where_not_in('emp_id', $p);
+		$this->db->order_by('emp_id', 'asc');
+		$this->db->group_by('emp_id');
+		$query = $this->db->where('salary_month', '2024-05-01')->get()->result_array(); // 710 get
+		$ps = array_column($query, 'emp_id');
+
+
+		dd(array_diff($p, $ps ));
+
+		$rs = array_column($query, 'emp_id');
+		dd($rs);
+	}
+
 	function dpt_sec_lin_udate()
 	{
 		exit('only for developer');
@@ -54,7 +125,7 @@ class Command extends CI_Controller {
 
 		while ($i >= '2013-10-30') {
 
-			$rs = $this->db->where('shift_log_date', $i)->get('pr_emp_shift_log')->row();;
+			$rs = $this->db->where('shift_log_date', $i)->get('pr_emp_shift_log')->row();
 			if (!empty($rs))
 			{
 				$this->db->where('shift_log_date', $i)->delete('pr_emp_shift_log');
@@ -408,23 +479,23 @@ class Command extends CI_Controller {
 		$this->db->select('pr_emp_com_info.id, pr_emp_com_info.emp_id, pr_emp_com_info.unit_id');
 		$this->db->from('pr_emp_shift_log');
 		$this->db->from('pr_emp_com_info');
-		$this->db->where('pr_emp_com_info.id = pr_emp_shift_log.emp_id');
-		$this->db->where('pr_emp_com_info.unit_id =', 2);
-		$this->db->group_by('pr_emp_com_info.id');
+		$this->db->where('pr_emp_com_info.emp_id = pr_emp_shift_log.emp_id');
+		$this->db->where('pr_emp_com_info.unit_id =', 3);
+		$this->db->group_by('pr_emp_com_info.emp_id');
 		$results = $this->db->get()->result();
 		// dd($results);
 
 		foreach ($results as $key => $row) {
-			$rs = $this->db->where('emp_id',$row->id)->get('pr_emp_shift_log')->result();
+			$rs = $this->db->where('emp_id',$row->emp_id)->get('pr_emp_shift_log')->result();
 			// dd($rs);
 
 			$data = array(
-				'emp_id'			=> $row->emp_id,
-				// 'unit_id'			=> $row->unit_id,
+				// 'emp_id'			=> $row->emp_id,
+				'unit_id'			=> $row->unit_id,
 			);
-			$this->db->where('emp_id',$row->id)->update('pr_emp_shift_log', $data);
+			$this->db->where('emp_id',$row->emp_id)->update('pr_emp_shift_log', $data);
 
-			echo "<pre> $row->emp_id =  emp id set = ".count($rs);
+			echo "<pre> $key  =  $row->emp_id =  emp id set = ".count($rs);
 		}
 		dd('exit');
 	}
@@ -625,16 +696,16 @@ class Command extends CI_Controller {
 		exit('only for developer');
 		//echo "hello, ci";
 		$results = $this->db->select('emp_id')->where('unit_id', 4)->get('pr_emp_com_info')->result(); //->where('unit_id',4)
-		
+
 		foreach ($results as $key => $row) {
-			$r = $this->db->where('emp_id', $row->emp_id)->get('pr_emp_com_info_c')->row(); 
+			$r = $this->db->where('emp_id', $row->emp_id)->get('pr_emp_com_info_c')->row();
 			if (!empty($r)) {
 				$data = array(
 					'emp_dept_id' => $r->emp_dept_id,
 					'emp_sec_id' => $r->emp_sec_id,
 					'emp_line_id' => $r->emp_line_id,
 				);
-				$this->db->where('emp_id', $row->emp_id)->update('pr_emp_com_info', $data); 	
+				$this->db->where('emp_id', $row->emp_id)->update('pr_emp_com_info', $data);
 				echo "<pre> Id = $row->emp_id  done";
 			} else {
 				echo "<pre> Id = $row->emp_id not done";
@@ -715,4 +786,304 @@ class Command extends CI_Controller {
 
 
 
+	public function leave_final(){
+		dd('only for developer');
+		$all_leave = $this->db->order_by('id','asc')->get('pr_leave_transs')->result();
+		$data = array();
+			$employee_id = '';
+			$unit_id 	 = '';
+			$start_date  = '';
+			$leave_type  = '';
+			$leave_start = '';
+			$leave_end   = '';
+			$total_leave = '';
+		foreach($all_leave as $key => $row){
+				if($employee_id == $row->emp_id &&
+					$unit_id 	 == $row->unit_id &&
+					$leave_type  == $row->leave_type
+					){
+						$total_leave= $total_leave + 1;
+						$leave_end = $row->start_date;
+				}else{
+					if ($key!=0) {
+						$data[]=array(
+							'emp_id' => $employee_id,
+							'unit_id' => $unit_id,
+							'start_date' => $start_date,
+							'leave_type' => $leave_type,
+							'leave_start' => $leave_start,
+							'leave_end' => $leave_end,
+							'total_leave' => $total_leave
+						);
+					}
+					$employee_id = $row->emp_id;
+					$unit_id = $row->unit_id;
+					$start_date = $row->start_date;
+					$leave_type = $row->leave_type;
+					$leave_start = $row->start_date;
+					$leave_end = $row->start_date;
+					$total_leave = 1;
+				}
+			}
+			$this->db->insert_batch('pr_leave_trans',$data);
+		}
+		public function delete_data(){
+			$this->db->select('emp_id');
+			$this->db->where('left_date <', date('2023-11-01'));
+			$this->db->group_by('emp_id');
+			$data1=$this->db->get('pr_emp_left_history')->result();
+			$employee_id1=array_column($data1,'emp_id');
+			//$this->db->select('emp_id');
+			$this->db->where('resign_date <', date('2023-11-01'));
+			$this->db->group_by('emp_id');
+			$data2=$this->db->get('pr_emp_resign_history')->result();
+			$employee_id2=array_column($data2,'emp_id');
+
+
+			$user_id=array_unique(array_merge($employee_id1,$employee_id2));
+
+
+			$this->db->where_in('emp_id',$user_id);
+			$this->db->delete('pr_emp_shift_log');
+		}
+
+
+		public function add_data(){
+			$unit_id=2;
+			$table_data=$this->db->get('aj_fashion')->result();
+			foreach($table_data as $key => $row){
+				$emp_id=$row->emp_id;
+				// dd($row);
+				// if($this->db->where('emp_id',$emp_id)->get('pr_emp_com_info')->num_rows()>0){
+				// 	continue;
+				// }
+//
+				// elseif(in_array($emp_id,['2010402','2010403','2010404','2010405','2010406','2010407'])){
+				// 	continue;
+				// }
+
+				$name=$row->name;
+				$dept_id=$this->get_dept_id($row->dept,$unit_id);
+				// dd($dept_id);
+				$sec_id=$this->get_sec_id($row->sec,$dept_id);
+				$line_id=$this->get_line_id($row->line,$sec_id);
+				$desg_id=$this->get_desg_id($row->desg,$unit_id);
+				$joinng_date = date('Y-d-m',strtotime($row->joinng_date));
+				$salary=$row->salary;
+				$grade=$row->grade;
+				$this->add_employee_per($emp_id,$name,$dept_id,$sec_id,$line_id,$desg_id,$joinng_date,$salary,$grade);
+				$this->add_employee_com($unit_id,$emp_id,$dept_id,$sec_id,$line_id,$desg_id,$joinng_date,$salary,$grade);
+
+			}
+		}
+
+		public function get_dept_id($dept_name,$unit_id){
+			// dd($dept_name);
+			$this->db->select('dept_id');
+			$this->db->where('unit_id',$unit_id);
+			$this->db->where('dept_name',$dept_name);
+			$data=$this->db->get('emp_depertment')->row();
+			//dd($data);
+			return $data->dept_id;
+		}
+		public function get_sec_id($sec_name,$dept_id){
+			// dd($sec_name);
+			$this->db->select('id');
+			$this->db->where('depertment_id',$dept_id);
+			$this->db->where('sec_name_en',$sec_name);
+			$data=$this->db->get('emp_section')->row();
+
+			// if (isset($data->id)) {
+				return $data->id;
+			// }else{
+			// 	return 'eeee';
+			// }
+		}
+
+		public function get_desg_id($desg_name,$unit_id){
+			$this->db->select('id');
+			$this->db->where('unit_id',$unit_id);
+			$this->db->like('desig_name',$desg_name,'both');
+			$data=$this->db->get('emp_designation')->row();
+			// dd($this->db->last_query());
+
+			return $data->id;
+		}
+		public function get_line_id($line_name,$sec_id){
+			$this->db->select('id');
+			$this->db->where('section_id',$sec_id);
+			$this->db->where('line_name_en',$line_name);
+			$data=$this->db->get('emp_line_num')->row();
+			return $data->id;
+		}
+
+		public function add_employee_per($emp_id,$name,$dept_id,$sec_id,$line_id,$desg_id,$joinng_date,$salary,$grade){
+			$data = array(
+				'emp_id'		=> $emp_id,
+				'name_en'		=> $name,
+				'national_brn_id'	=> '',
+				'father_name'	=> '',
+				'mother_name'	=> '',
+				'per_village'	=> '',
+				'per_post'		=> '',
+				'per_thana'		=> '',
+				'per_district'	=> '',
+				'per_village_bn'	=> '',
+				'pre_home_owner'	=> '',
+				'holding_num'	=> '',
+				'home_own_mobile'	=> '',
+				'pre_village'	=> '',
+				'pre_post'		=> '',
+				'pre_thana'		=> '',
+				'pre_district'	=> '',
+				'pre_village_bn'	=> '',
+				'spouse_name'	=> '',
+				'emp_dob'		=> date('Y-m-d'),
+				'gender'		=> '',
+				'marital_status'	=> '',
+				'religion'		=> '',
+				'blood'			=> '',
+				'emp_religion'	=> '',
+				'emp_sex'		=> '',
+				'emp_marital_status'	=> '',
+				'emp_blood'		=> '',
+				'm_child'		=> '',
+				'f_child'		=> '',
+				'nominee_name'	=> '',
+				'nominee_vill'	=> '',
+				'nomi_post'		=> '',
+				'nomi_thana'	=> '',
+				'nomi_district'	=> '',
+				'nomi_age'		=> date('Y-m-d'),
+				'nomi_relation'	=> '',
+				'nomi_mobile'	=> '',
+				'refer_name'	=> '',
+				'refer_village'	=> '',
+				'ref_post'		=> '',
+				'ref_thana'		=> '',
+				'ref_district'	=> '',
+				'refer_mobile'	=> '',
+				'refer_relation'	=> '',
+				'education'		=> '',
+				'nid_dob_id'	=> '',
+				'nid_dob_check'	=> '',
+				'exp_factory_name'	=> '',
+				'exp_duration'		=> '',
+				'exp_dasignation'	=> '',
+				'hight'			=> '',
+				'symbol'			=> '',
+				'personal_mobile'	=> '',
+				'bank_bkash_no'		=> '',
+				'img_source'		=> '',
+				'signature'			=> '',
+				'identificatiion_marks'	=> '',
+			);
+			$this->db->insert('pr_emp_per_info', $data);
+		}
+
+ 		public function add_employee_com($unit_id,$emp_id,$dept_id,$sec_id,$line_id,$desg_id,$emp_join_date,$salary,$emp_sal_gra_id){
+			$data = array();
+			$data['unit_id'] = $unit_id;
+			$data['emp_id'] = $emp_id;
+			$data['emp_dept_id'] = $dept_id;
+			$data['emp_sec_id'] = $sec_id;
+			$data['emp_line_id'] = $line_id;
+			$data['attn_sum_line_id'] = '';
+			$data['emp_desi_id'] = $desg_id;
+			$data['emp_sal_gra_id'] = $emp_sal_gra_id;
+			$data['emp_cat_id'] = 1;
+			$data['emp_type'] = '';
+			$data['proxi_id'] = $emp_id;
+			$data['emp_shift'] = '';
+			$data['gross_sal'] = $salary;
+			$data['com_gross_sal'] = '';
+			$data['ot_entitle'] = '';
+			$data['com_ot_entitle'] = '';
+			$data['transport'] = '';
+			$data['lunch'] = '';
+			$data['hight'] = '';
+			$data['symbol'] = '';
+			$data['att_bonus'] = '';
+			$data['salary_draw'] = '';
+			$data['salary_type'] = '';
+			$data['emp_join_date'] = $emp_join_date;
+			$this->db->insert('pr_emp_com_info', $data);
+		}
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

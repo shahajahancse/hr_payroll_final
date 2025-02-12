@@ -37,7 +37,7 @@
             <div class="navbar-header col-md-5" style="padding: 7px;">
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('training_con/employee_training_form') ?>">Add training</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">

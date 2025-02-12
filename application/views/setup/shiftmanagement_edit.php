@@ -11,12 +11,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url("/index.php/setup_con/shift_management");?>">Back To
+                <a class="navbar-brand" href="<?php echo base_url("setup_con/shift_management");?>">Back To
                     List</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url("/index.php/payroll_con");?>">Home</a></li>
+                    <li class="active"><a href="<?php echo base_url("payroll_con");?>">Home</a></li>
                 </ul>
 
             </div>
@@ -42,7 +42,7 @@
 
     <h3>Update Shift </h3>
     <hr>
-    <form action="<?= base_url('index.php/setup_con/shiftmanagement_edit').'/'.$pr_emp_shift->id?> " enctype="multipart/form-data" method="post"
+    <form action="<?= base_url('setup_con/shiftmanagement_edit/'.$pr_emp_shift->id)?> " enctype="multipart/form-data" method="post"
         name="creatsection">
         <div class="row">
             <div class="col-md-6">
@@ -86,7 +86,7 @@ function get_data() {
     var unit_id = $('#unit_id').val();
     $.ajax({
 
-        url: "<?php echo base_url('index.php/setup_con/get_shift') ?>",
+        url: "<?php echo base_url('setup_con/get_shift') ?>",
         method: "POST",
         data: {
             unit_id: unit_id

@@ -7,7 +7,7 @@ class Newcon extends CI_Controller {
 
 		/* Standard Libraries */
 		ini_set('date.timezone', 'Asia/Dacca');
-		$this->load->model('admin/admin_model');
+		$this->load->model('admin/Admin_model');
 		$this->load->model('Log_model');
 	}
 	function index()

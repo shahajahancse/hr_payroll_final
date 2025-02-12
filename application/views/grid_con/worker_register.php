@@ -8,7 +8,8 @@
     <style>
 @media print {
     @page {
-        size: A4 landscape;
+        size: legal landscape;
+		margin:3px 0px;
     }
     table {
         width: 100%;
@@ -21,63 +22,113 @@
 	<div class="container-fluid">
 
 		<div height="85px" style="margin-top: 20px;">
-			<span style="text-align:center;line-height:10px;margin-top:10px">
-                <p>ফরম-৮</p>
-                <p>[ধারা ৯ (১) (২) এবং বিধি ২৩ (১) দ্রষ্টব্য]</p>
-                <p><b>শ্রমিক রেজিষ্টার</b></p>
-				<!-- <span style="font-size:13px; font-weight:bold; text-align: center;">Section Wise All Employee List </span> -->
+			<span  style="text-align:center;line-height:10px;margin-top:10px">
+                <p class="unicode-to-bijoy">ফরম-৮</p>
+                <p class="unicode-to-bijoy">[ধারা ৯ (১) (২) এবং বিধি ২৩ (১) দ্রষ্টব্য]</p>
+                <p class="unicode-to-bijoy"><b>শ্রমিক রেজিষ্টার</b></p>
 			</span>
 		</div>
         <br><br>
+		<?php 
+        $unit_id =$this->session->userdata['data']->unit_name;
+        $com_info = $this->db->select('*')->where('unit_id',$unit_id)->get('company_infos')->row();
+        
+        ?>
         <div>
             <span  colspan="22" style="text-align:left;line-height:10px;">
-                <p>কারখানা বা প্রতিষ্ঠানের নামঃ হানিওয়েল গার্মেন্টস লিমিটেড</p>
-                <p>কারখানা বা প্রতিষ্ঠানের ঠিকানাঃ ৭৯৯, (পুরাতন প্লট নং- ১০১০/১০১১),আমবাগ,মৌজা বাঘিয়া, কোনাবাড়ী, গাজীপুর -১৭০০</p>
-                <p>শ্রমিকের শ্রেনী বিভাগঃ স্থায়ী</p>
+                <p class="unicode-to-bijoy">কারখানা বা প্রতিষ্ঠানের নামঃ <?php echo $com_info->company_name_bangla?></p>
+                <p class="unicode-to-bijoy">কারখানা বা প্রতিষ্ঠানের ঠিকানাঃ <?php echo $com_info->company_add_bangla?></p>
+                <p class="unicode-to-bijoy">শ্রমিকের শ্রেনী বিভাগঃ স্থায়ী</p>
             </span>
         </div>
-	<table  border="1" cellspacing="0" cellpadding="2" style="font-size:12px;">
-		<th class="text-center">ক্রমিক<br>নং</th>
-		<th class="text-center">শ্রমিক<br>রেজিস্টার<br>ক্রমিক<br>নং</th>
-		<th class="text-center">শ্রমিকের নাম<br> ও <br>এন আই ডি নং</th>
-		<th class="text-center">পিতার<br>নাম</th>
-		<th class="text-center">মাতার<br>নাম </th>
-		<th class="text-center">লিঙ্গ<br>জন্ম তারিখ<br>ও<br>বয়স</th>
-		<th class="text-center">স্থায়ী<br>ঠিকানা </th>
-		<th class="text-center">নিয়োগের<br>তারিখ</th>
-		<th class="text-center">পদবী<br>ও<br>গ্রেড </th>
-		<th class="text-center">কার্ড নং</th>
-		<th class="text-center">পাওনা ছুটি</th>
-		<th class="text-center">কর্ম সময়</th>
-		<th class="text-center"> বিরতির সময়</th>
-		<th class="text-center">সাপ্তাহিক<br>ছুটির<br>দিন</th>
-		<th class="text-center">গ্রুপের নাম</th>
-		<th class="text-center">পালাওরিলে</th>
-		<th class="text-center">গ্রুপে<br>বদলির<br>বিবরণ</th>
-		<th class="text-center">মন্তব্য</th>
-		<?php ; $i= 1;foreach($values as $row){?>
+	<table  border="1" cellspacing="0" cellpadding="2" style="font-size:18px;">
+		<th class="text-center unicode-to-bijoy">ক্রমিক নং</th>
+		<th class="text-center unicode-to-bijoy">শ্রমিকের রেজিস্টার নং</th>
+		<th class="text-center unicode-to-bijoy">শ্রমিকের নাম   ও   এন আই ডি নং/জন্মনিবন্ধন নং</th>
+		<th class="text-center unicode-to-bijoy">পিতার  নাম</th>
+		<th class="text-center unicode-to-bijoy">মাতার  নাম </th>
+		<th class="text-center unicode-to-bijoy">লিঙ্গ  জন্ম তারিখ ও বয়স</th>
+		<th class="text-center unicode-to-bijoy">স্থায়ী   ঠিকানা </th>
+		<th class="text-center unicode-to-bijoy">নিয়োগের  তারিখ</th>
+		<th class="text-center unicode-to-bijoy">পদবী  ও  গ্রেড </th>
+		<th class="text-center unicode-to-bijoy">কার্ড নং</th>
+		<th class="text-center unicode-to-bijoy" style="font-family:SUtonnyMJ;font-size:17px">পাওনা ছুটি</th>
+		<th class="text-center unicode-to-bijoy">কর্ম সময়</th>
+		<th class="text-center unicode-to-bijoy"> বিরতির সময়</th>
+		<th class="text-center unicode-to-bijoy">সাপ্তাহিক ছুটির দিন</th>
+		<th class="text-center unicode-to-bijoy">গ্রুপের নাম</th>
+		<th class="text-center unicode-to-bijoy">পালা ও রিলে</th>
+		<th class="text-center unicode-to-bijoy">গ্রুপ   বদলির   বিবরণ</th>
+		<th class="text-center unicode-to-bijoy">gšÍe¨</th>
+		<tr >
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">1</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">2</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">3</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">4</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">5</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">6</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">7</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">8</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">9</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">10</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">11</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">12</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">13</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">14</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">15</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">16</th>
+			<th class='unicode-to-bijoy' style="font-size:14px;text-align:center">17</th>
+		</tr>
+		<?php ; $i= 1;foreach($values as $row){ ?>
 		<tr>
-			<td class="text-center"><?php echo "<span style='font-family:SutonnyMJ;font-size:18px'>".$i++."</span>"?></td>
-			<td class="text-center"><?php echo "<span style='font-family:SutonnyMJ;font-size:18px'>".$row->id."</span>"?></td>
-			<td class="text-center"><?php echo $row->name_bn .'<br>'.$row->nid_dob_id?></td>
-			<td class="text-center"><?php echo $row->father_name?></td>
-			<td class="text-center"><?php echo $row->mother_name?></td>
-			<td class="text-center">
-                <?php
-                    echo $row->gender == 'Male' ? 'পুরুষ' : 'নারী'.' ,';echo '<br>'."<span style='font-family:SutonnyMJ;font-size:16px'>".date('d/m/Y',strtotime($row->emp_dob))."</span>";$currentDate = new DateTime();
-                    $employeeDob = new DateTime($row->emp_dob);
-                    $diff = $currentDate->diff($employeeDob);
-                    echo '<br>'."<span style='font-family:SutonnyMJ;'>".$diff->format(' <span style = "font-size:16px">%y</span> বছর <span style = "font-size:16px">%m</span> মাস <span style = "font-size:16px">%d</span> দিন')."</span>";
-                ?>
-            </td>
-			<td class="text-center" style="width: 150px;"><?php echo $row->per_village.','.$row->per_post_name_bn.','.$row->per_upa_name_bn.','.$row->per_dis_name_bn ?></td>
+			<td class="text-center" ><?php echo "<span style='font-family:SutonnyMJ;font-size:18px'>".$i++."</span>"?></td>
+			<td class="text-center" ><?php echo "<span style='font-family:SutonnyMJ;font-size:18px'>".$row->id."</span>"?></td>
+			<!-- <td class="text-center"><?php echo "<span style='font-family:SutonnyMJ;font-size:18px'>".$row->id."</span>"?></td> -->
+			<td class="text-center" style="line-height:10px">
+			<p class="unicode-to-bijoy" >
+				<p style="font-size:19px" class="unicode-to-bijoy">
+    			<?php echo $row->name_bn; ?>
+			</p>
+			<p class="unicode-to-bijoy" style="font-size:19px">
+				<?php echo ($row->nid_dob_check == 1 ? 'এন আইডি নংঃ ' : 'জন্মনিবন্ধনঃ '); ?>
+			</p>
+			<p style="font-family:SutonnyMJ; font-size:19px">
+				<?php echo $row->nid_dob_id; ?>
+			</p>
+		</p>
+			</td>
+			<td class="text-center unicode-to-bijoy"><?php echo $row->father_name?></td>
+			<td class="text-center unicode-to-bijoy"><?php echo $row->mother_name?></td>
+			<td class="text-center  " style="line-height:10px">
+				<p class="unicode-to-bijoy"><?php
+					echo $row->gender == 'Male' ? 'cyiæl' : 'নারী';
+				?><p>
+				
+				<p style='font-family:SutonnyMJ;font-size:16px'><?= date('d/m/Y',strtotime($row->emp_dob)) ?></p>
+				<p class="unicode-to-bijoy" style="line-height:18px">
+				<?php
+					$currentDate = new DateTime();
+					$employeeDob = new DateTime($row->emp_dob);
+					$diff = $currentDate->diff($employeeDob);
+					echo $diff->format(' <span style = "font-size:16px">%y</span> বছর <span style = "font-size:16px">%m</span> মাস <span style = "font-size:16px">%d</span> দিন');
+				?></p>
+			</td>
+
+			<td class="text-center unicode-to-bijoy" style="width: 150px;"><?php echo $row->per_village_bn.', '.$row->per_post_name_bn.', '.$row->per_upa_name_bn.', '.$row->per_dis_name_bn ?></td>
 			<td class="text-center" style="white-space:nowrap"><?php echo "<span style='font-family:SutonnyMJ;font-size:16px'>".date('d/m/Y',strtotime($row->emp_join_date))."</span>"?></td>
-			<td class="text-center" style="width: 80px;"><?php echo $row->desig_bangla.'<br>'.$row->emp_sal_gra_id?></td>
-			<td class="text-center"><?php echo $row->emp_id?></td>
-			<td class="text-center"><?php echo ''?></td>
-			<td class="text-center"><?php echo 'সকাল ০৮ হইতে <br> বিকাল ০৫ টা <br> পর্যন্ত'?></td>
-			<td class="text-center"><?php echo 'দুপুর ০১ হইতে <br>০২ টা <br> পর্যন্ত'?></td>
-			<td class="text-center"><?php echo 'শুক্রবার'?></td>
+			<td class="text-center unicode-to-bijoy" style="width: 80px;"><?php echo $row->desig_bangla.', '.$row->gr_name?></td>
+			<td class="text-center unicode-to-bijoy"><?php echo $row->emp_id?></td>
+			<td>
+				<ul style="position: relative;list-style-type: none;margin-left: -40px;">
+					<li class="unicode-to-bijoy">*বাৎসরিক ছুটি = ১২ দিন</li>
+					<li class="unicode-to-bijoy">*নৈমিত্তিক ছুটি = ১০ দিন</li>
+					<li class="unicode-to-bijoy">*পীড়া = ১৪ দিন</li>
+					<li class="unicode-to-bijoy">*অর্জিত ছুটি = ( প্রতি ১৮ কর্ম দিবসের জন্য ১ দিন ) </li>
+				</ul>
+			</td>
+			<td class="text-center unicode-to-bijoy"><?php echo 'সকাল ০৮ হইতে <br> বিকাল ০৫ টা <br> ch©šÍ'?></td>
+			<td class="text-center unicode-to-bijoy"><?php echo 'দুপুর ০১ হইতে <br>০২ টা <br> ch©šÍ'?></td>
+			<td class="text-center unicode-to-bijoy"><?php echo 'শুক্রবার'?></td>
 			<td class="text-center"><?php echo ''?></td>
 			<td class="text-center"></td>
 			<td class="text-center"></td>
@@ -87,6 +138,8 @@
 	</table>
 	</div>
 	<div style="page-break-after: always;"></div>
+	<script src="<?=base_url()?>js/unicode_to_bijoy.js" type="text/javascript"></script>
+<?php echo "<script>applyUnicodeToBijoy()</script>"?>
 </body>
 </html>
 <?php exit(); ?>

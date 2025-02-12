@@ -43,7 +43,7 @@
   </div>
   <div id="add_form" class="row tablebox">
     <label for="user_id">Select User</label>
-    <select name="user_id" id="user_id" onchange="get_user_level(this.value, 3)" style="width: 300px!important;">
+    <select name="user_id" id="user_id" onchange="get_user_level(this.value, 4)" style="width: 300px!important;">
         <option>Select User</option>
         <?php 
         foreach($users as $key => $value) { ?>

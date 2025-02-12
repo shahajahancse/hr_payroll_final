@@ -61,8 +61,10 @@ class Common_model extends CI_Model{
 
 	function get_emp_by_unit($id){
 		$this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
+		$this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
 		$this->db->from('pr_emp_com_info as com');
 		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
+		$this->db->where('deg.hide_status', 1);
 		$this->db->where('com.emp_cat_id', 1);
 		$this->db->group_by('com.id');
 		return $this->db->where('com.unit_id', $id)->get()->result();
@@ -77,6 +79,9 @@ class Common_model extends CI_Model{
 	}
 
 	function get_group_wise_attendance($line_id, $date, $unit_id, $array){
+		// dd($array['Operator']);
+		// dd($array);
+		// $line_id = 218;
 		if (!empty($array['Operator'])) {
 			$this->db->select("
 		                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS total_emp,
@@ -87,13 +92,16 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			$this->db->where("log.in_time !=", "00:00:00");
+			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Operator']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Operator'] = $this->db->get()->row();
@@ -111,13 +119,16 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			$this->db->where("log.in_time !=", "00:00:00");
+			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Helper']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Helper'] = $this->db->get()->row();
@@ -135,13 +146,16 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			$this->db->where("log.in_time !=", "00:00:00");
+			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Iron Man']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Iron Man'] = $this->db->get()->row();
@@ -159,13 +173,16 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
 			$this->db->where("com.attn_sum_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			$this->db->where("log.in_time !=", "00:00:00");
+			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Line Chief']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Line Chief'] = $this->db->get()->row();
@@ -183,13 +200,16 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			$this->db->where("log.in_time !=", "00:00:00");
+			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['F.Q.I']);
 			$this->db->group_by("log.shift_log_date");
 			$d['F.Q.I'] = $this->db->get()->row();
@@ -207,13 +227,16 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
 			$this->db->where("com.attn_sum_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			$this->db->where("log.in_time !=", "00:00:00");
+			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Supervisor']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Supervisor'] = $this->db->get()->row();
@@ -231,19 +254,23 @@ class Common_model extends CI_Model{
 			$this->db->from("pr_emp_shift_log as log");
 			$this->db->from('pr_emp_com_info as com');
 			$this->db->from('emp_line_num as num');
+			$this->db->from('emp_designation as desig');
+			$this->db->where("desig.id = com.emp_desi_id");
+			$this->db->where("desig.hide_status", 1);
 			$this->db->where("log.emp_id = com.emp_id");
 			$this->db->where("num.id = com.emp_line_id");
 
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			$this->db->where("log.in_time !=", "00:00:00");
+			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Input Man']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Input Man'] = $this->db->get()->row();
 		} else {
 			$d['Input Man'] = new stdClass();
 		}
+		// dd($d);
 		return $d;
 	}
 
@@ -282,25 +309,28 @@ class Common_model extends CI_Model{
                     pr_emp_shift_log.shift_log_date,
                     pr_emp_shift_log.ot,
                     pr_emp_shift_log.eot,
-                    pr_emp_shift.shift_name,
+                    pr_emp_shift_log.present_status,
+					pr_emp_shift_schedule.sh_type as shift_name
                 ');
             $this->db->from('pr_emp_shift_log');
-            $this->db->from('pr_emp_shift');
+			$this->db->from('pr_emp_shift_schedule');
             $this->db->where_in('pr_emp_shift_log.emp_id', $emp_id);
             $this->db->where("pr_emp_shift_log.shift_log_date", $first_date);
-            $this->db->where('pr_emp_shift.id = pr_emp_shift_log.shift_id');
+			$this->db->where('pr_emp_shift_schedule.id = pr_emp_shift_log.schedule_id');
             $shift = $this->db->get()->row();
 
             if(!empty($shift)){
                 $logs[$i]["in_time"] 	= $shift->in_time;
                 $logs[$i]["out_time"] 	= $shift->out_time;
                 $logs[$i]["shift_name"] = $shift->shift_name;
+                $logs[$i]["present_status"] = $shift->present_status;
             }
             else
             {
                 $logs[$i]["in_time"] 	= '';
                 $logs[$i]["out_time"] 	= '';
                 $logs[$i]["shift_name"] = '';
+                $logs[$i]["present_status"] = '';
             }
             $first_date = date("Y-m-d", strtotime("+1 day", strtotime($first_date)));
             $i = $i + 1;
@@ -397,6 +427,9 @@ class Common_model extends CI_Model{
 
 	function company_information($unit_id)
 	{
+		if($unit_id == 0){
+			return $company_infos = $this->db->get('company_infos')->result();
+		}
 		return $company_infos = $this->db->where('unit_id',$unit_id)->get('company_infos')->result();
 
 		// return $query = $this->db->select('*')->get('company_infos')->row();
@@ -853,7 +886,7 @@ class Common_model extends CI_Model{
 		$this->db->where('dept_id',$dept_id);
 		$query = $this->db->get('emp_depertment');
 		$row = $query->row();
-		return $row->dept_name;
+		return isset($row->dept_name) ? $row->dept_name : '';
 	}
 	function get_section_name($sec_id)
 	{
@@ -861,7 +894,7 @@ class Common_model extends CI_Model{
 		$this->db->where('id',$sec_id);
 		$query = $this->db->get('emp_section');
 		$row = $query->row();
-		return $row->sec_name_en;
+		return isset($row->sec_name_en) ? $row->sec_name_en : '';
 	}
 	function get_line_name($line_id)
 	{
@@ -869,7 +902,7 @@ class Common_model extends CI_Model{
 		$this->db->where('id',$line_id);
 		$query = $this->db->get('emp_line_num');
 		$row = $query->row();
-		return $row->line_name_en;
+		return isset($row->line_name_en) ? $row->line_name_en : '';
 	}
 	function get_desig_name($desig_id)
 	{
@@ -878,10 +911,7 @@ class Common_model extends CI_Model{
 		$this->db->where('id',$desig_id);
 		$query = $this->db->get('emp_designation');
 		$row = $query->row();
-		if(empty($row)){
-			dd($desig_id);
-		}
-		return $row->desig_name;
+		return isset($row->desig_name) ? $row->desig_name : '';
 	}
 	function get_grade_name($gr_id)
 	{

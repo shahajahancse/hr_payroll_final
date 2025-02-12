@@ -47,27 +47,13 @@
 					echo "</tr>";
 
 					echo "<tr>";
-						echo "<td >";
-						echo "<strong>Proxi NO. :</strong>";
-						echo "</td>";
-						echo "<td >";
-						echo $value->proxi_id;
-						echo "</td>";
-
 						echo "<td style:width:20px'>";
 						echo "<strong>Section :</strong>";
 						echo "</td>";
 						echo "<td width='30px'>";
 						echo $value->sec_name_en;
 						echo "</td>";
-					echo "</tr>";
-					echo "<tr>";
-						echo "<td>";
-						echo "<strong>Line :</strong>";
-						echo "</td>";
-						echo "<td>";
-						echo $value->line_name_en;
-						echo "</td>";
+						
 						echo "<td>";
 						echo "<strong>Desig :</strong>";
 						echo "</td>";
@@ -77,10 +63,10 @@
 					echo "</tr>";
 					echo "<tr>";
 						echo "<td>";
-						echo "<strong>DOJ :</strong>";
+						echo "<strong>Line :</strong>";
 						echo "</td>";
 						echo "<td>";
-						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo $value->line_name_en;
 						echo "</td>";
 
 						echo "<td >";
@@ -91,18 +77,17 @@
 						echo "</td>";
 					echo "</tr>";
 
-					// echo "<tr>";
-					// 	echo "<td >";
-					// 	echo "<strong>Shift Name:</strong>";
-					// 	echo "</td>";
-					// 	echo "<td >";
-					// 	//dd($value);
-					// 	$shift_data=$this->db->select('shift_name')->where('unit_id',$value->unit_id)->where('schedule_id',$value->emp_shift)->get('pr_emp_shift')->row();
-					// 	if ($shift_data) {
-					// 		echo $shift_data->shift_name;
-					// 	}
-					// 	echo "</td>";
-					// echo "</tr>";
+					echo "</tr>";
+					echo "<tr>";
+						echo "<td>";
+						echo "<strong>DOJ :</strong>";
+						echo "</td>";
+						echo "<td>";
+						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo "</td>";
+
+
+
 					echo "<table>";
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
 					// dd($emp_data);
@@ -121,30 +106,30 @@
 						</tr>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
 
-						if(in_array($row->shift_log_date,$emp_data['leave'])){
+						if($row->present_status == 'L'){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
 							$att_status = $leave_type;
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot = 0;
-							$row->eot = 0;
+							$row->com_ot = 0;
+							 $row->com_eot = 0;
 						}
 						elseif(in_array($row->shift_log_date,$emp_data['holiday'])){
 							$att_status = "Holiday";
 							$att_status_count = "Holiday";
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot = 0;
-							$row->eot = 0;
+							$row->com_ot = 0;
+							 $row->com_eot = 0;
 						}
 						elseif($row->present_status == 'W') {
 							$att_status = "Work Off";
 							$att_status_count = "Work Off";
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot = 0;
-							$row->eot = 0;
+							$row->com_ot = 0;
+							 $row->com_eot = 0;
 						}
 						elseif($row->in_time !='00:00:00' and $row->out_time !='00:00:00'){
 							$att_status = "P";
@@ -157,8 +142,8 @@
 						else{
 							$att_status = "A";
 							$att_status_count = "A";
-							$row->ot = 0;
-							$row->eot = 0;
+							$row->com_ot = 0;
+							 $row->com_eot = 0;
 						}
 						// $emp_shift = $this->job_card_model->emp_shift_check($value->emp_id, $row->shift_log_date);
 						$schedule = $this->job_card_model->schedule_check($row->schedule_id);
@@ -178,16 +163,31 @@
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
 							$in_time = $row->in_time;
-							// $in_time = $this->job_card_model->time_am_pm_format($in_time);
+							list($hour, $minute, $second) = explode(':', $in_time);
+							if ((int)$minute < 45 && $schedule[0]["in_time"] > $row->in_time) {
+
+							$minuteDigits = str_split($minute);
+							$minuteSum = array_sum($minuteDigits);                                
+							$n_m = 60 - $minuteSum;
+							$in_time = sprintf("%02d:%02d:%02d", (int)$hour, $n_m, (int)$second);
+							}
 						} else{
 							$in_time = "00:00:00";
 						}
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							// $out_time = $this->job_card_model->time_am_pm_format($out_time);
+							// dd($out_time);
+							list($hour, $minute, $second) = explode(':', $out_time);
+						
+							if ((int)$minute >13 && (int)$minute < 50) {
+								$minuteDigits = str_split($minute);
+								$minuteSum = array_sum($minuteDigits);
+								$out_time = sprintf("%02d:%02d:%02d", (int)$hour, $minuteSum, (int)$second);
+							}
 						} else{
 							$out_time = "00:00:00";
 						}
+
 
 						echo "<tr>";
 							echo "<td>&nbsp;";
@@ -199,19 +199,11 @@
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
-							if($in_time == "00:00:00"){
-								echo "&nbsp;";
-							}else{
-								echo $in_time;
-							}
+							echo $in_time;
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
-							if($out_time =="00:00:00"){
-								echo "&nbsp;";
-							}else{
-								echo $out_time;
-							}
+							echo $out_time;
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
@@ -247,18 +239,18 @@
 								$remark = "";
 							}
 							echo "<td>&nbsp;";
-							echo $row->ot;
+							echo $row->com_ot;
 							echo "&nbsp;</td>";
 
-							$total_ot = $total_ot + $row->ot;
-							$total_ot_hour = $total_ot_hour + $row->ot + $row->eot;
+							$total_ot = $total_ot + $row->com_ot;
+							$total_ot_hour = $total_ot_hour + $row->com_ot + $row->com_eot;
 
 							echo "<td>&nbsp;";
-							echo $row->eot;
+							echo $row->com_eot;
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
-							echo $row->eot + $row->ot;
+							echo $row->com_eot + $row->com_ot;
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
@@ -326,7 +318,7 @@
 					echo "</td>";
 
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
-					echo "OVERTIME";
+					echo "OVER TIME";
 					echo "</td>";
 
 					echo "</tr>";

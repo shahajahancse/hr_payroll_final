@@ -39,8 +39,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?=base_url('index.php/setup_con/shiftmanagement_add')?>">Add ShiftManagement</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?=base_url('setup_con/shiftmanagement_add')?>">Add ShiftManagement</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -87,22 +87,21 @@
                         <th>Unit Name </th>
                         <th>Shift Type</th>
                         <th width="80">Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(149,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        if(!empty($pr_emp_shift)){ foreach($pr_emp_shift as $pr_emp_shifts){?>
+                    <?php if(!empty($pr_emp_shift)){ foreach($pr_emp_shift as $pr_emp_shifts){?>
                     <tr>
                         <td><?php echo $pr_emp_shifts['shift_name'] ?></td>
                         <td><?php echo $pr_emp_shifts['unit_name'] ?></td>
                         <td><?php echo $pr_emp_shifts['sh_type'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/shiftmanagement_edit').'/'.$pr_emp_shifts["id"]?>"
+                            <a href="<?=base_url('setup_con/shiftmanagement_edit/'.$pr_emp_shifts["id"])?>"
                                 class="btn btn-primary center-text input-sm" role="button">Edit</a>
                         </td>
-                        <td>
-                            <a href="<?=base_url('index.php/setup_con/shiftmanagement_delete').'/'.$pr_emp_shifts["id"]?>"
+                        <td <?php if(in_array(149,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
+                            <a href="<?=base_url('setup_con/shiftmanagement_delete/'.$pr_emp_shifts["id"])?>"
                                 class="btn btn-danger center-text input-sm" role="button">Delete</a>
                         </td>
                     </tr>

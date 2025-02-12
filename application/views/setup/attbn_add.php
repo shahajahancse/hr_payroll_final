@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="unit_id">Unit</label>
                         <select name="unit_id" id="unit_id" class="form-control">
                             <option value="">Select Unit</option>
@@ -51,15 +51,34 @@
                         <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
                     </div>
                     <div class="form-group col-md-6">
-
                         <label>Rule Name</label>
                         <input type="text" name="rule_name" value="" placeholder="Rule Name" class="form-control">
                         <?=(isset($failuer['rule_name'])) ? '<div class="alert alert-failuer">' . $failuer['rule_name'] . '</div>' : ''; ?>
                     </div>
+                    <div class="form-group col-md-6">
+                        <label>Prev Amt</label>
+                        <input type="text" name="prev_rule" value="" placeholder="Rule Name" class="form-control">
+                        <?=(isset($failuer['prev_rule'])) ? '<div class="alert alert-failuer">' . $failuer['prev_rule'] . '</div>' : ''; ?>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Prev End Date</label>
+                        <input type="text" name="prev_end" placeholder="Rule Name" class="form-control date">
+                        <?=(isset($failuer['prev_end'])) ? '<div class="alert alert-failuer">' . $failuer['prev_end'] . '</div>' : ''; ?>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-6">
-                        <label>Rule</label>
+                    <div class="form-group col-md-3">
+                        <label>Last Amt</label>
+                        <input type="text" name="rule1" value="" placeholder="Rule" class="form-control">
+                        <?=(isset($failuer['rule1'])) ? '<div class="alert alert-failuer">' . $failuer['rule1'] . '</div>' : ''; ?>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Lasr End Date</label>
+                        <input type="text" name="rule1_end" class="form-control date">
+                        <?=(isset($failuer['rule1_end'])) ? '<div class="alert alert-failuer">' . $failuer['rule1_end'] . '</div>' : ''; ?>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Current Amt</label>
                         <input type="text" name="rule" value="" placeholder="Rule" class="form-control">
                         <?=(isset($failuer['rule'])) ? '<div class="alert alert-failuer">' . $failuer['rule'] . '</div>' : ''; ?>
                     </div>

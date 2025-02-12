@@ -29,9 +29,9 @@
         <div class="container-fluid nav_head">
             <div class="navbar-header col-md-5" style="padding: 7px;">
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/night_allowance_add') ?>">Add Night
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/night_allowance_add') ?>">Add Night
                         Allowance</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -85,7 +85,7 @@
                         <th>Time </th>
                         <th>Night Allowance</th>
                         <th width="80">Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(142,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,12 +99,12 @@
                         <td><?php echo $night_allowance['night_time'] ?></td>
                         <td><?php echo $night_allowance['night_allowance'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/night_allowance_edit') . '/' . $night_allowance["id"]?>"
+                            <a href="<?=base_url('setup_con/night_allowance_edit') . '/' . $night_allowance["id"]?>"
                                  class="btn btn-primary input-sm  center-text" role="button">Edit</a>
                         </td>
 
-                        <td>
-                            <a href="<?=base_url('index.php/setup_con/night_allowance_delete') . '/' . $night_allowance["id"]?>"
+                        <td <?php if(in_array(142,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
+                            <a href="<?=base_url('setup_con/night_allowance_delete') . '/' . $night_allowance["id"]?>"
                                 class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>

@@ -60,7 +60,7 @@ class Attn_process_con extends CI_Controller {
 
 		$input_date = date("Y-m-d", strtotime($date));
 		$grid_emp_id = explode(',', $sql);
-
+		// dd($grid_emp_id);
 		$this->db->trans_start();
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
@@ -68,10 +68,10 @@ class Attn_process_con extends CI_Controller {
 		// final process check
 		$slm = date("Y-m-01", strtotime($date));
 		$check = $this->db->where('unit_id', $unit)->where('block_month',$slm)->get('pay_salary_block');
-		if ($check->num_rows() > 0) {
-			echo "Sorry! This Month Already Final Processed";
-			return false; exit();
-		}
+		// if ($check->num_rows() > 0) {
+		// 	echo "Sorry! This Month Already Final Processed";
+		// 	return false; exit();
+		// }
 		// final process check end
 
 		$data = $this->Attn_process_model->attn_process($input_date,$unit,$grid_emp_id);
@@ -81,10 +81,10 @@ class Attn_process_con extends CI_Controller {
 			echo "Process failed";
 		}else{
 			$this->db->trans_commit();
-			if($data == true){
+			if($data['success'] == true){
 				// ATTENDANCE PROCESS LOG Generate
 				$this->Log_model->log_attn_process($input_date);
-				echo "Process completed sucessfully";
+				echo $data['msg'];
 			}else{
 				echo "Process failed";
 			}
@@ -92,27 +92,20 @@ class Attn_process_con extends CI_Controller {
 	}
 
 	function attendance_process2(){
-
 		$unit = $this->input->post('unit_id');
 		$date1 = $this->input->post('process_date1');
 		$date2 = $this->input->post('process_date2');
+		if (strtotime($date1) > strtotime($date2)) {
+			echo "Sorry! Please select the Right Date Format";
+			return false; exit();
+		}
 		$days = (strtotime($date2) - strtotime($date1)) / 86400 + 1;
-
 
 		$sql = $this->input->post('sql');
 		$grid_emp_id = explode(',', $sql);
 		$this->db->trans_start();
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
-
-		// final process check
-		$slm = date("Y-m-01", strtotime($date1));
-		$check = $this->db->where('unit_id', $unit)->where('block_month',$slm)->get('pay_salary_block');
-		if ($check->num_rows() > 0) {
-			echo "Sorry! This Month Already Final Processed";
-			return false; exit();
-		}
-		// final process check end
 
 		for ($i=0; $i < $days ; $i++) {
 			$input_date = date("Y-m-d", strtotime($date1 . ' + ' . $i . ' days'));

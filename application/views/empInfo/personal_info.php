@@ -8,6 +8,9 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+.bangla_name, .bangla_village {
+    font-family: SutonnyMJ !important;
+}
 </style>
 <!-- < ? php dd($emp_info);?> -->
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
@@ -15,21 +18,18 @@ input[type="number"] {
     <div class="row">
         <div class="col-md-8">
             <?php $success = $this->session->flashdata('success');
-        if ($success != "") { ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            if ($success != "") { ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
             <?php }
-         $failuer = $this->session->flashdata('failuer');
-         if ($failuer) { ?>
-            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
+                $failuer = $this->session->flashdata('failuer');
+            if ($failuer) { ?>
+                <div class="alert alert-failuer"><?php echo $failuer; ?></div>
             <?php } ?>
         </div>
     </div>
 
     <div id="target-div">
-
         <div class="container-fluid">
-
-
             <button onclick="emp_id_search()" class="form-control btn input-sm  btn-success"
                 style="width: 8%;line-height: 10px !important;float: right;border-radius: 0 !important; margin-top: 7px;">Search</button>
 
@@ -39,8 +39,7 @@ input[type="number"] {
             <form id="form_id" enctype="multipart/form-data" method="post" name="creatdepartment"
                 action="<?php echo base_url('emp_info_con/personal_info_add')?>">
                 <h3 style="font-weight: bold; width:fit-content"><?= $title ?>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
-                        class="text-center" style="font-size:18px !important" id='last_emp_id'></span></h3>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-center" style="font-size:18px !important" id='last_emp_id'></span></h3>
 
                 <hr style="margin-bottom: 0px !important;">
                 <div style="background-color: white; padding: 15px !important;">
@@ -53,11 +52,14 @@ input[type="number"] {
                                     <option value="">Select Unit</option>
                                     <?php
 										foreach ($units as $row) {
-										if($row->unit_id == $user_data->unit_name){
-											$select_data="selected";
-										}else{
-											continue;
-										}
+                                            if($row->unit_id == $user_data->unit_name){
+                                                $select_data="selected";
+                                            }else{
+                                                if ($user_data->level != "All") {
+                                                    continue;
+                                                }
+                                            }
+                                        
 										echo '<option '.$select_data.'  value="'.$row->unit_id.'">'.$row->unit_name.
 										'</option>';
 										}
@@ -69,7 +71,7 @@ input[type="number"] {
                             <div class="form-group">
                                 <label>Emp Id <span style="color: red;">*</span> </label>
                                 <input type="text" name="emp_id" id="emp_id" class="form-control input-sm required"
-                                    value="<?= isset($emp_info->emp_id)?>" required>
+                                    value="<?= isset($emp_info->emp_id)?>" onkeypress="if (this.value.length > 6) return false;" required>
                                 <?php echo form_error('emp_id');?>
                             </div>
                         </div>
@@ -97,16 +99,15 @@ input[type="number"] {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Name (Bangla) <span style="color: red;">*</span> </label>
-                                <input type="text" name="name_bn" id="name_bn" class="form-control input-sm bangla_name required"
-                                    value="<?= isset($emp_info->name_bn)?>" required>
+                                <input style="" type="text" name="name_bn" id="name_bn" class="form-control input-sm bangla_name required" value="<?= isset($emp_info->name_bn)?>" required>
                                 <?php echo form_error('name_bn');?>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Father's Name (Bangla) <span style="color: red;">*</span> </label>
-                                <input style="font-family: SutonnyMJ;" type="text" name="father_name" id="father_name"
-                                    class="form-control input-sm bangla_name required"
+                                <input  style="font-family: SutonnyMJ;" type="text" name="father_name" id="father_name"
+                                    class="form-control input-sm bangla_name unicode-to-bijoy required"
                                     value="<?= isset($emp_info->father_name)?>" required>
                                 <?php echo form_error('father_name');?>
                             </div>
@@ -218,22 +219,28 @@ input[type="number"] {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Education </label>
-                                <!-- <input type="text" name="education" id="education" class="form-control input-sm">
-                                <?php echo form_error('education');?> -->
-                                <Select name="education" id="education" class="form-control input-sm required">
+                                <input type="text" name="education" id="education" class="form-control input-sm">
+                                <!-- < ?php echo form_error('education');?>
+                                 <Select name="education" id="education" class="form-control input-sm required">
                                     <option value="">select</option>
                                     <option value="None">None</option>
+                                    <option value="One">One</option>
+                                    <option value="Two">Two</option>
+                                    <option value="Three">Three</option>
+                                    <option value="Four">Four</option>
+                                    <option value="Five">Five</option>
                                     <option value="PSC">PSC</option>
-                                    <option value="Six">Six</option>
                                     <option value="Seven">Seven</option>
                                     <option value="JSC">JSC</option>
+                                    <option value="Nine">Nine</option>
+                                    <option value="Ten">Ten</option>
                                     <option value="SSC">SSC</option>
                                     <option value="HSC">HSC</option>
                                     <option value="Diploma">Diploma</option>
                                     <option value="Graduation">Graduation</option>
                                     <option value="Post Graduation">Post Graduation</option>
                                     <option value="Other">Other</option>
-                                </Select>
+                                </Select> -->
                             </div>
                         </div>
                     </div>
@@ -279,48 +286,42 @@ input[type="number"] {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Hight <span style="color: red;">*</span> </label>
-                                <div class="col-md-12" style="display: flex;flex-direction: row;justify-content: space-evenly;align-items: center;">
-                                    <select name="ft" id="ft" class="col-md-5">
-                                        <option value="">selectft</option>
-                                        <option value="0">0ft </option>
-                                        <option value="1">1ft </option>
-                                        <option value="2">2ft </option>
-                                        <option value="3">3ft </option>
-                                        <option value="4">4ft </option>
-                                        <option value="5">5ft </option>
-                                        <option value="6">6ft </option>
-                                        <option value="7">7ft </option>
-                                        <option value="8">8ft </option>
-                                        <option value="9">9ft </option>
-                                        <option value="10">10ft</option>
-                                        <option value="11">11ft</option>
-                                        <option value="12">12ft</option>
-                                    </select>
-                                    <select name="inches" id="inches" class="col-md-5">
-                                        <option value="0">0 inches</option>
-                                        <option value="1">1 inches</option>
-                                        <option value="2">2 inches</option>
-                                        <option value="3">3 inches</option>
-                                        <option value="4">4 inches</option>
-                                        <option value="5">5 inches</option>
-                                        <option value="6">6 inches</option>
-                                        <option value="7">7 inches</option>
-                                        <option value="8">8 inches</option>
-                                        <option value="9">9 inches</option>
-                                        <option value="10">10 inches</option>
-                                        <option value="11">11 inches</option>
-                                        <option value="12">12 inches</option>
-                                    
-                                    </select>
+                                <!-- <input type="hidden" name="ft" id="ft"> -->
+                                <!-- <input type="hidden" name="inches" id="inches"> -->
+                                <input  class="form-control input-sm" name="hight" id="hight" class="col-md-5" type="text" onkeypress="return isValidInput(event)" oninput="validateHeightInput(this)">
+                               
+                            <script>
+                                function isValidInput(event) {
+                                    // Allow only digits and dot (.)
+                                    const charCode = event.charCode;
+                                    return (charCode >= 48 && charCode <= 57) || charCode === 46;
+                                }
 
-                                </div>
-                                
+                                function validateHeightInput(input) {
+                                    // Allow only up to 3 digits before dot and 2 digits after dot
+                                    const regex = /^(\d{0,3})(\.\d{0,2})?$/;
+                                    if (!regex.test(input.value)) {
+                                        // Trim the value to fit the format
+                                        const match = input.value.match(/^(\d{0,3})(\.\d{0,2})?/);
+                                        input.value = match ? match[0] : '';
+                                    }
+                                }
+
+                            </script>
+
+                                <!-- <input class="form-control input-sm" name="hight" id="hight" class="col-md-5" type="text"> -->
+                                    <!-- <option value="">select</option>
+                                    <?php for ($i = 99; $i <= 220; $i++ ) { ?>
+                                        <option value="<?= $i; ?>"><?= $i; ?> cm </option>
+                                    <?php } ?>
+                                </select> -->
                             </div>
                         </div>
-                        <div class="col-md-3">
+
+                        <div class="col-md-9">
                             <div class="form-group">
                                 <label>Symbol<span style="color: red;">*</span> </label>
-                                <textarea name="symbol" id="symbol" style="width: 740px; height: 27px;"></textarea>
+                                <textarea name="symbol" id="symbol" style="width: 100%; height: 27px;"></textarea>
                                 <?php echo form_error('symbol');?>
                             </div>
                         </div>
@@ -534,7 +535,6 @@ input[type="number"] {
                                 </select>
                             </div>
                         </div>
-
                         <?php $shifts = $this->db->where('unit_id',$user_data->unit_name)->get('pr_emp_shift')->result(); ?>
                         <div class="col-md-3">
                             <div class="form-group">
@@ -624,7 +624,7 @@ input[type="number"] {
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row"  <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Gross Salary <span style="color: red;">*</span> </label>
@@ -683,8 +683,7 @@ input[type="number"] {
                                 style="display: inline; margin-right: 10px;" required checked>No
                         </div>
                     </div>
-                    <div class="row"
-                        <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>
+                    <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Salary <span style="color: red;">*</span> </label>
@@ -821,12 +820,34 @@ input[type="number"] {
                             <div class="form-group">
                                 <label>Relation<span style="color: red;">*</span> </label>
                                 <?php echo form_error('nomi_relation');?>
-                                <select name="nomi_relation" id="nomi_relation" class="form-control input-sm required" required>
+                                 <input type="text" name="nomi_relation" id="nomi_relation" value="<?= isset($emp_info->nomi_relation)?>" class="form-control input-sm required"
+                                    required>
+                                <!-- <select name="nomi_relation" id="nomi_relation" class="form-control input-sm required" required>
                                     <option value="">-- Select one --</option>
-                                    <?php foreach ($nominees as $key => $row) { ?>
+                                    < ?php foreach ($nominees as $key => $row) { ?>
                                     <option value="<?= $row->id ?>"><?= $row->nomini_relation; ?></option>
-                                    <?php } ?>
-                                </select>
+                                    < ?php } ?>
+                                </select> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Identification Type<span style="color: red;">*</span> </label>
+                                <?php echo form_error('nomi_nid_bc_check');?>
+                                <input class="form-check-input" type="radio" value="1" id="nomi_nid_bc_check"
+                                    name="nomi_nid_bc_check"> NID
+                                <input class="form-check-input" type="radio" value="2" id="nomi_nid_bc_check"
+                                    name="nomi_nid_bc_check"> DOB
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nominee NID/Birth Certificate <span style="color: red;">*</span> </label>
+                                <?php echo form_error('nomi_nid');?>
+                                <input type="text" name="nomi_nid" id="nomi_nid" class="form-control input-sm required"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -857,13 +878,14 @@ input[type="number"] {
                             <div class="form-group">
                                 <label>Rrelation<span style="color: red;">*</span> </label>
                                 <?php echo form_error('refer_relation');?>
-                                <select name="refer_relation" id="refer_relation" class="form-control input-sm required"
+                                <input type="text" name="refer_relation" id="refer_relation" value="<?= isset($emp_info->refer_relation)?>" class="form-control input-sm required" required>
+                                <!-- <select name="refer_relation" id="refer_relation" class="form-control input-sm required"
                                     required>
                                     <option value='' >-- Select --</option>
-                                    <?php foreach ($nominees as $key => $row) { ?>
-                                    <option value="<?= $row->id ?>"><?= $row->nomini_relation; ?></option>
-                                    <?php } ?>
-                                </select>
+                                    < ?php foreach ($nominees as $key => $row) { ?>
+                                    <option value="< ?= $row->id ?>"><?= $row->nomini_relation; ?></option>
+                                    < ?php } ?>
+                                </select> -->
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -1017,12 +1039,11 @@ function set_desi_item() {
     var nomi_thana = localStorage.getItem('nomi_thana');
     var nomi_post = localStorage.getItem('nomi_post');
 
-    var ref_district = localStorage.getItem('ref_district');
-    var ref_thana = localStorage.getItem('ref_thana');
-    var ref_post = localStorage.getItem('ref_post');
+    
     var ot_entitle = localStorage.getItem('ot_entitle');
     var com_ot_entitle = localStorage.getItem('com_ot_entitle');
     var nid_dob_check = localStorage.getItem('nid_dob_check');
+    var nomi_nid_bc_check = localStorage.getItem('nomi_nid_bc_check');
 
     var gross_sal = localStorage.getItem('gross_sal');
     var com_gross_sal = localStorage.getItem('com_gross_sal');
@@ -1045,13 +1066,13 @@ function set_desi_item() {
     //alert(new Date(emp_dob));
     var nomi_age = localStorage.getItem('nomi_age');
     var emp_join_date = localStorage.getItem('emp_join_date');
-    var ft = localStorage.getItem('ft');
-    var inches = localStorage.getItem('inches');
-    console.log(ft, inches);
+    // var ft = localStorage.getItem('ft');
+    // var inches = localStorage.getItem('inches');
+    // console.log(ft, inches);
 
 
-    $('#ft').val(ft).trigger('change');
-    $('#inches').val(inches).trigger('change');
+    // $('#ft').val(ft).trigger('change');
+    // $('#inches').val(inches).trigger('change');
 
 
 
@@ -1090,13 +1111,20 @@ function set_desi_item() {
         }, 500)
     }, 500)
 
+    var ref_district = localStorage.getItem('ref_district');
+    var ref_thana = localStorage.getItem('ref_thana');
+    var ref_post = localStorage.getItem('ref_post');
+    
+    var hight = localStorage.getItem('hight');
+    $('#hight').val(hight).trigger('change');
 
 
-    $('#ref_district').val(per_district).trigger('change');
+
+    $('#ref_district').val(ref_district).trigger('change');
     setTimeout(function() {
-        $('#ref_thana').val(per_thana).trigger('change');
+        $('#ref_thana').val(ref_thana).trigger('change');
         setTimeout(function() {
-            $('#ref_post').val(per_post).trigger('change');
+            $('#ref_post').val(ref_post).trigger('change');
         }, 500)
     }, 500)
 
@@ -1131,6 +1159,10 @@ function set_desi_item() {
         if (nidDobCheckElement) {
             nidDobCheckElement.checked = true;
         }
+        var nomiNidBcCheckElement = document.querySelector('input[name="nomi_nid_bc_check"][value="'+nomi_nid_bc_check+'"]');
+        if (nomiNidBcCheckElement) {
+            nomiNidBcCheckElement.checked = true;
+        }
 //localStorage.clear();
 
 }
@@ -1153,6 +1185,7 @@ function emp_id_search(id = null) {
         },
         success: function(e) {
             var data = e.data;
+            // consol.log(data);return;
             $('#age').html(data.age)
             $('#job_duration').html(data.job_duration)
             if (e.status == false) {
@@ -1172,16 +1205,16 @@ function emp_id_search(id = null) {
                     "pre_village_bn", "spouse_name", "emp_dob", "gender",
                     "marital_status", "religion", "blood", "m_child", "f_child",
                     "nominee_name", "nominee_vill", "nomi_post", "nomi_thana",
-                    "nomi_district", "nomi_age", "nomi_relation", "nomi_mobile",
+                    "nomi_district", "nomi_age","nomi_nid", "nomi_relation", "nomi_mobile",
                     "refer_name", "refer_address", "refer_mobile", "refer_relation",
-                    "education", "nid_dob_id", "nid_dob_check", "exp_factory_name",
+                    "education", "nid_dob_id", "nid_dob_check","nomi_nid_bc_check", "exp_factory_name",
                     "exp_duration", "exp_designation", "personal_mobile", "exp_dasignation",
                     "bank_bkash_no", "unit_id", "emp_dept_id", "refer_village",
                     "emp_sec_id", "emp_line_id", "emp_desi_id", "emp_sal_gra_id",
                     "emp_cat_id", "proxi_id", "emp_shift", "gross_sal",
                     "com_gross_sal", "ot_entitle", "com_ot_entitle", "transport", "img_source",
                     "lunch", "att_bonus", "salary_draw", "salary_type", "emp_join_date",
-                    "ref_district", "refer_village", "ref_thana", "ref_post","ft","inches","symbol"
+                    "ref_district", "refer_village", "ref_thana", "ref_post","hight","symbol"
                 ];
                 // Filter the data based on keysToFilter
                 var filteredData = {};
@@ -1194,7 +1227,7 @@ function emp_id_search(id = null) {
                             key == 'per_thana' || key == 'per_post' || key == 'pre_post' || key ==
                             'nomi_post' || key == 'ref_thana' || key == 'ref_post' || key ==
                             'ref_district' || key == 'emp_dob' || key == 'nomi_age' || key ==
-                            'emp_join_date' || key == 'ft' || key == 'inches' || key == 'ot_entitle' || key == 'com_ot_entitle' || key == 'nid_dob_check' || key == 'com_gross_sal'|| key == 'gross_sal'
+                            'emp_join_date' || key == 'hight' || key == 'ot_entitle' || key == 'com_ot_entitle' ||key == 'nomi_nid_bc_check'|| key == 'nid_dob_check' || key == 'com_gross_sal'|| key == 'gross_sal'
                         ) {
                             localStorage.setItem(key, data[key]);
                         } else if (key == 'img_source') {
@@ -1202,7 +1235,7 @@ function emp_id_search(id = null) {
                                 '<?php echo base_url("/uploads/photo/")?>' + data[key] : '');
                             $("#img_source").attr("src", data[key] != null ?
                                 '<?php echo base_url("/uploads/photo/")?>' + data[key] : '');
-                        } else if (key == 'nid_dob_check' || key == 'ot_entitle' || key ==
+                        } else if (key == 'nid_dob_check' || key == 'nomi_nid_bc_check'  || key == 'ot_entitle' || key ==
                             'com_ot_entitle') {
                             var radioBtn = $('#' + key);
                             if (data[key] != null) {
@@ -1549,6 +1582,7 @@ $(function() {
                 },
                 success: function(data) {
                     response(data);
+                    changeFontBn();
                 }
             });
         },
@@ -1586,12 +1620,18 @@ $(function() {
                 },
                 success: function(data) {
                     response(data);
+                    changeFontBn();
                 }
             });
         },
         minLength: 2
     });
 });
+function changeFontBn() {
+    setTimeout(() => {
+        $('.ui-menu-item-wrapper').css('font-family', 'SutonnyMJ');
+    }, 500);
+}
 </script>
 <script>
 function checkAndBlockSubmit(type, e) {
@@ -1657,6 +1697,16 @@ function checkAndBlockSubmit(type, e) {
 </script>
 
 <script>
+$('#marital_status').change(function(){
+    status = $('#marital_status').val();
+    if(status == 'Unmarried'){
+        $('#m_child').val(0);
+        $('#f_child').val(0);
+    }else{
+         $('#m_child').val('');
+         $('#f_child').val('');
+    }
+});
 function get_last_id() {
     var unit_id = $('#unit_id').val();
     $.ajax({
@@ -1677,7 +1727,5 @@ function get_last_id() {
     })
 }
 get_last_id()
+
 </script>
-
-
-

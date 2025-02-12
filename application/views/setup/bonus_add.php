@@ -30,77 +30,71 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label for="unit_id">Unit</label>
                             <select name="unit_id" id="unit_id" class="form-control">
                                 <option value="">Select Unit</option>
-                                <?php foreach ($pr_units as $key => $value) {
-                            ?>
-                                <option value="<?php echo $value->unit_id; ?>"><?php echo $value->unit_name; ?></option>
+                                <?php foreach ($pr_units as $key => $value) { ?>
+                                <option <?= $user_data->unit_name == $value->unit_id ? 'selected':'' ?> value="<?php echo $value->unit_id; ?>"><?php echo $value->unit_name; ?></option>
                                 <?php } ?>
                             </select>
                             <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
                         </div>
-                        <div class="form-group col-md-6">
-
-                            <label>Employee Type</label>
-                            <!-- <input required type="text" name="emp_type" value="" placeholder="Employee Type"
-                                class="form-control"> -->
-                                <select name="emp_type" id="">
+                        <div class="form-group col-md-3">
+                            <label>Employee Type <span style="color:red">*</span> </label>
+                                <select name="emp_type" class="form-control" required>
                                     <option value="">Select Employee Type</option>
-                                    <option value="Worker">Worker</option>
-                                    <option value="Staff">Staff</option>
+                                    <option value="1">Worker</option>
+                                    <option value="2">Staff</option>
                                 </select>
                             <?=(isset($failuer['emp_type'])) ? '<div class="alert alert-failuer">' . $failuer['emp_type'] . '</div>' : ''; ?>
+                        </div>
+                        <?php $religion = $this->db->get('pr_religions')->result(); ?>
+                        <div class="form-group col-md-3">
+                            <label>Religion</label>
+                            <select name="religion_id" class="form-control">
+                                <option value="">Select Religion</option>
+                                <?php foreach ($religion as $key => $value) { ?> 
+                                    <option value="<?php echo $value->religion_id; ?>"><?php echo $value->religion_name; ?></option> 
+                                <?php } ?>
+                            </select>
+                            <?=(isset($failuer['emp_type'])) ? '<div class="alert alert-failuer">' . $failuer['emp_type'] . '</div>' : ''; ?>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Festival <span style="color:red">*</span> </label>
+                            <input required type="text" name="festival" placeholder="Festival" class="form-control">
+                            <?=(isset($failuer['festival'])) ? '<div class="alert alert-failuer">' . $failuer['festival'] . '</div>' : ''; ?>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-md-4">
-                            <label>Bonus First Month</label>
-                            <input required type="number" name="bonus_first_month" value=""
-                                placeholder="Bonus First Month" class="form-control">
+                        <div class="form-group col-md-3">
+                            <label>Bonus Enabled Days <span style="color:red">*</span></label>
+                            <input required type="number" name="bonus_first_month" placeholder="Bonus Enabled days" class="form-control">
                             <?=(isset($failuer['bonus_first_month'])) ? '<div class="alert alert-failuer">' . $failuer['bonus_first_month'] . '</div>' : ''; ?>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Bonus Second Month</label>
-                            <input required type="number" name="bonus_second_month" value=""
-                                placeholder="Bonus Second Month" class="form-control">
+                        <div class="form-group col-md-3">
+                            <label>Less Than Days</label>
+                            <input type="number" name="bonus_second_month" placeholder="Less than enabled days (Optional)" class="form-control">
                             <?=(isset($failuer['bonus_second_month'])) ? '<div class="alert alert-failuer">' . $failuer['bonus_second_month'] . '</div>' : ''; ?>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Bonus Amount</label>
-                            <select name="bonus_amount" id="">
-                                    <option value="">Select Employee Type</option>
+                        <div class="form-group col-md-2">
+                            <label>Bonus Pay <span style="color:red">*</span></label>
+                            <select name="bonus_amount" class="form-control" required>
+                                    <option value="">Select Pay Type</option>
                                     <option value="Gross">Gross</option>
                                     <option value="Basic">Basic</option>
                                 </select>
                             <?=(isset($failuer['bonus_amount'])) ? '<div class="alert alert-failuer">' . $failuer['bonus_amount'] . '</div>' : ''; ?>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label>Bonus Amount Fraction</label>
-                            <input required type="number" name="bonus_amount_fraction" value=""
-                                placeholder="Bonus Amount Fraction" class="form-control">
-                            <?=(isset($failuer['bonus_amount_fraction'])) ? '<div class="alert alert-failuer">' . $failuer['bonus_amount_fraction'] . '</div>' : ''; ?>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Bonus Percent</label>
-                            <input required type="number" name="bonus_percent" value="" placeholder="Bonus Percent"
-                                class="form-control">
+                        <div class="form-group col-md-2">
+                            <label>Bonus Percent (%) <span style="color:red">*</span></label>
+                            <input required type="number" name="bonus_percent" placeholder="Bonus Percent" class="form-control">
                             <?=(isset($failuer['bonus_percent'])) ? '<div class="alert alert-failuer">' . $failuer['bonus_percent'] . '</div>' : ''; ?>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label>Festival</label>
-                            <input required type="text" name="festival" value="" placeholder="Festival"
-                                class="form-control">
-                            <?=(isset($failuer['festival'])) ? '<div class="alert alert-failuer">' . $failuer['festival'] . '</div>' : ''; ?>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Effective Date</label>
-                            <input required type="text" class="date" name="effective_date" value="" placeholder="Effective Date"
-                                class="form-control">
+                        <div class="form-group col-md-2">
+                            <label>Effective Date <span style="color:red">*</span></label>
+                            <input required name="effective_date" class="form-control date" type="text" >
                             <?=(isset($failuer['effective_date'])) ? '<div class="alert alert-failuer">' . $failuer['effective_date'] . '</div>' : ''; ?>
                         </div>
                     </div>

@@ -48,26 +48,11 @@
 					echo "</tr>";
 
 					echo "<tr>";
-						echo "<td >";
-						echo "<strong>Proxi NO. :</strong>";
-						echo "</td>";
-						echo "<td >";
-						echo $value->proxi_id;
-						echo "</td>";
-
 						echo "<td style:width:20px'>";
 						echo "<strong>Section :</strong>";
 						echo "</td>";
 						echo "<td width='30px'>";
 						echo $value->sec_name_en;
-						echo "</td>";
-					echo "</tr>";
-					echo "<tr>";
-						echo "<td>";
-						echo "<strong>Line :</strong>";
-						echo "</td>";
-						echo "<td>";
-						echo $value->line_name_en;
 						echo "</td>";
 						echo "<td>";
 						echo "<strong>Desig :</strong>";
@@ -78,18 +63,27 @@
 					echo "</tr>";
 					echo "<tr>";
 						echo "<td>";
-						echo "<strong>DOJ :</strong>";
+						echo "<strong>Line :</strong>";
 						echo "</td>";
 						echo "<td>";
-						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo $value->line_name_en;
 						echo "</td>";
-
 						echo "<td >";
 						echo "<strong>Dept :</strong>";
 						echo "</td>";
 						echo "<td >";
 						echo $value->dept_name;
 						echo "</td>";
+					echo "</tr>";
+					echo "<tr>";
+						echo "<td>";
+						echo "<strong>DOJ :</strong>";
+						echo "</td>";
+						echo "<td>";
+						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo "</td>";
+
+
 					echo "</tr>";
 
 					// echo "<tr>";
@@ -117,15 +111,15 @@
 							<th>Remarks</th>
 						</tr>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
-						if ($row->eot >= 2) {
+						if ($row->com_eot >= 2) {
 							$extra_ot_hour = 2;
-						} else if(0.0 == $row->eot) {
+						} else if(0.0 == $row->com_eot) {
 							$extra_ot_hour = 0;
 						} else {
-							$extra_ot_hour = $row->eot;
+							$extra_ot_hour = $row->com_eot;
 						}
 
-						if(in_array($row->shift_log_date,$emp_data['leave'])){
+						if($row->present_status == 'L'){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
 							$att_status = $leave_type;
@@ -138,7 +132,7 @@
 							$att_status_count = "Holiday";
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot =0;
+							$row->com_ot =0;
 							$extra_ot_hour = 0;
 						}
 						elseif($row->present_status == 'W') {
@@ -146,7 +140,7 @@
 							$att_status_count = "Work Off";
 							$row->in_time = "00:00:00";
 							$row->out_time = "00:00:00";
-							$row->ot =0;
+							$row->com_ot =0;
 							$extra_ot_hour = 0;
 						}
 						elseif($row->in_time !='00:00:00' and $row->out_time !='00:00:00'){
@@ -178,30 +172,51 @@
 						$date=trim(substr($shift_log_date,8,2));
 						$shift_log_date = date("d-M-y", mktime(0, 0, 0, $month, $date, $year));
 						$deduction_hour = $row->deduction_hour;
+
 						if($row->in_time != "00:00:00"){
 							$in_time = $row->in_time;
-							// $in_time = $this->job_card_model->time_am_pm_format($in_time);
+							$in_time = $this->job_card_model->time_am_pm_format($in_time);
+							list($hour, $minute, $second) = explode(':', $in_time);
+							if ((int)$minute < 45 && $schedule[0]["in_time"] > $row->in_time) {
+
+							$minuteDigits = str_split($minute);
+							$minuteSum = array_sum($minuteDigits);                                
+							$n_m = 60 - $minuteSum;
+							$in_time = sprintf("%02d:%02d:%02d", (int)$hour, $n_m, (int)$second);
+							}
 						}else{
 							$in_time = "00:00:00";
 						}
+
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							$out_time = $this->job_card_model->get_formated_out_time_9pm($value->emp_id, $out_time, $row->schedule_id);
+							list($hour, $minute, $second) = explode(':', $out_time);
+							// Check if the minute is greater than 13
+							if ((int)$minute > 13 && (int)$minute < 50) {
+								// Sum the digits of the minute
+								$minuteDigits = str_split($minute);
+								$minuteSum = array_sum($minuteDigits);
+								
+								// Format the new time string with the summed minute value
+								$out_time = sprintf("%02d:%02d:%02d", (int)$hour, $minuteSum, (int)$second);
+							}
 
-							if($row->eot == 1 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
+							if($row->com_eot == 1 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
 								$extra_ot_hour = 0;
 								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							} else if($row->eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
+							} else if($row->com_eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
 								$extra_ot_hour = 0;
 								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 1){
+							} else if($row->com_eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 1){
 								$extra_ot_hour = 1;
 								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
-
 						}else{
 							$out_time = "00:00:00";
 						}
+
+						// get format buyer time
+						$out_time = $this->job_card_model->get_formated_out_time_9pm($value->emp_id, $out_time, $row->schedule_id);
 
 						echo "<tr>";
 							echo "<td>&nbsp;";
@@ -263,21 +278,21 @@
 								$remark = "";
 							}
 							echo "<td>&nbsp;";
-							if($row->ot == 0){
-								echo $row->ot;
+							if($row->com_ot == 0){
+								echo $row->com_ot;
 							}else{
-								echo $row->ot;
+								echo $row->com_ot;
 							}
 							echo "&nbsp;</td>";
-							$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
-							$total_ot = $total_ot + $row->ot;
+							$total_ot_hour = $total_ot_hour + $row->com_ot + $extra_ot_hour;
+							$total_ot = $total_ot + $row->com_ot;
 
 							echo "<td>&nbsp;";
 							echo $extra_ot_hour;
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
-							echo $extra_ot_hour + $row->ot;
+							echo $extra_ot_hour + $row->com_ot;
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
@@ -345,7 +360,7 @@
 					echo "</td>";
 
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
-					echo "OVERTIME";
+					echo "OVER TIME";
 					echo "</td>";
 
 					echo "</tr>";

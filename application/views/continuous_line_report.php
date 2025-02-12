@@ -51,7 +51,7 @@ for($counter = 1; $counter <= $page,$counter <= $page2; $counter ++)
 	<tr height="70px">
 		<td style="text-align:center;width: 70%;padding-left:150px;">
 		<?php $this->load->view("head_english");?><span style="font-size:13px; font-weight:bold; text-align: center;">
-			Line Change Report from 
+			<?= ($type=='section')?'Section':'Line' ?> Change Report from 
 			<?php 
 				$year= trim(substr($start_date,0,4));
 				$month = trim(substr($start_date,5,2));

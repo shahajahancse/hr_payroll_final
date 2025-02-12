@@ -27,14 +27,14 @@ class Auth extends REST_Controller
             $data =$this->Admin_model->check_user_account_FE();
             $this->response($data, 200);
 
-            if ($data['logged_in'] == true )
-            {
-                $this->response($data, 200); // 200 being the HTTP response code
-                redirect(base_url('index.php/api/user/dashboard'));
+            // if ($data['logged_in'] == true )
+            // {
+            //     $this->response($data, 200); // 200 being the HTTP response code
+            //     redirect(base_url('index.php/api/user/dashboard'));
 
-            }else{
-                $this->response(array('status' => 404, 'response' => 'Username or password not match!', 'data' => null, 'logged_in' => false), 404);
-            }
+            // }else{
+            //     $this->response(array('status' => 404, 'response' => 'Username or password not match!', 'data' => null, 'logged_in' => false), 404);
+            // }
         }
         else
         {

@@ -14,7 +14,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url('index.php/payroll_con') ?>">Home</a></li>
+                    <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
                 </ul>
 
             </div>
@@ -29,7 +29,7 @@
 
     <h3>Update Tiffin Bill Allowance</h3>
     <hr>
-    <form action="<?= base_url('index.php/setup_con/tiffin_bill_edit').'/'.$attbn->id?> " enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('setup_con/tiffin_bill_edit').'/'.$attbn->id?> " enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -57,7 +57,7 @@
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary ">Submit</button></button>
-                    <a href="<?php echo base_url('index.php/setup_con/tiffin_bill_setup') ?>" class="btn-warning btn">Cancel</a>
+                    <a href="<?php echo base_url('setup_con/tiffin_bill_setup') ?>" class="btn-warning btn">Cancel</a>
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+            <li class="active"><a href="<?=base_url('setup_con/upazila_add')?>" >Add Upazila</a></li>
             <li class="active"><a href="<?=base_url('payroll_con')?>" >Home</a></li>
           </ul>
           <div class="pull-right">
@@ -86,15 +87,15 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label>পোস্ট অফিস</label>
+                <label>পোস্ট অফিস বাংলা</label>
                 <?php echo form_error('post_office'); ?>
-                <input type="text" name="post_office"value="" id="post_office" class="form-control" required>
+                <input type="text" name="post_office"value="" id="post_office" class="form-control bfont" required>
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
-                <label>Post Office English</label>
+                <label>পোস্ট অফিস ইংরেজি</label>
                 <input type="text" name="post_office_en"value="" id="post_office_en" class="form-control" required>
                 <?php echo form_error('post_office_en');?>
               </div>

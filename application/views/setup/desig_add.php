@@ -1,3 +1,8 @@
+<style>
+    p {
+        font-family: SutonnyMJ !important;
+    }
+</style>
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
@@ -114,7 +119,7 @@
                     <div class="col-md-6">
                             <div class="form-group">
                             <label>Designation Name Bangla</label>
-                            <input type="text" name="desig_bangla" value="" placeholder="Designation Name Bangla" class="form-control">
+                            <input type="text" name="desig_bangla" value="" placeholder="Designation Name Bangla" class="form-control bfont">
                             <?=(isset($failuer['desig_bangla'])) ? '<div class="alert alert-failuer">' . $failuer['desig_bangla'] . '</div>' : ''; ?>
                         </div>
                     </div>
@@ -152,7 +157,7 @@
                 </script>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary ">Submit</button></button>
-                    <a href="<?= base_url('index.php/setup_con/designation') ?>" class="btn-warning btn">Cancel</a>
+                    <a href="<?= base_url('setup_con/designation') ?>" class="btn-warning btn">Cancel</a>
                 </div>
             </div>
     </form>

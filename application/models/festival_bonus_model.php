@@ -11,31 +11,20 @@ class Festival_bonus_model extends CI_Model{
 		$this->load->model('common_model');
 	}
 	
-	function festival_bonus_process($year, $month,$process_check)
+	function festival_bonus_process($emp_ids, $date, $process_check)
 	{
-		$year_v=$year;
-		$month_v=$month;
+		$unit_id = $this->session->userdata('data')->unit_name;
+		$start_date = date("Y-m-01", strtotime($date));
+		$salary_month = date("Y-m", strtotime($date));
 		
-		$start_date = date("Y-m-d", mktime(0, 0, 0, $month_v, 1, $year_v));
-		
-		$year_month = "$year_v-$month_v";
-		/////////////////Get Employee////////////////
-		$unit_id = $this->common_model->get_session_unit_id_name();
-		
-		$this->db->select("emp_id,gross_sal,emp_sal_gra_id,emp_desi_id,emp_join_date,salary_type,emp_sec_id,ot_entitle,com_gross_sal,emp_dept_id,emp_line_id,emp_cat_id,emp_sts_id");
+		$this->db->where_in("emp_id",$emp_ids);
 		// $this->db->where("unit_id",$unit_id);
-		// $this->db->where("emp_id","11000026");
-		// $this->db->where("emp_id","11000714");
-		//$this->db->where("emp_cat_id","4");
 		$this->db->order_by("emp_id");
 		$query = $this->db->get("pr_emp_com_info");
 		
-		if($query->num_rows() == 0)
-		{
+		if($query->num_rows() == 0) {
 			return "Employee information does not exist";
-		}
-		else
-		{
+		} else {
 			$serial = 1;
 			$data = array();
 			$data_com 	= array();
@@ -43,153 +32,166 @@ class Festival_bonus_model extends CI_Model{
 			{
 				set_time_limit(0) ;
 				ini_set("memory_limit","512M");
-				
-				
+
 				//========================GENERAL INFORMATION==================================
 				//=============================================================================
-				$emp_name 		= $this->emp_name($rows->emp_id);
 				$emp_id 		= $rows->emp_id; 
-				$desi_id 		= $rows->emp_desi_id;
-				$emp_sec_id 	= $rows->emp_sec_id;
-				$emp_desig 		= $this->emp_desig($rows->emp_desi_id);
-				
-				$emp_dept_id	= $rows->emp_dept_id;
-				$emp_line_id	= $rows->emp_line_id;
-				$emp_cat_id		= $rows->emp_cat_id;
-				
-				$ot_entitle		= $rows->ot_entitle;
-				$emp_sts_id		= $rows->emp_sts_id;
-				
+				$emp_type 		= $rows->emp_type; 
 				$doj 			= $rows->emp_join_date;
 				$gross_sal 		= $rows->gross_sal;
 				$gross_sal_com 	= $rows->com_gross_sal;
+				$per_info = $this->db->where("emp_id",$emp_id)->get('pr_emp_per_info')->row();
 				
 				$salary_process_eligibility = $this->salary_process_eligibility($emp_id, $start_date);
 				
-				if($salary_process_eligibility == true)
-				{
-				//==============================FOR INCREMENT AND PROMOTION=====================
-				//==============================================================================
-				$where = "trim(substr(effective_month,1,7)) = '$year_month'";
-				$this->db->select("new_salary");
-				$this->db->where("new_emp_id",$emp_id);
-				$this->db->where($where);
-				$inc_prom_entry1 = $this->db->get("pr_incre_prom_pun");
-				if($inc_prom_entry1->num_rows() > 0 )
-				{
-					foreach($inc_prom_entry1->result() as $row)
-					{
-						$gross_sal 		= $row->new_salary;
-					}
-				}
-				else
-				{
-					$where = "trim(substr(effective_month,1,7)) > '$year_month'";
-					$this->db->select("prev_salary");
-					$this->db->where("new_emp_id",$emp_id);
+				if($salary_process_eligibility == true) {
+					//=========================  FOR INCREMENT AND PROMOTION =====================
+					//============================================================================
+					$where = "trim(substr(effective_month,1,7)) = '$salary_month'";
+					$this->db->select("new_salary");
+					$this->db->where("new_emp_id", $emp_id);
 					$this->db->where($where);
-					$this->db->limit(1);
-					$inc_prom_entry2 = $this->db->get("pr_incre_prom_pun");
-					if($inc_prom_entry2->num_rows() > 0 )
+					$inc_prom_entry1 = $this->db->get("pr_incre_prom_pun");
+
+					if($inc_prom_entry1->num_rows() > 0 )
 					{
-						foreach($inc_prom_entry2->result() as $row)
+						foreach($inc_prom_entry1->result() as $row)
 						{
-							$gross_sal 		= $row->prev_salary;
+							$gross_sal 	= $row->new_salary;
 						}
 					}
 					else
 					{
-						echo "";
+						$where = "trim(substr(effective_month,1,7)) > '$salary_month'";
+						$this->db->select("prev_salary");
+						$this->db->where("new_emp_id",$emp_id);
+						$this->db->where($where);
+						$this->db->limit(1);
+						$inc_prom_entry2 = $this->db->get("pr_incre_prom_pun");
+						if($inc_prom_entry2->num_rows() > 0 )
+						{
+							foreach($inc_prom_entry2->result() as $row)
+							{
+								$gross_sal 		= $row->prev_salary;
+							}
+						}
+						else
+						{
+							echo "";
+						}
 					}
-				
-				}
-				//============================================END INCREMENT AND PROMOTION======================
-				$salary_structure 		= $this->common_model->salary_structure($gross_sal);
-				$basic_sal 				= $salary_structure['basic_sal'];
-				$madical_allo 			= $salary_structure['medical_allow'];
-				$house_rent 			= $salary_structure['house_rent'];
-				$trans_allow 			= $salary_structure['trans_allow'];
-				$food_allow 			= $salary_structure['food_allow'];
-				
-				$total_sal = $basic_sal + $house_rent + $madical_allo + $food_allow + $trans_allow; 
-				$data["emp_id"] 		= $emp_id;
-				$data["unit_id"] 		= $unit_id;
-				$data["sec_id"] 		= $emp_sec_id;
-				$data["desig_id"] 		= $desi_id;
-				$data["dept_id"] 		= $emp_dept_id;
-				$data["line_id"] 		= $emp_line_id;
-				$data["emp_status"] 	= $emp_cat_id;
-				$data["emp_sex"] 		= $this->db->where("emp_id",$emp_id)->get('pr_emp_per_info')->row()->emp_sex;
-				
-				$data["basic_sal"] 		= $basic_sal;
-				$data["house_r"] 		= $house_rent;
-				$data["medical_a"] 		= $madical_allo;
-				$data["food_allow"] 	= $food_allow;
-				$data["trans_allow"] 	= $trans_allow;
-				$data["gross_sal"] 		= $gross_sal;
-				
-	//===========================END GENERAL INFORMATION==================================
-				
+					//=============================== END INCREMENT AND PROMOTION ======================
+					$data["emp_id"] 		= $emp_id;
+					$data["unit_id"] 		= $rows->unit_id;
+					$data["dept_id"] 		= $rows->emp_dept_id;
+					$data["sec_id"] 		= $rows->emp_sec_id;
+					$data["line_id"] 		= $rows->emp_line_id;
+					$data["desig_id"] 		= $rows->emp_desi_id;
+					$data["emp_status"] 	= $rows->emp_cat_id;
+					$data["emp_sex"] 		= $per_info->emp_sex;
+
+					$salary_structure 		= $this->common_model->salary_structure($gross_sal);
+					$basic_sal 				= $salary_structure['basic_sal'];
+					$data["basic_sal"] 		= $basic_sal;
+					$data["house_r"] 		= $salary_structure['house_rent'];
+					$data["medical_a"] 		= $salary_structure['medical_allow'];
+					$data["food_allow"] 	= $salary_structure['food_allow'];
+					$data["trans_allow"] 	= $salary_structure['trans_allow'];
+					$data["gross_sal"] 		= $gross_sal;
+					//===========================END GENERAL INFORMATION==================================
 			
-			/////////////////////////////
-		$salary_month = trim(substr($start_date,0,7));
-		$join_month = trim(substr($doj,0,7));
-		
-		$effective_date = $this->get_bonus_effective_date($salary_month);
-	
-			if($effective_date != false)
-				{
-				$service_month = $this->get_service_month($effective_date,$doj);
-				$lowest_month_festival = $this->get_lowest_month_festival_bonus($year_month,$unit_id);
-				// echo "$effective_date ===$doj====$service_month====$lowest_month_festival"; 
-				if($service_month >= $lowest_month_festival)
-				{
-						$festival_bonus_rule 	= $this->get_festival_bonus_rule($service_month,$unit_id,$emp_sts_id);
-						// print_r($festival_bonus_rule);
-						$festival_bonus 		= $this->get_festival_bonus($festival_bonus_rule,$gross_sal,$basic_sal);	
-				}
-				else
-				{
-					$festival_bonus 	= 0;
-					$festival_bonus_rule['id'] = 0;
-				}
+					$join_month = trim(substr($doj,0,7));
+					$effective_date = $this->get_bonus_effective_date($salary_month);
 
-				
-				$data["service_length"] 	= $service_month;
-				$data["bonus_rule_id"] 		= $festival_bonus_rule['id'];
-				$data["bonus_amount"] 		= $festival_bonus;
-				$data["effective_month"] 	= $start_date;
+					if ($effective_date < $doj) {
+						continue;
+					}
+					$service_days = $this->get_service_month($doj,$effective_date);
+					$rule = $this->get_bonus_rule($effective_date,$service_days,$unit_id, $emp_type);
+					if(!empty($rule))
+					{
+						$bonus = $this->get_festival_bonus($rule,$gross_sal,$basic_sal,$per_info);	
+					}
+					else
+					{
+						continue;
+					}
 
-				// print_r($data);
-				
-			//echo "$service_month====$festival_bonus===$start_date";
-				//festival_bonus_sheet///update/////insert////
-				$this->db->select("emp_id");
-				$this->db->where("emp_id", $rows->emp_id);
-				$this->db->where("effective_month", $start_date);
-				$query = $this->db->get("pr_festival_bonus_sheet");
-				
-				if($query->num_rows() > 0 )
-				{
-					//echo "hello==$start_date";
+					$data["service_length"] 	= $service_days;
+					$data["bonus_rule_id"] 		= $rule->id;
+					$data["bonus_amount"] 		= $bonus;
+					$data["effective_month"] 	= $start_date;
+					// dd($data);
+
+					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
 					$this->db->where("effective_month", $start_date);
-					$this->db->update("pr_festival_bonus_sheet",$data);
-				}
-				else
-				{
-					$this->db->insert("pr_festival_bonus_sheet",$data);
+					$query = $this->db->get("pr_festival_bonus_sheet");
+					if($query->num_rows() > 0 )
+					{
+						$this->db->where("emp_id", $rows->emp_id);
+						$this->db->where("effective_month", $start_date);
+						$this->db->update("pr_festival_bonus_sheet",$data);
+					}
+					else
+					{
+						$this->db->insert("pr_festival_bonus_sheet",$data);
+					}
 
 				}
-			}	
+			}
+			return "Process completed successfully";		
 		}
 	}
-		
-		return "Process completed successfully";		
-		/////////////
+
+	function get_festival_bonus($rule,$gross_sal,$basic_sal,$per_info)
+	{
+		if ($per_info->religion == 'Islam') {
+			$religion = 1;
+		} else if ($per_info->religion == 'Hindu') {
+			$religion = 2;
+		} else if ($per_info->religion == 'Christian') {
+			$religion = 3;	
+		} else if ($per_info->religion == 'Buddhish') {
+			$religion = 4;
+		} else {
+			$religion = 1;
+		}
+
+		$check = false;
+		if (!empty($rule->religion_id) && $religion == $rule->religion_id) {
+			$check = true;
+		}
+		if ($check == true) {
+			if ($rule->bonus_amount == 'Gross') {
+				$amt = ($rule->bonus_percent * $gross_sal) / 100;
+			} else {
+				$amt = ($rule->bonus_percent * $basic_sal) / 100;
+			}
+		} else {
+			$amt = 0;
+		}
+		return $amt;
 	}
+
+	function get_bonus_rule($salary_month, $service_days, $unit_id, $emp_type)
+	{      
+		$this->db->where("unit_id",$unit_id);
+		$this->db->where("emp_type",$emp_type);
+		$this->db->where("bonus_first_month <=",$service_days);
+		$this->db->where("bonus_second_month >=",$service_days);
+		$this->db->where("effective_date",$salary_month);
+		$this->db->order_by("bonus_first_month","DESC");
+		$query = $this->db->get("pr_bonus_rules");
+		$row = $query->row();
+		return $row;
 	}
-	
+	function get_service_month($second_date, $first_date)
+	{
+		$days = (new DateTime($second_date))->diff(new DateTime($first_date))->days + 1;
+		return $days;
+	}
+
 	function get_bonus_effective_date($salary_month)
 	{
 		$this->db->select('effective_date');
@@ -203,7 +205,16 @@ class Festival_bonus_model extends CI_Model{
 			return false;
 		}
 	}
-	
+
+
+
+
+
+
+
+
+
+
 	function get_festival_bonus_rule($service_month,$unit_id,$emp_type)
 	{
 		// echo $service_month;
@@ -239,27 +250,6 @@ class Festival_bonus_model extends CI_Model{
 		return $data;
 	}
 	
-	function get_festival_bonus($festival_bonus_rule,$gross_sal,$basic_sal)
-	{
-		$bonus_amount 		= $festival_bonus_rule['bonus_amount'];
-		$amount_fraction 	= $festival_bonus_rule['amount_fraction'];
-		$bonus_percent 		= $festival_bonus_rule['bonus_percent']; 
-		
-		if($bonus_amount == "Gross")
-		{
-			$salary_for_bonus = $gross_sal;
-		}
-		else
-		{
-			$salary_for_bonus = $basic_sal; 
-		}
-		//echo $bonus_amount."===".$salary_for_bonus;
-		
-		$pre_festival_bonus = $salary_for_bonus * $amount_fraction;
-		$festival_bonus = round((($pre_festival_bonus * $bonus_percent)/100));
-		//echo $festival_bonus;
-		return $festival_bonus;
-	}
 	function get_desig_bonus_rules($effective_date,$desig_id)
 	{
 		$this->db->select('pr_desig_bonus_rules.bonus_amount,pr_desig_bonus_rules.rules_name');
@@ -286,7 +276,7 @@ class Festival_bonus_model extends CI_Model{
 	
 	function emp_name($emp_id)
 	{
-		$this->db->select("emp_full_name");
+		$this->db->select("name_en as emp_full_name");
 		$this->db->where("emp_id",$emp_id);
 		$query = $this->db->get("pr_emp_per_info");
 		$row = $query->row();
@@ -294,11 +284,17 @@ class Festival_bonus_model extends CI_Model{
 	}
 	function emp_desig($desig_id)
 	{
+		// dd($desig_id);
 		$this->db->select("desig_name");
-		$this->db->where("desig_id",$desig_id);
-		$query = $this->db->get("pr_designation");
+		$this->db->where("id",$desig_id);
+		$query = $this->db->get("emp_designation");
 		$row = $query->row();
-		return $row->desig_name;
+		// dd($row->desig_name);
+		if ($row !== null && isset($row->desig_name)) {
+			return $row->desig_name;
+		} else {
+			return null;
+		}
 	}
 	
 	function salary_grade($gr_id)
@@ -325,11 +321,9 @@ class Festival_bonus_model extends CI_Model{
 		}
 		else
 		{
-
 			$this->db->where('emp_id', $emp_id);
 			$this->db->like('effective_month', $salary_month);
 			$this->db->delete('pr_festival_bonus_sheet'); 
-			
 			return false;
 		}
 	}
@@ -423,22 +417,7 @@ class Festival_bonus_model extends CI_Model{
 			}
 		}
 	}
-	
-	function get_service_month($effective_date,$doj)
-	{
-		/*$start = strtotime($doj);
-		$end = strtotime($effective_date);
-		$no_of_days = ceil(abs($end - $start) / 86400);
-		return  $no_of_days;*/
-		
-		
-		$date_diff 		= strtotime($effective_date)-strtotime($doj);
-		//DATE TO DATE RULE
-		//return $month 	= floor(($date_diff)/2592000);
-		
-		//MONTH TO MONTH RULE
-		return $month 	= ceil(($date_diff)/2628000);
-	}
+
 	/////////////get_lowest_month_festival_bonus//
 	function get_lowest_month_festival_bonus($year_month,$unit_id)
 	{

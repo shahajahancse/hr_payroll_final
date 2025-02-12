@@ -28,6 +28,7 @@
           <li class="start <?= activate_method('personal_info_short') ?>"> <a href="<?=base_url('emp_info_con/personal_info_short')?>" >Emp Short Information </a></li>
         <?php } ?>
 
+
         </ul>
       </li>
       <?php } ?>
@@ -73,7 +74,9 @@
           <?php if(in_array(24,$acl)) { ?>
             <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
           <?php } ?>
+
           <li class="start <?= activate_method('missing_emp_info') ?>"> <a href="<?=base_url('entry_system_con/missing_emp_info')?>" >Missing Employee List</a></li>
+
           <?php if(in_array(25,$acl)) { ?>
             <li class="start <?= activate_method('inter_unit_transfer') ?>"> <a href="<?=base_url('entry_system_con/inter_unit_transfer')?>" class="anchor_cls" id="acl">Unit Transfer</a> </li>
           <?php } ?>
@@ -114,6 +117,7 @@
         <ul class="sub-menu ">
           <?php if(in_array(31,$acl)) { ?>
             <li class="start <?= activate_method('salary_process_form') ?>"> <a href="<?=base_url('salary_process_con/salary_process_form')?>" class="anchor_cls" id="acl">Process</a> </li>
+
           <?php } ?>
           <?php if(in_array(32,$acl)) { ?>
             <li class="start <?= activate_method('adv_salary_report') ?>"> <a href="<?=base_url('salary_process_con/adv_salary_report')?>" class="anchor_cls">Adv. Salary</a> </li>

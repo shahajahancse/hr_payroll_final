@@ -39,8 +39,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/tiffin_bill_add') ?>">Add Tiffin Bill  Allowance</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/tiffin_bill_add') ?>">Add Tiffin Bill  Allowance</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -89,7 +89,7 @@
                         <th>Allowance Amount</th>
                         <th>Unit name</th>
                         <th width="80">Edit</th>
-                        <th>Delete</th>
+                        <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(143,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
 
                     </tr>
                 </thead>
@@ -102,11 +102,11 @@
                         <td><?php echo $pr_lines['allowance_amount'] ?></td>
                         <td><?php echo $pr_lines['unit_name'] ?></td>
                         <td>
-                            <a href="<?=base_url('index.php/setup_con/tiffin_bill_edit') . '/' . $pr_lines["id"]?>"
+                            <a href="<?=base_url('setup_con/tiffin_bill_edit') . '/' . $pr_lines["id"]?>"
                                  class="btn btn-primary input-sm center-text" role="button">Edit</a>
                         </td>
-                        <td>
-                            <a href="<?=base_url('index.php/setup_con/tiffin_bill_delete') . '/' . $pr_lines["id"]?>"
+                        <td <?php if(in_array(143,$acl)) {echo '';} else { echo 'style="display:none;"';} ?>>
+                            <a href="<?=base_url('setup_con/tiffin_bill_delete') . '/' . $pr_lines["id"]?>"
                                 class="btn btn-danger input-sm center-text" role="button">Delete</a>
                         </td>
                     </tr>

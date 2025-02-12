@@ -10,8 +10,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('index.php/setup_con/leave_setup') ?>">< < Back</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/payroll_con') ?>">Home</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/leave_setup') ?>">< < Back</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <!--/.nav-collapse -->
@@ -25,7 +25,7 @@
     </div>
     <div class="tablebox">
     <h3>Create Attendance Bonus</h3>
-    <form action="<?= base_url('index.php/setup_con/leave_edit').'/'.$pr_leave->lv_id?> " enctype="multipart/form-data" method="post">
+    <form action="<?= base_url('setup_con/leave_edit').'/'.$pr_leave->lv_id?> " enctype="multipart/form-data" method="post">
     <div class="row">
             <div class="col-md-12">
                 <div class="row">
@@ -64,9 +64,9 @@
                         <?=(isset($failuer['maternity_leave'])) ? '<div class="alert alert-failuer">' . $failuer['maternity_leave'] . '</div>' : ''; ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Paternity Leave</label>
-                        <input required type="number" name="paternity_leave" value="<?= $pr_leave->lv_pl ?>" placeholder="Paternity Leave" class="form-control">
-                        <?=(isset($failuer['paternity_leave'])) ? '<div class="alert alert-failuer">' . $failuer['paternity_leave'] . '</div>' : ''; ?>
+                        <label>Special Leave</label>
+                        <input required type="number" name="special_leave" value="<?= $pr_leave->lv_pl ?>" placeholder="Special Leave" class="form-control">
+                        <?=(isset($failuer['special_leave'])) ? '<div class="alert alert-failuer">' . $failuer['special_leave'] . '</div>' : ''; ?>
                     </div>
                 </div>
                 <br>

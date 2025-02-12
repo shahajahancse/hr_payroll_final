@@ -9,6 +9,7 @@
 	<body>
 		<div align="center" style="height:auto; width:100%; overflow:hidden;" >
 			<?php
+				// dd($values);
 				$this->load->model('job_card_model');
 				foreach ($values as $key => $value) {
 					echo "<div style=' overflow:hidden;'>";
@@ -48,26 +49,11 @@
 					echo "</tr>";
 
 					echo "<tr>";
-						echo "<td >";
-						echo "<strong>Proxi NO. :</strong>";
-						echo "</td>";
-						echo "<td >";
-						echo $value->proxi_id;
-						echo "</td>";
-
 						echo "<td style:width:20px'>";
 						echo "<strong>Section :</strong>";
 						echo "</td>";
 						echo "<td width='30px'>";
 						echo $value->sec_name_en;
-						echo "</td>";
-					echo "</tr>";
-					echo "<tr>";
-						echo "<td>";
-						echo "<strong>Line :</strong>";
-						echo "</td>";
-						echo "<td>";
-						echo $value->line_name_en;
 						echo "</td>";
 						echo "<td>";
 						echo "<strong>Desig :</strong>";
@@ -78,18 +64,28 @@
 					echo "</tr>";
 					echo "<tr>";
 						echo "<td>";
-						echo "<strong>DOJ :</strong>";
+						echo "<strong>Line :</strong>";
 						echo "</td>";
 						echo "<td>";
-						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo $value->line_name_en;
 						echo "</td>";
-
+						
 						echo "<td >";
 						echo "<strong>Dept :</strong>";
 						echo "</td>";
 						echo "<td >";
 						echo $value->dept_name;
 						echo "</td>";
+
+					echo "</tr>";
+					echo "<tr>";
+						echo "<td>";
+						echo "<strong>DOJ :</strong>";
+						echo "</td>";
+						echo "<td>";
+						echo date("d-M-Y", strtotime($value->emp_join_date));
+						echo "</td>";
+
 					echo "</tr>";
 
 					// echo "<tr>";
@@ -112,14 +108,15 @@
 							<th>Shift</th>
 							<th>Attn.Status</th>
 							<th>OT Hour</th>
-							<th>Extra OT Hour</th>
-							<th>Total OT Hour</th>
 							<th>Remarks</th>
-						</tr>";
+							</tr>";
+							// <th>Total OT Hour</th>
+							// <th>Extra OT Hour</th>
 					foreach ($emp_data['emp_data'] as $key => $row) {
+						// dd($row);
 						$extra_ot_hour = 0;
 
-						if(in_array($row->shift_log_date,$emp_data['leave'])){
+						if($row->present_status == 'L'){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
 							$att_status = $leave_type;
@@ -172,13 +169,24 @@
 						$date=trim(substr($shift_log_date,8,2));
 						$shift_log_date = date("d-M-y", mktime(0, 0, 0, $month, $date, $year));
 						$deduction_hour = $row->deduction_hour;
+						// dd($schedule);
 						if($row->in_time != "00:00:00"){
 							$in_time = $row->in_time;
 							$in_time = $this->job_card_model->time_am_pm_format($in_time);
+							
+							list($hour, $minute, $second) = explode(':', $in_time);
+							if ((int)$minute < 45 && $schedule[0]["in_time"] > $row->in_time) {
+
+							$minuteDigits = str_split($minute);
+							$minuteSum = array_sum($minuteDigits);                                
+							$n_m = 60 - $minuteSum;
+							$in_time = sprintf("%02d:%02d:%02d", (int)$hour, $n_m, (int)$second);
+							}
 						}
 						else{
 							$in_time = "00:00:00";
 						}
+						
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
 							$out_time = $this->job_card_model->get_formated_out_time_2ot($value->emp_id, $out_time, $row->schedule_id);
@@ -246,22 +254,22 @@
 								$remark = "";
 							}
 							echo "<td>&nbsp;";
-							if($row->ot == 0){
-								echo $row->ot;
+							if($row->com_ot == 0){
+								echo $row->com_ot;
 							}else{
-								echo $row->ot;
+								echo $row->com_ot;
 							}
 							echo "&nbsp;</td>";
-							$total_ot_hour = $total_ot_hour + $row->ot + $extra_ot_hour;
-							$total_ot = $total_ot + $row->ot;
+							$total_ot_hour = $total_ot_hour + $row->com_ot + $extra_ot_hour;
+							$total_ot = $total_ot + $row->com_ot;
 
-							echo "<td>&nbsp;";
-							echo $extra_ot_hour;
-							echo "&nbsp;</td>";
+							// echo "<td>&nbsp;";
+							// echo $extra_ot_hour;
+							// echo "&nbsp;</td>";
 
-							echo "<td>&nbsp;";
-							echo $extra_ot_hour + $row->ot;
-							echo "&nbsp;</td>";
+							// echo "<td>&nbsp;";
+							// echo $extra_ot_hour + $row->com_ot;
+							// echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
 							echo $remark;
@@ -279,13 +287,13 @@
 					echo $total_ot;
 					echo "</td>";
 
-					echo "<td>";
-					echo $total_ot_hour - $total_ot;
-					echo "</td>";
+					// echo "<td>";
+					// echo $total_ot_hour - $total_ot;
+					// echo "</td>";
 
-					echo "<td>";
-					echo $total_ot_hour;
-					echo "</td>";
+					// echo "<td>";
+					// echo $total_ot_hour;
+					// echo "</td>";
 
 					echo "<td>";
 					echo "&nbsp;";
@@ -328,7 +336,7 @@
 					echo "</td>";
 
 					echo "<td width='75' style='border-bottom:#000000 1px solid;'>";
-					echo "OVERTIME";
+					echo "OVER TIME";
 					echo "</td>";
 
 					echo "</tr>";

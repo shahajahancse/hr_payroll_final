@@ -47,7 +47,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="acl_name">Group Name</label>
-                    <input style="height: 5px !important;" type="text" name="name_en" class="form-control input-lg" id="name_en" placeholder="Enter Name">
+                    <input style="height: 5px !important;" type="text" name="name_en" class="form-control input-lg" id="name_en" placeholder="Enter Name" required>
                     <?= (isset($failuer['name_en'])) ? '<div class="alert alert-failuer">' . $failuer['name_en'] . '</div>' : ''; ?>
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="acl_name">Group Name (Bangla)</label>
-                    <input style="height: 5px !important;" type="text" name="name_bn" class="form-control input-lg" id="name_bn" placeholder="Enter Name">
+                    <input style="height: 5px !important;" type="text" name="name_bn" class="form-control input-lg" id="name_bn" placeholder="Enter Name" required>
                     <?= (isset($failuer['name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['name_bn'] . '</div>' : ''; ?>
                 </div>
             </div>
@@ -63,7 +63,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="unit_id">Unit</label>
-                    <select name="unit_id" class="form-control" >
+                    <select name="unit_id" class="form-control" required>
                         <option value="">Select Unit</option>
                         <?php foreach ($units as $row) { ?>
                             <option value="<?= $row->unit_id ?>"><?= $row->unit_name?> </option>
@@ -75,7 +75,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="unit_id">status</label>
-                    <select name="status" class="form-control" >
+                    <select name="status" class="form-control" required>
                         <option value="1">Enable</option>
                         <option value="2">Disable</option>
                     </select>

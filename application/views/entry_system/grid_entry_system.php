@@ -1,11 +1,11 @@
 <script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
-<style>
-    #fileDiv #removeTr td {
-        padding: 5px 10px !important;
-        font-size: 14px;
-    }
-</style>
-<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+    <style>
+        #fileDiv #removeTr td {
+            padding: 5px 10px !important;
+            font-size: 14px;
+        }
+    </style>
+    <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
     <?php
         $this->load->model('common_model');
@@ -38,7 +38,9 @@
                                 if ($row['unit_id'] == $user_data->unit_name) {
                                     $select_data = "selected";
                                 } else {
-                                    continue;
+                                    if ($user_data->level != "All") {
+                                        continue;
+                                    }
                                 }
                                 echo '<option ' . $select_data . '  value="' . $row['unit_id'] . '">' . $row['unit_name'] .
                                     '</option>';
@@ -139,9 +141,10 @@
                                     <div class="input-group">
                                         <span class="input-group-btn" style="display: flex; gap: 15px;">
                                             <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
-                                            <input class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
-                                            <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
-                                            <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
+                                            <input <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
+                                            <input <?php  if(in_array(128,$acl)) {echo '';} else { echo 'style="display:none;"';}?>  class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
+
+                                            <input <?php  if(in_array(129,$acl)) {echo '';} else { echo 'style="display:none;"';}?>  class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
                                         </span>
                                     </div><!-- /input-group -->
                                 </div>
@@ -151,6 +154,37 @@
                 </div>
             </div>
 
+            <!-- Stop Salary -->
+            <?php
+                $user_id = $this->session->userdata('data')->id;
+                $acl = check_acl_list($user_id);
+            ?>
+            <?php if(in_array(127,$acl)) { ?>
+                <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
+                    <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
+                        <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
+                            <form method="post" id="eot_modify_form">
+                                <div class="raw">
+                                    <div class="col-md-4" style="padding: 5px !important">
+                                        <div class="form-group" style="margin-bottom: 3px !important;">
+                                            <label class="control-label">Stop Salary Month</label>
+                                            <input class="form-control input-sm" type="month" id="stop_month" name="stop_month" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="padding: 5px !important">
+                                        <div class="input-group" style="top: 15px;">
+                                            <span class="input-group-btn" style="display: flex; gap: 15px;">
+                                                <input class="btn btn-primary" onclick="stop_salary(event)" type="button" value="Save">
+                                                <input class="btn btn-danger" style="<?php  if(in_array(132,$acl)) {echo '';} else { echo 'display:none;"';}?>" onclick="stop_delete(event)" type="button" value="Delete">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
             <style>
                 .hints {
                     color: #436D19;
@@ -158,7 +192,7 @@
                 }
             </style>
             <!-- eot entry form   -->
-            <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
+            <!-- <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
                 <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                     <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                         <form method="post" id="eot_modify_form">
@@ -199,7 +233,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- employee list for right side -->
@@ -241,6 +275,92 @@
             $('#loader').css('display', 'block');
         }
     </script>
+
+    <script>
+        function stop_salary(e) {
+            e.preventDefault();
+            var checkboxes = document.getElementsByName('emp_id[]');
+            var sql = get_checked_value(checkboxes);
+            let emp_id = sql.split(",");
+            if (emp_id == '') {
+                showMessage('error', 'Please select employee Id');
+                return false;
+            }
+            unit_id = document.getElementById('unit_id').value;
+            if (unit_id == '') {
+                showMessage('error', 'Please select Unit');
+                return false;
+            }
+
+            stop_month = document.getElementById('stop_month').value;
+            if (stop_month == '') {
+                showMessage('error', 'Please select Stop Salary Month');
+                return false;
+            }
+
+            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&stop_month=" + stop_month; 
+            $.ajax({
+                type: "POST",
+                url: hostname + "entry_system_con/stop_salary",
+                data: data,
+                success: function(data) {
+                    $("#loader").hide();
+                    if (data == 'success') {
+                        showMessage('success', 'Record Inserted Successfully');
+                    } else {
+                        showMessage('error', data);
+                    }
+                },
+                error: function(data) {
+                    $("#loader").hide();
+                    showMessage('error', 'Record Not Inserted');
+                }
+            })
+        }
+
+        function stop_delete(e) {
+            e.preventDefault();
+            var checkboxes = document.getElementsByName('emp_id[]');
+            var sql = get_checked_value(checkboxes);
+            let emp_id = sql.split(",");
+            if (emp_id == '') {
+                showMessage('error', 'Please select employee Id');
+                return false;
+            }
+            unit_id = document.getElementById('unit_id').value;
+            if (unit_id == '') {
+                showMessage('error', 'Please select Unit');
+                return false;
+            }
+
+            stop_month = document.getElementById('stop_month').value;
+            if (stop_month == '') {
+                showMessage('error', 'Please select Stop Salary Month');
+                return false;
+            }
+
+            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&stop_month=" + stop_month; 
+            loading_open();
+            $.ajax({
+                type: "POST",
+                url: hostname + "entry_system_con/stop_delete",
+                data: data,
+                success: function(data) {
+                    loading_close();
+                    if (data == 'success') {
+                        showMessage('success', 'Stop Salary Deleted Successfully');
+                    } else {
+                        showMessage('error', data);
+                    }
+                },
+                error: function(data) {
+                    loading_close();
+                    showMessage('error', 'Stop Salary Not Deleted');
+                }
+            })
+        }
+    </script>
+
     <script>
         function eot_modify_entry(e) {
             e.preventDefault();
@@ -311,6 +431,11 @@
                 showMessage('error', 'Please select employee Id');
                 return false;
             }
+            if (emp_id.length > 1) {
+                showMessage('error', 'Please select max one employee Id');
+                return false;
+            }
+
             unit_id = document.getElementById('unit_id').value;
             if (unit_id == '') {
                 showMessage('error', 'Please select Unit');

@@ -38,7 +38,9 @@
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
-								continue;
+                                    if ($user_data->level != "All") {
+                                        continue;
+                                    }
 								}
 								echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
 								'</option>';
@@ -114,7 +116,7 @@
                 <span style="font-size: 20px;"><?= $title ?></span>
             </div><!-- /.col-lg-6 -->
             <div class="col-lg-7">
-                <div class="input-group" style="display:flex; gap: 14px">
+                <div class="input-group" style="display:flex; gap: 5px">
                     <input class="btn btn-primary" onclick='toggleSection("special")' type="button" value="Special" />
                     <input class="btn btn-primary" onclick='toggleSection("increment")' type="button" value="Increment" />
                     <input class="btn btn-info" onclick='toggleSection("promotion")' type="button" value="Promotion" />
@@ -152,28 +154,28 @@
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="special_entry_form">
                         <div class="raw">
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-3" style="padding: 5px !important ; <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'display:none';}?> ">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
                                     <input class="form-control" readonly id="spc_salary" name="salary">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-3" style="padding: 5px !important;<?php  if(!in_array(10,$acl)) {echo '';} else { echo 'display:none';}?> ">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Salary</label>
+                                    <label class="control-label">New Gross Salary</label>
                                     <input class="form-control" id="gross_sal" name="gross_sal">
 
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Com. Salary</label>
+                                    <label class="control-label">Salary</label>
                                     <input class="form-control" readonly id="spc_com_salary" name="com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Com. Salary</label>
+                                    <label class="control-label">New Salary</label>
                                     <input class="form-control" id="com_gross_sal" name="com_gross_sal">
                                 </div>
                             </div>
@@ -184,7 +186,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="text" class="form-control date" id="special_date" placeholder="select date">
+                                    <input type="text" style="<?php  if(!in_array(10,$acl)) {echo '';} else { echo 'width:56%';}?>" class="form-control date" id="special_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='special_entry(event)' type="button" value='Save' />
                                         <input class="btn btn-danger" onclick="special_delete(event)" type="button" value="Delete">
@@ -226,13 +228,13 @@
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="increment_entry_form">
                         <div class="raw">
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-3" style="padding: 5px !important;<?php  if(!in_array(10,$acl)) {echo '';} else { echo 'display:none';}?>">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
                                     <input class="form-control" readonly id="inc_salary" name="salary">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding: 5px !important">
+                            <div class="col-md-3" style="padding: 5px !important; <?php  if(!in_array(10,$acl)) {echo '';} else { echo 'display:none';}?>">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
                                     <input class="form-control" id="inc_gross_sal" name="gross_sal">
@@ -241,13 +243,13 @@
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Com. Salary</label>
+                                    <label class="control-label">Salary</label>
                                     <input class="form-control" readonly id="inc_com_salary" name="com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Com. Salary</label>
+                                    <label class="control-label">New Salary</label>
                                     <input class="form-control" id="inc_com_gross_sal" name="com_gross_sal">
                                 </div>
                             </div>
@@ -258,7 +260,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group" style="gap: 14px; display: flex;">
-                                    <input type="text" class="form-control date" id="incr_date" placeholder="select date">
+                                    <input type="text" style="<?php  if(!in_array(10,$acl)) {echo '';} else { echo 'width:56%';}?>" class="form-control date" id="incr_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
                                         <input class="btn btn-danger" onclick="incr_delete(event)" type="button" value="Delete">
@@ -337,27 +339,27 @@
                             </div>
                         </div>
                         <div class="raw">
-                            <div class="col-md-3" style="padding-left: 0px!important; padding-right: 5px!important;">
+                            <div class="col-md-3" style="padding-left: 0px!important; padding-right: 5px!important;<?php  if(!in_array(10,$acl)) {echo '';} else { echo 'display:none';}?>">
                                 <div class="form-group">
                                     <label class="control-label">Gross Salary</label>
                                     <input class="form-control" readonly id="salary" name="salary">
                                 </div>
                             </div>
-                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
+                            <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;<?php  if(!in_array(10,$acl)) {echo '';} else { echo 'display:none';}?>">
                                 <div class="form-group">
-                                    <label class="control-label">New Salary</label>
+                                    <label class="control-label">New Gross Salary</label>
                                     <input class="form-control" id="prom_gross_sal" name="prom_gross_sal">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group">
-                                    <label class="control-label">Com. Salary</label>
+                                    <label class="control-label">Salary</label>
                                     <input class="form-control" readonly id="com_salary" name="com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
-                                    <label class="control-label">New Com. Salary</label>
+                                    <label class="control-label">New Salary</label>
                                     <input class="form-control" id="prom_com_gross_sal" name="prom_com_gross_sal">
                                 </div>
                             </div>
@@ -365,8 +367,9 @@
 
                         <div class="row" top='20px'>
                             <div class="col-md-3">
+                                <label class="control-label">Grade</label>
                                 <select name="grade_id" id="grade_id" class="form-control">
-                                    <option value="">Grade</option>
+                                    <option value="">Select Grade</option>
                                     <option value="8">1</option>
                                     <option value="7">2</option>
                                     <option value="3">3</option>
@@ -377,14 +380,13 @@
                                     <option value="1">None</option>
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <span style="font-size: 18px; font-weight: bold;">Effective Date : </span>
-                            </div>
+
                             <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                 <label class="control-label">Effective Date :</label>
                                 <input type="text" class="form-control date" id="prom_date" placeholder="select date">
                             </div>
                             <div class="col-md-3">
-                                <div class="input-group" style="gap: 14px; display: flex;">
+                                <div class="input-group" style="gap: 14px; display: flex;margin-top: 20px;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='promotion_entry(event)' type="button" value='Save' />
                                         <input class="btn btn-danger" onclick="prom_delete(event)" type="button" value="Delete">

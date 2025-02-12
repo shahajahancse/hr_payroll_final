@@ -37,8 +37,7 @@
     <div class="tablebox">
         <h3>Update Company Unit</h3>
         <form enctype="multipart/form-data" method="post" name="creatcompanyunit"
-            action="<?php echo base_url().'
-            setup_con/company_edit/'.$company_infos->id;?>">
+            action="<?php echo base_url().'setup_con/company_edit/'.$company_infos->id;?>">
             <input type="hidden" name="id" value="<?=$company_infos->id?>" class="form-control">
             <div class="row">
                 <div class="col-md-12">
@@ -54,23 +53,19 @@
                             <label>Company Name Bangla</label>
                             <input type="text" name="bname"
                                 value="<?php echo set_value('company_name_bangla',$company_infos->company_name_bangla)?>"
-                                class="form-control">
+                                class="form-control bfont">
                             <?php echo form_error('bname');?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label>Company Address English</label>
-                            <input type="text" name="en_add"
-                                value="<?php echo set_value('company_add_english',$company_infos->company_add_english)?>"
-                                class="form-control">
+                            <input type="text" name="en_add" value="<?php echo set_value('company_add_english',$company_infos->company_add_english)?>" class="form-control">
                             <?php echo form_error('en_add');?>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Company Address Bangla</label>
-                            <input type="text" name="bn_add"
-                                value="<?php echo set_value('company_add_bangla',$company_infos->company_add_bangla)?>"
-                                class="form-control">
+                            <input type="text" name="bn_add" value="<?php echo set_value('company_add_bangla',$company_infos->company_add_bangla)?>" class="form-control bfont">
                             <?php echo form_error('bn_add');?>
                         </div>
                         <div class="form-group col-md-4">

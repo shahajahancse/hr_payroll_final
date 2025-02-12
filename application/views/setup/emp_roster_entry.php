@@ -104,7 +104,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary ">Submit</button></button>
-                    <a href="<?= base_url('index.php/setup_con/emp_roster_shift') ?>" class="btn-warning btn">Cancel</a>
+                    <a href="<?= base_url('setup_con/emp_roster_shift') ?>" class="btn-warning btn">Cancel</a>
                 </div>
             </div>
     </form>

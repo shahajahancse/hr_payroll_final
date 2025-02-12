@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-     <!-- < ?php dd($values);?> -->
+     <!-- < ?php dd($results);?> -->
     <?php $this->load->view("head_english");?>
     <h4 style="text-align:center">Attendence Summary Report <?php echo date('d/m/Y',strtotime($report_date))?></h4>
     <div align="center" class="container">
@@ -60,6 +60,7 @@
 				<th class="text-center">Remark</th>
 			</tr>
             <?php
+            // dd($results);
                 $i=1;
                 $sumAllEmp=$sumAllPresent=$sumAllPresent=$sumAllAbsent=$sumAllMale=$sumAllFemale=$sumAllLeave=$sumAllLate=0;
                 $tt=$pr=$ab= array();
@@ -82,6 +83,7 @@
 				<td style="text-align:center; background: #dbf5f9;"><?php echo $row->all_male?></td>
 				<td style="text-align:center; background: #dbf5f9;"><?php echo $row->all_female?></td>
                <?php $dddd = 0;
+                    // dd($row);
                     foreach($keys as $key){ $dddd = $dddd + 1;
                         $group_data = $row->group_data[$key]?? (object) array('total_emp'=>0, 'emp_present'=>0, 'emp_absent'=>0);
 
@@ -184,3 +186,12 @@
 </body>
 </html>
 <?php exit(); ?>
+
+
+
+
+
+
+
+
+

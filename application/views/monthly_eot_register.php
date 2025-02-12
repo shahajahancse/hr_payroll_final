@@ -54,7 +54,7 @@ Monthly EOT Report of <?php echo "$start_date"; ?></span>
 
 
 <?php
-
+// dd($values);
 $section=array();
 
 	for($i=0; $i<=$per_page_id; $i++)
@@ -112,7 +112,7 @@ $section=array();
 	echo "</td>";
 
 	echo "<td >";
-	echo $values["emp_shift"][$k];
+	echo ($values["emp_shift"][$k]== 'Template  (Night_shift)' || $values["emp_shift"][$k]== 'Template (Day_shift)')? 'HGL_Worker' : $values["emp_shift"][$k];
 	echo "</td>";
 
 	echo "<td  width='40'  style='text-align:right;' >";

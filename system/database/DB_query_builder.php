@@ -2416,9 +2416,10 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 				for ($ci = 0, $cc = count($conditions); $ci < $cc; $ci++)
 				{
 					if (($op = $this->_get_operator($conditions[$ci])) === FALSE
-						OR ! preg_match('/^(\(?)(.*)('.preg_quote($op, '/').')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches))
-					{
+						OR ! preg_match('/^(\(?)(.*?)(?<=\S)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/is', $conditions[$ci], $matches)){
 						continue;
+					}else{
+						error_reporting(0);
 					}
 
 					// $matches = array(
