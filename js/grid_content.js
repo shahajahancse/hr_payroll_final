@@ -563,7 +563,7 @@ function actual_salary_sheet()
 
 	var queryString="salary_month="+salary_month+"&unit_id="+unit_id+"&sql="+sql+"&stop_salary="+stop_salary+"&status="+status;
     url =  hostname+"salary_report_con/actual_salary_sheet/";
-	
+
 	document.getElementById('loaader').style.display = 'flex';
 	ajaxRequest = new XMLHttpRequest();
 	ajaxRequest.open("POST", url, true);
@@ -1470,7 +1470,7 @@ function unit_transferred_list(type)
 {
 	var firstdate = document.getElementById('firstdate').value;
 	var seconddate = document.getElementById('seconddate').value;
-	
+
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
 	{
@@ -1906,7 +1906,7 @@ function grid_new_join_report(){
 		alert("Please select Category options");
 		return false;
 	}
-	
+
 	document.getElementById('loaader').style.display = 'flex';
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id;
@@ -2683,7 +2683,7 @@ function grid_extra_ot_all() {
 		}
 		}
 	}
-	
+
 	var firstdate = document.getElementById("firstdate").value;
 	if (firstdate == "") {
 	alert("Please select First date");
@@ -2927,6 +2927,76 @@ function grid_continuous_ot_eot_report()
 		}
 	}
 }
+function grid_continuous_max_ot_day()
+{
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+		ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate =='')
+	{
+		alert("Please select Second date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select unit !");
+		return false;
+	}
+
+	var max = document.getElementById('max_ot').value;
+	if(max =='')
+	{
+		alert("Please select max OT !");
+		return false;
+	}
+
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+
+	document.getElementById('loaader').style.display = 'flex';
+
+	var query="firstdate="+firstdate+"&seconddate="+seconddate+"&max_ot="+max+"&spl="+sql+"&unit_id="+unit_id;
+   	url = hostname + "grid_con/grid_continuous_max_ot_day";
+
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(query);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			continuous_ot_eot_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			continuous_ot_eot_report.document.write(resp);
+		}
+	}
+}
 
 function grid_maternity_benefit(type){
 	var ajaxRequest;  // The variable that makes Ajax possible!
@@ -3045,6 +3115,7 @@ function grid_monthly_att_register(i = null)
 		}
 	}
 }
+
 function grid_monthly_att_register_ot(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
@@ -3092,12 +3163,12 @@ function grid_monthly_att_register_ot(){
 	}
 
 	document.getElementById('loaader').style.display = 'flex';
-   var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"grid_con/grid_monthly_att_register_ot/";
+	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
+	url =  hostname+"grid_con/grid_monthly_att_register_ot/";
 
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
 		document.getElementById('loaader').style.display = 'none';
@@ -3107,8 +3178,8 @@ function grid_monthly_att_register_ot(){
 			continuous_costing_report.document.write(resp);
 		}
 	}
-
 }
+
 function grid_monthly_ot_register()
 {
 
@@ -3318,16 +3389,16 @@ function grid_salary_sheet_with_eot_bank()
 	      }
 	   }
 	}
-	
+
 	var salary_month = document.getElementById('salary_month').value;
 	if(salary_month =='')
 	{
 		alert("Please select year and month");
 		return;
 	}
-	
+
 	var status = document.getElementById('status').value;
-	
+
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
 
@@ -3386,7 +3457,7 @@ function grid_monthly_allowance_sheet()
 	{
 		alert("Please select year and month");
 		return;
-	}	
+	}
 
 	var unit_id = document.getElementById('unit_id').value;
 	if(unit_id =='Select')
@@ -9473,6 +9544,28 @@ colModel: [
 }
 
 
+function grid_service_book_info()
+{
+	 var ajaxRequest;  // The variable that makes Ajax possible!
+
+ try{
+   // Opera 8.0+, Firefox, Safari
+   ajaxRequest = new XMLHttpRequest();
+ }catch (e){
+   // Internet Explorer Browsers
+   try{
+      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+   }catch (e) {
+      try{
+         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+      }catch (e){
+         // Something went wrong
+         alert("Your browser broke!");
+         return false;
+      }
+   }
+ }
+
 function grid_service_book_info() {
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	
@@ -9493,6 +9586,7 @@ function grid_service_book_info() {
 			}
 		}
 	}
+
 	var unit_id = document.getElementById('unit_id').value;
 	if (unit_id == 'Select') {
 		alert("Please select unit !");
@@ -9500,6 +9594,7 @@ function grid_service_book_info() {
 	}
 	var checkboxes = document.getElementsByName('emp_id[]');
 	var sql = get_checked_value(checkboxes);
+
 		
 	if (sql == '') {
 		alert("Please select Employee ID");
@@ -9507,21 +9602,21 @@ function grid_service_book_info() {
 	}
 	document.getElementById('loaader').style.display = 'flex';
 
+
 	// hostname = window.location.href;s 
 	// hostname = hostname.substring(0, (hostname.indexOf("index.php") == -1) ? hostname.length :   	hostname.indexOf("index.php"));
 	
 	var queryString = "spl=" + sql + "&unit_id=" + unit_id;
 	url = hostname + "grid_con/grid_service_book_info/";
 	// $(".").dialog("open");
+
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajaxRequest.send(queryString);
 	ajaxRequest.onreadystatechange = function () {
 		if (ajaxRequest.readyState == 4) {
 			document.getElementById('loaader').style.display = 'none';
-
 			var resp = ajaxRequest.responseText;
-			// $(".clearfix").dialog("close");		
 			service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
 			service_book.document.write(resp);
 			service_book.stop();

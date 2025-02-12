@@ -7,23 +7,31 @@
     <title>Daily Cost Report</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/print.css" media="print" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" />
+	<style>
+		@media print {
+			#btnExport {
+				display: none;
+			}
+		}
+	</style>
 </head>
 
 <body>
-    <div style=" margin:0 auto; ">
+    <div style=" margin:0 auto; " id='report-data'>
         <?php $data['unit_id'] = $unit_id;
 		$this->load->view("head_english",$data); ?>
 
         <!--Report title goes here-->
-        <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
-            <span style="font-size:12px; font-weight:bold;">
+        <div  style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
+            <center><span style="font-size:12px; font-weight:bold;text-align:center">
                 Daily Cost Report <?php echo "$grid_date"; ?>
-			</span>
+			</span></center>
             <br/> <br/>
         	<?php $num_of_days = date("t",strtotime($grid_date));
 			?>
-
-            <table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:14px;width:60%">
+		<button style='position:absulate;margin-left:50px' id="btnExport">Download as Excel</button>
+		<br></br>
+		<table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:14px;width:60%">
 				<tr>
 					<th style="padding:4px;">SL</th>
 					<th style="padding:4px;">Emp ID</th>
@@ -134,6 +142,21 @@
         </div>
     </div>
 	<br><br>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+	<script>
+		function convert_excel(type, fn, dl) {
+			var elt = document.getElementById('report-data');
+			var wb = XLSX.utils.table_to_book(elt, {sheet:"Sheet JS"});
+			return dl ?
+				XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
+				XLSX.writeFile(wb, fn || ('Sales-Report.' + (type || 'xlsx')));
+		}
+		$("#btnExport").click(function(event) {
+		convert_excel('xlsx');
+		});
+	</script>
 </body>
 </html>
 <?php exit(); ?>

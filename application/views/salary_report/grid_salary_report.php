@@ -258,6 +258,7 @@
                             <th class="active" style="width:10%"><input type="checkbox" id="select_all" class="select-all checkbox" name="select-all"></th>
                             <th class="" style="background:#0177bcc2;color:white">Id</th>
                             <th class=" text-center" style="background:#0177bc;color:white">Name</th>
+
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -275,6 +276,25 @@
                         <tr class="removeTrno">
                             <td colspan="3" class="text-center"> No data found</td>
                         </tr>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        <?php if (!empty($employees)) {
+                            foreach ($employees as $key => $emp) {
+                        ?>
+                                <tr class="removeTr">
+                                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
+                                    </td>
+                                    <td class="success"><?= $emp->emp_id ?></td>
+                                    <td class="warning "><?= $emp->name_en ?></td>
+                                </tr>
+                        <?php }
+                        } ?>
+                        <tr class="removeTrno">
+                            <td colspan="3" class="text-center"> No data found</td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -311,7 +331,7 @@
             if (typeof unit === "undefined" || unit === '') {
                  alert('Please Select Unit First'); return;
             }
-            
+
             url = hostname + "common/salary_emp_list/";
             $.ajax({
                 url: url,

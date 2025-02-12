@@ -247,7 +247,9 @@
             return false;
         }
 
-        var data = "unit_id=" + unit_id + "&emp_id=" + emp_id + "&salary_month=" + salary_month; 
+
+        var data = "unit_id=" + unit_id + "&emp_id=" + emp_id + "&salary_month=" + salary_month;
+
         url =  hostname+"salary_report_con/advance_salary_report/";
 
         ajaxRequest.open("POST", url, true);

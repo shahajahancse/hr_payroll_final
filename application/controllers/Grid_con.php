@@ -94,7 +94,7 @@ class Grid_con extends CI_Controller {
 		$grid_emp_id = explode(',', trim($grid_data));
 		$unit_id = $this->input->post('unit_id');
 
-		if ($status == 'LA') { 
+		if ($status == 'LA') {
 			$data["values"] = $this->Grid_model->continuous_late_report($girstdate, $seconddate, $grid_emp_id);
 		} else {
 			$data["values"] = $this->Grid_model->continuous_report($girstdate, $seconddate, $status, $grid_emp_id);
@@ -131,6 +131,46 @@ class Grid_con extends CI_Controller {
 		{
 			$this->load->view('grid_con/continuous_report',$data);
 		}
+	}
+
+	function continuous_present_report_excel(){
+		$hide_date = $this->input->post('hide_date');
+		$hide_date2 = $this->input->post('hide_date2');
+		$status = $this->input->post('hide_status');
+		$unit_id = $this->input->post('hide_unit');
+		$grid_data = $this->input->post('hide_emp');
+
+		$emp_ids = explode(',', trim($grid_data));
+		$hide_date = date("Y-m-d",strtotime($hide_date));
+		$hide_date2 = date("Y-m-d",strtotime($hide_date2));
+
+		if ($status == 'LA') {
+			$data["value"] = $this->Grid_model->continuous_late_report($hide_date, $hide_date2, $emp_ids);
+		} else {
+			$data["value"] = $this->Grid_model->continuous_report($hide_date, $hide_date2, $status, $emp_ids);
+		}
+
+		if($status =="A")
+		{
+			$status = "Absent";
+		}
+		elseif($status =="P")
+		{
+			$status = "Present";
+		}
+		elseif($status =="L")
+		{
+			$status = "Leave";
+		}
+		elseif($status =="LA")
+		{
+			$status = "Late";
+		}
+		$data["status"] 	= $status;
+		$data["start_date"] = $hide_date;
+		$data["end_date"] 	= $hide_date2;
+		$data["unit_id"] 	= $unit_id;
+		$this->load->view('grid_con/continuous_present_report_excel',$data);
 	}
 
 	function continuous_leave_report()
@@ -664,13 +704,13 @@ class Grid_con extends CI_Controller {
 		$grid_data = $this->input->post('spl');
 		$emp_id = explode(',', trim($grid_data));
 		if($status == 1){
-			if (!empty($this->input->post('firstdate'))) {		
+			if (!empty($this->input->post('firstdate'))) {
 				$firstdate  = date('Y-m-d',strtotime('-180 day',strtotime($this->input->post('firstdate'))));
 			} else {
 				$firstdate  = date('Y-m-d',strtotime('-180 day',strtotime(date('Y-m-d'))));
 			}
 		} else if ($status == 2) {
-			if (!empty($this->input->post('firstdate'))) {	
+			if (!empty($this->input->post('firstdate'))) {
 				$firstdate  = date('Y-m-d',strtotime('-90 day',strtotime($this->input->post('firstdate'))));
 			} else {
 				$firstdate  = date('Y-m-d',strtotime('-90 day',strtotime(date('Y-m-d'))));
@@ -697,14 +737,14 @@ class Grid_con extends CI_Controller {
 		$status = $this->input->post('status');
 		$unit_id = $this->session->userdata('data')->unit_name;
 		$id_number = $this->session->userdata('data')->id_number;
-		
+
 
 		$data['values'] 	= $this->Grid_model->grid_letter_report_print($emp_id);
 		$data['unit_id']	= $unit_id;
 		$data['unit_id']	= $id_number;
 		$data['no_change']	= 1;
-		$data['status']	= $status;
-		
+
+
 		if(empty($data)){
 			echo "Not Found Data"; exit();
 		}else{
@@ -734,8 +774,8 @@ class Grid_con extends CI_Controller {
 		$data['values'] 	= $this->Grid_model->grid_letter_report($data['firstdate'],$unit_id,$off_day,$days,$status);
 		$data['unit_id']	= $unit_id;
 		$data['no_change']	= 2;
-		
-		
+
+
 		if(empty($data)){
 			echo "Not Found Data"; exit();
 		}else{
@@ -797,8 +837,7 @@ class Grid_con extends CI_Controller {
 		$data["start_date"] = $sStartDate;
 		$data["end_date"] = $sEndDate;
 		$data["unit_id"] = $unit_id;
-		// dd($data);
-		
+
 		if(is_string($data["values"]))
 		{
 			echo $data["values"];
@@ -859,6 +898,33 @@ class Grid_con extends CI_Controller {
 			$this->load->view('continuous_ot_eot_report',$data);
 		}
 	}
+	// ============================== end grid continuous ot eot report ===============D
+	// ============================== grid continuous max ot day ===============D
+	function grid_continuous_max_ot_day()
+	{
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$unit_id = $this->input->post('unit_id');
+		$max_ot = $this->input->post('max_ot');
+
+		$sStartDate = date("Y-m-d", strtotime($this->input->post('firstdate')));
+		$sEndDate = date("Y-m-d", strtotime($this->input->post('seconddate')));
+
+		$data["values"] = $this->Grid_model->grid_continuous_max_ot_day($sStartDate, $sEndDate, $grid_emp_id, $max_ot);
+
+		$data["start_date"] = $sStartDate;
+		$data["end_date"] 	= $sEndDate;
+		$data["unit_id"] 	= $unit_id;
+		if(is_string($data["values"]))
+		{
+			echo $data["values"];
+		}
+		else
+		{
+			$this->load->view('grid_continuous_max_ot_day',$data);
+		}
+	}
+	// ============================== end grid continuous max ot day ===============D
 	function grid_continuous_costing_report()
 	{
 		$firstdate  = $this->input->post('firstdate');
@@ -912,21 +978,22 @@ class Grid_con extends CI_Controller {
 		foreach($d as $key => $row){
 			$get_all[$key] = $row;
 			$this->db->select('
-					SUM(ot) as ot_hour, 
-					SUM(eot) as eot_hour, 
-					SUM(ot_eot_4pm) as ot_eot_4pm, 
-					SUM(ot_eot_12am) as ot_eot_12am, 
-					SUM(with_out_friday_ot) as with_out_friday_ot, 
-					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
-					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
-					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
+
+					SUM(ot) as ot_hour,
+					SUM(eot) as eot_hour,
+					SUM(ot_eot_4pm) as ot_eot_4pm,
+					SUM(ot_eot_12am) as ot_eot_12am,
+					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday,
+					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday,
+					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days,
+
 					COUNT(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as status', FALSE
 			);
 			$this->db->from('pr_emp_shift_log');
 			$this->db->where('pr_emp_shift_log.emp_id',$row->emp_id);
 			$this->db->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)));
 			$this->db->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)));
-			$dd = $this->db->get()->row();	
+			$dd = $this->db->get()->row();
 			$ssss = $this->common_model->salary_structure($row->gross_sal);
 
 			$get_all[$key]->ot_hour = $dd->ot_hour;
@@ -938,6 +1005,7 @@ class Grid_con extends CI_Controller {
 		}
 		echo json_encode($get_all[0]);
 	}
+
 	function grid_monthly_att_register(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
@@ -952,6 +1020,23 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_reportt',$data);
 		}
 	}
+
+	function att_register_excel(){
+		$grid_firstdate = $this->input->post('hide_date');
+		$grid_data = $this->input->post('hide_emp');
+		$unit_id = $this->input->post('hide_unit');
+		$emp_ids = explode(',', trim($grid_data));
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_att_registerr($emp_ids);
+
+		$year_month = date("M-Y", strtotime($grid_firstdate));
+		$data["value"]=$query;
+		$data['unit_id'] = $unit_id;
+		$data["year_month"] = $year_month;
+		$this->load->view('att_register_excel',$data);
+	}
+
 	function grid_monthly_att_register_ot(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
@@ -972,6 +1057,23 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_report_ot',$data);
 		}
 	}
+
+	function att_register_ot_excel(){
+		$grid_firstdate = $this->input->post('hide_date');
+		$grid_data = $this->input->post('hide_emp');
+		$unit_id = $this->input->post('hide_unit');
+		$emp_ids = explode(',', trim($grid_data));
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_att_register($year_month, $emp_ids);
+
+		$year_month = date("M-Y", strtotime($grid_firstdate));
+		$data["value"]=$query;
+		$data['unit_id'] = $unit_id;
+		$data["year_month"] = $year_month;
+		$this->load->view('att_register_ot_excel',$data);
+	}
+
 	function grid_monthly_ot_register()
 	{
 		$grid_firstdate = $this->input->post('firstdate');
@@ -992,6 +1094,23 @@ class Grid_con extends CI_Controller {
 		{
 			$this->load->view('monthly_ot_register',$data);
 		}
+	}
+
+	function ot_register_excel(){
+		$grid_firstdate = $this->input->post('hide_date');
+		$grid_data = $this->input->post('hide_emp');
+		$unit_id = $this->input->post('hide_unit');
+		$emp_ids = explode(',', trim($grid_data));
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_ot_register($year_month, $emp_ids);
+		// dd($query);
+
+		$year_month = date("M-Y", strtotime($grid_firstdate));
+		$data["value"]=$query;
+		$data['unit_id'] = $unit_id;
+		$data["year_month"] = $year_month;
+		$this->load->view('ot_register_excel',$data);
 	}
 
 	function grid_monthly_eot_register()
@@ -1015,6 +1134,23 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_eot_register',$data);
 		}
 	}
+
+	function eot_register_excel(){
+		$grid_firstdate = $this->input->post('hide_date');
+		$grid_data = $this->input->post('hide_emp');
+		$unit_id = $this->input->post('hide_unit');
+		$emp_ids = explode(',', trim($grid_data));
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_eot_register($year_month, $emp_ids);
+
+		$year_month = date("M-Y", strtotime($grid_firstdate));
+		$data["value"]=$query;
+		$data['unit_id'] = $unit_id;
+		$data["year_month"] = $year_month;
+		$this->load->view('eot_register_excel',$data);
+	}
+
 	function grid_emp_job_application(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
@@ -2778,7 +2914,7 @@ class Grid_con extends CI_Controller {
 		echo "done";
 
 	}
-		
+
 	function grid_service_book_info(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
@@ -2786,7 +2922,7 @@ class Grid_con extends CI_Controller {
 		$data["values"] = $this->Grid_model->service_book_info($grid_emp_id);
 		// dd($data);
 		$data['unit_id'] = $this->input->post('unit_id');
-				
+
 		$this->load->view('service_book_info',$data);
 	}
 	public function grid_roster_employee(){

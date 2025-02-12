@@ -157,17 +157,18 @@ class Attn_process_model extends CI_Model{
 				// dd('not');
 
 				//=================OT CALCULATION ========================
-				$ot_hour 		   			= 0;
-				$eot_hour 		   			= 0;
-				$ot_eot_4pm        			= 0;
-				$ot_eot_12am 	   			= 0;
-				$with_out_friday_ot 	    = 0;
-				$deduction_hour    			= 0;
-				$late_status 	   			= 0;
-				$late_time 	   				= 0;
-				$night_allo        			= 0;
-				$holiday_allo 	   			= 0;
-				$weekly_allo 	   			= 0;
+
+				$tot_hour 		   = 0;
+				$ot_hour 		   = 0;
+				$eot_hour 		   = 0;
+				$ot_eot_12am 	   = 0;
+				$ot_eot_4pm        = 0;
+				$deduction_hour    = 0;
+				$late_status 	   = 0;
+				$night_allo        = 0;
+				$holiday_allo 	   = 0;
+				$weekly_allo 	   = 0;
+
 
                 $ot_last_hour 		= $schedule[0]["ot_minute_to_one_hour"];
                 $lunch_start   		= $schedule[0]["lunch_start"];
@@ -276,6 +277,7 @@ class Attn_process_model extends CI_Model{
 							if ($minute % 60 >= $ot_last_hour) {
 								$ot_hour = $ot_hour + 1;
 							}
+							$tot_hour = $ot_hour;
 							// EOT Calculation
 							if ($ot_hour > 2) {
 								$eot_hour = $ot_hour - 2;
@@ -305,18 +307,6 @@ class Attn_process_model extends CI_Model{
 									$ot_eot_12am = $eot_hour;
 								}
 							}
-							// dd($ot_eot_12am);
-						}
-
-						// Late Status check
-						$late_start_time = "$process_date $late_start_time";
-						if($in_time > $late_start_time) {
-							$late_status = 1;
-							$cal_late_time = strtotime($in_time);
-							$late_in_time  = strtotime("$process_date $acual_in_time");
-							$late_time     = ($cal_late_time - $late_in_time) / 60;
-						}
-						// Late Status
 					}
 				}
 				//============ End  Working day/Weeked/Holiday OT Calculation =============
@@ -342,10 +332,10 @@ class Attn_process_model extends CI_Model{
 				$data = array(
 					'in_time' 			=> $in_time,
 					'out_time' 			=> $out_time,
-					'ot' 				=> $ot_entitle == 1 ? 0:  $ot_hour,
-					'eot' 				=> $ot_entitle == 1 ? 0: $eot_hour,
-					'com_ot' 			=> $com_ot_entitle == 1 ? 0:  $ot_hour,
-					'com_eot' 			=> $com_ot_entitle == 1 ? 0: $eot_hour,
+
+					'tot' 				=> $tot_hour,
+					'ot' 				=> $ot_hour,
+					'eot' 				=> $eot_hour,
 					'false_ot_4' 		=> null,
 					'false_ot_12' 		=> null,
 					'false_ot_all' 		=> null,
@@ -362,9 +352,6 @@ class Attn_process_model extends CI_Model{
 					'weekly_allo'		=> $weekly_allo,
 					'unit_id'			=> $unit,
 				);
-
-				// dd($data);
-				
 				$this->db->where('shift_log_date', $process_date);
 				$this->db->where('emp_id', $emp_id);
 				$this->db->update('pr_emp_shift_log', $data);				

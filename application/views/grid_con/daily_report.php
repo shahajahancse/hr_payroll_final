@@ -47,6 +47,9 @@
         table {
             widht: 600px !important;
         }
+		#btnExport {
+				display: none;
+		}
     }
     </style>
 </head>
@@ -55,8 +58,10 @@
 	<span id='massage'></span>
 	<div id='all_data'>
     <?php $this->load->view("head_english"); ?>
+
+	<button style='position:absulate;margin-left:50px' id="btnExport">Download as Excel</button>
+    <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
     <!--Report title goes here-->
-    <div align="center"  style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
         <span style="font-size:12px; font-weight:bold;"> Daily
             <?php
 
@@ -97,7 +102,7 @@
             <?php echo date("d/m/Y",strtotime($date)); ?>
         </span>
         <br><br>
-        <table border="1" cellpadding="0" cellspacing="0" style="font-size:12px; width:700px; margin-bottom:20px;">
+        <table border="1" cellpadding="0" cellspacing="0" style="font-size:12px; width:700px; margin-bottom:20px;" id='report-data'>
             <?php $this->load->model('Grid_model'); $i=1;
 			$groupedData = array();
 			
@@ -164,7 +169,7 @@
 				
 				$emp_num_rows = $this->Grid_model->attendance_check_for_absent($employee['emp_id'],$date);
 				//dd($emp_num_rows);
-				
+
 				?>
             <tr>
                 <td style="text-align:center"><?php echo $i++?></td>
@@ -258,13 +263,23 @@
 	</div>
 	<br><br>
 
-	</div>
-	<?php if($i-1 == 0){ ?>
-	<script>
- 		document.getElementById('all_data').remove();
- 		document.getElementById('massage').innerHTML = 'Requested list is empty';
-	</script>
-	<?php }?>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<script>
+		function convert_excel(type, fn, dl) {
+			var elt = document.getElementById('report-data');
+			var wb = XLSX.utils.table_to_book(elt, {sheet:"Sheet JS"});
+			return dl ?
+				XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
+				XLSX.writeFile(wb, fn || ('Reports.' + (type || 'xlsx')));
+		}
+		$("#btnExport").click(function(event) {
+		convert_excel('xlsx');
+		});
+</script>
+
 </body>
 
 </html>
