@@ -46,21 +46,43 @@ class Command extends CI_Controller {
 		dd('exit');
 	}
 
-	public function index()
+	public function earn()
 	{
-		// $this->db->where('emp_join_date <', '2024-07-01');
-		// $this->db->where('unit_id', 2);
-		// $this->db->group_by('emp_id');
-		$qsss = $this->db->get('pr_emp_com_info')->result();
-		$arr = array();
+		dd("hello, ci");
+		$this->db->where('unit_id', 2);
+		$this->db->group_by('emp_id');
+		$this->db->order_by('emp_id', 'asc');
+		$qsss = $this->db->get('pr_earn_2021')->result(); 
 		foreach ($qsss as $key => $r) {
-			$arr[$key] = $r->emp_id;
-		}
-		// dd($arr);
-		if (!empty($arr)) {
-			$this->db->where_not_in('emp_id', $arr)->delete('pr_holiday');
-			$this->db->where_not_in('emp_id', $arr)->delete('pr_id_proxi');
-			$this->db->where_not_in('ref_id', $arr)->delete('pr_incre_prom_pun');
+			$data = array(
+				'unit_id'    => $r->unit_id,
+				'emp_id'     => $r->emp_id,
+				'dept_id'    => $r->dept_id,
+				'sec_id'     => $r->sec_id,
+				'line_id'    => $r->line_id,
+				'desig_id'   => $r->desig_id,
+				'gross_sal'  => $r->gross_sal,
+				'com_gross_sal'  => $r->gross_sal,
+				'basic_sal'  => $r->basic_sal,
+				'P'  => $r->P,
+				'A'  => $r->A,
+				'H'  => $r->H,
+				'W'  => $r->W,
+				'L'  => $r->L,
+				'el'  => $r->el,
+				'cl'  => $r->cl,
+				'sl'  => $r->sl,
+				'ml'  => $r->ml,
+				't_days' 	 => $r->ttl_wk_days,
+				'w_days' 	 => $r->pay_days,
+				'earn_leave' => $r->earn_leave,
+				'net_pay'  => $r->net_pay,
+				'earn_month' => '2021-12-31',
+			);
+			$query = $this->db->where('earn_month', '2021-12-31')->where('emp_id', $r->emp_id)->get('pr_earn_leave');
+			if (empty($query->row())) {
+				$this->db->insert('pr_earn_leave', $data);
+			} 
 		}
 		dd('done');
 	}
@@ -77,8 +99,8 @@ class Command extends CI_Controller {
 		$this->db->order_by('emp_id', 'asc');
 		$q = $this->db->get()->result_array();  // 707 get
 		$p = array_column($q, 'emp_id');
-
-
+	
+		
 		$this->db->select(' emp_id ');
 		$this->db->from('pay_salary_sheet_com');
 		$this->db->where('unit_id', 4);
@@ -87,8 +109,8 @@ class Command extends CI_Controller {
 		$this->db->group_by('emp_id');
 		$query = $this->db->where('salary_month', '2024-05-01')->get()->result_array(); // 710 get
 		$ps = array_column($query, 'emp_id');
-
-
+		
+	
 		dd(array_diff($p, $ps ));
 
 		$rs = array_column($query, 'emp_id');
@@ -696,16 +718,16 @@ class Command extends CI_Controller {
 		exit('only for developer');
 		//echo "hello, ci";
 		$results = $this->db->select('emp_id')->where('unit_id', 4)->get('pr_emp_com_info')->result(); //->where('unit_id',4)
-
+		
 		foreach ($results as $key => $row) {
-			$r = $this->db->where('emp_id', $row->emp_id)->get('pr_emp_com_info_c')->row();
+			$r = $this->db->where('emp_id', $row->emp_id)->get('pr_emp_com_info_c')->row(); 
 			if (!empty($r)) {
 				$data = array(
 					'emp_dept_id' => $r->emp_dept_id,
 					'emp_sec_id' => $r->emp_sec_id,
 					'emp_line_id' => $r->emp_line_id,
 				);
-				$this->db->where('emp_id', $row->emp_id)->update('pr_emp_com_info', $data);
+				$this->db->where('emp_id', $row->emp_id)->update('pr_emp_com_info', $data); 	
 				echo "<pre> Id = $row->emp_id  done";
 			} else {
 				echo "<pre> Id = $row->emp_id not done";
@@ -841,7 +863,7 @@ class Command extends CI_Controller {
 
 
 			$user_id=array_unique(array_merge($employee_id1,$employee_id2));
-
+			
 
 			$this->db->where_in('emp_id',$user_id);
 			$this->db->delete('pr_emp_shift_log');
@@ -857,7 +879,7 @@ class Command extends CI_Controller {
 				// if($this->db->where('emp_id',$emp_id)->get('pr_emp_com_info')->num_rows()>0){
 				// 	continue;
 				// }
-//
+// 
 				// elseif(in_array($emp_id,['2010402','2010403','2010404','2010405','2010406','2010407'])){
 				// 	continue;
 				// }
@@ -892,7 +914,7 @@ class Command extends CI_Controller {
 			$this->db->where('depertment_id',$dept_id);
 			$this->db->where('sec_name_en',$sec_name);
 			$data=$this->db->get('emp_section')->row();
-
+			
 			// if (isset($data->id)) {
 				return $data->id;
 			// }else{
@@ -906,7 +928,7 @@ class Command extends CI_Controller {
 			$this->db->like('desig_name',$desg_name,'both');
 			$data=$this->db->get('emp_designation')->row();
 			// dd($this->db->last_query());
-
+			
 			return $data->id;
 		}
 		public function get_line_id($line_name,$sec_id){

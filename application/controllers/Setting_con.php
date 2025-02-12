@@ -111,7 +111,7 @@ class Setting_con extends CI_Controller {
 		$this->data['user_id'] = $id;
 
 		$this->data['users'] = $this->get_member();
-		// dd($this->data['users']);
+		// dd($this->data);
         $this->data['title'] = 'User Access HRM';
         $this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['subview'] = 'settings/left_menu_acl';
@@ -197,7 +197,7 @@ class Setting_con extends CI_Controller {
 
     function get_member()
     {
-    	$this->db->select('members.id, members.id_number, pr_units.unit_name');
+    	$this->db->select('members.id, members.id_number,members.unit_name as unit_id, pr_units.unit_name');
     	$this->db->join('pr_units', 'members.unit_name = pr_units.unit_id', 'left');
     	// $this->db->where('members.unit_name !=', '0');
     	$this->db->order_by('members.id', 'desc');

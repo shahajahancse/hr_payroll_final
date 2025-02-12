@@ -47,6 +47,7 @@ table.dataTable tbody td {
             <?php } ?>
         </div>
     </div>
+       <!-- < ?php dd($units);?> -->
     <div class="row tablebox" style="display: flex;flex-direction: row;">
         <div class="col-md-6">
             <h4 style="font-weight:bold">Report Setting</h4>
@@ -55,15 +56,26 @@ table.dataTable tbody td {
             <a class="btn btn-primary" onclick="add_report_setting('add')"><i class="fa fa-plus"></i> Add</a>
         </div>
     </div>
+ 
     <div id="add_form" class="row tablebox " style="display: none">
+
         <form action="" method="post" id="report_setting_form">
             <div class="col-md-12">
                 <div class="form-group col-md-2">
                     <label for="acl_name">Select Unit</label>
                     <select class="form-control input-sm" name="unit_id" id="unit_id" required>
                         <option value="">Select</option>
-                        <?php  foreach($units as $key => $value) { ?>
-                        <option value="<?= $value['unit_id'] ?>"><?= $value['unit_name'] ?></option>
+                        <!-- < ?php  foreach($units as $key => $value) {  dd($value)?>
+                        <option value="< ?= $value['unit_id'] ?>">< ?= $value['unit_name'] ?></option>
+                        < ?php } ?> -->
+
+                        <?php 
+                        // dd($users);
+                        foreach($units as $key => $value) {
+                        $selected = ($value['unit_id'] == $_SESSION['data']->unit_name) ? 'selected' : 'style="display:none;"';
+                        ?>
+                         <option value="<?= $value['unit_id'] ?>" <?= $selected ?>><?= $value['unit_name'] ?></option>
+                        <!-- <option value="< ?= $value->id ?>" >< ?php echo $value->id_number.' >> '.$value->unit_name?></option> -->
                         <?php } ?>
                     </select>
                 </div>

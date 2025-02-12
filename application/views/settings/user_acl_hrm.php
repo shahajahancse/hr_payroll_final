@@ -45,10 +45,17 @@
     <label for="user_id">Select User</label>
     <select name="user_id" id="user_id" onchange="get_user_level(this.value, 3)" style="width: 300px!important;">
         <option>Select User</option>
-        <?php 
+        <!-- < ?php 
         foreach($users as $key => $value) { ?>
-            <option value="<?= $value->id ?>"><?php echo $value->id_number.' >> '.$value->unit_name?></option>
-        <?php } ?>
+            <option value="< ?= $value->id ?>">< ?php echo $value->id_number.' >> '.$value->unit_name?></option>
+        < ?php } ?> -->
+
+                    <?php 
+            foreach($users as $key => $value) {
+            $selected = ($value->unit_id == $_SESSION['data']->unit_name) ? 'selected' : 'style="display:none;"';
+            ?>
+            <option value="<?= $value->id ?>" <?= $selected ?>><?php echo $value->id_number.' >> '.$value->unit_name?></option>
+            <?php } ?>
     </select>
   </div>
 

@@ -237,7 +237,6 @@
 						<div class="tab-pane fade" id="monthly">
 							<?php if(in_array(80,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register_ot()">Attendance Register</button>
-
 								<?php echo form_open(base_url('grid_con/att_register_ot_excel'), array('method' => 'post')); ?>
 								<input type="hidden" class='hide_date' name="hide_date">
 								<input type="hidden" class='hide_emp' name="hide_emp">
@@ -245,10 +244,6 @@
 								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Attendance Register Excel</button>
 								<?php echo form_close(); ?>
 							<?php } ?>
-<<<<<<< HEAD
-							<?php if(in_array(35,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="grid_monthly_ot_register()">OT Register</button>
-=======
 							<?php if(in_array(81,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_ot_register()">OT Register</button>
 								<?php echo form_open(base_url('grid_con/ot_register_excel'), array('method' => 'post')); ?>
@@ -257,7 +252,6 @@
 								<input type="hidden" class='hide_unit' name="hide_unit">
 								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">OT Register Excel</button>
 								<?php echo form_close(); ?>
->>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 							<?php } ?>
 							<?php if(in_array(82,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_eot_register()">EOT Register</button>
@@ -284,7 +278,6 @@
 						<div class="tab-pane fade" id="continuous">
 							<?php if(in_array(84,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_continuous_present_report()">Present Report</button>
-
 								<?php echo form_open(base_url('grid_con/continuous_present_report_excel'), array('method' => 'post')); ?>
 								<input type="hidden" class='hide_date' name="hide_date">
 								<input type="hidden" class='hide_date2' name="hide_date2">
@@ -469,11 +462,6 @@
                             <?php } ?>
 							<!-- roster list end  -->
 						</div>
-<<<<<<< HEAD
-						<!-- Other Reports end -->
-=======
-
->>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 					</div>
 				</div>
 			</div>
@@ -496,23 +484,12 @@
 						<?php if (!empty($employees)) {
 							foreach ($employees as $key => $emp) {
 						?>
-<<<<<<< HEAD
-								<tr class="removeTr">
-									<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-									</td>
-									<td class="success"><?= $emp->emp_id ?></td>
-									<td class="warning "><?= $emp->name_en ?></td>
-								</tr>
-=======
 							<tr class="removeTr">
-
 								<td><input onclick="get_checked_emp()" type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="<?= $emp->emp_id ?>">
-
 								</td>
 								<td class="success"><?= $emp->emp_id ?></td>
 								<td class="warning "><?= $emp->name_en ?></td>
 							</tr>
->>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 						<?php }
 						} ?>
 						<tr class="removeTrno">
@@ -524,10 +501,7 @@
 		</div>
 	</div>
 
-<<<<<<< HEAD
-=======
 	<script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
-
 
 	<script>
 		$(document).ready(function() {
@@ -539,7 +513,6 @@
 				alert('Please select employee');
 				return false;
 			} else {
-				// document.getElementById('loaader').style.display = 'flex';
 				return true;
 			}
 		}
@@ -578,7 +551,6 @@
 
 	</script>
 
->>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 	<script>
 		$(document).ready(function() {
 			$("#searchi").on("keyup", function() {
@@ -750,17 +722,6 @@
 			if (first_date == '') {
 				return false;
 			}
-<<<<<<< HEAD
-			 $.ajax({
-				 type: "POST",
-				 url: hostname + "grid_con/grid_letter_count",
-				 data: {
-					 "unit_id": unit,
-					 "firstdate": first_date
-				 },
-				 success: function(data) {
-=======
-
 			$('.hide_date').val(first_date); // for excel on monthly report
 			$('.hide_unit').val(unit_id); // for excel on monthly report
 
@@ -772,7 +733,6 @@
 					"firstdate": first_date
 				},
 				success: function(data){
->>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 					var data = JSON.parse(data);
 					$('#letter1_count').html(data[1]);
 					$('#letter2_count').html(data[2]);
@@ -786,24 +746,22 @@
 		$(document).ready(function() {
 			count_l1();
 		});
-<<<<<<< HEAD
-=======
 		function changeFontBn() {
 			setTimeout(() => {
 				// console.log('changeFontBn');
 				$('.changeFontBn').css('font-family', 'SutonnyMJ');
 			}, 5000);
 		}
-
 	</script>
 	<script>
 		function grid_roster_employee(){
 			var ajaxRequest;  // The variable that makes Ajax possible!
+
 			try{
-				// Opera 8.0+, Firefox, Safari
-				ajaxRequest = new XMLHttpRequest();
+			// Opera 8.0+, Firefox, Safari
+			ajaxRequest = new XMLHttpRequest();
 			}catch (e){
-				// Internet Explorer Browsers
+			// Internet Explorer Browsers
 			try{
 				ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
 			}catch (e) {
@@ -839,52 +797,4 @@
 				}
 			}
 		}
->>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 	</script>
-
-
-<script>
-function grid_roster_employee(){
-	var ajaxRequest;  // The variable that makes Ajax possible!
-
-	try{
-	// Opera 8.0+, Firefox, Safari
-	ajaxRequest = new XMLHttpRequest();
-	}catch (e){
-	// Internet Explorer Browsers
-	try{
-		ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-	}catch (e) {
-		try{
-			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-		}catch (e){
-			// Something went wrong
-			alert("Your browser broke!");
-			return false;
-		}
-	}
-	}
-	var unit_id = document.getElementById('unit_id').value;
-	var first_date = document.getElementById('firstdate').value;
-	if(unit_id =='Select'){
-		alert("Please select unit !");
-		return;
-	}
-
-	document.getElementById('loaader').style.display = 'flex';
-	var queryString="unit_id="+unit_id+"&first_date="+first_date;
-	url =  hostname+"grid_con/grid_roster_employee/";
-	ajaxRequest.open("POST", url, true);
-	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-	ajaxRequest.send(queryString);
-	ajaxRequest.onreadystatechange = function(){
-		if (ajaxRequest.readyState == 4) {
-			document.getElementById('loaader').style.display = 'none';
-			var resp = ajaxRequest.responseText;
-			service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
-			service_book.document.write(resp);
-			service_book.stop();
-		}
-	}
-}
-</script>

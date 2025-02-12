@@ -23,6 +23,11 @@ class Salary_process_model extends CI_Model{
 		$table_name    = "att_".date("Y_m", strtotime($process_month));
 
 		//PROCESS MONTH EXISTANCE CHECK
+		if($process_month < '2024-07-02')
+		{
+			return "Processing is not allowed before 2024-07-01.";
+		}
+
 		if(!$this->db->table_exists($table_name))
 		{
 			return "Process month does not exist, please change your process month";

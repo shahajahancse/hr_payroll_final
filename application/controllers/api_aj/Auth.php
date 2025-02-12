@@ -46,7 +46,7 @@ class Auth extends API_Controller
         );
         //dd($data);
         $auth = $this->login_auth($data);
-        // dd($auth);
+       // dd($auth);
         if ($auth['status'] == true) {
             //dd($auth);
             // you user authentication code will go here, you can compare the user with the database or whatever
@@ -108,7 +108,7 @@ class Auth extends API_Controller
                     'message' => 'User logout successful.',
                     'data' => null,
                 ], 200);
-
+                
             } else {
                 // Error response for invalid API key
                 $this->api_return([

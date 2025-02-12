@@ -247,17 +247,7 @@
             return false;
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         var data = "unit_id=" + unit_id + "&emp_id=" + emp_id + "&salary_month=" + salary_month; 
-=======
-        var data = "unit_id=" + unit_id + "&emp_id=" + emp_id + "&salary_month=" + salary_month;
->>>>>>> bf661ad8fac5127562e40f191e767e275d29986f
-=======
-
-        var data = "unit_id=" + unit_id + "&emp_id=" + emp_id + "&salary_month=" + salary_month;
-
->>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
         url =  hostname+"salary_report_con/advance_salary_report/";
 
         ajaxRequest.open("POST", url, true);

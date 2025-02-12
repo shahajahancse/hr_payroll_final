@@ -11,15 +11,15 @@ class Authentication extends CI_Controller {
 		/* Standard Libraries */
 		// $this->load->model('processdb');
 		$this->load->helper('form');
-
+		
 	}
-
-
+	
+	
 	function index()
 	{
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
-
+		
 		if($this->session->userdata('logged_in') == true)
 		{
 			if($this->session->userdata('level')== 2 || $this->session->userdata('level')==3)
@@ -34,7 +34,7 @@ class Authentication extends CI_Controller {
 		}
 		else
 		{
-			$this->load->view('admin/login');
+			$this->load->view('admin/login'); 
 		}
 	}
 }

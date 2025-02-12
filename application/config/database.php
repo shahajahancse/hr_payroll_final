@@ -78,11 +78,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-<<<<<<< HEAD
-	'database' => 'erp_aj',
-=======
 	'database' => 'erp_payroll',
->>>>>>> 4576f5ada5e890be8307e4763ec790af8a0a0d19
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
     'pconnect' => FALSE,
