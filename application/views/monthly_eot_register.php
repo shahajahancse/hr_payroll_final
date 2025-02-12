@@ -43,11 +43,11 @@ Monthly EOT Report of <?php echo "$start_date"; ?></span>
 		<!-- <th>Punch Card No.</th> -->
 		<th>Employee Name</th>
 		<!-- <th>Department</th> -->
-		<th>Designation</th> 
-		<th>Line No. </th> 
-		<th>Shift</th> 
-		<th>Gross Sal</th> 
-		<th>OT Rate</th> 
+		<th>Designation</th>
+		<th>Line No. </th>
+		<th>Shift</th>
+		<th>Gross Sal</th>
+		<th>OT Rate</th>
 		<th>Total EOT Hour</th>
 		<th>Total EOT Amount</th>
 	</tr>

@@ -130,6 +130,46 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
+	function continuous_present_report_excel(){
+		$hide_date = $this->input->post('hide_date');
+		$hide_date2 = $this->input->post('hide_date2');
+		$status = $this->input->post('hide_status');
+		$unit_id = $this->input->post('hide_unit');
+		$grid_data = $this->input->post('hide_emp');
+
+		$emp_ids = explode(',', trim($grid_data));
+		$hide_date = date("Y-m-d",strtotime($hide_date));
+		$hide_date2 = date("Y-m-d",strtotime($hide_date2));
+
+		if ($status == 'LA') {
+			$data["value"] = $this->Grid_model->continuous_late_report($hide_date, $hide_date2, $emp_ids);
+		} else {
+			$data["value"] = $this->Grid_model->continuous_report($hide_date, $hide_date2, $status, $emp_ids);
+		}
+
+		if($status =="A")
+		{
+			$status = "Absent";
+		}
+		elseif($status =="P")
+		{
+			$status = "Present";
+		}
+		elseif($status =="L")
+		{
+			$status = "Leave";
+		}
+		elseif($status =="LA")
+		{
+			$status = "Late";
+		}
+		$data["status"] 	= $status;
+		$data["start_date"] = $hide_date;
+		$data["end_date"] 	= $hide_date2;
+		$data["unit_id"] 	= $unit_id;
+		$this->load->view('grid_con/continuous_present_report_excel',$data);
+	}
+
 	function continuous_leave_report()
 	{
 		$firstdate = date("Y-m-d", strtotime($this->input->post('firstdate')));
@@ -929,6 +969,7 @@ class Grid_con extends CI_Controller {
 		}
 		echo json_encode($get_all[0]);
 	}
+
 	function grid_monthly_att_register(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
@@ -943,6 +984,23 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_reportt',$data);
 		}
 	}
+
+	function att_register_excel(){
+		$grid_firstdate = $this->input->post('hide_date');
+		$grid_data = $this->input->post('hide_emp');
+		$unit_id = $this->input->post('hide_unit');
+		$emp_ids = explode(',', trim($grid_data));
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_att_registerr($emp_ids);
+
+		$year_month = date("M-Y", strtotime($grid_firstdate));
+		$data["value"]=$query;
+		$data['unit_id'] = $unit_id;
+		$data["year_month"] = $year_month;
+		$this->load->view('att_register_excel',$data);
+	}
+
 	function grid_monthly_att_register_ot(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');
@@ -963,6 +1021,23 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_report_ot',$data);
 		}
 	}
+
+	function att_register_ot_excel(){
+		$grid_firstdate = $this->input->post('hide_date');
+		$grid_data = $this->input->post('hide_emp');
+		$unit_id = $this->input->post('hide_unit');
+		$emp_ids = explode(',', trim($grid_data));
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_att_register($year_month, $emp_ids);
+
+		$year_month = date("M-Y", strtotime($grid_firstdate));
+		$data["value"]=$query;
+		$data['unit_id'] = $unit_id;
+		$data["year_month"] = $year_month;
+		$this->load->view('att_register_ot_excel',$data);
+	}
+
 	function grid_monthly_ot_register()
 	{
 		$grid_firstdate = $this->input->post('firstdate');
@@ -983,6 +1058,23 @@ class Grid_con extends CI_Controller {
 		{
 			$this->load->view('monthly_ot_register',$data);
 		}
+	}
+
+	function ot_register_excel(){
+		$grid_firstdate = $this->input->post('hide_date');
+		$grid_data = $this->input->post('hide_emp');
+		$unit_id = $this->input->post('hide_unit');
+		$emp_ids = explode(',', trim($grid_data));
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_ot_register($year_month, $emp_ids);
+		// dd($query);
+
+		$year_month = date("M-Y", strtotime($grid_firstdate));
+		$data["value"]=$query;
+		$data['unit_id'] = $unit_id;
+		$data["year_month"] = $year_month;
+		$this->load->view('ot_register_excel',$data);
 	}
 
 	function grid_monthly_eot_register()
@@ -1006,6 +1098,23 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_eot_register',$data);
 		}
 	}
+
+	function eot_register_excel(){
+		$grid_firstdate = $this->input->post('hide_date');
+		$grid_data = $this->input->post('hide_emp');
+		$unit_id = $this->input->post('hide_unit');
+		$emp_ids = explode(',', trim($grid_data));
+		$year_month = date("Y-m", strtotime($grid_firstdate));
+
+		$query=$this->Grid_model->grid_monthly_eot_register($year_month, $emp_ids);
+
+		$year_month = date("M-Y", strtotime($grid_firstdate));
+		$data["value"]=$query;
+		$data['unit_id'] = $unit_id;
+		$data["year_month"] = $year_month;
+		$this->load->view('eot_register_excel',$data);
+	}
+
 	function grid_emp_job_application(){
 		$grid_data = $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));

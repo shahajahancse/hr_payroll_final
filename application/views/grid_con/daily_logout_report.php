@@ -7,9 +7,14 @@
         table{
             line-height:20px;
         }
+        @media print {
+        #btnExport {
+				display: none;
+			}
+        }
     </style>
 </head>
-    <body>
+    <body id='report-data'>
         <?php // print_r($values); ?>
         <div style=" margin:0 auto;  width:auto;">
         <div id="no_print" style="float:right;"></div>
@@ -17,6 +22,8 @@
                 $data['unit_id'] = $unit_id;
                 $this->load->view("head_english",$data);
             ?>
+	        <button style='position:absulate;margin-left:50px' id="btnExport">Download as Excel</button>
+
             <div align="center" style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;"><span style="font-size:13px; font-weight:bold;">
                 <?php echo $title; ?> Wise Manpower Summary <?php echo $report_date; ?></span>
                 <br />
@@ -135,6 +142,21 @@
             </div>
         </div>
         <br><br>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+	<script>
+		function convert_excel(type, fn, dl) {
+			var elt = document.getElementById('report-data');
+			var wb = XLSX.utils.table_to_book(elt, {sheet:"Sheet JS"});
+			return dl ?
+				XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
+				XLSX.writeFile(wb, fn || ('Sales-Report.' + (type || 'xlsx')));
+		}
+		$("#btnExport").click(function(event) {
+		convert_excel('xlsx');
+		});
+	</script>
     </body>
 </html>
 <?php exit(); ?>

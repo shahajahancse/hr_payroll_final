@@ -1,10 +1,30 @@
-<html>
-<head>
-<title>Monthly Attendance Register</title>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" />
-</head>
-<body>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head> </head>
 
+<body>
+	<?php
+		$filename = "otreg.xls";
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	?>
+
+	<style type="text/css">
+		.priview-body{font-size: 16px;color:#000;margin: 25px;}
+		.priview-header{margin-bottom: 10px;text-align:center;}
+		.priview-header div{font-size: 18px;}
+		.priview-memorandum{padding-bottom: 20px;}
+		.headding{border-top:1px solid #000;border-bottom:1px solid #000;text-align:center;}
+		.table{width:100%;border-collapse: collapse;}
+		.table td, .table th{border:0px solid #ddd;}
+	</style>
+
+	<?php
+		if (is_string($value)) {
+			echo $value;
+			exit();
+		}
+	?>
     <?php
         $per_page_id = 11;
         $row_count=count($value);
@@ -130,7 +150,6 @@
             $t_day = $p+ $a+  $w + $h +$l;
             echo "<td style='text-align: center;'> $t_day </td>";
 
-            // echo "<td style='text-align: center;'> $total_meot </td>";
             echo "<td style='text-align: center;'>";
             echo "$total_ot+$total_eot =";
             echo  $total_ot + $total_eot;
@@ -142,5 +161,4 @@
     <div style="page-break-after:always;"></div>
 </body>
 </html>
-<br><br><br>
 <?php exit(); ?>

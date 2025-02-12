@@ -3057,6 +3057,7 @@ function grid_monthly_att_register(i = null)
 		}
 	}
 }
+
 function grid_monthly_att_register_ot(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
@@ -3104,12 +3105,12 @@ function grid_monthly_att_register_ot(){
 	}
 
 	document.getElementById('loaader').style.display = 'flex';
-   var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
-   url =  hostname+"grid_con/grid_monthly_att_register_ot/";
+	var queryString="firstdate="+firstdate+"&spl="+sql+"&unit_id="+unit_id;
+	url =  hostname+"grid_con/grid_monthly_att_register_ot/";
 
-   ajaxRequest.open("POST", url, true);
-   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-   ajaxRequest.send(queryString);
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
 
 	ajaxRequest.onreadystatechange = function(){
 		document.getElementById('loaader').style.display = 'none';
@@ -3119,8 +3120,8 @@ function grid_monthly_att_register_ot(){
 			continuous_costing_report.document.write(resp);
 		}
 	}
-
 }
+
 function grid_monthly_ot_register()
 {
 
