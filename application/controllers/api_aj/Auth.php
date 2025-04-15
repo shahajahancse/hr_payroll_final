@@ -23,7 +23,6 @@ class Auth extends API_Controller
     private function key()
     {
         // use database query for get valid key
-
         return 1452;
     }
 
@@ -76,7 +75,7 @@ class Auth extends API_Controller
                 $this->api_return([
                     'status' => false,
                     'message' => 'User login unsuccessful.',
-                    'data' => [],
+                    'data' => null,
                 ], 200);
             }
 
@@ -84,7 +83,7 @@ class Auth extends API_Controller
             $this->api_return([
                 'status' => false,
                 'message' => 'User login unsuccessful.',
-                'data' => [],
+                'data' => null,
             ], 200);
         }
     }
@@ -107,7 +106,7 @@ class Auth extends API_Controller
                 $this->api_return([
                     'status' => true,
                     'message' => 'User logout successful.',
-                    'data' => [],
+                    'data' => null,
                 ], 200);
                 
             } else {
@@ -115,7 +114,7 @@ class Auth extends API_Controller
                 $this->api_return([
                     'status' => false,
                     'message' => 'User logout unsuccessful.',
-                    'data' => [],
+                    'data' => null,
                 ], 404);
             }
         } else {
@@ -123,7 +122,7 @@ class Auth extends API_Controller
             $this->api_return([
                 'status' => false,
                 'message' => 'User logout unsuccessful.',
-                'data' => [],
+                'data' => null,
             ], 404);
         }
     }

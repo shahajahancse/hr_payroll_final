@@ -114,7 +114,7 @@
                             <a href="<?=base_url('setup_con/designation_edit') . '/' . $data["id"]?>"
                             class="btn btn-primary center-text" role="button">Edit</a>
                         </td>
-                        <td <?php  if(in_array(139,$acl)) {echo '';} else { echo 'style="display:none;"';}?>?>>
+                        <td <?php  if(in_array(139,$acl)) {echo '';} else { echo 'style="display:none;"';}?>?>
                             <a href="<?=base_url('setup_con/designation_delete') . '/' . $data["id"]?>"
                                 class="btn btn-danger center-text" role="button">Delete</a>
                         </td>

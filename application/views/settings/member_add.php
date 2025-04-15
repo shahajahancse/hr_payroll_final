@@ -63,9 +63,26 @@
             <label>Unit Name</label>
               <select name="unit_name" id= "field-unit_name" class="form-control" required>
                 <option value="">Select Unit</option>
-                <?php foreach ($pr_units as $row) { ?>
-                  <option value="<?php echo $row->unit_id;?>"><?php echo $row->unit_name; ?></option>
-                <?php } ?>
+                <?php foreach ($pr_units as $row) { 
+                  // dd($_SESSION['data']->unit_name);
+                  if ($row->unit_id == $_SESSION['data']->unit_name) {
+                          $select_data = "selected";
+                    } else {
+                      // $select_data = '';
+                      continue;
+                    }
+                    echo '<option ' . $select_data . '  value="' . $row->unit_id . '">' . $row->unit_name.'</option>';
+                } ?>
+              </select>
+          </div>
+          <div class="form-group">
+            <label>Buyer Mood</label>
+              <select name="mode" id= "field-status" class="form-control" required>
+                <option value="">Select Status</option>
+                <option value="0">No</option>
+                <option value="7">7pm</option>
+                <option value="9">9pm</option>
+                <option value="12">12pm</option>
               </select>
           </div>
           <div class="form-group">

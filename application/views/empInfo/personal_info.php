@@ -28,6 +28,11 @@ input[type="number"] {
         </div>
     </div>
 
+    <?php
+        $user_id = $this->session->userdata('data')->id;
+        $acl = check_acl_list($user_id);
+    ?>
+
     <div id="target-div">
         <div class="container-fluid">
             <button onclick="emp_id_search()" class="form-control btn input-sm  btn-success"
@@ -59,7 +64,6 @@ input[type="number"] {
                                                     continue;
                                                 }
                                             }
-                                        
 										echo '<option '.$select_data.'  value="'.$row->unit_id.'">'.$row->unit_name.
 										'</option>';
 										}
@@ -69,10 +73,17 @@ input[type="number"] {
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Emp Id <span style="color: red;">*</span> </label>
-                                <input type="text" name="emp_id" id="emp_id" class="form-control input-sm required"
-                                    value="<?= isset($emp_info->emp_id)?>" onkeypress="if (this.value.length > 6) return false;" required>
-                                <?php echo form_error('emp_id');?>
+                                <label>Emp Id <span style="color: red;">*</span> </label> 
+                                <!-- < ?php echo form_error('emp_id');?> -->
+                                <input type="number" name="emp_id" id="emp_id" 
+                                    class="form-control input-sm required" 
+                                    value="<?= isset($emp_info->emp_id) ? htmlspecialchars($emp_info->emp_id) : '' ?>" 
+                                    maxlength="7" 
+                                    pattern="\d{1,7}" 
+                                    onblur="validateEmpId(this)" 
+                                    oninput="this.value = this.value.slice(0, 7);"
+                                    required>
+                                <?php echo form_error('emp_id'); ?>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -220,27 +231,6 @@ input[type="number"] {
                             <div class="form-group">
                                 <label>Education </label>
                                 <input type="text" name="education" id="education" class="form-control input-sm">
-                                <!-- < ?php echo form_error('education');?>
-                                 <Select name="education" id="education" class="form-control input-sm required">
-                                    <option value="">select</option>
-                                    <option value="None">None</option>
-                                    <option value="One">One</option>
-                                    <option value="Two">Two</option>
-                                    <option value="Three">Three</option>
-                                    <option value="Four">Four</option>
-                                    <option value="Five">Five</option>
-                                    <option value="PSC">PSC</option>
-                                    <option value="Seven">Seven</option>
-                                    <option value="JSC">JSC</option>
-                                    <option value="Nine">Nine</option>
-                                    <option value="Ten">Ten</option>
-                                    <option value="SSC">SSC</option>
-                                    <option value="HSC">HSC</option>
-                                    <option value="Diploma">Diploma</option>
-                                    <option value="Graduation">Graduation</option>
-                                    <option value="Post Graduation">Post Graduation</option>
-                                    <option value="Other">Other</option>
-                                </Select> -->
                             </div>
                         </div>
                     </div>
@@ -286,22 +276,17 @@ input[type="number"] {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Hight <span style="color: red;">*</span> </label>
-                                <!-- <input type="hidden" name="ft" id="ft"> -->
-                                <!-- <input type="hidden" name="inches" id="inches"> -->
                                 <input  class="form-control input-sm" name="hight" id="hight" class="col-md-5" type="text" onkeypress="return isValidInput(event)" oninput="validateHeightInput(this)">
                                
                             <script>
                                 function isValidInput(event) {
-                                    // Allow only digits and dot (.)
                                     const charCode = event.charCode;
                                     return (charCode >= 48 && charCode <= 57) || charCode === 46;
                                 }
 
                                 function validateHeightInput(input) {
-                                    // Allow only up to 3 digits before dot and 2 digits after dot
                                     const regex = /^(\d{0,3})(\.\d{0,2})?$/;
                                     if (!regex.test(input.value)) {
-                                        // Trim the value to fit the format
                                         const match = input.value.match(/^(\d{0,3})(\.\d{0,2})?/);
                                         input.value = match ? match[0] : '';
                                     }
@@ -1007,9 +992,12 @@ input[type="number"] {
                             <a href="" class="btn-warning btn">Cancel</a>
 
                             <input type="hidden" name="submit_type" id="submit_type">
-
+                            <?php if(in_array(213,$acl)) { ?>
                             <button onclick="checkAndBlockSubmit('edit',event)" class="btn btn-success">EDIT</button>
+                            <?php } ?>
+                            <?php if(in_array(212,$acl)) { ?>
                             <button onclick="checkAndBlockSubmit('save',event)" class="btn btn-primary">SAVE</button>
+                            <?php } ?>
 
                         </div>
                     </div>
@@ -1728,4 +1716,25 @@ function get_last_id() {
 }
 get_last_id()
 
+</script>
+
+<script>
+     function validateEmpId(input) {
+        // Check if the length exceeds 7
+         proxi_id = document.getElementById('proxi_id');
+        if (input.value.length > 7) {
+            alert('Emp ID cannot be more than 7 characters.');
+            // input.value = '';
+        } else if( input.value.length < 7){
+            alert('Emp ID cannot be less than 7 characters.');
+            // input.value = '';
+            // proxi_id.value = '';
+        }
+        // Check if the input is not numeric
+        else if (!/^\d{1,7}$/.test(input.value)) {
+            alert('Emp ID must be number and cannot be more than 7 digits.');
+            input.value = '';
+            proxi_id.value = '';
+        }
+    }
 </script>

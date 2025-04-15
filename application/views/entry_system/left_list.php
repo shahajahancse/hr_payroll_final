@@ -43,10 +43,11 @@
         </div>
     </div>
     <!-- <br> -->
+    <div id='loaader' style='position: absolute;display: none;z-index: 99999;text-align: center;background: white;margin: 52px 500px;'>
+        <img src="http://118.179.191.20/hr_payroll/loader.gif"  alt="Loader">
+    </div>
     <div class="row tablebox">
-
         <div class="col-md-12">
-
             <table class="table table-striped" id="">
                 <thead>
                     <tr>
@@ -59,7 +60,6 @@
                         <th>Delete</th>
                     </tr>
                 </thead>
-
                 </thead>
 
                 <tbody id="tbody">
@@ -148,14 +148,14 @@ function report(emp_id, status) {
         }
     }
 
-    // document.getElementById('loaader').style.display = 'flex';
+    document.getElementById('loaader').style.display = 'flex';
     var queryString = "emp_id=" + emp_id + "&status=" + status;
     url = hostname + "grid_con/grid_letter_report_print/";
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
     ajaxRequest.send(queryString);
     ajaxRequest.onreadystatechange = function() {
-        // document.getElementById('loaader').style.display = 'none';
+        document.getElementById('loaader').style.display = 'none';
         if (ajaxRequest.readyState == 4) {
             var resp = ajaxRequest.responseText;
             letter_1 = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
@@ -193,7 +193,7 @@ $(document).ready(function() {
 
 function get_data(offset=0) {
     
-    var deptSearch = $('#deptSearch').val()
+    var deptSearch = $('#deptSearch').val();
     $.ajax({
         url: "<?php echo base_url('entry_system_con/left_list_ajax') ?>",
         type: "post",
@@ -204,7 +204,6 @@ function get_data(offset=0) {
         },
         success: function(data) {
             var obj = JSON.parse(data)
-
             obj.forEach(element => {
                 if (element.status == 1) {
                     var s_at = 'No Letter'

@@ -208,6 +208,13 @@
                     <?php echo form_error('random_minute');?>
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Ifftar Allowance Time</label>
+                    <input type="text" name="iffter_allow_time" value="" class="form-control input-sm">
+                    <?php echo form_error('iffter_allow_time');?>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">

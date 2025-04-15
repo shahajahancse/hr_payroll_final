@@ -103,7 +103,7 @@
                             <a href="<?=base_url('setup_con/sec_edit') . '/' . $pr_secs["id"]?>"
                                 class="btn btn-primary center-text" role="button">Edit</a>
                         </td>
-                        <td <?php if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>?>>
+                        <td <?php if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>?>
                             <a href="<?=base_url('setup_con/sec_delete') . '/' . $pr_secs["id"]?>"
                                 class="btn btn-danger center-text" role="button">Delete</a>
 

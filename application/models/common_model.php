@@ -9,40 +9,44 @@ class Common_model extends CI_Model{
 		/* Standard Libraries */
 	}
 
-	function salary_structure($gross_salary)
+	function salary_structure($gross_salary, $date = null)
 	{
+		if (empty($date)) {
+			$date = date('Y-m-d');
+		}
 		$data = array();
-		$date = date('Y-m-d');
-		if($date > '2018-11-31')
+		if($date > '2023-11-31')
 		{
 			$data['medical_allow'] 	= 750;
 			$data['trans_allow'] 	= 450;
 			$data['food_allow'] 	= 1250;
-			$total_salary_allow 	= $data['medical_allow'] + $data['trans_allow'] + $data['food_allow'];
 			$data['gross_salary'] 	= $gross_salary;
-			$basic_salary 			= (($gross_salary - $total_salary_allow) / 1.5);
+			$basic_salary 			= (($gross_salary - 2450) / 1.5);
+			$data['basic_sal'] 	    = round($basic_salary);
+			$data['house_rent']     = round($basic_salary * 50 / 100);
+			$data['ot_rate']        = round(($data['basic_sal'] * 2  / 208),2);
+			$data['stamp'] = 0;
+		} else if($date > '2018-11-31') {
+			$data['medical_allow'] 	= 600;
+			$data['trans_allow'] 	= 350;
+			$data['food_allow'] 	= 900;
+			$data['gross_salary'] 	= $gross_salary;
+			$basic_salary 			= (($gross_salary - 1850) / 1.5);
 			$data['basic_sal'] 	   = round($basic_salary);
 			$data['house_rent']    = round($basic_salary * 50 / 100);
 			$data['ot_rate']       = round(($data['basic_sal'] * 2  / 208),2);
-			//$data['ot_rate']       = round(($gross_salary - $data['basic_sal']/1.5 * 208),2);
 			$data['stamp'] = 0;
-
 		}else{
-
 			$data['medical_allow'] 	= 250;
 			$data['trans_allow'] 	= 200;
 			$data['food_allow'] 	= 650;
-			$total_salary_allow 	= $data['medical_allow'] + $data['trans_allow'] + $data['food_allow'];
 			$data['gross_salary'] 	= $gross_salary;
-			$basic_salary 			= (($gross_salary - $total_salary_allow) / 1.4);
+			$basic_salary 			= (($gross_salary - 1100) / 1.4);
 			$data['basic_sal'] 	   = round($basic_salary);
 			$data['house_rent']    = round($basic_salary * 40 / 100);
 			$data['ot_rate']       = round(($data['basic_sal'] * 2  / 208),2);
 			$data['stamp'] = 0;
-
 		}
-		// dd($basic_salary/71.15);
-
 
 		if($gross_salary == 0)
 		{
@@ -55,7 +59,6 @@ class Common_model extends CI_Model{
 			$data['ot_rate']       	= 0;
 			$data['stamp'] 			= 0;
 		}
-
 		return $data;
 	}
 
@@ -70,6 +73,81 @@ class Common_model extends CI_Model{
 		return $this->db->where('com.unit_id', $id)->get()->result();
 	}
 
+    // [per_village] => Monla
+    // [per_post] => 5503
+    // [per_thana] => 179
+    // [per_district] => 1
+    // [per_village_bn] => মেংলা
+    // [pre_home_owner] => মোঃ শরিফুল ইসলাম
+    // [holding_num] => 0
+    // [home_own_mobile] => 01929020443
+    // [pre_village] => Kamrangachala
+    // [pre_post] => 4540
+    // [pre_thana] => 130
+    // [pre_district] => 18
+    function get_emp_info_by_id($id, $unit_id = null){
+
+		$this->db->select('
+			pr_emp_com_info.id as com_id,
+			pr_emp_com_info.emp_id as empp_id,
+			pr_emp_per_info.*,
+			emp_depertment.dept_name,
+			emp_section.sec_name_en,
+			emp_section.sec_name_bn,
+			emp_line_num.line_name_en,
+			emp_line_num.line_name_bn,
+			emp_designation.desig_name,
+			emp_designation.desig_bangla,
+			pr_emp_com_info.emp_join_date,				
+			pr_emp_shift.shift_name,
+			pr_grade.gr_name,
+			pr_grade.gr_str_basic,
+			pr_emp_com_info.gross_sal,
+			pr_emp_status.stat_type,
+			pr_emp_per_info.per_village,
+			per_dis.name_bn as per_dis_name_bn,
+			per_upa.name_bn as per_upa_name_bn,
+			per_post.name_bn as per_post_name_bn,
+
+			per_dis.name_en as per_dis_name_en,
+			per_upa.name_en as per_upa_name_en,
+			per_post.name_en as per_post_name_en,
+
+			pr_emp_per_info.pre_village,
+			pre_dis.name_bn as pre_dis_name_bn,
+			pre_upa.name_bn as pre_upa_name_bn,
+			pre_post.name_bn as pre_post_name_bn,
+			
+			pre_dis.name_en as pre_dis_name_en,
+			pre_upa.name_en as pre_upa_name_en,
+			pre_post.name_en as pre_post_name_en,
+
+			pr_emp_resign_history.resign_date,
+			pr_emp_left_history.left_date,
+			DAY(pr_emp_resign_history.resign_date) as last_working_day,
+			year(pr_emp_resign_history.resign_date) as resign_year,
+		');
+		$this->db->from('pr_emp_com_info');				
+		$this->db->join('pr_emp_shift','pr_emp_shift.id = pr_emp_com_info.emp_shift', 'left');
+		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+		$this->db->join('pr_emp_left_history', 'pr_emp_per_info.emp_id = pr_emp_left_history.emp_id', 'left');
+		$this->db->join('pr_emp_resign_history', 'pr_emp_per_info.emp_id = pr_emp_resign_history.emp_id', 'left');
+		$this->db->join('pr_grade', 'pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id', 'left');
+		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id', 'left');
+		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id', 'left');
+		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id', 'left');
+		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id', 'left');
+		$this->db->join('pr_emp_status', 'pr_emp_com_info.emp_cat_id = pr_emp_status.stat_id', 'left');
+		$this->db->join('emp_districts as per_dis', 	'pr_emp_per_info.per_district = per_dis.id', 'LEFT');
+		$this->db->join('emp_upazilas as per_upa', 		'pr_emp_per_info.per_thana = per_upa.id', 'LEFT');
+		$this->db->join('emp_post_offices as per_post', 'pr_emp_per_info.per_post = per_post.id', 'LEFT');
+		$this->db->join('emp_districts as pre_dis', 	'pr_emp_per_info.pre_district = pre_dis.id', 'LEFT');
+		$this->db->join('emp_upazilas as pre_upa', 		'pr_emp_per_info.pre_thana = pre_upa.id', 'LEFT');
+		$this->db->join('emp_post_offices as pre_post', 'pr_emp_per_info.pre_post = pre_post.id', 'LEFT');
+        $r = $this->db->where('pr_emp_com_info.emp_id', $id)->get()->row();
+        return $r;
+    }
+
 	function get_group_name(){
 		$this->db->select("emp_group_dasignation.*, pr_units.unit_name");
 		$this->db->from("emp_group_dasignation");
@@ -79,8 +157,6 @@ class Common_model extends CI_Model{
 	}
 
 	function get_group_wise_attendance($line_id, $date, $unit_id, $array){
-		// dd($array['Operator']);
-		// dd($array);
 		// $line_id = 218;
 		if (!empty($array['Operator'])) {
 			$this->db->select("
@@ -101,7 +177,6 @@ class Common_model extends CI_Model{
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Operator']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Operator'] = $this->db->get()->row();
@@ -128,7 +203,6 @@ class Common_model extends CI_Model{
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Helper']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Helper'] = $this->db->get()->row();
@@ -155,7 +229,6 @@ class Common_model extends CI_Model{
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Iron Man']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Iron Man'] = $this->db->get()->row();
@@ -182,7 +255,6 @@ class Common_model extends CI_Model{
 			$this->db->where("com.attn_sum_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Line Chief']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Line Chief'] = $this->db->get()->row();
@@ -209,7 +281,6 @@ class Common_model extends CI_Model{
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['F.Q.I']);
 			$this->db->group_by("log.shift_log_date");
 			$d['F.Q.I'] = $this->db->get()->row();
@@ -236,7 +307,6 @@ class Common_model extends CI_Model{
 			$this->db->where("com.attn_sum_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Supervisor']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Supervisor'] = $this->db->get()->row();
@@ -263,7 +333,6 @@ class Common_model extends CI_Model{
 			$this->db->where("com.emp_line_id", $line_id);
 			$this->db->where("com.unit_id", $unit_id);
 			$this->db->where("log.shift_log_date", $date);
-			// $this->db->where("log.in_time !=", "00:00:00");
 			$this->db->where_in("com.emp_desi_id", $array['Input Man']);
 			$this->db->group_by("log.shift_log_date");
 			$d['Input Man'] = $this->db->get()->row();
@@ -427,6 +496,9 @@ class Common_model extends CI_Model{
 
 	function company_information($unit_id)
 	{
+		if($unit_id == 0){
+			return $company_infos = $this->db->get('company_infos')->result();
+		}
 		return $company_infos = $this->db->where('unit_id',$unit_id)->get('company_infos')->result();
 
 		// return $query = $this->db->select('*')->get('company_infos')->row();

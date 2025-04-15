@@ -56,6 +56,16 @@
               </select>
           </div>
           <div class="form-group">
+            <label>Buyer Mood</label>
+              <select name="mode" id= "field-status" class="form-control" required>
+                <option value="">Select Status</option>
+                <option value="0" <?= ($row->user_mode == '0')? 'selected':'' ?> >No</option>
+                <option value="7" <?= ($row->user_mode == '7')? 'selected':'' ?> >7pm</option>
+                <option value="9" <?= ($row->user_mode == '9')? 'selected':'' ?> >9pm</option>
+                <option value="10" <?= ($row->user_mode == '12')? 'selected':'' ?> >12pm</option>
+              </select>
+          </div>
+          <div class="form-group">
             <label>Status</label>
               <select name="status" id= "field-status" class="form-control">
                 <option value="">select status</option>

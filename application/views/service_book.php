@@ -27,12 +27,13 @@
 </head>
 <body class="container">
     <br>
-    <?php 
-        $session = $this->session->userdata('data'); 
+    <?php $session = $this->session->userdata('data'); 
     foreach($values as $value){ 
         $emp_signature =$this->db->select('signature')->where('emp_id',$value->emp_id)->get('pr_emp_per_info')->row('signature');    
         $register =$this->db->select('register')->where('unit_id',$unit_id)->get('company_infos')->row('register');
     ?>
+
+    <!-- First divition -->
     <div class="d-flex">
         <div class="flex-fill" style="height:90vh;width:70vw;border: 3px solid black;">
             <div class="text-center" >
@@ -82,6 +83,7 @@
     </div>
     <div style="margin-bottom: 20px;page-break-after: always;"></div>
     
+    <!-- Second division -->
     <div class="d-flex">
         <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
             <p style="padding: 5px 0px 0px 5px;" class="unicode-to-bijoy"> ফরম নং - ৭(খ)</p>
@@ -144,6 +146,8 @@
             </table>
         </div>
     </div>
+
+    <!-- third division -->
     <div style="margin-bottom: 20px;page-break-after: always;"></div>
     <div class="d-flex">
         <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
@@ -180,27 +184,45 @@
                         <td class="unicode-to-bijoy">টাকা</td>
                         <td class="unicode-to-bijoy">টাকা</td>
                     </tr>
-                    <tr class="text-center">
-                        <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
-                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo '<span style="font-size:12px;">'.$value->desig_bangla.'</span>'.' '.$value->emp_id?></td>
-                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($value->gross_sal-2450)/1.5)?></td>
-                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round((($value->gross_sal-2450)/1.5/2))?></td>
-                        <td style="font-size:15px;font-family:sutonnyMJ">750</td>
-                        <td>-</td>
-                    </tr>
-                    <?php 
-                        $incProms = $this->db->where('new_emp_id',$value->emp_id)->get('pr_incre_prom_pun')->result();
-                        foreach($incProms as $incProm){
+
+                    <?php
+                        $this->db->select('pm.*, d.desig_bangla');
+                        $this->db->join('emp_designation d', 'd.id = pm.new_desig', 'left');
+                        $this->db->where('new_emp_id',$value->emp_id)->group_by('effective_month');
+                        $this->db->order_by('effective_month', 'ASC');
+                        $incProms = $this->db->get('pr_incre_prom_pun as pm')->result();
+                        if (empty($incProms)) {
+                            $gross_sal = $value->com_gross_sal;
+                        } else {
+                            $gross_sal = $incProms[0]->prev_com_salary;
+                        }
+                        $ss = $this->common_model->salary_structure($gross_sal, $value->emp_join_date);
+                        $oss = $ss['trans_allow'] + $ss['food_allow'];
                     ?>
 
-                    <tr>
-                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $incProm->effective_month?></td>
-                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $incProm->new_dept?></td>
-                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($incProm->new_salary-2450)/1.5)?></td>
-                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round((($incProm->new_salary-2450)/1.5/2))?></td>
-                        <td style="font-size:15px;font-family:sutonnyMJ">750</td>
+                    <tr class="text-center">
+                        <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
+                        <td style="font-size:13px; font-family:sutonnyMJ"><?php echo '<span style="font-size:10px;">'.$value->desig_bangla.'</span>'.' '.$value->emp_id?></td>
+                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $ss['basic_sal'] ?></td>
+                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $ss['house_rent'] ?></td>
+                        <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $ss['medical_allow'] ?></td>
                         <td>-</td>
                     </tr>
+
+                    <?php foreach($incProms as $incProm){ ?>
+                        <?php  $dad = date('d-m-Y', strtotime($incProm->effective_month));  ?>
+                        <?php
+                            $ngross_sal = $incProm->new_salary;
+                            $ss = $this->common_model->salary_structure($ngross_sal, $incProm->effective_month);
+                        ?>
+                        <tr>
+                            <td style="font-size:15px;font-family:sutonnyMJ"><?= $dad; ?> Bs</td>
+                            <td style="font-size:13px; font-family:sutonnyMJ"><?php echo '<span style="font-size:10px;">'.$incProm->desig_bangla.'</span>'.' '.$value->emp_id?></td>
+                            <td style="font-size:15px;font-family:sutonnyMJ"><?= $ss['basic_sal'] ?></td>
+                            <td style="font-size:15px;font-family:sutonnyMJ"><?= $ss['house_rent'] ?></td>
+                            <td style="font-size:15px;font-family:sutonnyMJ"><?= $ss['medical_allow'] ?></td>
+                            <td>-</td>
+                        </tr>
                     <?php }?>
                 </tbody>
             </table>
@@ -242,8 +264,8 @@
                 </thead>
                 <tbody>
                     <tr class="text-center">
-                        <td class='unicode-to-bijoy' style="padding:6px;">1700</td>
-                        <td  style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($value->gross_sal))?> </td>
+                        <td style="padding :14px 0px" class='unicode-to-bijoy'><?php echo $oss ?></td></td>
+                        <td  style="font-size:15px;font-family:sutonnyMJ"><?php echo $gross_sal ?> </td>
                         <td> </td>
                         <td> </td>
                         <td> </td>
@@ -251,9 +273,14 @@
                         <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>
 
-                    <?php  foreach($incProms as $incProm){?>
+                    <?php foreach($incProms as $incProm){ ?>
+                    <?php
+                        $gross_sal = $incProm->new_salary;
+                        $ss = $this->common_model->salary_structure($gross_sal, $incProm->effective_month);
+                        $oss = $ss['trans_allow'] + $ss['food_allow'];
+                    ?>
                     <tr>
-                        <td class='unicode-to-bijoy'>1700</td>
+                        <td style="padding :15px 0px" class='unicode-to-bijoy'><?= $oss ?></td>
                         <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($incProm->new_salary))?> </td>
                         <td> </td>
                         <td> </td>
@@ -268,6 +295,7 @@
     </div>
     <div style="margin-bottom: 20px;page-break-after: always;"></div>
     
+    <!-- Four division -->
     <div class="d-flex">
         <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
             <p  class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঘ)</p>
@@ -338,6 +366,8 @@
         <div style="width:1% !important"></div>
     </div>
     <div style="margin-bottom: 20px;page-break-after: always;"></div>
+
+    <!-- Five division -->
     <div class="d-flex">
         <div class="flex-fill" style="height:90vh;width:60vw;border: 1px solid black;">
             <p  class="unicode-to-bijoy " style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঙ)</p>

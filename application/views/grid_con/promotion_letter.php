@@ -176,12 +176,12 @@ $obj = new BanglaNumberToWord();
                 Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q ‡h, ‡Kv¤úvbx KZ©…c¶ Avcbvi Kg©`¶Zvq mš‘ó n‡q Avcbv‡K 
                 <?php echo '<span style="font-size:14px">'.$row->prev_desig_name.'</span>'?> c`, ‡M«Wt 
                 <?php echo '<span font-size:19px;">'.($row->prev_grade_name =="None" ? '<span class="unicode-to-bijoy"> প্রযোজ্য নয় </span>' : $row->prev_grade_name).'</span>';?>  ‡_‡K
-                <?php echo '<span style="font-size:14px">'.$row->new_desig_name.'</span>'?> c‡`, jvBbt 
+                <?php echo '<span style="font-size:18px">'.$row->new_desig_name.'</span>'?> c‡`, jvBbt 
                 <?php echo '<span style="font-size:18px">'.$row->new_line_name.'</span>'?> , ‡M«Wt 
                 <?php echo '<span font-size:19px">'.($row->new_grade_name =="None"? '<span class="unicode-to-bijoy">প্রযোজ্য নয় </span>': $row->new_grade_name).'</span>';?> G c‡`vbœwZ ‡`Iqvi wm×všÍ M…nxZ n‡q‡Q| Avcbvi c~‡e©i ‡eZb 
-                <?php echo $row->prev_salary?>
+                <?php echo $row->prev_com_salary?>
                 UvKvi mv‡_ AviI 
-                <?php echo ($row->new_salary - $row->prev_salary)?> UvKv e…w× K‡i ‡gvU ‡eZb <?php echo $row->new_salary?> UvKv avh© Kiv nBj| hv A`¨  <?php echo date('d/m/Y',strtotime($row->effective_month))?> Bs ZvwiL n‡Z Kvh©Ki Kiv n‡e|
+                <?php echo ($row->new_com_salary - $row->prev_com_salary)?> UvKv e…w× K‡i ‡gvU ‡eZb <?php echo $row->new_com_salary?> UvKv avh© Kiv nBj| hv A`¨  <?php echo date('d/m/Y',strtotime($row->effective_month))?> Bs ZvwiL n‡Z Kvh©Ki Kiv n‡e|
                 Avcbvi ‡eZb e…w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zyjbvg~jK Z_¨ejx wbgœiæc|
             </p>
 
@@ -194,8 +194,8 @@ $obj = new BanglaNumberToWord();
                     </tr>
                     <tr>
                         <td>c`ex</td>
-                        <td><?php echo '<span style="font-family:Arial;font-size:14px">'.$row->prev_desig_name.'</span>'?></td>
-                        <td><?php echo '<span style="font-family:Arial;font-size:14px">'.$row->new_desig_name.'</span>'?></td>
+                        <td><?php echo '<span class="unicode-to-bijoy" style="font-family:Arial;font-size:18px">'.$row->prev_desig_name.'</span>'?></td>
+                        <td><?php echo '<span class="unicode-to-bijoy" style="font-family:Arial;font-size:18px">'.$row->new_desig_name.'</span>'?></td>
                     </tr>
                     <tr>
                         <td>‡MÖW</td>
@@ -204,8 +204,8 @@ $obj = new BanglaNumberToWord();
                     </tr>
                     <tr>
                         <td>g~j gRyix</td>
-                        <td style="font-family:SutonnyMJ;font-size:19px"><?php echo  $prev_basic =round(($row->prev_salary - (1250+750+450))/ 1.5) ; ?></td>
-                        <td style="font-family:SutonnyMJ;font-size:19px"><?php echo  $new_basic =round(($row->new_salary  - (1250+750+450))/ 1.5); ?></td>
+                        <td style="font-family:SutonnyMJ;font-size:19px"><?php echo  $prev_basic =round(($row->prev_com_salary - (1250+750+450))/ 1.5) ; ?></td>
+                        <td style="font-family:SutonnyMJ;font-size:19px"><?php echo  $new_basic =round(($row->new_com_salary  - (1250+750+450))/ 1.5); ?></td>
                     </tr>
                     <tr>
                         <td>evox fvov (g~j gRyix 50%)</td>
@@ -229,8 +229,8 @@ $obj = new BanglaNumberToWord();
                     </tr>
                     <tr>
                         <td><b>me©‡gvU gRyix</b></td>
-                        <td style="font-family:SutonnyMJ;font-size:19px"><b><?php echo $row->prev_salary?></b></td>
-                        <td style="font-family:SutonnyMJ;font-size:19px"><b><?php echo $row->new_salary?></b></td>
+                        <td style="font-family:SutonnyMJ;font-size:19px"><b><?php echo $row->prev_com_salary?></b></td>
+                        <td style="font-family:SutonnyMJ;font-size:19px"><b><?php echo $row->new_com_salary?></b></td>
                     </tr>
                     <tr>
                         <td>Ifvi UvBg fvZvi nvi / N›Uv cÖwZ</td>
@@ -242,7 +242,7 @@ $obj = new BanglaNumberToWord();
                         <td style="font-family:SutonnyMJ;font-size:19px">< ?php echo round($new_basic/104,2)?></td>
                     </tr> -->
                 </table>
-                <span class='unicode-to-bijoy' style='font-size:19px'><b style="font-size:20px">K_vqt</b> <?php $a= ($row->new_salary - $row->prev_salary); echo $obj->numToWord($a);?></span>
+                <span class='unicode-to-bijoy' style='font-size:19px'><b style="font-size:20px">K_vqt</b> <?php $a= ($row->new_com_salary); echo $obj->numToWord($a);?></span>
                 <p>Avkv Kwi fwel¨‡Z Avcwb Avcbvi AwaKZi Kg©`¶Zvi cwiPq w`‡eb Ges ‡Kv¤úvbxi DË‡ivËi mg…w×‡Z Avi mqvnK f~wgKv cvjb Ki‡eb|</p>
             </div>
 
@@ -251,7 +251,7 @@ $obj = new BanglaNumberToWord();
                 <p style="margin-bottom: 110px !important;">ab¨ev`v‡šÍ,</p>
                 <hr style="border: 1px solid black; width: 340px;float:left;display: block;"><br>
                 <br>
-                <p class="mt-2">wefvMxq cÖavb (GBPAvi, GWwgb GÛ Kgcøv‡qÝ)</p>
+                <p class="mt-3">wefvMxq cÖavb (GBPAvi, GWwgb GÛ Kgcøv‡qÝ)</p>
                 <p><?= $com_info->company_name_bangla ?></p>
                 <p class="mt-5">Abywjwct</p>
                 <p>1| MÖæc ‡Rbv‡ij g¨v‡bRvi (GBPAvi, GWwgb GÛ Kgcøv‡qÝ)</p>

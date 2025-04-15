@@ -107,9 +107,9 @@ echo $date_format;
 
 		<tr height="85px">
 				<?php if($deduct_status == "Yes"){?> 
-				<td colspan="10" align="center">
+				<td colspan="12" align="center">
 				<?php }else{ ?>
-				<td colspan="10" align="center">
+				<td colspan="12" align="center">
 				<?php } ?>
 
 					<div style="width:100%; font-family:Arial, Helvetica, sans-serif;">
@@ -128,13 +128,9 @@ echo $date_format;
 								if($grid_status == 1)
 								{ echo 'Reguler Employee '; }
 								elseif($grid_status == 2)
-								{ echo 'New Employee '; }
-								elseif($grid_status == 3)
 								{ echo 'Left Employee '; }
-								elseif($grid_status == 4)
+								elseif($grid_status == 3)
 								{ echo 'Resign Employee '; }
-								elseif($grid_status == 6)
-								{ echo 'Promoted Employee '; }
 								echo '<span style="font-weight:bold;">';
 							?>
 							Monthly Salary Sheet With EOT of 
@@ -165,6 +161,8 @@ echo $date_format;
 			<th rowspan="2" width="130" height="20px"><div align="center"><strong>Designation</strong></div></th>
 			<th rowspan="2" width="120" height="20px"><div align="center"><strong>Line	</strong></div></th>
 			<th rowspan="2" width="35" height="20px"><div align="center"><strong>Salary Amount</strong></div></th>
+			<th rowspan="2" width="35" height="20px"><div align="center"><strong>Total OT</strong></div></th>
+			<th rowspan="2" width="35" height="20px"><div align="center"><strong>OT Amount	</strong></div></th>
 			<th rowspan="2" width="35" height="20px"><div align="center"><strong>Total EOT</strong></div></th>
 			<th rowspan="2" width="35" height="20px"><div align="center"><strong>EOT Amount	</strong></div></th>
 			<th rowspan="2" width="35" height="20px"><div align="center"><strong>Total Amount</strong></div></th>
@@ -172,6 +170,7 @@ echo $date_format;
 			<tr></tr>
 
 			<?php	
+				// dd($value);
 				if($counter == $page)
 				{
 					$modulus = ($row_count-1) % 43;
@@ -253,34 +252,53 @@ echo $date_format;
 				echo  $net_pay;
 				echo "</td>";
 						
+				$total_ot_hour	= $value[$k]->ot_hour;
+				echo "<td>";
+				echo $total_ot_hour;
+				echo "</td>";
+				$ot_amount =  $value[$k]->ot_amount;
+				$ot_amount = $ot_amount;
+				echo "<td>";
+				echo $ot_amount;
+				echo "</td>";
+
 				$total_ot_eot_hour	= $value[$k]->eot_hour;
 				echo "<td>";
 				//echo $eot_hour = $value[$k]->eot_hour;
 				echo $total_ot_eot_hour;
 				echo "</td>";
+
+
+				$total_ot_hour_per_page = $total_ot_hour_per_page + $total_ot_hour;
+				$grand_total_ot_hour = $grand_total_ot_hour + $total_ot_hour; 
 				$total_ot_eot_hour_per_page = $total_ot_eot_hour_per_page + $total_ot_eot_hour;
 				$grand_total_ot_eot_hour = $grand_total_ot_eot_hour + $total_ot_eot_hour; 
 				
 				$total_net_pay_per_page = $total_net_pay_per_page + $net_pay;
 				$grand_net_pay = $grand_net_pay + $net_pay; 
 				//$total_ot_rate_per_page = $total_ot_rate_per_page + $ot_rate; 
-				$ot_amount =  $value[$k]->ot_amount;
+
 				$eot_amount =  $value[$k]->eot_amount;
 				
+
+
 				$ot_eot_amount = $eot_amount;
 				echo "<td>";
 				echo $ot_eot_amount;
 				echo "</td>";
 				
+				$total_ott_amount_per_page = $total_ott_amount_per_page + $ot_amount;
+				$grand_total_ott_amount = $grand_total_ott_amount + $ot_amount;
 				$total_ot_amount_per_page = $total_ot_amount_per_page + $ot_eot_amount;
 				$grand_total_ot_amount = $grand_total_ot_amount + $ot_eot_amount;
 				
-				$total_amount = $ot_eot_amount + $net_pay;
+				$total_amount = $ot_amount + $ot_eot_amount + $net_pay;
 				echo "<td>";
 				echo $total_amount;
 				echo "</td>";
 				
 				$total_total_amount_per_page = $total_total_amount_per_page + $total_amount;
+				// $total_total_amount_per_page = $total_total_amount_per_page + $total_amount;
 				$grand_total_amount_amount = $grand_total_amount_amount + $total_amount;
 				
 				echo "<td>";
@@ -296,6 +314,9 @@ echo $date_format;
 				
 				<td align="right"><strong><?php echo $english_format_number = number_format($total_net_pay_per_page);?></strong></td>
 
+				<td align="right"><strong><?php echo $english_format_number = number_format($total_ot_hour_per_page);?></strong></td>
+
+				<td align="right"><strong><?php echo $english_format_number = number_format($total_ott_amount_per_page);?></strong></td>
 				<td align="right"><strong><?php echo $english_format_number = number_format($total_ot_eot_hour_per_page);?></strong></td>
 
 				<td align="right"><strong><?php echo $english_format_number = number_format($total_ot_amount_per_page);?></strong></td>
@@ -308,8 +329,10 @@ echo $date_format;
 					<td colspan="5" align="center"><strong>Grand Total Amount Tk</strong></td>
 				
 					<td align="right"><strong><?php echo $english_format_number = number_format($grand_net_pay);?></strong></td>
+					<td align="right"><strong><?php echo $english_format_number = number_format($grand_total_ot_hour);?></strong></td>
+					<td align="right"><strong><?php echo $english_format_number = number_format($grand_total_ott_amount);?></strong></td>
 					<td align="right"><strong><?php echo $english_format_number = number_format($grand_total_ot_eot_hour);?></strong></td>
-				
+					
 					<td align="right"><strong><?php echo $english_format_number = number_format($grand_total_ot_amount);?></strong></td>
 					
 					<td align="right"><strong><?php echo $english_format_number = number_format($grand_total_amount_amount);?></strong></td>

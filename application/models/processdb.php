@@ -280,6 +280,7 @@ class Processdb extends CI_Model{
 			'emp_shift'  		=> $this->input->post('emp_shift'),
 			'emp_join_date'		=> $ejd,
 			'emp_sal_gra_id'  	=> $this->input->post('emp_sal_gra_id'),
+			'emp_type'			=> $this->input->post('emp_type'),
 			'salary_type'		=> $this->input->post('salary_type'),
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'lunch'				=> $this->input->post('lunch'),
@@ -2296,8 +2297,19 @@ class Processdb extends CI_Model{
 			$interval = $date1->diff($date2);
 			$d->age = $interval->format("%y years %m months %d days");
 			$date1 = new DateTime($d->emp_join_date);
-			$date2 = new DateTime();
-			$interval = $date1->diff($date2);
+			$left_date = $this->db->select('left_date')->where('emp_id',$d->emp_id)->get('pr_emp_left_history')->row('left_date');
+			$resign_date = $this->db->select('resign_date')->where('emp_id',$d->emp_id)->get('pr_emp_resign_history')->row('resign_date');
+
+			$emp_join_date = new DateTime($d->emp_join_date);
+			if($left_date != ''){
+				$date2 = new DateTime($left_date);
+			}elseif($resign_date != ''){
+				$date2 = new DateTime($resign_date);
+			}else{
+				$date2 = new DateTime();
+			}	
+			$interval = $emp_join_date->diff($date2);
+			$interval->d += 1;
 			$d->job_duration = $interval->format("%y years %m months %d days");
 			return ['status'=>true,'data'=>$d];
 		}

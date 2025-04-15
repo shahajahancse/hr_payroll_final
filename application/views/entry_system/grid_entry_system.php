@@ -115,36 +115,40 @@
             <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
                 <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                     <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                        <form method="post" id="present_entry_form">
+                        <form method="post" id="present_entry_form" autocomplete="on">
                             <div class="raw">
                                 <div class="col-md-4" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">From Date</label>
-                                        <input class="form-control date" id="first_date" name="first_date" autocomplete="off">
+                                        <input class="form-control date" id="first_date" name="first_date">
                                     </div>
                                 </div>
                                 <div class="col-md-4" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">To Date</label>
-                                        <input class="form-control date" id="second_date" name="second_date" autocomplete="off">
+                                        <input class="form-control date" id="second_date" name="second_date">
                                     </div>
                                 </div>
                                 <div class="col-md-4" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">Time</label>
-                                        <input class="form-control" id="time" name="time" placeholder="hh:mm:ss">
+                                        <input type='text' class="form-control" id="time" name="time" placeholder="hh:mm:ss" autocomplete>
                                     </div>
                                 </div>
                             </div>
+
+                            <style>
+                            </style>
+
                             <div class="raw">
                                 <div class="col-md-12" style="padding: 10px 5px !important;">
                                     <div class="input-group">
                                         <span class="input-group-btn" style="display: flex; gap: 15px;">
                                             <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
                                             <input <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
-                                            <input <?php  if(in_array(128,$acl)) {echo '';} else { echo 'style="display:none;"';}?>  class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
+                                            <input <?php  if(!in_array(137,$acl)) {echo 'style="display:none;"';} else { echo '';}?>  class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
 
-                                            <input <?php  if(in_array(129,$acl)) {echo '';} else { echo 'style="display:none;"';}?>  class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
+                                            <input <?php  if(!in_array(138,$acl)) {echo 'style="display:none;"';} else { echo '';}?>  class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
                                         </span>
                                     </div><!-- /input-group -->
                                 </div>
@@ -168,7 +172,7 @@
                                     <div class="col-md-4" style="padding: 5px !important">
                                         <div class="form-group" style="margin-bottom: 3px !important;">
                                             <label class="control-label">Stop Salary Month</label>
-                                            <input class="form-control input-sm" type="month" id="stop_month" name="stop_month" autocomplete="off">
+                                            <input class="form-control input-sm" type="month" id="stop_month" name="stop_month">
                                         </div>
                                     </div>
                                     <div class="col-md-4" style="padding: 5px !important">
@@ -191,49 +195,6 @@
                     font-weight: bold;
                 }
             </style>
-            <!-- eot entry form   -->
-            <!-- <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
-                <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
-                    <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
-                        <form method="post" id="eot_modify_form">
-                            <div class="raw">
-                                <div class="col-md-5" style="padding: 5px !important">
-                                    <div class="col-md-6" style="padding: 5px !important">
-                                        <div class="form-group" style="margin-bottom: 3px !important;">
-                                            <label class="control-label">First Date</label>
-                                            <input class="form-control input-sm date" type="text" id="eot_f_date" name="eot_f_date" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" style="padding: 5px !important">
-                                        <div class="form-group" style="margin-bottom: 3px !important;">
-                                            <label class="control-label">Second Date</label>
-                                            <input class="form-control input-sm date" type="text" id="eot_s_date" name="eot_s_date" autocomplete="off">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="col-md-3" style="padding: 5px !important">
-                                        <div class="form-group" style="padding: 2px 5px !important;">
-                                            <label class="control-label">EOT</label>
-                                            <input class="form-control" id="eot" name="eot">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9" style="padding: 0px !important; margin-top: 30px;">
-                                        <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" style="top: -15px">
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <input class="btn btn-primary" onclick='eot_modify_entry(event)' type="button" value='Save' />
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div> -->
         </div>
 
         <!-- employee list for right side -->

@@ -110,15 +110,6 @@
 						echo "</td>";
 
 					echo "</tr>";
-
-					// echo "<tr>";
-					// 	echo "<td >";
-					// 	echo "<strong>Dept :</strong>";
-					// 	echo "</td>";
-						// echo "<td >";
-						// echo  $this->db->select('shift_name')->where('unit_id',$value->unit_id)->where('schedule_id',$value->emp_shift)->get('pr_emp_shift')->row()->shift_name;;
-						// echo "</td>";
-					// echo "</tr>";
 					echo "<table>";
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
 					// dd($emp_data);
@@ -132,8 +123,6 @@
 							<th>Attn.Status</th>
 							<th>OT Hour</th>
 							<th>Extra OT Hour</th>
-							<th>Modify EOT</th>
-							<th>EOT Ded.</th>
 							<th>Total OT Hour</th>
 							<th>Remarks</th>
 						</tr>";
@@ -268,13 +257,13 @@
 							echo $row->eot;
 							echo "&nbsp;</td>";
 
-							echo "<td>&nbsp;";
-							echo $row->modify_eot;
-							echo "&nbsp;</td>";
+							// echo "<td>&nbsp;";
+							// echo $row->modify_eot;
+							// echo "&nbsp;</td>";
 
-							echo "<td>&nbsp;";
-							echo $row->deduction_hour;
-							echo "&nbsp;</td>";
+							// echo "<td>&nbsp;";
+							// echo $row->deduction_hour;
+							// echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
 							echo $row->eot + $row->ot - $row->deduction_hour + ($row->modify_eot);
@@ -300,13 +289,13 @@
 					echo $total_ot_hour - $total_ot;
 					echo "</td>";
 
-					echo "<td>";
-					echo $total_ot_modify;
-					echo "</td>";
+					// echo "<td>";
+					// echo $total_ot_modify;
+					// echo "</td>";
 
-					echo "<td>";
-					echo $total_ot_deduct;
-					echo "</td>";
+					// echo "<td>";
+					// echo $total_ot_deduct;
+					// echo "</td>";
 
 					echo "<td>";
 					echo $total_ot_hour;

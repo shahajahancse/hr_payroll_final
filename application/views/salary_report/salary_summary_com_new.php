@@ -58,16 +58,13 @@ $this->load->view("head_english");
 <div style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif; width:100%; ">
 	<div  style="font-size:13px; font-weight:bold; text-align:center; width:100%;">
 	<?php 
-	if($grid_status == 1)
-	{ echo 'Reguler Employee '; }
-	elseif($grid_status == 2)
-	{ echo 'New Employee '; }
-	elseif($grid_status == 3)
-	{ echo 'Left Employee '; }
-	elseif($grid_status == 4)
-	{ echo 'Resign Employee '; }
-	elseif($grid_status == 6)
-	{ echo 'Promoted Employee '; }
+		if($grid_status == 1)
+		{ echo 'Reguler Employee '; }
+		elseif($grid_status == 2)
+		{ echo 'Left Employee '; }
+		elseif($grid_status == 3)
+		{ echo 'Resign Employee '; }
+
 	?>
 	Monthly Salary Summary of 
 	<?php 

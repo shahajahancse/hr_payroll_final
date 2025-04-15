@@ -13,6 +13,13 @@
     @media print {
         @page {
             size: 926px 416px;
+            margin: 0; /* Remove default margins */
+        }
+        body {
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh; /* Full height to center content vertically */
         }
     }
 
@@ -23,15 +30,17 @@
         padding: 0;
         justify-content: center;  
         align-items: center;      
-        height: 80vh;            
+        height: 80vh;     
+        
+        
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh; 
     }
     .order-box {
         width: 926px;  
         height: 416px; 
-        /* margin: 20px 0px 0px 20px; */
-        /* background-color: #f0f0f0;  */
-        /* border: 2px solid #333;     */
-        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -42,8 +51,9 @@
         justify-content: space-between;
     }
     .left-section {
+        /* width: 50%; */
         width: 100%;
-        font-size: 24px;
+        font-size: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -52,144 +62,162 @@
     .logo {
         display: flex;
         align-items: center;
-        margin-bottom: 10px;
     }
     .logo img {
-        width: 60px;
-        height: 40px;
+        width: 90px;
+        height: 50px;
         margin-right: 10px;
     }
     .company-details {
         font-weight: bold;
         margin-bottom: 5px;
+        font-family: 'SutonnyMJ'
     }
     .company-address {
-        font-size: 16px;
+        font-size: 18px;
         color: #555;
+        font-family: 'SutonnyMJ'
     }
     .right-section {
-        width: 50%;
+        width: 100%;
+        place-content: center !important;
     }
     .form-table {
-        width: 35%;
+        width: 90%;
+        /* height: 70vh; */
         border-collapse: collapse;
     }
     .form-table td {
+        padding: 2px;
+        font-size: 16px !important;
+        vertical-align: middle;
+    }
+    .form-table th {
         padding: 2px;
         vertical-align: middle;
     }
 </style>
 </head>
 <body>
-    <div class="order-box">
+    <?php
+		$unit_id = $this->session->userdata('data');
+		if ($unit_id->unit_name== 0) {
+			echo "Please Login as unit user (Not allow Super admin)";
+			exit();
+		}
+        $com_info = $this->db->where('unit_id',$unit_id->unit_name)->get('company_infos')->row()
+    ?>
+
+    <div class="order-box" style="height: 416px; width: 926px;">
         <div class="container">
             <!-- Left Section with Logo and Company Details -->
             <div class="left-section">
                 <div class="logo">
                     <img src="<?php echo base_url('images/AJ_Logo_copy5.png')?>" alt="Logo">
                     <div>
-                        <div class="company-details">এজে ফ্যাশনস লিমিটেড</div>
+                        <div class="company-details"><?=$com_info->company_name_bangla ?></div>
                         <div class="company-address">
-                            ২৩৪/৪ কচুক্ষেত, ঢাকা ক্যান্ট, ঢাকা-১২০৬
+                            <?=$com_info->company_add_bangla ?>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Right Section with Form using Table -->
             <div class="right-section">
-                <table class="form-table">
+                <table class="form-table" style='margin-left: 40px;line-height: 30px'>
                     <tr>
-                        <td class="form-label">প্রাপক,</td>
+                        <td><strong>প্রাপক,</strong></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td class="form-label">নাম</td>
-                        <td class="colon">:</td>
+                        <td class="colon">: <?= $info->name_bn ?></td>
                     </tr>
                     <tr>
                         <td class="form-label">পিতার নাম</td>
-                        <td class="colon">:</td>
+                        <td class="colon">: <?= $info->father_name ?></td>
                     </tr>
                     <tr>
-                        <td class="form-label">বর্তমান ঠিকানা</td>
-                        <td class="colon">:</td>
+                        <td colspan="2"><strong>বর্তমান ঠিকানা</strong></td>
                     </tr>
                     <tr>
                         <td class="form-label">গ্রাম</td>
-                        <td class="colon">:</td>
+                        <td class="colon">: <?= $info->pre_village_bn ?></td>
                     </tr>
                     <tr>
                         <td class="form-label">পোস্ট অফিস</td>
-                        <td class="colon">:</td>
+                        <td class="colon">: <?= $info->pre_post_name_bn ?></td>
                     </tr>
                     <tr>
                         <td class="form-label">থানা</td>
-                        <td class="colon">:</td>
+                        <td class="colon">: <?= $info->pre_upa_name_bn ?></td>
                     </tr>
                     <tr>
                         <td class="form-label">জেলা</td>
-                        <td class="colon">:</td>
+                        <td class="colon">: <?= $info->pre_dis_name_bn ?></td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
-<br><br><br>
+
+    <div class="clear-fix"></div>
+
+    <div class="order-box" style="height: 416px; width: 926px;">
+        <div class="container">
+            <!-- Left Section with Logo and Company Details -->
+            <div class="left-section">
+                <div class="logo">
+                    <img src="<?php echo base_url('images/AJ_Logo_copy5.png')?>" alt="Logo">
+                    <div>
+                        <div class="company-details"><?=$com_info->company_name_bangla ?></div>
+                        <div class="company-address">
+                            <?=$com_info->company_add_bangla ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section with Form using Table -->
+            <div class="right-section">
+                <table class="form-table" style='margin-left: 40px;line-height: 30px'>
+                    <tr>
+                        <td><strong>প্রাপক,</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="form-label">নাম</td>
+                        <td class="colon">: <?= $info->name_bn ?></td>
+                    </tr>
+                    <tr>
+                        <td class="form-label">পিতার নাম</td>
+                        <td class="colon">: <?= $info->father_name ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>স্থায়ী ঠিকানা</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="form-label">গ্রাম</td>
+                        <td class="colon">: <?= $info->per_village_bn ?></td>
+                    </tr>
+                    <tr>
+                        <td class="form-label">পোস্ট অফিস</td>
+                        <td class="colon">: <?= $info->per_post_name_bn ?></td>
+                    </tr>
+                    <tr>
+                        <td class="form-label">থানা</td>
+                        <td class="colon">: <?= $info->per_upa_name_bn ?></td>
+                    </tr>
+                    <tr>
+                        <td class="form-label">জেলা</td>
+                        <td class="colon">: <?= $info->per_dis_name_bn ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div style="page-break-after: always"></div>
-    <div class="order-box">
-        <div class="container">
-            <!-- Left Section with Logo and Company Details -->
-            <div class="left-section">
-                <div class="logo">
-                    <img src="<?php echo base_url('images/AJ_Logo_copy5.png')?>" alt="Logo">
-                    <div>
-                        <div class="company-details">এজে ফ্যাশনস লিমিটেড</div>
-                        <div class="company-address">
-                            ২৩৪/৪ কচুক্ষেত, ঢাকা ক্যান্ট, ঢাকা-১২০৬
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right Section with Form using Table -->
-            <div class="right-section">
-                <table class="form-table">
-                    <tr>
-                        <td class="form-label">প্রাপক,</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="form-label">নাম</td>
-                        <td class="colon">:</td>
-                    </tr>
-                    <tr>
-                        <td class="form-label">পিতার নাম</td>
-                        <td class="colon">:</td>
-                    </tr>
-                    <tr>
-                        <td class="form-label">বর্তমান ঠিকানা</td>
-                        <td class="colon">:</td>
-                    </tr>
-                    <tr>
-                        <td class="form-label">গ্রাম</td>
-                        <td class="colon">:</td>
-                    </tr>
-                    <tr>
-                        <td class="form-label">পোস্ট অফিস</td>
-                        <td class="colon">:</td>
-                    </tr>
-                    <tr>
-                        <td class="form-label">থানা</td>
-                        <td class="colon">:</td>
-                    </tr>
-                    <tr>
-                        <td class="form-label">জেলা</td>
-                        <td class="colon">:</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
 </body>
 </html>

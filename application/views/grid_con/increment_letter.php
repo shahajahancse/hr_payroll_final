@@ -82,23 +82,23 @@
             ï‡f”Qv wb‡eb, 
             <?php if ($row->status == 1) { ?>
             
-            Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q †h, Avcbvi PvKzixi †gqv` GK ermi c~b© nIqvq ewb©Z welq ev¯Íevq‡bi j‡ÿ¨ KZ…©cÿ <span style="font-family:SutonnyMJ;font-size:19px;white-space:nowrap"><?php echo date('d/m/Y',strtotime($row->effective_month))?> Bs</span>  ZvwiL n‡Z Avcbvi eZ©gvb gvwmK ‡gvU †eZb  <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->prev_salary?></span> UvKvi m‡½ <span style="font-family:SutonnyMJ;font-size:19px"><?php echo ($row->new_salary - $row->prev_salary) ?></span> UvKv †hvM K‡i †gvU <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->new_salary?></span>
+            Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q †h, Avcbvi PvKzixi †gqv` GK ermi c~b© nIqvq ewb©Z welq ev¯Íevq‡bi j‡ÿ¨ KZ…©cÿ <span style="font-family:SutonnyMJ;font-size:19px;white-space:nowrap"><?php echo date('d/m/Y',strtotime($row->effective_month))?> Bs</span>  ZvwiL n‡Z Avcbvi eZ©gvb gvwmK ‡gvU †eZb  <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->prev_com_salary?></span> UvKvi m‡½ <span style="font-family:SutonnyMJ;font-size:19px"><?php echo ($row->new_com_salary - $row->prev_com_salary) ?></span> UvKv †hvM K‡i †gvU <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->new_com_salary?></span>
             UvKvq DbœxZ Kiv nj| 
             <br>
             D‡jøL¨, cieZx© eQi GB e„w× µge×©gvb nv‡i e„w× ‡c‡q Ges Avcbvi eZ©gvb †MÖW I c`ex, wb‡qvM c‡Îi gRyix As‡ki gRyix KvVv‡gv
             wb‡Pi †Uwe‡j wjwLZ cwiewZ©Z gRyix web¨vm Kjvg Abyhvqx n‡e| Av‡iv D‡jøL, _v‡K †h, wb‡qvM c‡Îi Ab¨vb¨ kZ©vejx AcwiewZ©Z _vK‡e<br>
-            KZ©„cÿ Avkv K‡ib †h, Avcwb mZZv, AvšÍwiKZv I wbôvi mv‡_ KvR K‡i Av‡iv DbœwZ Ki‡eb| Avcbvi ‡eZb e„w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zzjbvg~jK Z_¨vejx wb¤œiƒct
+            KZ©„cÿ Avkv K‡ib †h, Avcwb mZZv, AvšÍwiKZv I wbôvi mv‡_ KvR K‡i Av‡iv DbœwZ Ki‡eb| Avcbvi ‡eZb e„w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zzjbvg~jK Z_¨vejx wb¤œiƒct  
             </p>
             <?php } else { ?>
                 Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q †h, ‡Kv¤úvbx KZ…©cÿ Avcbvi Kg©`ÿZvq mš‘ó n‡q Avcbvi c~‡e©i †eZb 
-                <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->prev_salary?></span> 
-                UvKvi mv‡_ AviI <span style="font-family:SutonnyMJ;font-size:19px"><?php echo ($row->new_salary - $row->prev_salary) ?></span>  UvKv e„w× K‡i †gvU †eZb 
-                <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->new_salary?></span> UvKv avh© Kviv n‡jv|
+                <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->prev_com_salary?></span> 
+                UvKvi mv‡_ AviI <span style="font-family:SutonnyMJ;font-size:19px"><?php echo ($row->new_com_salary - $row->prev_com_salary) ?></span>  UvKv e„w× K‡i †gvU †eZb 
+                <span style="font-family:SutonnyMJ;font-size:19px"><?php echo $row->new_com_salary?></span> UvKv avh© Kviv n‡jv|
+                hv AvMvgx <?php echo date("d/m/Y",strtotime($row->effective_month))?> Bs ZvwiL n‡Z Kvh©Ki Kiv n‡e| 
                 <br>
-                Avcbvi ‡eZb e„w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zzjbvg~jK Z_¨vejx wb¤œiƒct
+                Avcbvi ‡eZb e„w×i c~‡e©i I eZ©gvb gRyix KvVv‡gv Abyhvqx Zzjbvg~jK Z_¨vejx wb¤œiƒct 
                 </p>
                 <?php } ?>
-
             <div>
                 <table class="table table table-bordered text-center p-0" style="font-size:19px">
                     <tr>
@@ -118,8 +118,8 @@
                     </tr>
                     <tr>
                         <td>g~j gRyix</td>
-                        <td style="font-family:SutonnyMJ;font-size:19px"><?php echo  $prev_basic =round(($row->prev_salary - (1250+750+450))/ 1.5) ; ?></td>
-                        <td style="font-family:SutonnyMJ;font-size:19px"><?php echo  $new_basic =round(($row->new_salary  - (1250+750+450))/ 1.5); ?></td>
+                        <td style="font-family:SutonnyMJ;font-size:19px"><?php echo  $prev_basic =round(($row->prev_com_salary - (1250+750+450))/ 1.5) ; ?></td>
+                        <td style="font-family:SutonnyMJ;font-size:19px"><?php echo  $new_basic =round(($row->new_com_salary  - (1250+750+450))/ 1.5); ?></td>
                     </tr>
                     <tr>
                         <td>evox fvov (g~j gRyix 50%)</td>
@@ -143,8 +143,8 @@
                     </tr>
                     <tr>
                         <td><b>me©‡gvU gRyix</b></td>
-                        <td style="font-family:SutonnyMJ;font-size:19px"><b><?php echo $row->prev_salary?></b></td>
-                        <td style="font-family:SutonnyMJ;font-size:19px"><b><?php echo $row->new_salary?></b></td>
+                        <td style="font-family:SutonnyMJ;font-size:19px"><b><?php echo $row->prev_com_salary?></b></td>
+                        <td style="font-family:SutonnyMJ;font-size:19px"><b><?php echo $row->new_com_salary?></b></td>
                     </tr>
                     <tr>
                         <td>Ifvi UvBg fvZvi nvi / N›Uv cÖwZ</td>

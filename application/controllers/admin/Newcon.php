@@ -41,6 +41,7 @@ class Newcon extends CI_Controller {
 					'username' => $this->session->userdata('username'),
 					'logged_in' => $this->session->userdata('logged_in') ,
 					'level' => $this->session->userdata('level'),
+					'user_mode' => $this->session->userdata('user_mode'),
 					'unit_name' => $this->session->userdata('unit_name')
 					);
 		$this->session->sess_destroy();

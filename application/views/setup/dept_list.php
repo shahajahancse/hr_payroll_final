@@ -75,7 +75,8 @@
             <th>Departent Name Bangla </th>
             <th>Company Unit</th>
             <th width="80">Edit</th>
-            <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
+            <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>
+            >Delete </th>
           </tr>
         </thead>
         <tbody>
@@ -88,7 +89,7 @@
                 <td >
                   <a href="<?=base_url('setup_con/dept_edit/'.$pr_depts['dept_id'])?>" class="btn btn-primary center-text " role="button">Edit</a>
                 </td>
-                <td <?php if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>?>>
+                <td <?php if(in_array(136,$acl)) {echo '';} else { echo 'style="display:none;"';}?>?>
                   <a href="<?=base_url('setup_con/dept_delete/'.$pr_depts["dept_id"])?>" class="btn btn-danger center-text" role="button">Delete</a>
                 </td>
             </tr>

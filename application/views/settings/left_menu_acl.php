@@ -45,6 +45,7 @@
         <select name="user_id" id="user_id" onchange="get_user_level(this.value, 1)" style="width: 300px!important;">
             <option>Select User</option>
             <?php 
+            // dd($_SESSION);
             foreach($users as $key => $value) { ?>
                 <option value="<?= $value->id ?>"><?php echo $value->id_number.' >> '.$value->unit_name?></option>
             <?php } ?>

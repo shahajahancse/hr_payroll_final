@@ -144,6 +144,11 @@
         <input type="text" name="random_minute" value="<?=set_value('random_minute',$pr_emp_shift_schedule->random_minute)?>" class="form-control">
         <?php echo form_error('random_minute');?>
       </div>
+      <div class="form-group">
+        <label>Ifftar Allowance Time</label>
+        <input type="text" name="iffter_allow_time" value="<?=set_value('iffter_allow_time',$pr_emp_shift_schedule->iffter_allow_time)?>" class="form-control">
+        <?php echo form_error('iffter_allow_time');?>
+      </div>
      
       <div class="form-group">
         <button class="btn btn-primary">Update</button>

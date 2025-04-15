@@ -15,15 +15,18 @@ class Salary_process_con extends CI_Controller {
 		set_time_limit(0);
 		ini_set("memory_limit","512M");
 
+		
         if ($this->session->userdata('logged_in') == false) {
+			// dd($this->session->userdata);
             redirect("authentication");
         }
         $this->data['user_data'] = $this->session->userdata('data');
-        if (!check_acl_list($this->data['user_data']->id, 7)) {
-            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
-            redirect("payroll_con");
-            exit;
-        }
+		// dd($this->data['user_data']);
+        // if (!check_acl_list($this->data['user_data']->id, 7)) {
+        //     echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+        //     redirect("payroll_con");
+        //     exit;
+        // }
 
 	}
 	
@@ -147,6 +150,8 @@ class Salary_process_con extends CI_Controller {
 
 	function grid_salary_report()
 	{
+		// dd($this->session->userdata('logged_in'));
+
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
@@ -189,13 +194,10 @@ class Salary_process_con extends CI_Controller {
 		$this->db->like('effective_date', $month);
 		$this->db->where('unit_id', $this->session->userdata('data')->unit_name);
 		$query = $this->db->get('pr_bonus_rules');
-		// dd($query->result());
-		//echo $this->db->last_query();
 		if($query->num_rows()==0)
 		{
 			echo "Sorry! This Month is not setup in Festival.";
 		} else {
-			//dd($query->result());
 			$result = $this->Festival_bonus_model->festival_bonus_process($emp_ids, $date, null);
 			echo "Process completed successfully";
 		}	

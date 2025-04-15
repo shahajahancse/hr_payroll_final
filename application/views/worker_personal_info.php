@@ -338,7 +338,7 @@ $obj = new BanglaNumberToWord();
 
                     <p style='line-height:1'>7. cÖwZ Kg©w`e‡m wekÖvg, Avnvi, bvgvR I Ab¨vb¨ Kv‡Ri Rb¨ 01 (GK) N›Uv weiwZ cÖ`vb Kiv nq|</p>
 
-                    <p style='line-height:1'>8. Avcwb 1 (GK) eQi Kg©iZ _vKvi ci gyj gRyixi 5% nv‡i µgvš^‡q evrmwiK gRyix e„w× cvB‡e|</p>
+                    <p style='line-height:1'>8. Avcbvi evwl©K †eZb/gRyix e„w× evsjv‡`k kÖg AvB‡bi me©‡kl wb‡`©kbvejx/ms‡kvabx Abyhvqx ev¯ÍevwqZ n‡e|</p>
 
                     <p style='line-height:1'>9. PvKzix n‡Z B¯Ídv/c`Z¨vM t cÖ‡Z¨K ¯’vqx kÖwgK 60 w`‡bi wjwLZ †bvwUk cÖ`vb K‡i PvKyix n‡Z B¯Ídv w`‡Z cvi‡eb| webv †bvwU‡k PvKzix n‡Z B¯Ídv w`‡Z PvB‡j †bvwU‡ki cwie‡Z© 60 w`‡bi g~j gRyixi mgcwigvb A_© gvwjK‡K cÖ`vb Ki‡Z n‡e| gvwjK KZ…©K webv †bvwU‡k †Kvb kÖwg‡Ki PvKwiP‚¨wZ ev PvKzixi Aemvb n‡j gvwjK evsjv‡`k kÖg AvBb Abyhvqx D³ kÖwgK‡K Zvi hveZxq cvIbvw` cÖ`vb Ki‡eb|</p>
 
@@ -547,7 +547,7 @@ $obj = new BanglaNumberToWord();
 
                     <p style='line-height:1'>7. cÖwZ Kg©w`e‡m wekÖvg, Avnvi, bvgvR I Ab¨vb¨ Kv‡Ri Rb¨ 01 (GK) N›Uv weiwZ cÖ`vb Kiv nq|</p>
 
-                    <p style='line-height:1'>8. Avcwb 1 (GK) eQi Kg©iZ _vKvi ci gyj gRyixi 5% nv‡i µgvš^‡q evrmwiK gRyix e„w× cvB‡e|</p>
+                    <p style='line-height:1'>8. Avcbvi evwl©K †eZb/gRyix e„w× evsjv‡`k kÖg AvB‡bi me©‡kl wb‡`©kbvejx/ms‡kvabx Abyhvqx ev¯ÍevwqZ n‡e|</p>
 
                     <p style='line-height:1'>9. PvKzix n‡Z B¯Ídv/c`Z¨vM t cÖ‡Z¨K ¯’vqx kÖwgK 60 w`‡bi wjwLZ †bvwUk cÖ`vb K‡i PvKyix n‡Z B¯Ídv w`‡Z cvi‡eb| webv †bvwU‡k PvKzix n‡Z B¯Ídv w`‡Z PvB‡j †bvwU‡ki cwie‡Z© 60 w`‡bi g~j gRyixi mgcwigvb A_© gvwjK‡K cÖ`vb Ki‡Z n‡e| gvwjK KZ…©K webv †bvwU‡k †Kvb kÖwg‡Ki PvKwiP‚¨wZ ev PvKzixi Aemvb n‡j gvwjK evsjv‡`k kÖg AvBb Abyhvqx D³ kÖwgK‡K Zvi hveZxq cvIbvw` cÖ`vb Ki‡eb|</p>
 

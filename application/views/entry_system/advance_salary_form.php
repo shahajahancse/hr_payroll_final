@@ -8,8 +8,8 @@
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
 <?php
-$this->load->model('common_model');
-$unit = $this->common_model->get_unit_id_name();
+    $this->load->model('common_model');
+    $unit = $this->common_model->get_unit_id_name();
 ?>
 <div class="content">
     <div class="row">
@@ -40,8 +40,7 @@ $unit = $this->common_model->get_unit_id_name();
                             } else {
                                 $select_data = '';
                             }
-                            echo '<option ' . $select_data . '  value="' . $row['unit_id'] . '">' . $row['unit_name'] .
-                                '</option>';
+                            echo '<option ' . $select_data . '  value="' . $row['unit_id'] . '">' . $row['unit_name'] . '</option>';
                         }
                         ?>
                     </select>
@@ -91,16 +90,28 @@ $unit = $this->common_model->get_unit_id_name();
             </div>
             <!-- status -->
             <div class="col-md-6">
-                <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
-                <div class="form-group" style="margin-bottom: 10px !important;">
-                    <label class="control-label">Status </label>
-                    <select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
-                        <option value="">All Employee</option>
-                        <?php foreach ($categorys as $key => $row) { ?>
-                            <option value="<?= $row->id ?>" <?= ($row->id == 1) ? 'selected' : '' ?>><?= $row->status_type; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
+                <div class="col-md-6" style="padding-left: 0px; padding-right: 5px">
+                    <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
+                    <div class="form-group" style="margin-bottom: 10px !important;">
+                        <label class="control-label">Status </label>
+                        <select name="status" id="status" class="form-control input-sm" onChange="grid_emp_list()">
+                            <option value="">All Employee</option>
+                            <?php foreach ($categorys as $key => $row) { ?>
+                                <option value="<?= $row->id ?>" <?= ($row->id == 1) ? 'selected' : '' ?>><?= $row->status_type; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6" style="padding-right: 0px; padding-left: 5px;">
+                    <div class="form-group" style="margin-bottom: 10px !important;">
+                        <label class="control-label">Emp Type </label>
+                        <select name="emp_type" id="emp_type" class="form-control input-sm" onChange="grid_emp_list()">
+                            <option value="">All</option>
+                            <option value="1">Worker</option>
+                            <option value="2">Staff</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,7 +149,7 @@ $unit = $this->common_model->get_unit_id_name();
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Salary Type <span style="color: red;">*</span></label>
                                     <select name="salary_type" id="salary_type" class="form-control input-sm" required>
-                                        <option value="" >Select Salary Type</option>
+                                        <option value="" >Select Type</option>
                                         <option value="1">Gross</option>
                                         <option value="2">Basic</option>
                                     </select>
@@ -173,10 +184,14 @@ $unit = $this->common_model->get_unit_id_name();
                                     padding: 7px 10px !important;
                                 }
                             </style>
+                            <!-- <div class="col-md-3" style="padding: 5px !important">
+                                <label class="control-label">Pay Day <span style="color: red;">*</span></label>
+                                <input class="form-control input-sm" type="number" name="pay_day" id="pay_day" value="Pay Day">
+                            </div> -->
                             <div class="col-md-3" style="padding: 5px !important">
-                                <div class="form-group" style="padding: 2px 5px !important; margin-top: 15px; margin-bottom: 3px !important;">
-                                    <input class="btn btn-primary" onclick='advance_salary_entry(event)' type="button" value='Save'/>
-                                    <input class="btn btn-danger" onclick='advance_salary_delete(event)' type="button" value='Delete'/>
+                                <div class="form-group" style="margin-left: 0px; margin-top: 15px; margin-bottom: 3px !important;">
+                                    <input class="btn btn-sm btn-primary" onclick='advance_salary_entry(event)' type="button" value='Save'/>
+                                    <input class="btn btn-sm btn-danger" onclick='advance_salary_delete(event)' type="button" value='Delete'/>
                                 </div>
                             </div>
                         </div>
@@ -364,13 +379,15 @@ $unit = $this->common_model->get_unit_id_name();
         var line = document.getElementById('line').value;
         var desig = document.getElementById('desig').value;
         var status = document.getElementById('status').value;
+        var emp_type = document.getElementById('emp_type').value;
 
         url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
         $.ajax({
             url: url,
             type: 'GET',
             data: {
-                "status": status
+                "status": status,
+                "emp_type": emp_type,
             },
             contentType: "application/json",
             dataType: "json",

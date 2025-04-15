@@ -114,13 +114,13 @@
         </div>
 
         <style>
-        .input-group .form-control {
-            width: 90% !important;
-        }
+            .input-group .form-control {
+                width: 90% !important;
+            }
 
-        .input-group-btn .btn {
-            padding: 8px 10px !important;
-        }
+            .input-group-btn .btn {
+                padding: 8px 10px !important;
+            }
         </style>
         <div class="row nav_head" style="flex-direction: column;">
             <div class="col-lg-12">
@@ -490,7 +490,6 @@
             },
             success: function(data) {
                 alert(data);
-                
             },
             error: function(data) {
                 $("#loader").hide();

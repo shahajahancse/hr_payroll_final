@@ -191,11 +191,11 @@
                                 <td style="width:20%;"><input type="button" style="width:100%; font-size:100%;"
                                         value="Out & IN Report" onClick="grid_daily_out_in_report()"></td>
                                 <?php
-$user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
-$acl     = $this->acl_model->get_acl_list($user_id);
-$name = $this->session->userdata('username');
-//print_r($acl);
-if(!in_array(10,$acl)){ ?>
+                                    $user_id = $this->acl_model->get_user_id($this->session->userdata('username'));
+                                    $acl     = $this->acl_model->get_acl_list($user_id);
+                                    $name = $this->session->userdata('username');
+                                    //print_r($acl);
+                                    if(!in_array(10,$acl)){ ?>
                                 <td style="width:20%; background-color: #666666;"><input type="button"
                                         style="width:100%; font-size:100%;" value="Daily Out Punch Miss"
                                         onClick="grid_daily_out_punch_miss_report()"></td>

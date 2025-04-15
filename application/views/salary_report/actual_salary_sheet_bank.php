@@ -5,17 +5,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>
 		<?php
-		if ($grid_status == 1) {
-			echo 'Reguler Employee ';
-		} elseif ($grid_status == 2) {
-			echo 'New Employee ';
-		} elseif ($grid_status == 3) {
-			echo 'Left Employee ';
-		} elseif ($grid_status == 4) {
-			echo 'Resign Employee ';
-		} elseif ($grid_status == 6) {
-			echo 'Promoted Employee ';
-		}
+	if($grid_status == 1)
+	{ echo 'Reguler Employee '; }
+	elseif($grid_status == 2)
+	{ echo 'Left Employee '; }
+	elseif($grid_status == 3)
+	{ echo 'Resign Employee '; }
+
 		?> Monthly Salary Sheet of
 		<?php echo date("F-Y", strtotime($salary_month));  ?>
 	</title>
@@ -101,17 +97,13 @@
 					</div>
 					<?php $this->load->view("head_english"); ?>
 					<?php
-					if ($grid_status == 1) {
-						echo 'Reguler Employee ';
-					} elseif ($grid_status == 2) {
-						echo 'New Employee ';
-					} elseif ($grid_status == 3) {
-						echo 'Left Employee ';
-					} elseif ($grid_status == 4) {
-						echo 'Resign Employee ';
-					} elseif ($grid_status == 6) {
-						echo 'Promoted Employee ';
-					}
+						if($grid_status == 1)
+						{ echo 'Reguler Employee '; }
+						elseif($grid_status == 2)
+						{ echo 'Left Employee '; }
+						elseif($grid_status == 3)
+						{ echo 'Resign Employee '; }
+
 					?>Monthly Salary Sheet For the Month of
 					<?php
 					$date_format = date("F-Y", strtotime($salary_month));

@@ -118,6 +118,7 @@ table.dataTable thead th, table.dataTable thead td {
                         <td><?php echo $pr_emp_shift_schedules['tiffin_break2'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['tiffin_minute2'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['random_minute'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['iffter_allow_time'] ?></td>
 
            
                         <td>

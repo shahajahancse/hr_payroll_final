@@ -24,26 +24,147 @@ class Command extends CI_Controller {
 		// exit('only for developer');
 	}
 
-	public function iea()
-	{
-		// echo "hello, ci";
-		$i = '2024-06-06';
-
-		while ($i <= '2024-06-24') {
-			echo '<br> ' .$i;
-			$array = array(
-				'emp_id'		=> 5000462,
-				'unit_id'		=> 4,
-				'start_date'	=> $i,
-				'leave_type'	=> 'el',
-				'leave_start'	=> '2024-06-06',
-				'leave_end'		=> '2024-06-24',
-			);
-			// $rs = $this->db->insert($array, 'pr_leave_trans');
-
-			$i = date('Y-m-d', strtotime('+1 days'. $i));
+	function file(){
+		dd('only for developer');
+		date_default_timezone_set('Asia/Dhaka');
+		$file_name = "import/luck.txt";
+		if (file_exists($file_name)){
+			$lines = file($file_name);
+			$out = array();
+			foreach(array_values($lines)  as $line) {
+				list($emp_id,$amt) = explode('	', trim($line));
+				$this->db->where("emp_id", $emp_id);
+				$this->db->where("pay_month", '2025-03-01');
+				$query1 = $this->db->get('pr_advance_loan_pay_history');
+				$num_rows1 = $query1->num_rows();
+				if($num_rows1 == 0 ){
+					$data = array(
+						'loan_id'    => 2,
+						'emp_id'	 => $emp_id,
+						'pay_amount' => $amt,
+						'pay_month'  => '2025-03-01'
+					);
+					$this->db->insert('pr_advance_loan_pay_history' , $data);
+				}
+			}
+			exit('Done');
+		}else{
+			exit('Please Put the Data File.');
 		}
-		dd('exit');
+
+	}
+
+	public function indexs()
+	{
+		dd('do not allow this page');
+		$start = date("Y-m-01", strtotime('2024-12-01'));
+		$end = date("Y-m-t", strtotime('2024-12-01'));
+		$this->db->select("
+			SUM(case when com.emp_cat_id = 1 then 1 else 0 end) as join_emp
+		");
+		$this->db->from("pr_emp_com_info as com");
+		$this->db->where("com.emp_join_date BETWEEN '$start' AND '$end'");
+		if (!empty($unit)) {
+			$this->db->where("com.unit_id", $unit);
+		}
+		if (!empty($department)) {
+			$this->db->where("com.emp_dept_id", $department);
+		}
+		if (!empty($section)) {
+			$this->db->where("com.emp_sec_id", $section);
+		}
+		if (!empty($line)) {
+			$this->db->where("com.emp_line_id", $line);
+		}
+		$this->db->where("com.emp_cat_id", 1);
+		$query1 = $this->db->get()->row();
+
+		// left emp
+		$this->db->select("
+			SUM(case when com.emp_cat_id = 2 then 1 else 0 end) as left_emp
+		");
+		$this->db->from("pr_emp_left_history as lefts");
+		$this->db->from("pr_emp_com_info as com");
+		$this->db->where("com.emp_id = lefts.emp_id");
+		$this->db->where("lefts.left_date BETWEEN '$start' AND '$end'");
+		if (!empty($unit)) {
+			$this->db->where("com.unit_id", $unit);
+		}
+		if (!empty($department)) {
+			$this->db->where("com.emp_dept_id", $department);
+		}
+		if (!empty($section)) {
+			$this->db->where("com.emp_sec_id", $section);
+		}
+		if (!empty($line)) {
+			$this->db->where("com.emp_line_id", $line);
+		}
+		$this->db->where("com.emp_cat_id", 2);
+		$query2 = $this->db->get()->row();
+
+		// resign emp
+		$this->db->select("
+			SUM(case when com.emp_cat_id = 3 then 1 else 0 end) as resign_emp
+		");
+		$this->db->from("pr_emp_resign_history as res");
+		$this->db->from("pr_emp_com_info as com");
+		$this->db->where("com.emp_id = res.emp_id");
+		$this->db->where("res.resign_date BETWEEN '$start' AND '$end'");
+		if (!empty($unit)) {
+			$this->db->where("com.unit_id", $unit);
+		}
+		if (!empty($department)) {
+			$this->db->where("com.emp_dept_id", $department);
+		}
+		if (!empty($section)) {
+			$this->db->where("com.emp_sec_id", $section);
+		}
+		if (!empty($line)) {
+			$this->db->where("com.emp_line_id", $line);
+		}
+		$this->db->where("com.emp_cat_id", 3);
+		$query3 = $this->db->get()->row();
+		
+		$query = (object) array_merge((array) $query1, (array) $query2, (array) $query3);
+		dd($query);
+
+
+        $this->db->select("
+            num.id as line_id, num.line_name_en, num.line_name_bn,
+            SUM( CASE WHEN log.emp_id 	      != '' THEN 1 ELSE 0 END ) AS all_emp,
+            SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
+            SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS all_absent,
+            SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS all_leave,
+            SUM( CASE WHEN log.late_status    = 1 THEN 1 ELSE 0 END ) AS all_late,
+        ");
+		$this->db->from("pr_emp_shift_log as log");
+		$this->db->join('pr_emp_com_info as com', 'log.emp_id = com.emp_id', 'left');
+		$this->db->join('emp_line_num as num', 'com.emp_line_id = num.id', 'left');
+
+		$this->db->where("com.unit_id", 4);
+		$this->db->where("log.shift_log_date", '2025-01-09');
+		$this->db->order_by("num.line_name_en");
+		$this->db->group_by("com.emp_line_id");
+		$results = $this->db->get()->result();
+		dd($results);
+
+		dd('not allow');
+		$arr = array(5000019,5000023,5000122,5000354,5000374,5000474,5000515,5000537,5000573,5000600,5000619,5000628,5000651,5000662,5000738,5000744,5000765,5000846,5000866,5000948,5000949,5000969,5000982,5000998,5001024,5001128,5001165,5001223,5001330,5001415,5001452,5001524,5001529,5001543,5001660,5001777,5001856,5001903,5001923,5001959,5001979,5002032,5002085,5002091,5002099,5002113,5002118,5002119,5002122,5002212,5002271,5002382,5002390,5002446,5002504,5002520,5002567,5002586,5002587,5002598,5002624,5002687,5002716,5002717,5002869,5002884,5002899,5002917,5002988,5003003,5003010,5003101,5003136,5003216,5003227,5003244,5003346,5003363,5003394,5003550,5003555,5003651,5003680,5003691,5003819,5003847,5003886,5003928,5003960,5003973,5004015,5004023,5004060,5004062,5004126,5004138,5004162,5004172,5004215,5004239,5004244,5004262,5004307,5004328,5004417,5004460,5004484,5004533,5004553,5004671,5004676,5004715,5004747,5004757,5004760,5004810,5004811,5004817,5004830,5004834,5004841,5004852,5004853,5004951,5004969,5005205,5005244,5005335,5005359,5005367,5005396,5005445,5005471,5005533,5005787,5006322,5006323,5006330);
+
+		$this->db->where_in('ref_id', $arr);
+		$this->db->where('effective_month', '2024-12-01');
+		$this->db->group_by('ref_id');
+		$this->db->order_by('effective_month', 'desc');
+		$qsss = $this->db->get('pr_incre_prom_pun')->result(); 
+
+		foreach ($qsss as $key => $r) {
+			$data = array(
+				'gross_sal'     => $r->new_salary,
+				'com_gross_sal'     => $r->new_salary,
+			);
+			$query = $this->db->where('emp_id', $r->ref_id)->update('pr_emp_com_info', $data);
+		}
+		dd('done');
 	}
 
 	public function earn()
@@ -142,6 +263,7 @@ class Command extends CI_Controller {
 	// Delete pr_emp_shift_log table data 2013-10-30 to 2021-10-01
 	public function shift_log()
 	{
+		dd('only ddvv');
 		echo "hello, ci";
 		$i = '2021-10-01';
 
@@ -163,7 +285,7 @@ class Command extends CI_Controller {
 	// pr_incre_prom_pun
 	public function stopyyy()
 	{
-		// dd("hello, ci");
+		dd("hello, ci");
 		echo "hello, ci";
 		$this->db->select('
 				pay_emp_stop_salary.id as st_id,
@@ -195,7 +317,7 @@ class Command extends CI_Controller {
 	// pr_incre_prom_pun
 	public function incre_prom()
 	{
-		// dd("hello, ci");
+		dd("hello, ci");
 		echo "hello, ci";
 		$this->db->select('
 				pr_incre_prom_pun.prev_emp_id,
@@ -261,7 +383,7 @@ class Command extends CI_Controller {
 	// pr_emp_resign_history
 	public function emp_resign()
 	{
-		// dd("hello, ci");
+		dd("hello, ci");
 		echo "hello, ci";
 		$this->db->select('
 				pr_emp_resign_history.resign_id,
@@ -441,6 +563,7 @@ class Command extends CI_Controller {
 	//  salary     done
 	public function salary_emp_id()
 	{
+		dd('fff');
 		echo "hello, ci";
 		$this->db->select('pr_emp_com_info.id, pr_emp_com_info.emp_id, pr_emp_com_info.unit_id');
 		$this->db->from('pay_salary_sheet');
@@ -496,6 +619,7 @@ class Command extends CI_Controller {
 	//  pr_emp_shift_log employee id conver   done
 	public function log_emp_id()
 	{
+		exit('no');
 		echo "hello, ci";
 		exit('only for developer');
 		$this->db->select('pr_emp_com_info.id, pr_emp_com_info.emp_id, pr_emp_com_info.unit_id');
@@ -939,98 +1063,100 @@ class Command extends CI_Controller {
 			return $data->id;
 		}
 
-		public function add_employee_per($emp_id,$name,$dept_id,$sec_id,$line_id,$desg_id,$joinng_date,$salary,$grade){
-			$data = array(
-				'emp_id'		=> $emp_id,
-				'name_en'		=> $name,
-				'national_brn_id'	=> '',
-				'father_name'	=> '',
-				'mother_name'	=> '',
-				'per_village'	=> '',
-				'per_post'		=> '',
-				'per_thana'		=> '',
-				'per_district'	=> '',
-				'per_village_bn'	=> '',
-				'pre_home_owner'	=> '',
-				'holding_num'	=> '',
-				'home_own_mobile'	=> '',
-				'pre_village'	=> '',
-				'pre_post'		=> '',
-				'pre_thana'		=> '',
-				'pre_district'	=> '',
-				'pre_village_bn'	=> '',
-				'spouse_name'	=> '',
-				'emp_dob'		=> date('Y-m-d'),
-				'gender'		=> '',
-				'marital_status'	=> '',
-				'religion'		=> '',
-				'blood'			=> '',
-				'emp_religion'	=> '',
-				'emp_sex'		=> '',
-				'emp_marital_status'	=> '',
-				'emp_blood'		=> '',
-				'm_child'		=> '',
-				'f_child'		=> '',
-				'nominee_name'	=> '',
-				'nominee_vill'	=> '',
-				'nomi_post'		=> '',
-				'nomi_thana'	=> '',
-				'nomi_district'	=> '',
-				'nomi_age'		=> date('Y-m-d'),
-				'nomi_relation'	=> '',
-				'nomi_mobile'	=> '',
-				'refer_name'	=> '',
-				'refer_village'	=> '',
-				'ref_post'		=> '',
-				'ref_thana'		=> '',
-				'ref_district'	=> '',
-				'refer_mobile'	=> '',
-				'refer_relation'	=> '',
-				'education'		=> '',
-				'nid_dob_id'	=> '',
-				'nid_dob_check'	=> '',
-				'exp_factory_name'	=> '',
-				'exp_duration'		=> '',
-				'exp_dasignation'	=> '',
-				'hight'			=> '',
-				'symbol'			=> '',
-				'personal_mobile'	=> '',
-				'bank_bkash_no'		=> '',
-				'img_source'		=> '',
-				'signature'			=> '',
-				'identificatiion_marks'	=> '',
-			);
-			$this->db->insert('pr_emp_per_info', $data);
-		}
+	public function add_employee_per($emp_id,$name,$dept_id,$sec_id,$line_id,$desg_id,$joinng_date,$salary,$grade){
+		dd('exit');
+		$data = array(
+			'emp_id'		=> $emp_id,
+			'name_en'		=> $name,
+			'national_brn_id'	=> '',
+			'father_name'	=> '',
+			'mother_name'	=> '',
+			'per_village'	=> '',
+			'per_post'		=> '',
+			'per_thana'		=> '',
+			'per_district'	=> '',
+			'per_village_bn'	=> '',
+			'pre_home_owner'	=> '',
+			'holding_num'	=> '',
+			'home_own_mobile'	=> '',
+			'pre_village'	=> '',
+			'pre_post'		=> '',
+			'pre_thana'		=> '',
+			'pre_district'	=> '',
+			'pre_village_bn'	=> '',
+			'spouse_name'	=> '',
+			'emp_dob'		=> date('Y-m-d'),
+			'gender'		=> '',
+			'marital_status'	=> '',
+			'religion'		=> '',
+			'blood'			=> '',
+			'emp_religion'	=> '',
+			'emp_sex'		=> '',
+			'emp_marital_status'	=> '',
+			'emp_blood'		=> '',
+			'm_child'		=> '',
+			'f_child'		=> '',
+			'nominee_name'	=> '',
+			'nominee_vill'	=> '',
+			'nomi_post'		=> '',
+			'nomi_thana'	=> '',
+			'nomi_district'	=> '',
+			'nomi_age'		=> date('Y-m-d'),
+			'nomi_relation'	=> '',
+			'nomi_mobile'	=> '',
+			'refer_name'	=> '',
+			'refer_village'	=> '',
+			'ref_post'		=> '',
+			'ref_thana'		=> '',
+			'ref_district'	=> '',
+			'refer_mobile'	=> '',
+			'refer_relation'	=> '',
+			'education'		=> '',
+			'nid_dob_id'	=> '',
+			'nid_dob_check'	=> '',
+			'exp_factory_name'	=> '',
+			'exp_duration'		=> '',
+			'exp_dasignation'	=> '',
+			'hight'			=> '',
+			'symbol'			=> '',
+			'personal_mobile'	=> '',
+			'bank_bkash_no'		=> '',
+			'img_source'		=> '',
+			'signature'			=> '',
+			'identificatiion_marks'	=> '',
+		);
+		$this->db->insert('pr_emp_per_info', $data);
+	}
 
- 		public function add_employee_com($unit_id,$emp_id,$dept_id,$sec_id,$line_id,$desg_id,$emp_join_date,$salary,$emp_sal_gra_id){
-			$data = array();
-			$data['unit_id'] = $unit_id;
-			$data['emp_id'] = $emp_id;
-			$data['emp_dept_id'] = $dept_id;
-			$data['emp_sec_id'] = $sec_id;
-			$data['emp_line_id'] = $line_id;
-			$data['attn_sum_line_id'] = '';
-			$data['emp_desi_id'] = $desg_id;
-			$data['emp_sal_gra_id'] = $emp_sal_gra_id;
-			$data['emp_cat_id'] = 1;
-			$data['emp_type'] = '';
-			$data['proxi_id'] = $emp_id;
-			$data['emp_shift'] = '';
-			$data['gross_sal'] = $salary;
-			$data['com_gross_sal'] = '';
-			$data['ot_entitle'] = '';
-			$data['com_ot_entitle'] = '';
-			$data['transport'] = '';
-			$data['lunch'] = '';
-			$data['hight'] = '';
-			$data['symbol'] = '';
-			$data['att_bonus'] = '';
-			$data['salary_draw'] = '';
-			$data['salary_type'] = '';
-			$data['emp_join_date'] = $emp_join_date;
-			$this->db->insert('pr_emp_com_info', $data);
-		}
+	public function add_employee_com($unit_id,$emp_id,$dept_id,$sec_id,$line_id,$desg_id,$emp_join_date,$salary,$emp_sal_gra_id){
+		dd('de');
+		$data = array();
+		$data['unit_id'] = $unit_id;
+		$data['emp_id'] = $emp_id;
+		$data['emp_dept_id'] = $dept_id;
+		$data['emp_sec_id'] = $sec_id;
+		$data['emp_line_id'] = $line_id;
+		$data['attn_sum_line_id'] = '';
+		$data['emp_desi_id'] = $desg_id;
+		$data['emp_sal_gra_id'] = $emp_sal_gra_id;
+		$data['emp_cat_id'] = 1;
+		$data['emp_type'] = '';
+		$data['proxi_id'] = $emp_id;
+		$data['emp_shift'] = '';
+		$data['gross_sal'] = $salary;
+		$data['com_gross_sal'] = '';
+		$data['ot_entitle'] = '';
+		$data['com_ot_entitle'] = '';
+		$data['transport'] = '';
+		$data['lunch'] = '';
+		$data['hight'] = '';
+		$data['symbol'] = '';
+		$data['att_bonus'] = '';
+		$data['salary_draw'] = '';
+		$data['salary_type'] = '';
+		$data['emp_join_date'] = $emp_join_date;
+		$this->db->insert('pr_emp_com_info', $data);
+	}
 
 
 

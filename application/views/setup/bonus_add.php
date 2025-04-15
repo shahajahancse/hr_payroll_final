@@ -10,9 +10,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <a class="btn btn-info" href="<?php echo base_url('setup_con/bonus_setup') ?>">
-                        << Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <a class="btn btn-info"    href="<?php echo base_url('setup_con/bonus_setup')?>">Back</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>
             <!--/.nav-collapse -->
@@ -20,9 +19,7 @@
         <!--/.container-fluid -->
     </nav>
     <div class="row">
-        <?php
-            $failuer = $this->session->flashdata('failure');
-            ?>
+        <?php $failuer = $this->session->flashdata('failure'); ?>
     </div>
     <div class="tablebox">
         <h3>Create  Bonus</h3>
@@ -41,9 +38,9 @@
                             <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Employee Type <span style="color:red">*</span> </label>
-                                <select name="emp_type" class="form-control" required>
-                                    <option value="">Select Employee Type</option>
+                            <label>Employee Type</label>
+                                <select name="emp_type" class="form-control">
+                                    <option value="0">All</option>
                                     <option value="1">Worker</option>
                                     <option value="2">Staff</option>
                                 </select>
@@ -89,13 +86,22 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Bonus Percent (%) <span style="color:red">*</span></label>
-                            <input required type="number" name="bonus_percent" placeholder="Bonus Percent" class="form-control">
+                            <input required type="text" name="bonus_percent" placeholder="Bonus Percent" class="form-control">
                             <?=(isset($failuer['bonus_percent'])) ? '<div class="alert alert-failuer">' . $failuer['bonus_percent'] . '</div>' : ''; ?>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Effective Date <span style="color:red">*</span></label>
                             <input required name="effective_date" class="form-control date" type="text" >
                             <?=(isset($failuer['effective_date'])) ? '<div class="alert alert-failuer">' . $failuer['effective_date'] . '</div>' : ''; ?>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label>Month</label>
+                            <select name="fraction" class="form-control">
+                                <option value="0">No</option>
+                                <option value="1">9th</option>
+                            </select>
+                            <?=(isset($failuer['fraction'])) ? '<div class="alert alert-failuer">' . $failuer['fraction'] . '</div>' : ''; ?>
                         </div>
                     </div>
                     <br>

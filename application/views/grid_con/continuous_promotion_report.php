@@ -33,15 +33,15 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 
 	$k = 0;
 
-	$grand_total_prev_salary = 0;
+	$grand_total_prev_com_salary = 0;
 	$grand_total_inc_amount = 0;
-	$grand_total_new_salary = 0;
+	$grand_total_new_com_salary = 0;
 
 for($counter = 1; $counter <= $page; $counter ++)
 {
-	$sub_total_prev_salary = 0;
+	$sub_total_prev_com_salary = 0;
 	$sub_total_inc_amount = 0;
-	$sub_total_new_salary = 0;
+	$sub_total_new_com_salary = 0;
 
  ?>
  <table class="heading" align="center" height="auto" style="font-size:12px; width:750px;border:0px;">
@@ -145,7 +145,7 @@ for($counter = 1; $counter <= $page; $counter ++)
 	echo "</td>";
 	
 	echo "<td style='text-align:left; padding:2px;'>";
-	echo $values["prev_salary"][$k];
+	echo $values["prev_com_salary"][$k];
 	echo "</td>";
 	
 	
@@ -164,24 +164,24 @@ for($counter = 1; $counter <= $page; $counter ++)
 	echo "</td>";
 	
 	echo "<td style='text-align:left; padding:2px;'>";
-	echo $values["new_salary"][$k];
+	echo $values["new_com_salary"][$k];
 	echo "</td>";
 	
 	
 	
-	$inc_amount = $values["new_salary"][$k] - $values["prev_salary"][$k];
+	$inc_amount = $values["new_com_salary"][$k] - $values["prev_com_salary"][$k];
 	echo "<td style='text-align:right; padding:2px;' >";
 	echo $inc_amount;
 	echo "</td>";
 
 	
-	$sub_total_prev_salary = $sub_total_prev_salary + $values["prev_salary"][$k];
+	$sub_total_prev_com_salary = $sub_total_prev_com_salary + $values["prev_com_salary"][$k];
 	$sub_total_inc_amount = $sub_total_inc_amount + $inc_amount;
-	$sub_total_new_salary = $sub_total_new_salary + $values["new_salary"][$k];
+	$sub_total_new_com_salary = $sub_total_new_com_salary + $values["new_com_salary"][$k];
 	
-	$grand_total_prev_salary = $grand_total_prev_salary + $values["prev_salary"][$k];
+	$grand_total_prev_com_salary = $grand_total_prev_com_salary + $values["prev_com_salary"][$k];
 	$grand_total_inc_amount = $grand_total_inc_amount + $inc_amount;
-	$grand_total_new_salary = $grand_total_new_salary + $values["new_salary"][$k];
+	$grand_total_new_com_salary = $grand_total_new_com_salary + $values["new_com_salary"][$k];
 	
 	
 	$sStartDate = date("d-M-Y", strtotime($values["effective_month"][$k])); 
@@ -208,7 +208,7 @@ for($counter = 1; $counter <= $page; $counter ++)
 	echo "</td>";
 	
 	echo "<td>";
-	echo $sub_total_prev_salary;
+	echo $sub_total_prev_com_salary;
 	echo "</td>";
 	
 	echo "<td colspan='3' >";
@@ -216,7 +216,7 @@ for($counter = 1; $counter <= $page; $counter ++)
 	echo "</td>";
 	
 	echo "<td>";
-	echo $sub_total_new_salary;
+	echo $sub_total_new_com_salary;
 	echo "</td>";
 	
 	echo "<td>";
@@ -234,7 +234,7 @@ for($counter = 1; $counter <= $page; $counter ++)
 		echo "</td>";
 		
 		echo "<td>";
-		echo $grand_total_prev_salary;
+		echo $grand_total_prev_com_salary;
 		echo "</td>";
 		
 		echo "<td colspan='3' >";
@@ -242,7 +242,7 @@ for($counter = 1; $counter <= $page; $counter ++)
 		echo "</td>";
 		
 		echo "<td>";
-		echo $grand_total_new_salary;
+		echo $grand_total_new_com_salary;
 		echo "</td>";
 		
 		echo "<td>";

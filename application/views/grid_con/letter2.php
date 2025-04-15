@@ -18,7 +18,7 @@
             padding:2px;
         }
         p{
-            font-size:23px
+            font-size:21px
         }
     </style>
 </head>
@@ -68,30 +68,24 @@
           }
         ?>
     <div class="d-flex">
-          <div class="col-md-6" style="font-family: SutonnyMJ;font-size:23px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:23px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date . '+1 days'))?></span><span style="font-family: SutonnyMJ;font-size:23px">-we</span></div>
-      <div class="col-md-6 text-right">তারিখঃ <span style="font-family: SutonnyMJ;font-size:23px">
-            <?php 
-              $l_date =  add_days_skipping_fridays($value->left_date, 21,$value->emp_id);
-              $date = DateTime::createFromFormat('d/m/Y', $l_date);
-              $date->modify('+1 day');
-              $l_date = $date->format('d/m/Y');
+          <div class="col-md-6" style="font-family: SutonnyMJ;font-size:21px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:21px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date . '+1 days'))?></span><span style="font-family: SutonnyMJ;font-size:21px">-we</span></div>
+      <div class="col-md-6 text-right">তারিখঃ <span style="font-family: SutonnyMJ;font-size:21px">
+          <?php 
+           $l_date = strtotime($value->left_date);
+            $days_added = 0;
 
-              list($day, $month, $year) = explode('/', $l_date);
-              $formatted_date_str = "$year-$month-$day";
-              $date_timestamp = strtotime($formatted_date_str);
-              if ($date_timestamp === false) {
-                throw new Exception("Failed to parse date string");
-              }
-              $day_of_week = date('N', $date_timestamp);
-              if ($day_of_week == 5) {
-                $date_timestamp = strtotime('+1 day', $date_timestamp);
-              }
-              if($day_of_week == 6){
-                $date_timestamp = strtotime('+1 day', $date_timestamp);
-              }
-              $new_date_str = date('d/m/Y', $date_timestamp);
-              echo $new_date_str;
-            ?></span> ইং</div>
+            while ($days_added < 22) {
+                $l_date = strtotime('+1 day', $l_date);
+                if (!in_array(date('N', $l_date), [5])) { // Skip Friday (5) and Saturday (6)
+                    $days_added++;
+                }
+            }
+            if (date('N', $l_date) == 6) {
+              $l_date = strtotime('+1 day', $l_date);
+            }
+            echo date('d/m/Y', $l_date);
+          ?>
+          </span> ইং</div>
      
     </div>
 
@@ -101,51 +95,57 @@
 
       <div class="d-flex ml-3 mt-5">
         <div class="col-md-4 border" style="line-height: 10px;">
-          <p class="mt-3 unicode-to-bijoy" style='font-size:23px'><b>অফিস বিবরনীঃ</b></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">নামঃ <?php echo $value->name_bn?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">পদবীঃ <?php echo $value->desig_bangla?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">কার্ডঃ <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?></span></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">সেকশনঃ <?php echo $value->sec_name_bn?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">লাইনঃ <?php echo $value->line_name_bn?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">যোগদানঃ <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo date('d/m/Y',strtotime($value->emp_join_date))?></span> ইং</p>
+          <p class="mt-3 unicode-to-bijoy" style='font-size:21px'><b>অফিস বিবরনীঃ</b></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">নামঃ <?php echo $value->name_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">পদবীঃ <?php echo $value->desig_bangla?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">কার্ডঃ <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->emp_id?></span></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">সেকশনঃ <?php echo $value->sec_name_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">লাইনঃ <?php echo $value->line_name_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">যোগদানঃ <span style="font-family: SutonnyMJ;font-size:19px"> <?php echo date('d/m/Y',strtotime($value->emp_join_date))?></span> ইং</p>
         </div>
         <div class="col-md-4 border" style="line-height: 10px;">
-          <p class="mt-3 unicode-to-bijoy" style='font-size:23px'><b>বর্তমান ঠিকানাঃ</b></p>
-          <p class='unicode-to-bijoy' style="font-size:20px">হোল্ডিং নংঃ <span style="font-family: SutonnyMJ;font-size:13px">  <?php echo $value->holding_num.', '.$value->pre_village_bn?></sapn></p>
+          <p class="mt-3 unicode-to-bijoy" style='font-size:21px'><b>বর্তমান ঠিকানাঃ</b></p>
+          <p class='unicode-to-bijoy' style="font-size:20px;line-height: 21px;">হোল্ডিং নংঃ <span style="font-family: SutonnyMJ;font-size:13px">  <?php echo $value->holding_num.', '.$value->pre_village_bn?></sapn></p>
           <!-- <p>গ্রামঃ < ?php echo $value->pre_village_bn?></p> -->
-          <p class='unicode-to-bijoy' style="font-size:23px">ডাকঘরঃ <?php echo $value->post_bn?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">থানাঃ <?php echo $value->upa_bn?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">জেলাঃ <?php echo $value->dis_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px;margin-top: -6px;">ডাকঘরঃ <?php echo $value->post_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">থানাঃ <?php echo $value->upa_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">জেলাঃ <?php echo $value->dis_bn?></p>
 
         </div>
         <div class="col-md-4 border" style="line-height: 10px;">
-          <p class="mt-3 unicode-to-bijoy" style='font-size:23px'><b>স্থায়ী ঠিকানাঃ</b></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">পিতার নামঃ <?php echo $value->father_name?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">মাতার নামঃ <?php echo $value->mother_name?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">গ্রামঃ <?php echo $value->per_village_bn?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">ডাকঘরঃ <?php echo $value->post_name_bn?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">থানাঃ <?php echo $value->upa_name_bn?></p>
-          <p class='unicode-to-bijoy' style="font-size:23px">জেলাঃ <?php echo $value->dis_name_bn?></p>
+          <p class="mt-3 unicode-to-bijoy" style='font-size:21px'><b>স্থায়ী ঠিকানাঃ</b></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">পিতার নামঃ <?php echo $value->father_name?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">মাতার নামঃ <?php echo $value->mother_name?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">গ্রামঃ <?php echo $value->per_village_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">ডাকঘরঃ <?php echo $value->post_name_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">থানাঃ <?php echo $value->upa_name_bn?></p>
+          <p class='unicode-to-bijoy' style="font-size:21px">জেলাঃ <?php echo $value->dis_name_bn?></p>
 
         </div>
       </div>
 
     
-      <h6 class="ml-3 mt-5 unicode-to-bijoy" style="font-size:23px"><b>বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭(৩ক) ধারা মোতাবেক আত্নপক্ষ সমর্থনের সুযোগ প্রদান প্রসঙ্গে।</b></h6>
+      <h6 class="ml-3 mt-5 unicode-to-bijoy" style="font-size:21px"><b>বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭(৩ক) ধারা মোতাবেক আত্নপক্ষ সমর্থনের সুযোগ প্রদান প্রসঙ্গে।</b></h6>
     <div class="ml-3 mt-5">
-        <span class='unicode-to-bijoy' style='font-size:23px'>জনাব/জনাবা,</span><br> 
-        <p class="text-justify unicode-to-bijoy" style='font-size:23px'>
+        <span class='unicode-to-bijoy' style='font-size:21px'>জনাব/জনাবা,</span><br> 
+        <p class="text-justify unicode-to-bijoy" style='font-size:21px'>
         আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date . '+1 days'))?></span></b> ইং তারিখ থেকে কারখানা কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত i‡q‡Qb। এ প্রেক্ষিতে কারখানার
         কর্তৃপক্ষ আপনার স্থায়ী ও বর্তমান ঠিকানায় রেজিষ্ট্রি ডাকযোগে গত <b><span style="font-family: SutonnyMJ;font-size:19px">
         <?php 
-          $second_date = add_days_skipping_fridays($value->left_date, 11,$value->emp_id);
-          $date = DateTime::createFromFormat('d/m/Y', $second_date);
-          if($date->format('D') == 'Sat'){
-            $date->modify('+1 day');
-            echo $date->format('d/m/Y');
-          }else{
-            echo $second_date;
-          }
+           $l_date = strtotime($value->left_date);
+            $days_added = 0;
+
+            while ($days_added < 11) {
+                $l_date = strtotime('+1 day', $l_date);
+                if (!in_array(date('N', $l_date), [5])) { // Skip Friday (5) and Saturday (6)
+                    $days_added++;
+                }
+            }
+            if (date('N', $l_date) == 6) {
+              $l_date = strtotime('+1 day', $l_date);
+            }
+            echo date('d/m/Y', $l_date);
+          // }
         ?></span></b> ইং তারিখে যার <b><span style="font-family: SutonnyMJ;font-size:19px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:19px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date . '+1 days'))?></span><span style="font-family: SutonnyMJ;font-size:19px">-G</span></span></b> এর বিনা অনুমতিতে চাকুরীতে অনুপস্থিতির কারণ ব্যাখ্যা সহ কাজে যোগদানের জন্য পত্র প্রেরণ করেছে।
         কিন্তু অদ্যবদি আপনি উপরোক্ত বিষয়ে লিখিত ব্যাখ্যা প্রদান করেন নাই এবং চাকুরীতেও যোগদান করেন নাই।
         <br><br>
@@ -155,25 +155,21 @@
       </p>
 
       <div class="mt-5">
-        <p class='unicode-to-bijoy'  style="margin-bottom: 117px !important;font-size:23px">ধন্যবাদান্তে,</p>
-        <p class="mt-5 unicode-to-bijoy" style="border-top:2px solid black;width:fit-content;padding-top: 5px;font-size:23px">বিভাগীয় প্রধান</p>
-        <p class='unicode-to-bijoy' style='font-size:23px'>এইচআর, এডমিন এন্ড Kgcøv‡qÝ</p>
-        <p class='unicode-to-bijoy' style='font-size:23px'><?php echo $com_info->company_name_bangla?></p>
-        <p class="mt-5 unicode-to-bijoy" style="font-size:23px">অনুলিপিঃ</p>
-        <p class='unicode-to-bijoy' style='font-size:23px'>১ . কোম্পানীর সংশ্লিষ্ট বিভাগ সমূহ</p>
-        <p class='unicode-to-bijoy' style='font-size:23px'>২. কারখানার নোটিশ বোর্ড</p>
-        <p class='unicode-to-bijoy' style='font-size:23px'>৩. শ্রমিকের ব্যক্তিগত নথি।</p>
+        <p class='unicode-to-bijoy'  style="margin-bottom: 117px !important;font-size:21px">ধন্যবাদান্তে,</p>
+        <p class="mt-5 unicode-to-bijoy" style="border-top:2px solid black;width:fit-content;padding-top: 5px;font-size:21px">বিভাগীয় প্রধান</p>
+        <p class='unicode-to-bijoy' style='font-size:21px'>এইচআর, এডমিন এন্ড Kgcøv‡qÝ</p>
+        <p class='unicode-to-bijoy' style='font-size:21px'><?php echo $com_info->company_name_bangla?></p>
+        <p class="mt-5 unicode-to-bijoy" style="font-size:21px">অনুলিপিঃ</p>
+        <p class='unicode-to-bijoy' style='font-size:21px'>১ . কোম্পানীর সংশ্লিষ্ট বিভাগ সমূহ</p>
+        <p class='unicode-to-bijoy' style='font-size:21px'>২. কারখানার নোটিশ বোর্ড</p>
+        <p class='unicode-to-bijoy' style='font-size:21px'>৩. শ্রমিকের ব্যক্তিগত নথি।</p>
       </div>
     </div>
   </div>    
 <div style="page-break-after:always"></div>
   <?php }?>
-
-  
     <script src="<?=base_url()?>js/unicode_to_bijoy.js" type="text/javascript"></script>
     <?php echo "<script>applyUnicodeToBijoy()</script>"?>
   </body>
 </html>
 <?php exit(); ?>
-
-

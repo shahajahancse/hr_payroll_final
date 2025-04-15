@@ -743,7 +743,7 @@ class Crud_model extends CI_Model{
         $this->db->select('SQL_CALC_FOUND_ROWS pr_emp_shift_schedule.*,pr_units.unit_name', false);
         $this->db->from('pr_emp_shift_schedule');
         $this->db->join('pr_units','pr_units.unit_id = pr_emp_shift_schedule.unit_id');
-        if ($unit_id != null) {
+        if ($unit_id != 0) {
             $this->db->where('pr_emp_shift_schedule.unit_id', $unit_id);
         }
         return $this->db->get()->result_array();
@@ -784,6 +784,7 @@ class Crud_model extends CI_Model{
         $formArray['tiffin_break2'] = $this->input->post('tiffin_break2');
         $formArray['tiffin_minute2'] = $this->input->post('tiffin_minute2');
         $formArray['random_minute'] = $this->input->post('random_minute');
+        $formArray['iffter_allow_time'] = $this->input->post('iffter_allow_time');
 
         $this->db->where('id',$shiftscheduleId);
         $this->db->update('pr_emp_shift_schedule',$formArray);

@@ -13,11 +13,11 @@ class Setting_con extends CI_Controller {
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
-        /*if (!check_acl_list($this->data['user_data']->id, 17)) {
-            echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
-            redirect("payroll_con");
-            exit;
-        }*/
+        // /*if (!check_acl_list($this->data['user_data']->id, 17)) {
+        //     echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
+        //     redirect("payroll_con");
+        //     exit;
+        // }*/
 
 	}
 
@@ -37,6 +37,7 @@ class Setting_con extends CI_Controller {
 
 		$this->db->select('active_log.*, members.id_number');
 		$this->db->join('members', 'members.id = active_log.member_id', 'left');
+		$this->db->where('members.unit_name', $_SESSION['data']->unit_name);
 		$this->db->order_by('id', 'desc');
 		$this->data['data'] = $this->db->get('active_log')->result();
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -248,6 +249,7 @@ class Setting_con extends CI_Controller {
 
 		$this->db->select('pr_report_setting.*, pr_units.unit_name');
 		$this->db->join('pr_units', 'pr_report_setting.unit_id = pr_units.unit_id', 'left');
+		$this->db->where('pr_units.unit_id', $_SESSION['data']->unit_name);
 		$this->db->order_by('id', 'desc');
 		$this->data['data'] = $this->db->get('pr_report_setting')->result_array();
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -361,7 +363,8 @@ class Setting_con extends CI_Controller {
 	        $this->data['title'] = 'Edit Dasignation Group';
 			$this->data['subview'] = 'settings/dasig_group_edit';
 		} else {
-	        $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->order_by('u.unit_id', 'ASC');
+			// dd($unit_id);
+	        $this->db->select('g.*, u.unit_name')->from('emp_group_dasignation as g')->where('g.unit_id',$_SESSION['data']->unit_name)->order_by('u.unit_id', 'ASC');
 	        $this->data['groups'] = $this->db->join('pr_units as u', 'g.unit_id = u.unit_id')->get()->result();
 
 			$this->data['subview'] = 'settings/dasig_group';
@@ -444,6 +447,7 @@ class Setting_con extends CI_Controller {
 		$this->data['username'] = $this->data['user_data']->id_number;
 		$this->db->select('SQL_CALC_FOUND_ROWS members.*, pr_units.unit_name', false);
 		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
+		$this->db->where('members.unit_name',$_SESSION['data']->unit_name);
 		$this->data['members'] = $this->db->get('members')->result_array();
 		$this->data['subview'] = 'settings/acl';
         $this->load->view('layout/template', $this->data);
@@ -469,6 +473,7 @@ class Setting_con extends CI_Controller {
 		$data['password'] = $this->input->post('password');
 		$data['level'] = $this->input->post('level');
 		$data['unit_name'] = $this->input->post('unit_name');
+		$data['user_mode'] = $this->input->post('mode');
 		$data['status'] = $this->input->post('status');
 		$this->db->insert('members',$data);
 		$this->session->set_flashdata('success','Record Insert successfully!');
@@ -497,6 +502,7 @@ class Setting_con extends CI_Controller {
 		$data['password'] = $this->input->post('password');
 		$data['level'] = $this->input->post('level');
 		$data['unit_name'] = $this->input->post('unit_name');
+		$data['user_mode'] = $this->input->post('mode');
 		$data['status'] = $this->input->post('status');
 		$this->db->where('members.id',$id);
 		$this->db->update('members',$data);
@@ -518,14 +524,17 @@ class Setting_con extends CI_Controller {
     //-------------------------------------------------------------------------------------------------------
 	public function line_wise_atn_desig()
     {
-        $this->db->select('pr_emp_per_info.*,pr_emp_com_info.*,pr_units.unit_name,emp_line_num.line_name_en');
-        $this->db->from('pr_emp_com_info');
-        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id');
-        $this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id');
-        $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
-        $this->db->where('pr_emp_com_info.attn_sum_line_id IS NOT NULL');
+        $this->db->select('per.*,info.*,pr_units.unit_name,n.line_name_en, num.line_name_en snum');
+        $this->db->from('pr_emp_com_info info');
+        $this->db->join('pr_units', 'pr_units.unit_id = info.unit_id');
+        $this->db->join('emp_line_num n', 'n.id = info.emp_line_id');
+        $this->db->join('emp_line_num num', 'num.id = info.attn_sum_line_id');
+        $this->db->join('pr_emp_per_info per', 'per.emp_id = info.emp_id', 'left');
+        $this->db->where('info.attn_sum_line_id IS NOT NULL');
+        $this->db->where('info.unit_id', $_SESSION['data']->unit_name);
         $this->data['pr_line'] = $this->db->get()->result_array();
 		// dd($this->data['pr_line']);
+
         $this->data['title'] = 'Line Wise Designation List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'settings/line_wise_atn_desig';

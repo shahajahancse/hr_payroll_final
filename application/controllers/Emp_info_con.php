@@ -14,7 +14,7 @@ class Emp_info_con extends CI_Controller {
 			redirect("authentication");
 		}
 		$this->data['user_data'] = $this->session->userdata('data');
-		if (!check_acl_list($this->data['user_data']->id,1)) {
+		if (!check_acl_list($this->data['user_data']->id, 1)) {
 			echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
 			redirect("payroll_con");
 			exit;
@@ -33,7 +33,7 @@ class Emp_info_con extends CI_Controller {
 		$this->load->view('layout/template', $this->data);
 	}
 
-		function personal_info_short()
+	function personal_info_short()
 	{
         $this->data['units'] = $this->db->select('pr_units.*')->get('pr_units')->result();
 
@@ -538,6 +538,7 @@ class Emp_info_con extends CI_Controller {
 			echo 'true';
 		}
 	}
+	
 
 
 }

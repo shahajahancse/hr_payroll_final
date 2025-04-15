@@ -63,13 +63,10 @@ $this->load->view("head_english",$data);
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
 	elseif($grid_status == 2)
-	{ echo 'New Employee '; }
-	elseif($grid_status == 3)
 	{ echo 'Left Employee '; }
-	elseif($grid_status == 4)
+	elseif($grid_status == 3)
 	{ echo 'Resign Employee '; }
-	elseif($grid_status == 6)
-	{ echo 'Promoted Employee '; }
+
 	?>
 	Monthly EOT Summary of 
 	<?php 

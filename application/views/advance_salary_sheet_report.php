@@ -5,7 +5,23 @@
 <title>Advance Salary Sheet</title>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/print.css" media="print" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" />
+<style>
+	@media print {
+		body {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		@page {
+			size: A4 landscape;
+			margin: 10px;
+			padding: 10px;
+			box-sizing: border-box;
+			width: 90%;
+		}
+	}
 
+</style>
 
 </head>
 

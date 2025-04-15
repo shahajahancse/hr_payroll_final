@@ -21,7 +21,7 @@ class Attn_process_con extends CI_Controller {
             redirect("authentication");
         }
         $this->data['user_data'] = $this->session->userdata('data');
-        if (!check_acl_list($this->data['user_data']->id, 4)) {
+        if (!check_acl_list($this->data['user_data']->id, 3)) {
             echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
             redirect("payroll_con");
             exit;
@@ -92,7 +92,6 @@ class Attn_process_con extends CI_Controller {
 	}
 
 	function attendance_process2(){
-
 		$unit = $this->input->post('unit_id');
 		$date1 = $this->input->post('process_date1');
 		$date2 = $this->input->post('process_date2');
@@ -102,21 +101,11 @@ class Attn_process_con extends CI_Controller {
 		}
 		$days = (strtotime($date2) - strtotime($date1)) / 86400 + 1;
 
-
 		$sql = $this->input->post('sql');
 		$grid_emp_id = explode(',', $sql);
 		$this->db->trans_start();
 		ini_set('memory_limit', '-1');
 		set_time_limit(0);
-
-		// final process check
-		$slm = date("Y-m-01", strtotime($date1));
-		$check = $this->db->where('unit_id', $unit)->where('block_month',$slm)->get('pay_salary_block');
-		// if ($check->num_rows() > 0) {
-		// 	echo "Sorry! This Month Already Final Processed";
-		// 	return false; exit();
-		// }
-		// final process check end
 
 		for ($i=0; $i < $days ; $i++) {
 			$input_date = date("Y-m-d", strtotime($date1 . ' + ' . $i . ' days'));

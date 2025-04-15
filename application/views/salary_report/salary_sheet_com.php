@@ -8,13 +8,10 @@
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
 	elseif($grid_status == 2)
-	{ echo 'New Employee '; }
-	elseif($grid_status == 3)
 	{ echo 'Left Employee '; }
-	elseif($grid_status == 4)
+	elseif($grid_status == 3)
 	{ echo 'Resign Employee '; }
-	elseif($grid_status == 6)
-	{ echo 'Promoted Employee '; }
+
 ?>Monthly Salary Sheet of 
 <?php 
 $date = $salary_month;
@@ -46,6 +43,10 @@ echo $date_format;
 <body">
 
 <?php 
+if(count($value) == 0){
+	echo "No Record Found";
+	exit;
+}
 // echo "<pre>";print_r($value);exit;
 $row_count=count($value);
 if($row_count >7)
@@ -57,7 +58,7 @@ else
 $page=1;
 }
 
-$k = 0;
+	 $k = 0;
 	 $grand_total_basic_salary 		= 0;
 	 $grand_total_house_rent 		= 0;
 	 $grand_total_medical_allowance = 0;
@@ -81,13 +82,12 @@ $k = 0;
 	 $grand_total_wages_with_stamp	= 0;
 	 $grand_total_sum				= 0;
 
-for ( $counter = 1; $counter <= $page; $counter ++){
-?>
+for ( $counter = 1; $counter <= $page; $counter ++){?>
 
 <table height="auto" class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:13px; width:13.5in; position: relative; font-family:SutonnyMJ, SolaimanLipi;">
 
 <tr height="90px">
-<td colspan="35" align="center">
+<td colspan="37" align="center">
 
 <div style="width:90%; font-family:Arial, Helvetica, sans-serif;">
 <?php 
@@ -112,16 +112,13 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 	<div style="text-align:center; position:relative;padding-left:10px;width:50%; float:left; display:block;">
 		<?php 
 			$this->load->view("head_english");
-			if($grid_status == 1)
-			{ echo 'Reguler Employee '; }
-			elseif($grid_status == 2)
-			{ echo 'New Employee '; }
-			elseif($grid_status == 3)
-			{ echo 'Left Employee '; }
-			elseif($grid_status == 4)
-			{ echo 'Resign Employee '; }
-			elseif($grid_status == 6)
-			{ echo 'Promoted Employee '; }
+				if($grid_status == 1)
+				{ echo 'Reguler Employee '; }
+				elseif($grid_status == 2)
+				{ echo 'Left Employee '; }
+				elseif($grid_status == 3)
+				{ echo 'Resign Employee '; }
+
 			echo '<span style="font-weight:bold;">';
 			echo "Salary/Wages & OT Wages Payment Sheet for the month of  ";
 			
@@ -143,7 +140,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
   <tr height="20px">
     <td rowspan="2"  width="15" height="20px"><div align="center"><strong>নং</strong></div></td>
     <td rowspan="2" width="25" height="20px"><div align="center"><strong>কার্ড নং</strong></div></td>
-    <td rowspan="2" colspan="6" width="94" height="20px"><div align="center"><strong>নাম, পদবী, যোগদান, গ্রেড</strong></div></td>
+    <td rowspan="2" colspan="6" width="94" height="20px" ><div align="center"><strong>নাম, পদবী, যোগদান, গ্রেড</strong></div></td>
 	<td rowspan="2" width="50" height="20px"><div align="center"><strong>লাইন</strong></div></td>
     <td rowspan="2" width="20" height="20px"> <div align="center"><strong>মূল বেতন</strong></div></td>
     <td rowspan="2" width="17" height="20px"><div align="center"><strong>বাড়ী ভাড়া</strong></div></td>
@@ -152,8 +149,8 @@ for ( $counter = 1; $counter <= $page; $counter ++){
     <td rowspan="2" width="15" height="20px"><div align="center"><strong>খাদ্য ভাতা</strong></div></td>
     <td rowspan="2" width="35" height="20px"><div align="center"><strong>মোট বেতন</strong></div></td>
     <td colspan="4" width="30" height="20px"><div align="center"><strong>উপস্থিতি</strong></div></td>
-	<td colspan="4" height="20px"><div align="center"><strong>ছুটি</strong></div></td>
-    <td rowspan="2" width="25" height="20px"><div align="center"><strong>অনুস্পস্থিতি কর্তন</strong></div></td>
+	<td colspan="6" height="20px"><div align="center"><strong>ছুটি</strong></div></td>
+    <td rowspan="2" width="25" height="20px"><div align="center"><strong>অনুঃ কর্তন</strong></div></td>
     <td rowspan="2" width="25" height="20px"><div align="center"><strong>পে ডে</strong></div></td>
     <td rowspan="2" width="25" height="20px"><div align="center"><strong>প্রদেয় বেতন</strong></div></td>
     <td rowspan="2"  height="20px"><div align="center"><strong>হাজিরা <br />বোনাস</strong></div></td>
@@ -180,6 +177,8 @@ for ( $counter = 1; $counter <= $page; $counter ++){
     <!--<td width="15"><div align="center"><strong>F/L</strong></div></td>-->
 	<td width="15"><div align="center" style="font-family:Arial, Helvetica, sans-serif;"><strong>EL</strong></div></td>
 	<td width="15"><div align="center" style="font-family:Arial, Helvetica, sans-serif;"><strong>M/L</strong></div></td>
+	<td width="15"><div align="center" style="font-family:Arial, Helvetica, sans-serif;"><strong>SPL</strong></div></td>
+	<td width="15"><div align="center" style="font-family:Arial, Helvetica, sans-serif;"><strong>WPL</strong></div></td>
     
         
     <td width="37"><div align="center"><strong>ওটি ঘণ্টা</strong></div></td>
@@ -227,9 +226,13 @@ for ( $counter = 1; $counter <= $page; $counter ++){
    $total_sum				= 0;
    $in_total_sum			= 0;
 //    dd($value);
+   for($p=0; $p<=$per_page_row;$p++)
+   {
+		// dd();
 
-	for($p=0; $p<=$per_page_row;$p++)
-	{
+		// if($value[$k]->net_pay == 0){
+		// 	continue;
+		// }
 		echo "<tr height='75' style='text-align:center;' >";
 		echo "<td >";
 		echo $k+1;
@@ -239,7 +242,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		print_r($value[$k]->emp_id);
 		echo "</td>";
 		
-		echo "<td colspan='6' style='font-family:Arial, Helvetica, sans-serif; text-align:left; padding-left:5px;'>";
+		echo "<td colspan='6' style='font-family:Arial, Helvetica, sans-serif; text-align:left; padding-left:5px;white-space:nowrap'>";
 		echo "<span  style='font-weight:bold;'>";
 		print_r($value[$k]->name_en);
 		echo "</span>";
@@ -341,6 +344,14 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		echo "<td>";
 		print_r ($value[$k]->m_l);
 		echo "</td>";
+
+		echo "<td>";
+		print_r (isset($day_info->sp) != "" ? $day_info->sp : 0);
+		echo "</td>";
+
+		echo "<td>";
+		print_r (isset($day_info->wp) != "" ? $day_info->wp : 0);
+		echo "</td>";
 		
 		$abs_deduction 				= $value[$k]->abs_deduction;
 		$total_abs_deduction 		= $total_abs_deduction + $abs_deduction;
@@ -372,18 +383,19 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		echo "</td>";
 		
 		echo "<td>";
-		print_r ($value[$k]->ot_hour);
+		$t_ot_hour = ($value[$k]->ot_hour);
+		echo $t_ot_hour;
 		
-		$total_ot_hour 			= $total_ot_hour + $value[$k]->ot_hour;
-		$grand_total_ot_hour 	= $grand_total_ot_hour + $value[$k]->ot_hour;
+		$total_ot_hour 			= $total_ot_hour + $t_ot_hour ;
+		$grand_total_ot_hour 	= $grand_total_ot_hour + $t_ot_hour ;
 		echo "</td>";
 		
 		echo "<td>";
 		print_r ($value[$k]->ot_rate);
 		echo "</td>";
 		
-		$ot_amount 					= $value[$k]->ot_amount;	
-		$ot_eot_amount 				= $ot_amount;// + $eot_amount;
+		$ot_amount 					= ceil($value[$k]->ot_rate*$t_ot_hour);	
+		$ot_eot_amount 				= $ot_amount;
 		$total_ot_eot_amount 		= $total_ot_eot_amount + $ot_eot_amount;
 		$grand_total_ot_eot_amount 	= $grand_total_ot_eot_amount + $ot_eot_amount;
 		echo "<td>";
@@ -397,12 +409,6 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		echo $total_sum;
 		echo "</td>";
 
-		//11-05-2022 shahajahan
-		/*if ($value[$k]->sec_id == 5 || $value[$k]->sec_id == 6) {	
-			$adv_deduct 				= 0;
-		}else{
-			$adv_deduct 				= $value[$k]->adv_deduct;
-		}*/
 
 		$adv_deduct 				= $value[$k]->adv_deduct;
 		$total_adv_deduct 			= $total_adv_deduct + $adv_deduct;
@@ -420,15 +426,6 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		echo $stamp_deduct;
 		echo "</td>";
 
-		// $net_pay 				= $value[$k]->net_pay ;
-		//11-05-2022 shahajahan
-		/*if ($value[$k]->sec_id == 5 || $value[$k]->sec_id == 6) {
-			// exit('hi ali');
-			$net_pay 				= $total_sum - $stamp_deduct ;
-		}else{
-			$net_pay 				= $total_sum - $stamp_deduct - $adv_deduct;
-		}*/
-
 		$net_pay 				= $total_sum - $stamp_deduct - $adv_deduct;
 		$total_net_pay 			= $total_net_pay + $net_pay;
 		$grand_total_net_pay 	= $grand_total_net_pay + $net_pay;
@@ -440,7 +437,6 @@ for ( $counter = 1; $counter <= $page; $counter ++){
 		echo "<td style='font-family:arial;font-weight:bold; font-size: 28px;'>";
 		if($salary_month_check == $doj_check){echo '***';}
 		echo "&nbsp;&nbsp;&nbsp;|&nbsp;";
-		//echo "<span style='border:'>&nbsp;|&nbsp;</span>";
 		echo "</td>";
 		
 		$total_wages_with_stamp = $total_net_pay  + $total_stamp_deduct ;
@@ -457,7 +453,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
          <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($total_conveyance);?></strong></td>
          <td align="right" style="font-size:16px;" ><strong><?php echo $english_format_number = number_format($total_food_allow);?></strong></td>
           <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($total_gross_salary);?></strong></td>
-         <td align="right" colspan="8"></td>
+         <td align="right" colspan="10"></td>
          <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($total_abs_deduction);?></strong></td>
          <td align="right" colspan="1"></td>
          <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($total_net_wages);?></strong></td>
@@ -491,7 +487,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
             <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_conveyance);?></strong></td>
             <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_food_allow);?></strong></td>
              <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_gross_salary);?></strong></td>
-         <td align="right" colspan="8"></td>
+         <td align="right" colspan="10"></td>
             <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_abs_deduction);?></strong></td>
          <td align="right" colspan="1"></td>
          <td align="right" style="font-size:14px;"><strong><?php echo $english_format_number = number_format($grand_total_net_wages);?></strong></td>
@@ -508,7 +504,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){
             </tr>
 			<?php } ?>
 			<tr>
-				<td colspan="35">
+				<td colspan="37">
 					<?php 
 					$siginfo['unit_id'] = $unit_id;
 					$this->load->view("authorised_signature", $siginfo);?>

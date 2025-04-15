@@ -12,7 +12,7 @@ class Grid_con extends CI_Controller {
             redirect("authentication");
         }
         $this->data['user_data'] = $this->session->userdata('data');
-        if (!check_acl_list($this->data['user_data']->id, 4)) {
+        if (!check_acl_list($this->data['user_data']->id, 3)) {
             echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
             redirect("payroll_con");
             exit;
@@ -27,9 +27,7 @@ class Grid_con extends CI_Controller {
 		$unit_id = $this->input->post('unit_id');
 		$grid_data = $this->input->post('emp_id');
 		$type = $this->input->post('report_type');
-		//dd($type);
 		$grid_emp_id = explode(',', trim($grid_data));
-		// dd($grid_emp_id);
 		$data["values"] = $this->Grid_model->grid_daily_report($date,$grid_emp_id,$type);
 		// dd($data["values"]);
 
@@ -58,10 +56,7 @@ class Grid_con extends CI_Controller {
 
 		$data['values'] = $this->Grid_model->daily_attendance_summary($date, $unit_id);
 		//dd($data['values']);
-		// dd($data['values']);
-		// $data['values'] = $this->mars_model->line_attendance_summary($date, $unit_id);
-		// dd($data['values']);
-
+		
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $date;
 		$data['category']    = 'Line';
@@ -179,9 +174,10 @@ class Grid_con extends CI_Controller {
 		$grid_firstdate 	= $this->input->post('firstdate');
 		$grid_seconddate	= $this->input->post('seconddate');
 		$unit_id		 	= $this->input->post('unit_id');
+		$status		 		= $this->input->post('status');
 		$grid_firstdate  	= date("Y-m-d", strtotime($grid_firstdate));
 		$grid_seconddate  	= date("Y-m-d", strtotime($grid_seconddate));
-		$data['values'] 	= $this->Grid_model->grid_new_join_report($grid_firstdate, $grid_seconddate, $unit_id);
+		$data['values'] 	= $this->Grid_model->grid_new_join_report($grid_firstdate, $grid_seconddate, $unit_id,$status);
 		$data['start_date']	= $grid_firstdate;
 		$data['end_date'] 	= $grid_seconddate;
 		$data['unit_id'] 	= $unit_id;
@@ -476,11 +472,6 @@ class Grid_con extends CI_Controller {
 		}else{
 			$this->load->view('grid_con/grid_daily_costing_report',$data);
 		}
-		/* if(is_string($data["values"])){
-			echo $data["values"];
-		}else{
-			$this->load->view('grid_con/daily_costing_report',$data);
-		} */
 	}
 	// ============================== end Daily Costing Report ===============
 
@@ -616,7 +607,8 @@ class Grid_con extends CI_Controller {
 		$date1= date('Y-m-d',strtotime($this->input->post('firstdate'))); //$this->input->post('firstdate'));
 		$date2= date('Y-m-d',strtotime($this->input->post('seconddate'))); // $this->input->post('seconddate');
 
-		if (empty($date2)) {
+		// dd($date2);
+		if ($date2 == '1970-01-01') {
 			$date2=$date1;
 		};
 		$unit_id = $this->input->post('unit_id');
@@ -627,7 +619,7 @@ class Grid_con extends CI_Controller {
 		$data["date1"]			= $date1;
 		$data["date2"]			= $date2;
 		$data["unit_id"] 		= $unit_id;
-
+		// dd($data);
 		if(is_string($data["values"]))
 		{
 			echo $data["values"];
@@ -757,11 +749,13 @@ class Grid_con extends CI_Controller {
 		$days2 = 22;
 		$days3 = 31;
 		$off_day = 'Fri';
-		// dd($days2);
+		// dd($_POST);
 
 		$data['values']  = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days1, 1);
 		$data['values2'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days2, 2);
 		$data['values3'] = $this->Grid_model->grid_letter_report($data['firstdate'], $unit_id, $off_day, $days3, 3);
+
+		// dd($data);
 
 		if (!empty($data['values'])) {
 			$v['1'] = count($data['values']);
@@ -901,6 +895,7 @@ class Grid_con extends CI_Controller {
 		$data["values"] = $this->Grid_model->grid_employee_information($grid_emp_id);
 		// dd($data);
 		$data['total_value']= $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
+		// dd($data['total_value']);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['type'] = $this->input->post('type');
 		$this->load->view('grid_con/final_satalment',$data,false);
@@ -927,15 +922,16 @@ class Grid_con extends CI_Controller {
 			$this->db->where('shift_log_date >=',date('Y-m-01',strtotime($row->resign_date)));
 			$this->db->where('shift_log_date <=',date('Y-m-d',strtotime($row->resign_date)));
 			$dd = $this->db->get()->row();	
-			$ssss = $this->common_model->salary_structure($row->gross_sal);
-
-			$get_all[$key]->ot_hour = $dd->ot_hour;
-			$get_all[$key]->eot_hour = $dd->eot_hour;
-			$get_all[$key]->status = $dd->status;
+			$ssss = $this->common_model->salary_structure($row->com_gross_sal);
+			// dd($ssss);
+			$get_all[$key]->ot_hour      = $dd->ot_hour;
+			$get_all[$key]->eot_hour     = $dd->eot_hour;
+			$get_all[$key]->status       = $dd->status;
 			$get_all[$key]->working_days = ($dd->working_days+$dd->status);
-			$get_all[$key]->basic_sal = $ssss['basic_sal'];
-			$get_all[$key]->ot_rate = $ssss['ot_rate'];
+			$get_all[$key]->basic_sal    = $ssss['basic_sal'];
+			$get_all[$key]->ot_rate      = $ssss['ot_rate'];
 		}
+		// dd($get_all);
 		echo json_encode($get_all[0]);
 	}
 	function grid_monthly_att_register(){
@@ -2788,6 +2784,63 @@ class Grid_con extends CI_Controller {
 		$data['unit_id'] = $this->input->post('unit_id');
 				
 		$this->load->view('service_book_info',$data);
+	}
+	public function grid_roster_employee(){
+		$unit_id = $this->input->post('unit_id');
+		$firstdate  = date("Y-m-d", strtotime($this->input->post('first_date')));
+		$this->db->select('shift_type');
+		$this->db->where('unit_id', $unit_id);
+		$query = $this->db->get('pr_emp_roster_shift');
+		if($query->num_rows() == 0){
+			return "Requested list is empty";
+		}
+		$array = array();
+		foreach ($query->result() as $key => $row) {
+			$arr = json_decode($row->shift_type);
+			$array = array_merge($array, $arr[0]);
+		}
+		$this->db->select('
+			pr_emp_com_info.emp_id,
+			pr_emp_per_info.name_en, 
+			emp_designation.desig_name,
+			emp_depertment.dept_name, 
+			emp_section.sec_name_en,
+			emp_line_num.line_name_en, 
+			pr_emp_com_info.emp_join_date, 
+			pr_emp_shift_schedule.id,
+			pr_emp_shift_schedule.sh_type shift_name,
+			pr_emp_com_info.emp_cat_id,
+		');
+		$this->db->from('pr_emp_shift_log');
+		$this->db->from('pr_emp_com_info');
+		$this->db->from('pr_emp_shift_schedule');
+		$this->db->from('pr_emp_per_info');
+		$this->db->from('emp_designation');
+		$this->db->from('emp_depertment');
+		$this->db->from('emp_section');
+		$this->db->from('emp_line_num');
+		$this->db->where('pr_emp_shift_log.schedule_id = pr_emp_shift_schedule.id');
+		$this->db->where('pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id');
+		$this->db->where('pr_emp_com_info.emp_id = pr_emp_per_info.emp_id');
+		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
+		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
+		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
+		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
+		$this->db->where_in('pr_emp_shift_log.shift_id',$array);
+		$this->db->where('pr_emp_shift_log.shift_log_date', $firstdate);
+		$this->db->order_by('pr_emp_shift_schedule.id','ASC');
+		$this->db->group_by('pr_emp_shift_schedule.id');
+		$this->db->group_by('pr_emp_shift_log.emp_id');
+		$data["values"] = $this->db->get()->result();
+
+		// dd($query);
+		$data["unit_id"] 		= $unit_id;
+		$data["firstdate"] 		= date("d-m-Y", strtotime($firstdate));
+		if(is_string($data["values"])){
+			echo $data["values"];
+		}else{
+			$this->load->view('grid_roster_employes',$data);
+		}
 	}
 }
 ?>

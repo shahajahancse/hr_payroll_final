@@ -26,11 +26,6 @@ class Admin extends API_Controller
         $authorization = $this->input->get_request_header('Authorization');
         $user_info = api_auth($authorization);
         if ($user_info['status'] == true) {
-                // $offset = $this->input->post('offset');
-                // $limit = $this->input->post('limit');
-                // $status = $this->input->post('status');
-
-                // $result = $this->Timesheet_model->get_leaves_with_info_with_pagi($offset, $limit, $status);
                 $result = [
                     'name' => 'test',
                     'email' => 'test',
@@ -46,7 +41,7 @@ class Admin extends API_Controller
                     $this->api_return([
                         'status' => false,
                         'message' => 'Data not found',
-                        'data' => [],
+                        'data' => null,
                     ], 200);
                 }
         } else {
@@ -62,30 +57,32 @@ class Admin extends API_Controller
         $authorization = $this->input->get_request_header('Authorization');
         $user_info = api_auth($authorization);
         if ($user_info['status'] == true) {
-            $unit=$this->input->post('unit');
+            $unit_id=$this->input->post('unit_id');
             $department=$this->input->post('department');
             $section=$this->input->post('section');
             $line=$this->input->post('line');
             $date=$this->input->post('date');
+
             if (empty($date) || !$date) {
                 $date = date('Y-m-d');
             }else{
                 $date = date('Y-m-d', strtotime($date));
             }
-                $result = $this->Api_model->get_dashboard($unit,$department,$section,$line,$date);
-                if ($result) {
-                    $this->api_return([
-                        'status' => true,
-                        'message' => 'Successful',
-                        'data' => $result,
-                    ], 200);
-                } else {
-                    $this->api_return([
-                        'status' => false,
-                        'message' => 'Data not found',
-                        'data' => [],
-                    ], 200);
-                }
+
+            $result = $this->Api_model->get_dashboard($unit_id,$department,$section,$line,$date);
+            if ($result) {
+                $this->api_return([
+                    'status' => true,
+                    'message' => 'Successful',
+                    'data' => $result,
+                ], 200);
+            } else {
+                $this->api_return([
+                    'status' => false,
+                    'message' => 'Data not found',
+                    'data' => null,
+                ], 200);
+            }
         } else {
             $this->api_return([
                 'status' => false,
@@ -94,8 +91,6 @@ class Admin extends API_Controller
             ], 401);
         }
     }
-
-
 
     public function get_all_unit(){
         $authorization = $this->input->get_request_header('Authorization');
@@ -113,7 +108,7 @@ class Admin extends API_Controller
                     $this->api_return([
                         'status' => false,
                         'message' => 'Data not found',
-                        'data' => [],
+                        'data' => null,
                     ], 200);
                 }
         } else {
@@ -140,7 +135,7 @@ class Admin extends API_Controller
                     $this->api_return([
                         'status' => false,
                         'message' => 'Data not found',
-                        'data' => [],
+                        'data' => null,
                     ], 200);
                 }
         } else {
@@ -168,7 +163,7 @@ class Admin extends API_Controller
                     $this->api_return([
                         'status' => false,
                         'message' => 'Data not found',
-                        'data' => [],
+                        'data' => null,
                     ], 200);
                 }
         } else {
@@ -197,7 +192,7 @@ class Admin extends API_Controller
                     $this->api_return([
                         'status' => false,
                         'message' => 'Data not found',
-                        'data' => [],
+                        'data' => null,
                     ], 200);
                 }
         } else {
@@ -208,4 +203,152 @@ class Admin extends API_Controller
             ], 401);
         }
     }
+
+	function attendance_summary_line(){
+        $authorization = $this->input->get_request_header('Authorization');
+        $user_info = api_auth($authorization);
+        if ($user_info['status'] == true) {
+            $unit_id=$this->input->post('unit_id');
+            $date=$this->input->post('date');
+            if (empty($date)) {
+                $date = date('Y-m-d');
+            }else{
+                $date = date('Y-m-d', strtotime($date));
+            }
+
+            $result = $this->Api_model->get_attn_line($unit_id, $date);
+
+            if ($result) {
+                $this->api_return([
+                    'status' => true,
+                    'message' => 'Successful',
+                    'data' => $result,
+                ], 200);
+            } else {
+                $this->api_return([
+                    'status' => false,
+                    'message' => 'Data not found',
+                    'data' => null,
+                ], 200);
+            }
+
+        } else {
+            $this->api_return([
+                'status' => false,
+                'message' => 'Unauthorized User',
+                'data' => null,
+            ], 401);
+        }
+	}
+
+	function attendance_summary_section(){
+        $authorization = $this->input->get_request_header('Authorization');
+        $user_info = api_auth($authorization);
+        if ($user_info['status'] == true) {
+            $unit_id=$this->input->post('unit_id');
+            $date=$this->input->post('date');
+            if (empty($date)) {
+                $date = date('Y-m-d');
+            }else{
+                $date = date('Y-m-d', strtotime($date));
+            }
+
+            $result = $this->Api_model->get_attn_section($unit_id, $date);
+
+            if ($result) {
+                $this->api_return([
+                    'status' => true,
+                    'message' => 'Successful',
+                    'data' => $result,
+                ], 200);
+            } else {
+                $this->api_return([
+                    'status' => false,
+                    'message' => 'Data not found',
+                    'data' => null,
+                ], 200);
+            }
+
+        } else {
+            $this->api_return([
+                'status' => false,
+                'message' => 'Unauthorized User',
+                'data' => null,
+            ], 401);
+        }
+	}
+
+	function costing_summary_line(){
+        $authorization = $this->input->get_request_header('Authorization');
+        $user_info = api_auth($authorization);
+        if ($user_info['status'] == true) {
+            $unit_id=$this->input->post('unit_id');
+            $date=$this->input->post('date');
+            if (empty($date)) {
+                $date = date('Y-m-d');
+            }else{
+                $date = date('Y-m-d', strtotime($date));
+            }
+
+            $result = $this->Api_model->get_costing_summary_ine($unit_id, $date);
+
+            if ($result) {
+                $this->api_return([
+                    'status' => true,
+                    'message' => 'Successful',
+                    'data' => $result,
+                ], 200);
+            } else {
+                $this->api_return([
+                    'status' => false,
+                    'message' => 'Data not found',
+                    'data' => null,
+                ], 200);
+            }
+
+        } else {
+            $this->api_return([
+                'status' => false,
+                'message' => 'Unauthorized User',
+                'data' => null,
+            ], 401);
+        }
+	}
+
+	function costing_summary_section(){
+        $authorization = $this->input->get_request_header('Authorization');
+        $user_info = api_auth($authorization);
+        if ($user_info['status'] == true) {
+            $unit_id=$this->input->post('unit_id');
+            $date=$this->input->post('date');
+            if (empty($date)) {
+                $date = date('Y-m-d');
+            }else{
+                $date = date('Y-m-d', strtotime($date));
+            }
+
+            $result = $this->Api_model->get_costing_summary_section($unit_id, $date);
+
+            if ($result) {
+                $this->api_return([
+                    'status' => true,
+                    'message' => 'Successful',
+                    'data' => $result,
+                ], 200);
+            } else {
+                $this->api_return([
+                    'status' => false,
+                    'message' => 'Data not found',
+                    'data' => null,
+                ], 200);
+            }
+
+        } else {
+            $this->api_return([
+                'status' => false,
+                'message' => 'Unauthorized User',
+                'data' => null,
+            ], 401);
+        }
+	}
 }

@@ -7,13 +7,10 @@
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
 	elseif($grid_status == 2)
-	{ echo 'New Employee '; }
-	elseif($grid_status == 3)
 	{ echo 'Left Employee '; }
-	elseif($grid_status == 4)
+	elseif($grid_status == 3)
 	{ echo 'Resign Employee '; }
-	elseif($grid_status == 6)
-	{ echo 'Promoted Employee '; }
+
 ?>Monthly EOT Sheet of
 <?php
 $date = $salary_month;
@@ -136,13 +133,10 @@ $this->load->view("head_english");
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
 	elseif($grid_status == 2)
-	{ echo 'New Employee '; }
-	elseif($grid_status == 3)
 	{ echo 'Left Employee '; }
-	elseif($grid_status == 4)
+	elseif($grid_status == 3)
 	{ echo 'Resign Employee '; }
-	elseif($grid_status == 6)
-	{ echo 'Promoted Employee '; }
+
 echo '<span style="font-weight:bold;">';
 ?>
 Monthly EOT Sheet of

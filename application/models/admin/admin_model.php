@@ -43,7 +43,7 @@ class Admin_model extends CI_Model {
 		$user_id = $this->input->post('username');
 		$password = $this->input->post('password');
 
-		$this->db->select("id, id_number, level, unit_name");
+		$this->db->select("id, id_number, level, unit_name,user_mode");
 		$this->db->where('id_number',$user_id);
 		$this->db->where('password',$password);
 		$this->db->where('status ','Enable');

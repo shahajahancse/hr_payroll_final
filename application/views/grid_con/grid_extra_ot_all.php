@@ -172,7 +172,7 @@
 							$in_time = sprintf("%02d:%02d:%02d", (int)$hour, $n_m, (int)$second);
 							}
 						} else{
-							$in_time = "00:00:00";
+							$in_time = $row->present_status== 'W' ? "" : "00:00:00";
 						}
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
@@ -185,7 +185,7 @@
 								$out_time = sprintf("%02d:%02d:%02d", (int)$hour, $minuteSum, (int)$second);
 							}
 						} else{
-							$out_time = "00:00:00";
+							$out_time = $row->present_status== 'W' ? "" : "00:00:00";
 						}
 
 
@@ -199,11 +199,19 @@
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
-							echo $in_time;
+							if($in_time == "00:00:00"){
+								echo "&nbsp;";
+							}else{
+								echo $in_time;
+							}
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
-							echo $out_time;
+							if($out_time == "00:00:00"){
+								echo "&nbsp;";
+							}else{
+								echo $out_time;
+							}
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
@@ -239,18 +247,18 @@
 								$remark = "";
 							}
 							echo "<td>&nbsp;";
-							echo $row->com_ot;
+							echo $row->present_status== 'W' ? "" : $row->com_ot;
 							echo "&nbsp;</td>";
 
 							$total_ot = $total_ot + $row->com_ot;
 							$total_ot_hour = $total_ot_hour + $row->com_ot + $row->com_eot;
 
 							echo "<td>&nbsp;";
-							echo $row->com_eot;
+							echo $row->present_status== 'W' ? "" : $row->com_eot;
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";
-							echo $row->com_eot + $row->com_ot;
+							echo $row->present_status== 'W' ? "" : ($row->com_eot + $row->com_ot);
 							echo "&nbsp;</td>";
 
 							echo "<td>&nbsp;";

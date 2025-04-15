@@ -38,9 +38,9 @@
                             <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Employee Type <span style="color:red">*</span> </label>
-                                <select name="emp_type" class="form-control" required>
-                                    <option value="">Select Employee Type</option>
+                            <label>Employee Type</label>
+                                <select name="emp_type" class="form-control">
+                                    <option <?= ($row->emp_type==1)?'selected':'' ?> value="0">All</option>
                                     <option <?= ($row->emp_type==1)?'selected':'' ?> value="1">Worker</option>
                                     <option <?= ($row->emp_type==2)?'selected':'' ?> value="2">Staff</option>
                                 </select>
@@ -86,13 +86,21 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Bonus Percent (%) <span style="color:red">*</span></label>
-                            <input required type="number" name="bonus_percent" value="<?= $row->bonus_percent ?>" class="form-control">
+                            <input required type="text" name="bonus_percent" value="<?= $row->bonus_percent ?>" class="form-control">
                             <?=(isset($failuer['bonus_percent'])) ? '<div class="alert alert-failuer">' . $failuer['bonus_percent'] . '</div>' : ''; ?>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Effective Date <span style="color:red">*</span></label>
                             <input value="<?= date('d-m-Y',strtotime($row->effective_date)) ?>" required name="effective_date" class="form-control date" type="text" >
                             <?=(isset($failuer['effective_date'])) ? '<div class="alert alert-failuer">' . $failuer['effective_date'] . '</div>' : ''; ?>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Month</label>
+                            <select name="fraction" class="form-control">
+                                <option <?= ($row->fraction=='0')?'selected':'' ?> value="0">No</option>
+                                <option <?= ($row->fraction=='1')?'selected':'' ?> value="1">Yes</option>
+                            </select>
+                            <?=(isset($failuer['fraction'])) ? '<div class="alert alert-failuer">' . $failuer['fraction'] . '</div>' : ''; ?>
                         </div>
                     </div>
                     <br>

@@ -120,40 +120,35 @@ for ( $counter = 1; $counter <= $page; $counter ++)
 <td colspan="10" align="center">
 <?php } ?>
 
-<div style="width:100%; font-family:Arial, Helvetica, sans-serif;">
-<div style="text-align:left; position:relative;padding-left:10px;width:20%; float:left; font-weight:bold;">
-<table>
-<?php 
-$date = date('d-m-Y');
-// <<<<<<<<<<<<<<  ✨ Codeium Command 🌟 >>>>>>>>>>>>>>>>
-if (is_object($value[0])) {
-    $section_name = $value[0]->sec_name_en;
-	echo "Section : $section_name<br>";
-}else {
-    echo "Section : <br>";
-}
-// -$section_name = $value[0]->sec_name_en;
-// <<<<<<<  b69a902f-d29f-4ca8-a5af-3d416fc5ae7a  >>>>>>>
-
- ?>
-</table>
+	<div style="width:100%; font-family:Arial, Helvetica, sans-serif;">
+	<div style="text-align:left; position:relative;padding-left:10px;width:20%; float:left; font-weight:bold;">
+		<table>
+			<?php 
+				$date = date('d-m-Y');
+				if (is_object($value[0])) {
+					$section_name = $value[0]->sec_name_en;
+					echo "Section : $section_name<br>";
+				}else {
+					echo "Section : <br>";
+				}
+			?>
+		</table>
 </div>
  <div style="text-align:center; position:relative;padding-left:10px;width:50%; overflow:hidden; float:left; display:block;">
-<?php 
-$this->load->view("head_english");
-
-	if($grid_status == 1)
-	{ echo 'Reguler Employee '; }
-	elseif($grid_status == 2)
-	{ echo 'New Employee '; }
-	elseif($grid_status == 3)
-	{ echo 'Left Employee '; }
-	elseif($grid_status == 4)
-	{ echo 'Resign Employee '; }
-	elseif($grid_status == 6)
-	{ echo 'Promoted Employee '; }
-echo '<span style="font-weight:bold;">';
-?>
+	<?php 
+		$this->load->view("head_english");	
+		if($grid_status == 1)
+		{ echo 'Reguler Employee '; }
+		elseif($grid_status == 2)
+		{ echo 'New Employee '; }
+		elseif($grid_status == 3)
+		{ echo 'Left Employee '; }
+		elseif($grid_status == 4)
+		{ echo 'Resign Employee '; }
+		elseif($grid_status == 6)
+		{ echo 'Promoted Employee '; }
+		echo '<span style="font-weight:bold;">';
+	?>
 Monthly Salary Sheet With EOT of 
 <?php 
 $date = $salary_month;
@@ -187,12 +182,6 @@ echo "Payment Date : ";
         <th rowspan="2" width="30" height="20px"><div align="center"><strong>	Name of Employee	</strong></div></th>
         <th rowspan="2" width="130" height="20px"><div align="center"><strong>	Designation			</strong></div></th>
         <th rowspan="2" width="120" height="20px"><div align="center"><strong>	Line				</strong></div></th>
-    
-        <!-- <th rowspan="2" width="35" height="20px"><div align="center"><strong>	Total EOT			</strong></div></th> -->
-        <!-- <th rowspan="2" width="35" height="20px"><div align="center"><strong>	Salary Amount			</strong></div></th> -->
-
-        <!-- <th rowspan="2" width="35" height="20px"><div align="center"><strong>	EOT Amount				</strong></div></th> -->
-        
         <th rowspan="2" width="35" height="20px"><div align="center"><strong>	Pay Salary Amount				</strong></div></th>
         <th rowspan="2" width="120" height="20px"><div align="center"><strong>	bKash No.</strong></div></th>
         <tr></tr>
@@ -268,44 +257,13 @@ echo "Payment Date : ";
 				
 		echo "<td>";
 		print_r($value[$k]->desig_name);
-		//echo $row->desig_name;
 		echo "</td>";
 		
 		echo "<td>";
 		print_r($value[$k]->line_name_en);
-		//echo $row->desig_name;
 		echo "</td>";
 				
-				
-		/*
-				
-		$total_ot_eot_hour	= $value[$k]->eot_hour;
-		echo "<td>";
-		echo $total_ot_eot_hour;
-		echo "</td>";
-		$total_ot_eot_hour_per_page = $total_ot_eot_hour_per_page + $total_ot_eot_hour;
-		$grand_total_ot_eot_hour = $grand_total_ot_eot_hour + $total_ot_eot_hour; 
-		
-		$net_pay 				= $value[$k]->net_pay ;
-		echo "<td>";
-		echo  $net_pay;
-		echo "</td>";
-
-		$total_net_pay_per_page = $total_net_pay_per_page + $net_pay;
-		$grand_net_pay = $grand_net_pay + $net_pay; 
-		//$total_ot_rate_per_page = $total_ot_rate_per_page + $ot_rate; 
-		$ot_amount =  $value[$k]->ot_amount;
-		$eot_amount =  $value[$k]->eot_amount;
-		
-		$ot_eot_amount = $eot_amount;
-		echo "<td>";
-		echo $ot_eot_amount;
-		echo "</td>";
-		
-		$total_ot_amount_per_page = $total_ot_amount_per_page + $ot_eot_amount;
-		$grand_total_ot_amount = $grand_total_ot_amount + $ot_eot_amount;
-		*/
-		
+	
 		$total_amount = floor($value[$k]->pay_amt);
 		echo "<td>";
 		echo $total_amount;
@@ -316,7 +274,6 @@ echo "Payment Date : ";
 		
 		echo "<td>";
 		echo $value[$k]->mobile;
-		//echo $value[$k]->att_bonus;;
 		echo "</td>";
 			
 		echo "</tr>"; 
@@ -325,13 +282,6 @@ echo "Payment Date : ";
 	?>
 	<tr>
 		<td align="center" colspan="5"><strong>Total Per Page</strong></td>
-       
-        <!-- <td align="right"><strong><?php echo $english_format_number = number_format($total_ot_eot_hour_per_page);?></strong></td> -->
-        
-       <!--  <td align="right"><strong><?php echo $english_format_number = number_format($total_net_pay_per_page);?></strong></td> -->
-
-		<!-- <td align="right"><strong><?php echo $english_format_number = number_format($total_ot_amount_per_page);?></strong></td> -->
-		
 		<td align="right"><strong><?php echo $english_format_number = number_format($total_total_amount_per_page);?></strong></td>
 		<td></td>
 		
@@ -340,16 +290,9 @@ echo "Payment Date : ";
 	if($counter == $page)
    		{?>
 			<tr height="10">
-			<td colspan="5" align="center"><strong>Grand Total Amount Tk</strong></td>
-        
-            <!-- <td align="right"><strong><?php echo $english_format_number = number_format($grand_total_ot_eot_hour);?></strong></td> -->
-           
-        	<!-- <td align="right"><strong><?php echo $english_format_number = number_format($grand_net_pay);?></strong></td> -->
-            <!-- <td align="right"><strong><?php echo $english_format_number = number_format($grand_total_ot_amount);?></strong></td> -->
-            
-            <td align="right"><strong><?php echo $english_format_number = number_format($grand_total_amount_amount);?></strong></td>
-            <td></td>
-			
+				<td colspan="5" align="center"><strong>Grand Total Amount Tk</strong></td>
+				<td align="right"><strong><?php echo $english_format_number = number_format($grand_total_amount_amount);?></strong></td>
+				<td></td>
 			</tr>
 			<?php } ?>
 			

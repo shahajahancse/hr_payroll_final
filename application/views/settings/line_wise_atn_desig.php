@@ -75,6 +75,7 @@
                 <thead>
                     <tr>
                         <th>Sl. No.</th>
+                        <th>Id</th>
                         <th>Employee Name</th>
                         <th>Actual Line name</th>
                         <th>Unit</th>
@@ -84,20 +85,17 @@
                 </thead>
                 <tbody>
                     <?php
+                        if(count($this->data['pr_line']) == 0){
+                           echo "<tr><td colspan='12' ><p style='padding:20px;font-size:20px;color:red;font-weight:bold'>No data found<p></td></tr>";
+                        }
                        if (!empty($pr_line)) {foreach ($pr_line as $key => $pr_lines) {?>
                         <tr>
                             <td><?php echo $key + 1  ?></td>
+                            <td><?php echo $pr_lines["emp_id"] ?></td>
                             <td><?php echo $pr_lines["name_en"] ?></td>
                             <td><?php echo $pr_lines["line_name_en"] ?></td>
                             <td><?php echo $pr_lines["unit_name"] ?></td>
-                            <td><?php
-                            // $samari_line=$pr_lines["attn_sum_line_id"];
-                            $samari_line=$pr_lines["emp_line_id"];
-                            // dd($samari_line);
-                            $this->db->where('id', $samari_line);
-                            $query = $this->db->get('emp_line_num')->row();
-                            echo $query->line_name_en
-                            ?></td>
+                            <td><?php echo $pr_lines["snum"] ?></td>
                             <td>
                                 <a href="<?=base_url('setting_con/line_delete') . '/' . $pr_lines["emp_id"]?>"
                                     class="btn btn-danger center-text" role="button">Delete</a>

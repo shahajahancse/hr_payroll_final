@@ -19,6 +19,38 @@
  * @access	public
  * @param	mixed 
  */
+
+if ( ! function_exists('gov_holiday'))
+{
+	function gov_holiday($date)
+	{
+		$CI =& get_instance();
+		$CI->db->where('date', $date)->where('unit_id',$_SESSION['data']->unit_name);
+		$gd = $CI->db->get('pr_gov_holiday')->row();
+		if (!empty($gd)) {
+			$date = date("Y-m-d", strtotime("+1 days".$date));
+			$date = gov_holiday($date);
+		}
+		return $date;
+	}
+}
+
+if ( ! function_exists('coff_day'))
+{
+	function coff_day($date)
+	{
+		$CI =& get_instance();
+		$CI->db->where('work_off_date', $date)->where('unit_id',$_SESSION['data']->unit_name);
+		$gd = $CI->db->get('attn_holyday_off')->row();
+		if (!empty($gd)) {
+			$date = date("Y-m-d", strtotime("+1 days".$date));
+			$date = coff_day($date);
+		}
+		return $date;
+	}
+}
+
+
 if ( ! function_exists('get_all_emp_id'))
 {
 	function get_all_emp_id($emp_cat = array(), $unit_id = 0)
@@ -61,6 +93,7 @@ if ( ! function_exists('add_days_skipping_fridays'))
 			}
 		}
 		$dayss  = date('Y-m-d', strtotime($date. ' +'.$days.' days'));
+		// dd($dayss);
 		$gov_holiday= $CI->db->where('date >=',$date)->where('date <=',$dayss)->where('unit_id',$_SESSION['data']->unit_name)->get('pr_gov_holiday')->result();
 		$count = count($gov_holiday);
 		if($count > 0) {

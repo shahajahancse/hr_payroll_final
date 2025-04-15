@@ -31,10 +31,16 @@
     </style>
 </head>
 <body style=" margin:0px auto; margin-left:20px;">
+    <?php 
+        if(count($values)==0){
+            echo "No Data Found";
+            exit;
+        }
+    ?>
     <table align="left" border="0" cellpadding="0" cellspacing="0">
         <!-- <tr> -->
             <?php
-                // dd($values);
+                
                 $row_count=count($values);
                 if($row_count >3)
                 {
@@ -48,9 +54,6 @@
                 $k = 0;
                 foreach($values as $rows)
                 {
-                    // $salary_structure = json_decode($rows->salary_structure);
-                    // $rows = json_decode($rows->rows);
-                    // dd($rows);
                 echo "<tr>";
             ?>
             <td style="width:450px; height:300px;">
@@ -133,7 +136,7 @@
                                     </td>
                                     <td width="75">
                                         <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            <?php echo $rows->sec_name_en;   ?>
+                                            <?php echo $rows->sec_name_en;?>
                                         </font>
                                     </td>
                                 </tr>
@@ -168,12 +171,6 @@
                                             <?php echo $rows->total_days;   ?>
                                         </font>
                                     </td>
-                                    <!-- <td width="72" style="font-size: 10px;">&#2474;&#2460;&#2495;&#2486;&#2472;</td>
-                                    <td width="75">
-                                        <font style="font-family:'Times New Roman', Times, serif;font-size: 11px;">:
-                                            < ?php echo $rows->posi_name;   ?>
-                                        </font>
-                                    </td> -->
                                 </tr>
                                 <tr>
                                     <td width="76" style="font-size: 10px;">&#2478;&#2507;&#2463;
@@ -188,22 +185,6 @@
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
                                             <?php 
                                             //  [total_days] => 30
-    // [num_of_workday] => 27
-    // [att_days] => 27
-    // [absent_days] => 0
-    // [ba_absent] => 0
-    // [c_l] => 0
-    // [s_l] => 0
-    // [e_l] => 0
-    // [m_l] => 0
-    // [wp] => 0
-    // [total_leave] => 0
-    // [pay_leave] => 0
-    // [holiday] => 0
-    // [weekend] => 3
-    // [total_holiday] => 3
-    // [pay_days] => 30
-
                                                 $c_l = $rows->c_l;  
                                                 $s_l = $rows->s_l;  
                                                 $e_l = $rows->e_l;   
@@ -241,7 +222,7 @@
                                         &#2456;&#2472;&#2509;&#2463;&#2494; </td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php echo $rows->ot_hour;   ?>
+                                            <?php $total_ot_hour = $rows->ot_hour;  echo $total_ot_hour; ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -259,7 +240,7 @@
                                         &#2480;&#2503;&#2463; </td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ; font-size:12px;">:
-                                            <?php  echo $rows->ot_rate;    ?>
+                                            <?php  echo $rows->ot_rate;   ?>
                                         </font>
                                     </td>
                                 </tr>
@@ -341,7 +322,7 @@
                                         <td></td>
                                         <td width="210" style="font-weight: bold; padding-left: 5px;">(ঘ) অতিরিক্ত কাজ :
                                             <span style="font-family: SutonnyMJ; font-size: 12px;">
-                                                <?php echo ($rows->ot_amount); ?>
+                                                <?php $total_ot_amount = ceil($rows->ot_rate*$total_ot_hour); echo ceil($total_ot_amount);?>
                                             </span>
                                         </td>
                                     </tr>
@@ -356,7 +337,7 @@
                                         <td>:</td>
                                         <td width="78" style="padding-right: 9px;" align="right">
                                             <font style="font-family: SutonnyMJ; font-size:12px;">
-                                                <?php  echo $rows->net_pay;    ?>
+                                                <?php  echo $rows->net_pay+$total_ot_amount;    ?>
                                             </font>
                                         </td>
                                     </tr>
@@ -647,7 +628,7 @@
                                         <td></td>
                                         <td width="210" style="font-weight: bold; padding-left: 5px;">(ঘ) অতিরিক্ত কাজ :
                                             <span style="font-family: SutonnyMJ; font-size: 12px;">
-                                                <?php echo $rows->ot_amount; ?>
+                                                <?php echo $total_ot_amount; ?>
                                             </span>
                                         </td>
                                     </tr>
@@ -662,7 +643,7 @@
                                         <td>:</td>
                                         <td width="78" style="padding-right: 9px;" align="right">
                                             <font style="font-family: SutonnyMJ; font-size:12px;">
-                                                <?php  echo $rows->net_pay;  ?>
+                                                <?php  echo $rows->net_pay+$total_ot_amount;  ?>
                                             </font>
                                         </td>
                                     </tr>
@@ -696,7 +677,6 @@
                      $i = $i + 1;
                      }
                  ?>
-  
     </table>
 </body>
 </html>

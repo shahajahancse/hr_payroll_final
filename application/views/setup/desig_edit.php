@@ -31,14 +31,18 @@
     <div class="tablebox">
     <h3>Update Designation</h3>
     <hr>
-    <?= validation_errors();?>
+    <!-- < ?php if (validation_errors()) { ?>
+        <div class="alert alert-danger" style="font-family: Arial !important;">
+            < ?php echo validation_errors(); ?>
+        </div>
+    < ? php } ?> -->
     <form action="<?= base_url('setup_con/designation_edit').'/'.$emp_designation->id?>"
         enctype="multipart/form-data" method="post">
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="unit_id">Unit Id <span style="color: red;">*</span></label>
-                    <select name="unit_id" onchange="get_data(this.value);" id="unit_id" class=" form-control ">
+                    <select name="unit_id" onchange="get_data(this.value);" id="unit_id" class=" form-control " required>
                         <option value="">Select Unit</option>
                         <?php foreach ($pr_units as $key => $value) {?>
                         <option value="<?php echo $value->unit_id; ?>" <?php echo $value->unit_id == $emp_designation->unit_id ? 'selected' : ''; ?>><?php echo $value->unit_name; ?></option>
@@ -57,7 +61,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="atttn_id">Attendance Bonus <span style="color: red;">*</span></label>
-                    <select name="attn_id"  id="attn_id" class="form-control  ">
+                    <select name="attn_id"  id="attn_id" class="form-control  " required>
                         <option value="">Select Attendance Bonus</option>
                         <?php foreach ($attn_rules as $key => $r) { ?>
                             <option <?php echo $emp_designation->attn_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->rule ?></option>
@@ -77,7 +81,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="holiday_weekend_id">Holiday/Weekend <span style="color: red;">*</span></label>
-                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control  ">
+                    <select name="holiday_weekend_id"  id="holiday_weekend_id" class="form-control " required>
                         <option value="">Select Holyday/Weekend</option>
                         <?php foreach ($offs_rules as $key => $r) { ?>
                             <option <?php echo $emp_designation->holiday_weekend_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->allowance_amount ?></option>
@@ -99,7 +103,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select  Iftar Allowance <span style="color: red;">*</span></label>
-                    <select name="iftar_id"  id="iftar_id" class="form-control  ">
+                    <select name="iftar_id"  id="iftar_id" class="form-control  " required>
                         <option value="">Select Iftar Allowance</option>
                         <?php foreach ($ifter_rules as $key => $r) { ?>
                             <option <?php echo $emp_designation->iftar_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->allowance_amount ?></option>
@@ -119,7 +123,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select  Night Allowance <span style="color: red;">*</span></label>
-                    <select name="night_al_id"  id="night_al_id" class="form-control  ">
+                    <select name="night_al_id"  id="night_al_id" class="form-control  " required>
                         <option value="">Select Night Allowance</option>
                         <?php foreach ($night_rules as $key => $r) { ?>
                             <option <?php echo $emp_designation->night_al_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->night_allowance ?></option>
@@ -139,7 +143,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select Tiffin Allowance  <span style="color: red;">*</span></label>
-                    <select name="tiffin_id"  id="tiffin_id" class="form-control  ">
+                    <select name="tiffin_id"  id="tiffin_id" class="form-control  " required>
                         <option value="">Select Tiffin Allowance</option>
                         <?php foreach ($tifin_rules as $key => $r) { ?>
                             <option <?php echo $emp_designation->tiffin_id==$r->id?'selected':''; ?> value="<?php echo $r->id?>" ><?= $r->rule_name .' > '. $r->allowance_amount ?></option>

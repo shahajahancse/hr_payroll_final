@@ -164,12 +164,12 @@ input[type=number] {
                             কার্ড	:	<span id="card_no" style="font-family: SutonnyMJ;"></span>
                         </div>
                         <div class="col-md-4">
-                            পদবী	:	<span id="designation_name"></span>
+                            পদবী	:	<span style="font-family: SutonnyMJ;" id="designation_name"></span>
                         </div>
                     </div>
                     <div class="row" style="font-size: 15px;">
                         <div class="col-md-4">
-                            সেকশন	:	<span id="section_name"></span>
+                            সেকশন	:	<span style="font-family: SutonnyMJ;" id="section_name"></span>
                         </div>
                         <div class="col-md-4">
                             যোগদানের তারিখ	:	<span id="joining_date" style="font-family: SutonnyMJ;"></span> ইং
@@ -184,7 +184,7 @@ input[type=number] {
                             চাকুরীকাল	:	<span id="job_duration"> </span>
                         </div>
                         <div class="col-md-4">
-                            মোট বেতন	:	<span id="gross_salary" style="font-family:SutonnyMJ"> </span> টাকা
+                            মোট বেতন	:	<span id="com_gross_salary" style="font-family:SutonnyMJ"> </span> টাকা
                         </div>
                         <div class="col-md-4">
                             মূল বেতন	:	<span id="basic_salary" style="font-family:SutonnyMJ"> </span> টাকা
@@ -312,9 +312,11 @@ function final_satalment(id) {
             $("#last_working_date").html(d.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/[^0-9]/g, "-").replace(/^(..)-(..)-(....)$/, "$2-$1-$3"));
             $("#job_duration").html(calculateJobDuration(employeeData.emp_join_date, employeeData.resign_date));
             $("#gross_salary").html(employeeData.gross_sal);
+            $("#com_gross_salary").html(employeeData.com_gross_sal);
             $("#basic_salary").html(employeeData.basic_sal);
             $("#ot_rate").html(employeeData.ot_rate);   
             $("#hidden_gross_salary").val(employeeData.gross_sal);
+            $("#hidden_com_gross_salary").val(employeeData.com_gross_sal);
             $("#hidden_basic_salary").val(employeeData.basic_sal);
             $("#hidden_ot_rate").val(employeeData.ot_rate); 
             $("#resign_pay_day").val(0); 
@@ -414,8 +416,8 @@ function third_r(){
     var extra_payoff=$('#earn_leave_day').val();
     var ette=Number(extra_payoff)/18;
     var extra_payoff=ette.toFixed(2);
-    var gross_salary=Number($('#gross_salary').html());
-    var har=gross_salary/30;
+    var com_gross_salary=Number($('#com_gross_salary').html());
+    var har=com_gross_salary/30;
     var har=har.toFixed(2);
     var pay=har*extra_payoff;
     var pay=pay.toFixed(2);
@@ -473,21 +475,23 @@ function mot_total() {
 
 $('#save_button').on('click', function() {
     var formData = {
-        'form_id'               : $("#form_id").val(),
-        'emp_id'                : $("#card_no").html(),
-        'gross_salary'          : $("#gross_salary").html(),
-        'basic_salary'          : $("#basic_salary").html(),
-        'ot_rate'               : $("#ot_rate").html(),
-        'hidden_gross_salary'   : $("#hidden_gross_salary").val(),
-        'hidden_basic_salary'   : $("#hidden_basic_salary").val(),
-        'hidden_ot_rate'        : $("#hidden_ot_rate").val(),
-        'resign_pay_day'        : $("#resign_pay_day").val(),
-        'extra_payoff'          : $("#extra_payoff").val(),
-        'earn_leave_day'        : $("#earn_leave_day").val(),
-        'another_deposit'       : $("#another_deposit").val(),
-        'notice_deduct'         : $("#notice_deduct").val(),
-        'advanced_salary'       : $("#advanced_salary").val(),
-        'service_benifit'       : $("#service_benifit").val(),
+        'form_id'                : $("#form_id").val(),
+        'emp_id'                 : $("#card_no").html(),
+        'gross_salary'           : $("#gross_salary").html(),
+        'com_gross_salary'       : $("#com_gross_salary").html(),
+        'basic_salary'           : $("#basic_salary").html(),
+        'ot_rate'                : $("#ot_rate").html(),
+        'hidden_gross_salary'    : $("#hidden_gross_salary").val(),
+        'hidden_com_gross_salary': $("#hidden_com_gross_salary").val(),
+        'hidden_basic_salary'    : $("#hidden_basic_salary").val(),
+        'hidden_ot_rate'         : $("#hidden_ot_rate").val(),
+        'resign_pay_day'         : $("#resign_pay_day").val(),
+        'extra_payoff'           : $("#extra_payoff").val(),
+        'earn_leave_day'         : $("#earn_leave_day").val(),
+        'another_deposit'        : $("#another_deposit").val(),
+        'notice_deduct'          : $("#notice_deduct").val(),
+        'advanced_salary'        : $("#advanced_salary").val(),
+        'service_benifit'        : $("#service_benifit").val(),
     };
     $.ajax({
         url: "<?php echo base_url('entry_system_con/add_final_satalment'); ?>",
@@ -572,19 +576,19 @@ function get_data(offset=0) {
                 var lid = ''
 
                 if (element.status == 1) {
-                    <?php if(in_array(116,$acl)) { ?>
+                    <?php if(in_array(132,$acl)) { ?>
                     lid+= `<li><a class="btn btn-sm" onclick="report(${element.emp_id}, 1)">Satalement Acc</a></li>`
                     <?php } ?>
-                    <?php if(in_array(117,$acl)) { ?>
+                    <?php if(in_array(133,$acl)) { ?>
                          lid+= `<li><a class="btn btn-sm" onclick="report(${element.emp_id}, 2)">Final Satalement 7pm </a></li>`
                     <?php } ?>
-                    <?php if(in_array(118,$acl)) { ?>
+                    <?php if(in_array(134,$acl)) { ?>
                      lid+= `<li><a class="btn btn-sm" onclick="report(${element.emp_id}, 3)">Final Satalement 9pm</a></li>`
                     <?php } ?>
-                    <?php if(in_array(119,$acl)) { ?>
+                    <?php if(in_array(135,$acl)) { ?>
                      lid+= `<li><a class="btn btn-sm" onclick="report(${element.emp_id}, 4)">Satalement 12am</a></li>`
                     <?php } ?>
-                    <?php if(in_array(120,$acl)) { ?>
+                    <?php if(in_array(136,$acl)) { ?>
                      lid+= `<li><a class="btn btn-sm" onclick="report(${element.emp_id}, 5)">Satalement(W/H)</a></li>`
                     <?php } ?>
                 }else{

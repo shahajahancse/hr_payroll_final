@@ -43,6 +43,7 @@
 		<th class="text-center unicode-to-bijoy">NID/Birth Ceertificate</th>
 		<th class="text-center unicode-to-bijoy">Date of Birth</th>
 		<th class="text-center unicode-to-bijoy">Mobile</th>
+		<th class="text-center unicode-to-bijoy">Account</th>
 		<th class="text-center unicode-to-bijoy">Present Address</th>
 		<th class="text-center unicode-to-bijoy">Permanent Address</th>
 		<th class="text-center unicode-to-bijoy">Gender</th>
@@ -68,6 +69,7 @@
 			<td class="text-center unicode-to-bijoy"><?php echo $row->nid_dob_id?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo date('d/m/Y',strtotime($row->emp_dob))?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo $row->personal_mobile?></td>
+			<td class="text-center unicode-to-bijoy"><?php echo $row->bank_bkash_no?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo $row->pre_village.",".$row->pre_post_name_en.",".$row->pre_upa_name_en.",".$row->pre_dis_name_en?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo $row->per_village.",".$row->per_post_name_en.",".$row->per_upa_name_en.",".$row->per_dis_name_en?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo $row->gender?></td>

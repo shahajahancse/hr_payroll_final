@@ -1,9 +1,7 @@
 <?php
 class Festival_bonus_model extends CI_Model{
 	
-	
-	function __construct()
-	{
+	function __construct(){
 		parent::__construct();
 		
 		/* Standard Libraries */
@@ -11,14 +9,11 @@ class Festival_bonus_model extends CI_Model{
 		$this->load->model('common_model');
 	}
 	
-	function festival_bonus_process($emp_ids, $date, $process_check)
-	{
+	function festival_bonus_process($emp_ids, $date, $process_check){
 		$unit_id = $this->session->userdata('data')->unit_name;
 		$start_date = date("Y-m-01", strtotime($date));
 		$salary_month = date("Y-m", strtotime($date));
-		
 		$this->db->where_in("emp_id",$emp_ids);
-		// $this->db->where("unit_id",$unit_id);
 		$this->db->order_by("emp_id");
 		$query = $this->db->get("pr_emp_com_info");
 		
@@ -28,8 +23,8 @@ class Festival_bonus_model extends CI_Model{
 			$serial = 1;
 			$data = array();
 			$data_com 	= array();
-			foreach($query->result() as $rows)
-			{
+			foreach($query->result() as $rows){
+				// dd($rows);
 				set_time_limit(0) ;
 				ini_set("memory_limit","512M");
 
@@ -39,7 +34,7 @@ class Festival_bonus_model extends CI_Model{
 				$emp_type 		= $rows->emp_type; 
 				$doj 			= $rows->emp_join_date;
 				$gross_sal 		= $rows->gross_sal;
-				$gross_sal_com 	= $rows->com_gross_sal;
+				$com_gross_sal	= $rows->com_gross_sal;
 				$per_info = $this->db->where("emp_id",$emp_id)->get('pr_emp_per_info')->row();
 				
 				$salary_process_eligibility = $this->salary_process_eligibility($emp_id, $start_date);
@@ -48,38 +43,34 @@ class Festival_bonus_model extends CI_Model{
 					//=========================  FOR INCREMENT AND PROMOTION =====================
 					//============================================================================
 					$where = "trim(substr(effective_month,1,7)) = '$salary_month'";
-					$this->db->select("new_salary");
+					$this->db->select("new_salary,new_com_salary");
 					$this->db->where("new_emp_id", $emp_id);
 					$this->db->where($where);
 					$inc_prom_entry1 = $this->db->get("pr_incre_prom_pun");
 
-					if($inc_prom_entry1->num_rows() > 0 )
-					{
-						foreach($inc_prom_entry1->result() as $row)
-						{
-							$gross_sal 	= $row->new_salary;
+					if($inc_prom_entry1->num_rows() > 0 ){
+						foreach($inc_prom_entry1->result() as $row){
+							$gross_sal 	   = $row->new_salary;
+							$com_gross_sal = $row->new_com_salary;
 						}
-					}
-					else
-					{
+					}else{
 						$where = "trim(substr(effective_month,1,7)) > '$salary_month'";
-						$this->db->select("prev_salary");
+						$this->db->select("prev_salary,prev_com_salary");
 						$this->db->where("new_emp_id",$emp_id);
 						$this->db->where($where);
 						$this->db->limit(1);
 						$inc_prom_entry2 = $this->db->get("pr_incre_prom_pun");
-						if($inc_prom_entry2->num_rows() > 0 )
-						{
-							foreach($inc_prom_entry2->result() as $row)
-							{
+						if($inc_prom_entry2->num_rows() > 0 ){
+							foreach($inc_prom_entry2->result() as $row){
+								$com_gross_sal  = $row->prev_com_salary;
 								$gross_sal 		= $row->prev_salary;
 							}
 						}
-						else
-						{
+						else{
 							echo "";
 						}
 					}
+					// dd($com_gross_sal);
 					//=============================== END INCREMENT AND PROMOTION ======================
 					$data["emp_id"] 		= $emp_id;
 					$data["unit_id"] 		= $rows->unit_id;
@@ -98,6 +89,15 @@ class Festival_bonus_model extends CI_Model{
 					$data["food_allow"] 	= $salary_structure['food_allow'];
 					$data["trans_allow"] 	= $salary_structure['trans_allow'];
 					$data["gross_sal"] 		= $gross_sal;
+
+					$com_salary_structure 	= $this->common_model->salary_structure($com_gross_sal);
+					$com_basic_sal 			= $com_salary_structure['basic_sal'];
+					$data["basic_sal_com"] 	= $com_basic_sal;
+					$data["house_r_com"] 	= $com_salary_structure['house_rent'];
+					$data["com_gross_sal"] 	= $com_gross_sal;
+
+					// dd($data);
+
 					//===========================END GENERAL INFORMATION==================================
 			
 					$join_month = trim(substr($doj,0,7));
@@ -110,42 +110,46 @@ class Festival_bonus_model extends CI_Model{
 					$rule = $this->get_bonus_rule($effective_date,$service_days,$unit_id, $emp_type);
 					if(!empty($rule))
 					{
-						$bonus = $this->get_festival_bonus($rule,$gross_sal,$basic_sal,$per_info);	
-					}
-					else
-					{
+						$bonus     = $this->get_festival_bonus($rule,$gross_sal,$basic_sal,$per_info);	
+						$com_bonus = $this->get_festival_bonus($rule,$com_gross_sal,$com_basic_sal,$per_info);	
+					}else{
 						continue;
 					}
+
+					// dd($service_days);
+					if($rule->fraction == 1){
+						$month = floor($service_days/30);
+						$bonus = ceil(($bonus/12)*$month);
+						$com_bonus = ceil(($com_bonus/12)*$month);
+					}
+					// dd($com_bonus);
+
 
 					$data["service_length"] 	= $service_days;
 					$data["bonus_rule_id"] 		= $rule->id;
 					$data["bonus_amount"] 		= $bonus;
+					$data["com_bonus_ammount"] 	= $com_bonus;
 					$data["effective_month"] 	= $start_date;
-					// dd($data);
 
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
 					$this->db->where("effective_month", $start_date);
 					$query = $this->db->get("pr_festival_bonus_sheet");
-					if($query->num_rows() > 0 )
-					{
+					if($query->num_rows() > 0 ){
 						$this->db->where("emp_id", $rows->emp_id);
 						$this->db->where("effective_month", $start_date);
 						$this->db->update("pr_festival_bonus_sheet",$data);
-					}
-					else
-					{
+					}else{
 						$this->db->insert("pr_festival_bonus_sheet",$data);
 					}
-
 				}
 			}
 			return "Process completed successfully";		
 		}
 	}
 
-	function get_festival_bonus($rule,$gross_sal,$basic_sal,$per_info)
-	{
+	function get_festival_bonus($rule,$gross_sal,$basic_sal,$per_info){
+		// dd($per_info->religion);
 		if ($per_info->religion == 'Islam') {
 			$religion = 1;
 		} else if ($per_info->religion == 'Hindu') {
@@ -157,11 +161,14 @@ class Festival_bonus_model extends CI_Model{
 		} else {
 			$religion = 1;
 		}
-
+		
+		// dd($rule);
 		$check = false;
-		if (!empty($rule->religion_id) && $religion == $rule->religion_id) {
+		if (!empty($rule->religion_id) && $religion == $rule->religion_id || $rule->religion_id == 0) {
 			$check = true;
 		}
+
+		// dd($check);
 		if ($check == true) {
 			if ($rule->bonus_amount == 'Gross') {
 				$amt = ($rule->bonus_percent * $gross_sal) / 100;
@@ -174,26 +181,26 @@ class Festival_bonus_model extends CI_Model{
 		return $amt;
 	}
 
-	function get_bonus_rule($salary_month, $service_days, $unit_id, $emp_type)
-	{      
+	function get_bonus_rule($salary_month, $service_days, $unit_id, $emp_type){      
+		// dd($service_days);
 		$this->db->where("unit_id",$unit_id);
-		$this->db->where("emp_type",$emp_type);
+		$this->db->where("emp_type",0);
 		$this->db->where("bonus_first_month <=",$service_days);
 		$this->db->where("bonus_second_month >=",$service_days);
 		$this->db->where("effective_date",$salary_month);
 		$this->db->order_by("bonus_first_month","DESC");
 		$query = $this->db->get("pr_bonus_rules");
 		$row = $query->row();
+		// dd($row);
+		// dd($this->db->last_query());
 		return $row;
 	}
-	function get_service_month($second_date, $first_date)
-	{
+	function get_service_month($second_date, $first_date){
 		$days = (new DateTime($second_date))->diff(new DateTime($first_date))->days + 1;
 		return $days;
 	}
 
-	function get_bonus_effective_date($salary_month)
-	{
+	function get_bonus_effective_date($salary_month){
 		$this->db->select('effective_date');
 		$this->db->like('effective_date',$salary_month);
 		$query = $this->db->get('pr_bonus_rules');
@@ -206,25 +213,17 @@ class Festival_bonus_model extends CI_Model{
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-	function get_festival_bonus_rule($service_month,$unit_id,$emp_type)
-	{
+	function get_festival_bonus_rule($service_month,$unit_id,$emp_type){
 		// echo $service_month;
 		// echo $emp_type;
-		if($emp_type== "2")
+		if($emp_type== "1")
 		{
 			$emp_type = "Worker";
 		}
-		else{
+		elseif($emp_type== "2"){
 			$emp_type = "Staff";
+		}else{
+			$emp_type = "All";
 		}
 		
 		$data = array();

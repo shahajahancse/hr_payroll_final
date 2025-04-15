@@ -121,6 +121,23 @@
         </style>
 
         <div class="row nav_head">
+            <div class="col-lg-4">
+                <span style="font-size: 16px;">Employee Status: <span id="emp_status"></span></span>
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-8">
+                <div class="input-group" style="display:flex; gap: 14px">
+                    <span style="font-size: 16px !important;white-space: nowrap; width: 300px !important; line-height: 35px;"><?= 'Last Working Date: '; ?> <span id='emp_lpd'> </span></span>
+                    <span class="input-group-btn">
+                        <input class="btn btn-info" onclick='check_emp_status()' type="button" value='Check Status' />
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div>
+
+
+        <br><br>
+
+        <div class="row nav_head">
             <div class="col-lg-3">
                 <span style="font-size: 20px;"><?= 'Left / Resign'; ?></span>
             </div><!-- /.col-lg-6 -->
@@ -411,6 +428,74 @@
       }
     })
   }
+
+
+
+function check_emp_status() {
+    var checkboxes = document.getElementsByName('emp_id[]');
+    var sql = get_checked_value(checkboxes);
+    var selectedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+    if (sql == '') {
+      alert('Please select employee Id');
+      $("#loader").hide();
+      return false;
+    }
+    if (selectedCount > 1) {
+      alert('Please select only one employee Id');
+      $("#loader").hide();
+      return false;
+    }
+
+    var unit_id = document.getElementById('unit_id').value;
+    if (unit_id == '') {
+      alert('Please select Unit');
+      $("#loader").hide();
+      return false;
+    }
+
+    $("#loader").show();
+    $.ajax({
+      type: "POST",
+      url: hostname + "entry_system_con/check_emp_status",
+      data: {
+        sql: sql,
+        unit_id: unit_id,
+      },
+    success: function(data) {
+        $("#loader").hide();
+        if (data != '') {
+          var response = JSON.parse(data);
+        //   cosole.log(response);
+          var statusText = '';
+          switch(response.emp_cat_id) {
+              case '1':
+                  statusText = '<span style="color: green;"><b>Regular</b></span>';
+                  break;
+              case '2':
+                  statusText = '<span style="color: red;"><b>Left</b></span>';
+                  break;
+              case '3':
+                  statusText = '<span style="color: orange;"><b>Resign</b></span>';
+                  break;
+              case '5':
+                  statusText = '<span style="color: blue;"><b>Transfer</b></span>';
+                  break;
+              default:
+                  statusText = 'Unknown';
+          }
+          $('#emp_status').html(statusText);
+          var date = new Date(response.shift_log_date);
+          var options = { year: 'numeric', month: 'long', day: 'numeric' };
+          var formattedDate = date.toLocaleDateString('en-GB', options);
+          $('#emp_lpd').text(formattedDate);
+        } else {
+          showMessage('error', 'Something Wrong!!!');
+        }
+    },
+      error: function () {
+        $("#loader").hide();
+        showMessage('error', 'Something Wrong!!!');
+      }
+    })
+  }
 </script>
-
-

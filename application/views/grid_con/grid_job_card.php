@@ -87,15 +87,6 @@
 						echo "</td>";
 
 					echo "</tr>";
-
-					// echo "<tr>";
-					// 	echo "<td >";
-					// 	echo "<strong>Dept :</strong>";
-					// 	echo "</td>";
-						// echo "<td >";
-						// echo  $this->db->select('shift_name')->where('unit_id',$value->unit_id)->where('schedule_id',$value->emp_shift)->get('pr_emp_shift')->row()->shift_name;;
-						// echo "</td>";
-					// echo "</tr>";
 					echo "<table>";
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
 					// dd($emp_data);
@@ -111,7 +102,8 @@
 							<th>Extra OT Hour</th>
 							<th>Total OT Hour</th>
 							<th>Remarks</th>
-						</tr>";
+							</tr>";
+
 					foreach ($emp_data['emp_data'] as $key => $row) {
 						// dd($row);
 						$extra_ot_hour = 0;

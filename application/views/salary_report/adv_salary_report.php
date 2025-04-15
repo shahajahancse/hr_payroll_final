@@ -114,7 +114,7 @@
                 </div>
             </div>
             <!-- status -->
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
                 <div class="form-group" style="margin-bottom: 10px !important;">
                     <label class="control-label">Status </label>
@@ -127,11 +127,20 @@
                     </select>
                 </div>
             </div>
+            <div class="col-md-3">
+                <!-- < ?php $categorys = $this->db->get('pr_emp_com_info')->result(); ?> -->
+                <div class="form-group" style="margin-bottom: 10px !important;">
+                    <label class="control-label">Emp Type</label>
+                    <select name="emp_type" id="emp_type" class="form-control input-sm" onChange="grid_emp_list()">
+                        <option value="">All</option>
+                        <option value="1">Worker</option>
+                        <option value="2">Staff</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <br>
-        <div id="loader" align="center" style="margin:0 auto; overflow:hidden; display:none; margin-top:5px;">
-            <img src="<?php echo base_url('images/ajax-loader.gif'); ?>" />
-        </div>
+
 
         <style>
             .tab-pane  {
@@ -141,6 +150,10 @@
             }
         </style>
         <!-- Report are -->
+        <div id="loader" align="center" style="margin:0 auto;position:absolute;padding: 0px 260px;
+    margin: -76px auto !important; overflow:hidden; z-index:999999;display:none; margin-top:5px;">
+            <img src="<?php echo base_url('loader.gif'); ?>" />
+        </div>
         <div class="row tablebox" style="margin-bottom: 15px;">
             <div class='multitab-section'>
                 <ul class="nav nav-tabs" id="myTabs">
@@ -149,23 +162,23 @@
                 <div class="tab-content">
                     <!-- salary report  -->
                     <div class="tab-pane fade in active" id="daily">
-                        <?php if(in_array(87,$acl)) { ?>
-                        <button class="btn input-sm sbtn" onclick="grid_festival_bonus()">Festival Bonus</button>
+                        <?php if(in_array(206,$acl)) { ?>
+                        <button class="btn input-sm sbtn" onclick="grid_festival_bonus()">Festival Bonus Actual</button>
                         <?php } ?>
-                        <?php if(in_array(88,$acl)) { ?>
+                        <?php if(in_array(207,$acl)) { ?>
                         <button class="btn input-sm sbtn" onclick="grid_festival_bonus_summary()">Festival Bonus Summary</button>
                         <?php } ?>
-                        <?php if(in_array(89,$acl)) { ?>
-                        <button class="btn input-sm sbtn" onclick="grid_festival_bonus_summary_sec_wise()">Festival Bonus Summary(Sec)</button>
+                        <?php if(in_array(208,$acl)) { ?>
+                        <button class="btn input-sm sbtn" onclick="grid_festival_bonus_buyer()">Festival Bonus</button>
                         <?php } ?>
-                        <?php if(in_array(90,$acl)) { ?>
+                        <?php if(in_array(209,$acl)) { ?>
                         <button class="btn input-sm sbtn" onclick="advance_salary_report()">Advance Salary Sheet</button>
                         <?php } ?>
-                        <?php if(in_array(91,$acl)) { ?>
-                        <!-- <button class="btn input-sm sbtn" onclick="grid_comprative_salary_statement()">Comparative Statement</button> -->
-                        <?php } ?>
-                        <?php if(in_array(92,$acl)) { ?>
+                        <?php if(in_array(210,$acl)) { ?>
                         <button class="btn input-sm sbtn" onclick="act_advance_salary_sheet()">Act. Adv. Sal. Sheet</button>
+                        <?php } ?>
+                        <?php if(in_array(211,$acl)) { ?>
+                        <!-- <button class="btn input-sm sbtn" onclick="grid_comprative_salary_statement()">Comparative Statement</button> -->
                         <?php } ?>
                     </div>
                     <!-- Others Benefit Report end -->
@@ -249,14 +262,14 @@
 
         var data = "unit_id=" + unit_id + "&emp_id=" + emp_id + "&salary_month=" + salary_month; 
         url =  hostname+"salary_report_con/advance_salary_report/";
-
+        document.getElementById('loader').style.display = 'block';
         ajaxRequest.open("POST", url, true);
         ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
         ajaxRequest.send(data);
         ajaxRequest.onreadystatechange = function(){
             if(ajaxRequest.readyState == 4){
+                document.getElementById('loader').style.display = 'none';
                 var resp = ajaxRequest.responseText;
-
                 advance_salary_sheet = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
                 advance_salary_sheet.document.write(resp);
             }
@@ -290,13 +303,16 @@
         var line = document.getElementById('line').value;
         var desig = document.getElementById('desig').value;
         var status = document.getElementById('status').value;
+        var emp_type = document.getElementById('emp_type').value;
 
         url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
         $.ajax({
             url: url,
             type: 'GET',
             data: {
-                "status": status
+                "status": status,
+                "emp_type": emp_type,
+
             },
             contentType: "application/json",
             dataType: "json",

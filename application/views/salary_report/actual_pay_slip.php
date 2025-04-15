@@ -90,7 +90,7 @@
                                     <td width="72">গ্রেড</td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ;font-size: 11px;">:
-                                            <?php echo $rows->gr_name;   ?>
+                                            <?php echo $rows->gr_name =='None'?'c«‡hvR¨ bq':$rows->gr_name;?> 
                                         </font>
                                     </td>
                                     <?php }?>
@@ -107,7 +107,7 @@
                                     <td width="72">গ্রেড</td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ;font-size: 11px;">:
-                                            <?php echo $rows->gr_name;   ?>
+                                            <?php echo $rows->gr_name =='None'?'c«‡hvR¨ bq':$rows->gr_name;?> 
                                         </font>
                                     </td>
                                     <?php }?>
@@ -406,7 +406,7 @@
                                     <td width="72">গ্রেড</td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ;font-size: 11px;">:
-                                            <?php echo $rows->gr_name;   ?>
+                                            <?php echo $rows->gr_name =='None'?'c«‡hvR¨ bq':$rows->gr_name;?> 
                                         </font>
                                     </td>
                                     <?php }?>
@@ -423,7 +423,7 @@
                                     <td width="72">গ্রেড</td>
                                     <td width="75">
                                         <font style="font-family: SutonnyMJ;font-size: 11px;">:
-                                            <?php echo $rows->gr_name;   ?>
+                                            <?php echo $rows->gr_name =='None'?'c«‡hvR¨ bq':$rows->gr_name;?> 
                                         </font>
                                     </td>
                                     <?php }?>

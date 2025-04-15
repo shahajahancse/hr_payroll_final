@@ -43,6 +43,7 @@
 		<th class="text-center unicode-to-bijoy">মাতার নাম</th>
 		<th class="text-center unicode-to-bijoy">স্বামী/স্ত্রীর নাম</th>
 		<th class="text-center unicode-to-bijoy">ফোন নং</th>
+		<th class="text-center unicode-to-bijoy">ব্যাংক নম্বর</th>
 		<th class="text-center unicode-to-bijoy">বর্তমান ঠিকানা</th>
 		<th class="text-center unicode-to-bijoy">স্থায়ী ঠিকানা</th>
 		<th class="text-center unicode-to-bijoy">লিঙ্গ</th>
@@ -78,9 +79,10 @@
 			<td class="text-center unicode-to-bijoy"><?php echo $row->mother_name?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo $row->spouse_name?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo $row->personal_mobile?></td>
+			<td class="text-center unicode-to-bijoy"><?php echo $row->bank_bkash_no?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo $row->pre_village_bn.",".$row->pre_post_name_bn.",".$row->pre_upa_name_bn.",".$row->pre_dis_name_bn?></td>
 			<td class="text-center unicode-to-bijoy"><?php echo $row->per_village_bn.",".$row->per_post_name_bn.",".$row->per_upa_name_bn.",".$row->per_dis_name_bn?></td>
-			<td class="text-center unicode-to-bijoy"><?php echo $row->gender=="Male" ? "cyiæl" : "মহিলা"?></td>
+			<td class="text-center unicode-to-bijoy"><?php echo $row->gender=="Male" ? "cyiæl" : "নারী"?></td>
 			<td class="text-center "><?php echo $row->blood == 'None'?'-' : $row->blood ?></td>
 			<td class="text-center unicode-to-bijoy" style="height:35px;width:77px"></td>
 		</tr>

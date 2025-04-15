@@ -108,11 +108,11 @@
 			<?php
 
 			if($status ==2){
-				$per_page=19;
+				$per_page=22;
 			}else{
-				$per_page=26;
+				$per_page=29;
 			}
-				
+				// dd($per_page);
 			
 			
 			foreach ($values as $key => $row) {?> 
@@ -140,14 +140,14 @@
 				<div style="font-family:SutonnyMJ;font-size:16px;border-top:1px solid black;width:fit-content">cÖ¯‘ZKvixi ¯^vÿi</div>
 				<div> 
 					<p style="font-family:SutonnyMJ;font-size:18px;margin-top: 0px !important;border-top:1px solid black;width:fit-content;">Aby‡gv`bKvixi ¯^vÿi</p>
-					<span style="font-family:SutonnyMJ;font-size:18px;text-align: center;">(gvbem¤ú` wefvM)</span>
-					<br>
+					<span style="font-family:SutonnyMJ;font-size:18px;text-align: center;margin-top: -18px;display: block;">(gvbem¤ú` wefvM)</span>
+					<!-- <br> -->
 					<?php if ($status == 2) {?>
 						<span class="unicode-to-bijoy"></span>
 					<?php }?>
 				</div>
 			</div>
-			<br><br>
+			<!-- <br><br> -->
 			<div style="page-break-after:always"></div>
 			<!-- heading  -->
     <?php if($status != 2){?>
@@ -242,14 +242,14 @@
 		<div style="font-family:SutonnyMJ;font-size:16px;border-top:1px solid black;width:fit-content">cÖ¯‘ZKvixi ¯^vÿi</div>
 		<div> 
 		<p style="font-family:SutonnyMJ;font-size:18px;border-top:1px solid black;margin-top: 0px !important;width:fit-content">Aby‡gv`bKvixi ¯^vÿi</p>
-			<span style="font-family:SutonnyMJ;font-size:18px;">(gvbem¤ú` wefvM)</span>
-			<br>
+			<span style="font-family:SutonnyMJ;font-size:18px;margin-top: -18px;display: block;">(gvbem¤ú` wefvM)</span>
+			<!-- <br> -->
 			<?php if ($status == 2) {?>
 				<span style="font-size:18px;" class="unicode-to-bijoy"></span>
 			<?php }?>
 		</div>
 	</div>
-	<br><br>
+	<!-- <br><br> -->
 </body>
 </html>
 <script src="<?=base_url()?>js/unicode_to_bijoy.js" type="text/javascript"></script>

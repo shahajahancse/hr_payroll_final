@@ -4,16 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>X
 		<?php
-			if($grid_status == 1)
-			{ echo 'Reguler Employee '; }
-			elseif($grid_status == 2)
-			{ echo 'New Employee '; }
-			elseif($grid_status == 3)
-			{ echo 'Left Employee '; }
-			elseif($grid_status == 4)
-			{ echo 'Resign Employee '; }
-			elseif($grid_status == 6)
-			{ echo 'Promoted Employee '; }
+	if($grid_status == 1)
+	{ echo 'Reguler Employee '; }
+	elseif($grid_status == 2)
+	{ echo 'Left Employee '; }
+	elseif($grid_status == 3)
+	{ echo 'Resign Employee '; }
+
 		?> Monthly EOT Sheet of
 		<?php
 			$date = $salary_month;
@@ -108,17 +105,13 @@
 						<div style="text-align:center; position:relative;padding-left:10px;width:50%; overflow:hidden; float:left; display:block;">
 							<?php
 								$this->load->view("head_english");
-
 								if($grid_status == 1)
 								{ echo 'Reguler Employee '; }
 								elseif($grid_status == 2)
-								{ echo 'New Employee '; }
-								elseif($grid_status == 3)
 								{ echo 'Left Employee '; }
-								elseif($grid_status == 4)
+								elseif($grid_status == 3)
 								{ echo 'Resign Employee '; }
-								elseif($grid_status == 6)
-								{ echo 'Promoted Employee '; }
+
 								echo '<span style="font-weight:bold;">';
 							?>
 							Monthly EOT Sheet of
@@ -256,24 +249,25 @@
 				$ot_rate    = round(($values[$k]->basic_sal * 2  / 208), 2);
 
 				echo "<td>";
-				echo $ot_data->ot;
+				echo $values[$k]->ot_hour;
+				// echo $ot_data->ot;
 				echo "</td>";
 
 				echo "<td>";
 				echo $ot_data->actual_eot_12am;
 				echo "</td>";
 				
-				$total_ot_eot_hour	= $ot_data->ot + $ot_data->actual_eot_12am;
+				$total_ot_eot_hour	= $values[$k]->ot_hour + $ot_data->actual_eot_12am;
 
 				echo "<td>";
 				echo $total_ot_eot_hour;
 				echo "</td>";
 
-				$total_ot_per_page = $total_ot_per_page + $ot_data->ot;
+				$total_ot_per_page = $total_ot_per_page + $values[$k]->ot_hour;
 				$total_eot_per_page = $total_eot_per_page + $ot_data->actual_eot_12am;
 				$total_ot_eot_per_page = $total_ot_eot_per_page + $total_ot_eot_hour;
 
-				$grand_total_ot_hour = $grand_total_ot_hour + $ot_data->ot;
+				$grand_total_ot_hour = $grand_total_ot_hour + $values[$k]->ot_hour;
 				$grand_total_eot_hour = $grand_total_eot_hour + $ot_data->actual_eot_12am;
 				$grand_total_ot_eot_hour = $grand_total_ot_eot_hour + $total_ot_eot_hour;
 
@@ -283,7 +277,7 @@
 				echo "</td>";
 
 				echo "<td>";
-				echo $eot_amount = ceil($ot_data->actual_eot_12am * $ot_rate);
+				echo $eot_amount = round($ot_data->actual_eot_12am * $ot_rate);
 				echo "</td>";
 
 				$total_ot_eot_amount_per_page = $total_ot_eot_amount_per_page + $eot_amount;
@@ -298,7 +292,7 @@
 			} ?>
 
 			<tr>
-				<td align="center" colspan="6"><strong>Total Per Page</strong></td>
+				<td align="center" colspan="7"><strong>Total Per Page</strong></td>
 				<td align="right"><strong><?php echo number_format($total_gross_sal_per_page);?></strong></td>
 				<td align="right"><strong><?php echo number_format($total_ot_per_page);?></strong></td>
 				<td align="right"><strong><?php echo number_format($total_eot_per_page);?></strong></td>
@@ -310,7 +304,7 @@
 
 			<?php if($counter == $page) {?>
 				<tr height="10">
-					<td colspan="6" align="center"><strong>Grand Total Amount Tk</strong></td>
+					<td colspan="7" align="center"><strong>Grand Total Amount Tk</strong></td>
 					<td align="right"><strong><?php echo number_format($gross_sal);?></strong></td>
 					<td align="right"><strong><?php echo number_format($grand_total_ot_hour);?></strong></td>
 					<td align="right"><strong><?php echo number_format($grand_total_eot_hour);?></strong></td>

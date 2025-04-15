@@ -32,6 +32,15 @@ echo $date_format;
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/print.css" media="print" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" />
 <style>
+
+@media print{
+	@page{
+		size: a4 landscape;
+	}
+	table{
+		width: 100% !important;
+	}
+}
 .bottom_txt_design
 {
 	 border-top:1px solid;
@@ -92,7 +101,7 @@ for ($counter = 1; $counter <= $page; $counter ++)
 {
 ?>
 
-<table height="auto"  class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:12px; width:13.6in; , SolaimanLipi;">
+<table height="auto"  class="sal" border="1" cellspacing="0" cellpadding="0" style="font-size:12px;  , SolaimanLipi;">
 
 <tr height="75px">
 

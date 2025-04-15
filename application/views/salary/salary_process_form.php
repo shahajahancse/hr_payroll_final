@@ -134,7 +134,7 @@
                     <input type="month" class="form-control" id="process_month" >
                     <span class="input-group-btn">
                         <input class="btn btn-primary" style="<?php  if(in_array(131,$acl)) {echo '';} else { echo 'margin: 0px 3px !important;"';}?>" onclick='salary_process()' type="button" value='Process' />
-                        <input class="btn btn-success" onclick='salary_process_block()' type="button" value='Final Process' style="margin: 0px 3px !important; <?php  if(in_array(131,$acl)) {echo '';} else { echo 'display:none;"';}?>" />
+                        <input class="btn btn-danger" onclick='salary_process_block()' type="button" value='Process Lock' style="margin: 0px 3px !important; <?php  if(in_array(131,$acl)) {echo '';} else { echo 'display:none;"';}?>" />
                         <input class="btn btn-danger" style="<?php if(in_array(133,$acl)) {echo '';} else { echo 'display:none;';}?>" onclick='salary_block_delete()' type="button" value='Final Delete' />
                     </span>
                 </div><!-- /input-group -->

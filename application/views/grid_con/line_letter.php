@@ -73,19 +73,19 @@
             </div>
         <div class="d-flex">
             <div class="col-md-6">m~Ît <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/GBPAviwW/<?php echo date('m/Y')?>/ <?php echo $row->letter_id?></div>
-            <div class="col-md-6 text-right">ZvwiLt  <?php echo date('d/m/Y')?> Bs</div>
+            <div class="col-md-6 text-right" style="padding-right: 126px;">ZvwiLt</div>
         </div>
         <div>
             <h3 class="text-center" style="border-bottom: 2px solid black;width: 124px;margin: 0 auto;line-height: 18px;">AeMwZ cÎ</h3>
         </div>
         <div class="ml-3" style="line-height: 10px;">
-            <p class="mt-3">cÖwZ,</p>
-            <p> bvgt   <?php echo "<span style='font-family:SutonnyMJ;font-size:14px'>".$row->name_bn?>        </p>
-            <p> c`ext  <?php echo "<span style='font-family:SutonnyMJ;font-size:14px'>".$row->new_desig_name?> </p>
-            <p> KvWt   <?php echo $row->emp_id?>         </p>
-            <p> ‡mKkbt <?php echo "<span style='font-family:arial;font-size:14px'>".$row->new_sec_name?>   </p>
-            <p> jvBbt  <?php echo "<span style='font-family:arial;font-size:14px'>".$row->new_line_name?>  </p>
-            <p> ‡hvM`vbt 
+            <p class="mt-3 unicode-to-bijoy">cÖwZ,</p>
+            <p class='unicode-to-bijoy'> bvgt   <?php echo "<span style='font-family:SutonnyMJ;font-size:14px'>".$row->name_bn?></p>
+            <p class='unicode-to-bijoy'> c`ext  <?php echo "<span style='font-family:SutonnyMJ;font-size:14px'>".$row->new_desig_name?></p>
+            <p class='unicode-to-bijoy'> KvWt   <?php echo $row->emp_id?>         </p>
+            <p class='unicode-to-bijoy'> c~‡e©i ‡mKkbt <?php echo "<span class='unicode-to-bijoy' style='font-family:arial;font-size:14px'>".$row->prev_sec_name?></p>
+            <p class='unicode-to-bijoy'> c~‡e©i jvBbt  <?php echo "<span class='unicode-to-bijoy' style='font-family:arial;font-size:14px'>".$row->prev_line_name?></p>
+            <p class='unicode-to-bijoy'> ‡hvM`vbt 
                 <span style="font-family:SutonnyMJ;font-size:19px">
                     <?php echo date('m/Y',strtotime($row->effective_month))?>
                 </span>Bs
@@ -94,7 +94,7 @@
         <br>
         <h5 class="ml-3"><b>welq: jvBb cwieZ©b cªm‡½|</b></h5><br>
         <div class="ml-3">
-            <p class="text-justify">
+            <p class="text-justify unicode-to-bijoy">
                 <span><?php echo $row->gender == "Male"? 'Rbve':'Rbvev'?>,</span><br>
                 Avcbvi AeMwZi Rb¨ Rvbv‡bv hv‡”Q ‡h, ‡Kv¤úvbx KZ©…c¶ KviLvbvi Kv‡Ri myweav‡_© Ges Avcbvi me© m¤§wZµ‡g Avcbv‡K <?php echo $row->prev_sec_name?> Gi <?php echo $row->prev_desig_name?> Gi  ‡_‡K <?php echo $row->new_line_name?>  G cwieZ©b Kivi wm×vš— M«nb Kiv nj| hv AvMvgx <?php echo date('d/m/Y',strtotime($row->effective_month))?> Bs ZvwiL n‡Z Kvh©Ki Kiv n‡e| Avcbvi hveZxq ‡eZb, fvZv I Ab¨vb¨ cvIbvw` c~‡e©i b¨vq envj _vK‡e|<br>
                 AZGe, ‡Kv¤úvbx KZ©…c¶ Avkv Ki‡Q ‡h, Avcwb Avcbvi eZ©gvb ‡mKk‡bi wba©vwiZ jvB‡b Avcbvi Dci Awc©Z `vwqZ¡ I KZ©…e¨ cvj‡b AviI m‡PZb n‡eb Ges ‡Kv¤úvbxi D‡ËviËi mg…w×‡Z AviI mnvqK f~wgKv ivL‡eb|
@@ -115,7 +115,11 @@
             </div>
         </div>
     </div>
+    <div style="page-break-after: always"></div>
     <?php }?>
+    
+    <script src="<?=base_url()?>js/unicode_to_bijoy.js" type="text/javascript"></script>
+    <?php echo "<script>applyUnicodeToBijoy()</script>"?>
 </body>
 </html>
 <?php exit(); ?>

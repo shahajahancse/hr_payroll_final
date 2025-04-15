@@ -932,5 +932,48 @@ class Import extends CI_Controller {
 
 		echo "Success";exit;
 	}
+
+
+	function incs(){
+		$datas = $this->db
+					->select('new_salary,new_com_salary,prev_emp_id,effective_month')
+					->where('effective_month LIKE','%2024%')
+					->where('prev_emp_id LIKE','50%')
+					->order_by('effective_month','DESC')
+					->group_by('prev_emp_id')
+					->get('pr_incre_prom_pun')->result();
+		// echo "<pre>";print_r($datas);exit;
+	
+		foreach($datas as $row){
+			$this->db->where('emp_id', $row->prev_emp_id)->update('pr_emp_com_info', 
+				[
+					'gross_sal'     => $row->new_salary,
+					'com_gross_sal' => $row->new_com_salary,
+				]);
+		}
+
+		echo "Update successfully done!";
+	}
+
+
+
+	function ____bkash_no(){
+		date_default_timezone_set('Asia/Dhaka');
+		$file_name = "import/bkash.txt";
+		if (file_exists($file_name)){
+			$lines = file($file_name);
+			foreach(array_values($lines)  as $line) {
+				list($id, $amt) = preg_split('/\s+/',$line);
+				$data = array(
+					'emp_id' 	=> $id,
+					'bank_bkash_no'	=> $amt,
+				);
+				// dd($data);
+				$this->db->where('emp_id', $id);
+				$this->db->update('pr_emp_per_info', $data);
+			}
+			echo "Upload successfully done";
+		}
+	}
 }
 ?>

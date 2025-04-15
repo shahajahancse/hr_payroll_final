@@ -59,7 +59,6 @@
     <div align="center"  style=" margin:0 auto;  overflow:hidden; font-family: 'Times New Roman', Times, serif;">
         <span style="font-size:12px; font-weight:bold;"> Daily
             <?php
-
 			//    dd($values);
 				if ($daily_status == 2)
 				{
@@ -105,7 +104,6 @@
 				if($employee['out_time'] == '00:00:00' && $employee['in_time'] == '00:00:00' && in_array($daily_status,array(7,8))) {
 					continue;
 				}
-				
 				$sectionName = $employee['sec_name_en'];
 				$groupedData[$sectionName][] = $employee;
 			} ?>
@@ -160,12 +158,9 @@
                 <?php }?>
             </tr>
 
-            <?php 	foreach ($employees as $key=>$employee) {
-				
+            <?php  	foreach ($employees as $key=>$employee) {
 				$emp_num_rows = $this->Grid_model->attendance_check_for_absent($employee['emp_id'],$date);
-				//dd($emp_num_rows);
-				
-				?>
+			?>
             <tr>
                 <td style="text-align:center"><?php echo $i++?></td>
                 <td style="text-align:center;padding:0 4px"><?php echo $employee['emp_id']?></td>
@@ -173,13 +168,11 @@
                 <td style="text-align:center"><?php echo $employee['desig_name']?></td>
                 <td style="text-align:center;padding:0 4px"><?php echo $employee['line_name_en']?></td>
                 <td style="text-align:center;"><?php echo $employee['shift_name']?></td>
-
 				<?php if($daily_status == 4){?>
 					<td style="text-align:center; padding:0 4px">
 						<?php echo date('h:i:s A',strtotime($employee['in_time']))?>
 					</td>
                 <?php }?>
-
                 <?php if($daily_status==1 || $daily_status== 5 || $daily_status==6 || $daily_status==7 || $daily_status==8){?>
 					<td style="text-align:center; padding:0 4px">
 						<?php 
@@ -187,18 +180,38 @@
 						?>
 					</td>
 					<td style="text-align:center; padding:0 4px">
-					<?php
-					//dd($daily_status);
-					if ($daily_status==5 &&  $employee['ot']>=2) {
-						//dd($employee['ot']);
-						$text= ($employee['out_time'] !='00:00:00')? date('7:i:s A',strtotime($employee['out_time'])) : "";
-					}else{
-						$text= ($employee['out_time'] !='00:00:00')? date('h:i:s A',strtotime($employee['out_time'])) : "";
-					}
+					<?php 
+						$out_time = ($employee['out_time'] != '00:00:00') ? date('h:i:s A', strtotime($employee['out_time'])) : "";
+						$times  = explode(':', $employee['out_time']);
+						$hour   = $times[0];
+						$minute = $times[1];
+						$second = $times[2];
+						// dd($hour);
+						if ($hour >18 && ($minute > 14 && $minute < 50)) {
+							$minute = array_sum(str_split($minute));
+						}
+						if($minute >=50 && $minute <= 60){
+							$minute = array_sum(str_split($minute));
+							$hour = $hour+1;
+						}
+						// Format minute with leading zero if necessary
+						$formattedMinute = str_pad($minute, 2, '0', STR_PAD_LEFT);
+						if ($_SESSION['data']->user_mode == 7) {
+							$h = ($hour== 5 || $hour == 6|| $hour == 7|| $hour == 17 || $hour == 18|| $hour == 19)  ? $hour: 19;
+							$formattedTime = "$h:$formattedMinute:$second";
+							echo date('h:i:s A', strtotime($formattedTime));
+						}elseif ($_SESSION['data']->user_mode == 9) {
+							$h = $hour < 21 ? $hour : 21; 
+							$formattedTime = "$h:$formattedMinute:$second";
+							echo date('h:i:s A', strtotime($formattedTime));
+						} elseif ($_SESSION['data']->user_mode == 12) {
+							$h = $hour < 23 ? $hour : 12; 
+							$formattedTime = "$h:$formattedMinute:$second";
+							echo date('h:i:s A', strtotime($formattedTime));
+						} else {
+							echo $out_time;
+						}
 					?>
-
-
-						<?php echo $text ?>
 					</td>
                 <?php }?>
 
@@ -212,7 +225,7 @@
                 <!-- <td style="text-align:center">
                     < ?php echo ($employee['eot']+ $employee['modify_eot']+$employee['deduction_hour'])?></td> -->
                 <td style="text-align:center">
-                    <?php echo ($employee['ot']+$employee['eot']+ $employee['modify_eot']+$employee['deduction_hour'])?>
+                    <?php echo ($employee['ot']+$employee['eot'])?>
                 </td>
                 <?php }?>
 
@@ -220,22 +233,18 @@
 					<td style="text-align:center">
 						<?php
 							if($daily_status == 3){
-								echo  ( $employee['leave_type'] =='cl'? 'Casual Leave':
-									( $employee['leave_type'] =='sl'? 'Sick Leave':
-									( $employee['leave_type'] =='ml'? 'Maternity Leave':
-									( $employee['leave_type'] =='el'? 'Earn Leave': 'Leave'))));
+								echo ( $employee['leave_type'] == 'cl' ? 'Casual Leave':
+									 ( $employee['leave_type'] == 'sl' ? 'Sick Leave':
+									 ( $employee['leave_type'] == 'ml' ? 'Maternity Leave':
+									 ( $employee['leave_type'] == 'el' ? 'Earn Leave': 'Leave'))));
 							}else if($daily_status == 2){
 								echo  $emp_num_rows;
 							}
-							// else{
-								// echo  $daily_status != 4 ? $employee['present_status'] : "P(Late)";
-							// }
 						?>
 					</td>
 				<?php } else { ?>
 					<td style="padding-top:30px;padding-left:80px"> </td>
 				<?php } ?>
-
                 <?php if($daily_status == 2){?>
 					<td style="padding:0 4px"><?php echo $employee['personal_mobile']?></td>
 					<td style="padding-top:30px;padding-left:80px"></td>
@@ -244,20 +253,15 @@
                 	<td style="padding-top:30px;padding-left:80px"> </td>
                 <?php }?>
             </tr>
-            <?php } }
-				
-			
-			?>
+            <?php } }?>
             <tr style="border:none;font-size:14px;white-space:nowrap">
                 <td colspan="10" style="padding:0 4px">
                     <?php echo  "<style='float:left;'>Total : " . $i-1?>
                 </td>
             </tr>
-
         </table>
 	</div>
 	<br><br>
-
 	</div>
 	<?php if($i-1 == 0){ ?>
 	<script>
@@ -266,6 +270,5 @@
 	</script>
 	<?php }?>
 </body>
-
 </html>
 <?php exit(); ?>

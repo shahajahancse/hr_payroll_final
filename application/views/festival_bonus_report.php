@@ -2,13 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>উৎসব ভাতা</title>
+	<title>Festival Bonus</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/print.css" media="print" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/SingleRow.css" />
 </head>
 
 <body>
 	<?php 
+		// dd($value);
 		$row_count=count($value);
 		if($row_count >15)
 		{
@@ -37,70 +38,28 @@
 						<div style="width:100%; font-family:Arial, Helvetica, sans-serif;">
 							<div style="text-align:left; position:relative;padding-left:10px;width:20%; float:left; font-weight:bold;">
 								<table> 
-									<?php 
-										$date = date('d-m-Y');
-										// $section_name = isset($value[$k]->sec_name_bn) ? $value[$k]->sec_name_bn : "";
-										// echo "<span style='white-space:nowrap;'>সেকশন : ".$section_name."</span><br>";
-									?>
+									<?php $date = date('d-m-Y');?>
 								</table>
 							</div>
 
 							<div style="text-align:center; position:relative; overflow:hidden; display:block;">
 								<?php $this->load->view("head_english"); ?>
-									<!-- 
-										// if($grid_status == 1)
-										// { echo 'Reguler Employee '; }
-										// elseif($grid_status == 2)
-										// { echo 'New Employee '; }
-										// elseif($grid_status == 3)
-										// { echo 'Left Employee '; }
-										// elseif($grid_status == 4)
-										// { echo 'Resign Employee '; }
-										// elseif($grid_status == 6)
-										// { echo 'Promoted Employee '; }
-										// echo '<span style="font-weight:bold;">';
-										উৎসব ভাতা 
-									-->
 								Festival Bonus Sheet for The Month of 
 								<?php echo '</span>';
 									$date = $salary_month;
 									$date_format = date("F-Y", strtotime($date));
-									// $date_formate2 = $this->common_model->covert_english_date_to_bangla_date_with_day_name($date_format);
 									$this->db->where('id', $value[0]->bonus_rule_id);
 									$bbnn = $this->db->get('pr_bonus_rules')->row();
+									// dd($bbnn);
 									echo $date_format .' ( '. $bbnn->festival .' )';
 									echo '</span>';
 								?>
 							</div>
-
 							<div style="text-align:left; position:relative;padding-left:10px;width:20%; overflow:hidden; float:right; display:block; font-weight:bold">
-								<?php
-									// echo '<span style="font-weight:bold;font-family:SutonnyMj; SolaimanLipi;">';
-									// echo "পেজ নম্বর # $counter এর $page<br>";
-									// echo "প্রদাণের তারিখ : ";
-									// echo '</span>';
-								?>
 							</div>
 						</div>
 					</td>
 				</tr>
-				<!-- heading part -->
-				<!-- <tr height="20px">
-					<td  height="20px" style='white-space:nowrap;'><div align="center"><strong>ক্রমিক নং</strong></div></td>
-					<td style='white-space:nowrap;'><div align="center"><strong>কার্ড নং</strong></div></td>
-					<td style='white-space:nowrap;'><div align="center"><strong>কর্মচারীর নাম</strong></div></td>
-					<td ><div align="center"><strong>পদবী</strong></div></td>
-					<td ><div align="center"><strong>লাইন</strong></div></td>
-					<td style='white-space:nowrap;'><div align="center"><strong>যোগদানের তারিখ</strong></div></td>
-					<td style='white-space:nowrap;'><div align="center"><strong>গ্রেড</strong></div></td>
-					<td style='white-space:nowrap;'> <div align="center"><strong>মূল বেতন</strong></div></td>
-					<td style='white-space:nowrap;'><div align="center"><strong>মোট বেতন</strong></div></td>
-					<td style='white-space:nowrap;'><div align="center"><strong>কর্ম মাস</strong></div></td>
-					<td style='white-space:nowrap;'><div align="center"><strong>ভাতা%</strong></div></td>
-					<td style='white-space:nowrap;'><div align="center"><strong>উৎসব ভাতা</strong></div></td> 
-					<td><div align="center"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;স্বাক্ষর&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></div></td>
-				</tr> -->
-
 				<!-- report title -->
 				<tr height="20px">
 					<td  height="20px" style='padding:3px;'><strong>Sl. No.</strong</td>
@@ -115,19 +74,14 @@
 					<td style='padding:3px;'><strong>Payable Amount</strong</td>
 					<td style='padding:3px;'><strong>Bkash Number</strong</td>
 				</tr>
-				<!-- report title -->
 
 				<?php	
-					if($counter == $page)
-					{
+					if($counter == $page){
 						$modulus = ($row_count-1) % 15;
 						$per_page_row=$modulus;
-					}
-					else
-					{
+					}else{
 						$per_page_row=14;
 					}
-					
 					$total_basic_sal = 0;
 					$total_house_rent = 0;
 					$total_medical_all = 0;
@@ -136,8 +90,7 @@
 					$total_gross_sal = 0;
 					$total_net_pays		= 0;
 					$total_festival_bonus = 0;
-					for($p=0; $p<=$per_page_row;$p++)
-					{
+					for($p=0; $p<=$per_page_row;$p++){
 						echo "<tr height='50' style='padding:3px;'>";
 						echo "<td >";
 						echo $k+1;
@@ -160,24 +113,27 @@
 						echo "</td>";
 								
 						echo "<td style='padding:3px;'>";
-						echo date("d-F-Y", strtotime($value[$k]->emp_join_date));
+						echo date("d-m-Y", strtotime($value[$k]->emp_join_date));
 						echo "</td>";
 
 						echo "<td style='padding:3px;'>";
-						echo date("d-F-Y", strtotime($bbnn->effective_date));
+						echo date("d-m-Y", strtotime($bbnn->effective_date));
 						echo "</td>";
 
 						echo "<td style='padding:3px;'>";
-							$sh = $value[$k]->service_length;
-							$ffdate = date("Y-m-d", strtotime("-$sh day", strtotime($bbnn->effective_date)));
-							$fdate = new DateTime($ffdate);
-							$sdate = new DateTime($value[$k]->emp_join_date);
 
-							$interval = $fdate->diff($sdate);
-							$years = $interval->y;
-							$months = $interval->m;
-							
-							echo "$years Year $months Month";
+						$emp_join_date    = $value[$k]->emp_join_date;
+						$effective_date   = $bbnn->effective_date;
+						$joinDate         = new DateTime($emp_join_date);
+						$effectiveDate    = new DateTime($effective_date);
+						$diff             = $effectiveDate->diff($joinDate);
+						$days             = $diff->d;
+						if($days >= 30){
+							$diff->m = $diff->m + 1;
+							$days = $days - 30;
+						}
+						echo "{$diff->y} years, {$diff->m} months, {$days} days";
+
 						echo "</td>";
 
 						echo "<td style='padding:3px;'>";
@@ -185,7 +141,7 @@
 						echo "</td>";
 
 						echo "<td style='padding:3px; text-align:right'>";
-						print_r($value[$k]->bonus_amount ? $value[$k]->bonus_amount : 0);
+						print_r((int)$value[$k]->bonus_amount);
 						echo "</td>";
 
 						echo "<td style='padding:3px;'>";
@@ -200,23 +156,13 @@
 					}
 				?>
 				<tr>
-					<td align="center" colspan="8"><strong>Every Page Total</strong></td>
-					
-					<td align="right" style='padding:3px;'><strong><?php echo $english_format_number = number_format($total_basic_sal);?></strong></td>
-					
-					<td align="right" style='padding:3px;'><strong><?php echo $english_format_number = number_format($total_gross_sal);?></strong></td>
-					
+					<td align="center" colspan="9"><strong>Every Page Total</strong></td>
 					<td align="right" style='padding:3px;'><strong><?php echo $english_format_number = number_format($total_festival_bonus);?></strong></td>
 				</tr>
 
 				<?php if($counter == $page) {?>
 					<tr height="10">
-						<td align="center" colspan="8" style='padding:3px;'><strong>Total</strong></td>
-						
-						<td align="right" style='padding:3px;'><strong><?php echo $english_format_number = number_format($basic_sal);?></strong></td>
-						
-						<td align="right" style='padding:3px;'><strong><?php echo $english_format_number = number_format($gross_sal);?></strong></td>
-						
+						<td align="center" colspan="9" style='padding:3px;'><strong>Total</strong></td>
 						<td align="right" style='padding:3px;'><strong><?php echo $english_format_number = number_format($net_pay);?></strong></td>
 					</tr>
 				<?php } ?>

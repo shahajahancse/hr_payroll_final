@@ -137,66 +137,66 @@ class Entry_system_con extends CI_Controller
         $emp_ids       = explode(',', $emp_id);
 		$num_of_days   = date("t", strtotime($loan_month));
         $st = false;
+        if (!empty($from_date) && !empty($to_date)) {
+            $from = new DateTime($from_date);
+            $to = new DateTime($to_date);
+            $difference = $from->diff($to)->days + 1;
+        }
+        $pay_day       = $difference;
         foreach ($emp_ids as $row) {
-            // attendance status check with out ml leave
             $info = $this->db->where('emp_id', $row)->get('pr_emp_com_info')->row();
+            // dd($info);
+            if($info->gross_sal == 0){
+                continue;
+            }
             $attendances = $this->attendance_check($row, $from_date, $to_date);
-            $attend  =  $attendances->attend;
-            $absent  =  $attendances->absent;
-            $weekend =  $attendances->weekend;
-            $holiday =  $attendances->holiday;
+            $attend      =  $attendances->attend;
+            $absent      =  $attendances->absent;
+            $weekend     =  $attendances->weekend;
+            $holiday     =  $attendances->holiday;
             $total_leave =  $attendances->total_leave;
-
-            // pay days calculation
-            $pay_days = $attend + $weekend + $holiday + $total_leave;
-            // pay days calculation
-
-            // attendance bonus calculation
-            $att_check = $attend + $weekend  + $holiday;	
-            $att_bouns = 0;
-            if($att_check >= $num_of_days && $absent == 0 && $attn_bonus == 1)
-            {
+            $pay_days    = $attend + $weekend + $holiday + $total_leave;
+            $att_check   = $attend + $weekend  + $holiday;	
+            $att_bouns   = 0;
+            if($att_check >= $num_of_days && $absent == 0 && $attn_bonus == 1){
                 $allowances = $this->get_emp_allowances($info->emp_desi_id);
                 $att_bouns = isset($allowances->attn_bonus) ? $allowances->attn_bonus : 0;
             }
-
-			$ss = $this->common_model->salary_structure($info->gross_sal);
+			$ss             = $this->common_model->salary_structure($info->gross_sal);
+            // dd($ss);
             $basic_sal 		= $ss['basic_sal'];
             $ot_rate 		= $ss['ot_rate'];
-
-            // over time calculation
             $ot_amount = 0;
             if (!empty($attendances->ot) && $info->ot_entitle != 1 && $ot == 1) {
                 $ot_rate = $info->ot_rate;
                 $ot_amount = $attendances->ot * $ot_rate;
             }
-
-            // salary calculation
             if ($salary_type == 1) {
                 $salary = $info->gross_sal;
             } else {
                 $salary = $basic_sal;
             }
             $pay = round(($salary / $num_of_days) * $pay_days) + $ot_amount + $att_bouns;
-
             $data = array(
                 'emp_id'        => $row,
-                'loan_amount'   => $pay,
-                'pay_amt'       => $pay,
+                'loan_amount'   => floor($pay / 100) * 100,
+                'pay_amt'       => floor($pay / 100) * 100,
                 'loan_date'     => date('Y-m-d'),
                 'effect_month'  => $effect_month,
                 'loan_month'    => $loan_month,
                 'from_date'     => $from_date,
                 'to_date'       => $to_date,
                 'unit_id'       => $unit_id,
+                'ot'            => $ot,
+                'attn_bonus'    => $attn_bonus,
                 'loan_status'   => 1,
                 'type'          => 2,  // 2 advance salary 
+                'pay_day'       => $pay_day,
                 'created_by'    => $this->data['user_data']->id,
             );
-
             $r = $this->db->where('emp_id', $row)->where('loan_month', $loan_month)->where('type', 2)->where('loan_status', 1)->get('pr_advance_loan')->row();
             if (!empty($r)) {
-                $this->db->where('emp_id', $id)->where('loan_month', $loan_month)->where('status', 1);
+                $this->db->where('emp_id', $emp_id)->where('loan_month', $loan_month)->where('loan_status', 1);
                 if ($this->db->update('pr_advance_loan', $data)) {
                     $st = true;
                 }
@@ -220,11 +220,11 @@ class Entry_system_con extends CI_Controller
                 COALESCE(SUM(CASE WHEN present_status = 'W' THEN 1 ELSE 0 END ), 0) AS weekend,
                 COALESCE(SUM(CASE WHEN present_status = 'H' THEN 1 ELSE 0 END ), 0) AS holiday,
                 COALESCE(SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END ), 0) AS total_leave,
-                COALESCE(SUM(CASE WHEN late_status   = '1' THEN 1 ELSE 0 END ), 0) AS late_status,
-                COALESCE(SUM(CASE WHEN holiday_allo = '1' THEN 1 ELSE 0 END ), 0) AS holiday_allo,
-                COALESCE(SUM(CASE WHEN weekly_allo  = '1' THEN 1 ELSE 0 END ), 0) AS weekly_allo,
-                COALESCE(SUM(CASE WHEN night_allo   = '1' THEN 1 ELSE 0 END ), 0) AS night_allo,
-                COALESCE(SUM(CASE WHEN tiffin_allo  = '1' THEN 1 ELSE 0 END ), 0) AS tiffin_allo,
+                COALESCE(SUM(CASE WHEN late_status    = '1' THEN 1 ELSE 0 END ), 0) AS late_status,
+                COALESCE(SUM(CASE WHEN holiday_allo   = '1' THEN 1 ELSE 0 END ), 0) AS holiday_allo,
+                COALESCE(SUM(CASE WHEN weekly_allo    = '1' THEN 1 ELSE 0 END ), 0) AS weekly_allo,
+                COALESCE(SUM(CASE WHEN night_allo     = '1' THEN 1 ELSE 0 END ), 0) AS night_allo,
+                COALESCE(SUM(CASE WHEN tiffin_allo    = '1' THEN 1 ELSE 0 END ), 0) AS tiffin_allo,
                 COALESCE(SUM(ot), 0) AS ot,
                 COALESCE(SUM(eot), 0) AS eot,
                 COALESCE(SUM(ot_eot_4pm), 0) AS ot_eot_4pm,
@@ -554,18 +554,31 @@ class Entry_system_con extends CI_Controller
                 $schedule  = $this->Attn_process_model->get_emp_schedule($emp_shift->schedule_id);
                 $out_end   = $schedule[0]["out_end"];
                 // dd($schedule);
+                // dd($time."=====". $out_end);
+
+                if($schedule[0]['sh_type'] == 'Worker_HGL'){
+                    if (strtotime($time) >= strtotime($out_end) && strtotime($time) <= strtotime('23:59:59')) {
+                      $date = $first_date;
+                    }
+                }
+
+                // if($schedule[0]['sh_type'] == 'Day_shift(Loader)'){
+                //     if (strtotime($time) >= strtotime($out_end) && strtotime($time) <= strtotime('23:59:59')) {
+                //       $date = $first_date;
+                //     }
+                // }
 
                 if (strtotime($time) <= strtotime($out_end)) {
                     $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
                 } else {
                     $date = $first_date;
                 }
-                // dd($date ." ".$time);
                 $data = array(
                     'date_time'       => $date ." ".$time,
                     'proxi_id'         => $proxi_id,
                     'device_id'         => 0,
                 );
+                // dd($data);
                 $mm = $this->insert_attn_process($data, $first_date, $unit_id, $rows->emp_id, $proxi_id);
             }
             $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
@@ -837,6 +850,10 @@ class Entry_system_con extends CI_Controller
 
         $this->db->where("shift_log_date BETWEEN '$first_date' and '$second_date' ")->where_in('emp_id', $emp_ids);
         if ($this->db->where('unit_id', $unit_id)->delete('pr_emp_shift_log')) {
+            $this->db->where_in('proxi_id', $emp_ids)
+                ->where('date_time >=', $first_date . ' 07:00:00')
+                ->where('date_time <=', $second_date . ' 23:59:59');
+            $this->db->delete('att_'.date('Y_m', strtotime($first_date)));
             echo 'success';
         } else {
             echo 'Record Not Deleted';
@@ -2096,6 +2113,8 @@ class Entry_system_con extends CI_Controller
         }
     }
 
+
+    
     public function save_maternity(){
         // dd($_POST);
         if ($this->chack_ability($this->input->post('sql')) != true) {
@@ -3074,6 +3093,24 @@ class Entry_system_con extends CI_Controller
 
         return true;
 
+    }
+
+
+
+    public function check_emp_status(){
+        // dd($_POST);
+        $emp_id = $_POST['sql'];
+        $unit_id = $_POST['sql'];
+
+        $status = $this->db->select('emp_cat_id')->where('emp_id', $emp_id)->get('pr_emp_com_info')->row('emp_cat_id');
+        $this->db->select('shift_log_date');
+        $this->db->where('emp_id', $emp_id);
+        $this->db->where('present_status', 'P');
+        $this->db->order_by('shift_log_date', 'DESC');
+        $this->db->limit(1);
+        $date = $this->db->get('pr_emp_shift_log')->row('shift_log_date');
+        echo json_encode(['emp_cat_id' => $status,'shift_log_date'=> $date]);
+        // dd($staus);
     }
 
 

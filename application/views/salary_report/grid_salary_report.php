@@ -26,7 +26,6 @@
     <?php
         $this->load->model('common_model');
         $unit = $this->common_model->get_unit_id_name();
-
         $user_id = $this->session->userdata('data')->id;
         $acl = check_acl_list($user_id);
     ?>
@@ -168,77 +167,80 @@
                     <div class="tab-content">
                         <!-- salary report  -->
                         <div class="tab-pane fade in active" id="daily">
-                            <?php if(in_array(77,$acl)) { ?>
+                            <?php if(in_array(180,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="salary_sheet_com()">Salary Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(78,$acl)) { ?>
+                            <?php if(in_array(181,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="pay_slip_com()">Pay Slip</button>
                             <?php } ?>
-                            <?php if(in_array(79,$acl)) { ?>
+                            <?php if(in_array(182,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="salary_summary_com()">Salary Summary</button>
                             <?php } ?>
-                            <?php if(in_array(80,$acl)) { ?>
+                            <?php if(in_array(183,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="sec_sal_summary_com()">Sec Wise Salary Summary</button>
                             <?php } ?>
 
-                            <?php if(in_array(81,$acl)) { ?>
+                            <?php if(in_array(184,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_salary_sheet()">Actual Salary Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(82,$acl)) { ?>
+                            <?php if(in_array(185,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_pay_slip()">Actual Pay Slip </button>
                             <?php } ?>
-                            <?php if(in_array(83,$acl)) { ?>
+                            <?php if(in_array(186,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_salary_summary()">Actual Salary Summary</button>
                             <?php } ?>
-                            <?php if(in_array(84,$acl)) { ?>
+                            <?php if(in_array(187,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_sec_sal_summary()">Actual Sec Salary Summary</button>
                             <?php } ?>
 
-                            <?php if(in_array(85,$acl)) { ?>
+                            <?php if(in_array(188,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_salary_sheet_bank()">Actual Salary Bank</button>
                             <?php } ?>
-                            <?php if(in_array(97,$acl)) { ?>
+                            <?php if(in_array(189,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_eot_sheet()">Actual EOT Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(98,$acl)) { ?>
+                            <?php if(in_array(190,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_eot_summary()">Actual EOT Summary</button>
                             <?php } ?>
-                            <?php if(in_array(86,$acl)) { ?>
+                            <?php if(in_array(191,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="actual_eot_sheet_bank()">Actual EOT Bank</button>
                             <?php } ?>
 
-                            <?php if(in_array(99,$acl)) { ?>
+                            <?php if(in_array(192,$acl)) { ?>
                                 <button class="btn input-sm sbtn" onclick="eot_sheet_com_9()">EOT Sheet.</button>
                             <?php } ?>
-                            <?php if(in_array(100,$acl)) { ?>
+                            <?php if(in_array(193,$acl)) { ?>
                                 <button class="btn input-sm sbtn" onclick="eot_sheet_com_12()">EOT Sheet`</button>
                             <?php } ?>
-                            <?php if(in_array(101,$acl)) { ?>
+                            <?php if(in_array(194,$acl)) { ?>
                                 <button class="btn input-sm sbtn" onclick="eot_sheet_com_all()">EOT Sheet!</button>
                             <?php } ?>
-                            <?php if(in_array(102,$acl)) { ?>
+                            <?php if(in_array(195,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_monthly_stop_sheet()">Stop Salary Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(121,$acl)) { ?>
+                            <?php if(in_array(196,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_salary_sheet_with_eot_bank()">Mobile Banking Report</button>
                             <?php } ?>
-                            <?php if(in_array(122,$acl)) { ?>
-                            <button class="btn input-sm sbtn" onclick="grid_monthly_allowance_sheet()">Monthly Night Bill Report</button>
+                            <?php if(in_array(197,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_monthly_allowance_sheet(1)">Monthly Night Bill Report</button>
                             <?php } ?>
-                            <?php if(in_array(123,$acl)) { ?>
+                            <?php if(in_array(216,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_monthly_allowance_sheet(2)">Monthly Holiday Bill Report</button>
+                            <?php } ?>
+                            <?php if(in_array(198,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_salary_sheet_with_eot_bank()">Monthly Weekend/Holiday Report</button>
                             <?php } ?>
                         </div>
                         <!-- salary report end  -->
 
                         <div class="tab-pane fade" id="earn_leave">
-                            <?php if(in_array(93,$acl)) { ?>
+                            <?php if(in_array(199,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_earn_leave_payment_buyer()">Earn Leave Payment Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(94,$acl)) { ?>
+                            <?php if(in_array(200,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_earn_leave_general_info()">Actual Earn Leave Payment Sheet</button>
                             <?php } ?>
-                            <?php if(in_array(95,$acl)) { ?>
+                            <?php if(in_array(201,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_earn_leave_summery()">Earn Leave Summery Sheet</button>
                             <?php } ?>
                         </div>

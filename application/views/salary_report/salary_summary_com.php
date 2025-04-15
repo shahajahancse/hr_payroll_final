@@ -61,13 +61,10 @@ $this->load->view("head_english");
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
 	elseif($grid_status == 2)
-	{ echo 'New Employee '; }
-	elseif($grid_status == 3)
 	{ echo 'Left Employee '; }
-	elseif($grid_status == 4)
+	elseif($grid_status == 3)
 	{ echo 'Resign Employee '; }
-	elseif($grid_status == 6)
-	{ echo 'Promoted Employee '; }
+
 	?>
 	Monthly Salary Summary of 
 	<?php 
@@ -123,6 +120,9 @@ $this->load->view("head_english");
 		$count = count($values["sec_name_en"]);
 		for($i=0; $i < $count; $i++)
 		{
+			if (($values["emp_cash"][$i] + $values["emp_bank"][$i]) == 0) {
+				continue; // Skip this iteration if total employees are 0
+			}
 			echo "<tr>";
 			
 			echo "<td  style='text-align:left; padding-left:5px;'>";
@@ -132,6 +132,7 @@ $this->load->view("head_english");
 			$total_emp = $values["emp_cash"][$i] + $values["emp_bank"][$i];
 			echo "<td align='center'>";
 			echo $total_emp;
+
 			echo "</td>";
 			$gt_mp = $gt_mp + $total_emp;
 			 
@@ -186,14 +187,17 @@ $this->load->view("head_english");
 			echo "</td>";
 			$gt_transport = $gt_transport + $total_trans_allow;
 	
-	$total_net_pay = $values["cash_sum_net_pay"][$i]+ $values["bank_sum_net_pay"][$i] ;							 	
-	$total_ot_amount = $values["cash_sum_ot_amount"][$i] + $values["bank_sum_ot_amount"][$i];
-	$total_attn_bonus = $values["cash_att_bonus"][$i] + $values["bank_att_bonus"][$i];
+			$total_net_pay = $values["cash_sum_net_pay"][$i]+ $values["bank_sum_net_pay"][$i] ;							 	
+			$total_ot_amount = $values["cash_sum_ot_amount"][$i] + $values["bank_sum_ot_amount"][$i];
+			$total_attn_bonus = $values["cash_att_bonus"][$i] + $values["bank_att_bonus"][$i];
+					
+			// $total_salary_amount = $total_net_pay - ($total_ot_amount + $total_attn_bonus); 
+			// $total_salary_amount = $total_net_pay + ($total_emp * 0) - ($total_ot_amount + $total_attn_bonus); 
+			$total_salary_amount =$total_gross_salary - $values['sub_total_cash_bank_deduction'][$i] ;
+
+
 			
-	// $total_salary_amount = $total_net_pay - ($total_ot_amount + $total_attn_bonus); 
-	$total_salary_amount = $total_net_pay + ($total_emp * 0) - ($total_ot_amount + $total_attn_bonus); 
-	//$gross_salary - $total_deduction + $value[$k]->stamp + $value[$k]->adv_deduct;
-			
+					
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_salary_amount);
 			echo "</td>";
@@ -220,7 +224,7 @@ $this->load->view("head_english");
 			
 			//CASH TOTAL NET WAGES
 			echo "<td align='right' style='padding-right:5px;'>";
-			echo number_format($values["cash_sum_net_pay"][$i] +$values["stam_deduct_cash"][$i]);
+			echo number_format($values["cash_sum_net_pay"][$i] +$values["stam_deduct_cash"][$i]+$total_attn_bonus+$total_ot_amount);
 			echo "</td>";
 			$gt_cash_salary = $gt_cash_salary + $values["cash_sum_net_pay"][$i]+$values["stam_deduct_cash"][$i];
 			
@@ -231,7 +235,7 @@ $this->load->view("head_english");
 			$gt_bank_salary = $gt_bank_salary + $values["bank_sum_net_pay"][$i] + $values["stam_deduct_bank"][$i];
 			
 			//CASH & BANK TOTAL NET WAGES
-			$total_net_pay_with_stamp = $values["cash_sum_net_pay"][$i]+ $values["bank_sum_net_pay"][$i] + $values["stam_deduct_cash"][$i] +$values["stam_deduct_bank"][$i];							 	
+			$total_net_pay_with_stamp = $values["cash_sum_net_pay"][$i]+ $values["bank_sum_net_pay"][$i] + $values["stam_deduct_cash"][$i] +$values["stam_deduct_bank"][$i]+$total_attn_bonus+$total_ot_amount;							 	
 
 			
 			echo "<td align='right' style='padding-right:5px;'>";
@@ -317,20 +321,5 @@ $this->load->view("head_english");
 			</td>
 		</tr>
 	</table>
-	<!-- <table width="100%" height="80px" border="0" align="center" style="margin-bottom:85px; font-family:Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold;">
-			<tr height="80%" >
-			<td colspan="28"></td>
-			</tr>
-			<tr height="20%">
-			<td  align="center" style="width:20%;"><dt class="bottom_txt_design" >Prepared By</dt></td>
-            <td align="center"  style="width:20%" ><dt class="bottom_txt_design" >Account Executive</dt></td>
-			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >HR Manager \ AGM</dt></td>
-			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >GM (HR,Admin & Comp.)</dt></td>
-            <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >General Manager (GM)</dt></td>
-            <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Director</dt></td>
-			</tr>
-			
-			</table> -->
-	
 </body>
 </html>

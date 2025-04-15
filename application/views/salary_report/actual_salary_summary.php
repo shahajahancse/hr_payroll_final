@@ -61,13 +61,10 @@ $this->load->view("head_english");
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
 	elseif($grid_status == 2)
-	{ echo 'New Employee '; }
-	elseif($grid_status == 3)
 	{ echo 'Left Employee '; }
-	elseif($grid_status == 4)
+	elseif($grid_status == 3)
 	{ echo 'Resign Employee '; }
-	elseif($grid_status == 6)
-	{ echo 'Promoted Employee '; }
+
 	?>
 	Monthly Salary Summary of 
 	<?php 
@@ -138,7 +135,7 @@ $this->load->view("head_english");
 			echo $row->line_name_en;
 			echo "</td>";
 			
-			$total_emp = $row->emp_cash; 
+			$total_emp = $row->emp_cash+$row->emp_bank; 
             // + $row->emp_bank;
 			echo "<td align='center'>";
 			echo $total_emp;
@@ -153,51 +150,44 @@ $this->load->view("head_english");
 			echo "<td align='center'>";
 			echo $row->emp_bank;
 			echo "</td>";
-			$gt_bank_mp = $gt_bank_mp ;
-            // + $row->emp_bank;
+			$gt_bank_mp = $gt_bank_mp + $row->emp_bank;
 			// $total_gross_salary = 0;			
-			$total_gross_salary = $row->cash_sum ;
-            // + $row->bank_sum;
+			$total_gross_salary = $row->cash_sum  + $row->bank_sum;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_gross_salary);
 			echo "</td>";
 			$gt_gross = $gt_gross + $total_gross_salary;
 			
 			//BASIC SALARY		
-			$total_basic_salary = $row->cash_sum_basic_sal ;
-            // + $row->bank_sum_basic_sal;			
+			$total_basic_salary = $row->cash_sum_basic_sal  + $row->bank_sum_basic_sal;			
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_basic_salary);
 			echo "</td>";
 			$gt_basic = $gt_basic + $total_basic_salary;
 			
 			//HOUSE RENT		
-			$total_house_rent = $row->cash_sum_house_r ;
-            // + $row->bank_sum_house_r;		
+			$total_house_rent = $row->cash_sum_house_r  + $row->bank_sum_house_r;		
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_house_rent);
 			echo "</td>";
 			$gt_house_r = $gt_house_r + $total_house_rent;
 			
 			//MEDICAL ALLOWANCE	
-			$total_medical_a = $row->cash_sum_medical_a ;
-            // + $row->bank_sum_medical_a;
+			$total_medical_a = $row->cash_sum_medical_a  + $row->bank_sum_medical_a;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_medical_a);
 			echo "</td>";
 			$gt_medical = $gt_medical + $total_medical_a;
 			
 			//FOOD ALLOWANCE	
-			$total_food_allow = $row->cash_sum_food_allow ;
-            // + $row->bank_sum_food_allow;
+			$total_food_allow = $row->cash_sum_food_allow + $row->bank_sum_food_allow;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_food_allow);
 			echo "</td>";
 			$gt_food = $gt_food + $total_food_allow;
 			
 			//TRANSPORT ALLOWANCE	
-			$total_trans_allow = $row->cash_sum_trans_allow ;
-            // + $row->bank_sum_trans_allow;
+			$total_trans_allow = $row->cash_sum_trans_allow  + $row->bank_sum_trans_allow;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_trans_allow);
 			echo "</td>";
@@ -217,8 +207,7 @@ $this->load->view("head_english");
 			$gt_salary_amt = $gt_salary_amt + $total_salary_amount;
 			
 			//TOTAL OT HOUR
-			$total_ot_hour = $row->cash_sum_ot_hour;
-            // + $row->bank_sum_ot_hour;
+			$total_ot_hour = $row->cash_sum_ot_hour + $row->bank_sum_ot_hour;
 			echo "<td align='right' style='padding-right:5px;'>";
 			echo number_format($total_ot_hour);
 			echo "</td>";

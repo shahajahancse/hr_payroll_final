@@ -8,6 +8,7 @@ class Earn_leave_con extends CI_Controller {
 		$this->load->model('Common_model');
 		set_time_limit(0);
 		ini_set("memory_limit","512M");
+
 		$this->load->model('acl_model');
 		$access_level = 7;
 		$acl = $this->acl_model->acl_check($access_level);

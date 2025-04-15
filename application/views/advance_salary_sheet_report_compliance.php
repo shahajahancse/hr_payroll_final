@@ -67,6 +67,8 @@ $k = 0;
 	 $grand_total_net_pay			= 0;
 	 $grand_total_holiday_allowance	= 0;
 	 $grand_total_net_wages			= 0;
+
+
 	 $grand_total_night_allowance	= 0;
 	 $grand_total_tax_deduct		= 0;
 	 $grand_total_wages_with_stamp	= 0;
@@ -475,9 +477,9 @@ echo "Payment Date : ";
 			</tr>
 			<tr height="20%">
 			<td  align="center" style="width:15%;"><dt class="bottom_txt_design" >Prepared By</dt></td>
-            <td align="center"  style="width:25%" ><dt class="bottom_txt_design" >Account Office / Executive</dt></td>
-			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >HR Manager</dt></td>
-            <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >General Manager (GM)</dt></td>
+            <td align="center"  style="width:25%" ><dt class="bottom_txt_design" >Accounts Executive</dt></td>
+			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Manager (HRD)</dt></td>
+            <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >GM (Projrct Head)</dt></td>
             <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Director</dt></td>
 			</tr>
 			

@@ -110,7 +110,7 @@
 		echo "</td>";
 
 		echo "<td   style='text-align:center;'>";
-		echo $values["gross_sal"][$k];
+		echo $values["com_gross_sal"][$k];
 		echo "</td>";
 
 		echo "<td  style='text-align:center; '>";

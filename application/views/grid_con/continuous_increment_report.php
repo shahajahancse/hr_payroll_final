@@ -35,18 +35,18 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 
 		$k = 0;
 
-		$grand_total_prev_salary = 0;
+		$grand_total_prev_com_salary = 0;
 		$grand_total_inc_amount = 0;
-		$grand_total_new_salary = 0;
+		$grand_total_new_com_salary = 0;
 		$section_id = $values["new_section_id"][0]; 
 		$section = $values["new_section"][0]; 
 		// dd($section_id .' = ' .$section);
 	?>
 	<?php for($counter = 1; $counter <= $page,$counter <= $page2; $counter ++)
 	{
-		$sub_total_prev_salary = 0;
+		$sub_total_prev_com_salary = 0;
 		$sub_total_inc_amount = 0;
-		$sub_total_new_salary = 0; 
+		$sub_total_new_com_salary = 0; 
 	?>
 
 		<table class="heading" align="center" height="auto" style="font-size:12px; width:750px;border:0px;">
@@ -128,16 +128,18 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 							<th>Effective Date</th>
 						</tr>
 					<?php } 
-
+					$emp_id = isset($values["ref_id"][$k]) ? $values["ref_id"][$k] : '';
 					// dd($values);
-
+					if($emp_id==''){
+						continue;
+					}
 					echo "<tr>";
 						echo "<td style='padding:5px;'>";
 						echo $s = $k+1;
 						echo "</td>";
 						
 						echo "<td style='background:; padding:5px;font-weight:bold;'> ";
-						$emp_id = isset($values["ref_id"][$k]) ? $values["ref_id"][$k] : '';
+						
 						echo $emp_id;
 						echo "</td>";
 						
@@ -162,26 +164,26 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 						echo "</td>";
 						
 						echo "<td style='text-align:right; padding:5px;' >";
-						echo (isset($values["prev_salary"][$k])) ? $values["prev_salary"][$k] : '';
+						echo (isset($values["prev_com_salary"][$k])) ? $values["prev_com_salary"][$k] : '';
 						echo "</td>";
 						
-						$inc_amount = (isset($values["new_salary"][$k]) && isset($values["prev_salary"][$k])) ? $values["new_salary"][$k] - $values["prev_salary"][$k] : 0;
+						$inc_amount = (isset($values["new_com_salary"][$k]) && isset($values["prev_com_salary"][$k])) ? $values["new_com_salary"][$k] - $values["prev_com_salary"][$k] : 0;
 						echo "<td style='text-align:right; padding:5px;' >";
 						echo $inc_amount;
 						echo "</td>";
 						
 						echo "<td style='text-align:right; padding:5px;' >";
-						echo (isset($values["new_salary"][$k])) ? $values["new_salary"][$k] : '';
+						echo (isset($values["new_com_salary"][$k])) ? $values["new_com_salary"][$k] : '';
 						echo "</td>";
 						
-						$sub_total_prev_salary += isset($values["prev_salary"][$k]) ? $values["prev_salary"][$k] : 0;
+						$sub_total_prev_com_salary += isset($values["prev_com_salary"][$k]) ? $values["prev_com_salary"][$k] : 0;
 						$sub_total_inc_amount = $sub_total_inc_amount + $inc_amount;
-						$sub_total_new_salary += isset($values["new_salary"][$k]) ? $values["new_salary"][$k] : 0;
+						$sub_total_new_com_salary += isset($values["new_com_salary"][$k]) ? $values["new_com_salary"][$k] : 0;
 						
-						$grand_total_prev_salary += isset($values["prev_salary"][$k]) ? $values["prev_salary"][$k] : 0;
+						$grand_total_prev_com_salary += isset($values["prev_com_salary"][$k]) ? $values["prev_com_salary"][$k] : 0;
 						$grand_total_inc_amount = $grand_total_inc_amount + $inc_amount;
-						$grand_total_new_salary += isset($values["new_salary"][$k]) ? $values["new_salary"][$k] : 0;
-						$grand_total_new_salary += (isset($values["new_salary"][$k]) ? $values["new_salary"][$k] : 0);
+						$grand_total_new_com_salary += isset($values["new_com_salary"][$k]) ? $values["new_com_salary"][$k] : 0;
+						$grand_total_new_com_salary += (isset($values["new_com_salary"][$k]) ? $values["new_com_salary"][$k] : 0);
 						
 					    $sStartDate = isset($values["effective_month"][$k]) ? date("d-M-Y", strtotime($values["effective_month"][$k])) : '';
 						
@@ -204,7 +206,7 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 				echo "</td>";
 				
 				echo "<td>";
-				echo $sub_total_prev_salary;
+				echo $sub_total_prev_com_salary;
 				echo "</td>";
 				
 				echo "<td>";
@@ -213,7 +215,7 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 				echo "</td>";
 				
 				echo "<td>";
-				echo $sub_total_new_salary;
+				echo $sub_total_new_com_salary;
 				echo "</td>";
 				
 				echo "<td>";
@@ -227,7 +229,7 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 					echo "</td>";
 					
 					echo "<td>";
-					echo $grand_total_prev_salary;
+					echo $grand_total_prev_com_salary;
 					echo "</td>";
 					
 					echo "<td>";
@@ -235,7 +237,7 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 					echo "</td>";
 					
 					echo "<td>";
-					echo $grand_total_new_salary;
+					echo $grand_total_new_com_salary;
 					echo "</td>";
 					
 					echo "<td>";

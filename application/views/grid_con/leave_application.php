@@ -108,7 +108,7 @@
                 <span style="display:flex">
                     <span style='display: flex;width: 50%;'>‡mKkb t 
                         <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width:82%;">
-                            <?php echo $values['emp_info']->sec_name_bn?>
+                            <?php echo $values['emp_info']->line_name_bn?>
                         </p>
                     </span>
                     <span style='display: flex;width: 50%;'>wefvM t 
