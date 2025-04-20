@@ -16,7 +16,7 @@ class Crud_model extends CI_Model{
         $this->db->join('pr_units','emp_depertment.unit_id = pr_units.unit_id', 'left');
 
         if ($unit_id!=0) {
-            $this->db->where('emp_depertment.unit_id',$unit_id); 
+            $this->db->where('emp_depertment.unit_id',$unit_id);
         }
 
         if (!empty($condition)) {
@@ -30,12 +30,12 @@ class Crud_model extends CI_Model{
     function get_post_office($limit, $start, $condition = 0)
     {
         $this->db->select('
-                SQL_CALC_FOUND_ROWS epo.*, 
-                ediv.name_bn as div_name_bn, 
-                ediv.name_en as div_name_en, 
-                edis.name_bn as dis_name_bn, 
-                edis.name_en as dis_name_en, 
-                eup.name_bn upa_name_bn, 
+                SQL_CALC_FOUND_ROWS epo.*,
+                ediv.name_bn as div_name_bn,
+                ediv.name_en as div_name_en,
+                edis.name_bn as dis_name_bn,
+                edis.name_en as dis_name_en,
+                eup.name_bn upa_name_bn,
                 eup.name_en upa_name_en', false
             );
         $this->db->from('emp_post_offices epo');
@@ -746,6 +746,7 @@ class Crud_model extends CI_Model{
         if ($unit_id != 0) {
             $this->db->where('pr_emp_shift_schedule.unit_id', $unit_id);
         }
+        $this->db->order_by('pr_emp_shift_schedule.id', 'desc');
         return $this->db->get()->result_array();
     }
 
@@ -784,7 +785,8 @@ class Crud_model extends CI_Model{
         $formArray['tiffin_break2'] = $this->input->post('tiffin_break2');
         $formArray['tiffin_minute2'] = $this->input->post('tiffin_minute2');
         $formArray['random_minute'] = $this->input->post('random_minute');
-
+        $formArray['of_day'] = json_encode($this->input->post('of_day'));
+        
         $this->db->where('id',$shiftscheduleId);
         $this->db->update('pr_emp_shift_schedule',$formArray);
     }
@@ -818,7 +820,7 @@ class Crud_model extends CI_Model{
         $this->db->join('pr_emp_shift_schedule','pr_emp_shift_schedule.id = pr_emp_shift.shift_duty');
 
         return $this->db->get()->result_array();
-        
+
     }
 
     function shiftmanagement_fetch(){
@@ -1054,7 +1056,7 @@ class Crud_model extends CI_Model{
 
 
 function weekend_infos(){
-    $this->db->select('attn_work_off.*, pr_units.unit_name'); 
+    $this->db->select('attn_work_off.*, pr_units.unit_name');
     $this->db->from('attn_work_off');
     $this->db->join('pr_units', 'pr_units.unit_id = attn_work_off.unit_id');
     return $this->db->get()->result_array();
@@ -1158,7 +1160,7 @@ function weekend_infos(){
             $this->db->like('pr_emp_per_info.name_en', $searchQuery);
         }
         $query = $this->db->get()->result_array();
-        
+
         return $query;
     }
 
@@ -1205,7 +1207,7 @@ function weekend_infos(){
 
       $this->db->where('emp_id', $emp_id);
       $this->db->delete('pr_emp_left_history');
-      
+
       return true;
     }
 

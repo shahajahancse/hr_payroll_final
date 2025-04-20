@@ -10,16 +10,17 @@
           vertical-align: middle !important;
 
     }
+
     .table td {
-    /* border-top: 1px solid #e8edf1; */
-    padding: 0px 3px !important;
-    font-size: 13px;
-    width: 100%;
-}
-table.dataTable thead th, table.dataTable thead td {
-    /* padding: 10px 18px; */
-    border-bottom: none;
-}
+        /* border-top: 1px solid #e8edf1; */
+        padding: 0px 3px !important;
+        font-size: 13px;
+        width: 100%;
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        /* padding: 10px 18px; */
+        border-bottom: none;
+    }
 </style>
 
 <div class="content">
@@ -89,6 +90,7 @@ table.dataTable thead th, table.dataTable thead td {
                         <th>Tiffin break 2</th>
                         <th>Tiffin minute 2</th>
                         <th>Random minute</th>
+                        <th>off Days</th>
                         <th style="width:80px !important">Edit</th>
                         <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(148,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
@@ -96,7 +98,8 @@ table.dataTable thead th, table.dataTable thead td {
                 <tbody>
                     <?php
                    // dd($pr_emp_shift_schedule);
-                        if(!empty($pr_emp_shift_schedule)){ $i=1; foreach($pr_emp_shift_schedule as $pr_emp_shift_schedules){  ?>
+                        if(!empty($pr_emp_shift_schedule)){ $i=1;
+                        foreach($pr_emp_shift_schedule as $pr_emp_shift_schedules){ ?>
                     <tr>
                         <td><?php echo $i++ ?></td>
                         <td style="white-space: nowrap;"><?php echo $pr_emp_shift_schedules['unit_name'] ?></td>
@@ -118,8 +121,13 @@ table.dataTable thead th, table.dataTable thead td {
                         <td><?php echo $pr_emp_shift_schedules['tiffin_break2'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['tiffin_minute2'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['random_minute'] ?></td>
+                        <?php if (!empty($pr_emp_shift_schedules['of_day'])) { ?>
+                            <?php $days = json_decode($pr_emp_shift_schedules['of_day']); ?>
+                            <td><?php echo implode(', ', $days); ?></td>
+                        <?php } else { ?>
+                            <td></td>
+                        <?php } ?>
 
-           
                         <td>
                             <a href="<?=base_url('setup_con/shiftschedule_edit').'/'.$pr_emp_shift_schedules["id"]?>"
                                  class="btn btn-primary input-sm" role="button">Edit</a>

@@ -1620,7 +1620,7 @@ class Setup_con extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('Crud_model');
         $data['shiftscheduleinfo'] = $this->Crud_model->shiftschedule_fetch();
-        
+
         $this->form_validation->set_rules('stype', 'shiftschedule Shift Type', 'trim|required');
         $this->form_validation->set_rules('instrt', 'shiftschedule In Start', 'trim|required');
         $this->form_validation->set_rules('intime', 'shiftschedule In Time', 'trim|required');
@@ -1632,7 +1632,6 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('otminute', 'shiftschedule Ot Minute', 'trim|required');
         $this->form_validation->set_rules('onehrottime', 'shiftschedule One Hour Ot Time', 'trim|required');
         $this->form_validation->set_rules('twohrottime', 'shiftschedule Two Hour Ot Time', 'trim|required');
-
         if ($this->form_validation->run() == false) {
             $this->data['title'] = 'Shift Schedule Add';
             $this->data['allUnit'] = $this->Crud_model->getallUnit();
@@ -1660,6 +1659,7 @@ class Setup_con extends CI_Controller
             $formArray['tiffin_break2'] = $this->input->post('tiffin_break2');
             $formArray['tiffin_minute2'] = $this->input->post('tiffin_minute2');
             $formArray['random_minute'] = $this->input->post('random_minute');
+            $formArray['of_day'] = json_encode($this->input->post('of_day'));
 
             $this->Crud_model->shiftschedule_add($formArray);
             $this->session->set_flashdata('success', 'Record add successfully!');
@@ -2235,7 +2235,7 @@ class Setup_con extends CI_Controller
                 // 'bonus_amount_fraction' => $this->input->post('bonus_amount_fraction'),
                 'bonus_percent' => $this->input->post('bonus_percent'),
                 'effective_date' => date('Y-m-d', strtotime($this->input->post('effective_date')))
-            );        
+            );
 
             $this->db->where('id', $bonus_id);
             if ($this->db->update('pr_bonus_rules', $formArray)) {
@@ -2278,7 +2278,7 @@ class Setup_con extends CI_Controller
         $this->data['subview'] = 'setup/emp_roster_list';
         $this->load->view('layout/template', $this->data);
     }
-    public function roster_entry() {   
+    public function roster_entry() {
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -2303,7 +2303,7 @@ class Setup_con extends CI_Controller
                 'unit_id' => $this->input->post('unit_id'),
                 'start_date' => date('Y-m-d', strtotime($this->input->post('start_date'))),
                 'duration' => $this->input->post('duration'),
-                'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))), 
+                'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))),
                 'shift_type' =>  json_encode($shift_type),
             );
             if ($this->db->insert('pr_emp_roster_shift', $formArray)) {
@@ -2314,7 +2314,7 @@ class Setup_con extends CI_Controller
             redirect(base_url() . 'setup_con/emp_roster_shift');
         }
     }
-    public function roster_edit($id) {   
+    public function roster_edit($id) {
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         if ($this->form_validation->run() == false) {
 
@@ -2345,7 +2345,7 @@ class Setup_con extends CI_Controller
                 'unit_id' => $this->input->post('unit_id'),
                 'start_date' => date('Y-m-d', strtotime($this->input->post('start_date'))),
                 'duration' => $this->input->post('duration'),
-                'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))), 
+                'end_date' => date('Y-m-d', strtotime($this->input->post('end_date'))),
                 'shift_type' =>  json_encode($shift_type),
             );
             $this->db->where('id', $id);
@@ -2367,7 +2367,7 @@ class Setup_con extends CI_Controller
         }
         redirect(base_url() . 'setup_con/emp_roster_shift');
     }
-    public function roster_schedule_change() {   
+    public function roster_schedule_change() {
         $id = $this->input->post('id');
         $row = $this->db->where('id', $id)->get('pr_emp_roster_shift')->row();
         $unit_id = $row->unit_id;
@@ -2375,12 +2375,12 @@ class Setup_con extends CI_Controller
         $shift_type = $dd[0];
 
         // automatecally change employee shift
-        if (count($shift_type) == 3) {			
+        if (count($shift_type) == 3) {
             $morning_shift = $shift_type[0];
             $evening_shift = $shift_type[1];
             $night_shift   = $shift_type[2];
 
-            // get shift id wise employee in array 
+            // get shift id wise employee in array
             $morning = $this->get_roster_shift_emp($morning_shift, $unit_id);
             $evening = $this->get_roster_shift_emp($evening_shift, $unit_id);
             $night   = $this->get_roster_shift_emp($night_shift, $unit_id);
@@ -2408,7 +2408,7 @@ class Setup_con extends CI_Controller
             if (!empty($night)) {
                 $tr = $this->auto_change_roster_shift($night, $day_shift, $unit_id);
             }
-        } 
+        }
         // end auto employee shift change
         if ($tr) {
             echo 'Record successfully Inserted';

@@ -1,16 +1,15 @@
 <script src="<?php echo base_url(); ?>js/grid_content.js" type="text/javascript"></script>
 <style>
-#fileDiv #removeTr td {
-    padding: 5px 10px !important;
-    font-size: 14px;
-}
+    #fileDiv #removeTr td {
+        padding: 5px 10px !important;
+        font-size: 14px;
+    }
 </style>
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-
 <?php
-		$this->load->model('common_model');
-		$unit = $this->common_model->get_unit_id_name();
-	?>
+	$this->load->model('common_model');
+	$unit = $this->common_model->get_unit_id_name();
+?>
 <div class="content">
     <div class="row">
         <div class="col-md-8">
@@ -131,7 +130,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>প্রসব পূর্ববর্তী নোটিশ<span style="color: red;">*</span> </label>
+                            <label>প্রসব পূর্ববর্তী নোটিশ <span style="color: red;">*</span> </label>
                             <input name="inform_date" id="inform_date" class="form-control input-sm date"
                                 required>
                         </div>
@@ -145,34 +144,40 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>ছুটি শুরুর তারিখ <span style="color: red;">*</span> </label>
+                            <label>ছুটি শুরুর তারিখ </label>
                             <input name="start_date" id="start_date" class="form-control input-sm" readonly>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>ছুটি শেষের তারিখ <span style="color: red;">*</span> </label>
+                            <label>ছুটি শেষের তারিখ </label>
                             <input name="end_date" id="end_date" class="form-control input-sm" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label>প্রথম পেমেন্ট তারিখ <span style="color: red;">*</span> </label>
-                            <input name="first_pay" id="first_pay" class="form-control input-sm date" required>
+                            <label>প্রথম কিস্তির তারিখ </label>
+                            <input name="first_pay" id="first_pay" class="form-control input-sm" readonly>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label>দ্বিতীয় পেমেন্ট তারিখ <span style="color: red;">*</span> </label>
-                            <input name="second_pay" id="second_pay" class="form-control input-sm date" required>
+                            <label>দ্বিতীয় কিস্তির তারিখ </label>
+                            <input name="second_pay" id="second_pay" class="form-control input-sm" readonly>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label>পেমেন্ট দিন <span style="color: red;">*</span> </label>
-                            <input type="number" name="pay_day" id="pay_day" class="form-control input-sm" required>
+                            <label>প্রদেয় দিন </label>
+                            <input type="number" name="pay_day" id="pay_day" class="form-control input-sm" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>মোট প্রদেয় দিন </label>
+                            <input type="number" name="total_pay_day" id="total_pay_day" class="form-control input-sm" readonly>
                         </div>
                     </div>
                 </div>
@@ -217,6 +222,60 @@
         </div>
     </div>
 </div>
+
+<script>
+    function change_date_ml() {
+        var probability = $('#probability').val();
+        var unit_id = $('#unit_id').val();
+
+        if (probability == '') {
+            alert('Please select date');
+            return false;
+        }
+
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = "";
+        var count = 0;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                count++;
+                sql = checkboxes[i].value;
+            }
+        }
+        if (count > 1) {
+            alert('Select only one employee');
+            return false;
+        } else if (count == 0) {
+            alert('Please select at least one employee');
+            return false;
+        }
+        if (sql == '') {
+            alert('Please select employee Id');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/change_date_ml",
+            data: {
+                unit_id: unit_id,
+                probability: probability
+            },
+            success: function(data) {
+                var d = JSON.parse(data);
+                $('#start_date').val(d.start_date);
+                $('#end_date').val(d.end_date);
+                $('#first_pay').val(d.start_date);
+                $('#second_pay').val(d.end_date);
+                $('#pay_day').val(d.pay_day);
+                $('#total_pay_day').val(d.total_pay_day);
+            },
+            error: function(data) {
+                alert(data);
+            }
+        })
+    }
+</script>
 
 <script>
     $(document).ready(function() {
@@ -380,6 +439,7 @@
         });
     });
 </script>
+
 <script>
     function get_checked_value(checkboxes) {
         var vals = Array.from(checkboxes)
@@ -387,27 +447,6 @@
             .map(checkbox => checkbox.value)
             .join(",");
         return vals;
-    }
-</script>
-
-
-<script>
-    function change_date_ml() {
-        var probability = $('#probability').val();
-        var unit_id = $('#unit_id').val();
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/change_date_ml",
-            data: {
-                unit_id: unit_id,
-                probability: probability
-            },
-            success: function(data) {
-                var d = JSON.parse(data);
-                $('#start_date').val(d.start_date);
-                $('#end_date').val(d.end_date);
-            }
-        })
     }
 </script>
 
@@ -442,11 +481,13 @@
             alert('Please select at least one employee');
             return false;
         }
+
         if (sql == '') {
             alert('Please select employee Id');
             $("#loader").hide();
             return false;
         }
+
         if (pay_day == '') {
             alert('Please enter the pay day of the month');
             $("#loader").hide();

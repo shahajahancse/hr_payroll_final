@@ -48,7 +48,7 @@
 
   <!-- END CORE TEMPLATE JS -->
   <script src="<?=base_url()?>js/common.js" type="text/javascript"></script>
-  
+
   <script>
     function showMessage(icon, message) {
       const Toast = Swal.mixin({
@@ -86,7 +86,7 @@
           autocomplete: false,
           todayHighlight: true,
           fridayHighlight: true,
-         
+
         });
         $('.date').on('change', function() {
             var date = $(this).datepicker('getDate');
