@@ -268,11 +268,14 @@ input[type="number"] {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Position <span style="color: red;">*</span> </label>
-                                <?php echo form_error('posi_name');?>
-                                <select name="posi_name" id="posi_name" class="form-control input-sm required" required>
+                                <?php echo form_error('position_id');?>
+                                <select name="position_id" id="position_id" class="form-control input-sm required" required>
                                     <option value="">-- Select one --</option>
                                     <option value="1" selected>Fixed</option>
-                                    <option value="2">Production</option>
+                                    <option value="2">A</option>
+                                    <option value="3">B</option>
+                                    <option value="4">C</option>
+                                    <option value="5">D</option>
                                 </select>
                             </div>
                         </div>
@@ -640,7 +643,7 @@ function emp_id_search(id = null) {
                     "emp_sec_id", "emp_line_id", "emp_desi_id", "emp_sal_gra_id",
                     "emp_cat_id", "proxi_id", "emp_shift", "gross_sal",
                     "com_gross_sal", "ot_entitle", "com_ot_entitle", "transport", "img_source",
-                    "lunch", "att_bonus", "salary_draw", "salary_type","posi_name", "emp_join_date",
+                    "lunch", "att_bonus", "salary_draw", "salary_type","position_id", "emp_join_date",
                     "ref_district", "refer_village", "ref_thana", "ref_post","ft","inches","symbol"
                 ];
                 // Filter the data based on keysToFilter
@@ -718,6 +721,21 @@ $(document).ready(function() {
                     // 	$('#emp_dept_id').val();
                     // });
                 });
+            }
+        });
+    });
+    $('#emp_sal_gra_id').change(function() {
+    // alert($(this).val());
+        var grade_id = $(this).val();
+        $.ajax({
+            type: "POST",
+            data: {
+                grade_id: grade_id
+            },
+            url: hostname + "emp_info_con/get_salary_by_grade_id/",
+            success: function(func_data) {
+              $('#com_gross_sal').val(func_data);
+              salary_structure_cal2();
             }
         });
     });
