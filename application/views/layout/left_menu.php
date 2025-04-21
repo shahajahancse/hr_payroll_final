@@ -186,6 +186,9 @@
             <!-- <li class="start <?= activate_method('upazila') ?>"> <a href="<?=base_url('setup_con/upazila')?>" class="anchor_cls">Upazila / Thana</a> </li> -->
             <li class="start <?= activate_method('post_office') ?>"> <a href="<?=base_url('setup_con/post_office')?>" class="anchor_cls">Post Office</a> </li>
           <?php } ?>
+          <?php if(in_array(43,$acl)) { ?>
+            <li class="start <?= activate_method('position') ?>"> <a href="<?=base_url('setup_con/position')?>" class="anchor_cls">Position</a> </li>
+          <?php } ?>
         </ul>
       </li>
       <?php } ?>

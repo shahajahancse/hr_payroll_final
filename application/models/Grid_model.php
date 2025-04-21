@@ -587,9 +587,11 @@ class Grid_model extends CI_Model{
 			emp_depertment.dept_bangla,
 			emp_section.sec_name_bn,
 			emp_line_num.line_name_bn,
+			pr_emp_position.posi_name_bn,
 		');
 		$this->db->from('pr_emp_com_info');
 		$this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+		$this->db->join('pr_emp_position', 'pr_emp_position.posi_id = pr_emp_com_info.position_id', 'left');
 		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id', 'left');
 		$this->db->join('emp_depertment', 'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id', 'left');
 		$this->db->join('emp_section', 'pr_emp_com_info.emp_sec_id = emp_section.id', 'left');
@@ -636,7 +638,7 @@ class Grid_model extends CI_Model{
 		}
         $data['leave_balance_casual']    = $data['leave_entitle_casual'] - $data['leave_taken_casual'];
         $data['leave_balance_sick'] 	 = $data['leave_entitle_sick'] - $data['leave_taken_sick'];
-		// dd($data);
+		// dd($emp_info);
 		return $data;
 	}
 
@@ -1106,7 +1108,7 @@ class Grid_model extends CI_Model{
 		$query = $this->db->get()->row();
 		return $query ? $query->allowance_amount : 0;
 	}
-	function get_desi_ifter_day($date1,$date2, $emp_id,){
+	function get_desi_ifter_day($date1,$date2, $emp_id){
 		$this->db->select('
 				sum(case when pr_emp_shift_log.ifter_allo > 0 then 1 else 0 end) as day
 		');

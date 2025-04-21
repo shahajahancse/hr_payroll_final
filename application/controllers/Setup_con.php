@@ -2810,4 +2810,85 @@ class Setup_con extends CI_Controller
         $this->crud_output($output);
     }
 
+    public function position(){
+
+        $this->data['title'] = 'Position List';
+        $this->data['pr_position'] = $this->db->get('pr_emp_position')->result_array();
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/position';
+        $this->load->view('layout/template', $this->data);
+    }
+
+
+    public function position_add(){
+        $this->load->library('form_validation');
+        $this->load->model('Crud_model');
+        $this->form_validation->set_rules('posi_name', 'Position English Name', 'trim|required');
+        $this->form_validation->set_rules('posi_name_bn', 'Position Bangla Name', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+
+            $this->db->select('pr_units.*');
+            $this->data['unit'] =$this->pr_units_get();
+            $this->data['title'] = 'Add Position';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/position_add';
+            $this->load->view('layout/template', $this->data);
+        } else {
+
+            $formArray = array(
+                'posi_name' => $this->input->post('posi_name'),
+                'posi_name_bn' => $this->input->post('posi_name_bn'),
+            );
+
+            if ($this->db->insert('pr_emp_position', $formArray)) {
+                $this->session->set_flashdata('success', 'Record add successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record add failed!');
+            }
+            redirect(base_url() . 'setup_con/position');
+        }
+
+    }
+
+    public function position_edit($id = null){
+        if ($id === null) {
+            show_error('The "id" parameter is required.', 400);
+        }
+        $this->load->library('form_validation');
+        $this->load->model('Crud_model');
+        $this->form_validation->set_rules('posi_name', 'Position English Name', 'trim|required');
+        $this->form_validation->set_rules('posi_name_bn', 'Position Bangla Name', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+
+            $this->db->select('pr_units.*');
+            $this->data['unit'] = $this->db->get('pr_units')->result();
+
+            $this->data['position'] = $this->db->get_where('pr_emp_position', array('posi_id' => $id))->row($id);
+            $this->data['title'] = 'Edit Position';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/position_edit';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $formArray = array(
+                'posi_name' => $this->input->post('posi_name'),
+                'posi_name_bn' => $this->input->post('posi_name_bn'),
+            );
+            $this->db->where('posi_id', $id);
+            if ($this->db->update('pr_emp_position', $formArray)) {
+                $this->session->set_flashdata('success', 'Record Updated successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record Update failed!');
+            }
+            redirect(base_url() . 'setup_con/position');
+        }
+    }
+
 }

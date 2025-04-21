@@ -106,14 +106,20 @@
                 </span>
 
                 <span style="display:flex">
-                    <span style='display: flex;width: 50%;'>‡mKkb t 
-                        <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width:82%;">
+                    <span style='display: flex;width: 30%;'>‡mKkb t 
+                        <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width:50%;">
                             <?php echo $values['emp_info']->line_name_bn?>
                         </p>
                     </span>
-                    <span style='display: flex;width: 50%;'>wefvM t 
-                        <p class='unicode-to-bijoy' style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 68%;">
+                    <span style='display: flex;width: 30%;'>wefvM t 
+                        <p class='unicode-to-bijoy' style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 50%;">
                             <?php echo $values['emp_info']->dept_bangla?>
+                        </p>
+                    </span>
+
+                    <span style='display: flex;width: 50%;'>PvKyixiZ Ae¯’vb t 
+                        <p class='unicode-to-bijoy' style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 60%;">
+                            <?php echo $values['emp_info']->posi_name_bn?>
                         </p>
                     </span>
                 </span>

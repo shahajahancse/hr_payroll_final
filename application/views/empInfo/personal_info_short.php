@@ -271,11 +271,11 @@ input[type="number"] {
                                 <?php echo form_error('position_id');?>
                                 <select name="position_id" id="position_id" class="form-control input-sm required" required>
                                     <option value="">-- Select one --</option>
-                                    <option value="1" selected>Fixed</option>
-                                    <option value="2">A</option>
-                                    <option value="3">B</option>
-                                    <option value="4">C</option>
-                                    <option value="5">D</option>
+                                    <?php $positions = $this->db->get('pr_emp_position')->result();
+                                        foreach ($positions as $key => $value) {
+                                            echo '<option value="'.$value->posi_id.'">'.$value->posi_name.'</option>';
+                                        }
+                                    ?>
                                 </select>
                             </div>
                         </div>
