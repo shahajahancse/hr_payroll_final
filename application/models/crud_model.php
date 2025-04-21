@@ -666,12 +666,10 @@ class Crud_model extends CI_Model{
 //============================================Salary Grade=========================================//
 
 
-
-
-
      function getsalgrd($salgrdId)
     {
         $this->db->where('gr_id',$salgrdId);
+        // dd($this->db->get('pr_grade')->row());
         return $this->db->get('pr_grade')->row();
     }
 
@@ -693,18 +691,15 @@ class Crud_model extends CI_Model{
 
 
 
-     function salgrd_add($fromArray)
-        {
+     function salgrd_add($fromArray){
 
-            $comData = array(
-                'gr_name' => $fromArray['gr_name'],
-
-            );
-            // print_r($comData);exit('obaydullah');
-
-              $this->db->insert('pr_grade',$comData);
-
-        }
+        $comData = array(
+            'gr_name' => $fromArray['gr_name'],
+            'salary'  => $fromArray['salary'],
+        );
+        // print_r($comData);exit('obaydullah');
+        $this->db->insert('pr_grade',$comData);
+    }
 
 
      function salgrd_edit($salgrdId)
@@ -712,6 +707,7 @@ class Crud_model extends CI_Model{
              $formArray = array();
 
              $formArray['gr_name'] = $this->input->post('gr_name');
+             $formArray['salary'] = $this->input->post('salary');
 
              $this->db->where('gr_id',$salgrdId);
              $this->db->update('pr_grade',$formArray);

@@ -109,44 +109,6 @@ input[type="number"] {
                         </div>
                     </div>
 
-                    <!-- <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Name (Bangla) <span style="color: red;">*</span> </label>
-                                <input type="text" name="name_bn" id="name_bn" class="form-control input-sm bangla_name required"
-                                    value="<?= isset($emp_info->name_bn)?>" required>
-                                <?php echo form_error('name_bn');?>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Father's Name (Bangla) <span style="color: red;">*</span> </label>
-                                <input style="font-family: SutonnyMJ;" type="text" name="father_name" id="father_name"
-                                    class="form-control input-sm bangla_name required"
-                                    value="<?= isset($emp_info->father_name)?>" required>
-                                <?php echo form_error('father_name');?>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Mother's Name (Bangla) <span style="color: red;">*</span> </label>
-                                <input type="text" name="mother_name" id="mother_name"
-                                    class="form-control input-sm bangla_name required"
-                                    value="<?= isset($emp_info->mother_name)?>" required>
-                                <?php echo form_error('mother_name');?>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Spouse Name (Bangla) </label>
-                                <input type="text" name="spouse_name" id="spouse_name"
-                                    class="form-control input-sm bangla_name "
-                                    value="<?= isset($emp_info->spouse_name)?>">
-                                <?php echo form_error('spouse_name');?>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -305,6 +267,17 @@ input[type="number"] {
                         <?php //dd($shifts); ?>
                         <div class="col-md-3">
                             <div class="form-group">
+                                <label>Position <span style="color: red;">*</span> </label>
+                                <?php echo form_error('posi_name');?>
+                                <select name="posi_name" id="posi_name" class="form-control input-sm required" required>
+                                    <option value="">-- Select one --</option>
+                                    <option value="1" selected>Fixed</option>
+                                    <option value="2">Production</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
                                 <label>Salary Type <span style="color: red;">*</span> </label>
                                 <?php echo form_error('salary_type');?>
                                 <select name="salary_type" id="salary_type" class="form-control input-sm required" required>
@@ -314,7 +287,7 @@ input[type="number"] {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Salary Withdraw <span style="color: red;">*</span> </label>
                                 <?php echo form_error('salary_draw');?>
@@ -326,7 +299,7 @@ input[type="number"] {
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Lunch <span style="color: red;">*</span> </label>
                                 <?php echo form_error('lunch');?>
@@ -337,7 +310,7 @@ input[type="number"] {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Transport <span style="color: red;">*</span> </label>
                                 <?php echo form_error('transport');?>
@@ -525,13 +498,6 @@ function set_desi_item() {
             }, 500)
         }, 500)
         
-
-
-
-
-
-    
-
     //alert(new Date(emp_dob));
     var nomi_age = localStorage.getItem('nomi_age');
     var emp_join_date = localStorage.getItem('emp_join_date');
@@ -674,7 +640,7 @@ function emp_id_search(id = null) {
                     "emp_sec_id", "emp_line_id", "emp_desi_id", "emp_sal_gra_id",
                     "emp_cat_id", "proxi_id", "emp_shift", "gross_sal",
                     "com_gross_sal", "ot_entitle", "com_ot_entitle", "transport", "img_source",
-                    "lunch", "att_bonus", "salary_draw", "salary_type", "emp_join_date",
+                    "lunch", "att_bonus", "salary_draw", "salary_type","posi_name", "emp_join_date",
                     "ref_district", "refer_village", "ref_thana", "ref_post","ft","inches","symbol"
                 ];
                 // Filter the data based on keysToFilter

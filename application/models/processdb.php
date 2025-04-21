@@ -232,6 +232,7 @@ class Processdb extends CI_Model{
 			'transport'			=> $this->input->post('transport'),
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
+			'posi_name'			=> $this->input->post('posi_name'),
 			'emp_join_date'		=> $ejd,
 
 		);
@@ -281,6 +282,7 @@ class Processdb extends CI_Model{
 			'emp_join_date'		=> $ejd,
 			'emp_sal_gra_id'  	=> $this->input->post('emp_sal_gra_id'),
 			'salary_type'		=> $this->input->post('salary_type'),
+			'posi_name'		    => $this->input->post('posi_name'),
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'lunch'				=> $this->input->post('lunch'),
 			'transport'			=> $this->input->post('transport'),

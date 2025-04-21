@@ -353,6 +353,7 @@ class Crud_con extends CI_Controller
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('gr_name', 'salgrd Rule Name', 'trim|required');
+        $this->form_validation->set_rules('salary', 'salgrd Rule Name', 'trim|required');
         if ($this->form_validation->run() == false) {
             $this->data['username'] = $this->data['user_data']->id_number;
             $this->data['subview'] = 'salgrd_add';
@@ -361,6 +362,7 @@ class Crud_con extends CI_Controller
 
             $formArray = array();
             $formArray['gr_name'] = $this->input->post('gr_name');
+            $formArray['salary'] = $this->input->post('salary');
 
             $this->Crud_model->salgrd_add($formArray);
             $this->session->set_flashdata('success', 'Record added successfully!');

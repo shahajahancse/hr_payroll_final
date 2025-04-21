@@ -53,21 +53,32 @@
   <hr>
   <form enctype="multipart/form-data" method="post" name="creatsalarygrade" action="<?php echo base_url().'crud_con/salgrd_add'?>">
 	  <div class="row">
-	    <div class="col-md-6">
+	    <div class="col-md-4">
 	      <div class="form-group">
 	        <label>Grade Name</label>
 	        <input type="text" name="gr_name" value="" class="form-control">
 	        <?php echo form_error('gr_name');?>
 	      </div>
         <br>
-        <div class="form-group">
-          <button class="btn btn-primary">Create</button>
-          <a href=""class="btn-warning btn">Cancel</a>
-        </div>
       </div>
+
+      <div class="col-md-4">
+	      <div class="form-group">
+	        <label>Salary</label>
+	        <input type="number" name="salary" value="" class="form-control">
+	        <?php echo form_error('salary');?>
+	      </div>
+        <br>
+      </div>
+      <br>
+      <div class="form-group">
+          <button class="btn btn-primary">Create</button>
+          <a href="" class="btn btn-warning ">Cancel</a>
+        </div>
     </div>
   </form>
 </div>
 
 
 </div>
+
