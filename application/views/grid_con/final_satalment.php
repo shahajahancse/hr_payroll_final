@@ -150,7 +150,7 @@ function englishToBengaliMonth($englishMonth) {
         } */
     </style>
         <style>
-        
+
         .voucher-container {
             border: 1px solid black;
             padding: 20px;
@@ -213,7 +213,7 @@ function englishToBengaliMonth($englishMonth) {
 <body>
         <!-- < ?php dd($values)?> -->
     <div class="container w-75">
-        
+
     <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
         <div class="d-flex flex-row justify-content-between">
             <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
@@ -266,7 +266,7 @@ function englishToBengaliMonth($englishMonth) {
                         <td class="unicode-to-bijoy">পদবী</td>
                         <td class="unicode-to-bijoy"><?php echo $row->desig_bangla?></td>
                     </tr>
-                
+
                     <tr>
                         <td class="unicode-to-bijoy">সেকশন</td>
                         <td class="unicode-to-bijoy"><?php echo $row->sec_name_bn?></td>
@@ -284,15 +284,15 @@ function englishToBengaliMonth($englishMonth) {
                         <td class="unicode-to-bijoy" style="font-size:19px;font-family:SutonnyMJ"> <?php echo $join_date = date('d-m-Y', strtotime($row->emp_join_date))?> Bs</td>
                     </tr>
                     <tr>
-                       
+
                     <td class="unicode-to-bijoy">শেষ কর্মদিবস</td>
-                     <td class="unicode-to-bijoy" style=" font-size:19px;font-family:SutonnyMJ"> 
+                     <td class="unicode-to-bijoy" style=" font-size:19px;font-family:SutonnyMJ">
                     <?php echo $last_day = $row->resign_date==null ? '':date('d-m-Y', strtotime($row->resign_date))?> Bs</td>
                     </tr>
                     <tr>
                         <td class="unicode-to-bijoy">চাকুরীকাল</td>
                         <td class="unicode-to-bijoy">
-                        <?php 
+                        <?php
                             $date1 = new DateTime($join_date);
                             $date2 = new DateTime($last_day);
                             $interval = $date1->diff($date2);
@@ -432,7 +432,7 @@ function englishToBengaliMonth($englishMonth) {
                     <td class="unicode-to-bijoy"><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা</td>
                 </tr>
             </table>
- 
+
 
             <div style="margin-top: 20px;font-size:19px" class="mt-5 ml-3 d-flex justify-content-between">
                 <p style='border-top:1px solid black;' class="unicode-to-bijoy">প্রস্তুতকারী</p>
@@ -444,7 +444,7 @@ function englishToBengaliMonth($englishMonth) {
 
             <p style="font-size:19px" class="text-justify ml-3 unicode-to-bijoy">আমি  <?php echo $row->name_bn?>, পদবীঃ <?php echo $row->desig_bangla?>, র্কাড নম্বরঃ <?php echo $row->emp_id?>, সেকশন এন্ড লাইনঃ <?php $row->sec_name_bn.' ,'.$row->line_name_bn?>, চুড়ান্ত  নিষ্পত্তকিরন বাবদঃ <?php echo ceil($total_taka); ?> টাকা এর প্রাপ্তি স্বীকার করছি এবং এই প্রতিষ্ঠানে আমার আর কোন আর্থিক পাওনা কিংবা দাবী-দাওয়া নাই। </p>
             <p class="text-right unicode-to-bijoy" style="font-size:19px;margin-right:200px"> স্বাক্ষরঃ</p>
-      
+
     </div>
     <br>
     <br>
@@ -486,8 +486,8 @@ function englishToBengaliMonth($englishMonth) {
         <p class="voucher-title">Payment Voucher</p>
         <p style="margin-left: 20px;">Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
     </div>
-  
-        
+
+
         <table class="details">
             <tr>
                 <td>Name:</td>
