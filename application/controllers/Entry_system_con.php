@@ -152,7 +152,7 @@ class Entry_system_con extends CI_Controller
             // pay days calculation
 
             // attendance bonus calculation
-            $att_check = $attend + $weekend  + $holiday;	
+            $att_check = $attend + $weekend  + $holiday;
             $att_bouns = 0;
             if($att_check >= $num_of_days && $absent == 0 && $attn_bonus == 1)
             {
@@ -190,7 +190,7 @@ class Entry_system_con extends CI_Controller
                 'to_date'       => $to_date,
                 'unit_id'       => $unit_id,
                 'loan_status'   => 1,
-                'type'          => 2,  // 2 advance salary 
+                'type'          => 2,  // 2 advance salary
                 'created_by'    => $this->data['user_data']->id,
             );
 
@@ -241,10 +241,10 @@ class Entry_system_con extends CI_Controller
 	function get_emp_allowances($desi_id)
 	{
 		$this->db->select("
-				aab.rule attn_bonus, 
-				ahw.allowance_amount hw_bill, 
-				aib.allowance_amount iftar_bill, 
-				anr.night_allowance night_bill, 
+				aab.rule attn_bonus,
+				ahw.allowance_amount hw_bill,
+				aib.allowance_amount iftar_bill,
+				anr.night_allowance night_bill,
 				atb.allowance_amount tiffin_bill
 			");
 		$this->db->from("emp_designation as ed");
@@ -487,7 +487,7 @@ class Entry_system_con extends CI_Controller
             ->update('pr_emp_shift_log',array('schedule_id'=>$schedule_id,'shift_id'=>$shift->id));
         };
         echo 'success';
-       
+
     }
 
     //-------------------------------------------------------------------------------------------------------
@@ -536,7 +536,7 @@ class Entry_system_con extends CI_Controller
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
 			return false; exit();
-		} 
+		}
 		// final process check end
 
         $emp_data = $this->Attn_process_model->get_all_employee($emp_ids);
@@ -622,7 +622,7 @@ class Entry_system_con extends CI_Controller
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
 			return false; exit();
-		} 
+		}
 		// final process check end
 
         $this->db->select('
@@ -652,7 +652,7 @@ class Entry_system_con extends CI_Controller
         $this->db->where_in('pr_emp_com_info.emp_id', $emp_id);
         $row = $this->db->get()->row();
         $this->data['row'] = $row;
-       
+
 
         $this->db->select('pr_units.*')->where('unit_id', $row->unit_id);
         $this->data['unit'] = $this->db->get('pr_units')->row();
@@ -677,14 +677,14 @@ class Entry_system_con extends CI_Controller
         $in_time     = $_POST['in_time'];
         $out_time    = $_POST['out_time'];
         // dd($_POST);
-        
+
         // final process check
 		$slm = date("Y-m-01", strtotime($date[0]));
 		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
 			return false; exit();
-		} 
+		}
 		// final process check end
 
         $emp_data = $this->Attn_process_model->get_all_employee(array($emp_id))->row();
@@ -790,7 +790,7 @@ class Entry_system_con extends CI_Controller
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
 			return false; exit();
-		} 
+		}
 		// final process check end
 
         foreach ($emp_ids as $key => $emp_id) {
@@ -857,7 +857,7 @@ class Entry_system_con extends CI_Controller
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
 			return false; exit();
-		} 
+		}
 		// final process check end
 
         // $com_ids    = $this->get_com_emp_id($emp_ids);
@@ -883,7 +883,7 @@ class Entry_system_con extends CI_Controller
 		if ($check->num_rows() > 0) {
 			echo "Sorry! This Month Already Final Processed";
 			return false; exit();
-		} 
+		}
 		// final process check end
         $com_info=$this->db->where('emp_id',$emp_id)->get('pr_emp_com_info')->row();
         if($com_info->ot_entitle!=0){
@@ -894,7 +894,7 @@ class Entry_system_con extends CI_Controller
                 echo 'EOT not updated';
             }
         }else{
-            echo 'Not Allowed To Modify EOT For This Employee. This Employee has no OT Entitle.'; 
+            echo 'Not Allowed To Modify EOT For This Employee. This Employee has no OT Entitle.';
         }
     }
     function get_com_emp_id($emp_ids) {
@@ -1456,7 +1456,7 @@ class Entry_system_con extends CI_Controller
         $this->db->where('attn_holyday_off.work_off_date >=', $date);
 
             $this->db->limit($limit, $offset);
-    
+
 
         if (!empty($deptSearch) && $deptSearch != '') {
             $this->db->group_start();
@@ -1640,7 +1640,7 @@ class Entry_system_con extends CI_Controller
             'religion' => $pr_emp_per_info->religion,
         );
         $this->db->insert('pr_emp_per_info', $data);
-        
+
         return $new_emp_id;
     }
     function change_pr_emp_com_info($id, $new_unit_id,$new_emp_id, $pr_emp_com_info){
@@ -1689,7 +1689,7 @@ class Entry_system_con extends CI_Controller
             'new_com_salary' => $pr_incre_prom_pun->new_com_salary,
             'effective_month' => $pr_incre_prom_pun->effective_month,
             'ref_id' => $pr_incre_prom_pun->ref_id,
-            'status' => $pr_incre_prom_pun->status, //tranfer unit 
+            'status' => $pr_incre_prom_pun->status, //tranfer unit
         );
         $this->db->insert('pr_incre_prom_pun', $data);
     }
@@ -1719,7 +1719,7 @@ class Entry_system_con extends CI_Controller
         $date = date('Y-m-d', strtotime($this->input->post('date')));
         $data = array(
             'unit_id'      => $unit_id,
-            'date'         => $date, 
+            'date'         => $date,
             'description'  => $this->input->post('description'),
         );
         $check = $this->db->where('unit_id', $unit_id)->where('date', $date)->get('pr_gov_holiday')->row();
@@ -1809,7 +1809,7 @@ class Entry_system_con extends CI_Controller
         $leave_start = date("Y-m-d", strtotime($from_date));
         $leave_end = date("Y-m-d", strtotime($to_date));
         $total_leave = date_diff(date_create($leave_start), date_create($leave_end))->format('%a') + 1;
-        
+
         // Check for duplicate entry
         $duplicate_check = $this->db->where('emp_id', $emp_id)
                         ->where('leave_start', $leave_start)
@@ -2015,7 +2015,7 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
     }
     public function leave_list_ajax(){
-        
+
         $offset = $this->input->post('offset');
         $limit = $this->input->post('limit');
         $deptSearch = $this->input->post('deptSearch');
@@ -2071,13 +2071,42 @@ class Entry_system_con extends CI_Controller
 
     public function change_date_ml()
     {
+        $emp_id = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $probability = $this->input->post('probability');
-        $half_ml = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml / 2;
+        $lv_ml = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml;
+        $half_ml = $lv_ml / 2;
         $mhl = $half_ml - 1;
         $start_date = date('d-m-Y', strtotime("-{$mhl} days", strtotime($probability)));
         $end_date = date('d-m-Y', strtotime("+{$half_ml} days", strtotime($probability)));
-        echo json_encode(['start_date' => $start_date, 'end_date' => $end_date]);
+
+        $fir_inst = date('d-m-Y', strtotime("-1 days", strtotime($start_date)));
+        $sec_inst = date('d-m-Y', strtotime("+1 days", strtotime($end_date)));
+
+        // check payment date
+        $this->db->select('sche.*');
+        $this->db->from('pr_emp_com_info as com');
+        $this->db->join('pr_emp_shift as shift', 'shift.id = com.emp_shift', 'left');
+        $this->db->join('pr_emp_shift_schedule as sche', 'sche.id = shift.schedule_id', 'left');
+        $this->db->where('com.emp_id', $emp_id);
+        $rows = $this->db->get()->row()->of_day;
+        if (!empty($rows)) {
+            foreach ($rows as $key => $r) {
+                # code...
+            }
+        }
+        dd(json_decode($row));
+
+        $data = array(
+            'unit_id' => $unit_id,
+            'lv_ml' => $lv_ml,
+            'half_ml' => $half_ml,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'fir_inst' => $fir_inst,
+            'sec_inst' => $sec_inst
+        );
+        echo json_encode($data);
     }
 
     public function chack_ability($emp_id)
@@ -2143,7 +2172,7 @@ class Entry_system_con extends CI_Controller
             'leave_end' => $end_date,
             'total_leave' => ($half_ml*2),
         );
-        
+
         if ($this->db->insert('pr_leave_trans', $formArray)) {
             $form_data=array(
                 'prev_month_salary'=> $payment->gross_sal ?? 0,
@@ -2222,7 +2251,7 @@ class Entry_system_con extends CI_Controller
         }else{
             $this->session->set_flashdata('error', 'Record Not Deleted');
             redirect('entry_system_con/maternity_list');
-        }    
+        }
     }
     //------------------------------------------------------------------------------------------
     // end maternity entry to the Database
@@ -2327,7 +2356,7 @@ class Entry_system_con extends CI_Controller
             $this->db->or_like('pr_units.unit_name', $deptSearch);
             $this->db->or_like('per.name_en', $deptSearch);
             $this->db->or_like('per.emp_id', $deptSearch);
-            $this->db->group_end();  
+            $this->db->group_end();
         }
         $results= $this->db->get()->result();
 
@@ -2370,7 +2399,7 @@ class Entry_system_con extends CI_Controller
             $this->db->or_like('pr_units.unit_name', $deptSearch);
             $this->db->or_like('per.name_en', $deptSearch);
             $this->db->or_like('per.emp_id', $deptSearch);
-            $this->db->group_end();            
+            $this->db->group_end();
         }
         $this->data['results'] = $this->db->get()->result();
 
@@ -2424,7 +2453,7 @@ class Entry_system_con extends CI_Controller
             $holiday =  $attendances->holiday;
             $total_leave =  $attendances->total_leave;
 
-            $att_check = $attend + $weekend  + $holiday + $total_leave;	
+            $att_check = $attend + $weekend  + $holiday + $total_leave;
             if($att_check >= $num_of_days && $absent == 0)
             {
                 $allowances = $this->get_emp_allowances($emp_info->emp_desi_id);
@@ -2451,7 +2480,7 @@ class Entry_system_con extends CI_Controller
         $extra_pay             = round($extra_payoff * ($basic_salary / 30), 2);
         $earn_pay              = round(($earn_leave_day / 18), 2) * round($gross_salary / 30, 2);
         $emp_total_pay         = $rpay + $extra_pay + $earn_pay;
-        
+
         $absent                = ($get_info->absent * round($basic_salary / 30, 2));
         $ndeduct               = round($notice_deduct * ($basic_salary / 30), 2) + $absent;
 
@@ -2485,21 +2514,21 @@ class Entry_system_con extends CI_Controller
 
     public function final_log_info($info){
         $this->db->select('
-                SUM(ot) as ot_hour, 
-                SUM(eot) as eot_hour, 
-                SUM(ot_eot_4pm) as ot_eot_4pm, 
-                SUM(ot_eot_12am) as ot_eot_12am, 
-                SUM(with_out_friday_ot) as with_out_friday_ot, 
-                SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
-                SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
-                SUM(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as present, 
+                SUM(ot) as ot_hour,
+                SUM(eot) as eot_hour,
+                SUM(ot_eot_4pm) as ot_eot_4pm,
+                SUM(ot_eot_12am) as ot_eot_12am,
+                SUM(with_out_friday_ot) as with_out_friday_ot,
+                SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday,
+                SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday,
+                SUM(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as present,
                 SUM(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as absent', FALSE
         );
         $this->db->from('pr_emp_shift_log');
         $this->db->where('pr_emp_shift_log.emp_id',$info->emp_id);
         $this->db->where('shift_log_date >=',date('Y-m-01',strtotime($info->resign_date)));
         $this->db->where('shift_log_date <=',date('Y-m-d',strtotime($info->resign_date)));
-        return $this->db->get()->row();	
+        return $this->db->get()->row();
 	}
     //---------------------------------------------------------------------------
     // Left/Resign end
@@ -2524,7 +2553,7 @@ class Entry_system_con extends CI_Controller
     }
 
 
-   
+
 
 
 

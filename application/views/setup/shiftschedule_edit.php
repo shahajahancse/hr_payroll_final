@@ -16,7 +16,7 @@
             <ul class="nav navbar-nav">
               <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
             </ul>
-            
+
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
@@ -26,14 +26,13 @@
   <form enctype="multipart/form-data" method="post" name="editshiftschedule" action="<?php echo base_url().'setup_con/shiftschedule_edit/'.$pr_emp_shift_schedule->id;?>">
   <div class="row">
     <div class="col-md-6">
-      <input type="hidden" name="id"value="<?=$pr_emp_shift_schedule->id;?>" class="form-control"> 
+      <input type="hidden" name="id"value="<?=$pr_emp_shift_schedule->id;?>" class="form-control">
       <div class="form-group">
           <select name="uname" id= "uname" class="form-control input-lg select22">
             <option value="">Select Unit</option>
             <?php
             foreach ($allUnit as  $row){?>
               <option value="<?=$row['unit_id']?>"<?php if($row['unit_id']==$pr_emp_shift_schedule->unit_id){echo 'selected';}?>><?=$row['unit_name']?></option>">Select Unit</option>
-
             <?php } ?>
           </select>
         </div>
@@ -44,43 +43,42 @@
         <?php echo form_error('stype');?>
       </div>
      <div class="form-group">
-    
+
         <label>IN Start</label>
         <input type="text" name="instrt"value="<?=set_value('in_start',$pr_emp_shift_schedule->in_start)?>" class="form-control">
         <?php echo form_error('instrt');?>
       </div>
      <div class="form-group">
-    
+
         <label>IN Time</label>
         <input type="text" name="intime"value="<?=set_value('in_time',$pr_emp_shift_schedule->in_time)?>" class="form-control">
         <?php echo form_error('intime');?>
       </div>
      <div class="form-group">
-    
+
         <label>Late Start</label>
         <input type="text" name="ltstart"value="<?=set_value('late_start',$pr_emp_shift_schedule->late_start)?>" class="form-control">
         <?php echo form_error('ltstart');?>
       </div>
      <div class="form-group">
-    
+
         <label>IN End</label>
         <input type="text" name="inend"value="<?=set_value('in_end',$pr_emp_shift_schedule->in_end)?>" class="form-control">
         <?php echo form_error('inend');?>
       </div>
      <div class="form-group">
-    
+
         <label>OUT Start</label>
         <input type="text" name="outstart"value="<?=set_value('out_start',$pr_emp_shift_schedule->out_start)?>" class="form-control">
         <?php echo form_error('outstart');?>
       </div>
      <div class="form-group">
-    
+
         <label>OUT End</label>
         <input type="text" name="outend"value="<?=set_value('out_end',$pr_emp_shift_schedule->out_end)?>" class="form-control">
         <?php echo form_error('outend');?>
       </div>
      <div class="form-group">
-    
         <label>OT Start</label>
         <input type="text" name="otstart"value="<?=set_value('ot_start',$pr_emp_shift_schedule->ot_start)?>" class="form-control">
         <?php echo form_error('otstart');?>
@@ -144,7 +142,32 @@
         <input type="text" name="random_minute" value="<?=set_value('random_minute',$pr_emp_shift_schedule->random_minute)?>" class="form-control">
         <?php echo form_error('random_minute');?>
       </div>
-     
+
+      <div class="form-group">
+          <label> Off Days <i class="hrsale-asterisk"><span style="color:red">*</span></i></label>
+          <select multiple="multiple" class="select22 sinput-sm" name="of_day[]" data-plugin="select_hrm" data-placeholder="select one" required >
+              <option value="Fri">Friday</option>
+              <option value="Sat">Saturday</option>
+              <option value="Sun">Sunday</option>
+              <option value="Mon">Monday</option>
+              <option value="Tue">Tuesday</option>
+              <option value="Wed">Wednesday</option>
+              <option value="Thu">Thursday</option>
+          </select>
+      </div>
+      <style>
+          .sinput-sm {
+              height: 40px !important;
+              width: 100%;
+          }
+          .select2-container-multi .select2-choices {
+              height: 40px !important;
+              top: -1px;
+              width: 101%;
+              left: -1px;
+          }
+      </style>
+
       <div class="form-group">
         <button class="btn btn-primary">Update</button>
         <a href=""class="btn-warning btn">Cancel</a>
