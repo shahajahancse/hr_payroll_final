@@ -2071,7 +2071,7 @@ class Entry_system_con extends CI_Controller
 
     public function change_date_ml()
     {
-        $emp_id = $this->input->post('emp_id');
+        $emp_id = $this->input->post('sql');
         $unit_id = $this->input->post('unit_id');
         $probability = $this->input->post('probability');
         $lv_ml = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml;
@@ -2080,14 +2080,31 @@ class Entry_system_con extends CI_Controller
         $start_date = date('d-m-Y', strtotime("-{$mhl} days", strtotime($probability)));
         $end_date = date('d-m-Y', strtotime("+{$half_ml} days", strtotime($probability)));
 
+        $fir_inst = date('d-m-Y', strtotime("-1 days", strtotime($start_date)));
+        $sec_inst = date('d-m-Y', strtotime("+1 days", strtotime($end_date)));
+
         // check payment date
+        $this->db->select('sche.*');
+        $this->db->from('pr_emp_com_info as com');
+        $this->db->join('pr_emp_shift as shift', 'shift.id = com.emp_shift', 'left');
+        $this->db->join('pr_emp_shift_schedule as sche', 'sche.id = shift.schedule_id', 'left');
+        $this->db->where('com.emp_id', $emp_id);
+        $rows = $this->db->get()->row()->of_day;
+        if (!empty($rows)) {
+            foreach ($rows as $key => $r) {
+                # code...
+            }
+        }
+        dd(json_decode($row));
 
         $data = array(
             'unit_id' => $unit_id,
             'lv_ml' => $lv_ml,
             'half_ml' => $half_ml,
             'start_date' => $start_date,
-            'end_date' => $end_date
+            'end_date' => $end_date,
+            'fir_inst' => $fir_inst,
+            'sec_inst' => $sec_inst
         );
         echo json_encode($data);
     }

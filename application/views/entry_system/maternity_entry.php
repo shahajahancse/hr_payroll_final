@@ -258,6 +258,7 @@
             type: "POST",
             url: hostname + "entry_system_con/change_date_ml",
             data: {
+                sql: sql,
                 unit_id: unit_id,
                 probability: probability
             },
