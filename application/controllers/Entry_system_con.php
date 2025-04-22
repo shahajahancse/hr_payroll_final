@@ -2000,14 +2000,6 @@ class Entry_system_con extends CI_Controller
     }
 
     public function leave_list(){
-        // $this->db->select('pr_leave_trans.*, pr_units.unit_name, pr_emp_per_info.name_en as user_name');
-        // $this->db->from('pr_leave_trans');
-        // $this->db->join('pr_units', 'pr_units.unit_id = pr_leave_trans.unit_id', 'left');
-        // $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_leave_trans.emp_id', 'left');
-        // $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
-        // $this->db->order_by('pr_leave_trans.leave_start', 'DESC');
-        // $this->data['results'] = $this->db->get()->result();
-
         $this->data['title'] = 'Leave List';
         $this->data['username'] = $this->data['user_data']->id_number;
         // dd($this->data);
@@ -2077,36 +2069,94 @@ class Entry_system_con extends CI_Controller
         $lv_ml = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml;
         $half_ml = $lv_ml / 2;
         $mhl = $half_ml - 1;
-        $start_date = date('d-m-Y', strtotime("-{$mhl} days", strtotime($probability)));
-        $end_date = date('d-m-Y', strtotime("+{$half_ml} days", strtotime($probability)));
+        $start_date = date('Y-m-d', strtotime("-{$mhl} days", strtotime($probability)));
+        $end_date = date('Y-m-d', strtotime("+{$half_ml} days", strtotime($probability)));
 
-        $fir_inst = date('d-m-Y', strtotime("-1 days", strtotime($start_date)));
-        $sec_inst = date('d-m-Y', strtotime("+1 days", strtotime($end_date)));
+        // get Installment date
+        $fir_inst = $this->get_first_installment_date($start_date, $emp_id);  // get first Installment date
+        $sec_inst = $this->get_second_installment_date($end_date, $emp_id);  // get second Installment date
+        $data = array(
+            'unit_id' => $unit_id,
+            'lv_ml' => $lv_ml,
+            'half_ml' => $half_ml,
+            'start_date' => date('d-m-Y', strtotime($start_date)),
+            'end_date' => date('d-m-Y', strtotime($end_date)),
+            'fir_inst' => date('d-m-Y', strtotime($fir_inst)),
+            'sec_inst' => date('d-m-Y', strtotime($sec_inst))
+        );
+        echo json_encode($data);
+    }
 
-        // check payment date
+    public function get_first_installment_date($fir_inst, $emp_id)
+    {
+        // check holiday
+        $fir_inst = date('Y-m-d', strtotime("-1 days", strtotime($fir_inst)));
+        $fir_day = date('D', strtotime($fir_inst));
+        $holiday = $this->db->where('date', $fir_inst)->get('pr_gov_holiday')->row();
+        if (!empty($holiday) && ($holiday->date == $fir_inst)) {
+            $fir_inst = date('Y-m-d', strtotime("-1 days", strtotime($fir_inst)));
+            $fir_day = date('D', strtotime($fir_inst));
+        }
+
+        // check weekend
         $this->db->select('sche.*');
         $this->db->from('pr_emp_com_info as com');
         $this->db->join('pr_emp_shift as shift', 'shift.id = com.emp_shift', 'left');
         $this->db->join('pr_emp_shift_schedule as sche', 'sche.id = shift.schedule_id', 'left');
         $this->db->where('com.emp_id', $emp_id);
-        $rows = $this->db->get()->row()->of_day;
+        $row = $this->db->get()->row()->of_day;
+        $rows = json_decode($row);
         if (!empty($rows)) {
             foreach ($rows as $key => $r) {
-                # code...
+                if ($r == $fir_day) {
+                    $fir_inst = date('Y-m-d', strtotime("-1 days", strtotime($fir_inst)));
+                    $fir_day = date('D', strtotime($fir_inst));
+                }
             }
         }
-        dd(json_decode($row));
 
-        $data = array(
-            'unit_id' => $unit_id,
-            'lv_ml' => $lv_ml,
-            'half_ml' => $half_ml,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
-            'fir_inst' => $fir_inst,
-            'sec_inst' => $sec_inst
-        );
-        echo json_encode($data);
+        // again check holiday
+        $holiday = $this->db->where('date', $fir_inst)->get('pr_gov_holiday')->row();
+        if (!empty($holiday) && ($holiday->date == $fir_inst)) {
+            $fir_inst = date('Y-m-d', strtotime("-1 days", strtotime($fir_inst)));
+        }
+        return $fir_inst;
+    }
+
+    public function get_second_installment_date($sec_inst, $emp_id)
+    {
+        // check holiday
+        $sec_inst = date('Y-m-d', strtotime("+1 days", strtotime($sec_inst)));
+        $sec_day = date('D', strtotime($sec_inst));
+        $holiday = $this->db->where('date', $sec_inst)->get('pr_gov_holiday')->row();
+        if (!empty($holiday) && ($holiday->date == $sec_inst)) {
+            $sec_inst = date('Y-m-d', strtotime("+1 days", strtotime($sec_inst)));
+            $sec_day = date('D', strtotime($sec_inst));
+        }
+
+        // check weekend
+        $this->db->select('sche.*');
+        $this->db->from('pr_emp_com_info as com');
+        $this->db->join('pr_emp_shift as shift', 'shift.id = com.emp_shift', 'left');
+        $this->db->join('pr_emp_shift_schedule as sche', 'sche.id = shift.schedule_id', 'left');
+        $this->db->where('com.emp_id', $emp_id);
+        $row = $this->db->get()->row()->of_day;
+        $rows = json_decode($row);
+        if (!empty($rows)) {
+            foreach ($rows as $key => $r) {
+                if ($r == $sec_day) {
+                    $sec_inst = date('Y-m-d', strtotime("+1 days", strtotime($sec_inst)));
+                    $sec_day = date('D', strtotime($sec_inst));
+                }
+            }
+        }
+
+        // again check holiday
+        $holiday = $this->db->where('date', $sec_inst)->get('pr_gov_holiday')->row();
+        if (!empty($holiday) && ($holiday->date == $sec_inst)) {
+            $sec_inst = date('Y-m-d', strtotime("+1 days", strtotime($sec_inst)));
+        }
+        return $sec_inst;
     }
 
     public function chack_ability($emp_id)
@@ -2126,11 +2176,11 @@ class Entry_system_con extends CI_Controller
     }
 
     public function save_maternity(){
-        // dd($_POST);
         if ($this->chack_ability($this->input->post('sql')) != true) {
             echo 'Please check Emp information, Gender and Marital Status is not Match';
             exit();
         }
+
         $inform_date = date('Y-m-d', strtotime($this->input->post('inform_date')));
         $probability = date('Y-m-d', strtotime($this->input->post('probability')));
         $start_date  = date('Y-m-d', strtotime($this->input->post('start_date')));
@@ -2139,8 +2189,8 @@ class Entry_system_con extends CI_Controller
         $second_pay  = date('Y-m-d', strtotime($this->input->post('second_pay')));
         $unit_id     = $this->input->post('unit_id');
         $emp_id      = $this->input->post('sql');
-        $pay_day     = $this->input->post('pay_day');
-        $half_ml     = $this->db->select('lv_ml')->where('unit_id', $unit_id)->get('pr_leave')->row()->lv_ml / 2;
+        $tot_pay_day = $this->input->post('tot_pay_day');
+        $pay_day     = ($this->input->post('tot_pay_day') / 2);
 
         $this->db->where('emp_id', $emp_id);
         $this->db->where('salary_month', date('Y-m-01', strtotime("-1 month", strtotime($start_date))));
@@ -2153,12 +2203,7 @@ class Entry_system_con extends CI_Controller
         $year=date('Y-m-d', strtotime($start_date));
         $balance = $this->leave_balance_ajax($emp_id, $year, 1);
 
-        if ($balance['leave_balance_maternity'] <= 0) {
-            echo "This employee have not enough leave";
-            exit();
-        }
-
-        if ($balance['leave_balance_maternity'] < ($half_ml*2)) {
+        if ($balance['leave_balance_maternity'] < $tot_pay_day) {
             echo "This employee have not enough leave";
             exit();
         }
@@ -2170,7 +2215,7 @@ class Entry_system_con extends CI_Controller
             'leave_type' => 'ml',
             'leave_start' => $start_date,
             'leave_end' => $end_date,
-            'total_leave' => ($half_ml*2),
+            'total_leave' => $tot_pay_day,
         );
 
         if ($this->db->insert('pr_leave_trans', $formArray)) {
@@ -2186,8 +2231,8 @@ class Entry_system_con extends CI_Controller
                 'second_pay'=>$second_pay,
                 'unit_id'=>$unit_id,
                 'emp_id'=>$emp_id,
-                'total_day'=>$half_ml,
                 'pay_day'=>$pay_day,
+                'total_day'=>$tot_pay_day,
                 'created_at'=>date('Y-m-d'),
             );
 

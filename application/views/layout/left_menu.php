@@ -153,6 +153,7 @@
             <li class="start <?= activate_method('section') ?>"> <a href="<?=base_url('setup_con/section')?>" class="anchor_cls">Section</a> </li>
             <li class="start <?= activate_method('line') ?>"> <a href="<?=base_url('setup_con/line')?>" class="anchor_cls">Line</a> </li>
             <li class="start <?= activate_method('designation') ?>"> <a href="<?=base_url('setup_con/designation')?>" class="anchor_cls">Designation</a> </li>
+            <li class="start <?= activate_method('position') ?>"> <a href="<?=base_url('setup_con/position')?>" class="anchor_cls">Position</a> </li>
           <?php } ?>
           <?php if(in_array(36,$acl)) { ?>
             <li class="start <?= activate_method('manage_designation') ?>"> <a href="<?=base_url('setup_con/manage_designation')?>" class="anchor_cls">Manage Designation</a> </li>

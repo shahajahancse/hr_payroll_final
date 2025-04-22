@@ -1287,7 +1287,6 @@ class Setup_con extends CI_Controller
             }
             redirect(base_url() . 'setup_con/night_allowance_setup');
         }
-
     }
 
     public function night_allowance_edit($id){
@@ -1602,6 +1601,100 @@ class Setup_con extends CI_Controller
     //----------------------------------------------------------------------------------
     // CRUD for designation manage end
     //----------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------
+    // CRUD for position Start
+    //----------------------------------------------------------------------------------
+    public function position()
+    {
+        $this->db->select('pr_emp_position.*,pr_units.unit_name');
+        $this->db->from('pr_emp_position');
+        $this->db->join('pr_units', 'pr_units.unit_id=pr_emp_position.unit_id');
+        if ($this->data['user_data']->unit_name!=0) {
+            $this->db->where('pr_emp_position.unit_id', $this->data['user_data']->unit_name);
+        }
+        $this->data['results'] = $this->db->get()->result_array();
+        $this->data['title'] = 'Position List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'setup/position';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function position_add(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('posi_name', 'Name English', 'trim|required');
+        $this->form_validation->set_rules('posi_name_bn', 'AmoName Banglaunt', 'required');
+
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+            $this->data['pr_units'] = $this->pr_units_get();
+            $this->data['title'] = 'Add Position';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/position_add';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $formArray = array(
+                'unit_id' => $this->input->post('unit_id'),
+                'posi_name' => $this->input->post('posi_name'),
+                'posi_name_bn' => $this->input->post('posi_name_bn'),
+            );
+            if ($this->db->insert('pr_emp_position', $formArray)) {
+                $this->session->set_flashdata('success', 'Record add successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record add failed!');
+            }
+            redirect(base_url() . 'setup_con/position');
+        }
+    }
+
+    public function position_edit($id){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('posi_name', 'Name English', 'trim|required');
+        $this->form_validation->set_rules('posi_name_bn', 'AmoName Banglaunt', 'required');
+
+        if ($this->form_validation->run() == false) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $this->session->set_flashdata('failure', $this->form_validation->error_array());
+            }
+            $this->db->select('pr_units.*');
+            $this->data['pr_units'] = $this->db->get('pr_units')->result();
+
+            $this->db->where('posi_id', $id);
+            $this->data['attbn'] = $this->db->get('pr_emp_position')->row($id);
+            $this->data['title'] = 'Edit Position';
+            $this->data['username'] = $this->data['user_data']->id_number;
+            $this->data['subview'] = 'setup/position_edit';
+            $this->load->view('layout/template', $this->data);
+        } else {
+            $formArray = array(
+                'unit_id' => $this->input->post('unit_id'),
+                'posi_name' => $this->input->post('posi_name'),
+                'posi_name_bn' => $this->input->post('posi_name_bn'),
+            );
+            $this->db->where('posi_id', $id);
+            if ($this->db->update('pr_emp_position', $formArray)) {
+                $this->session->set_flashdata('success', 'Record Updated successfully!');
+            } else {
+                $this->session->set_flashdata('failure', 'Record Update failed!');
+            }
+            redirect(base_url('setup_con/position'));
+        }
+    }
+
+    public function position_delete($id){
+        $this->db->where('posi_id', $id);
+        $this->db->delete('pr_emp_position');
+        $this->session->set_flashdata('success', 'Record Deleted successfully!');
+        redirect(base_url('setup_con/position'));
+    }
+    //----------------------------------------------------------------------------------
+    // CRUD for position end
+    //----------------------------------------------------------------------------------
+
 
     //-------------------------------------------------------------------------------------------------------
     // CRUD for Shift Schedules start

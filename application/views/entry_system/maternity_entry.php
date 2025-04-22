@@ -10,6 +10,10 @@
 	$this->load->model('common_model');
 	$unit = $this->common_model->get_unit_id_name();
 ?>
+<?php
+    $user_id = $this->session->userdata('data')->id;
+    $acl = check_acl_list($user_id);
+?>
 <div class="content">
     <div class="row">
         <div class="col-md-8">
@@ -171,7 +175,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>প্রদেয় দিন </label>
-                            <input type="number" name="pay_day" id="pay_day" class="form-control input-sm" readonly>
+                            <input name="pay_day" id="pay_day" class="form-control input-sm" readonly>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -183,8 +187,13 @@
                 </div>
             </div>
             <div class="col-md-12" style="display: flex;justify-content: flex-end; padding: 4px 15px;gap: 10px;">
-                <button id="save_btn" type="button" class="btn btn-primary" style="padding:4px;"
-                    onclick="save()">save</button>
+                <?php if(in_array(129,$acl)) { ?>
+                    <button class="btn btn-success" style="padding:4px 7px;"  onclick="mprint(2)">Print 2</button>
+                <?php } ?>
+                <?php if(in_array(128,$acl)) { ?>
+                    <button class="btn btn-success" style="padding:4px 7px;"  onclick="mprint(1)">Print 1</button>
+                <?php } ?>
+                <button id="save_btn" type="button" class="btn btn-primary" style="padding:4px 7px;" onclick="save()">save</button>
             </div>
         </div>
     </div>
@@ -223,6 +232,60 @@
     </div>
 </div>
 
+<!-- get date and data -->
+<script>
+    function mprint(type){
+        var ajaxRequest;  // The variable that makes Ajax possible!
+        try{
+            ajaxRequest = new XMLHttpRequest();
+        }catch (e){
+            // Internet Explorer Browsers
+            try{
+                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+            }catch (e) {
+                try{
+                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }catch (e){
+                    alert("Your browser broke!");
+                    return false;
+                }
+            }
+        }
+
+        var unit_id = document.getElementById('unit_id').value;
+        if(unit_id =='Select')
+        {
+            alert("Please select unit !");
+            return false;
+        }
+
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+
+        if (sql == '') {
+            alert('Please select employee Id');
+            return false;
+        }
+
+        document.getElementById('loader').style.display = 'flex';
+        var queryString="type="+type+"&unit_id="+unit_id+"&spl="+sql;
+        url =  hostname+"grid_con/grid_maternity_benefit/";
+
+        ajaxRequest.open("POST", url, true);
+        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        ajaxRequest.send(queryString);
+
+        ajaxRequest.onreadystatechange = function(){
+            document.getElementById('loader').style.display = 'none';
+            if(ajaxRequest.readyState == 4){
+                var resp = ajaxRequest.responseText;
+                maternity_benefit = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                maternity_benefit.document.write(resp);
+            }
+        }
+    }
+</script>
+
 <script>
     function change_date_ml() {
         var probability = $('#probability').val();
@@ -230,6 +293,7 @@
 
         if (probability == '') {
             alert('Please select date');
+            $("#loader").hide();
             return false;
         }
 
@@ -244,16 +308,20 @@
         }
         if (count > 1) {
             alert('Select only one employee');
+            $("#loader").hide();
             return false;
         } else if (count == 0) {
             alert('Please select at least one employee');
+            $("#loader").hide();
             return false;
         }
         if (sql == '') {
-            alert('Please select employee Id');
+            alert('Please select employee Id')
+            $("#loader").hide();
             return false;
         }
 
+        $("#loader").show();
         $.ajax({
             type: "POST",
             url: hostname + "entry_system_con/change_date_ml",
@@ -264,15 +332,118 @@
             },
             success: function(data) {
                 var d = JSON.parse(data);
+                var p_d = d.half_ml +' * '+ 2;
                 $('#start_date').val(d.start_date);
                 $('#end_date').val(d.end_date);
                 $('#first_pay').val(d.start_date);
                 $('#second_pay').val(d.end_date);
-                $('#pay_day').val(d.pay_day);
-                $('#total_pay_day').val(d.total_pay_day);
+                $('#pay_day').val(p_d);
+                $('#total_pay_day').val(d.lv_ml);
+                $("#loader").hide();
             },
             error: function(data) {
                 alert(data);
+            },
+            complete: function(data) {
+                $("#loader").hide();
+            }
+        })
+    }
+</script>
+
+<!-- save -->
+<script>
+    function save() {
+        var inform_date   = $('#inform_date').val();
+        var probability   = $('#probability').val();
+        var start_date    = $('#start_date').val();
+        var end_date      = $('#end_date').val();
+        var first_pay     = $('#first_pay').val();
+        var second_pay    = $('#second_pay').val();
+        var unit_id       = $('#unit_id').val();
+        var pay_day       = $('#pay_day').val();
+        var tot_pay_day   = $('#total_pay_day').val();
+        if (unit_id == '') {
+            alert('Please select Unit');
+            return false;
+        }
+
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = "";
+        var count = 0;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                count++;
+                sql = checkboxes[i].value;
+            }
+        }
+        if (count > 1) {
+            alert('Select only one employee');
+            $("#loader").hide();
+            return false;
+        } else if (count == 0) {
+            alert('Please select at least one employee');
+            $("#loader").hide();
+            return false;
+        }
+
+        if (sql == '') {
+            alert('Please select employee Id');
+            $("#loader").hide();
+            return false;
+        }
+
+        if (pay_day == '') {
+            alert('Please enter the pay day of the month');
+            $("#loader").hide();
+            return false;
+        }
+        if (second_pay == '') {
+            alert('Please select second pay date');
+            $("#loader").hide();
+            return false;
+        }
+        if (first_pay == '') {
+            alert('Please select first pay date');
+            $("#loader").hide();
+            return false;
+        }
+        if (inform_date == '') {
+            alert('Please select information date');
+            $("#loader").hide();
+            return false;
+        }
+        if (probability == '') {
+            alert('Please select probability date child born');
+            $("#loader").hide();
+            return false;
+        }
+        $("#loader").show();
+
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/save_maternity",
+            data: {
+                tot_pay_day  : tot_pay_day,
+                pay_day      : pay_day,
+                inform_date  : inform_date,
+                probability  : probability,
+                start_date   : start_date,
+                end_date     : end_date,
+                first_pay    : first_pay,
+                second_pay   : second_pay,
+                unit_id      : unit_id,
+                sql          : sql
+            },
+            success: function(data) {
+                alert(data);
+            },
+            error: function(data) {
+                $("#loader").hide();
+                alert(data);
+            },
+            complete: function(data) {
+                $("#loader").hide();
             }
         })
     }
@@ -289,11 +460,14 @@
         });
     });
 </script>
+
 <script>
     function loading_open() {
         $('#loader').css('display', 'block');
     }
 </script>
+
+<!-- get emp list -->
 <script type="text/javascript">
     // on load employee
     function grid_emp_list() {
@@ -448,98 +622,5 @@
             .map(checkbox => checkbox.value)
             .join(",");
         return vals;
-    }
-</script>
-
-<script>
-    function save() {
-        var inform_date   = $('#inform_date').val();
-        var probability   = $('#probability').val();
-        var start_date    = $('#start_date').val();
-        var end_date      = $('#end_date').val();
-        var first_pay     = $('#first_pay').val();
-        var second_pay    = $('#second_pay').val();
-        var unit_id       = $('#unit_id').val();
-        var pay_day       = $('#pay_day').val();
-        if (unit_id == '') {
-            alert('Please select Unit');
-            return false;
-        }
-
-        var checkboxes = document.getElementsByName('emp_id[]');
-        var sql = "";
-        var count = 0;
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                count++;
-                sql = checkboxes[i].value;
-            }
-        }
-        if (count > 1) {
-            alert('Select only one employee');
-            return false;
-        } else if (count == 0) {
-            alert('Please select at least one employee');
-            return false;
-        }
-
-        if (sql == '') {
-            alert('Please select employee Id');
-            $("#loader").hide();
-            return false;
-        }
-
-        if (pay_day == '') {
-            alert('Please enter the pay day of the month');
-            $("#loader").hide();
-            return false;
-        }
-        if (second_pay == '') {
-            alert('Please select second pay date');
-            $("#loader").hide();
-            return false;
-        }
-        if (first_pay == '') {
-            alert('Please select first pay date');
-            $("#loader").hide();
-            return false;
-        }
-        if (inform_date == '') {
-            alert('Please select information date');
-            $("#loader").hide();
-            return false;
-        }
-        if (probability == '') {
-            alert('Please select probability date child born');
-            $("#loader").hide();
-            return false;
-        }
-        $("#loader").show();
-
-        $.ajax({
-            type: "POST",
-            url: hostname + "entry_system_con/save_maternity",
-            data: {
-                pay_day      : pay_day,
-                inform_date  : inform_date,
-                probability  : probability,
-                start_date   : start_date,
-                end_date     : end_date,
-                first_pay    : first_pay,
-                second_pay   : second_pay,
-                unit_id      : unit_id,
-                sql          : sql
-            },
-            success: function(data) {
-                alert(data);
-            },
-            error: function(data) {
-                $("#loader").hide();
-                alert(data);
-            },
-            complete: function(data) {
-                $("#loader").hide();
-            }
-        })
     }
 </script>
