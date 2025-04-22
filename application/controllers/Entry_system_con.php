@@ -937,13 +937,14 @@ class Entry_system_con extends CI_Controller
     }
     public function special_entry()
     {
-        $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
         $incr_date      = date('Y-m-01', strtotime($_POST['special_date']));
         $new_salary     = $_POST['gross_sal'];
         $new_com_salary = $_POST['com_gross_sal'];
+        $emp_id         = $_POST['emp_id'];
         $old_salary     = $_POST['salary'];
         $old_com_salary = $_POST['com_salary'];
+
         $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
         $data = array(
             'prev_emp_id' => $emp_id,
@@ -959,7 +960,7 @@ class Entry_system_con extends CI_Controller
             'new_desig' => $r->emp_desi_id,
             'new_grade' => $r->emp_sal_gra_id,
             'new_salary' => $new_salary,
-            'new_com_salary' => $new_com_salary,
+            'new_com_salary' => $new_com_salary ?? $new_salary,
             'effective_month' => $incr_date,
             'ref_id' => $emp_id,
             'status' => 4,
@@ -967,7 +968,7 @@ class Entry_system_con extends CI_Controller
 
         $dd = array(
             'gross_sal' => $new_salary,
-            'com_gross_sal' => $new_com_salary,
+            'com_gross_sal' => $new_com_salary ?? $new_salary
         );
 
         $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date)->get('pr_incre_prom_pun');

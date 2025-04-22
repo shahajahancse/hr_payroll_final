@@ -1883,8 +1883,7 @@ class Grid_model extends CI_Model{
 
 	}
 
-	function incre_prom_report($first_date,$second_date,$emp_id,$type){
-		// dd($first_date.'===='.$second_date);
+	function incre_prom_report($first_date,$second_date,$emp_id,$type, $skip = null){
 		$this->db->select('
 			pr_emp_per_info.id as letter_id,
 			pr_emp_per_info.name_bn,
@@ -1912,22 +1911,20 @@ class Grid_model extends CI_Model{
 		$this->db->join('pr_incre_prom_pun', 'pr_incre_prom_pun.prev_emp_id = pr_emp_per_info.emp_id','left');
 		$this->db->join('emp_depertment as prev_dept_name',  'pr_incre_prom_pun.prev_dept    = prev_dept_name.dept_id','left');
 		$this->db->join('emp_section as prev_sec_name',      'pr_incre_prom_pun.prev_section = prev_sec_name.id','left');
-		$this->db->join('pr_line_num as prev_line_name',    'pr_incre_prom_pun.prev_line    = prev_line_name.id','left');
+		$this->db->join('emp_line_num as prev_line_name',    'pr_incre_prom_pun.prev_line    = prev_line_name.id','left');
 		$this->db->join('emp_designation as prev_desig_name','pr_incre_prom_pun.prev_desig   = prev_desig_name.id','left');
 		$this->db->join('pr_grade as prev_grade_name',       'pr_incre_prom_pun.prev_grade   = prev_grade_name.gr_id','left');
 		$this->db->join('emp_depertment as new_dept_name',   'pr_incre_prom_pun.new_dept = new_dept_name.dept_id','left');
 		$this->db->join('emp_section as new_sec_name',       'pr_incre_prom_pun.new_section = new_sec_name.id','left');
-		$this->db->join('pr_line_num as new_line_name',     'pr_incre_prom_pun.new_line = new_line_name.id','left');
+		$this->db->join('emp_line_num as new_line_name',     'pr_incre_prom_pun.new_line = new_line_name.id','left');
 		$this->db->join('emp_designation as new_desig_name', 'pr_incre_prom_pun.new_desig = new_desig_name.id','left');
 		$this->db->join('pr_grade as new_grade_name',        'pr_incre_prom_pun.new_grade = new_grade_name.gr_id','left');
 		$this->db->join('pr_emp_com_info',   'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-		/* $this->db->join('emp_designation',   'pr_emp_com_info.emp_desi_id = emp_designation.id');
-		$this->db->join('emp_depertment',    'pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
-		$this->db->join('emp_section',       'pr_emp_com_info.emp_sec_id = emp_section.id');
-		$this->db->join('emp_line_num',      'pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->join('pr_religions',      'pr_emp_per_info.emp_religion = pr_religions.religion_id'); */
+
 		$this->db->where_in('pr_emp_com_info.emp_id', $emp_id);
-		$this->db->where('pr_incre_prom_pun.effective_month between "'.$first_date.'" and "'.$second_date.'"');
+		if (empty($skip)) {
+			$this->db->where('pr_incre_prom_pun.effective_month between "'.$first_date.'" and "'.$second_date.'"');
+		}
 		if($type == 1){
 			$this->db->where_in('pr_incre_prom_pun.status', array(1,4));
 		}else if($type == 2){
@@ -1935,14 +1932,15 @@ class Grid_model extends CI_Model{
 		}else{
 			$this->db->where_in('pr_incre_prom_pun.status', 3);
 		}
+		$this->db->order_by('pr_incre_prom_pun.id','desc');
+		$this->db->group_by('pr_incre_prom_pun.ref_id');
 		$query = $this->db->get()->result();
-		// dd($this->db->last_query());
-			if(!empty($query)){
-				return $query;
-			}
-			else{
-				dd("Requested list is empty") ;
-			}
+
+		if(!empty($query)){
+			return $query;
+		}else{
+			dd("Requested list is empty") ;
+		}
 	}
 
 	function prom_report_db($grid_firstdate,$grid_emp_id){
