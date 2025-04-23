@@ -1016,13 +1016,13 @@ class Entry_system_con extends CI_Controller
     }
     public function increment_entry()
     {
-        $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
         $incr_date      = date('Y-m-01', strtotime($_POST['incr_date']));
         $new_salary     = $_POST['gross_sal'];
-        $new_com_salary = $_POST['com_gross_sal'];
-        $old_salary     = $_POST['salary'];
-        $old_com_salary = $_POST['com_salary'];
+        $new_com_salary = $_POST['com_gross_sal'] ?? $new_salary;
+        $emp_id         = $_POST['emp_id'];
+        $old_salary     = $_POST['inc_salary'];
+        $old_com_salary = $_POST['inc_com_salary'];
         $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
         $data = array(
             'prev_emp_id' => $emp_id,

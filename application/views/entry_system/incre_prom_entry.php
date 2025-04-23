@@ -159,7 +159,7 @@
 
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="special_entry_form">
-                        <?php if(in_array(10,$acl)) { ?>
+                        <?php if(!in_array(10,$acl)) { ?>
                         <div class="row">
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
@@ -280,26 +280,26 @@
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="inc_salary" name="salary">
+                                    <input class="form-control" readonly id="inc_salary" name="inc_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="inc_gross_sal" name="gross_sal">
+                                    <input class="form-control" id="inc_gross_sal" name="inc_gross_sal">
 
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Salary</label>
-                                    <input class="form-control" readonly id="inc_com_salary" name="com_salary">
+                                    <input class="form-control" readonly id="inc_com_salary" name="inc_com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="inc_com_gross_sal" name="com_gross_sal">
+                                    <input class="form-control" id="inc_com_gross_sal" name="inc_com_gross_sal">
                                 </div>
                             </div>
                         </div>
@@ -312,7 +312,7 @@
                                     <input type="text" class="form-control date" id="incr_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: 10px">
                                         <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='increment_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(1)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="incr_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -320,21 +320,23 @@
                         </div>
                         <?php } else { ?>
                         <div class="raw">
-                            <input type="hidden" name="inc_salary" id="salary">
-                            <input type="hidden" name="gross_sal" id="inc_gross_sal">
-
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Salary</label>
-                                    <input class="form-control" readonly id="inc_com_salary" name="com_salary">
+                                    <input class="form-control" readonly id="inc_salary" name="inc_salary">
                                 </div>
                             </div>
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="inc_com_gross_sal" name="com_gross_sal">
+                                    <input class="form-control" id="inc_gross_sal" name="inc_gross_sal">
                                 </div>
                             </div>
+
+                            <input type="hidden" id="inc_com_salary" name="inc_com_salary">
+                            <input type="hidden" id="inc_com_gross_sal" name="inc_com_gross_sal">
+
+
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Effective Date</label>
@@ -348,7 +350,7 @@
                                 <div class="input-group pull-right" style="gap: 14px; display: flex;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: 10px">
                                         <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='increment_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(1)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="incr_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -932,10 +934,10 @@
         }
 
         com_gross_sal = document.getElementById('inc_com_gross_sal').value;
-        if (com_gross_sal == '') {
-            showMessage('error', 'Please input the New Com. Salary');
-            return false;
-        }
+        // if (com_gross_sal == '') {
+        //     showMessage('error', 'Please input the New Com. Salary');
+        //     return false;
+        // }
 
         incr_date = document.getElementById('incr_date').value;
         if (incr_date == '') {
@@ -1301,7 +1303,6 @@
         })
     }
     function get_emp_info_special() {
-
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");

@@ -1901,42 +1901,50 @@ class Grid_model extends CI_Model{
 			new_sec_name.sec_name_bn as new_sec_name,
 			new_line_name.line_name_bn as new_line_name,
 			new_desig_name.desig_bangla as new_desig_name,
-			new_desig_name.desig_bangla as new_desig_name,
 			new_grade_name.gr_name as new_grade_name,
-			pr_incre_prom_pun.prev_emp_id as emp_id,
-			pr_incre_prom_pun.effective_month as effective_month,
-			pr_incre_prom_pun.prev_salary as prev_salary,
-			pr_incre_prom_pun.new_salary as new_salary,
-			pr_incre_prom_pun.status,
+			incre.prev_emp_id as emp_id,
+			incre.effective_month as effective_month,
+			incre.prev_salary as prev_salary,
+			incre.new_salary as new_salary,
+			incre.status
 		');
-		$this->db->from('pr_emp_per_info');
-		$this->db->join('pr_incre_prom_pun', 'pr_incre_prom_pun.prev_emp_id = pr_emp_per_info.emp_id','left');
-		$this->db->join('emp_depertment as prev_dept_name',  'pr_incre_prom_pun.prev_dept    = prev_dept_name.dept_id','left');
-		$this->db->join('emp_section as prev_sec_name',      'pr_incre_prom_pun.prev_section = prev_sec_name.id','left');
-		$this->db->join('emp_line_num as prev_line_name',    'pr_incre_prom_pun.prev_line    = prev_line_name.id','left');
-		$this->db->join('emp_designation as prev_desig_name','pr_incre_prom_pun.prev_desig   = prev_desig_name.id','left');
-		$this->db->join('pr_grade as prev_grade_name',       'pr_incre_prom_pun.prev_grade   = prev_grade_name.gr_id','left');
-		$this->db->join('emp_depertment as new_dept_name',   'pr_incre_prom_pun.new_dept = new_dept_name.dept_id','left');
-		$this->db->join('emp_section as new_sec_name',       'pr_incre_prom_pun.new_section = new_sec_name.id','left');
-		$this->db->join('emp_line_num as new_line_name',     'pr_incre_prom_pun.new_line = new_line_name.id','left');
-		$this->db->join('emp_designation as new_desig_name', 'pr_incre_prom_pun.new_desig = new_desig_name.id','left');
-		$this->db->join('pr_grade as new_grade_name',        'pr_incre_prom_pun.new_grade = new_grade_name.gr_id','left');
-		$this->db->join('pr_emp_com_info',   'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+
+		// Subquery to get latest id per ref_id
+		$this->db->from('pr_incre_prom_pun incre');
+		$this->db->join('(SELECT MAX(id) as max_id FROM pr_incre_prom_pun GROUP BY ref_id) as latest_ids', 'incre.id = latest_ids.max_id');
+		$this->db->join('pr_emp_per_info', 'incre.ref_id = pr_emp_per_info.emp_id','left');
+		$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
+		$this->db->join('emp_depertment as prev_dept_name',  'incre.prev_dept    = prev_dept_name.dept_id','left');
+		$this->db->join('emp_section as prev_sec_name',      'incre.prev_section = prev_sec_name.id','left');
+		$this->db->join('emp_line_num as prev_line_name',    'incre.prev_line    = prev_line_name.id','left');
+		$this->db->join('emp_designation as prev_desig_name','incre.prev_desig   = prev_desig_name.id','left');
+		$this->db->join('pr_grade as prev_grade_name',       'incre.prev_grade   = prev_grade_name.gr_id','left');
+		$this->db->join('emp_depertment as new_dept_name',   'incre.new_dept = new_dept_name.dept_id','left');
+		$this->db->join('emp_section as new_sec_name',       'incre.new_section = new_sec_name.id','left');
+		$this->db->join('emp_line_num as new_line_name',     'incre.new_line = new_line_name.id','left');
+		$this->db->join('emp_designation as new_desig_name', 'incre.new_desig = new_desig_name.id','left');
+		$this->db->join('pr_grade as new_grade_name',        'incre.new_grade = new_grade_name.gr_id','left');
 
 		$this->db->where_in('pr_emp_com_info.emp_id', $emp_id);
+
 		if (empty($skip)) {
-			$this->db->where('pr_incre_prom_pun.effective_month between "'.$first_date.'" and "'.$second_date.'"');
+			$this->db->where('incre.effective_month BETWEEN "'.$first_date.'" AND "'.$second_date.'"');
 		}
+
 		if($type == 1){
-			$this->db->where_in('pr_incre_prom_pun.status', array(1,4));
-		}else if($type == 2){
-			$this->db->where_in('pr_incre_prom_pun.status', 2);
-		}else{
-			$this->db->where_in('pr_incre_prom_pun.status', 3);
+			$this->db->where_in('incre.status', array(1,4));
+		} else if($type == 2){
+			$this->db->where_in('incre.status', 2);
+		} else {
+			$this->db->where_in('incre.status', 3);
 		}
-		$this->db->order_by('pr_incre_prom_pun.id','desc');
-		$this->db->group_by('pr_incre_prom_pun.ref_id');
+
+		$this->db->order_by('incre.effective_month','DESC');
+		$this->db->order_by('incre.id','DESC');
+
+		// No group_by needed anymore
 		$query = $this->db->get()->result();
+
 
 		if(!empty($query)){
 			return $query;
