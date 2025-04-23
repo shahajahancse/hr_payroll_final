@@ -159,7 +159,7 @@
 
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="special_entry_form">
-                        <?php if(!in_array(10,$acl)) { ?>
+                        <?php if(in_array(10,$acl)) { ?>
                         <div class="row">
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
@@ -198,7 +198,7 @@
                                     <input type="text" class="form-control date" id="special_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: 10px;">
                                         <input class="btn btn-primary" onclick='special_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='special_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(1)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="special_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -235,7 +235,7 @@
                                 <div class="input-group pull-right" style="gap: 14px; display: flex;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='special_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='special_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(1)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="special_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div> <!-- /input-group -->
@@ -1037,10 +1037,10 @@
         }
 
         com_gross_sal = document.getElementById('com_gross_sal').value;
-        if (com_gross_sal == '') {
-            showMessage('error', 'Please input the New Com. Salary');
-            return false;
-        }
+        // if (com_gross_sal == '') {
+        //     showMessage('error', 'Please input the New Com. Salary');
+        //     return false;
+        // }
 
         special_date = document.getElementById('special_date').value;
         if (special_date == '') {
@@ -1694,4 +1694,54 @@
         $("#" + sectionId).slideToggle();
     }
     $("#special_entry, #increment_entry, #promotion_entry, #line_change").hide();
+</script>
+
+<script>
+    function lprint(type){
+        var ajaxRequest;  // The variable that makes Ajax possible!
+        try{
+            // Opera 8.0+, Firefox, Safari
+            ajaxRequest = new XMLHttpRequest();
+        }catch (e){
+            // Internet Explorer Browsers
+            try{
+                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+            }catch (e) {
+                try{
+                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }catch (e){
+                    // Something went wrong
+                    alert("Your browser broke!");
+                    return false;
+                }
+            }
+        }
+        var firstdate = document.getElementById('special_date').value;
+
+        var unit_id = document.getElementById('unit_id').value;
+        if(unit_id =='Select'){
+            alert("Please select Unit");
+            return false;
+        }
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        if (sql == '') {
+            alert('Please select employee Id');
+            return false;
+        }
+        document.getElementById('loader').style.display = 'flex';
+        var queryString="first_date="+firstdate+"&second_date="+firstdate+"&spl="+sql+"&type="+type+"&skip="+1;
+        url =  hostname+"grid_con/incre_prom_report/";
+        ajaxRequest.open("POST", url, true);
+        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        ajaxRequest.send(queryString);
+        ajaxRequest.onreadystatechange = function () {
+            document.getElementById('loader').style.display = 'none';
+            if(ajaxRequest.readyState == 4){
+                var resp = ajaxRequest.responseText;
+                continuous_increment_promotion = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                continuous_increment_promotion.document.write(resp);
+            }
+        }
+    }
 </script>

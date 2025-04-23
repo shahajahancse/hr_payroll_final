@@ -196,13 +196,13 @@ class Grid_con extends CI_Controller {
 	function incre_prom_report(){
 		$first_date = date('Y-m-d',strtotime($this->input->post('first_date')));
 		$second_date = date('Y-m-d',strtotime($this->input->post('second_date')));
-
-		// dd($second_date);
 		$ids = $this->input->post('spl');
 		$type = $this->input->post('type');
+		$skip = $this->input->post('skip');
 		$emp_id = explode(',', trim($ids));
-		// dd($emp_id);
-		$data["values"] = $this->Grid_model->incre_prom_report($first_date,$second_date,$emp_id,$type);
+
+		$data["values"] = $this->Grid_model->incre_prom_report($first_date,$second_date,$emp_id,$type, $skip);
+		// dd($data["values"]);
         if($type == 1){
 			$this->load->view('grid_con/increment_letter',$data);
 		}else if($type == 2){
