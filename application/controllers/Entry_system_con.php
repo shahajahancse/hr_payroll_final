@@ -1144,13 +1144,13 @@ class Entry_system_con extends CI_Controller
         $unit_id        = $_POST['unit_id'];
         $prom_date      = date('Y-m-01', strtotime($_POST['prom_date']));
         $new_salary     = $_POST['prom_gross_sal'];
-        $new_com_salary = $_POST['prom_com_gross_sal'];
+        $new_com_salary = $_POST['prom_com_gross_sal'] ?? $new_salary ;
         $department     = $_POST['department'];
         $section        = $_POST['section'];
         $line           = $_POST['line'];
         $designation    = $_POST['designation'];
         $grade_id       = $_POST['grade_id'];
-        $old_salary     = $_POST['salary'];
+        $old_salary     = $_POST['salary'] ?? $new_salary ;
         $old_com_salary = $_POST['com_salary'];
 
         $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();

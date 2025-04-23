@@ -807,10 +807,10 @@
         }
 
         prom_gross_sal = document.getElementById('prom_gross_sal').value;
-        if (prom_gross_sal == '') {
-            showMessage('error', 'Please input the New Salary');
-            return false;
-        }
+        // if (prom_gross_sal == '') {
+        //     showMessage('error', 'Please input the New Salary');
+        //     return false;
+        // }
 
         prom_com_gross_sal = document.getElementById('prom_com_gross_sal').value;
         if (prom_com_gross_sal == '') {
