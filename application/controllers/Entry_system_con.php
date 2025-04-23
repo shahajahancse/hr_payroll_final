@@ -21,9 +21,53 @@ class Entry_system_con extends CI_Controller
         }
     }
 
-    //-------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
+    // GRID Display for Alert System
+    //----------------------------------------------------------------------------------------
+    public function alert_system()
+    {
+        $emp_id       = $_POST['emp_id'];
+        $unit_id      = $_POST['unit_id'];
+        $msg          = $_POST['msg'];
+
+        $this->db->where('unit_id', $unit_id)->where('emp_id',$emp_id);
+        $check = $this->db->where('date', date("Y-m-d"))->get('emp_alert_message')->row();
+        if (empty($check)) {
+            $data = array(
+                'unit_id'   => $unit_id,
+                'emp_id'    => $emp_id,
+                'msg'       => $msg,
+                'date'      => date("Y-m-d"),
+            );
+            if ($this->db->insert('emp_alert_message', $data)) {
+                echo 'success';
+                exit;
+            } else {
+                echo 'Record Not Inserted';
+                exit;
+            }
+        } else {
+            $data = array(
+                'msg'       => $msg,
+            );
+            $this->db->where('unit_id', $unit_id)->where('emp_id', $emp_id)->where('date', date("Y-m-d"));
+            if ($this->db->update('emp_alert_message', $data)) {
+                echo 'success';
+                exit;
+            } else {
+                echo 'Record Not Inserted';
+                exit;
+            }
+        }
+        echo 'Record Not Inserted';
+    }
+    //----------------------------------------------------------------------------------------
+    // GRID Display for Alert System
+    //----------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------
     // GRID Display for Stop Salary System
-    //-------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
     public function stop_salary()
     {
         $sql           = $_POST['emp_id'];
@@ -1016,13 +1060,13 @@ class Entry_system_con extends CI_Controller
     }
     public function increment_entry()
     {
-        $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
         $incr_date      = date('Y-m-01', strtotime($_POST['incr_date']));
         $new_salary     = $_POST['gross_sal'];
-        $new_com_salary = $_POST['com_gross_sal'];
-        $old_salary     = $_POST['salary'];
-        $old_com_salary = $_POST['com_salary'];
+        $new_com_salary = $_POST['com_gross_sal'] ?? $new_salary;
+        $emp_id         = $_POST['emp_id'];
+        $old_salary     = $_POST['inc_salary'];
+        $old_com_salary = $_POST['inc_com_salary'];
         $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
         $data = array(
             'prev_emp_id' => $emp_id,
@@ -1095,6 +1139,7 @@ class Entry_system_con extends CI_Controller
 
     public function promotion_entry()
     {
+        dd($_POST);
         $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
         $prom_date      = date('Y-m-01', strtotime($_POST['prom_date']));
@@ -1209,13 +1254,13 @@ class Entry_system_con extends CI_Controller
 
     public function line_entry()
     {
-        $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
-        $line_date      = date('Y-m-01', strtotime($_POST['line_date']));
         $department     = $_POST['department'];
         $section        = $_POST['section'];
         $line           = $_POST['line'];
         $designation    = $_POST['designation'];
+        $line_date      = date('Y-m-01', strtotime($_POST['line_date']));
+        $emp_id         = $_POST['emp_id'];
 
         $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
             $dd = array(
@@ -1250,7 +1295,7 @@ class Entry_system_con extends CI_Controller
                 'status'            => 3,
             );
 
-            $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $line_date);
             if ( $this->db->update('pr_incre_prom_pun', $data) ) {
                 $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
                 echo 'success';
@@ -1287,6 +1332,7 @@ class Entry_system_con extends CI_Controller
             }
         }
     }
+
     public function line_delete_ajax(){
         $emp_id         = $_POST['sql'];
         $unit_id        = $_POST['unit_id'];

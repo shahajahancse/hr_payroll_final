@@ -271,6 +271,60 @@
 								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Attendance Register Excel</button>
 								<?php echo form_close(); ?>
 							<?php } ?>
+
+
+							<?php if(in_array(217,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_monthly_night_register()">Night Bill Register</button>
+								<?php echo form_open(base_url('grid_con/night_bill_register_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Night Bill Register Excel</button>
+								<?php echo form_close(); ?>
+							<?php } ?>
+
+							<?php if(in_array(218,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_monthly_ifter_register()">Ifter Bill Register</button>
+								<?php echo form_open(base_url('grid_con/ifter_bill_register_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Ifter Bill Register Excel</button>
+								<?php echo form_close(); ?>
+							<?php } ?>
+
+
+
+							<?php if(in_array(219,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_monthly_weekend_register()"> Weekend Register</button>
+								<?php echo form_open(base_url('grid_con/weekend_bill_register_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Weekend  Register Excel</button>
+								<?php echo form_close(); ?>
+							<?php } ?>
+
+
+
+							<?php if(in_array(220,$acl)) { ?>
+								<button class="btn input-sm sbtn" onclick="grid_monthly_holiday_register()">Holiday Register</button>
+								<?php echo form_open(base_url('grid_con/holiday_register_excel'), array('method' => 'post')); ?>
+								<input type="hidden" class='hide_date' name="hide_date">
+								<input type="hidden" class='hide_emp' name="hide_emp">
+								<input type="hidden" class='hide_unit' name="hide_unit">
+								<button onclick="return validFunc()" type="submit" name="excel" value="excel" class="btn input-sm btn-info">Holiday Register Excel</button>
+								<?php echo form_close(); ?>
+							<?php } ?>
+
+
+
+
+
+
+
+
+
 						</div>
 						<!-- Monthly Reports end -->
 

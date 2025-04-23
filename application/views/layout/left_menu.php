@@ -101,6 +101,12 @@
             <li class="start <?= activate_method('attn_process_form') ?>"> <a href="<?=base_url('attn_process_con/attn_process_form')?>" class="anchor_cls">Attendance Process</a> </li>
           <?php } ?>
           <?php if(in_array(30,$acl)) { ?>
+            <li class="start <?= activate_method('alert_msg_list') ?>">
+              <a href="<?=base_url('attn_process_con/alert_msg_list')?>" class="anchor_cls">Alert List
+                <span style="margin-right: 10px;" class="badge badge-danger pull-right"> <?= alt_ntf(); ?> </span>
+              </a>
+            </li>
+
             <li class="start <?= activate_method('grid_window') ?>"> <a href="<?=base_url('attn_process_con/grid_window')?>" class="anchor_cls">Reports</a> </li>
           <?php } ?>
         </ul>
@@ -121,9 +127,6 @@
           <?php if(in_array(33,$acl)) { ?>
             <li class="start <?= activate_method('grid_salary_report') ?>"> <a href="<?=base_url('salary_process_con/grid_salary_report')?>" class="anchor_cls">Reports</a> </li>
           <?php } ?>
-          <!-- < ?php if(in_array(125,$acl)) { ?>
-            <li class="start < ?= activate_method('grid_salary_report') ?>"> <a href="< ?=base_url('salary_process_con/festival_bonus_form')?>" class="anchor_cls">Festival Bonus</a> </li>
-          < ?php } ?> -->
         </ul>
       </li>
       <?php } ?>

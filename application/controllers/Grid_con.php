@@ -984,6 +984,20 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_reportt',$data);
 		}
 	}
+	// function grid_monthly_night_register(){
+	// 	$grid_firstdate = $this->input->post('firstdate');
+	// 	$grid_data = $this->input->post('spl');
+	// 	$grid_emp_id = explode(',', trim($grid_data));
+	// 	$data['unit_id'] = $this->input->post('unit_id');
+	// 	$query=$this->Grid_model->grid_monthly_night_register($grid_firstdate,$grid_emp_id);
+	// 	if(is_string($query)){
+	// 		echo $query;
+	// 	}else{
+	// 		$data["value"] = $query;
+	// 		$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+	// 		$this->load->view('monthly_report_night',$data);
+	// 	}
+	// }
 
 	function att_register_excel(){
 		$grid_firstdate = $this->input->post('hide_date');
@@ -2886,5 +2900,71 @@ class Grid_con extends CI_Controller {
 
 		$this->load->view('service_book_info',$data);
 	}
+
+	function grid_monthly_night_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_night_register($grid_firstdate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_report_night',$data);
+		}
+	}
+
+
+	function grid_monthly_ifter_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_ifter_register($grid_firstdate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_report_ifter',$data);
+		}
+	}
+	function grid_monthly_weekend_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_weekend_register($grid_firstdate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_report_weekend',$data);
+		}
+	}
+	function grid_monthly_holiday_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_holiday_register($grid_firstdate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_report_holiday',$data);
+		}
+	}
+
+
+
+
+
+
+
 }
 ?>

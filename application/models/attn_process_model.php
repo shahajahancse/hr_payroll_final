@@ -261,7 +261,13 @@ class Attn_process_model extends CI_Model{
 				 	$holiday_allo = 1;
 				}
 				// week and holiday end
-				// dd($ot_entitle);
+
+				// get alert message
+				$alert_msg = 0;
+				if ($attn_status == "P") {
+					$alert_msg = $this->get_alert_message($emp_id, $process_date, 1);
+				}
+
 				$data = array(
 					'in_time' 			=> $in_time,
 					'out_time' 			=> $out_time,
@@ -281,6 +287,7 @@ class Attn_process_model extends CI_Model{
 					'holiday_allo'	    => $holiday_allo,
 					'weekly_allo'		=> $weekly_allo,
 					'unit_id'			=> $unit,
+					'alert_msg'			=> $alert_msg
 				);
 				$this->db->where('shift_log_date', $process_date);
 				$this->db->where('emp_id', $emp_id);
@@ -296,6 +303,19 @@ class Attn_process_model extends CI_Model{
 		return true;
 	}
 
+	// get alert message
+	function get_alert_message($emp_id, $process_date, $type)
+	{
+		$this->db->where('emp_id', $emp_id);
+		$this->db->where('date', $process_date);
+		$this->db->where('status', $type);
+		$result = $this->db->get('emp_alert_message')->row();
+		if (!empty($result)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 
 	// check roster shift and chage it
 	function check_shift_roster($date, $unit)
