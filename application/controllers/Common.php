@@ -145,8 +145,9 @@ class Common extends CI_Controller {
                 // dd($trimmedTerm);
                 if ($index === 0) {
                     $this->db->like('ss.emp_id', $trimmedTerm);
-                } else {
+                } else { 
                     $this->db->or_like('ss.emp_id', $trimmedTerm);
+
                 }
             }
         }
