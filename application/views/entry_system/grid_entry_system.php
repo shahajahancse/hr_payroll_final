@@ -635,6 +635,8 @@
     <script type="text/javascript">
         // on load employee
         function grid_emp_list() {
+            $('.removeTr').remove();
+
             var unit = document.getElementById('unit_id').value;
             var dept = document.getElementById('dept').value;
             var section = document.getElementById('section').value;
