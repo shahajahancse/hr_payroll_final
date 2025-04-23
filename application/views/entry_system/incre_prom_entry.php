@@ -489,6 +489,7 @@
                                 <div class="input-group" style="gap: 14px; display: flex;margin-top: 20px;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='promotion_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-info" onclick='lprint(2)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="prom_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -536,7 +537,7 @@
                                 <div class="input-group pull-right" style="gap: 14px; display: flex; margin-bottom: 10px;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: -10px">
                                         <input class="btn btn-primary" onclick='promotion_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='promotion_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(2)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="prom_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -623,7 +624,7 @@
                                     <input type="text" class="form-control date" id="line_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: 10px">
                                         <input class="btn btn-primary" onclick='line_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='line_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(3)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="line_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -635,6 +636,7 @@
         </div>
     </div>
 
+    <!-- left menu to select employee/search employee -->
     <div class="col-md-4 tablebox">
         <input type="text" id="searchi" class="form-control" placeholder="Search">
         <div style="height: 80vh; overflow-y: scroll;">
@@ -667,6 +669,7 @@
     </div>
     <!-- </div> -->
 </div>
+
 <!-- line_entry -->
 <script>
     function line_entry(e) {
@@ -781,6 +784,7 @@
     }
 </script>
 <!-- promotion_entry -->
+
 <script>
     function promotion_entry(e) {
         e.preventDefault();
@@ -906,6 +910,7 @@
         })
     }
 </script>
+
 <!-- increment_entry -->
 <script>
     function increment_entry(e) {
@@ -1694,6 +1699,7 @@
     $("#special_entry, #increment_entry, #promotion_entry, #line_change").hide();
 </script>
 
+<!-- letter print -->
 <script>
     function lprint(type){
         var ajaxRequest;  // The variable that makes Ajax possible!
