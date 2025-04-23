@@ -287,11 +287,7 @@
     <script>
         $(document).ready(function() {
             $("#searchi").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-                $(".removeTrno").toggle($(".removeTr").length === 0);
+                grid_emp_list()
             });
         });
     </script>
@@ -307,6 +303,8 @@
             var status = document.getElementById('status').value;
             var stop_salary = document.getElementById('stop_salary').value;
             var salary_month = document.getElementById('salary_month').value;
+
+            var searchi = document.getElementById('searchi').value;
 
             if (typeof unit === "undefined" || unit === '') {
                  alert('Please Select Unit First'); return;
@@ -325,6 +323,7 @@
                     "status"      : status,
                     "stop_salary" : stop_salary,
                     "salary_month": salary_month,
+                    "searchi"     : searchi
                 },
                 contentType: "application/json",
                 dataType: "json",

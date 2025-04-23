@@ -60,7 +60,7 @@ class Common_model extends CI_Model{
 	}
 
 	function get_emp_by_unit($id){
-		$this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
+		$this->db->select('MAX(com.id) as id, MAX(com.emp_id) as emp_id, MAX(per.name_en) as name_en, MAX(per.name_bn) as name_bn');
 		$this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
 		$this->db->from('pr_emp_com_info as com');
 		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
