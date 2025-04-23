@@ -254,30 +254,30 @@
     <script>
         $(document).ready(function() {
             $("#searchi").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-                $(".removeTrno").toggle($(".removeTr").length === 0);
+                grid_emp_list()
             });
         });
     </script>
     <script type="text/javascript">
         // on load employee
         function grid_emp_list() {
+            $('.removeTr').remove();
+
             var unit = document.getElementById('unit_id').value;
             var dept = document.getElementById('dept').value;
             var section = document.getElementById('section').value;
             var line = document.getElementById('line').value;
             var desig = document.getElementById('desig').value;
             var status = document.getElementById('status').value;
+            var searchi = document.getElementById('searchi').value;
 
             url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
             $.ajax({
                 url: url,
                 type: 'GET',
                 data: {
-                    "status": status
+                    "status": status,
+                    "searchi": searchi
                 },
                 contentType: "application/json",
                 dataType: "json",

@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Common extends CI_Controller {
 
     function grid_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
+        $searchInput = $_GET['searchi'];
         // if (empty($_GET['status'])) {
         //     $this->db->select('emp_id');
         //     $this->db->from('pr_emp_resign_history');
@@ -22,7 +23,7 @@ class Common extends CI_Controller {
         ini_set("pcre.backtrack_limit", 100000000000);
         ini_set("pcre.recursion_limit", 10000000000);
     	$data = array();
-        $this->db->select('com.id, com.emp_id, per.name_en, per.name_bn');
+        $this->db->select('max(com.id) as id, max(com.emp_id) as emp_id, max(per.name_en) as name_en, max(per.name_bn) as name_bn');
         $this->db->from('pr_emp_com_info as com');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
         $this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
@@ -51,10 +52,23 @@ class Common extends CI_Controller {
         if (!empty($_GET['status'])) {
             $this->db->where('com.emp_cat_id', $_GET['status']);
         }
+        if (!empty($searchInput)) {
+            $searchTerms = explode(',', $searchInput);
+            foreach ($searchTerms as $index => $term) {
+                $trimmedTerm = trim($term);
+                // dd($trimmedTerm);
+                if ($index === 0) {
+                    $this->db->like('com.emp_id', $trimmedTerm);
+                } else {
+                    $this->db->or_like('com.emp_id', $trimmedTerm);
+                }
+            }
+        }
 
         $this->db->group_by('com.emp_id');
         $this->db->order_by('com.emp_id', 'asc');
         $result = $this->db->get()->result();
+        //dd($result);
 
         header('Content-Type: application/x-json; charset=utf-8');
         echo json_encode($result);
