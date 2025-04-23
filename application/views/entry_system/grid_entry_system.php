@@ -192,40 +192,21 @@
                 }
             </style>
             <!-- eot entry form   -->
-            <!-- <div id="eot_modify" class="row nav_head" style="margin-top: 13px;">
+            <div id="alert_system" class="row nav_head" style="margin-top: 13px;">
                 <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                     <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                         <form method="post" id="eot_modify_form">
                             <div class="raw">
-                                <div class="col-md-5" style="padding: 5px !important">
-                                    <div class="col-md-6" style="padding: 5px !important">
-                                        <div class="form-group" style="margin-bottom: 3px !important;">
-                                            <label class="control-label">First Date</label>
-                                            <input class="form-control input-sm date" type="text" id="eot_f_date" name="eot_f_date" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" style="padding: 5px !important">
-                                        <div class="form-group" style="margin-bottom: 3px !important;">
-                                            <label class="control-label">Second Date</label>
-                                            <input class="form-control input-sm date" type="text" id="eot_s_date" name="eot_s_date" autocomplete="off">
-                                        </div>
+                                <div class="col-md-12" style="padding: 5px !important">
+                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                        <label class="control-label">Alert Remark</label>
+                                        <textarea class="form-control" name="alert_remark" id="alert_remark"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="col-md-3" style="padding: 5px !important">
-                                        <div class="form-group" style="padding: 2px 5px !important;">
-                                            <label class="control-label">EOT</label>
-                                            <input class="form-control" id="eot" name="eot">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9" style="padding: 0px !important; margin-top: 30px;">
-                                        <span class="hints" style="font-size:12px;">[EOT Modification for Multiple Employee]</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" style="top: -15px">
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <input class="btn btn-primary" onclick='eot_modify_entry(event)' type="button" value='Save' />
+                                <div class="col-md-12">
+                                    <div class="input-group pull-right">
+                                        <span class="input-group-btn" style="display: flex; gap: 15px; right:-5px">
+                                            <input class="btn btn-primary" onclick="alert_system(event)" type="button" value="Save">
                                         </span>
                                     </div>
                                 </div>
@@ -233,7 +214,7 @@
                         </form>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
 
         <!-- employee list for right side -->
@@ -276,6 +257,50 @@
         }
     </script>
 
+    <!-- Alert system entry -->
+    <script>
+        function alert_system(e) {
+            e.preventDefault();
+            var checkboxes = document.getElementsByName('emp_id[]');
+            var sql = get_checked_value(checkboxes);
+            let emp_id = sql.split(",");
+            if (emp_id == '') {
+                showMessage('error', 'Please select employee Id');
+                return false;
+            }
+            if (emp_id.length > 1) {
+                showMessage('error', 'Please select max one employee Id');
+                return false;
+            }
+            unit_id = document.getElementById('unit_id').value;
+            msg = document.getElementById('alert_remark').value;
+            if (unit_id == '') {
+                showMessage('error', 'Please select Unit');
+                return false;
+            }
+
+            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&msg=" + msg;
+            $.ajax({
+                type: "POST",
+                url: hostname + "entry_system_con/alert_system",
+                data: data,
+                success: function(data) {
+                    $("#loader").hide();
+                    if (data == 'success') {
+                        showMessage('success', 'Record Inserted Successfully');
+                    } else {
+                        showMessage('error', data);
+                    }
+                },
+                error: function(data) {
+                    $("#loader").hide();
+                    showMessage('error', 'Record Not Inserted');
+                }
+            })
+        }
+    </script>
+
+    <!-- stop salary -->
     <script>
         function stop_salary(e) {
             e.preventDefault();
@@ -298,7 +323,7 @@
                 return false;
             }
 
-            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&stop_month=" + stop_month; 
+            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&stop_month=" + stop_month;
             $.ajax({
                 type: "POST",
                 url: hostname + "entry_system_con/stop_salary",
@@ -339,7 +364,7 @@
                 return false;
             }
 
-            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&stop_month=" + stop_month; 
+            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&stop_month=" + stop_month;
             loading_open();
             $.ajax({
                 type: "POST",

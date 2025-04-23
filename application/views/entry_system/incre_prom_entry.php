@@ -485,6 +485,7 @@
                                  <label class="control-label">Effective Date :</label>
                                 <input type="text" class="form-control date" id="prom_date" placeholder="select date">
                             </div>
+
                             <div class="col-md-3">
                                 <div class="input-group" style="gap: 14px; display: flex;margin-top: 20px;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
@@ -1183,6 +1184,7 @@
             }
         })
     }
+    
     function get_emp_info_promotion() {
 
 
@@ -1256,6 +1258,7 @@
             }
         })
     }
+
     function get_emp_info_increment() {
 
         var checkboxes = document.getElementsByName('emp_id[]');

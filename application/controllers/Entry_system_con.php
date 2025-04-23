@@ -21,9 +21,53 @@ class Entry_system_con extends CI_Controller
         }
     }
 
-    //-------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
+    // GRID Display for Alert System
+    //----------------------------------------------------------------------------------------
+    public function alert_system()
+    {
+        $emp_id       = $_POST['emp_id'];
+        $unit_id      = $_POST['unit_id'];
+        $msg          = $_POST['msg'];
+
+        $this->db->where('unit_id', $unit_id)->where('emp_id',$emp_id);
+        $check = $this->db->where('date', date("Y-m-d"))->get('emp_alert_message')->row();
+        if (empty($check)) {
+            $data = array(
+                'unit_id'   => $unit_id,
+                'emp_id'    => $emp_id,
+                'msg'       => $msg,
+                'date'      => date("Y-m-d"),
+            );
+            if ($this->db->insert('emp_alert_message', $data)) {
+                echo 'success';
+                exit;
+            } else {
+                echo 'Record Not Inserted';
+                exit;
+            }
+        } else {
+            $data = array(
+                'msg'       => $msg,
+            );
+            $this->db->where('unit_id', $unit_id)->where('emp_id', $emp_id)->where('date', date("Y-m-d"));
+            if ($this->db->update('emp_alert_message', $data)) {
+                echo 'success';
+                exit;
+            } else {
+                echo 'Record Not Inserted';
+                exit;
+            }
+        }
+        echo 'Record Not Inserted';
+    }
+    //----------------------------------------------------------------------------------------
+    // GRID Display for Alert System
+    //----------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------
     // GRID Display for Stop Salary System
-    //-------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
     public function stop_salary()
     {
         $sql           = $_POST['emp_id'];
@@ -1095,6 +1139,7 @@ class Entry_system_con extends CI_Controller
 
     public function promotion_entry()
     {
+        dd($_POST);
         $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
         $prom_date      = date('Y-m-01', strtotime($_POST['prom_date']));
