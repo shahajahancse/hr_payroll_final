@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Common extends CI_Controller {
 
     function grid_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
-        $searchi = $_GET['searchi'];
+        $searchInput = $_GET['searchi'];
         // if (empty($_GET['status'])) {
         //     $this->db->select('emp_id');
         //     $this->db->from('pr_emp_resign_history');
@@ -52,11 +52,16 @@ class Common extends CI_Controller {
         if (!empty($_GET['status'])) {
             $this->db->where('com.emp_cat_id', $_GET['status']);
         }
-        if (!empty($searchi)) {
-            //dd($searchi);
-            $searchi_array = explode(",", $searchi);
-            foreach ($searchi_array as $key => $value) {
-                $this->db->like('com.emp_id', $value);
+        if (!empty($searchInput)) {
+            $searchTerms = explode(',', $searchInput);
+            foreach ($searchTerms as $index => $term) {
+                $trimmedTerm = trim($term);
+                // dd($trimmedTerm);
+                if ($index === 0) {
+                    $this->db->like('com.emp_id', $trimmedTerm);
+                } else {
+                    $this->db->or_like('com.emp_id', $trimmedTerm);
+                }
             }
         }
 
