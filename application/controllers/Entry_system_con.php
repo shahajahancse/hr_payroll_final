@@ -1139,7 +1139,7 @@ class Entry_system_con extends CI_Controller
 
     public function promotion_entry()
     {
-        dd($_POST);
+        // dd($_POST);
         $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
         $prom_date      = date('Y-m-01', strtotime($_POST['prom_date']));
