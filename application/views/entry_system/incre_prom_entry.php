@@ -1187,6 +1187,7 @@
     
     function get_emp_info_promotion() {
 
+
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
@@ -1228,7 +1229,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                // console.log(d);
+                console.log(d);
                 $("#loader").hide();
                 $("#promotion_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1240,6 +1241,16 @@
                 $('#desigs_id').html(d.desig_name);
                 $('#salary').val(d.gross_sal);
                 $('#com_salary').val(d.com_gross_sal);
+                $('#pro_department').val(d.emp_dept_id).trigger('change');
+                setTimeout(() => {
+                    $('#pro_section').val(d.emp_sec_id).trigger('change');
+                }, 500);
+                setTimeout(() => {
+                    $('#pro_line').val(d.emp_line_id).trigger('change');
+                }, 1000);
+                setTimeout(() => {
+                    $('#pro_designation').val(d.emp_desi_id).trigger('change');
+                }, 1500);
             },
             error: function() {
                 $("#loader").hide();
