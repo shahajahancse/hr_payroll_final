@@ -17,18 +17,28 @@
  * get employee id
  *
  * @access	public
- * @param	mixed 
+ * @param	mixed
  */
+if (!function_exists('alt_ntf'))
+{
+    function alt_ntf()
+    {
+        $CI =& get_instance();
+        $CI->db->select('count(*) as total');
+		$CI->db->where('shift_log_date', date('Y-m-d'))->where('alert_msg', 1);
+        $row = $CI->db->get('pr_emp_shift_log')->row();
+        return $row->total ? $row->total : 0;
+    }
+}
+
+
 if ( ! function_exists('get_all_emp_id'))
 {
 	function get_all_emp_id($emp_cat = array(), $unit_id = 0)
 	{
-
-		// dd($emp_cat.'---'.$unit_id);
-		
 		$CI =& get_instance();
       	$CI->db->select('emp_id');
-      	$CI->db->from('pr_emp_com_info'); 
+      	$CI->db->from('pr_emp_com_info');
       	$CI->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat);
 		if ($unit_id != 0) {
 			$CI->db->where('pr_emp_com_info.unit_id',$unit_id);
@@ -42,8 +52,8 @@ if ( ! function_exists('get_all_emp_id'))
 		});
 		return $data;
 	}
-
 }
+
 if ( ! function_exists('add_days_skipping_fridays'))
 {
 	function add_days_skipping_fridays($date, $days,$emp_id) {
@@ -69,13 +79,9 @@ if ( ! function_exists('add_days_skipping_fridays'))
 			// $current_date = strtotime('+' . $count . ' days', strtotime($current_date));
 		}
 		// dd(date('d/m/Y', $current_date));
-
 		return date('d/m/Y', $current_date);
 	}
-
 }
-
-
 
 // ------------------------------------------------------------------------
 
@@ -85,7 +91,7 @@ if ( ! function_exists('add_days_skipping_fridays'))
  * get employee id
  *
  * @access	public
- * @param	mixed 
+ * @param	mixed
  */
 if ( ! function_exists('check_acl_list'))
 {
