@@ -529,7 +529,7 @@ input[type="number"] {
                                 <select name="emp_cat_id" id="emp_cat_id" class="form-control input-sm required" required>
                                     <option value="">-- Select one --</option>
                                     <?php foreach ($categorys as $key => $row) { ?>
-                                    <option value="<?= $row->id ?>" <?php echo $row->id == 1 ? 'Selected':'';?>>
+                                    <option value="<?= $row->id ?>" <?php echo $row->id == 4 ? 'Selected':'';?>>
                                         <?= $row->status_type ?></option>
                                     <?php } ?>
                                 </select>
