@@ -14,7 +14,7 @@
           } else if (isset($unit_name)) {
             echo $unit_name;
           }else {
-            echo "ERP | AJ Group";
+            echo "Hr | Payroll";
           }
           ?></span>
         </a>

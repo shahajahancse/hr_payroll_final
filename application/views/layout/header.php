@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/ico" href="<?=base_url()?>awedget/assets/img/loopdot.png" />
 
-    <title>ERP | AJ Group</title>
+    <title>Hr | Payroll</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="Mysoftheaven (BD) Ltd." name="author" />
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
@@ -50,7 +50,7 @@
     <link href="<?=base_url()?>awedget/assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>awedget/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
     <script src="<?=base_url()?>awedget/assets/plugins/jquery-3.2.1.min.js" type="text/javascript"></script>
-   
+
     <!-- new -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
