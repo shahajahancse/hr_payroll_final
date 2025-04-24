@@ -432,7 +432,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
                                     <label class="control-label">New Designation</label>
-                                    <select id="pro_designation" class="form-control input-sm pro_designation">
+                                    <select id="pro_designationn" class="form-control input-sm pro_designation">
                                         <option value="">Select Designation</option>
                                     </select>
                                 </div>
@@ -807,10 +807,10 @@
         }
 
         prom_gross_sal = document.getElementById('prom_gross_sal').value;
-        if (prom_gross_sal == '') {
-            showMessage('error', 'Please input the New Salary');
-            return false;
-        }
+        // if (prom_gross_sal == '') {
+        //     showMessage('error', 'Please input the New Salary');
+        //     return false;
+        // }
 
         prom_com_gross_sal = document.getElementById('prom_com_gross_sal').value;
         if (prom_com_gross_sal == '') {
@@ -838,7 +838,7 @@
             showMessage('error', 'Please select Line');
             return false;
         }
-        designation = document.getElementById('pro_designation').value;
+        designation = document.getElementById('pro_designationn').value;
         if (designation == '') {
             showMessage('error', 'Please select Designation');
             return false;
@@ -1251,6 +1251,9 @@
                 setTimeout(() => {
                     $('#pro_designation').val(d.emp_desi_id).trigger('change');
                 }, 1500);
+                setTimeout(() => {
+                    $('#grade_id').val(d.emp_sal_gra_id).trigger('change');
+                }, 1000);
             },
             error: function() {
                 $("#loader").hide();
