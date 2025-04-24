@@ -106,7 +106,6 @@
                 <span style="margin-right: 10px;" class="badge badge-danger pull-right"> <?= alt_ntf(); ?> </span>
               </a>
             </li>
-
             <li class="start <?= activate_method('grid_window') ?>"> <a href="<?=base_url('attn_process_con/grid_window')?>" class="anchor_cls">Reports</a> </li>
           <?php } ?>
         </ul>
