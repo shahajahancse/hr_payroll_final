@@ -12395,6 +12395,31 @@ function service_book_info($grid_emp_id){
 			return "Soryy! Requested list is empty";
 		}
 	}
+	function grid_employee_background($grid_emp_id){
+
+		// dd($grid_emp_id);
+
+		$this->db->select('
+			pr_emp_com_info.*,
+			pr_emp_per_info.*,
+			
+			emp_designation.desig_name,
+			emp_line_num.line_name_en,
+		');
+		$this->db->from('pr_emp_com_info');
+		$this->db->join('pr_emp_per_info','pr_emp_com_info.emp_id = pr_emp_per_info.emp_id','left');
+		$this->db->join('emp_section','emp_section.id = pr_emp_com_info.emp_sec_id','left');
+		$this->db->join('emp_line_num','emp_line_num.id = pr_emp_com_info.emp_line_id','left');
+		$this->db->join('emp_designation','emp_designation.id = pr_emp_com_info.emp_desi_id','left');
+		$this->db->where_in('pr_emp_com_info.emp_id',$grid_emp_id);
+		$this->db->group_by("pr_emp_per_info.emp_id");
+		$this->db->order_by("pr_emp_per_info.emp_id");
+		$query = $this->db->get()->result();
+
+		return $query[0];
+
+		
+	}
 
 
   }

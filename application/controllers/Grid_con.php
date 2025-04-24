@@ -2960,10 +2960,12 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
-
-
-
-
+	function grid_employee_background(){
+		$grid_data = $this->input->post('emp_id');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"]=$this->Grid_model->grid_employee_background($grid_emp_id);
+		$this->load->view('employee_background',$data);
+	}
 
 
 }
