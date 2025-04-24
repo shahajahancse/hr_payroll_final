@@ -50,6 +50,7 @@
                             echo '<span style="font-weight:bold;">';
                             echo "Advance Salary Sheet for ".date("d M y", strtotime($salary_month)).' to '.$loan_date[0]->pay_day.date(" M y", strtotime($salary_month));
                             echo '</span>';
+                            // dd($value);
                         ?>
                     </div>
                     <div style="text-align:left; position:relative;padding-left:10px;width:20%; overflow:hidden; float:right; display:block; font-weight:bold">
@@ -94,6 +95,7 @@
         <!-- //hedding -->
 
         <?php
+        // dd($value);
         $per_page=8;
         $brack_page =$per_page+1;
 
@@ -108,7 +110,7 @@
         $total_ot_amount =0;
         $total_pay_amount =0;
         $i = 1; foreach($value as $key=>$row){
-        if($j==$brack_page){ ?>
+        if($j==$brack_page){  ?>
             <!-- per page total and footer heading -->
             <tr>
                 <td align="center" colspan="4"><strong>প্রতি পৃষ্ঠার মোট </strong></td>
@@ -175,7 +177,8 @@
                         <div style="width:100%; font-family:Arial, Helvetica, sans-serif;">
                             <div style="text-align:left; position:relative;padding-left:10px;width:20%; float:left; font-weight:bold;">
                                 <table>
-                                    <?php 
+                                    <?php  
+                                    
                                         $date = date('d-m-Y');
                                         $section_name = $value[0]->sec_name_en;
                                         $last_day = date("t", strtotime($salary_month));
@@ -246,7 +249,9 @@
                     $total_ot_amount =0;
                     $total_pay_amount =0;
                 ?>
-        <?php } ?>
+        <?php } 
+            
+        ?>
         <!-- internal page heading -->
 
         <?php if($row->gross_sal == 0){
@@ -254,8 +259,10 @@
         }
         $j++;
 
-            $get_data = $this->db->select('*')->from('pay_salary_sheet')->where('emp_id',$row->emp_id)->where('salary_month',$salary_month)->get()->row();
-            
+            $get_data = $this->db->select('*')->from('pay_salary_sheet')->where('emp_id', $row->emp_id)->where('salary_month', $salary_month)->get()->row();
+            // $get_data = $this->db->select('*')->from('pay_salary_sheet')->where('emp_id',$row->emp_id)->where('salary_month',$salary_month)->get()->row();
+            // dd($row);
+
             $loan_date = $this->db->select('*')->from('pr_advance_loan')->where('loan_month',$salary_month)->where('emp_id',$row->emp_id)->get()->row();
             // dd($loan_date);
             $gett_data = $this->db->select("
@@ -271,6 +278,8 @@
             ->where("shift_log_date between '$loan_date->from_date' and '$loan_date->to_date'")
             ->get()->row();
 
+            // dd($gett_data);
+
             $leave_type = $this->db->select("
                leave_type,total_leave
             ")
@@ -279,6 +288,8 @@
             ->where("leave_end  >=",$loan_date->from_date)
             ->where("leave_end  <=",$loan_date->to_date)
             ->get()->row();
+
+            // dd($leave_type);
 
             $cl = $leave_type->leave_type == 'cl' ? $leave_type->total_leave : 0;
             $sl = $leave_type->leave_type == 'sl' ? $leave_type->total_leave : 0;
@@ -289,7 +300,7 @@
 
             if ($unit_id == 1) {
                 $amptt = $this->db->where('pay_month',$salary_month)->where('emp_id',$row->emp_id)->get('pr_advance_loan_pay_history')->row();
-                $net_pay = $amptt->pay_amount? $amptt->pay_amount:0;
+                $net_pay = $amptt->pay_amount ? $amptt->pay_amount:0;
                 $ot = 0;
                 $ot_amount = 0;
                 $net_pay = floor($net_pay/100)*100;
@@ -299,7 +310,7 @@
                 $ot_amount = round($ot*$ot_rate);
             }
             
-            // dd( $loan_date->ot);
+            // dd( $net_pay);
             
             $total_amount = $net_pay+$ot_amount;
             $pay_amount  = floor($total_amount/100)*100;

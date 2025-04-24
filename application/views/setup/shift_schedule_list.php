@@ -11,15 +11,15 @@
 
     }
     .table td {
-    /* border-top: 1px solid #e8edf1; */
-    padding: 0px 3px !important;
-    font-size: 13px;
-    width: 100%;
-}
-table.dataTable thead th, table.dataTable thead td {
-    /* padding: 10px 18px; */
-    border-bottom: none;
-}
+        /* border-top: 1px solid #e8edf1; */
+        padding: 0px 3px !important;
+        font-size: 13px;
+        width: 100%;
+    }
+    table.dataTable thead th, table.dataTable thead td {
+        /* padding: 10px 18px; */
+        border-bottom: none;
+    }
 </style>
 
 <div class="content">
@@ -89,6 +89,7 @@ table.dataTable thead th, table.dataTable thead td {
                         <th>Tiffin break 2</th>
                         <th>Tiffin minute 2</th>
                         <th>Random minute</th>
+                        <th>Ot Half</th>
                         <th style="width:80px !important">Edit</th>
                         <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(148,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
@@ -119,6 +120,7 @@ table.dataTable thead th, table.dataTable thead td {
                         <td><?php echo $pr_emp_shift_schedules['tiffin_minute2'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['random_minute'] ?></td>
                         <td><?php echo $pr_emp_shift_schedules['iffter_allow_time'] ?></td>
+                        <td><?php echo $pr_emp_shift_schedules['ot_half'] ?></td>
 
            
                         <td>

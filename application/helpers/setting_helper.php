@@ -22,14 +22,43 @@
 
 if ( ! function_exists('gov_holiday'))
 {
-	function gov_holiday($date)
+	function gov_holiday($date1, $date2, $type = null)
 	{
+		// Check if session data is set
+        if (!isset($_SESSION['data']->unit_name)) {
+            return null; // or handle the error as needed
+        }
 		$CI =& get_instance();
-		$CI->db->where('date', $date)->where('unit_id',$_SESSION['data']->unit_name);
-		$gd = $CI->db->get('pr_gov_holiday')->row();
+		$CI->db->where('unit_id', $_SESSION['data']->unit_name);
+		$CI->db->where("date BETWEEN '$date1' AND '$date2'");
+		$gd = $CI->db->get('pr_gov_holiday')->num_rows();
+		
+		if (!empty($gd)) {
+			$date = date("Y-m-d", strtotime("+1 days".$date2));
+			$date = rec_gov_holiday($date);
+			$date = date("Y-m-d", strtotime("+$gd days".$date));
+		} else {
+			$date = $date2;
+			$date = date("Y-m-d", strtotime("+1 days".$date2));
+			$date = rec_gov_holiday($date);
+		}
+		$date = date("Y-m-d", strtotime("-1 days".$date));
+		return $date;
+	}
+}
+
+if ( ! function_exists('rec_gov_holiday'))
+{
+	function rec_gov_holiday($date)
+	{
+		// dd(date('d-m-Y', $date));
+		$CI =& get_instance();
+		$CI->db->where('unit_id', $_SESSION['data']->unit_name);
+		$CI->db->where("date", $date);
+		$gd = $CI->db->get('pr_gov_holiday')->num_rows();
 		if (!empty($gd)) {
 			$date = date("Y-m-d", strtotime("+1 days".$date));
-			$date = gov_holiday($date);
+			$date = rec_gov_holiday($date);
 		}
 		return $date;
 	}

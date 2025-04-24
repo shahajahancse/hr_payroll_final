@@ -149,6 +149,16 @@
         <input type="text" name="iffter_allow_time" value="<?=set_value('iffter_allow_time',$pr_emp_shift_schedule->iffter_allow_time)?>" class="form-control">
         <?php echo form_error('iffter_allow_time');?>
       </div>
+
+      <div class="form-group">
+        <label>Ot Half</label>
+        <select name="ot_half" class="form-control">
+          <option value="">Select</option>
+          <option value="No" <?php if($pr_emp_shift_schedule->ot_half=='No'){echo 'selected';}?>>No</option>
+          <option value="yes" <?php if($pr_emp_shift_schedule->ot_half=='Yes'){echo 'selected';}?>>Yes</option>
+        </select>
+        <?php echo form_error('ot_half');?>
+      </div>
      
       <div class="form-group">
         <button class="btn btn-primary">Update</button>

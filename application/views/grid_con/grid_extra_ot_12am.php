@@ -92,20 +92,31 @@
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
 					// dd($emp_data);
 					echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0'  style='text-align:center; font-size:13px; '>
-						<th>Date</th>
-						<th>Day</th>
-						<th>In Time</th>
-						<th>Out Time</th>
-						<th>Shift</th>
-						<th>Attn.Status</th>
-						<th>OT Hour</th>
-						<th>Extra OT Hour</th>
-						<th>Total OT Hour</th>
-						<th>Remarks</th>";
+						<tr>
+							<th>Date</th>
+							<th>Day</th>
+							<th>In Time</th>
+							<th>Out Time</th>
+							<th>Shift</th>
+							<th>Attn.Status</th>
+							<th>OT Hour</th>
+							<th>Extra OT Hour</th>
+							<th>Total OT Hour</th>
+							<th>Remarks</th>
+						</tr>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
+						$schedule = $this->job_card_model->schedule_check($row->schedule_id);
+						$tfb_start =  $schedule[0]['tiffin_break'];
+						$tiffin_minute =  $schedule[0]['tiffin_minute'];
+						$after_open_tfb = date("H:i:s", strtotime("+$tiffin_minute minutes", strtotime($tfb_start)));
+						$after_open_back = date("H:i:s", strtotime("+45 minutes", strtotime($after_open_tfb)));
 
 						$extra_ot_hour = $row->ot_eot_12am;
-
+						// ramadan fraction
+						if ($row->out_time <= $after_open_back && $row->ot_eot_4pm <= 1) {
+							$extra_ot_hour = 0;
+						}
+						
 						if($row->present_status == 'L'){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
@@ -143,18 +154,8 @@
 							$att_status_count = "A";
 							$extra_ot_hour = 0;
 						}
-						// $emp_shift = $this->job_card_model->emp_shift_check($value->emp_id, $row->shift_log_date);
-						$schedule = $this->job_card_model->schedule_check($row->schedule_id);
-                        // dd($schedule);
-						$start_time		=  $schedule[0]["in_start"];
-						$late_time 		=  $schedule[0]["late_start"];
-						$end_time   	=  $schedule[0]["in_end"];
-						$in_time   		=  $schedule[0]["in_time"];
-						$out_start_time	=  $schedule[0]["out_start"];
-						$out_end_time	=  $schedule[0]["out_end"];
-						$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
-						$ot_start	    =  $schedule[0]["ot_start"];
 
+						// in time
 						$shift_log_date = date("d-M-y", strtotime($row->shift_log_date));
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
@@ -170,11 +171,10 @@
 						}else{
 							$in_time = "00:00:00";
 						}
+						
+						// out time
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							$out_time = $this->job_card_model->get_formated_out_time_12am($value->emp_id, $out_time, $row->schedule_id);
-							
-
 							if($row->com_eot == 1 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
 								$extra_ot_hour = 0;
 								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
@@ -229,27 +229,12 @@
 								$extra_ot_hour = 4;
 								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
-
-
-
-							// $out_time = $row->out_time;
-							list($hour, $minute, $second) = explode(':', $out_time);
-							// Check if the minute is greater than 13
-							if ((int)$minute > 13 && (int)$minute <50) {
-								// Sum the digits of the minute
-								$minuteDigits = str_split($minute);
-								$minuteSum = array_sum($minuteDigits);
-								
-								// Format the new time string with the summed minute value
-								$out_time = sprintf("%02d:%02d:%02d", (int)$hour, $minuteSum, (int)$second);
-							}
-
-							// dd($out_time);
-						}
-						else{
+						} else {
 							$out_time = "00:00:00";
 						}
 
+						$out_time = $this->job_card_model->get_formated_out_time_12am($value->emp_id, $out_time, $schedule);
+						
 						echo "<tr>";
 							echo "<td>&nbsp;";
 							echo $shift_log_date;

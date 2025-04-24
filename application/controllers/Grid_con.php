@@ -377,6 +377,7 @@ class Grid_con extends CI_Controller {
 		}
 	}
 
+	// max 4 hours ot
 	function grid_extra_ot_9pm(){
 		$grid_firstdate  = $this->input->post('firstdate');
 		$grid_seconddate = $this->input->post('seconddate');
@@ -422,11 +423,11 @@ class Grid_con extends CI_Controller {
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}else{
-			if ($unit_id == 1) {
-				$this->load->view('grid_con/grid_extra_ot_all_aj',$data);
-			} else {
-				$this->load->view('grid_con/grid_extra_ot_all',$data);
-			}
+			$this->load->view('grid_con/grid_extra_ot_all',$data);
+			// if ($unit_id == 1) {
+			// 	$this->load->view('grid_con/grid_extra_ot_all_aj',$data);
+			// } else {
+			// }
 		}
 	}
 

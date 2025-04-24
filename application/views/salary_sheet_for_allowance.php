@@ -91,14 +91,9 @@
         </tr>
         <?php for ($i = $start; $i < $end; $i++){
             $employee = $value[$i]; 
-			// dd($employee);
-            if($employee->night_alo_count==0){
-                continue;
-            }
-            $holiday_allowance = $employee->night_allowance*$employee->night_alo_count; 
+            $holiday_allowance = $employee->night_allowance_rate*$employee->night_alo_count; 
             $total_page_allowance += $holiday_allowance;
             $grand_total_allowance += $holiday_allowance; 
-
         ?>
             <tr>
                 <td><?php echo $i + 1; ?></td>
@@ -109,7 +104,7 @@
                 <td style='white-space:nowrap'><?php echo date("d-M-y", strtotime($employee->emp_join_date)); ?></td>
                 <td style='white-space:nowrap'><?php echo $employee->gr_name; ?></td>
                 <td style='white-space:nowrap'><?php echo $employee->night_alo_count; ?></td>
-                <td style='white-space:nowrap'><?php echo (int)$employee->night_allowance; ?></td>
+                <td style='white-space:nowrap'><?php echo (int)$employee->night_allowance_rate; ?></td>
                 <td style='white-space:nowrap'><?php echo $holiday_allowance; ?></td>
                 <td style='padding:10px 60px'>&nbsp;</td>
             </tr>

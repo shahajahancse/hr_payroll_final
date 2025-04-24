@@ -10,7 +10,11 @@
     </style>
 </head>
     <body>
-        <?php // print_r($values); ?>
+        <?php 
+            $user_mode = $_SESSION['data']->user_mode;
+            // dd($user_mode);
+            // dd($values);
+        ?>
         <div style=" margin:0 auto;  width:auto;">
         <div id="no_print" style="float:right;"></div>
             <?php
@@ -29,6 +33,20 @@
                         <th width="50" style="white-space:nowrap">>05 PM</th>
                         <th width="50">05 PM</th>
                         <th width="50">06 PM</th>
+                        <?php if($user_mode==7){ ?>
+                        <th width="50">07 PM</th>
+                        <?php } if($user_mode==9){ ?>
+                        <th width="50">07 PM</th>
+                        <th width="50">08 PM</th>
+                        <th width="50">09 PM</th>
+                        <?php } if($user_mode==12){ ?>
+                        <th width="50">07 PM</th>
+                        <th width="50">08 PM</th>
+                        <th width="50">09 PM</th>
+                        <th width="50">10 PM</th>
+                        <th width="50">11 PM</th>
+                        <th width="50">12 PM</th>
+                        <?php } if($user_mode==0) { ?>
                         <th width="50">07 PM</th>
                         <th width="50">08 PM</th>
                         <th width="50">09 PM</th>
@@ -41,6 +59,7 @@
                         <th width="50">04 AM</th>
                         <th width="50">05 AM</th>
                         <th width="50">06 AM</th>
+                        <?php } ?>
                         <th width="80">P.Error</th>
                         <th width="80" style="white-space:nowrap">TTL O.T</th>
                         <th width="80">Remarks</th>
@@ -92,6 +111,20 @@
                             <th width="120"><?php echo $row->four_pm?></th>
                             <th width="120"><?php echo $row->five_pm?></th>
                             <th width="120"><?php echo $row->six_pm?></th>
+                            <?php if($user_mode==7){ ?>
+                            <th width="120"><?php echo $row->seven_pm?></th>
+                            <?php } if($user_mode==9){ ?>
+                            <th width="120"><?php echo $row->seven_pm?></th>
+                            <th width="120"><?php echo $row->eight_pm?></th>
+                            <th width="120"><?php echo $row->nine_pm?></th>
+                            <?php } if($user_mode==12){ ?>
+                            <th width="120"><?php echo $row->seven_pm?></th>
+                            <th width="120"><?php echo $row->eight_pm?></th>
+                            <th width="120"><?php echo $row->nine_pm?></th>
+                            <th width="120"><?php echo $row->ten_pm?></th>
+                            <th width="120"><?php echo $row->eleven_pm?></th>
+                            <th width="120"><?php echo $row->tweelve_pm?></th>
+                            <?php } if($user_mode==0){ ?>
                             <th width="120"><?php echo $row->seven_pm?></th>
                             <th width="120"><?php echo $row->eight_pm?></th>
                             <th width="120"><?php echo $row->nine_pm?></th>
@@ -104,6 +137,7 @@
                             <th width="120"><?php echo $row->four_am?></th>
                             <th width="120"><?php echo $row->five_am?></th>
                             <th width="120"><?php echo $row->six_am?></th>
+                            <?php } ?>
                             <th width="120"><?php echo $row->present_error?></th>
                             <th width="120"><?php echo $row->total_ot?></th>
                             <th width="120"><?php echo ''?></th>
@@ -115,6 +149,20 @@
                         <th><?php echo $total_four_pm;?></th>
                         <th><?php echo $total_five_pm;?></th>
                         <th><?php echo $total_six_pm;?></th>
+                        <?php if($user_mode==7){ ?>
+                        <th><?php echo $total_seven_pm;?></th>
+                        <?php } if($user_mode==9){ ?>
+                        <th><?php echo $total_seven_pm;?></th>
+                        <th><?php echo $total_eight_pm;?></th>
+                        <th><?php echo $total_nine_pm;?></th>
+                        <?php } if($user_mode==12){ ?>
+                        <th><?php echo $total_seven_pm;?></th>
+                        <th><?php echo $total_eight_pm;?></th>
+                        <th><?php echo $total_nine_pm;?></th>
+                        <th><?php echo $total_ten_pm;?></th>
+                        <th><?php echo $total_eleven_pm;?></th>
+                        <th><?php echo $total_tweelve_pm;?></th>
+                        <?php } if($user_mode==0){ ?>
                         <th><?php echo $total_seven_pm;?></th>
                         <th><?php echo $total_eight_pm;?></th>
                         <th><?php echo $total_nine_pm;?></th>
@@ -127,6 +175,7 @@
                         <th><?php echo $total_four_am;?></th>
                         <th><?php echo $total_five_am;?></th>
                         <th><?php echo $total_six_am;?></th>
+                        <?php } ?>
                         <th><?php echo $total_error;?></th>
                         <th><?php echo $total_ot;?></th>
                         <th></th>

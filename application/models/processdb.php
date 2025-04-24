@@ -51,6 +51,7 @@ class Processdb extends CI_Model{
 			'transport'			=> $this->input->post('transport'),
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
+			'emp_type'		    => $this->input->post('emp_type'),
 			'emp_join_date'		=> $ejd,
 			'hight'		=> $this->input->post('hight'),
 			'symbol'		=> $this->input->post('symbol'),
@@ -232,6 +233,7 @@ class Processdb extends CI_Model{
 			'transport'			=> $this->input->post('transport'),
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
+			'emp_type'			=> $this->input->post('emp_type'),
 			'emp_join_date'		=> $ejd,
 
 		);
@@ -641,6 +643,7 @@ class Processdb extends CI_Model{
 			'emp_join_date'		=> $ejd,
 			'salary_draw'		=> $this->input->post('saldraw'),
 			'salary_type'		=> $this->input->post('saltype'),
+			'emp_type'			=> $this->input->post('emp_type'),
 			'floor_id'			=> $this->input->post('floor_name'),
 			'wk_type_id'		=> $this->input->post('working_type'),
 			'work_process_id'	=> $this->input->post('work_process'),
@@ -711,6 +714,7 @@ class Processdb extends CI_Model{
 			'transport'			=> $this->input->post('transport'),
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
+			'emp_type'			=> $this->input->post('emp_type'),
 			'emp_join_date'		=> $ejd,
 			'hight'		=> $this->input->post('hight'),
 			'symbol'		=> $this->input->post('symbol'),
@@ -986,6 +990,7 @@ class Processdb extends CI_Model{
 			'emp_join_date'		=> $ejd,
 			'salary_draw'		=> $this->input->post('saldraw'),
 			'salary_type'		=> $this->input->post('saltype'),
+			'emp_type'			=> $this->input->post('emp_type'),
 			'wk_type_id'		=> $this->input->post('working_type'),
 			'work_process_id'	=> $this->input->post('work_process'),
 			'ot_show_in'	    => $this->input->post('ot_define')

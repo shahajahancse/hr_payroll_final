@@ -28,17 +28,17 @@ echo $date_format;
 </title>
 
 <style>
-.bottom_txt_design
-{
-	 border-top:1px solid;
-	 width:160px;
-	 font-weight:bold;
-}
-.bottom_txt_manager_design
-{
-	border-top:1px solid;
-	width:170px;
-}
+	.bottom_txt_design
+	{
+		border-top:1px solid;
+		width:160px;
+		font-weight:bold;
+	}
+	.bottom_txt_manager_design
+	{
+		border-top:1px solid;
+		width:170px;
+	}
 </style>
 
 </head>
@@ -247,7 +247,7 @@ echo $date_format;
 				//echo $row->desig_name;
 				echo "</td>";
 						
-				$net_pay 				= $value[$k]->net_pay;
+				$net_pay = $value[$k]->net_pay;
 				echo "<td>";
 				echo  $net_pay;
 				echo "</td>";
@@ -256,7 +256,7 @@ echo $date_format;
 				echo "<td>";
 				echo $total_ot_hour;
 				echo "</td>";
-				$ot_amount =  $value[$k]->ot_amount;
+				$ot_amount =  round($total_ot_hour * $value[$k]->ot_rate);
 				$ot_amount = $ot_amount;
 				echo "<td>";
 				echo $ot_amount;
@@ -278,9 +278,7 @@ echo $date_format;
 				$grand_net_pay = $grand_net_pay + $net_pay; 
 				//$total_ot_rate_per_page = $total_ot_rate_per_page + $ot_rate; 
 
-				$eot_amount =  $value[$k]->eot_amount;
-				
-
+				$eot_amount = round($total_ot_eot_hour * $value[$k]->ot_rate);
 
 				$ot_eot_amount = $eot_amount;
 				echo "<td>";

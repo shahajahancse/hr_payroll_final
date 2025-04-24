@@ -10,6 +10,7 @@
 		<div align="center" style="height:100%; width:100%; overflow:hidden;" >
 			<?php
 				$this->load->model('job_card_model');
+				// dd($value);
 				foreach ($values as $key => $value) {
 					echo "<div style='min-height:1000px; overflow:hidden;'>";
 					$present_count = 0;
@@ -82,18 +83,8 @@
 						echo "<td>";
 						echo date("d-M-Y", strtotime($value->emp_join_date));
 						echo "</td>";
-
-
 					echo "</tr>";
 
-					// echo "<tr>";
-					// 	echo "<td >";
-					// 	echo "<strong>Dept :</strong>";
-					// 	echo "</td>";
-						// echo "<td >";
-						// echo  $this->db->select('shift_name')->where('unit_id',$value->unit_id)->where('schedule_id',$value->emp_shift)->get('pr_emp_shift')->row()->shift_name;;
-						// echo "</td>";
-					// echo "</tr>";
 					echo "<table>";
 					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
 					// dd($emp_data);
@@ -111,12 +102,23 @@
 							<th>Remarks</th>
 						</tr>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
+						$schedule = $this->job_card_model->schedule_check($row->schedule_id);
+						$tfb_start =  $schedule[0]['tiffin_break'];
+						$tiffin_minute =  $schedule[0]['tiffin_minute'];
+						$after_open_tfb = date("H:i:s", strtotime("+$tiffin_minute minutes", strtotime($tfb_start)));
+						$after_open_back = date("H:i:s", strtotime("+45 minutes", strtotime($after_open_tfb)));
+
 						if ($row->com_eot >= 2) {
 							$extra_ot_hour = 2;
 						} else if(0.0 == $row->com_eot) {
 							$extra_ot_hour = 0;
 						} else {
 							$extra_ot_hour = $row->com_eot;
+						}
+
+						// ramadan fraction
+						if ($row->out_time <= $after_open_back && $row->ot_eot_4pm <= 1) {
+							$extra_ot_hour = 0;
 						}
 
 						if($row->present_status == 'L'){
@@ -156,16 +158,7 @@
 							$att_status_count = "A";
 							$extra_ot_hour = 0;
 						}
-						// $emp_shift = $this->job_card_model->emp_shift_check($value->emp_id, $row->shift_log_date);
-						$schedule = $this->job_card_model->schedule_check($row->schedule_id);
-						$start_time		=  $schedule[0]["in_start"];
-						$late_time 		=  $schedule[0]["late_start"];
-						$end_time   	=  $schedule[0]["in_end"];
-						$in_time   		=  $schedule[0]["in_time"];
-						$out_start_time	=  $schedule[0]["out_start"];
-						$out_end_time	=  $schedule[0]["out_end"];
-						$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
-						$ot_start	    =  $schedule[0]["ot_start"];
+						
 						$shift_log_date = $row->shift_log_date;
 						$year=trim(substr($shift_log_date,0,4));
 						$month=trim(substr($shift_log_date,5,2));
@@ -190,17 +183,6 @@
 
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							list($hour, $minute, $second) = explode(':', $out_time);
-							// Check if the minute is greater than 13
-							if ((int)$minute > 13 && (int)$minute < 50) {
-								// Sum the digits of the minute
-								$minuteDigits = str_split($minute);
-								$minuteSum = array_sum($minuteDigits);
-								
-								// Format the new time string with the summed minute value
-								$out_time = sprintf("%02d:%02d:%02d", (int)$hour, $minuteSum, (int)$second);
-							}
-
 							if($row->com_eot == 1 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
 								$extra_ot_hour = 0;
 								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
@@ -216,7 +198,7 @@
 						}
 
 						// get format buyer time
-						$out_time = $this->job_card_model->get_formated_out_time_9pm($value->emp_id, $out_time, $row->schedule_id);
+						$out_time = $this->job_card_model->get_formated_out_time_9pm($value->emp_id, $out_time, $schedule);
 
 						echo "<tr>";
 							echo "<td>&nbsp;";
@@ -277,13 +259,11 @@
 							} else{
 								$remark = "";
 							}
+
 							echo "<td>&nbsp;";
-							if($row->com_ot == 0){
-								echo $row->com_ot;
-							}else{
-								echo $row->com_ot;
-							}
+							echo $row->com_ot;
 							echo "&nbsp;</td>";
+
 							$total_ot_hour = $total_ot_hour + $row->com_ot + $extra_ot_hour;
 							$total_ot = $total_ot + $row->com_ot;
 

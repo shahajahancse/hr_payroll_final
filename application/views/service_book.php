@@ -140,7 +140,7 @@
                         <td><?php echo $value->left_date=='' ? 'বর্তমান': '<span style="font-family:sutonnyMJ;font-size:15px">'.date('d-m-Y',strtotime($value->left_date)).' Bs </span>'?> </td>
                         <td><?php echo $value->left_date=='' ? '-': cc($value->resign_reason)?> </td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px"></td>
-                        <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px;width:70px"></td>
+                        <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px;width:70px"></td>
                     </tr>
                 </tbody>
             </table>
@@ -270,7 +270,7 @@
                         <td> </td>
                         <td> </td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                        <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+                        <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>
 
                     <?php foreach($incProms as $incProm){ ?>
@@ -286,7 +286,7 @@
                         <td> </td>
                         <td> </td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                        <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+                        <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>
                     <?php }?>
                 </tbody>
@@ -356,7 +356,7 @@
                                 <td class="unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;white-space: nowrap"><?php echo $earn_leave->earn_month ?></td>
                                 <td style="font-family:sutonnyMJ;font-size:15px"><?php echo "" ?></td>
                                 <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                                <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+                                <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
                             </tr>   
                         <?php }?>
                 </tbody>
@@ -393,7 +393,7 @@
                         <td>-</td>
                         <td>-</td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                        <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+                        <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>
                 </tbody>
             </table>
@@ -424,7 +424,7 @@
                         <td>-</td>
                         <td>-</td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                        <td><img  src="<?php echo base_url('images/'.$emp_signature)?>" style="height: 30px"></td>
+                        <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>
                 </tbody>
             </table>

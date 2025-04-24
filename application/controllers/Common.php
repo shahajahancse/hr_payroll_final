@@ -105,7 +105,7 @@ class Common extends CI_Controller {
         $stop_salary    = $_GET['stop_salary'];
         $salary_month   = date('Y-m-01', strtotime($_GET['salary_month']));
         $end_month      = date('Y-m-t', strtotime($_GET['salary_month']));
-        // dd($_GET);
+        // dd($status);
 
         if (!empty($status) && $status == 1) {
             // $this->db->select('lf.emp_id');
@@ -115,7 +115,7 @@ class Common extends CI_Controller {
             $this->db->from('pay_salary_sheet');
             $this->db->where('unit_id', $unit_id);
             $this->db->where('salary_month', $salary_month);
-            // $this->db->where('net_pay >', 0);
+            $this->db->where('emp_status', 1);
             $emp_ids = $this->db->get()->result();
             $emp_id = array_column($emp_ids, 'emp_id');
         } elseif (!empty($status) && $status == 2) {

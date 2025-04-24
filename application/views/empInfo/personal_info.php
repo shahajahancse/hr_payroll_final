@@ -1,16 +1,16 @@
 <style>
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-.bangla_name, .bangla_village {
-    font-family: SutonnyMJ !important;
-}
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+    .bangla_name, .bangla_village {
+        font-family: SutonnyMJ !important;
+    }
 </style>
 <!-- < ? php dd($emp_info);?> -->
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
@@ -505,60 +505,59 @@ input[type="number"] {
                         </div>
                     </div>
 
-                    <div class="row">
-                        <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Emp Status <span style="color: red;">*</span> </label>
-                                <?php echo form_error('emp_cat_id');?>
-                                <select name="emp_cat_id" id="emp_cat_id" class="form-control input-sm required" required>
-                                    <option value="">-- Select one --</option>
-                                    <?php foreach ($categorys as $key => $row) { ?>
-                                    <option value="<?= $row->id ?>" <?php echo $row->id == 1 ? 'Selected':'';?>>
-                                        <?= $row->status_type ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <?php $shifts = $this->db->where('unit_id',$user_data->unit_name)->get('pr_emp_shift')->result(); ?>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Emp Shift <span style="color: red;">*</span> </label>
-                                <?php echo form_error('emp_shift');?>
-                                <select name="emp_shift" id="emp_shift" class="form-control input-sm required">
-                                    <!-- emp shift -->
-                                    <option value="">-- Select one --</option>
-                                    <?php foreach ($shifts as $key => $row) { ?>
-                                    <option value="<?= $row->id?>" <?= $row->id ==13 ? 'selected' : '' ?>>
-                                        <?= $row->shift_name; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3" style="padding-left: 0px !important;">
-                            <div class="form-group">
-                                <label>Emp Joining Date <span style="color: red;">*</span> </label>
-                                <input type="text" name="emp_join_date" id="emp_join_date"
-                                    class="date form-control input-sm required" required>
-                                <?php echo form_error('emp_join_date');?>
-                            </div>
-                        </div>
-
-                        <?php $sl_grade = $this->db->get('pr_grade')->result(); ?>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Salary Grade <span style="color: red;">*</span> </label>
-                                <?php echo form_error('emp_sal_gra_id');?>
-                                <select name="emp_sal_gra_id" id="emp_sal_gra_id" class="form-control input-sm required"
-                                    required>
-                                    <option value="">-- Select one --</option>
-                                    <?php foreach ($sl_grade as $key => $row) { ?>
-                                    <option value="<?= $row->gr_id ?>"><?= $row->gr_name; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
+                <div class="row">
+                    <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Emp Status <span style="color: red;">*</span> </label>
+                            <?php echo form_error('emp_cat_id');?>
+                            <select name="emp_cat_id" id="emp_cat_id" class="form-control input-sm required" required>
+                            <option value="">-- Select one --</option>
+                            <?php foreach ($categorys as $key => $row) { ?>
+                            <option value="<?= $row->id ?>" <?php echo $row->id == 1 ? 'Selected':'';?>>
+                                <?= $row->status_type ?>
+                            </option>
+                            <?php } ?>
+                            </select>
                         </div>
                     </div>
+                    <?php $shifts = $this->db->where('unit_id',$user_data->unit_name)->get('pr_emp_shift')->result(); ?>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Emp Shift <span style="color: red;">*</span> </label>
+                            <?php echo form_error('emp_shift');?>
+                            <select name="emp_shift" id="emp_shift" class="form-control input-sm required">
+                            <!-- emp shift -->
+                            <option value="">-- Select one --</option>
+                            <?php foreach ($shifts as $key => $row) { ?>
+                            <option value="<?= $row->id?>" <?= $row->id ==13 ? 'selected' : '' ?>>
+                                <?= $row->shift_name; ?>
+                            </option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="padding-left: 0px !important;">
+                        <div class="form-group">
+                            <label>Emp Joining Date <span style="color: red;">*</span> </label>
+                            <input type="text" name="emp_join_date" id="emp_join_date"
+                            class="date form-control input-sm required" required>
+                            <?php echo form_error('emp_join_date');?>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Employee Type <span style="color: red;">*</span> </label>
+                            <?php echo form_error('emp_type');?>
+                            <select name="emp_type" id="emp_type" class="form-control input-sm required"
+                            required>
+                            <option value="">-- Select one --</option>
+                            <option value="1">Worker</option>
+                            <option value="2">Staff</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                     <div class="row">
                         <?php //dd($shifts); ?>
@@ -585,7 +584,22 @@ input[type="number"] {
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <?php $sl_grade = $this->db->get('pr_grade')->result(); ?>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Salary Grade <span style="color: red;">*</span> </label>
+                                <?php echo form_error('emp_sal_gra_id');?>
+                                <select name="emp_sal_gra_id" id="emp_sal_gra_id" class="form-control input-sm required"
+                                required>
+                                <option value="">-- Select one --</option>
+                                <?php foreach ($sl_grade as $key => $row) { ?>
+                                <option value="<?= $row->gr_id ?>"><?= $row->gr_name; ?></option>
+                                <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Lunch <span style="color: red;">*</span> </label>
                                 <?php echo form_error('lunch');?>
@@ -596,7 +610,7 @@ input[type="number"] {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Transport <span style="color: red;">*</span> </label>
                                 <?php echo form_error('transport');?>
@@ -967,46 +981,52 @@ input[type="number"] {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="col-12">
+                        <div class="col-md-5 d-flex">
+                            <div class="col-md-4 d-flex flex-column align-items-center">
                                 <label>Employee Photo</label>
-                                <img id="image" style="max-width: 59%;" src="" alt="image">
+                                <img id="image" style="max-width: 65%;" src="" alt="image">
+                            </div>
+
+                            <div class="col-md-4 d-flex flex-column align-items-center">
+                                <label>Employee Signature</label>
+                                <img id="image_signature" style="width: 100px; height: 50px;" src="" alt="Signature Image">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-12">
+                                        <label>Age</label>
+                                        <span id="age" style="border: 1px solid #8b8b8b;padding: 2px 16px;width: fit-content;display: block;">-</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Job Duration</label>
+                                        <span id="job_duration" style="border: 1px solid #8b8b8b;padding: 2px 16px;width: fit-content;display: block;">-</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                        <div class="col-12">
-                                <label>Age</label>
-                                <span id="age" style="border: 1px solid #8b8b8b;padding: 2px 16px;width: fit-content;display: block;">-</span>
-                            </div>
-                            <div class="col-12">
-                                <label>Job Duration</label>
-                                <span id="job_duration" style="border: 1px solid #8b8b8b;padding: 2px 16px;width: fit-content;display: block;">-</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
+
+                        <br>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group pull-right">
-                            <a href="" class="btn-warning btn">Cancel</a>
-
                             <input type="hidden" name="submit_type" id="submit_type">
                             <?php if(in_array(213,$acl)) { ?>
-                            <button onclick="checkAndBlockSubmit('edit',event)" class="btn btn-success">EDIT</button>
+                                <a href="" class="btn-warning btn">Cancel</a>
+                                <button onclick="checkAndBlockSubmit('edit',event)" class="btn btn-success">EDIT</button>
                             <?php } ?>
                             <?php if(in_array(212,$acl)) { ?>
-                            <button onclick="checkAndBlockSubmit('save',event)" class="btn btn-primary">SAVE</button>
+                                <button onclick="checkAndBlockSubmit('save',event)" class="btn btn-primary">SAVE</button>
                             <?php } ?>
-
                         </div>
                     </div>
                 </div>
+                </div>
+
+            </form>
         </div>
-        </form>
     </div>
 </div>
-</div>
+
+
 <script>
 function set_desi_item() {
     
@@ -1186,8 +1206,8 @@ function emp_id_search(id = null) {
             if (e.status == true) {
                 const keysToFilter = [
                     "id", "emp_id", "name_en", "name_bn",
-                    "father_name", "mother_name", "per_village", "per_post",
-                    "per_thana", "per_district", "per_village_bn",
+                    "father_name", "mother_name", "per_village", 
+                    "per_post","per_thana", "per_district", "per_village_bn",
                     "pre_home_owner", "holding_num", "home_own_mobile",
                     "pre_village", "pre_post", "pre_thana", "pre_district",
                     "pre_village_bn", "spouse_name", "emp_dob", "gender",
@@ -1195,19 +1215,16 @@ function emp_id_search(id = null) {
                     "nominee_name", "nominee_vill", "nomi_post", "nomi_thana",
                     "nomi_district", "nomi_age","nomi_nid", "nomi_relation", "nomi_mobile",
                     "refer_name", "refer_address", "refer_mobile", "refer_relation",
-                    "education", "nid_dob_id", "nid_dob_check","nomi_nid_bc_check", "exp_factory_name",
-                    "exp_duration", "exp_designation", "personal_mobile", "exp_dasignation",
-                    "bank_bkash_no", "unit_id", "emp_dept_id", "refer_village",
+                    "education", "nid_dob_id", "nid_dob_check","nomi_nid_bc_check", "exp_factory_name","exp_duration", "exp_designation", "personal_mobile", "exp_dasignation","bank_bkash_no", "unit_id", "emp_dept_id", "refer_village",
                     "emp_sec_id", "emp_line_id", "emp_desi_id", "emp_sal_gra_id",
-                    "emp_cat_id", "proxi_id", "emp_shift", "gross_sal",
-                    "com_gross_sal", "ot_entitle", "com_ot_entitle", "transport", "img_source",
+                    "emp_cat_id", "proxi_id", "emp_shift", "gross_sal", "com_gross_sal", "ot_entitle", "com_ot_entitle", "transport", "img_source","signature",
                     "lunch", "att_bonus", "salary_draw", "salary_type", "emp_join_date",
-                    "ref_district", "refer_village", "ref_thana", "ref_post","hight","symbol"
+                    "ref_district", "refer_village", "ref_thana", "ref_post","hight","symbol", "emp_type"
                 ];
                 // Filter the data based on keysToFilter
                 var filteredData = {};
                 keysToFilter.forEach(function(key) {
-                    // console.log(key);
+                    console.log(key);
                     if (data[key] !== undefined && data[key] !== null) {
                         if (key == 'emp_dept_id' || key == 'emp_sec_id' || key == 'emp_line_id' ||
                             key == 'emp_desi_id' || key == 'nomi_district' || key == 'nomi_thana' ||
@@ -1223,7 +1240,15 @@ function emp_id_search(id = null) {
                                 '<?php echo base_url("/uploads/photo/")?>' + data[key] : '');
                             $("#img_source").attr("src", data[key] != null ?
                                 '<?php echo base_url("/uploads/photo/")?>' + data[key] : '');
-                        } else if (key == 'nid_dob_check' || key == 'nomi_nid_bc_check'  || key == 'ot_entitle' || key ==
+                            $("#image_signature").attr("src", data[key] != null ?
+                                '<?php echo base_url("/uploads/emp_signature/")?>' + data[key] : '');
+                        }  else if (key == 'signature') {
+                            $("#image_signature").attr("src", data[key] != null ?
+                                '<?php echo base_url("/uploads/emp_signature/")?>' + data[key] : '');
+                        } 
+                        
+                        
+                        else if (key == 'nid_dob_check' || key == 'nomi_nid_bc_check'  || key == 'ot_entitle' || key ==
                             'com_ot_entitle') {
                             var radioBtn = $('#' + key);
                             if (data[key] != null) {

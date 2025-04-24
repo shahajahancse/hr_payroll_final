@@ -398,7 +398,7 @@ class Salary_report_con extends CI_Controller {
 		$data["salary_month"] = $salary_month;
 		$data["grid_status"]  = $status;
 		$data["unit_id"]  	  = $unit_id;
-		// dd($data);
+
 		if($type == 1){
 			$this->load->view('salary_sheet_for_allowance',$data);
 		}else{
@@ -742,6 +742,7 @@ class Salary_report_con extends CI_Controller {
 		$data["salary_month"] = $sal_year_month;
 		$data["grid_status"]  = $grid_status;
 		$data["unit_id"]  = $grid_unit;
+		// dd($data["value"]);
 
 		$this->load->view('act_advance_salary_sheet',$data);
 	}

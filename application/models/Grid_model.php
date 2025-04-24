@@ -324,7 +324,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		// dd($status);
 		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
 		$this->db->where("pay_salary_sheet_com.eot_amount    != ",0);
-		$this->db->where("pay_salary_sheet_com.eot_hour      >",0);
+		$this->db->where("pay_salary_sheet_com.eot_hour      !=",0);
 		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
 		$query = $this->db->get();
 		// dd($query->result());
@@ -626,37 +626,101 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 
 	// daily logout report
 	function daily_logout_report($date, $unit_id){
-		$this->db->select("
+		// // dd($_SESSION['data']->user_mode);
+		// $this->db->select("
+		// 	num.id as line_id, num.line_name_en, num.line_name_bn,
+		// 	SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
+		// 	SUM( CASE WHEN (log.in_time != '00:00:00' AND log.out_time = '00:00:00') OR (log.in_time = '00:00:00' AND log.out_time != '00:00:00') THEN 1 ELSE 0 END ) AS present_error,
+		// 	SUM(ot + eot) AS total_ot,
+		// 	SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:59:59' THEN 1 ELSE 0 END ) AS four_pm,
+		// 	SUM( CASE WHEN log.out_time > '17:00:00' AND log.out_time <= '17:59:59' THEN 1 ELSE 0 END ) AS five_pm,
+		// 	SUM( CASE WHEN log.out_time > '18:00:00' AND log.out_time <= '18:59:59' THEN 1 ELSE 0 END ) AS six_pm,
+		// 	SUM( CASE WHEN log.out_time > '19:00:00' AND log.out_time <= '19:59:59' THEN 1 ELSE 0 END ) AS seven_pm,
+		// 	SUM( CASE WHEN log.out_time > '20:00:00' AND log.out_time <= '20:59:59' THEN 1 ELSE 0 END ) AS eight_pm,
+		// 	SUM( CASE WHEN log.out_time > '21:00:00' AND log.out_time <= '21:59:59' THEN 1 ELSE 0 END ) AS nine_pm,
+		// 	SUM( CASE WHEN log.out_time > '22:00:00' AND log.out_time <= '22:59:59' THEN 1 ELSE 0 END ) AS ten_pm,
+		// 	SUM( CASE WHEN log.out_time > '23:00:00' AND log.out_time <= '23:59:59' THEN 1 ELSE 0 END ) AS eleven_pm,
+		// 	SUM( CASE WHEN log.out_time > '00:00:00' AND log.out_time <= '00:59:59' THEN 1 ELSE 0 END ) AS tweelve_pm,
+		// 	SUM( CASE WHEN log.out_time > '01:00:00' AND log.out_time <= '01:59:59' THEN 1 ELSE 0 END ) AS one_am,
+		// 	SUM( CASE WHEN log.out_time > '02:00:00' AND log.out_time <= '02:59:59' THEN 1 ELSE 0 END ) AS two_am,
+		// 	SUM( CASE WHEN log.out_time > '03:00:00' AND log.out_time <= '03:59:59' THEN 1 ELSE 0 END ) AS three_am,
+		// 	SUM( CASE WHEN log.out_time > '04:00:00' AND log.out_time <= '04:59:59' THEN 1 ELSE 0 END ) AS four_am,
+		// 	SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '05:59:59' THEN 1 ELSE 0 END ) AS five_am,
+		// 	SUM( CASE WHEN log.out_time > '06:00:00' AND log.out_time <= '06:59:59' THEN 1 ELSE 0 END ) AS six_am,
+		// ");
+
+		// $this->db->from("emp_line_num as num");
+		// $this->db->join("pr_emp_com_info as com", "num.id = com.emp_line_id", "left");
+		// $this->db->join("pr_emp_shift_log as log", "com.emp_id = log.emp_id", "left");
+		// $this->db->where("com.unit_id", $unit_id);
+		// $this->db->where("log.shift_log_date", $date);
+		// $this->db->where("log.present_status","P");
+		// // $this->db->where_not_in("com.emp_cat_id", array(2,3,4));
+		// $this->db->group_by("num.id");
+		// $this->db->order_by("num.line_name_en");
+		// return $this->db->get()->result();
+
+
+
+		$user_mode = $_SESSION['data']->user_mode;
+		// dd($user_mode);
+		$select = "
 			num.id as line_id, num.line_name_en, num.line_name_bn,
 			SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
 			SUM( CASE WHEN (log.in_time != '00:00:00' AND log.out_time = '00:00:00') OR (log.in_time = '00:00:00' AND log.out_time != '00:00:00') THEN 1 ELSE 0 END ) AS present_error,
 			SUM(ot + eot) AS total_ot,
-			SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:59:59' THEN 1 ELSE 0 END ) AS four_pm,
-			SUM( CASE WHEN log.out_time > '17:00:00' AND log.out_time <= '17:59:59' THEN 1 ELSE 0 END ) AS five_pm,
-			SUM( CASE WHEN log.out_time > '18:00:00' AND log.out_time <= '18:59:59' THEN 1 ELSE 0 END ) AS six_pm,
-			SUM( CASE WHEN log.out_time > '19:00:00' AND log.out_time <= '19:59:59' THEN 1 ELSE 0 END ) AS seven_pm,
-			SUM( CASE WHEN log.out_time > '20:00:00' AND log.out_time <= '20:59:59' THEN 1 ELSE 0 END ) AS eight_pm,
-			SUM( CASE WHEN log.out_time > '21:00:00' AND log.out_time <= '21:59:59' THEN 1 ELSE 0 END ) AS nine_pm,
-			SUM( CASE WHEN log.out_time > '22:00:00' AND log.out_time <= '22:59:59' THEN 1 ELSE 0 END ) AS ten_pm,
-			SUM( CASE WHEN log.out_time > '23:00:00' AND log.out_time <= '23:59:59' THEN 1 ELSE 0 END ) AS eleven_pm,
-			SUM( CASE WHEN log.out_time > '00:00:00' AND log.out_time <= '00:59:59' THEN 1 ELSE 0 END ) AS tweelve_pm,
-			SUM( CASE WHEN log.out_time > '01:00:00' AND log.out_time <= '01:59:59' THEN 1 ELSE 0 END ) AS one_am,
-			SUM( CASE WHEN log.out_time > '02:00:00' AND log.out_time <= '02:59:59' THEN 1 ELSE 0 END ) AS two_am,
-			SUM( CASE WHEN log.out_time > '03:00:00' AND log.out_time <= '03:59:59' THEN 1 ELSE 0 END ) AS three_am,
-			SUM( CASE WHEN log.out_time > '04:00:00' AND log.out_time <= '04:59:59' THEN 1 ELSE 0 END ) AS four_am,
-			SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '05:59:59' THEN 1 ELSE 0 END ) AS five_am,
-			SUM( CASE WHEN log.out_time > '06:00:00' AND log.out_time <= '06:59:59' THEN 1 ELSE 0 END ) AS six_am,
-		");
+			SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:49:59' THEN 1 ELSE 0 END ) AS four_pm,
+			SUM( CASE WHEN log.out_time > '16:50:00' AND log.out_time <= '17:49:59' THEN 1 ELSE 0 END ) AS five_pm,
+			SUM( CASE WHEN log.out_time > '17:50:00' AND log.out_time <= '18:59:59' THEN 1 ELSE 0 END ) AS six_pm";
 
+		// Add more columns conditionally
+		if ($user_mode == 7) {
+			$select .= ",
+			SUM( CASE WHEN (log.out_time > '18:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS seven_pm";
+		}
+		if ($user_mode == 9) {
+			$select .= ",
+			SUM( CASE WHEN log.out_time > '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
+			SUM( CASE WHEN log.out_time > '19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
+			SUM( CASE WHEN (log.out_time > '20:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS nine_pm";
+		}
+		if ($user_mode == 12) {
+			$select .= ",
+			SUM( CASE WHEN log.out_time > '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
+			SUM( CASE WHEN log.out_time > '19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
+			SUM( CASE WHEN log.out_time > '20:50:00' AND log.out_time <= '21:49:59' THEN 1 ELSE 0 END ) AS nine_pm,
+			SUM( CASE WHEN log.out_time > '21:50:00' AND log.out_time <= '22:49:59' THEN 1 ELSE 0 END ) AS ten_pm,
+			SUM( CASE WHEN log.out_time > '22:50:00' AND log.out_time <= '23:49:59' THEN 1 ELSE 0 END ) AS eleven_pm,
+			SUM( CASE WHEN log.out_time > '23:50:00' AND log.out_time <= '07:15:59' THEN 1 ELSE 0 END ) AS tweelve_pm";
+		}
+		if ($user_mode == 0) {
+			$select .= ",
+			SUM( CASE WHEN log.out_time > '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
+			SUM( CASE WHEN log.out_time > '19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
+			SUM( CASE WHEN log.out_time > '20:50:00' AND log.out_time <= '21:49:59' THEN 1 ELSE 0 END ) AS nine_pm,
+			SUM( CASE WHEN log.out_time > '21:50:00' AND log.out_time <= '22:49:59' THEN 1 ELSE 0 END ) AS ten_pm,
+			SUM( CASE WHEN log.out_time > '22:50:00' AND log.out_time <= '23:49:59' THEN 1 ELSE 0 END ) AS eleven_pm,
+			SUM( CASE WHEN log.out_time > '23:50:00' AND log.out_time <= '00:49:59' THEN 1 ELSE 0 END ) AS tweelve_pm,
+			SUM( CASE WHEN log.out_time > '00:50:00' AND log.out_time <= '01:49:59' THEN 1 ELSE 0 END ) AS one_am,
+			SUM( CASE WHEN log.out_time > '01:50:00' AND log.out_time <= '02:49:59' THEN 1 ELSE 0 END ) AS two_am,
+			SUM( CASE WHEN log.out_time > '02:50:00' AND log.out_time <= '03:49:59' THEN 1 ELSE 0 END ) AS three_am,
+			SUM( CASE WHEN log.out_time > '03:50:00' AND log.out_time <= '04:49:59' THEN 1 ELSE 0 END ) AS four_am,
+			SUM( CASE WHEN log.out_time > '04:50:00' AND log.out_time <= '05:49:59' THEN 1 ELSE 0 END ) AS five_am,
+			SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '06:15:59' THEN 1 ELSE 0 END ) AS six_am,
+			SUM( CASE WHEN log.out_time > '06:00:00' AND log.out_time <= '07:15:59' THEN 1 ELSE 0 END ) AS six_am";
+		}
+
+		$this->db->select($select);
 		$this->db->from("emp_line_num as num");
 		$this->db->join("pr_emp_com_info as com", "num.id = com.emp_line_id", "left");
 		$this->db->join("pr_emp_shift_log as log", "com.emp_id = log.emp_id", "left");
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.present_status","P");
-		// $this->db->where_not_in("com.emp_cat_id", array(2,3,4));
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
+		// dd($this->db->get()->result());
+
 		return $this->db->get()->result();
 	}
 
@@ -1712,19 +1776,16 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		return $query->result();
 	}
 	function grid_monthly_salary_sheet_for_allowance($date, $grid_status, $grid_emp_id,$type){
-		// dd($type);
 		$this->db->select('
-			pr_emp_per_info.name_en,
-			emp_designation.*, 
-			emp_section.sec_name_en, 
-			pr_emp_com_info.emp_join_date,
-			pr_grade.gr_name,
 			pay_salary_sheet.*,
+			pr_emp_per_info.name_en,
 			pr_emp_com_info.emp_join_date,
+			pr_emp_com_info.emp_join_date,
+			emp_designation.desig_name, 
 			emp_line_num.line_name_en,
-			allowance_holiday_weekend_rules.*,
-			allowance_night_rules.*,'
-		);
+			emp_section.sec_name_en, 
+			pr_grade.gr_name,
+		');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('pr_grade');
@@ -1733,33 +1794,28 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->from('emp_section');
 		$this->db->from('emp_line_num');
 		$this->db->from('emp_designation');
-		$this->db->from('allowance_holiday_weekend_rules');
-		$this->db->from('allowance_night_rules');
 
-		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+		$this->db->where_in('pay_salary_sheet.emp_id', $grid_emp_id);
+		$this->db->where('pay_salary_sheet.emp_id = pr_emp_com_info.emp_id');
+		$this->db->where('pr_emp_com_info.emp_id = pr_emp_per_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_desi_id = emp_designation.id');
 		$this->db->where('pr_emp_com_info.emp_dept_id = emp_depertment.dept_id');
 		$this->db->where('pr_emp_com_info.emp_sec_id = emp_section.id');
 		$this->db->where('pr_emp_com_info.emp_line_id = emp_line_num.id');
-		$this->db->where('pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
 		$this->db->where('pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id');
-		$this->db->where('pr_emp_per_info.emp_id = pay_salary_sheet.emp_id');
 		$this->db->where("pay_salary_sheet.salary_month = '$date'");
 		if($type==1){
-			$this->db->where("allowance_night_rules.night_allowance >", 0);
-			$this->db->where("pay_salary_sheet.night_alo_count =", 1);
-			$this->db->where("allowance_night_rules.id = emp_designation.night_al_id");
+			$this->db->where("pay_salary_sheet.night_alo_count >", 0);
+			$this->db->where("pay_salary_sheet.night_allowance_rate >", 0);
 		}
 		if($type==2){
-			$this->db->where("allowance_holiday_weekend_rules.allowance_amount >", 0);
-			$this->db->where("pay_salary_sheet.weekend_alo_count =", 1);
-			$this->db->where('allowance_holiday_weekend_rules.id = emp_designation.holiday_weekend_id');
+			$this->db->where("pay_salary_sheet.weekend_alo_count >", 0);
+			$this->db->where("pay_salary_sheet.weekend_allowance_rate >", 0);
 		}
-		$this->db->order_by("pr_emp_com_info.emp_id");
+		$this->db->order_by("pay_salary_sheet.emp_id");
 		$this->db->order_by("emp_designation.desig_name");
 		$this->db->group_by("pay_salary_sheet.emp_id");
 		$query = $this->db->get();
-		// dd($query->result());
 		return $query->result();
 	}
 	// ========================  Salary with eot sheet bank end ========================
@@ -9047,6 +9103,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->join('emp_line_num', 'pr_emp_com_info.emp_line_id = emp_line_num.id','LEFT');
 		$this->db->join('emp_designation', 'pr_emp_com_info.emp_desi_id = emp_designation.id','LEFT');
 		$this->db->join('pr_grade', 'pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id','LEFT');
+		$this->db->where('pr_emp_com_info.emp_join_date <', '2025-03-01');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->group_by('pr_emp_com_info.emp_id');
 		$query = $this->db->get();
@@ -12106,7 +12163,7 @@ function grid_emp_job_application($grid_emp_id){
 
 
 	function act_advance_salary_sheet($sal_year_month, $grid_status, $grid_emp_id){
-
+		// dd($sal_year_month);
 		$query = $this->db->select('
 				pr_emp_per_info.name_en,
 				pr_emp_per_info.bank_bkash_no as mobile,
@@ -12133,6 +12190,7 @@ function grid_emp_job_application($grid_emp_id){
 			->group_by("pr_advance_loan.emp_id")
 			->get();
 			// dd($this->db->last_query());
+			// dd($query->result()); 	
 			if($query->num_rows() == 0){
 				return "No Data Found";
 			}

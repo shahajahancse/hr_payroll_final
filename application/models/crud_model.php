@@ -785,6 +785,7 @@ class Crud_model extends CI_Model{
         $formArray['tiffin_minute2'] = $this->input->post('tiffin_minute2');
         $formArray['random_minute'] = $this->input->post('random_minute');
         $formArray['iffter_allow_time'] = $this->input->post('iffter_allow_time');
+        $formArray['ot_half'] = $this->input->post('ot_half');
 
         $this->db->where('id',$shiftscheduleId);
         $this->db->update('pr_emp_shift_schedule',$formArray);

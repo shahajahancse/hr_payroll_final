@@ -75,23 +75,28 @@
           <div class="col-md-6" style="font-family: SutonnyMJ;font-size:21px">m~Ît- <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby <span style="font-family: SutonnyMJ;font-size:21px"><?php echo $value->id?>/<?php echo date('m/Y',strtotime($value->left_date))?></span><span style="font-family: SutonnyMJ;font-size:21px">-G</span></div>
           <div class="col-md-6 text-right">তারিখঃ <span style="font-family: SutonnyMJ;font-size:21px">
           <?php 
-
-            $l_date = strtotime($value->left_date);
+            $s2_date = strtotime($value->left_date);
+            $l2_date = $s2_date;
+            // dd(date('Y-m-d', $l2_date));
             $days_added = 0;
-
             while ($days_added < 11) {
-                $l_date = strtotime('+1 day', $l_date);
-                if (!in_array(date('N', $l_date), [5])) { // Skip Friday (5) and Saturday (6)
-                    $days_added++;
+                $l2_date = strtotime('+1 day', $l2_date);
+                if (!in_array(date('N', $l2_date), [5])) { // Skip Friday (5) and Saturday (6)
+                  $days_added++;
                 }
             }
-            if (date('N', $l_date) == 6) {
-              $l_date = strtotime('+1 day', $l_date);
+            // dd(date('Y-m-d', $s2_date) .' = '. date('Y-m-d', $l2_date));
+            $l2_date = gov_holiday(date('Y-m-d', $s2_date), date('Y-m-d', $l2_date));
+            $l2_date = coff_day($l2_date);
+            // again check
+            if (date('N', strtotime($l2_date)) == 5) {
+              $l2_date = date("Y-m-d", strtotime("+1 days".$l2_date));
             }
-            echo date('d/m/Y', $l_date);
-          
+            if (date('N', strtotime($l2_date)) == 6) {
+              $l2_date = date("Y-m-d", strtotime("+1 days".$l2_date));
+            }
+            echo date('d/m/Y', strtotime($l2_date));
           ?>
-
           </span> ইং</div>
         </div>
 

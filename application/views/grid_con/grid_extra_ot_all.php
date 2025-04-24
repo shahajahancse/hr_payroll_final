@@ -30,55 +30,55 @@
 					echo "<br /><br />";
 
 					echo "<table border='0' style='font-size:13px;' width='480'>";
-					echo "<tr>";
-						echo "<td width='70'>";
-						echo "<strong>Emp ID:</strong>";
-						echo "</td>";
-						echo "<td width='200'>";
-						echo $value->emp_id;
-						echo "</td>";
+						echo "<tr>";
+							echo "<td width='70'>";
+							echo "<strong>Emp ID:</strong>";
+							echo "</td>";
+							echo "<td width='200'>";
+							echo $value->emp_id;
+							echo "</td>";
 
-						echo "<td width='55'>";
-						echo "<strong>Name :</strong>";
-						echo "</td>";
-						echo "<td width='150'>";
-						echo $value->name_en;
-						echo "</td>";
-					echo "</tr>";
+							echo "<td width='55'>";
+							echo "<strong>Name :</strong>";
+							echo "</td>";
+							echo "<td width='150'>";
+							echo $value->name_en;
+							echo "</td>";
+						echo "</tr>";
 
-					echo "<tr>";
-						echo "<td style:width:20px'>";
-						echo "<strong>Section :</strong>";
-						echo "</td>";
-						echo "<td width='30px'>";
-						echo $value->sec_name_en;
-						echo "</td>";
-						
-						echo "<td>";
-						echo "<strong>Desig :</strong>";
-						echo "</td>";
-						echo "<td>";
-						echo $value->desig_name;
-						echo "</td>";
-					echo "</tr>";
-					echo "<tr>";
-						echo "<td>";
-						echo "<strong>Line :</strong>";
-						echo "</td>";
-						echo "<td>";
-						echo $value->line_name_en;
-						echo "</td>";
+						echo "<tr>";
+							echo "<td style:width:20px'>";
+							echo "<strong>Section :</strong>";
+							echo "</td>";
+							echo "<td width='30px'>";
+							echo $value->sec_name_en;
+							echo "</td>";
+							
+							echo "<td>";
+							echo "<strong>Desig :</strong>";
+							echo "</td>";
+							echo "<td>";
+							echo $value->desig_name;
+							echo "</td>";
+						echo "</tr>";
+						echo "<tr>";
+							echo "<td>";
+							echo "<strong>Line :</strong>";
+							echo "</td>";
+							echo "<td>";
+							echo $value->line_name_en;
+							echo "</td>";
 
-						echo "<td >";
-						echo "<strong>Dept :</strong>";
-						echo "</td>";
-						echo "<td >";
-						echo $value->dept_name;
-						echo "</td>";
-					echo "</tr>";
+							echo "<td >";
+							echo "<strong>Dept :</strong>";
+							echo "</td>";
+							echo "<td >";
+							echo $value->dept_name;
+							echo "</td>";
+						echo "</tr>";
 
-					echo "</tr>";
-					echo "<tr>";
+						echo "</tr>";
+						echo "<tr>";
 						echo "<td>";
 						echo "<strong>DOJ :</strong>";
 						echo "</td>";
@@ -105,6 +105,11 @@
 							<th>Remarks</th>
 						</tr>";
 					foreach ($emp_data['emp_data'] as $key => $row) {
+						$schedule = $this->job_card_model->schedule_check($row->schedule_id);
+						$tfb_start =  $schedule[0]['tiffin_break'];
+						$tiffin_minute =  $schedule[0]['tiffin_minute'];
+						$after_open_tfb = date("H:i:s", strtotime("+$tiffin_minute minutes", strtotime($tfb_start)));
+						$after_open_back = date("H:i:s", strtotime("+45 minutes", strtotime($after_open_tfb)));
 
 						if($row->present_status == 'L'){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
@@ -145,49 +150,84 @@
 							$row->com_ot = 0;
 							 $row->com_eot = 0;
 						}
-						// $emp_shift = $this->job_card_model->emp_shift_check($value->emp_id, $row->shift_log_date);
-						$schedule = $this->job_card_model->schedule_check($row->schedule_id);
-						$start_time		=  $schedule[0]["in_start"];
-						$late_time 		=  $schedule[0]["late_start"];
-						$end_time   	=  $schedule[0]["in_end"];
-						$in_time   		=  $schedule[0]["in_time"];
-						$out_start_time	=  $schedule[0]["out_start"];
-						$out_end_time	=  $schedule[0]["out_end"];
-						$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
-						$ot_start	    =  $schedule[0]["ot_start"];
-						$shift_log_date = $row->shift_log_date;
-						$year=trim(substr($shift_log_date,0,4));
-						$month=trim(substr($shift_log_date,5,2));
-						$date=trim(substr($shift_log_date,8,2));
-						$shift_log_date = date("d-M-y", mktime(0, 0, 0, $month, $date, $year));
+
+						// in time
+						$shift_log_date = date("d-M-y", strtotime($row->shift_log_date));
 						$deduction_hour = $row->deduction_hour;
 						if($row->in_time != "00:00:00"){
 							$in_time = $row->in_time;
 							list($hour, $minute, $second) = explode(':', $in_time);
 							if ((int)$minute < 45 && $schedule[0]["in_time"] > $row->in_time) {
-
-							$minuteDigits = str_split($minute);
-							$minuteSum = array_sum($minuteDigits);                                
-							$n_m = 60 - $minuteSum;
-							$in_time = sprintf("%02d:%02d:%02d", (int)$hour, $n_m, (int)$second);
+								$minuteDigits = str_split($minute);
+								$minuteSum = array_sum($minuteDigits);                                
+								$n_m = 60 - $minuteSum;
+								$in_time = sprintf("%02d:%02d:%02d", (int)$hour, $n_m, (int)$second);
 							}
 						} else{
-							$in_time = $row->present_status== 'W' ? "" : "00:00:00";
+							$in_time = "00:00:00";
 						}
+
+						// out time
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							// dd($out_time);
-							list($hour, $minute, $second) = explode(':', $out_time);
-						
-							if ((int)$minute >13 && (int)$minute < 50) {
-								$minuteDigits = str_split($minute);
-								$minuteSum = array_sum($minuteDigits);
-								$out_time = sprintf("%02d:%02d:%02d", (int)$hour, $minuteSum, (int)$second);
+							if($row->com_eot == 1 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
 							}
-						} else{
-							$out_time = $row->present_status== 'W' ? "" : "00:00:00";
-						}
 
+							if($row->com_eot == 2 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->com_eot == 2 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							}
+
+							if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							} else if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
+								$extra_ot_hour = 2;
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							}
+
+							if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-4 hour', strtotime($out_time)));
+							} else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							} else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
+								$extra_ot_hour = 2;
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 3){
+								$extra_ot_hour = 3;
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							}
+
+							if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+								$extra_ot_hour = 0;
+								$out_time = date('H:i:s ', strtotime('-5 hour', strtotime($out_time)));
+							} else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+								$extra_ot_hour = 1;
+								$out_time = date('H:i:s ', strtotime('-4 hour', strtotime($out_time)));
+							} else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
+								$extra_ot_hour = 2;
+								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							} else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 3){
+								$extra_ot_hour = 3;
+								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							} else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 4){
+								$extra_ot_hour = 4;
+								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							}
+						} else {
+							$out_time = "00:00:00";
+						}
+						$out_time = $this->job_card_model->get_formated_out_time_all($value->emp_id, $out_time, $schedule);
 
 						echo "<tr>";
 							echo "<td>&nbsp;";

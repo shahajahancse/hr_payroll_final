@@ -1661,6 +1661,7 @@ class Setup_con extends CI_Controller
             $formArray['tiffin_minute2'] = $this->input->post('tiffin_minute2');
             $formArray['random_minute'] = $this->input->post('random_minute');
             $formArray['iffter_allow_time'] = $this->input->post('iffter_allow_time');
+            $formArray['ot_half'] = $this->input->post('ot_half');
 
             $this->Crud_model->shiftschedule_add($formArray);
             $this->session->set_flashdata('success', 'Record add successfully!');

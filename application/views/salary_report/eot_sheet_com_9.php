@@ -186,107 +186,107 @@
 			?>
 
 			<?php for($p=0; $p<=$per_page_row;$p++) {
+                     
+				// if($values[$k]->ot_eot_4pm_hour == 0){
+				// 	// continue;
+
+				// }
 				echo "<tr height='45' style='text-align:center;' >";
-				echo "<td >";
-				echo $k+1;
-				echo "</td>";
+					echo "<td >";
+					echo $k+1;
+					echo "</td>";
 
-				echo "<td style='font-weight:bold;'>";
-				print_r($values[$k]->emp_id);
-				echo "</td>";
+					echo "<td style='font-weight:bold;'>";
+					print_r($values[$k]->emp_id);
+					echo "</td>";
 
-				echo "<td style='width:100px;'>";
-				print_r($values[$k]->name_en);
-				echo '<br>';
-				if($grid_status == 4)
-				{
-					$resign_date = $this->Grid_model->get_resign_date_by_empid($values[$k]->emp_id);
-					if($resign_date != false){
-					echo $resign_date = date('d-M-y', strtotime($resign_date));}
-				}
-				elseif($grid_status == 3)
-				{
-					$left_date = $this->Grid_model->get_left_date_by_empid($values[$k]->emp_id);
-					if($left_date != false){
-					echo $left_date = date('d-M-y', strtotime($left_date));}
-				}
-				echo "</td>";
+					echo "<td style='width:100px;'>";
+					print_r($values[$k]->name_en);
+					echo '<br>';
+					if($grid_status == 4)
+					{
+						$resign_date = $this->Grid_model->get_resign_date_by_empid($values[$k]->emp_id);
+						if($resign_date != false){
+						echo $resign_date = date('d-M-y', strtotime($resign_date));}
+					}
+					elseif($grid_status == 3)
+					{
+						$left_date = $this->Grid_model->get_left_date_by_empid($values[$k]->emp_id);
+						if($left_date != false){
+						echo $left_date = date('d-M-y', strtotime($left_date));}
+					}
+					echo "</td>";
 
-				echo "<td>";
-				print_r($values[$k]->desig_name);
-				//echo $row->desig_name;
-				echo "</td>";
+					echo "<td>";
+					print_r($values[$k]->desig_name);
+					echo "</td>";
 
-				echo "<td>";
-				print_r($values[$k]->line_name_en);
-				//echo $row->desig_name;
-				echo "</td>";
+					echo "<td>";
+					print_r($values[$k]->line_name_en);
+					echo "</td>";
 
 
-				echo "<td>";
-				$date = $values[$k]->emp_join_date;
-				//print_r($values[$k]->emp_join_date);
-				$year=trim(substr($date,0,4));
-				$month=trim(substr($date,5,2));
-				$day=trim(substr($date,8,2));
-				$date_format = date("d-M-y", mktime(0, 0, 0, $month, $day, $year));
-				echo $date_format;
-				echo "</td>";
+					echo "<td>";
+					$date = $values[$k]->emp_join_date;
+					$year=trim(substr($date,0,4));
+					$month=trim(substr($date,5,2));
+					$day=trim(substr($date,8,2));
+					$date_format = date("d-M-y", mktime(0, 0, 0, $month, $day, $year));
+					echo $date_format;
+					echo "</td>";
 
 
-				echo "<td>";
-				print_r($values[$k]->gr_name);
-				echo "</td>";
+					echo "<td>";
+					print_r($values[$k]->gr_name);
+					echo "</td>";
 
-				echo "<td style='font-weight:bold;'>";
-				print_r ($values[$k]->gross_sal);
-				$gross_sal = $gross_sal + $values[$k]->gross_sal;
-				$total_gross_sal_per_page = $total_gross_sal_per_page + $values[$k]->gross_sal;
-				echo "</td>";
+					echo "<td style='font-weight:bold;'>";
+					print_r ($values[$k]->gross_sal);
+					$gross_sal = $gross_sal + $values[$k]->gross_sal;
+					$total_gross_sal_per_page = $total_gross_sal_per_page + $values[$k]->gross_sal;
+					echo "</td>";
 
-				$ot_data = $this->Grid_model->cal_eot_com($values[$k]->emp_id, $salary_month, $second_date);
+					$ot_data = $this->Grid_model->cal_eot_com($values[$k]->emp_id, $salary_month, $second_date);
 
-				$ot_rate    = round(($values[$k]->basic_sal * 2  / 208), 2);
+					$ot_rate    = round(($values[$k]->basic_sal * 2  / 208), 2);
 
-				echo "<td>";
-				// dd($ot_data);
-				echo $values[$k]->ot_hour;
-				// echo $ot_data->ot;
-				echo "</td>";
+					echo "<td>";
+					echo $values[$k]->ot_hour;
+					echo "</td>";
 
-				echo "<td>";
-				echo $ot_data->actual_eot_4pm;
-				echo "</td>";
-				
-				$total_ot_eot_hour	= $values[$k]->ot_hour + $ot_data->actual_eot_4pm;
+					echo "<td>";
+					echo $ot_data->actual_eot_4pm;
+					echo "</td>";
+					
+					$total_ot_eot_hour	= $values[$k]->ot_hour + $ot_data->actual_eot_4pm;
 
-				echo "<td>";
-				echo $total_ot_eot_hour;
-				echo "</td>";
+					echo "<td>";
+					echo $total_ot_eot_hour;
+					echo "</td>";
 
-				$total_ot_per_page = $total_ot_per_page + $values[$k]->ot_hour;
-				$total_eot_per_page = $total_eot_per_page + $ot_data->actual_eot_4pm;
-				$total_ot_eot_per_page = $total_ot_eot_per_page + $total_ot_eot_hour;
+					$total_ot_per_page = $total_ot_per_page + $values[$k]->ot_hour;
+					$total_eot_per_page = $total_eot_per_page + $ot_data->actual_eot_4pm;
+					$total_ot_eot_per_page = $total_ot_eot_per_page + $total_ot_eot_hour;
 
-				$grand_total_ot_hour = $grand_total_ot_hour + $values[$k]->ot_hour;
-				$grand_total_eot_hour = $grand_total_eot_hour + $ot_data->actual_eot_4pm;
-				$grand_total_ot_eot_hour = $grand_total_ot_eot_hour + $total_ot_eot_hour;
+					$grand_total_ot_hour = $grand_total_ot_hour + $values[$k]->ot_hour;
+					$grand_total_eot_hour = $grand_total_eot_hour + $ot_data->actual_eot_4pm;
+					$grand_total_ot_eot_hour = $grand_total_ot_eot_hour + $total_ot_eot_hour;
 
-				echo "<td>";
-				print_r ($ot_rate);
-				$ot_rates = $ot_rates + $ot_rate;
-				echo "</td>";
+					echo "<td>";
+					print_r ($ot_rate);
+					$ot_rates = $ot_rates + $ot_rate;
+					echo "</td>";
 
-				echo "<td>";
-				echo $eot_amount = round($ot_data->actual_eot_4pm * $ot_rate);
-				echo "</td>";
+					echo "<td>";
+					echo $eot_amount = round($ot_data->actual_eot_4pm * $ot_rate);
+					echo "</td>";
 
-				$total_ot_eot_amount_per_page = $total_ot_eot_amount_per_page + $eot_amount;
-				$grand_total_ot_eot_amount = $grand_total_ot_eot_amount + $eot_amount;
+					$total_ot_eot_amount_per_page = $total_ot_eot_amount_per_page + $eot_amount;
+					$grand_total_ot_eot_amount = $grand_total_ot_eot_amount + $eot_amount;
 
-				echo "<td>";
-				echo "&nbsp;";
-				echo "</td>";
+					echo "<td>";
+					echo "&nbsp;";
+					echo "</td>";
 
 				echo "</tr>";
 				$k++;
