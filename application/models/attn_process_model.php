@@ -26,8 +26,9 @@ class Attn_process_model extends CI_Model{
         return;
     }
 
-	function attn_process($process_date,$unit,$grid_emp_id, $type = null)
-	{
+	function attn_process($process_date,$unit,$grid_emp_id, $type = null){
+
+		$this->autoNewToRegular($process_date);
 		//=========================== Get emplpoyee list ============================
 		$table = 'att_'.date('Y_m',strtotime($process_date));
 		$this->attn_month_table_check($table);
@@ -301,6 +302,13 @@ class Attn_process_model extends CI_Model{
 		}
 		// $this->check_shift_roster($process_date, $unit);
 		return true;
+	}
+
+	function autoNewToRegular($process_date)
+	{
+		$this->db->where('emp_cat_id',4)
+			->where('emp_join_date <=', date('Y-m-d', strtotime('-1 month'.$process_date)))
+			->update('pr_emp_com_info',['emp_cat_id'=>1]);
 	}
 
 	// get alert message

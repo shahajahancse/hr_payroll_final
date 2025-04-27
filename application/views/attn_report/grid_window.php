@@ -514,6 +514,9 @@
 							<?php if(in_array(131,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_roster_employee()">Roster List</button>
                             <?php } ?>
+							<?php if(in_array(121,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_employee_background()">Employee Background</button>
+                            <?php } ?>
 							<!-- roster list end  -->
 						</div>
 					</div>
@@ -851,4 +854,55 @@
 				}
 			}
 		}
-	</script>
+
+	function grid_employee_background(){
+		var ajaxRequest;
+
+		try{
+		ajaxRequest = new XMLHttpRequest();
+		}catch (e){
+			try{
+				ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+			}catch (e) {
+				try{
+					ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				}catch (e){
+					// Something went wrong
+					alert("Your browser broke!");
+					return false;
+				}
+			}
+		}
+
+
+
+		var checkboxes = document.getElementsByName('emp_id[]');
+		var sql = get_checked_value(checkboxes);
+		if (sql == '') {
+			alert('Please select employee Id');
+			return false;
+		}
+		document.getElementById('loaader').style.display = 'flex';
+		url =  hostname+"grid_con/grid_employee_background/";
+		var queryString="emp_id="+sql;
+		ajaxRequest.open("POST", url, true);
+		ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		ajaxRequest.send(queryString);
+		ajaxRequest.onreadystatechange = function(){
+			if (ajaxRequest.readyState == 4) {
+				document.getElementById('loaader').style.display = 'none';
+				var resp = ajaxRequest.responseText;
+				service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+				service_book.document.write(resp);
+				service_book.stop();
+			}
+		}
+	}
+
+	function get_checked_value(checkboxes) {
+		var vals = Array.from(checkboxes)
+		.filter(checkbox => checkbox.checked)
+		.map(checkbox => checkbox.value)
+		.join(",");	
+	}
+</script>
