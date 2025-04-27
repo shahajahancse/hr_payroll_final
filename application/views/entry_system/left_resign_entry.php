@@ -193,50 +193,51 @@
 <script type="text/javascript">
     // on load employee
     function grid_emp_list() {
-            $('.removeTr').remove();
+        $('.removeTr').remove();
 
-            var unit = document.getElementById('unit_id').value;
-            var dept = document.getElementById('dept').value;
-            var section = document.getElementById('section').value;
-            var line = document.getElementById('line').value;
-            var desig = document.getElementById('desig').value;
-            var status = document.getElementById('status').value;
-            var searchi = document.getElementById('searchi').value;
+        var unit = document.getElementById('unit_id').value;
+        var dept = document.getElementById('dept').value;
+        var section = document.getElementById('section').value;
+        var line = document.getElementById('line').value;
+        var desig = document.getElementById('desig').value;
+        var status = document.getElementById('status').value;
+        var searchi = document.getElementById('searchi').value;
 
-            url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
-            $.ajax({
-                url: url,
-                type: 'GET',
-                data: {
-                    "status": status,
-                    "searchi": searchi
-                },
-                contentType: "application/json",
-                dataType: "json",
+        url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                "status": status,
+                "searchi": searchi
+            },
+            contentType: "application/json",
+            dataType: "json",
 
 
-                success: function(response) {
+            success: function(response) {
+                $('.removeTr').remove();
+                if (response.length != 0) {
+                    $('.removeTrno').hide();
+                    var items = '';
+                    $.each(response, function(index, value) {
+                        items += `
+                            <tr class="removeTr">
+                                <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+                                <td class="success">${value.emp_id}</td>
+                                <td class="warning ">${value.name_en}</td>
+                            </tr>`
+                    });
+                    // console.log(items);
+                    $('#fileDiv tr:last').after(items);
+                } else {
+                    $('.removeTrno').show();
                     $('.removeTr').remove();
-                    if (response.length != 0) {
-                        $('.removeTrno').hide();
-                        var items = '';
-                        $.each(response, function(index, value) {
-                            items += `
-                                <tr class="removeTr">
-                                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
-                                    <td class="success">${value.emp_id}</td>
-                                    <td class="warning ">${value.name_en}</td>
-                                </tr>`
-                        });
-                        // console.log(items);
-                        $('#fileDiv tr:last').after(items);
-                    } else {
-                        $('.removeTrno').show();
-                        $('.removeTr').remove();
-                    }
                 }
-            });
-        }
+            }
+        });
+    }
+
     $(document).ready(function() {
         // select all item or deselect all item
         $("#select_all").click(function() {
@@ -338,6 +339,7 @@
         });
     });
 </script>
+
 <script>
     function get_checked_value(checkboxes) {
         var vals = Array.from(checkboxes)
@@ -349,67 +351,67 @@
 </script>
 
 <script>
-  function add_left_regign() {
-    var checkboxes = document.getElementsByName('emp_id[]');
-    var sql = get_checked_value(checkboxes);
-    if (sql =='') {
-      alert('Please select employee Id');
-      $("#loader").hide();
-      return false;
-    }
-
-    if (sql.length > 7) {
-        showMessage('error', 'Please select max one employee Id');
-        return false;
-    }
-
-    var unit_id = document.getElementById('unit_id').value;
-    if (unit_id =='') {
-      alert('Please select Unit');
-      $("#loader").hide();
-      return false;
-    }
-
-    var types = document.getElementById('types').value;
-    if (types =='') {
-      alert('Please select Type');
-      $("#loader").hide();
-      return false;
-    }
-
-    var date = document.getElementById('date').value;
-    if (date == '' && types != 1) {
-      alert('Please select Effect Date');
-      $("#loader").hide();
-      return false;
-    }
-
-    var remark = document.getElementById('remark').value;
-    $("#loader").show();
-    $.ajax({
-      type: "POST",
-      url: hostname + "entry_system_con/add_left_regign",
-      data: {
-        sql: sql,
-        date: date,
-        type: types,
-        unit_id: unit_id,
-        remark: remark,
-      },
-      success: function(data) {
-          $("#loader").hide();
-          if (data == 'success') {
-              showMessage('success', 'Updated Successfully');
-          }else {
-              showMessage('error', 'Sorry! Not Updated');
-          }
-      } ,
-      error: function () {
+    function add_left_regign() {
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        if (sql =='') {
+        alert('Please select employee Id');
         $("#loader").hide();
-        showMessage('error', 'Sorry! Not Updated');
-      }
-    })
-  }
+        return false;
+        }
+
+        if (sql.length > 7) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+
+        var unit_id = document.getElementById('unit_id').value;
+        if (unit_id =='') {
+        alert('Please select Unit');
+        $("#loader").hide();
+        return false;
+        }
+
+        var types = document.getElementById('types').value;
+        if (types =='') {
+        alert('Please select Type');
+        $("#loader").hide();
+        return false;
+        }
+
+        var date = document.getElementById('date').value;
+        if (date == '' && types != 1) {
+        alert('Please select Effect Date');
+        $("#loader").hide();
+        return false;
+        }
+
+        var remark = document.getElementById('remark').value;
+        $("#loader").show();
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/add_left_regign",
+            data: {
+                sql: sql,
+                date: date,
+                type: types,
+                unit_id: unit_id,
+                remark: remark,
+            },
+            success: function(data) {
+            $("#loader").hide();
+            if (data == 'success') {
+                showMessage('success', 'Updated Successfully');
+            }else {
+                showMessage('error', 'Sorry! Not Updated');
+            }
+            } ,
+            error: function () {
+                $("#loader").hide();
+                showMessage('error', 'Sorry! Not Updated');
+            }
+        })
+    }
 </script>
 
 

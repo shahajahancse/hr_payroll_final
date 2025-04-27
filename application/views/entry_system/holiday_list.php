@@ -51,9 +51,7 @@
     </div>
     <!-- <br> -->
     <div class="row tablebox">
-
         <div class="col-md-12">
-
             <table class="table table-striped" id="mytable">
                 <thead>
                     <tr>
@@ -67,59 +65,13 @@
                         <th>Delete</th>
                     </tr>
                 </thead>
-
-                </thead>
-
                 <tbody id="tbody">
-
-                    <!-- <?php
-
-                  if (!empty($results)) {foreach ($results as $key => $r) {?>
-
-                    <tr>
-                        <td><?php echo $key + 1  ?></td>
-                        <td><?php echo $r->user_name ?></td>
-                        <td><?php echo $r->emp_id ?></td>
-                        <td><?php echo $r->unit_name ?></td>
-                        <td><?php echo $r->work_off_date ?></td>
-                        <td><?php echo date('l', strtotime($r->work_off_date))?></td>
-                        <td><?php echo $r->description ?></td>
-                        <td>
-                            <a href="<?=base_url('entry_system_con/emp_holiday_del/'.$r->id)?>"
-                                class="btn btn-danger" role="button">Delete</a>
-                        </td>
-                    </tr>
-                    <?php }} else {?>
-
-                    <tr>
-                        <td colspan="12">Records not Found</td>
-                    </tr>
-                    <?php }?> -->
-
                 </tbody>
             </table>
         </div>
     </div>
     <br><br>
 </div>
-
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-    $("#mytable").dataTable();
-    $('#mytable_filter').css({
-        "display": "none"
-    })
-    $('#mytable_length').css({
-        "display": "none"
-    })
-    $("#mytable").dataTable();
-    oTable = $('#mytable').DataTable();
-    $('#deptSearch').keyup(function() {
-        oTable.search($(this).val()).draw();
-    })
-});
-</script> -->
-
 
 <script>
 var offset = 0
@@ -141,7 +93,7 @@ function get_data(offset=0) {
         },
         success:function(data){
             var obj = JSON.parse(data)
-           
+
             obj.forEach(element => {
                 var work_off_day = new Date(element.work_off_date).toLocaleString('en-US', { weekday: 'long' });
 
