@@ -18,6 +18,65 @@ class Monitoring_con extends CI_Controller {
         $this->data['user_data'] = $this->session->userdata('data');
 	}
 
+    // employee entry system start
+	public function left_list()
+    {
+        $this->db->select('
+            com.emp_id,com.emp_join_date,com.gross_sal,
+            per.name_en,per.father_name,per.mother_name,per.img_source,
+            per.personal_mobile,per.emp_dob,per.gender,per.marital_status,
+            dg.desig_name,line.line_name_en
+        ');
+        $this->db->from('pr_emp_com_info com');
+        $this->db->join('pr_emp_per_info per', 'per.emp_id = com.emp_id', 'left');
+        $this->db->join('emp_line_num line', 'line.id = com.emp_line_id', 'left');
+        $this->db->join('emp_designation dg', 'dg.id = com.emp_desi_id', 'left');
+        $this->data['results'] = $this->db->where('com.monitor_con', 2)->get()->result();
+        // dd($this->data['results']);
+        $this->data['title'] = 'Employee List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'monitoring/emp_list';
+        $this->load->view('layout/template', $this->data);
+    }
+
+	public function approve_emp()
+    {
+        $emp_id = $this->input->post('emp_id');
+        $this->db->trans_start();
+        $data = array(
+            'monitor_con' => 1,
+        );
+        $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $data);
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            echo 'error';
+        } else {
+            $this->db->trans_commit();
+            echo 'success';
+        }
+    }
+
+    public function delete_emp()
+    {
+        $emp_id = $this->input->post('emp_id');
+
+        $this->db->trans_start();
+        $this->db->where('emp_id', $emp_id)->delete('pr_emp_com_info');
+        $this->db->where('emp_id', $emp_id)->delete('pr_emp_per_info');
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            echo 'error';
+        } else {
+            $this->db->trans_commit();
+            echo 'success';
+        }
+    }
+    // employee entry system end
+
     // employee Increment/Promotion/Line change system start
 	public function emp_inc_list()
     {
@@ -68,10 +127,21 @@ class Monitoring_con extends CI_Controller {
     {
         $emp_id = $this->input->post('emp_id');
         $effective_month = $this->input->post('effective_month');
+        $r = $this->db->where('ref_id', $emp_id)->where('effective_month', $effective_month)->get('pr_incre_prom_pun')->row();
 
         $this->db->trans_start();
-        $this->db->where('emp_id', $emp_id)->delete('pr_emp_com_info');
-        $this->db->where('emp_id', $emp_id)->delete('pr_emp_per_info');
+        $data = array(
+            'emp_dept_id'    => $r->prev_dept,
+            'emp_sec_id'     => $r->prev_section,
+            'emp_line_id'    => $r->prev_line,
+            'emp_desi_id'    => $r->prev_desig,
+            'gross_sal'      => $r->prev_salary,
+            'com_gross_sal'  => $r->prev_com_salary,
+            'emp_sal_gra_id' => $r->prev_grade
+        );
+        if ($this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $data)) {
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $effective_month)->delete('pr_incre_prom_pun');
+        }
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {

@@ -116,7 +116,7 @@
                             <a onclick="return confirm('Are you sure you want to approve this?') ? approves(this, '<?= $r->emp_id ?>', '<?= $r->effective_month ?>') : false;" class="btn btn-primary center-text" role="button">Approve</a>
                         </td>
                         <td>
-                            <a onclick="return confirm('Are you sure you want to delete this?') ? deletes(this, '<?= $r->emp_id ?>') : false;" class="btn btn-danger center-text" role="button">Delete</a>
+                            <a onclick="return confirm('Are you sure you want to delete this?') ? deletes(this, '<?= $r->emp_id ?>', '<?= $r->effective_month ?>') : false;" class="btn btn-danger center-text" role="button">Delete</a>
                         </td>
                     </tr>
                 <?php }} else {?>
@@ -153,12 +153,13 @@
             }
         })
     }
-    function deletes(el, emp_id) {
+    function deletes(el, emp_id, effective_month) {
         $.ajax({
             type: "POST",
             url: hostname + "monitoring_con/delete_emp_ipl",
             data: {
                 emp_id: emp_id,
+                effective_month: effective_month
             },
             success: function(data) {
                 if (data == 'success') {
