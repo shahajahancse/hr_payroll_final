@@ -117,6 +117,22 @@ if ( ! function_exists('check_acl_list'))
 	}
 }
 
+
+
+if ( ! function_exists('log_activity'))
+{
+	function log_activity($title,$description,$user_id)
+	{
+		$CI =& get_instance();
+		$data = array(
+			'title' => $title,
+			'description' => $description,
+			'user_id' => $user_id,
+		);
+		$CI->db->insert('activity_log', $data);
+	}
+}
+
 // ------------------------------------------------------------------------
 
 
