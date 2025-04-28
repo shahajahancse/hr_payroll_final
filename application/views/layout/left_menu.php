@@ -34,7 +34,7 @@
 
       <!-- Enty System -->
       <?php if(in_array(2,$acl)) { ?>
-      <li class="start <?= activate_class('entry_system_con') ?>"> <a href="javascript:;"> <i class="fa fa-users"></i>
+      <li class="start <?= activate_class('entry_system_con') ?>"> <a href="javascript:;"> <i class="fa fa-pencil-square-o"></i>
         <span class="title">Entry System</span> <span class="selected"></span> <span class="arrow <?= arrow_open('entry_system_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <?php if(in_array(13,$acl)) { ?>
@@ -132,12 +132,26 @@
 
       <!-- Training -->
       <?php if(in_array(6,$acl)) { ?>
-        <li class="start <?= activate_class('training_con') ?>"> <a href="javascript:;"> <i class="fa fa-users"></i>
+        <li class="start <?= activate_class('training_con') ?>"> <a href="javascript:;"> <i class="fa fa-book fa-fw"></i>
           <span class="title">Training</span> <span class="selected"></span> <span class="arrow <?= arrow_open('training_con') ?>"></span> </a>
           <ul class="sub-menu ">
             <li class="start <?= activate_method('training_list') ?>"> <a href="<?=base_url('training_con/training_list')?>" >Training List</a></li>
             <li class="start <?= activate_method('training') ?>"> <a href="<?=base_url('training_con/training')?>" >Training Type</a></li>
             <li class="start <?= activate_method('training_report') ?>"> <a href="<?=base_url('training_con/training_report')?>" >Training Report</a></li>
+          </ul>
+        </li>
+      <?php } ?>
+
+      <!-- Monitoring -->
+      <?php if(in_array(8,$acl)) { ?>
+        <li class="start <?= activate_class('monitoring_con') ?>"><a href="javascript:;"><i class="fa fa-desktop"></i>
+          <span class="title">Monitoring</span> <span class="selected"></span> <span class="arrow <?= arrow_open('monitoring_con') ?>"></span> </a>
+          <ul class="sub-menu ">
+            <li class="start <?= activate_method('entry_list') ?>"> <a href="<?=base_url('monitoring_con/entry_list')?>" >Manual Entry</a></li>
+            <li class="start <?= activate_method('emp_list') ?>"> <a href="<?=base_url('monitoring_con/emp_list')?>" >Employee List</a></li>
+            <li class="start <?= activate_method('emp_inc_list') ?>"> <a href="<?=base_url('monitoring_con/emp_inc_list')?>" >Increment / Promotion</a></li>
+            <li class="start <?= activate_method('left_list') ?>"> <a href="<?=base_url('monitoring_con/left_list')?>">Left List</a></li>
+            <li class="start <?= activate_method('resign_list') ?>"> <a href="<?=base_url('monitoring_con/resign_list')?>" >Resign List</a></li>
           </ul>
         </li>
       <?php } ?>
@@ -198,7 +212,7 @@
 
       <!-- Setting -->
       <?php if($this->session->userdata('data')->level == "All" || in_array(7,$acl)) { ?>
-      <li class="start <?= activate_class('setting_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
+      <li class="start <?= activate_class('setting_con') ?>"> <a href="javascript:;"> <i class="fa fa-wrench"></i>
         <span class="title">Settings </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setting_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <?php if(in_array(44,$acl)) { ?>
