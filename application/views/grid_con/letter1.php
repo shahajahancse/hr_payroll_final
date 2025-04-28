@@ -1,5 +1,6 @@
 
 <!-- < ?php dd($values);?> -->
+<?php dd($values) ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -67,7 +68,7 @@
             <p class="text-center h5"><?= $com_info->company_add_bangla ?></p>
         </div>
         <?php 
-          if ($no_change == 2) {
+          if (isset($no_change) && $no_change == 2) {
             $this->db->where('left_id', $value->left_id)->update('pr_emp_left_history', array('status' => 2));
           }
         ?>

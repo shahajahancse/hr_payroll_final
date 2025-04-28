@@ -2430,17 +2430,18 @@ class Entry_system_con extends CI_Controller
     }
     public function left_list_ajax()
     {
+
         $offset = $this->input->post('offset');
         $limit = $this->input->post('limit');
         $deptSearch = $this->input->post('deptSearch');
-        $this->db->select('lf.*, pr_units.unit_name, per.name_en as user_name');
+        $this->db->select('lf.left_id, lf.unit_id,lf.status, lf.emp_id, lf.left_date, lf.remark, pr_units.unit_name, per.name_en as user_name');
         $this->db->from('pr_emp_left_history as lf');
         $this->db->join('pr_units', 'pr_units.unit_id = lf.unit_id', 'left');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = lf.emp_id', 'left');
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         }
-        $this->db->group_by('lf.emp_id');
+        $this->db->group_by('lf.emp_id, lf.left_id, lf.unit_id, lf.left_date, lf.remark, pr_units.unit_name, per.name_en');
         $this->db->order_by('lf.left_date', 'DESC');
         $this->db->limit($limit, $offset);
         if (!empty($deptSearch) && $deptSearch != '') {
@@ -2450,9 +2451,9 @@ class Entry_system_con extends CI_Controller
             $this->db->or_like('per.emp_id', $deptSearch);
             $this->db->group_end();
         }
-        $results= $this->db->get()->result();
-
+        $results = $this->db->get()->result();
         echo json_encode($results);
+        
     }
 
     public function resign_list(){
