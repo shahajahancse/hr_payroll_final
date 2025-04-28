@@ -36,7 +36,7 @@
             <div class="navbar-header col-md-5" style="padding: 7px;">
                 <div>
                     <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
-                    <a style="font-size: 16px; font-weight: bold;">Employee List</a>
+                    <a style="font-size: 16px; font-weight: bold;">Promotion / Increment / Line List</a>
                 </div>
             </div>
             <div class="col-md-7">
@@ -74,36 +74,46 @@
                     <th>Sl. No.</th>
                     <th>Emp Id </th>
                     <th>Name</th>
-                    <th>Line</th>
-                    <th>Designation</th>
                     <th>DOJ</th>
-                    <th>DOB</th>
-                    <th>Salary</th>
-                    <th>Mobile</th>
-                    <th>Gender</th>
-                    <th>Marital Status</th>
-                    <!-- <th>Image</th> -->
+                    <th>Old Line</th>
+                    <th>New Line</th>
+                    <th>Old Designation</th>
+                    <th>New Designation</th>
+                    <th>Old Salary</th>
+                    <th>Increment</th>
+                    <th>New Salary</th>
+                    <th>Effective Date</th>
+                    <th>status</th>
                     <th colspan="2">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                    if (!empty($results)) {foreach ($results as $key => $r) {?>
+                <?php if (!empty($results)) {foreach ($results as $key => $r) {?>
+                    <?php if ($r->status == 1) {
+                        $status = "Increment";
+                    } else if ($r->status == 2) {
+                        $status = "Promotion";
+                    } else if ($r->status == 3) {
+                        $status = "Line Change";
+                    } else {
+                        $status = "Special Increment";
+                    } ?>
                     <tr>
                         <td><?php echo $key + 1  ?></td>
                         <td> <?php echo $r->emp_id ?></td>
                         <td> <?php echo $r->name_en ?></td>
-                        <td> <?php echo $r->line_name_en ?></td>
-                        <td> <?php echo $r->desig_name ?></td>
                         <td> <?php echo date('d-m-Y', strtotime($r->emp_join_date)) ?></td>
-                        <td> <?php echo date('d-m-Y', strtotime($r->emp_dob)) ?></td>
-                        <td> <?php echo $r->gross_sal ?></td>
-                        <td> <?php echo $r->personal_mobile ?></td>
-                        <td> <?php echo $r->gender ?></td>
-                        <td> <?php echo $r->marital_status ?></td>
-                        <!-- <td> <?php echo $r->img_source ?></td> -->
+                        <td> <?php echo $r->line_name_en ?></td>
+                        <td> <?php echo $r->new_line ?></td>
+                        <td> <?php echo $r->desig_name ?></td>
+                        <td> <?php echo $r->new_desig ?></td>
+                        <td> <?php echo $r->prev_salary ?></td>
+                        <td> <?php echo ($r->new_salary - $r->prev_salary) ?></td>
+                        <td> <?php echo $r->new_salary ?></td>
+                        <td> <?php echo date('d-m-Y', strtotime($r->effective_month)) ?></td>
+                        <td> <?php echo $status ?></td>
                         <td>
-                            <a onclick="return confirm('Are you sure you want to approve this?') ? approves(this, '<?= $r->emp_id ?>') : false;" class="btn btn-primary center-text" role="button">Approve</a>
+                            <a onclick="return confirm('Are you sure you want to approve this?') ? approves(this, '<?= $r->emp_id ?>', '<?= $r->effective_month ?>') : false;" class="btn btn-primary center-text" role="button">Approve</a>
                         </td>
                         <td>
                             <a onclick="return confirm('Are you sure you want to delete this?') ? deletes(this, '<?= $r->emp_id ?>') : false;" class="btn btn-danger center-text" role="button">Delete</a>
@@ -121,12 +131,13 @@
 </div>
 
 <script>
-    function approves(el, emp_id) {
+    function approves(el, emp_id, effective_month) {
         $.ajax({
             type: "POST",
-            url: hostname + "monitoring_con/approve_emp",
+            url: hostname + "monitoring_con/approve_emp_ipl",
             data: {
                 emp_id: emp_id,
+                effective_month: effective_month
             },
             success: function(data) {
                 if (data == 'success') {
@@ -145,7 +156,7 @@
     function deletes(el, emp_id) {
         $.ajax({
             type: "POST",
-            url: hostname + "monitoring_con/delete_emp",
+            url: hostname + "monitoring_con/delete_emp_ipl",
             data: {
                 emp_id: emp_id,
             },
