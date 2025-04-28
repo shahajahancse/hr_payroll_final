@@ -144,9 +144,9 @@
             <input type="text" class="form-control" id="remark" placeholder="please enter comment">
         </div><!-- /.row -->
         <div class="row nav_head" style="gap: 10px;">
-            <a href="javascript:void(0)" class="btn btn-primary" onclick='get_letters(1)'>Get 1st Letter</a>
-            <a href="javascript:void(0)" class="btn btn-primary" onclick='get_letters(2)'>Get 2st Letter</a>
-            <a href="javascript:void(0)" class="btn btn-primary" onclick='get_letters(3)'>Get 3st Letter</a>
+            <a href="javascript:void(0)" class="btn btn-info" onclick='get_letters(1)'>Get 1st Letter</a>
+            <a href="javascript:void(0)" class="btn btn-info" onclick='get_letters(2)'>Get 2st Letter</a>
+            <a href="javascript:void(0)" class="btn btn-info" onclick='get_letters(3)'>Get 3st Letter</a>
         </div><!-- /.row -->
     </div>
 

@@ -719,9 +719,9 @@ class Grid_con extends CI_Controller {
 		if(empty($data)){
 			echo "Not Found Data"; exit();
 		}else{
-			if ($status == 1) {
+			if ($status == 2) {
 				$this->load->view('grid_con/letter1',$data);
-			} else if ($status == 2) {
+			} else if ($status == 3) {
 				$this->load->view('grid_con/letter2',$data);
 			} else {
 				$this->load->view('grid_con/letter3',$data);
