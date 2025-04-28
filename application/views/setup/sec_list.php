@@ -84,6 +84,7 @@
                         <th style="white-space: nowrap;">Section Name Bangla </th>
                         <th style="white-space: nowrap;">Section Name English </th>
                         <th style="white-space: nowrap;">Department</th>
+                        <th style="white-space: nowrap;">Man Power</th>
                         <th style="white-space: nowrap;">Company Unit</th>
                         <th width="80">Edit</th>
                         <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(137,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
@@ -98,6 +99,7 @@
                         <td class="bangla_font" style="white-space: nowrap;"><?php echo $pr_secs['sec_name_bn'] ?></td>
                         <td style="white-space: nowrap;"><?php echo $pr_secs['sec_name_en'] ?></td>
                         <td style="white-space: nowrap;"><?php echo $pr_secs['dept_name'] ?></td>
+                        <td style="white-space: nowrap;"><?php echo $pr_secs['man_power'] ?></td>
                         <td style="white-space: nowrap;"><?php echo $pr_secs['unit_name'] ?></td>
                         <td>
                             <a href="<?=base_url('setup_con/sec_edit') . '/' . $pr_secs["id"]?>"

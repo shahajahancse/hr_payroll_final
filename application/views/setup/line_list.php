@@ -81,6 +81,7 @@
                         <th>Unit Name </th>
                         <th>Department Name </th>
                         <th>Section Name</th>
+                        <th>Man Power</th>
                         <th width="80">Edit</th>
                         <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(138,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>
                     </tr>
@@ -95,6 +96,7 @@
                             <td><?php echo $pr_lines['unit_name'] ?></td>
                             <td><?php echo $pr_lines['dept_name'] ?></td>
                             <td><?php echo $pr_lines['sec_name_en'] ?></td>
+                            <td><?php echo $pr_lines['man_power'] ?></td>
                             <td>
                                 <a href="<?=base_url('setup_con/line_edit/'.$pr_lines['id'])?>"
                                     class="btn btn-primary center-text" role="button">Edit</a>

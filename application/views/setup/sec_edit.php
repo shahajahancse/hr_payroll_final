@@ -58,16 +58,21 @@
                         <?= (isset($failuer['depertment_id'])) ? '<div class="alert alert-failuer">' . $failuer['depertment_id'] . '</div>' : ''; ?>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label>Section Name</label>
                         <input type="text" name="sec_name_en" value="<?= $sec->sec_name_en ?>" placeholder="Section Name English"
                             class="form-control">
                         <?=(isset($failuer['sec_name_en'])) ? '<div class="alert alert-failuer">' . $failuer['sec_name_en'] . '</div>' : ''; ?>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label>Section Name Bangla</label>
                         <input type="text" name="sec_name_bn" value="<?= $sec->sec_name_bn ?>" placeholder="Section Name Bangla" class="form-control bfont">
                         <?=(isset($failuer['sec_name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['sec_name_bn'] . '</div>' : ''; ?>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Man Power</label>
+                        <input type="number" name="man_power" value="<?= $sec->man_power ?>" placeholder="Enter Man Power" class="form-control bfont">
+                        <?=(isset($failuer['man_power'])) ? '<div class="alert alert-failuer">' . $failuer['man_power'] . '</div>' : ''; ?>
                     </div>
                     <br>
                     <div class="form-group">

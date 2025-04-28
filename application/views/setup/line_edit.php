@@ -67,17 +67,23 @@
                         </select>
                         <?= (isset($failuer['section_id'])) ? '<div class="alert alert-failuer">' . $failuer['section_id'] . '</div>' : ''; ?>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
 
                         <label>Line Name Bangla</label>
                         <input type="text" name="line_name_bn" value="<?= $line->line_name_bn ?>" placeholder="Section Name Bangla" class="form-control bfont">
                         <?=(isset($failuer['line_name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['line_name_bn'] . '</div>' : ''; ?>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label>Line Name English</label>
                         <input type="text" name="line_name_en" value="<?= $line->line_name_en ?>" placeholder="Section Name english"
                             class="form-control">
                         <?=(isset($failuer['line_name_en'])) ? '<div class="alert alert-failuer">' . $failuer['line_name_en'] . '</div>' : ''; ?>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Man Power</label>
+                        <input type="Number" name="man_power" value="<?= $line->man_power ?>" placeholder="Enter Man Power"
+                        class="form-control">
+                        <?=(isset($failuer['man_power'])) ? '<div class="alert alert-failuer">' . $failuer['man_power'] . '</div>' : ''; ?>
                     </div>
                     <br>
                     <div class="form-group">

@@ -601,6 +601,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('sec_name_bn', 'Section Bangla Name', 'trim|required');
         $this->form_validation->set_rules('depertment_id', 'Department', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('man_power', 'Man Power', 'required');
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->session->set_flashdata('failure', $this->form_validation->error_array());
@@ -616,10 +617,11 @@ class Setup_con extends CI_Controller
             $this->load->view('layout/template', $this->data);
         } else {
             $formArray = array(
-                'sec_name_en' => $this->input->post('sec_name_en'),
-                'sec_name_bn' => $this->input->post('sec_name_bn'),
-                'depertment_id' => $this->input->post('depertment_id'),
-                'unit_id' => $this->input->post('unit_id'),
+                'sec_name_en'  => $this->input->post('sec_name_en'),
+                'sec_name_bn'  => $this->input->post('sec_name_bn'),
+                'depertment_id'=> $this->input->post('depertment_id'),
+                'unit_id'      => $this->input->post('unit_id'),
+                'man_power'    => $this->input->post('man_power'),
             );
 
             if ($this->db->insert('emp_section', $formArray)) {
@@ -649,6 +651,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('sec_name_bn', 'Section Bangla Name', 'trim|required');
         $this->form_validation->set_rules('depertment_id', 'Department', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('man_power', 'Man Power', 'required');
 
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -665,10 +668,11 @@ class Setup_con extends CI_Controller
             $this->load->view('layout/template', $this->data);
         } else {
             $formArray = array(
-                'sec_name_en' => $this->input->post('sec_name_en'),
-                'sec_name_bn' => $this->input->post('sec_name_bn'),
-                'depertment_id' => $this->input->post('depertment_id'),
-                'unit_id' => $this->input->post('unit_id'),
+                'sec_name_en'  => $this->input->post('sec_name_en'),
+                'sec_name_bn'  => $this->input->post('sec_name_bn'),
+                'depertment_id'=> $this->input->post('depertment_id'),
+                'unit_id'      => $this->input->post('unit_id'),
+                'man_power'    => $this->input->post('man_power'),
             );
             $this->db->where('id', $secId);
             if ($this->db->update('emp_section', $formArray)) {
@@ -738,6 +742,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('section_id', 'Section', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
         $this->form_validation->set_rules('depertment_id', 'Department', 'required');
+        $this->form_validation->set_rules('man_power', 'Man Power', 'required');
 
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -753,11 +758,12 @@ class Setup_con extends CI_Controller
         } else {
 
             $formArray = array(
-                'line_name_en' => $this->input->post('line_name_en'),
-                'line_name_bn' => $this->input->post('line_name_bn'),
-                'section_id' => $this->input->post('section_id'),
-                'unit_id' => $this->input->post('unit_id'),
-                'dept_id' => $this->input->post('depertment_id'),
+                'line_name_en'=> $this->input->post('line_name_en'),
+                'line_name_bn'=> $this->input->post('line_name_bn'),
+                'section_id'  => $this->input->post('section_id'),
+                'unit_id'     => $this->input->post('unit_id'),
+                'dept_id'     => $this->input->post('depertment_id'),
+                'man_power'   => $this->input->post('man_power'),
             );
 
             if ($this->db->insert('emp_line_num', $formArray)) {
@@ -778,6 +784,7 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('line_name_bn', 'Line Bangla Name', 'trim|required');
         $this->form_validation->set_rules('section_id', 'Section', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
+        $this->form_validation->set_rules('man_power', 'Man Power', 'required');
         $this->form_validation->set_rules('depertment_id', 'Department', 'required');
 
         if ($this->form_validation->run() == false) {
@@ -795,11 +802,12 @@ class Setup_con extends CI_Controller
             $this->load->view('layout/template', $this->data);
         } else {
             $formArray = array(
-                'line_name_en' => $this->input->post('line_name_en'),
-                'line_name_bn' => $this->input->post('line_name_bn'),
-                'section_id' => $this->input->post('section_id'),
-                'unit_id' => $this->input->post('unit_id'),
-                'dept_id' => $this->input->post('depertment_id'),
+                'line_name_en'=> $this->input->post('line_name_en'),
+                'line_name_bn'=> $this->input->post('line_name_bn'),
+                'section_id'  => $this->input->post('section_id'),
+                'unit_id'     => $this->input->post('unit_id'),
+                'man_power'   => $this->input->post('man_power'),
+                'dept_id'     => $this->input->post('depertment_id'),
             );
             $this->db->where('id', $line_id);
             if ($this->db->update('emp_line_num', $formArray)) {
