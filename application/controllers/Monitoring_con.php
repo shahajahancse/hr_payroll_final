@@ -18,35 +18,97 @@ class Monitoring_con extends CI_Controller {
         $this->data['user_data'] = $this->session->userdata('data');
 	}
 
-    // employee entry system start
+    // employee resign entry system start
+	public function resign_list()
+    {
+        $this->db->select('
+            com.emp_id,com.emp_join_date,com.gross_sal,
+            per.name_en,per.father_name,per.mother_name,per.img_source,
+            per.personal_mobile,per.emp_dob,per.gender,per.marital_status,
+            dg.desig_name,line.line_name_en, resign.resign_date
+        ');
+        $this->db->from('pr_emp_resign_history resign');
+        $this->db->join('pr_emp_com_info com', 'com.emp_id = resign.emp_id', 'left');
+        $this->db->join('pr_emp_per_info per', 'per.emp_id = com.emp_id', 'left');
+        $this->db->join('emp_line_num line', 'line.id = com.emp_line_id', 'left');
+        $this->db->join('emp_designation dg', 'dg.id = com.emp_desi_id', 'left');
+        $this->data['results'] = $this->db->where('resign.monitor_con', 2)->get()->result();
+        $this->data['title'] = 'Resign List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'monitoring/resign_list';
+        $this->load->view('layout/template', $this->data);
+    }
+
+	public function approve_resign()
+    {
+        $emp_id = $this->input->post('emp_id');
+        $this->db->trans_start();
+        $data = array(
+            'monitor_con' => 1,
+            'monitor_id' => $this->data['user_data']->id,
+            'monitor_date' => date('Y-m-d')
+        );
+        $this->db->where('emp_id', $emp_id)->update('pr_emp_resign_history', $data);
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            echo 'error';
+        } else {
+            $this->db->trans_commit();
+            echo 'success';
+        }
+    }
+
+    public function delete_resign()
+    {
+        $emp_id = $this->input->post('emp_id');
+
+        $this->db->trans_start();
+        $this->db->where('emp_id', $emp_id)->delete('pr_emp_resign_history');
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            echo 'error';
+        } else {
+            $this->db->trans_commit();
+            echo 'success';
+        }
+    }
+    // employee resign entry system end
+
+    // employee left entry system start
 	public function left_list()
     {
         $this->db->select('
             com.emp_id,com.emp_join_date,com.gross_sal,
             per.name_en,per.father_name,per.mother_name,per.img_source,
             per.personal_mobile,per.emp_dob,per.gender,per.marital_status,
-            dg.desig_name,line.line_name_en
+            dg.desig_name,line.line_name_en, left.left_date
         ');
-        $this->db->from('pr_emp_com_info com');
+        $this->db->from('pr_emp_left_history left');
+        $this->db->join('pr_emp_com_info com', 'com.emp_id = left.emp_id', 'left');
         $this->db->join('pr_emp_per_info per', 'per.emp_id = com.emp_id', 'left');
         $this->db->join('emp_line_num line', 'line.id = com.emp_line_id', 'left');
         $this->db->join('emp_designation dg', 'dg.id = com.emp_desi_id', 'left');
-        $this->data['results'] = $this->db->where('com.monitor_con', 2)->get()->result();
-        // dd($this->data['results']);
-        $this->data['title'] = 'Employee List';
+        $this->data['results'] = $this->db->where('left.monitor_con', 2)->get()->result();
+        $this->data['title'] = 'Left List';
         $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'monitoring/emp_list';
+        $this->data['subview'] = 'monitoring/left_list';
         $this->load->view('layout/template', $this->data);
     }
 
-	public function approve_emp()
+	public function approve_left()
     {
         $emp_id = $this->input->post('emp_id');
         $this->db->trans_start();
         $data = array(
             'monitor_con' => 1,
+            'monitor_id' => $this->data['user_data']->id,
+            'monitor_date' => date('Y-m-d')
         );
-        $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $data);
+        $this->db->where('emp_id', $emp_id)->update('pr_emp_left_history', $data);
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
@@ -58,13 +120,12 @@ class Monitoring_con extends CI_Controller {
         }
     }
 
-    public function delete_emp()
+    public function delete_left()
     {
         $emp_id = $this->input->post('emp_id');
 
         $this->db->trans_start();
-        $this->db->where('emp_id', $emp_id)->delete('pr_emp_com_info');
-        $this->db->where('emp_id', $emp_id)->delete('pr_emp_per_info');
+        $this->db->where('emp_id', $emp_id)->delete('pr_emp_left_history');
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
@@ -75,7 +136,7 @@ class Monitoring_con extends CI_Controller {
             echo 'success';
         }
     }
-    // employee entry system end
+    // employee left entry system end
 
     // employee Increment/Promotion/Line change system start
 	public function emp_inc_list()
