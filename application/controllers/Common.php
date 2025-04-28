@@ -99,7 +99,7 @@ class Common extends CI_Controller {
             $this->db->from('pr_emp_left_history as lf');
             $this->db->where('lf.unit_id', $unit_id);
             $this->db->where("lf.left_date BETWEEN '$salary_month' AND '$end_month'");
-            $emp_ids = $this->db->get()->result();h
+            $emp_ids = $this->db->get()->result();
             $emp_id = array_column($emp_ids, 'emp_id');
         } elseif (!empty($status) && $status == 3) {
             $this->db->select('lf.emp_id');
@@ -162,6 +162,8 @@ class Common extends CI_Controller {
         echo json_encode($result);
         return;
     }
+
+
 
     function ajax_department_by_unit_id($id){
 

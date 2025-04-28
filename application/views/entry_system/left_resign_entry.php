@@ -143,6 +143,11 @@
         <div class="row nav_head">
             <input type="text" class="form-control" id="remark" placeholder="please enter comment">
         </div><!-- /.row -->
+        <div class="row nav_head" style="gap: 10px;">
+            <a href="javascript:void(0)" class="btn btn-primary" onclick='get_letters(1)'>Get 1st Letter</a>
+            <a href="javascript:void(0)" class="btn btn-primary" onclick='get_letters(2)'>Get 2st Letter</a>
+            <a href="javascript:void(0)" class="btn btn-primary" onclick='get_letters(3)'>Get 3st Letter</a>
+        </div><!-- /.row -->
     </div>
 
     <div class="col-md-4 tablebox">
@@ -178,13 +183,73 @@
     <!-- </div> -->
 </div>
 
+
+<script type="text/javascript">
+function get_letters(emp_id, status) {
+    var ajaxRequest; // The variable that makes Ajax possible!
+    try {
+        // Opera 8.0+, Firefox, Safari
+        ajaxRequest = new XMLHttpRequest();
+    } catch (e) {
+        // Internet Explorer Browsers
+        try {
+            ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+                // Something went wrong
+                alert("Your browser broke!");
+                return false;
+            }
+        }
+    }
+
+    var date = $('#date').val()
+    if (date == '') {
+        alert('Please select date');
+        $("#loader").hide();
+
+        return false;
+    }
+    var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        if (sql =='') {
+            alert('Please select employee Id');
+            $("#loader").hide();
+            return false;
+        }
+
+        if (sql.length > 7) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+
+
+    // document.getElementById('loaader').style.display = 'flex';
+    var queryString = "emp_id=" + emp_id + "&status=" + status + "&date=" + date + "&sql=" + sql;
+    url = hostname + "grid_con/grid_letter_report_print_no_left/";
+    ajaxRequest.open("POST", url, true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+    ajaxRequest.send(queryString);
+    ajaxRequest.onreadystatechange = function() {
+        // document.getElementById('loaader').style.display = 'none';
+        if (ajaxRequest.readyState == 4) {
+            var resp = ajaxRequest.responseText;
+            letter_1 = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+            letter_1.document.write(resp);
+        }
+    }
+}
+</script>
+
 <script>
-        $(document).ready(function() {
-            $("#searchi").on("keyup", function() {
-                grid_emp_list()
-            });
+    $(document).ready(function() {
+        $("#searchi").on("keyup", function() {
+            grid_emp_list()
         });
-    </script>
+    });
+</script>
 <script>
     function loading_open() {
         $('#loader').css('display', 'block');

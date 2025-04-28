@@ -1296,6 +1296,51 @@ class Grid_model extends CI_Model{
 		return $data;
 	}
 
+	function grid_letter_report_print_no_left($emp_id, $unit_id = null){
+
+		$this->db->select('
+			per.*,
+			com.emp_join_date,
+			com.id as id_emp,
+			com.emp_sal_gra_id as grade,
+			com.com_gross_sal as salary,
+			emp_designation.desig_name,
+			emp_designation.desig_bangla,
+			emp_depertment.dept_name,
+			emp_depertment.dept_bangla,
+			emp_section.sec_name_en,
+			emp_section.sec_name_bn,
+			emp_line_num.line_name_bn,
+			emp_line_num.line_name_en,
+			per_dis.name_bn as dis_name_bn,
+			per_upa.name_bn as upa_name_bn,
+			per_post.name_bn as post_name_bn,
+			pre_dis.name_bn as dis_bn,
+			pre_upa.name_bn as upa_bn,
+			pre_post.name_bn as post_bn,
+			lh.left_date,
+			lh.left_id,
+		');
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->join('pr_emp_left_history as lh', 'com.emp_id = lh.emp_id', 'left');
+		$this->db->join('pr_emp_per_info per', 'com.emp_id = per.emp_id');
+
+		$this->db->join('emp_designation', 'com.emp_desi_id = emp_designation.id', 'left');
+		$this->db->join('emp_depertment', 'com.emp_dept_id = emp_depertment.dept_id', 'left');
+		$this->db->join('emp_section', 'com.emp_sec_id = emp_section.id', 'left');
+		$this->db->join('emp_line_num', 'com.emp_line_id = emp_line_num.id', 'left');
+
+		$this->db->join('emp_districts as per_dis', 'per.per_district = per_dis.id', 'LEFT');
+		$this->db->join('emp_upazilas as per_upa', 'per.per_thana = per_upa.id', 'LEFT');
+		$this->db->join('emp_post_offices as per_post', 'per.per_post = per_post.id', 'LEFT');
+		$this->db->join('emp_districts as pre_dis', 'per.pre_district = pre_dis.id', 'LEFT');
+		$this->db->join('emp_upazilas as pre_upa', 'per.pre_thana = pre_upa.id', 'LEFT');
+		$this->db->join('emp_post_offices as pre_post', 'per.pre_post = pre_post.id', 'LEFT');
+		$this->db->where('com.emp_id', $emp_id);
+		$data = $this->db->get()->result();
+		return $data;
+	}
+
 	//  =======================  start continuous report  ======================
 	function continuous_leave_report($firstdate, $seconddate, $status, $emp_ids)
 	{

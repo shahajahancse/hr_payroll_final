@@ -703,6 +703,7 @@ class Grid_con extends CI_Controller {
 	// ============================== end last increment or promotion Report ===============
 	// ============================== start left letter Report ===============
 	function grid_letter_report_print(){
+		
 		$emp_id = $this->input->post('emp_id');
 		$status = $this->input->post('status');
 		$unit_id = $this->session->userdata('data')->unit_name;
@@ -713,6 +714,7 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']	= $unit_id;
 		$data['unit_id']	= $id_number;
 		$data['no_change']	= 1;
+		
 
 		if(empty($data)){
 			echo "Not Found Data"; exit();
@@ -726,6 +728,45 @@ class Grid_con extends CI_Controller {
 			}
 		}
 	}
+	function grid_letter_report_print_no_left(){
+		
+		$emp_id = $this->input->post('emp_id');
+		$status = $this->input->post('status');
+		$date = $this->input->post('date');
+		$sql = $this->input->post('sql');
+		
+		$unit_id = $this->session->userdata('data')->unit_name;
+		$id_number = $this->session->userdata('data')->id_number;
+
+
+		$data['values'] 	= $this->Grid_model->grid_letter_report_print_no_left($sql);
+
+		$data['values'][0]->left_date= date("Y-m-d", strtotime($date));
+
+		$data['unit_id']	= $unit_id;
+		$data['unit_id']	= $id_number;
+		$data['no_change']	= 1;
+		
+
+		if(empty($data)){
+			echo "Not Found Data"; exit();
+		}else{
+			if ($status == 1) {
+				$this->load->view('grid_con/letter1',$data);
+			} else if ($status == 2) {
+				$this->load->view('grid_con/letter2',$data);
+			} else {
+				$this->load->view('grid_con/letter3',$data);
+			}
+		}
+	}
+
+please provide list example 
+
+Sl.	Name		Location	Model		Ip						Port		Type
+1	egen in		egen		egen/1		103.237.77.232			4333		Out
+2	egen out	egen in		egen in		103.237.77.232			4334		In	
+
 
 	function grid_letter_report(){
 		$unit_id = $this->input->post('unit_id');
