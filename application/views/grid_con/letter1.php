@@ -1,6 +1,5 @@
 
 <!-- < ?php dd($values);?> -->
-<?php dd($values) ?>
 <!doctype html>
 <html lang="en">
   <head>

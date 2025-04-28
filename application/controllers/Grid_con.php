@@ -741,7 +741,7 @@ class Grid_con extends CI_Controller {
 
 		$data['values'] 	= $this->Grid_model->grid_letter_report_print_no_left($sql);
 
-		if ($data['values'][0]->left_date == '') {
+		if ($data['values'][0]->left_date == '' || $data['values'][0]->left_date == null) {
 			$data['values'][0]->left_date = date("Y-m-d", strtotime($date));
 		}
 
