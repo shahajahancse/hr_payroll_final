@@ -73,7 +73,6 @@
           <?php if(in_array(24,$acl)) { ?>
             <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
           <?php } ?>
-          <li class="start <?= activate_method('missing_emp_info') ?>"> <a href="<?=base_url('entry_system_con/missing_emp_info')?>" >Missing Employee List</a></li>
           <?php if(in_array(25,$acl)) { ?>
             <li class="start <?= activate_method('inter_unit_transfer') ?>"> <a href="<?=base_url('entry_system_con/inter_unit_transfer')?>" class="anchor_cls" id="acl">Unit Transfer</a> </li>
           <?php } ?>
@@ -83,7 +82,6 @@
           <?php if(in_array(27,$acl)) { ?>
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan & Tax</a> </li>
           <?php } ?>
-          <!-- <li class="start <?= activate_method('letter_notification')?> "><a href="<?= base_url('entry_system_con/letter_notification')?>" class="anchor_cls">Letter Notification</a> </li> -->
           <!-- <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li> -->
         </ul>
       </li>

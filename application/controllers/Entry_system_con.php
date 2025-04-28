@@ -2453,7 +2453,7 @@ class Entry_system_con extends CI_Controller
         }
         $results = $this->db->get()->result();
         echo json_encode($results);
-        
+
     }
 
     public function resign_list(){
@@ -3198,18 +3198,6 @@ class Entry_system_con extends CI_Controller
 
     }
 
-
-
-
-
-    public function letter_notification(){
-
-        $this->data['title'] = 'Increment / Promotion';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'letter_notification';
-        $this->load->view('layout/template', $this->data);
-
-    }
 }
 
 
