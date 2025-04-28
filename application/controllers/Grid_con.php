@@ -719,9 +719,9 @@ class Grid_con extends CI_Controller {
 		if(empty($data)){
 			echo "Not Found Data"; exit();
 		}else{
-			if ($status == 1) {
+			if ($status == 2) {
 				$this->load->view('grid_con/letter1',$data);
-			} else if ($status == 2) {
+			} else if ($status == 3) {
 				$this->load->view('grid_con/letter2',$data);
 			} else {
 				$this->load->view('grid_con/letter3',$data);
@@ -741,7 +741,9 @@ class Grid_con extends CI_Controller {
 
 		$data['values'] 	= $this->Grid_model->grid_letter_report_print_no_left($sql);
 
-		$data['values'][0]->left_date= date("Y-m-d", strtotime($date));
+		if ($data['values'][0]->left_date == '') {
+			$data['values'][0]->left_date = date("Y-m-d", strtotime($date));
+		}
 
 		$data['unit_id']	= $unit_id;
 		$data['unit_id']	= $id_number;
@@ -760,12 +762,6 @@ class Grid_con extends CI_Controller {
 			}
 		}
 	}
-
-please provide list example 
-
-Sl.	Name		Location	Model		Ip						Port		Type
-1	egen in		egen		egen/1		103.237.77.232			4333		Out
-2	egen out	egen in		egen in		103.237.77.232			4334		In	
 
 
 	function grid_letter_report(){
