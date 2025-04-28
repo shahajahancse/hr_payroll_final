@@ -149,7 +149,7 @@
           <ul class="sub-menu ">
             <li class="start <?= activate_method('entry_list') ?>"> <a href="<?=base_url('monitoring_con/entry_list')?>" >Manual Entry</a></li>
             <li class="start <?= activate_method('emp_list') ?>"> <a href="<?=base_url('monitoring_con/emp_list')?>" >Employee List</a></li>
-            <li class="start <?= activate_method('pr_inc_list') ?>"> <a href="<?=base_url('monitoring_con/pr_inc_list')?>" >Increment/Promotion</a></li>
+            <li class="start <?= activate_method('emp_inc_list') ?>"> <a href="<?=base_url('monitoring_con/emp_inc_list')?>" >Increment / Promotion</a></li>
             <li class="start <?= activate_method('left_list') ?>"> <a href="<?=base_url('monitoring_con/left_list')?>">Left List</a></li>
             <li class="start <?= activate_method('resign_list') ?>"> <a href="<?=base_url('monitoring_con/resign_list')?>" >Resign List</a></li>
           </ul>

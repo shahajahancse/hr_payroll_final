@@ -18,6 +18,72 @@ class Monitoring_con extends CI_Controller {
         $this->data['user_data'] = $this->session->userdata('data');
 	}
 
+    // employee Increment/Promotion/Line change system start
+	public function emp_inc_list()
+    {
+        $this->db->select('
+            com.emp_id,com.emp_join_date, per.name_en,
+            ipp.prev_salary,ipp.new_salary,ipp.effective_month,ipp.status,
+            line.line_name_en,dg.desig_name, linen.line_name_en new_line, dgn.desig_name new_desig
+        ');
+        $this->db->from('pr_incre_prom_pun ipp');
+        $this->db->join('pr_emp_com_info com', 'com.emp_id = ipp.ref_id', 'left');
+        $this->db->join('pr_emp_per_info per', 'per.emp_id = com.emp_id', 'left');
+
+        $this->db->join('emp_line_num line', 'line.id = ipp.prev_line', 'left');
+        $this->db->join('emp_designation dg', 'dg.id = ipp.prev_desig', 'left');
+        $this->db->join('emp_line_num linen', 'linen.id = ipp.new_line', 'left');
+        $this->db->join('emp_designation dgn', 'dgn.id = ipp.new_desig', 'left');
+        $this->data['results'] = $this->db->where('ipp.monitor_con', 2)->get()->result();
+        // dd($this->data['results']);
+        $this->data['title'] = 'Employee List';
+        $this->data['username'] = $this->data['user_data']->id_number;
+        $this->data['subview'] = 'monitoring/emp_inc_list';
+        $this->load->view('layout/template', $this->data);
+    }
+
+	public function approve_emp_ipl()
+    {
+        $emp_id = $this->input->post('emp_id');
+        $effective_month = $this->input->post('effective_month');
+        $this->db->trans_start();
+        $data = array(
+            'monitor_con' => 1,
+            'monitor_id' => $this->data['user_data']->id,
+            'monitor_date' => date('Y-m-d')
+        );
+        $this->db->where('ref_id', $emp_id)->where('effective_month', $effective_month)->update('pr_incre_prom_pun', $data);
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            echo 'error';
+        } else {
+            $this->db->trans_commit();
+            echo 'success';
+        }
+    }
+
+    public function delete_emp_ipl()
+    {
+        $emp_id = $this->input->post('emp_id');
+        $effective_month = $this->input->post('effective_month');
+
+        $this->db->trans_start();
+        $this->db->where('emp_id', $emp_id)->delete('pr_emp_com_info');
+        $this->db->where('emp_id', $emp_id)->delete('pr_emp_per_info');
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            echo 'error';
+        } else {
+            $this->db->trans_commit();
+            echo 'success';
+        }
+    }
+    // employee Increment/Promotion/Line change system end
+
     // employee entry system start
 	public function emp_list()
     {
@@ -31,7 +97,7 @@ class Monitoring_con extends CI_Controller {
         $this->db->join('pr_emp_per_info per', 'per.emp_id = com.emp_id', 'left');
         $this->db->join('emp_line_num line', 'line.id = com.emp_line_id', 'left');
         $this->db->join('emp_designation dg', 'dg.id = com.emp_desi_id', 'left');
-        $this->data['results'] = $this->db->where('monotor_con', 2)->get()->result();
+        $this->data['results'] = $this->db->where('com.monitor_con', 2)->get()->result();
         // dd($this->data['results']);
         $this->data['title'] = 'Employee List';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -44,7 +110,7 @@ class Monitoring_con extends CI_Controller {
         $emp_id = $this->input->post('emp_id');
         $this->db->trans_start();
         $data = array(
-            'monotor_con' => 1,
+            'monitor_con' => 1,
         );
         $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $data);
         $this->db->trans_complete();
