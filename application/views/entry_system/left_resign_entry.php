@@ -185,7 +185,7 @@
 
 
 <script type="text/javascript">
-function get_letters(emp_id, status) {
+function get_letters(status) {
     var ajaxRequest; // The variable that makes Ajax possible!
     try {
         // Opera 8.0+, Firefox, Safari
