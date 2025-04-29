@@ -38,8 +38,10 @@
     <link href="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/css/bootstrap.min.css" rel="stylesheet"
         type="text/css" />
 
-    <link href="<?=base_url()?>awedget/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet"
-        type="text/css" />
+    <!-- <link href="<?=base_url()?>awedget/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet"
+        type="text/css" /> -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="<?=base_url()?>awedget/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
 
     <link href="<?=base_url()?>awedget/assets/croper/css/cropper.min.css" rel="stylesheet">
@@ -65,6 +67,18 @@
     <!--/.data table-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+
+
+<style>
+    *:not(i) {
+    font-family: roboto !important;
+}
+</style>
+
 
 
     <script type="text/javascript">
@@ -75,6 +89,7 @@
         /* input[type="text"] {
         font-family:"Helvetica Neue",Helvetica,Arial,"SutonnyMJ";
         } */
+
 
     .n_demand {
         position: absolute;

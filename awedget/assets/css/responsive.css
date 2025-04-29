@@ -57,6 +57,14 @@ and (min-width : 1824px) {
 	
 }
 
+.logo_image {
+    height: 41px;
+    align-content: center;
+    display: block;
+    place-self: anchor-center;
+    margin-top: 15px;
+}
+
 
 /*** Desktops & Laptops ***/
  @media (min-width: 980px) { 
@@ -66,14 +74,15 @@ and (min-width : 1824px) {
         margin-top: 0; 
         padding-top: 58px;
     }
- 	.page-sidebar {
+	.page-sidebar {
 		display: inline-block;
 		float: left;
 		position: fixed;
 		width: 250px;
-		margin-top:58px;
-        padding-bottom: 105px;
-  	}
+		margin-top: 73px;
+		padding-bottom: 105px;
+	}
+	
     .menu-non-fixed .footer-widget{
      z-index: 100;
     }

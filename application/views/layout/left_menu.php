@@ -254,9 +254,10 @@
 
 <a href="#" class="scrollup">Scroll</a>
 <div class="footer-widget">
-  <div class="copyrights text-center" style="width: 100%">
-  <span style=" float: right;"> <span style="vertical-align: bottom; font-size: 11px;">Developed By |</span> <a href="https:mysoftheaven.com/" target="_blank">
-  <img src="<?=base_url()?>awedget/assets/img/mysoft-logo.png" height="18"> Mysoftheaven (BD) Ltd.</a> </span>
+  <div class="copyrights" style="width: 100%;display: flex;align-items: center;justify-content: space-around;">
+    <div style="border-right: 2px solid white;padding-right: 15px;color: white;">Developed By</div>
+    <div><img src="<?=base_url()?>awedget/assets/img/mysoft-logo_full.png" alt="" style="height: 34px;"></div>
+            
   </div>
 </div>
 <!-- END SIDEBAR -->
