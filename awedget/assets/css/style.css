@@ -131,8 +131,7 @@ body.menu-non-fixed .page-sidebar {
   position: relative;
 }
 .header-seperation {
-  /*background-color: #86a8f1;*/
-  background-color: #006ba3;
+  background-color: #ffffff;
 }
 .header {
   padding: 0 !important;
@@ -140,20 +139,20 @@ body.menu-non-fixed .page-sidebar {
   position: fixed;
   width: 100%;
   z-index: 999;
-  min-height: 60px;
+  min-height: 75px;
 }
 .header .navbar-inner {
   background-image: none !important;
-  /*background-color: #ffffff !important;*/
-  background-color: #006ba3 !important;
+  background-color: #ffffff !important;
+  /* background-color: #006ba3 !important; */
   width: 100%;
   margin: 0;
   border: 0px;
   padding: 0px;
-  box-shadow: none;
+  box-shadow: 0px 1px 6px 0px #909090;
   border-radius: 0px;
   display: table;
-  min-height: 60px;
+  min-height: 75px;
 }
 .header .navbar-inner [class*="span"] {
   min-height: 58px !important;
@@ -382,9 +381,9 @@ body.menu-non-fixed .page-sidebar {
   border-radius: 3px;
 }
 .header .quick-section {
-  margin-left: 20px;
-  margin-top: 16px;
-  margin-right: 10px;
+  margin-left: 0px;
+  margin-top: 19px;
+  margin-right: 35px;
   display: inline-block;
   float: left;
 }
@@ -451,16 +450,15 @@ body.menu-non-fixed .page-sidebar {
   border: 0px;
 }
 .page-sidebar .page-sidebar-wrapper > ul > li > a {
-  /*color: #8b91a0;*/
+  /* color: #8b91a0; */
   color: #006ba3;
   display: block;
   position: relative;
   margin: 0;
   border: 0px;
-  /*padding: 11.5px 31px 11.5px 31px;*/
-  padding: 8px 20px 8px 10px;
+  padding: 14px 20px 14px 10px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal;
 }
 .page-sidebar .page-sidebar-wrapper > ul > li > a.open {
@@ -490,6 +488,12 @@ body.menu-non-fixed .page-sidebar {
 .page-sidebar .page-sidebar-wrapper > ul > li a i {
   /*color: #8b91a0;*/
   color: #006ba3;
+  width: 20px;
+  text-align: center;
+  display: inline-block;
+}
+.page-sidebar .page-sidebar-wrapper > ul > li a i:hover {
+  color: #ffffff;
   width: 20px;
   text-align: center;
   display: inline-block;
@@ -537,7 +541,7 @@ body.menu-non-fixed .page-sidebar {
   padding-left: 5px;
   display: block;
   margin: 0px 0px 0px 0px;
-  padding: 5px 0px;
+  padding: 12px 0px;
   padding-left: 40px !important;
   color: #006ba3;
   text-decoration: none;
@@ -728,13 +732,17 @@ body.menu-non-fixed .page-sidebar {
 .nav-collapse.collapse {
   height: 100%  !important;
 }
-.page-sidebar .page-sidebar-wrapper > ul > li.open > a,
-.page-sidebar .page-sidebar-wrapper > ul > li > a:hover,
-.page-sidebar .page-sidebar-wrapper > ul > li:hover > a {
-  /*background: #1b1e24;*/
-  background: #d0efff;
-  color: #006ba3;
-  /*color: #ffffff;*/
+.page-sidebar .page-sidebar-wrapper > ul > li.open > a, .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .page-sidebar .page-sidebar-wrapper > ul > li:hover > a {
+  /* background: #1b1e24; */
+  background: #006BA3;
+  color: #ffffff;
+  /* color: #ffffff; */
+}
+.page-sidebar .page-sidebar-wrapper > ul > li.open > a, .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .page-sidebar .page-sidebar-wrapper > ul > li:hover > a {
+  /* background: #1b1e24; */
+  background: #006BA3;
+  color: #ffffff !important;
+  /* color: #ffffff; */
 }
 .page-sidebar.mini .page-sidebar-wrapper > ul > li a > .label {
   display: none;
@@ -749,9 +757,8 @@ body.menu-non-fixed .page-sidebar {
   background: #8fcae9;
   /*background: #73d9ff;*/
 }
-.page-sidebar.mini .page-sidebar-wrapper > ul > li.active > a i,
-.page-sidebar .page-sidebar-wrapper > ul > li:hover > a i {
-  color: #006ba3 !important;
+.page-sidebar.mini .page-sidebar-wrapper > ul > li.active > a i, .page-sidebar .page-sidebar-wrapper > ul > li:hover > a i {
+  color: #ffffff !important;
 }
 .page-sidebar .page-sidebar-wrapper ul > li > a > .arrow:before,
 .page-sidebar .page-sidebar-wrapper > ul > li > a > .arrow.open:before {
@@ -761,9 +768,8 @@ body.menu-non-fixed .page-sidebar {
 .page-sidebar .page-sidebar-wrapper > ul > li.active > a .arrow.open:before {
   color: #006ba3 !important;
 }
-.page-sidebar .page-sidebar-wrapper ul > li.open > a i,
-.page-sidebar .page-sidebar-wrapper > ul > li.open > a i {
-  color: #006ba3 !important;
+.page-sidebar .page-sidebar-wrapper ul > li.open > a i, .page-sidebar .page-sidebar-wrapper > ul > li.open > a i {
+  color: #ffffff !important;
 }
 .page-sidebar .page-sidebar-wrapper > ul > li > ul.sub-menu > li.active > a,
 .page-sidebar .page-sidebar-wrapper > ul > li > ul.sub-menu > li > a:hover {
@@ -1262,9 +1268,9 @@ body.menu-non-fixed .page-sidebar {
   font-size: 14px;
 }
 .page-content .content {
-  padding-left: 20px;
+  padding-left: 9px;
   padding-right: 20px;
-  padding-top: 83px;
+  padding-top: 100px;
 }
 .inner-menu {
   display: inline-block;
