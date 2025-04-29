@@ -53,6 +53,7 @@
                         </select>
                         <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
                     </div>
+
                     <div class="form-group col-md-4">
                         <label for="">Department</label>
                         <select name="depertment_id" id="depertment_id" onchange="get_section(this.value)"
@@ -64,34 +65,69 @@
 
                     <div class="form-group col-md-4">
                         <label for="">Section</label>
-                        <select name="section_id" id="section_id">
+                        <select name="section_id" id="section_id" class="form-control">
                             <option value="">Select Section</option>
                         </select>
                         <?= (isset($failuer['section_id'])) ? '<div class="alert alert-failuer">' . $failuer['section_id'] . '</div>' : ''; ?>
                     </div>
-                    <div class="form-group col-md-4">
 
+                </div>
+
+                <div class="col-md-12">    
+                    <div class="form-group col-md-3">
                         <label>Line Name Bangla</label>
-                        <input type="text" name="line_name_bn" value="" placeholder="Section Name Bangla"
-                            class="form-control bfont">
+                        <input type="text" name="line_name_bn" value="" placeholder="" class="form-control bfont">
                         <?=(isset($failuer['line_name_bn'])) ? '<div class="alert alert-failuer">' . $failuer['line_name_bn'] . '</div>' : ''; ?>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Line Name English</label>
                         <input type="text" name="line_name_en" value="" placeholder="Section Name english"
                             class="form-control">
                         <?=(isset($failuer['line_name_en'])) ? '<div class="alert alert-failuer">' . $failuer['line_name_en'] . '</div>' : ''; ?>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label>Man Power</label>
-                        <input type="number" name="man_power" value="" placeholder="Enter Man Power" class="form-control bfont">
-                        <?=(isset($failuer['man_power'])) ? '<div class="alert alert-failuer">' . $failuer['man_power'] . '</div>' : ''; ?>
+                    <div class="form-group col-md-3">
+                        <label>Operator Budget</label>
+                        <input type="number" name="group_one" value="" placeholder="Enter Man Power" class="form-control efont">
+                        <?=(isset($failuer['group_one'])) ? '<div class="alert alert-failuer">' . $failuer['group_one'] . '</div>' : ''; ?>
                     </div>
+                    <div class="form-group col-md-3">
+                        <label>Asst. Operator Budget</label>
+                        <input type="number" name="group_two" value="" placeholder="Enter Man Power" class="form-control efont">
+                        <?=(isset($failuer['group_two'])) ? '<div class="alert alert-failuer">' . $failuer['group_two'] . '</div>' : ''; ?>
+                    </div>
+
                     <br>
-                    <div class="form-group" style="margin-left: 16px;">
-                        <button type="submit" class="btn btn-primary ">Submit</button></button>
-                        <a href="" class="btn-warning btn">Cancel</a>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group col-md-3">
+                        <label>Line Ironman Budget</label>
+                        <input type="number" name="group_three" value="" placeholder="Enter Man Power" class="form-control efont">
+                        <?=(isset($failuer['group_three'])) ? '<div class="alert alert-failuer">' . $failuer['group_three'] . '</div>' : ''; ?>
                     </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Input Budget</label>
+                        <input type="number" name="group_four" value="" placeholder="Enter Man Power" class="form-control efont">
+                        <?=(isset($failuer['group_four'])) ? '<div class="alert alert-failuer">' . $failuer['group_four'] . '</div>' : ''; ?>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Supervisor Budget</label>
+                        <input type="number" name="group_five" value="" placeholder="Enter Man Power" class="form-control efont">
+                        <?=(isset($failuer['group_five'])) ? '<div class="alert alert-failuer">' . $failuer['group_five'] . '</div>' : ''; ?>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>LIne Chief Budget</label>
+                        <input type="number" name="group_six" value="" placeholder="Enter Man Power" class="form-control efont">
+                        <?=(isset($failuer['group_six'])) ? '<div class="alert alert-failuer">' . $failuer['group_six'] . '</div>' : ''; ?>
+                    </div>
+            
+                </div>
+
+                <div class="form-group" style="margin-left: 30px;">
+                    <button type="submit" class="btn btn-primary ">Submit</button></button>
+                    <a href="" class="btn-warning btn">Cancel</a>
                 </div>
             </div>
         </form>

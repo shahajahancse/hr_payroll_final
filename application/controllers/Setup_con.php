@@ -621,7 +621,12 @@ class Setup_con extends CI_Controller
                 'sec_name_bn'  => $this->input->post('sec_name_bn'),
                 'depertment_id'=> $this->input->post('depertment_id'),
                 'unit_id'      => $this->input->post('unit_id'),
-                'man_power'    => $this->input->post('man_power'),
+                'grour_one'    => $this->input->post('grour_one'),
+                'grour_tow'    => $this->input->post('grour_tow'),
+                'grour_three'  => $this->input->post('grour_three'),
+                'grour_four'   => $this->input->post('grour_four'),
+                'grour_five'   => $this->input->post('grour_five'),
+                'grour_six'    => $this->input->post('grour_six'),
             );
 
             if ($this->db->insert('emp_section', $formArray)) {
@@ -651,7 +656,12 @@ class Setup_con extends CI_Controller
         $this->form_validation->set_rules('sec_name_bn', 'Section Bangla Name', 'trim|required');
         $this->form_validation->set_rules('depertment_id', 'Department', 'required');
         $this->form_validation->set_rules('unit_id', 'Unit', 'required');
-        $this->form_validation->set_rules('man_power', 'Man Power', 'required');
+        $this->form_validation->set_rules('grour_one', 'Operator Budget', 'required');
+        $this->form_validation->set_rules('grour_tow', 'Man Power', 'required');
+        $this->form_validation->set_rules('grour_three', 'Man Power', 'required');
+        $this->form_validation->set_rules('grour_four', 'Man Power', 'required');
+        $this->form_validation->set_rules('grour_five', 'Man Power', 'required');
+        $this->form_validation->set_rules('grour_six', 'Man Power', 'required');
 
         if ($this->form_validation->run() == false) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
