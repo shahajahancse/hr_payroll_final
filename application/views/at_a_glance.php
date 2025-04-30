@@ -51,6 +51,9 @@ body {
     height: 100%;
 }
 
+
+
+
 .dash-card__row {
     display: flex;
     height: 50%;
