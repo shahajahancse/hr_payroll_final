@@ -141,10 +141,13 @@ body {
     padding: 12px;
 }
 
+
 .dash-stat__item {
     margin-bottom: 8px;
     display: flex;
     align-items: center;
+    border: 1px solid #e1e1e1;
+    padding: 3px;
 }
 
 .dash-bullet {
@@ -237,6 +240,13 @@ body {
     margin-bottom: 13px;
 }
 </style>
+
+
+
+
+
+
+
 <div class="content">
     <!-- Top Cards -->
     <div class="dash-cards">
@@ -252,7 +262,7 @@ body {
         <div class="dash-card dash-card--green">
             <div class="dash-card__icon"><i class="fa fa-university"></i></div>
             <div class="dash-card__content">
-                <div class="dash-card__row"><span class="dash-card__title">Designation</span><span
+                <div class="dash-card__row"><span class="dash-card__title">Department</span><span
                         class="dash-card__value">35</span></div>
                 <div class="dash-card__row"><span class="dash-card__title">Line</span><span
                         class="dash-card__value">325</span></div>
@@ -261,9 +271,9 @@ body {
         <div class="dash-card dash-card--blue2">
             <div class="dash-card__icon"><i class="fa fa-id-card-o"></i></div>
             <div class="dash-card__content">
-                <div class="dash-card__row"><span class="dash-card__title">Department</span><span
-                        class="dash-card__value">14</span></div>
                 <div class="dash-card__row"><span class="dash-card__title">Section</span><span
+                        class="dash-card__value">14</span></div>
+                <div class="dash-card__row"><span class="dash-card__title">Designation</span><span
                         class="dash-card__value">345</span></div>
             </div>
         </div>
@@ -384,6 +394,23 @@ body {
             maintainAspectRatio: false
         }
     });
+    </script>
+    <script>
+      $(document).ready(function () {
+          function get_dashboard_data() {
+              $.ajax({
+                  url: '<?php echo base_url(); ?>/dashboard/get_dashboard_data',
+                  method: 'POST',
+                  success: function (data) {
+                  },
+                  error: function () {
+                      alert('error');
+                  }
+              });
+          }
+          get_dashboard_data();
+      });
+      
     </script>
 
 </div>
