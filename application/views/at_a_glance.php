@@ -25,7 +25,7 @@ body {
 .dash-card {
     background: #fff;
     flex: 1;
-    min-width: 320px;
+    min-width: 290px;
     display: flex;
     height: 117px;
 }
