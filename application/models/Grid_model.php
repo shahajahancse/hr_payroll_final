@@ -479,14 +479,14 @@ class Grid_model extends CI_Model{
 	function daily_attendance_summary($date, $unit_id){
 
 		$results = $this->db->where('unit_id', $unit_id)->order_by('id')->get('emp_group_dasignation')->result();
-		$data = array();
+		$groupWiseDesigId = array();
 		foreach ($results as $key => $r) {
-			$data[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
+			$groupWiseDesigId[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
 		}
-		$data['keys'] = array_keys($data);
+		$data['keys'] = array_keys($groupWiseDesigId);
 
 		$this->db->select("
-					num.id as line_id, num.line_name_en, num.line_name_bn,
+					num.id as line_id, num.line_name_en, num.line_name_bn, num.group_one,num.group_two,num.group_three,num.group_four,num.group_five,num.group_six,
 	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS all_emp,
 	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
 	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS all_absent,
@@ -514,12 +514,30 @@ class Grid_model extends CI_Model{
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
 		$data['results'] = $this->db->get()->result();
-
+		// dd($data);
 		foreach ($data['results'] as $key => $row) {
-			$d = $this->common_model->get_group_wise_attendance($row->line_id, $date, $unit_id, $data);
-			$data['results'][$key]->group_data = $d;
+			$d = $this->common_model->get_group_wise_attendance($row->line_id, $date, $unit_id, $groupWiseDesigId);
+			// dd($d);
+			$data['results'][$key]->group_data  = $d;
+			$group_names = [
+				'Operator'    => $row->group_one,
+				'Helper'      => $row->group_two,
+				'Iron Man'    => $row->group_three,
+				'Line Chief'  => $row->group_four,
+				'Supervisor'  => $row->group_five,
+				'Input Man'   => $row->group_six,
+			];
+			foreach ($d as $d_key => $d_value) {
+				foreach ($group_names as $group_name_key => $group_name) {
+					if ($d_key == $group_name_key) {
+						if(isset($data['results'][$key]->group_data[$d_key])){
+							$data['results'][$key]->group_data[$d_key]->group_budget = $group_name;
+						}
+					} 
+				}
+			}
 		}
-
+		
 		// dd($data);
 		if($data['results'] == null){
 		 echo "Requested list is empty"; exit;

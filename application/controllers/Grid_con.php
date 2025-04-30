@@ -57,7 +57,6 @@ class Grid_con extends CI_Controller {
 		$status  = $this->input->post('status');
 
 		$data['values'] = $this->Grid_model->daily_attendance_summary($date, $unit_id);
-		// $data['values'] = $this->mars_model->line_attendance_summary($date, $unit_id);
 		// dd($data);
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $date;
