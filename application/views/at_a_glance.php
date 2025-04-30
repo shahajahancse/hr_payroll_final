@@ -25,7 +25,7 @@ body {
 .dash-card {
     background: #fff;
     flex: 1;
-    min-width: 320px;
+    min-width: 290px;
     display: flex;
     height: 117px;
 }
@@ -50,6 +50,9 @@ body {
     width: 100%;
     height: 100%;
 }
+
+
+
 
 .dash-card__row {
     display: flex;
