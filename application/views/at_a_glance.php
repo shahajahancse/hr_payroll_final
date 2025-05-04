@@ -230,9 +230,9 @@ body {
 .dash-stat__value {
     font-weight: bold;
 }
-.pichart_main {
 
-}
+.pichart_main {}
+
 .piechart_c {
     height: 276px !important;
     background: #ffffff;
@@ -254,27 +254,27 @@ body {
             <div class="dash-card__icon"><i class="fa fa-users"></i></div>
             <div class="dash-card__content">
                 <div class="dash-card__row"><span class="dash-card__title">Total Staff</span><span
-                        class="dash-card__value">234</span></div>
+                        class="dash-card__value" id="total_staff">0</span></div>
                 <div class="dash-card__row"><span class="dash-card__title">Total Worker</span><span
-                        class="dash-card__value">16</span></div>
+                        class="dash-card__value" id="total_worker">0</span></div>
             </div>
         </div>
         <div class="dash-card dash-card--green">
             <div class="dash-card__icon"><i class="fa fa-university"></i></div>
             <div class="dash-card__content">
                 <div class="dash-card__row"><span class="dash-card__title">Department</span><span
-                        class="dash-card__value">35</span></div>
-                <div class="dash-card__row"><span class="dash-card__title">Line</span><span
-                        class="dash-card__value">325</span></div>
+                        class="dash-card__value" id="total_department">0</span></div>
+                <div class="dash-card__row"><span class="dash-card__title">Line</span><span class="dash-card__value"
+                        id="total_line">0</span></div>
             </div>
         </div>
         <div class="dash-card dash-card--blue2">
             <div class="dash-card__icon"><i class="fa fa-id-card-o"></i></div>
             <div class="dash-card__content">
-                <div class="dash-card__row"><span class="dash-card__title">Section</span><span
-                        class="dash-card__value">14</span></div>
+                <div class="dash-card__row"><span class="dash-card__title">Section</span><span class="dash-card__value"
+                        id="total_section">0</span></div>
                 <div class="dash-card__row"><span class="dash-card__title">Designation</span><span
-                        class="dash-card__value">345</span></div>
+                        class="dash-card__value" id="total_designation">0</span></div>
             </div>
         </div>
     </div>
@@ -285,39 +285,45 @@ body {
             <div class="dash-stat__header"><i class="fa fa-table"></i> Total Manpower</div>
             <ul class="dash-stat__list">
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span class="dash-stat__label">Total
-                        Employee</span><span class="dash-stat__value">1200</span></li>
+                        Employee</span><span class="dash-stat__value" id="total_employee">0</span></li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span class="dash-stat__label">Total
-                        Male</span><span class="dash-stat__value">700</span></li>
+                        Male</span><span class="dash-stat__value" id="total_male">0</span></li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span class="dash-stat__label">Total
-                        Female</span><span class="dash-stat__value">400</span></li>
+                        Female</span><span class="dash-stat__value" id="total_female">0</span></li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span class="dash-stat__label">Total
-                        Common</span><span class="dash-stat__value">0</span></li>
+                        Common</span><span class="dash-stat__value" id="total_common">0</span></li>
             </ul>
         </div>
         <div class="dash-stat dash-stat--today">
             <div class="dash-stat__header"><i class="fa fa-calendar"></i> Today Attendance</div>
             <ul class="dash-stat__list">
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span
-                        class="dash-stat__label">Present</span><span class="dash-stat__value">1170</span></li>
+                        class="dash-stat__label">Present</span><span class="dash-stat__value"
+                        id="total_present">0</span></li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span
-                        class="dash-stat__label">Absent</span><span class="dash-stat__value">30</span></li>
+                        class="dash-stat__label">Absent</span><span class="dash-stat__value" id="total_absent">0</span>
+                </li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span
-                        class="dash-stat__label">Leave</span><span class="dash-stat__value">20</span></li>
+                        class="dash-stat__label">Leave</span><span class="dash-stat__value" id="total_leave">0</span>
+                </li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span
-                        class="dash-stat__label">Late</span><span class="dash-stat__value">18</span></li>
+                        class="dash-stat__label">Late</span><span class="dash-stat__value" id="total_late">0</span>
+                </li>
             </ul>
         </div>
         <div class="dash-stat dash-stat--current">
             <div class="dash-stat__header"><i class="fa fa-bell"></i> Current Month Status</div>
             <ul class="dash-stat__list">
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span class="dash-stat__label">New
-                        Join</span><span class="dash-stat__value">370</span></li>
+                        Join</span><span class="dash-stat__value" id="total_new_join">370</span></li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span
-                        class="dash-stat__label">Resign</span><span class="dash-stat__value">28</span></li>
+                        class="dash-stat__label">Resign</span><span class="dash-stat__value" id="total_resign">28</span>
+                </li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span
-                        class="dash-stat__label">Lefty</span><span class="dash-stat__value">75</span></li>
+                        class="dash-stat__label">Lefty</span><span class="dash-stat__value" id="total_lefty">75</span>
+                </li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span class="dash-stat__label">New to
-                        Regular</span><span class="dash-stat__value">75</span></li>
+                        Regular</span><span class="dash-stat__value" id="total_new_to_regular">75</span></li>
             </ul>
         </div>
         <div class="dash-stat dash-stat--prev">
@@ -325,13 +331,15 @@ body {
             </div>
             <ul class="dash-stat__list">
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span
-                        class="dash-stat__label">Salary</span><span class="dash-stat__value">10000000</span></li>
+                        class="dash-stat__label">Salary</span><span class="dash-stat__value"
+                        id="total_salary">10000000</span></li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span
-                        class="dash-stat__label">Overtime</span><span class="dash-stat__value">200000</span></li>
+                        class="dash-stat__label">Overtime</span><span class="dash-stat__value"
+                        id="total_overtime">200000</span></li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span class="dash-stat__label">Ext.
-                        Overtime</span><span class="dash-stat__value">500000</span></li>
+                        Overtime</span><span class="dash-stat__value" id="total_ext_overtime">500000</span></li>
                 <li class="dash-stat__item"><span class="dash-bullet"></span><span class="dash-stat__label">Attn.
-                        Bonus</span><span class="dash-stat__value">500000</span></li>
+                        Bonus</span><span class="dash-stat__value" id="total_attn_bonus">500000</span></li>
             </ul>
         </div>
     </div>
@@ -340,14 +348,14 @@ body {
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-8 pichart_main">
-              <div class="piechart_c">
-                <canvas id="dash-barChart" style="height: 240px !important;"></canvas>
-              </div>
+                <div class="piechart_c">
+                    <canvas id="dash-barChart" style="height: 240px !important;"></canvas>
+                </div>
             </div>
             <div class="col-md-4 pichart_main">
-              <div class="piechart_c">
-                <canvas id="dash-pieChart" style="height: 240px !important;"></canvas>
-              </div>
+                <div class="piechart_c">
+                    <canvas id="dash-pieChart" style="height: 240px !important;"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -396,21 +404,81 @@ body {
     });
     </script>
     <script>
-      $(document).ready(function () {
-          function get_dashboard_data() {
-              $.ajax({
-                  url: '<?php echo base_url(); ?>/dashboard/get_dashboard_data',
-                  method: 'POST',
-                  success: function (data) {
-                  },
-                  error: function () {
-                      alert('error');
-                  }
-              });
-          }
-          get_dashboard_data();
-      });
-      
+    $(document).ready(function() {
+        function get_dashboard_data() {
+
+            $.ajax({
+                url: '<?php echo base_url(); ?>/dashboard/get_dashboard_data',
+                method: 'POST',
+                success: function(data) {
+    //                 data = JSON.parse(data);
+    //                   [monthly_join_id] => 62
+    // [monthly_resign_id] => 37
+    // [monthly_left_id] => 4
+    // [salary] => 24024162
+    // [ot] => 5964728
+    // [eot] => 2496815
+    // [att_bonus] => 1395900
+    // [all_emp] => 2951
+    // [all_present] => 
+    // [all_absent] => 
+    // [all_male] => 1234
+    // [all_female] => 1717
+    // [all_late] => 
+    // [all_leave] => 
+    // [all_staff] => 256
+    // [all_employee] => 2695
+                    var salary = data.salary;
+                    var ot = data.ot;
+                    var eot = data.eot;
+                    var att_bonus = data.att_bonus;
+                    var all_emp = data.all_emp;
+                    var all_present = data.all_present;
+                    var all_absent = data.all_absent;
+                    var all_male = data.all_male;
+                    var all_female = data.all_female;
+                    var all_late = data.all_late;
+                    var all_leave = data.all_leave;
+
+                    console.log(salary);
+                    
+
+                    $("#total_salary").html(salary);
+                    $("#total_overtime").html(ot);
+                    $("#total_ext_overtime").html(eot);
+                    $("#total_attn_bonus").html(att_bonus);
+
+
+
+                    $("#total_all_emp").html(all_emp);
+                    $("#total_all_present").html(all_present);
+                    $("#total_all_absent").html(all_absent);
+                    $("#total_all_male").html(all_male);
+                    $("#total_all_female").html(all_female);
+                    $("#total_all_late").html(all_late);
+                    $("#total_all_leave").html(all_leave);
+
+
+                    $("#total_all_emp").html('');
+                    $("#total_all_present").html('');
+                    $("#total_all_absent").html('');
+                    $("#total_all_male").html('');
+                    $("#total_all_female").html('');
+                    $("#total_all_late").html('');
+                    $("#total_all_leave").html('');
+
+
+
+                },
+                error: function() {
+                    alert('error');
+                }
+            });
+        }
+        get_dashboard_data();
+    });
     </script>
 
 </div>
+
+  
