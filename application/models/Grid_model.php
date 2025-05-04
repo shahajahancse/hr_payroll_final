@@ -475,7 +475,8 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("num.line_name_en");
 		return $this->db->get()->result();
 	}
-	// Daily attendance summary
+
+	// Daily attendance summary line wise
 	function daily_attendance_summary($date, $unit_id){
 
 		$results = $this->db->where('unit_id', $unit_id)->order_by('id')->get('emp_group_dasignation')->result();
@@ -533,19 +534,87 @@ class Grid_model extends CI_Model{
 						if(isset($data['results'][$key]->group_data[$d_key])){
 							$data['results'][$key]->group_data[$d_key]->group_budget = $group_name;
 						}
-					} 
+					}
 				}
 			}
 		}
-		
+
 		// dd($data);
 		if($data['results'] == null){
 		 echo "Requested list is empty"; exit;
 		}else{
 			return $data;
 		}
+	}
+	// Daily attendance summary section wise
+	function daily_attendance_summary1($date, $unit_id){
 
+		$results = $this->db->where('unit_id', $unit_id)->order_by('id')->get('emp_group_dasignation')->result();
+		$groupWiseDesigId = array();
+		foreach ($results as $key => $r) {
+			$groupWiseDesigId[$r->name_en] = $this->get_group_dasig_id($r->id, $unit_id);
+		}
+		$data['keys'] = array_keys($groupWiseDesigId);
 
+		$this->db->select("
+					num.id as line_id, num.line_name_en, num.line_name_bn, num.group_one,num.group_two,num.group_three,num.group_four,num.group_five,num.group_six,
+	                SUM( CASE WHEN log.emp_id 		  != '' THEN 1 ELSE 0 END ) AS all_emp,
+	                SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
+	                SUM( CASE WHEN log.present_status = 'A' THEN 1 ELSE 0 END ) AS all_absent,
+	                SUM( CASE WHEN log.present_status = 'L' THEN 1 ELSE 0 END ) AS all_leave,
+	                SUM( CASE WHEN log.late_status    = 1 THEN 1 ELSE 0 END ) AS all_late,
+	                SUM( CASE WHEN per.emp_sex 		  = 1 THEN 1 ELSE 0 END ) AS all_male,
+	                SUM( CASE WHEN per.emp_sex 		  = 2 THEN 1 ELSE 0 END ) AS all_female,
+				");
+
+		$this->db->from("pr_emp_shift_log as log");
+		$this->db->from('pr_emp_com_info as com');
+		$this->db->from('emp_line_num as num');
+		$this->db->from('pr_emp_per_info as per');
+
+		$this->db->where("log.emp_id = com.emp_id");
+		$this->db->where("per.emp_id = com.emp_id");
+		$this->db->where("num.id = com.emp_line_id");
+
+		$this->db->where("com.unit_id", $unit_id);
+		$this->db->where("log.shift_log_date", $date);
+		$this->db->where("log.in_time !=", "00:00:00");
+		$this->db->where("log.present_status !=", "W");
+		$this->db->where_not_in("com.emp_cat_id", array(2,3,4));
+
+		$this->db->group_by("num.id");
+		$this->db->order_by("num.line_name_en");
+		$data['results'] = $this->db->get()->result();
+		// dd($data);
+		foreach ($data['results'] as $key => $row) {
+			$d = $this->common_model->get_group_wise_attendance($row->line_id, $date, $unit_id, $groupWiseDesigId);
+			// dd($d);
+			$data['results'][$key]->group_data  = $d;
+			$group_names = [
+				'Operator'    => $row->group_one,
+				'Helper'      => $row->group_two,
+				'Iron Man'    => $row->group_three,
+				'Line Chief'  => $row->group_four,
+				'Supervisor'  => $row->group_five,
+				'Input Man'   => $row->group_six,
+			];
+			foreach ($d as $d_key => $d_value) {
+				foreach ($group_names as $group_name_key => $group_name) {
+					if ($d_key == $group_name_key) {
+						if(isset($data['results'][$key]->group_data[$d_key])){
+							$data['results'][$key]->group_data[$d_key]->group_budget = $group_name;
+						}
+					}
+				}
+			}
+		}
+
+		// dd($data);
+		if($data['results'] == null){
+		 echo "Requested list is empty"; exit;
+		}else{
+			return $data;
+		}
 	}
 
 	function get_group_dasig_id($id, $unit_id)	{
@@ -5647,7 +5716,7 @@ class Grid_model extends CI_Model{
 		}
 	}
 
-	
+
 
 	function grid_monthly_att_register_blank($year_month, $grid_emp_id){
 		$year= trim(substr($year_month,0,4));

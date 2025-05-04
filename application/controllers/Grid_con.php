@@ -55,8 +55,12 @@ class Grid_con extends CI_Controller {
 		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
-
-		$data['values'] = $this->Grid_model->daily_attendance_summary($date, $unit_id);
+		$type = $this->input->post('type');
+		if ($type == 1) {
+			$data['values'] = $this->Grid_model->daily_attendance_summary($date, $unit_id);
+		} else {
+			$data['values'] = $this->Grid_model->daily_attendance_summary1($date, $unit_id);
+		}
 		// dd($data);
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $date;
@@ -702,7 +706,7 @@ class Grid_con extends CI_Controller {
 	// ============================== end last increment or promotion Report ===============
 	// ============================== start left letter Report ===============
 	function grid_letter_report_print(){
-		
+
 		$emp_id = $this->input->post('emp_id');
 		$status = $this->input->post('status');
 		$unit_id = $this->session->userdata('data')->unit_name;
@@ -713,7 +717,7 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']	= $unit_id;
 		$data['unit_id']	= $id_number;
 		$data['no_change']	= 1;
-		
+
 
 		if(empty($data)){
 			echo "Not Found Data"; exit();
@@ -728,12 +732,12 @@ class Grid_con extends CI_Controller {
 		}
 	}
 	function grid_letter_report_print_no_left(){
-		
+
 		$emp_id = $this->input->post('emp_id');
 		$status = $this->input->post('status');
 		$date = $this->input->post('date');
 		$sql = $this->input->post('sql');
-		
+
 		$unit_id = $this->session->userdata('data')->unit_name;
 		$id_number = $this->session->userdata('data')->id_number;
 
@@ -747,7 +751,7 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']	= $unit_id;
 		$data['unit_id']	= $id_number;
 		$data['no_change']	= 1;
-		
+
 
 		if(empty($data)){
 			echo "Not Found Data"; exit();

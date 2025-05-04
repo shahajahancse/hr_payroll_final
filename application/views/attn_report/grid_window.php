@@ -213,7 +213,8 @@
 
 
 							<?php if(in_array(74,$acl)) { ?>
-							<button class="btn input-sm sbtn" onclick="daily_attendance_summary()">Attendance Summary</button>
+							<button class="btn input-sm sbtn" onclick="daily_attendance_summary(1)">Line Man Power Costing </button>
+							<button class="btn input-sm sbtn" onclick="daily_attendance_summary(2)">Section Man Power Costing </button>
 							<?php } ?>
 							<?php if(in_array(75,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="daily_costing_summary()">Daily Costing Summary</button>
@@ -903,6 +904,6 @@
 		var vals = Array.from(checkboxes)
 		.filter(checkbox => checkbox.checked)
 		.map(checkbox => checkbox.value)
-		.join(",");	
+		.join(",");
 	}
 </script>
