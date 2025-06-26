@@ -89,45 +89,39 @@ class Salary_process_model extends CI_Model{
 				{
 					//========== FOR INCREMENT AND PROMOTION ================
 					//==========================================================
-					// $where = "trim(substr(effective_month,1,7)) = '$start_date'";
+					$where = "trim(substr(effective_month,1,7)) = '$year_month'";
 					$this->db->select("*");
 					$this->db->where("new_emp_id", $emp_id);
-					$this->db->where('effective_month',$start_date);
+					$this->db->where($where)->limit(1);
 					$inc_prom = $this->db->get("pr_incre_prom_pun");
-					// dd($inc_prom->result());
-					// dd($start_date);
 					if($inc_prom->num_rows() > 0 ) {
-						$inc_p 			= $inc_prom->row();
-						$gross_sal 		= $inc_p->new_salary;
-						$gross_sal_com 	= $inc_p->new_com_salary;
+						$rowsss = $inc_prom->row();
+						$gross_sal 		= $rowsss->new_salary;
+						$gross_sal_com 	= $rowsss->new_com_salary;
+						$emp_dept_id	= $rowsss->new_dept;
+						$emp_grade_id	= $rowsss->new_grade;
+						$emp_sec_id 	= $rowsss->new_section;
+						$emp_line_id	= $rowsss->new_line;
+						$desi_id 		= $rowsss->new_desig;
 					}else{
-						// $where = "trim(substr(effective_month,1,7)) > '$start_date'";
+						$where = "trim(substr(effective_month,1,7)) > '$year_month'";
 						$this->db->select("*");
-						$this->db->where("new_emp_id",$emp_id);
-						$this->db->where('effective_month',$start_date);
-						$this->db->limit(1);
+						$this->db->where("new_emp_id", $emp_id);
+						$this->db->where($where)->limit(1);
 						$inc_prom = $this->db->get("pr_incre_prom_pun");
 						if($inc_prom->num_rows() > 0 )
 						{
-							foreach($inc_prom->result() as $row)
-							{
-								// dd($row->prev_dept);
-								$gross_sal 		= $row->prev_salary;
-								$gross_sal_com 	= $row->prev_com_salary;
-								$emp_dept_id	= $row->prev_dept;
-								$emp_grade_id	= $row->prev_grade ;
-								$emp_sec_id 	= $row->prev_section;
-								$emp_line_id	= $row->prev_line;
-								$desi_id 		= $row->prev_desig;
-							}
+							$rowsss = $inc_prom->row();
+							$gross_sal 		= $rowsss->prev_salary;
+							$gross_sal_com 	= $rowsss->prev_com_salary;
+							$emp_dept_id	= $rowsss->prev_dept;
+							$emp_grade_id	= $rowsss->prev_grade ;
+							$emp_sec_id 	= $rowsss->prev_section;
+							$emp_line_id	= $rowsss->prev_line;
+							$desi_id 		= $rowsss->prev_desig;
 						}
-						else
-						{
-							echo "";
-						}
-					
 					}
-					// dd($gross_sal_com);
+					// dd($gross_sal .'===='. $gross_sal_com);
 
 					//============= END INCREMENT AND PROMOTION ===============
 					$stop_salary	= $this->stop_salary_check($emp_id,$start_date);
