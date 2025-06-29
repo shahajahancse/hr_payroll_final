@@ -7,6 +7,7 @@ class Entry_system_con extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Common_model');
+        // $this->load->model('Grid_model');
         $this->load->model('Attn_process_model');
         $this->load->helper('url');
 
@@ -2408,9 +2409,73 @@ class Entry_system_con extends CI_Controller
     }
 
     public function print_envelope($id){
-        $this->db->where('emp_id', $id);
-        $employee_info = $this->db->get('pr_emp_com_info')->row();
-        $this->data['employee_info'] = $employee_info;
+        $query = $this->db->query("
+			SELECT 
+				pr_emp_com_info.id,
+				pr_emp_com_info.emp_id,
+				pr_emp_com_info.ot_entitle,
+				pr_emp_com_info.com_ot_entitle,
+				pr_emp_com_info.emp_sal_gra_id,
+				pr_emp_com_info.emp_join_date,
+				pr_emp_com_info.gross_sal,
+				pr_emp_com_info.com_gross_sal,
+				pr_emp_com_info.att_bonus,
+				pr_emp_per_info.name_bn,
+				pr_emp_per_info.name_en,
+				pr_emp_per_info.emp_dob,
+				pr_emp_per_info.father_name,
+				pr_emp_per_info.mother_name,
+				pr_emp_per_info.personal_mobile,
+				pr_emp_per_info.bank_bkash_no,
+				pr_emp_per_info.per_village,
+				pr_emp_per_info.per_village_bn,
+				pr_emp_per_info.pre_village,
+				pr_emp_per_info.pre_village_bn,
+				pr_emp_per_info.nid_dob_check,
+				pr_emp_per_info.gender,
+				pr_emp_per_info.blood,
+				pr_emp_per_info.nid_dob_id,
+				pr_emp_per_info.spouse_name,
+				pr_emp_com_info.emp_join_date,
+				emp_designation.desig_bangla,
+				emp_designation.desig_name,
+				emp_depertment.dept_bangla,
+				emp_depertment.dept_name,
+				emp_section.sec_name_bn,
+				emp_section.sec_name_en,
+				emp_line_num.line_name_bn,
+				emp_line_num.line_name_en,
+				allowance_attn_bonus.rule,
+				per_dis.name_bn  as  per_dis_name_bn,
+				per_upa.name_bn  as  per_upa_name_bn,
+				per_post.name_bn as  per_post_name_bn,
+				per_dis.name_en  as  per_dis_name_en,
+				per_upa.name_en  as  per_upa_name_en,
+				per_post.name_en as  per_post_name_en,
+				pre_dis.name_bn  as  pre_dis_name_bn,
+				pre_upa.name_bn  as  pre_upa_name_bn,
+				pre_post.name_bn as  pre_post_name_bn,
+				pre_dis.name_en  as  pre_dis_name_en,
+				pre_upa.name_en  as  pre_upa_name_en,
+				pre_post.name_en as  pre_post_name_en,
+				pr_grade.gr_name
+			FROM pr_emp_per_info
+			LEFT JOIN pr_emp_com_info ON pr_emp_per_info.emp_id = pr_emp_com_info.emp_id
+			LEFT JOIN emp_designation ON pr_emp_com_info.emp_desi_id = emp_designation.id
+			LEFT JOIN allowance_attn_bonus ON emp_designation.attn_id = allowance_attn_bonus.id
+			LEFT JOIN emp_depertment ON pr_emp_com_info.emp_dept_id = emp_depertment.dept_id
+			LEFT JOIN emp_section ON pr_emp_com_info.emp_sec_id = emp_section.id
+			LEFT JOIN emp_line_num ON pr_emp_com_info.emp_line_id = emp_line_num.id
+			LEFT JOIN emp_districts as per_dis ON pr_emp_per_info.per_district = per_dis.id
+			LEFT JOIN emp_upazilas as per_upa ON pr_emp_per_info.per_thana = per_upa.id
+			LEFT JOIN emp_post_offices as per_post ON pr_emp_per_info.per_post = per_post.id
+			LEFT JOIN emp_districts as pre_dis ON pr_emp_per_info.pre_district = pre_dis.id
+			LEFT JOIN emp_upazilas as pre_upa ON pr_emp_per_info.pre_thana = pre_upa.id
+			LEFT JOIN pr_grade  ON pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id
+			LEFT JOIN emp_post_offices as pre_post ON pr_emp_per_info.pre_post = pre_post.id
+			WHERE pr_emp_com_info.emp_id = $id ORDER BY  pr_emp_per_info.emp_id
+		")->result();
+        $this->data['info'] = $query[0];
         $this->load->view('entry_system/print_envelope', $this->data);
     }
 

@@ -56,8 +56,8 @@
                         <th>Emp Id</th>
                         <th>Unit name</th>
                         <th>Date</th>
-                        <th>Status</th>
-                        <th>Delete</th>
+                        <!-- <th>Status</th> -->
+                        <th>Action</th>
                     </tr>
                 </thead>
                 </thead>
@@ -191,6 +191,14 @@ $(document).ready(function() {
     get_data(offset)
 })
 
+function debounce(func, delay) {
+    let debounceTimer;
+    return function(...args) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
 function get_data(offset=0) {
     
     var deptSearch = $('#deptSearch').val();
@@ -208,15 +216,14 @@ function get_data(offset=0) {
                 if (element.status == 1) {
                     var s_at = 'No Letter'
                     var s=`<li><a class="btn btn-sm">No Letter </a></li>`
-                } else if (element.status == 2) {
-                    s_at = 'One Letter Print'
-                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>`
-                } else if (element.status == 3) {
-                    s_at = 'Two Letter Print'
-                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
-                        <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>`
-                } else if (element.status == 4) {
-                    s_at = 'Three Letter Print'
+                } else {
+                    // s_at = 'One Letter Print'
+                    // s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>`
+                
+                    // s_at = 'Two Letter Print'
+                    // s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
+                    //     <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>`
+                    // s_at = 'Three Letter Print'
                     s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
                         <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>
                         <li><a onclick="report(${element.emp_id}, 4)" class="btn btn-sm">Three Letter Print</a></li>`
@@ -231,7 +238,6 @@ function get_data(offset=0) {
                 <td style="padding: 5px !important">${element.emp_id}</td>
                 <td style="padding: 5px !important">${element.unit_name}</td>
                 <td style="padding: 5px !important">${left_date}</td>
-                <td>${s_at}</td>
                 <td style="padding: 5px !important">
                     <div class="btn-group">
                         <button style="padding: 5px 10px;" type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span> 
@@ -256,10 +262,29 @@ window.onscroll = function() {
     }
 }
 
-$('#deptSearch').keyup(function() {
-    offset = 0
-    i = 0
-    get_data(offset)
-    $('#tbody').empty()
-})
+$('#deptSearch').on('input', debounce(function() {
+    offset = 0;
+    i = 0;
+    $('#tbody').empty();
+    get_data(offset);
+}, 300));
+
 </script>
+
+
+<!-- if (element.status == 1) {
+                    var s_at = 'No Letter'
+                    var s=`<li><a class="btn btn-sm">No Letter </a></li>`
+                } else if (element.status == 2) {
+                    s_at = 'One Letter Print'
+                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>`
+                } else if (element.status == 3) {
+                    s_at = 'Two Letter Print'
+                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
+                        <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>`
+                } else if (element.status == 4) {
+                    s_at = 'Three Letter Print'
+                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
+                        <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>
+                        <li><a onclick="report(${element.emp_id}, 4)" class="btn btn-sm">Three Letter Print</a></li>`
+                } -->
