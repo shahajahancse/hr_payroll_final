@@ -64,62 +64,6 @@
 
                 <tbody id="tbody">
 
-                    <!-- <?php
-
-                  if (!empty($results)) {foreach ($results as $key => $r) {?>
-
-                    <tr>
-                        <td style="padding: 5px !important"><?php echo $key + 1  ?></td>
-                        <td style="padding: 5px !important"><?php echo $r->user_name ?></td>
-                        <td style="padding: 5px !important"><?php echo $r->emp_id ?></td>
-                        <td style="padding: 5px !important"><?php echo $r->unit_name ?></td>
-                        <td style="padding: 5px !important"><?php echo date('d-m-Y', strtotime($r->left_date))?></td>
-                        <?php if ($r->status == 1) { ?>
-                            <td style="padding: 5px; color: #f30968;">No Letter Print</td>
-                        <?php } else if($r->status == 2) { ?>
-                            <td style="padding: 5px; color: #3c0eeb;">One Letter Print</td>
-                        <?php } else if($r->status == 3) { ?>
-                            <td style="padding: 5px; color: #9807b1;">Two Letter Print</td>
-                        <?php } else if($r->status == 4) { ?>
-                            <td style="padding: 5px; color: #08ad9d;">Four Letter Print</td>
-                        <?php } ?>
-
-                        <td style="padding: 5px !important">
-                            <div class="btn-group">
-                                <button style="padding: 5px 10px;" type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span> 
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <?php
-                                        $user_id = $this->session->userdata('data')->id;
-                                        $acl = check_acl_list($user_id);
-                                    ?>
-                                    <?php if ($r->status == 1) { ?>
-                                        <li><a class="btn btn-sm">No Letter </a></li>
-                                    <?php } else if($r->status == 2) { ?>
-                                        <li><a onclick="report(<?= $r->emp_id ?>, 2)" class="btn btn-sm">One Letter Print</a></li>
-                                    <?php } else if($r->status == 3) { ?>
-                                        <li><a onclick="report(<?= $r->emp_id ?>, 2)" class="btn btn-sm">One Letter Print</a></li>
-                                        <li><a onclick="report(<?= $r->emp_id ?>, 3)" class="btn btn-sm">Two Letter Print</a></li>
-                                    <?php } else if($r->status == 4) { ?>
-                                        <li><a onclick="report(<?= $r->emp_id ?>, 2)" class="btn btn-sm">One Letter Print</a></li>
-                                        <li><a onclick="report(<?= $r->emp_id ?>, 3)" class="btn btn-sm">Two Letter Print</a></li>
-                                        <li><a onclick="report(<?= $r->emp_id ?>, 4)" class="btn btn-sm">Three Letter Print</a></li>
-                                    <?php } ?>
-                                    <li>
-                                        <a href="<?=base_url('entry_system_con/left_delete/'.$r->emp_id)?>" class="btn btn-sm" role="button">Delete</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-
-                    </tr>
-                    <?php }} else {?>
-
-                    <tr>
-                        <td colspan="12">Records not Found</td>
-                    </tr>
-                    <?php }?> -->
-
                 </tbody>
             </table>
         </div>
@@ -213,21 +157,10 @@ function get_data(offset=0) {
         success: function(data) {
             var obj = JSON.parse(data)
             obj.forEach(element => {
-                if (element.status == 1) {
-                    var s_at = 'No Letter'
-                    var s=`<li><a class="btn btn-sm">No Letter </a></li>`
-                } else {
-                    // s_at = 'One Letter Print'
-                    // s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>`
-                
-                    // s_at = 'Two Letter Print'
-                    // s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
-                    //     <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>`
-                    // s_at = 'Three Letter Print'
-                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
-                        <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>
-                        <li><a onclick="report(${element.emp_id}, 4)" class="btn btn-sm">Three Letter Print</a></li>`
-                }
+                // <li><a class="btn btn-sm">No Letter </a></li>
+                s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
+                    <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>
+                    <li><a onclick="report(${element.emp_id}, 4)" class="btn btn-sm">Three Letter Print</a></li>`
 
                 var left_date = element.left_date
                 left_date = left_date.split('-')
