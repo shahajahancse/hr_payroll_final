@@ -203,21 +203,3 @@ $('#deptSearch').on('input', debounce(function() {
 }, 300));
 
 </script>
-
-
-<!-- if (element.status == 1) {
-                    var s_at = 'No Letter'
-                    var s=`<li><a class="btn btn-sm">No Letter </a></li>`
-                } else if (element.status == 2) {
-                    s_at = 'One Letter Print'
-                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>`
-                } else if (element.status == 3) {
-                    s_at = 'Two Letter Print'
-                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
-                        <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>`
-                } else if (element.status == 4) {
-                    s_at = 'Three Letter Print'
-                    s = `<li><a onclick="report(${element.emp_id}, 2)" class="btn btn-sm">One Letter Print</a></li>
-                        <li><a onclick="report(${element.emp_id}, 3)" class="btn btn-sm">Two Letter Print</a></li>
-                        <li><a onclick="report(${element.emp_id}, 4)" class="btn btn-sm">Three Letter Print</a></li>`
-                } -->
