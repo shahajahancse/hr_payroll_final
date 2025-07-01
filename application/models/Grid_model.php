@@ -331,6 +331,112 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		return $query->result();
 	}
 
+	function eot_sheet_com_9($salary_month = null, $status = null,$type=null, $emp_id = null, $unit_id = null ){
+		// dd($status);
+		$lastday = date("t", strtotime($salary_month));
+		$this->db->select('
+			pr_emp_per_info.name_en,
+			pr_emp_per_info.name_bn,
+			pr_emp_per_info.bank_bkash_no as mobile,
+			pr_emp_per_info.personal_mobile,
+			pr_emp_com_info.emp_join_date,
+			pr_emp_com_info.ot_entitle,
+			pr_emp_com_info.com_ot_entitle,
+			emp_depertment.dept_name,
+			emp_depertment.dept_bangla,
+			emp_designation.desig_name,
+			emp_designation.desig_bangla,
+			emp_section.sec_name_bn,
+			emp_section.sec_name_en,
+			emp_line_num.line_name_en,
+			emp_line_num.line_name_bn,
+			pr_grade.gr_name,
+			pay_salary_sheet_com.*,
+		');
+		$this->db->from('pay_salary_sheet_com');
+		$this->db->from('pr_emp_com_info');
+		$this->db->from('pr_emp_per_info');
+		$this->db->from('emp_depertment');
+		$this->db->from('emp_designation');
+		$this->db->from('emp_section');
+		$this->db->from('emp_line_num');
+		$this->db->from('pr_grade');
+
+		$this->db->where_in('pay_salary_sheet_com.emp_id', $emp_id);
+		$this->db->where('pay_salary_sheet_com.emp_id 	  = pr_emp_per_info.emp_id');
+		$this->db->where('pay_salary_sheet_com.emp_id     = pr_emp_com_info.emp_id');
+		$this->db->where('pay_salary_sheet_com.dept_id    = emp_depertment.dept_id');
+		$this->db->where('pay_salary_sheet_com.desig_id   = emp_designation.id');
+		$this->db->where('pay_salary_sheet_com.sec_id     = emp_section.id');
+		$this->db->where('pay_salary_sheet_com.line_id    = emp_line_num.id');
+		$this->db->where('pay_salary_sheet_com.gr_id 	  = pr_grade.gr_id');
+		if($status == ''){
+			$this->db->where_in('pay_salary_sheet_com.emp_status',[1,2,3]);
+		}else{
+			$this->db->where('pay_salary_sheet_com.emp_status',$status);
+		}
+		// dd($status);
+		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
+		$this->db->where("pay_salary_sheet_com.ot_eot_4pm_hour !=",0);
+		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
+		$query = $this->db->get();
+		// dd($query->result());
+		return $query->result();
+	}
+
+	function eot_sheet_com_12($salary_month = null, $status = null,$type=null, $emp_id = null, $unit_id = null ){
+		// dd($status);
+		$lastday = date("t", strtotime($salary_month));
+		$this->db->select('
+			pr_emp_per_info.name_en,
+			pr_emp_per_info.name_bn,
+			pr_emp_per_info.bank_bkash_no as mobile,
+			pr_emp_per_info.personal_mobile,
+			pr_emp_com_info.emp_join_date,
+			pr_emp_com_info.ot_entitle,
+			pr_emp_com_info.com_ot_entitle,
+			emp_depertment.dept_name,
+			emp_depertment.dept_bangla,
+			emp_designation.desig_name,
+			emp_designation.desig_bangla,
+			emp_section.sec_name_bn,
+			emp_section.sec_name_en,
+			emp_line_num.line_name_en,
+			emp_line_num.line_name_bn,
+			pr_grade.gr_name,
+			pay_salary_sheet_com.*,
+		');
+		$this->db->from('pay_salary_sheet_com');
+		$this->db->from('pr_emp_com_info');
+		$this->db->from('pr_emp_per_info');
+		$this->db->from('emp_depertment');
+		$this->db->from('emp_designation');
+		$this->db->from('emp_section');
+		$this->db->from('emp_line_num');
+		$this->db->from('pr_grade');
+
+		$this->db->where_in('pay_salary_sheet_com.emp_id', $emp_id);
+		$this->db->where('pay_salary_sheet_com.emp_id 	  = pr_emp_per_info.emp_id');
+		$this->db->where('pay_salary_sheet_com.emp_id     = pr_emp_com_info.emp_id');
+		$this->db->where('pay_salary_sheet_com.dept_id    = emp_depertment.dept_id');
+		$this->db->where('pay_salary_sheet_com.desig_id   = emp_designation.id');
+		$this->db->where('pay_salary_sheet_com.sec_id     = emp_section.id');
+		$this->db->where('pay_salary_sheet_com.line_id    = emp_line_num.id');
+		$this->db->where('pay_salary_sheet_com.gr_id 	  = pr_grade.gr_id');
+		if($status == ''){
+			$this->db->where_in('pay_salary_sheet_com.emp_status',[1,2,3]);
+		}else{
+			$this->db->where('pay_salary_sheet_com.emp_status',$status);
+		}
+		// dd($status);
+		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
+		$this->db->where("pay_salary_sheet_com.ot_eot_12am_hour !=",0);
+		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
+		$query = $this->db->get();
+		// dd($query->result());
+		return $query->result();
+	}
+
 	function eot_sheet_com_all($salary_month = null, $status = null,$type=null, $emp_id = null, $unit_id = null ){
 		// dd($status);
 		$lastday = date("t", strtotime($salary_month));
@@ -377,7 +483,6 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		}
 		// dd($status);
 		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
-		$this->db->where("pay_salary_sheet_com.eot_amount    != ",0);
 		$this->db->where("pay_salary_sheet_com.eot_hr_for_sa !=",0);
 		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
 		$query = $this->db->get();

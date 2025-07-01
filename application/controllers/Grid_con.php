@@ -281,7 +281,7 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']     	 = $unit_id;
 		$data['first_date']  	 = $first_date;
 		$data['second_date'] 	 = $second_date;
-		$data['apply_date']  	 = date('d/m/Y', strtotime($apply_date));
+		$data['apply_date']  	 = $apply_date;
 		$data['values']      	 = $this->Grid_model->leave_application($first_date,$second_date,$emp_id,$unit_id);
 		$date1 					 = new DateTime($first_date);
 		$date2 					 = new DateTime($second_date);

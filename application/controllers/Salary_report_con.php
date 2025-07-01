@@ -98,7 +98,7 @@ class Salary_report_con extends CI_Controller {
 		$stop_salary  = $this->input->post('stop_salary');
 		$this->load->model('Common_model');
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
-		$data["values"] = $this->Grid_model->com_salary_sheet($salary_month, $status, $stop_salary, $grid_emp_id, $unit_id);
+		$data["values"] = $this->Grid_model->eot_sheet_com_9($salary_month, $status, $stop_salary, $grid_emp_id, $unit_id);
 		// dd($data["values"]);
 		$data["salary_month"] = $first_date;
 		$data["second_date"] = $second_date;
@@ -120,8 +120,9 @@ class Salary_report_con extends CI_Controller {
 		$stop_salary  = $this->input->post('stop_salary');
 		$this->load->model('Common_model');
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
-		$data["values"] = $this->Grid_model->com_salary_sheet($salary_month,$status, $stop_salary, $grid_emp_id, $unit_id);
+		$data["values"] = $this->Grid_model->eot_sheet_com_12($salary_month,$status, $stop_salary, $grid_emp_id, $unit_id);
 		// dd($data["values"]);
+
 		$data["salary_month"] = $first_date;
 		$data["second_date"] = $second_date;
 		$data["grid_emp_id"]  = $grid_emp_id;

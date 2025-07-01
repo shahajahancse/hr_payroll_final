@@ -54,7 +54,7 @@
 
         <div>
             <h2 class="text-center mt-2" style="border-radius:4px;border: 1px solid #57cf77;width: 200px;margin: 0 auto;">QywUi Av‡e`b dig</h2>
-            <p class="ml-3">ZvwiLt <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'> <strong> ".$apply_date." </strong></span>"?></p>
+            <p class="ml-3">ZvwiLt <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'> <strong> ".date('d/m/Y', strtotime($apply_date))." </strong></span>"?></p>
         </div>
         <?php
            $data =  $this->db->select('leave_type,leave_start,leave_end,total_leave')->where('leave_start',date('Y-m-d',strtotime($first_date)))->where('emp_id',$values['emp_info']->emp_id)->order_by('leave_end','DESC')->get('pr_leave_trans')->row();
@@ -63,7 +63,10 @@
             <p>Rbve/Rbvev,</p>
             <p>webxZ wb‡e`b GB ‡h, 
             Avwg <span style="font-family:SutonnyMJ;font-size:17px"><?php echo $values['emp_info']->name_bn?></span> 
-            <?php echo date('d-m-Y',strtotime($first_date)) < date('d-m-Y')?"MZ":"AvMvgx"?> <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?>  Bs ZvwiL n‡Z <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> ZvwiL  <span style='font-family:sutonnyMJ;font-size:18px'>পর্যন্ত</span> ‡gvU
+
+            <?php echo date('d-m-Y',strtotime($apply_date)) > date('d-m-Y',strtotime($first_date)) ? "MZ":"AvMvgx"?> 
+            
+            <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?>  Bs ZvwiL n‡Z <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> ZvwiL  <span style='font-family:sutonnyMJ;font-size:18px'>পর্যন্ত</span> ‡gvU
                 <?php $f_date = $first_date;$s_date = $second_date; ?>  <?php  $date1 = new DateTime($first_date);
                 $date2 = new DateTime($second_date);
                 $interval = $date2->diff($date1);

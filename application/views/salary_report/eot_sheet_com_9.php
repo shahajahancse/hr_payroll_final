@@ -246,30 +246,28 @@
 					$total_gross_sal_per_page = $total_gross_sal_per_page + $values[$k]->gross_sal;
 					echo "</td>";
 
-					$ot_data = $this->Grid_model->cal_eot_com($values[$k]->emp_id, $salary_month, $second_date);
-
 					$ot_rate    = round(($values[$k]->basic_sal * 2  / 208), 2);
 
 					echo "<td>";
 					echo $values[$k]->ot_hour;
 					echo "</td>";
-
+					
 					echo "<td>";
-					echo $ot_data->actual_eot_4pm;
+					echo $values[$k]->ot_eot_4pm_hour;
 					echo "</td>";
 					
-					$total_ot_eot_hour	= $values[$k]->ot_hour + $ot_data->actual_eot_4pm;
+					$total_ot_eot_hour	= $values[$k]->ot_hour + $values[$k]->ot_eot_4pm_hour;
 
 					echo "<td>";
 					echo $total_ot_eot_hour;
 					echo "</td>";
 
 					$total_ot_per_page = $total_ot_per_page + $values[$k]->ot_hour;
-					$total_eot_per_page = $total_eot_per_page + $ot_data->actual_eot_4pm;
+					$total_eot_per_page = $total_eot_per_page + $values[$k]->ot_eot_4pm_hour;
 					$total_ot_eot_per_page = $total_ot_eot_per_page + $total_ot_eot_hour;
 
 					$grand_total_ot_hour = $grand_total_ot_hour + $values[$k]->ot_hour;
-					$grand_total_eot_hour = $grand_total_eot_hour + $ot_data->actual_eot_4pm;
+					$grand_total_eot_hour = $grand_total_eot_hour + $values[$k]->ot_eot_4pm_hour;
 					$grand_total_ot_eot_hour = $grand_total_ot_eot_hour + $total_ot_eot_hour;
 
 					echo "<td>";
@@ -278,7 +276,7 @@
 					echo "</td>";
 
 					echo "<td>";
-					echo $eot_amount = round($ot_data->actual_eot_4pm * $ot_rate);
+					echo $eot_amount = round($values[$k]->ot_eot_4pm_hour * $ot_rate);
 					echo "</td>";
 
 					$total_ot_eot_amount_per_page = $total_ot_eot_amount_per_page + $eot_amount;

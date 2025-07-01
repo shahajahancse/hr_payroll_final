@@ -252,7 +252,6 @@
 				$total_gross_sal_per_page = $total_gross_sal_per_page + $values[$k]->gross_sal;
 				echo "</td>";
 
-
 				// dd($ot_data);
 
 				$ot_rate    = round(($values[$k]->basic_sal * 2  / 208), 2);
@@ -264,7 +263,7 @@
 
 				echo "<td>";
 				// dd($ot_data->with_out_friday_ot);
-				echo $a = $values[$k]->with_out_friday_ot;
+				echo $a = $values[$k]->eot_hr_for_sa;
 				echo "</td>";
 				
 				// $total_ot_eot_hour	= $ot_data->ot + $ot_data->eot;
