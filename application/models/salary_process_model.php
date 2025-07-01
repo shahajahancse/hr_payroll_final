@@ -514,7 +514,7 @@ class Salary_process_model extends CI_Model{
 						$modify_eot_hour  = $attendances->modify_eot;
 						$eot_hour_for_sa  = $this->eot_without_holi_weekend($emp_id, $start_date, $end_date);
 						$eot_hour 		  = $collect_eot_hour + $modify_eot_hour - $deduct_hour;
-
+						
 						$eot_amount 		= round($eot_hour * $ot_rate);;
 						$ot_eot_12am_amount = round($ot_eot_12am_hour * $ot_rate);
 						$ot_eot_4pm_amount  = round($ot_eot_4pm_hour * $ot_rate);
@@ -582,7 +582,7 @@ class Salary_process_model extends CI_Model{
 						$ot_eot_12am_hour = $attendances->ot_eot_12am;
 						$ot_eot_4pm_hour  = $attendances->ot_eot_4pm;
 						$modify_eot_hour  = $attendances->modify_eot;
-						$eot_hour_for_sa  = $this->eot_without_holi_weekend($emp_id, $start_date, $end_date);
+						$eot_hour_for_sa  = $this->eot_without_holi_weekend2($emp_id, $start_date, $end_date);
 						$eot_hour 		  = $collect_eot_hour + $modify_eot_hour - $deduct_hour;
 
 						$eot_amount 		= round($eot_hour * $ot_ratec);;
@@ -643,7 +643,7 @@ class Salary_process_model extends CI_Model{
 					$data_com["net_pay"] = $gross_sal_com + $att_bouns + $ot_amount_com - $total_deduction_com ;//Zuel 140420
 
 					
-					// dd($total_deduction_com);
+					// dd($data);
 
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
@@ -1113,6 +1113,19 @@ class Salary_process_model extends CI_Model{
 		$row = $query->row();
 		// dd($this->db->last_query());
 		return $row->eot;
+	}
+
+	function eot_without_holi_weekend2($emp_id, $start_date, $end_date)
+	{
+		$this->db->select_sum("com_eot");
+		$this->db->where("emp_id", $emp_id);
+		$this->db->where("present_status !=", 'W');
+		$this->db->where("present_status !=", 'H');
+		$this->db->where("shift_log_date BETWEEN '$start_date' AND '$end_date'");
+		$query = $this->db->get("pr_emp_shift_log");
+		$row = $query->row();
+		// dd($this->db->last_query());
+		return $row->com_eot;
 	}
 
 	function get_attendance_log($emp_id, $start_date, $end_date)

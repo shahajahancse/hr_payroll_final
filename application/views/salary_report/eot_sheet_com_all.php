@@ -264,8 +264,7 @@
 
 				echo "<td>";
 				// dd($ot_data->with_out_friday_ot);
-				echo $a = $values[$k]->eot_hour == $ot_data->with_out_friday_ot ? $ot_data->eot : $values[$k]->eot_hour ;
-				// echo $ot_data->with_out_friday_ot;
+				echo $a = $values[$k]->with_out_friday_ot;
 				echo "</td>";
 				
 				// $total_ot_eot_hour	= $ot_data->ot + $ot_data->eot;
