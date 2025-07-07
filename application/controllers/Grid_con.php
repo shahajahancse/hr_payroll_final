@@ -269,10 +269,11 @@ class Grid_con extends CI_Controller {
 	}
 
 	function leave_application(){
+		// dd(strtotime($_POST['apply_date']) .'=='. strtotime($_POST['firstdate']) .'=='. strtotime($_POST['seconddate']));
 		// dd($_POST);
+		$apply_date		         = $this->input->post('apply_date');
 		$first_date 		     = $this->input->post('firstdate');
 		$second_date		     = $this->input->post('seconddate');
-		$apply_date		         = $this->input->post('apply_date');
 		$unit_id    		     = $this->input->post('unit_id');
 		$emp_id     		     = $this->input->post('emp_id');
 		$data['type']    	     = $this->input->post('type');

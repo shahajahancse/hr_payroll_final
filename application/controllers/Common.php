@@ -108,9 +108,6 @@ class Common extends CI_Controller {
         // dd($status);
 
         if (!empty($status) && $status == 1) {
-            // $this->db->select('lf.emp_id');
-            // $this->db->from('pr_emp_com_info as lf');
-            // $this->db->where('lf.emp_cat_id', 1);
             $this->db->select('emp_id');
             $this->db->from('pay_salary_sheet');
             $this->db->where('unit_id', $unit_id);
@@ -141,8 +138,15 @@ class Common extends CI_Controller {
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = ss.emp_id', 'left');
         $this->db->join('emp_designation as deg', 'deg.id = ss.desig_id', 'left');
         $this->db->where('ss.unit_id', $unit_id);
-        if (!empty($emp_id)) {
+        if (!empty($emp_id) && !empty($status) && $status == 1) {
             $this->db->where_in('ss.emp_id', $emp_id);
+            $this->db->where('emp_status', 1);
+        } elseif (!empty($emp_id) && !empty($status) && $status == 2) {
+            $this->db->where_in('ss.emp_id', $emp_id);
+            $this->db->where('emp_status', 2);
+        } elseif (!empty($emp_id) && !empty($status) && $status == 3) {
+            $this->db->where_in('ss.emp_id', $emp_id);
+            $this->db->where('emp_status', 3);
         }
         $this->db->where('ss.salary_month', $salary_month);
         $this->db->where('deg.hide_status', 1);
@@ -166,8 +170,6 @@ class Common extends CI_Controller {
         $this->db->group_by('ss.emp_id');
         $this->db->order_by('ss.emp_id', 'asc');
         $result = $this->db->get()->result();
-        // dd($this->db->last_query());
-        // dd(count($result));
 
         header('Content-Type: application/x-json; charset=utf-8');
         echo json_encode($result);

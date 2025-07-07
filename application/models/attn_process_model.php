@@ -121,9 +121,10 @@ class Attn_process_model extends CI_Model{
                 $out_end_time 	   = $schedule[0]["out_end"];
                 $ot_start_time 	   = $schedule[0]["ot_start"];
                 $late_start_time   = $schedule[0]["late_start"];
+                $late_compare_time = $schedule[0]["in_time"];
 				$iffter_allow_time = $schedule[0]["iffter_allow_time"];
 
-				// dd($iffter_allow_time);
+				// dd($schedule[0]);
 
             	// one day plus for out end time
             	// because out end next day
@@ -324,11 +325,11 @@ class Attn_process_model extends CI_Model{
 						// dd($eot_hour);
 						// Late Status check
 						$late_start_time = "$process_date $late_start_time";
+						$late_compare_time = "$process_date $late_compare_time";
 						if($in_time > $late_start_time) {
 							$late_status = 1;
 							$cal_late_time = strtotime($in_time);
-							$late_in_time  = strtotime("$late_start_time");
-							// $late_in_time  = strtotime("$process_date $acual_in_time");
+							$late_in_time  = strtotime($late_compare_time);
 							$late_time     = ($cal_late_time - $late_in_time) / 60;
 						}
 						// Late Status

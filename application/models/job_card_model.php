@@ -405,6 +405,10 @@ class Job_card_model extends CI_Model{
 
 			if ($out_time > $two_hour_ot_out_time) {
 				return  $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
+			} else if ($out_time < $one_hour_ot) {
+				return  $out_time = $this->get_buyer_in_time($one_hour_ot, $out_time);
+			} else if ($out_time < $two_hour_ot) {
+				return  $out_time = $this->get_buyer_in_time($two_hour_ot, $out_time);
 			} else {
 				return $out_time = $this->time_am_pm_format($out_time);
 			}
@@ -459,6 +463,8 @@ class Job_card_model extends CI_Model{
 				} else {
 					return $out_time = $this->get_buyer_in_time($one_hour_ot_out_time, $out_time);
 				}
+			} elseif ($out_time < $one_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($one_hour_ot, $out_time);
 			}
 
 			// two hour ot cal and get buyer time
@@ -468,6 +474,8 @@ class Job_card_model extends CI_Model{
 				} else {
 					return $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
 				}
+			} elseif ($out_time < $two_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($two_hour_ot, $out_time);
 			}
 
 			// three hour ot cal and get buyer time
@@ -478,6 +486,8 @@ class Job_card_model extends CI_Model{
 					// exit($out_time);
 					return $out_time = $this->get_buyer_in_time($three_hour_ot_out_time, $out_time);
 				}
+			} elseif ($out_time < $three_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($three_hour_ot, $out_time);
 			}
 
 			// four hour ot cal and get buyer time
@@ -487,6 +497,8 @@ class Job_card_model extends CI_Model{
 				} else {
 					return $out_time = $this->get_buyer_in_time($four_hour_ot_out_time, $out_time);
 				}
+			} elseif ($out_time < $four_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($four_hour_ot, $out_time);
 			}
 
 			if ($out_time > $four_hour_ot_out_time) {
@@ -741,6 +753,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $one_hour_ot_out_time AND $out_time < $two_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($one_hour_ot_out_time, $out_time);
+			} else if ($out_time < $one_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($one_hour_ot, $out_time);
 			}
 
 			// two hour ot cal and get buyer time
@@ -748,6 +762,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $two_hour_ot_out_time AND $out_time < $three_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
+			} else if ($out_time < $two_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($two_hour_ot, $out_time);
 			}
 
 			// three hour ot cal and get buyer time
@@ -755,6 +771,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $three_hour_ot_out_time AND $out_time < $four_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($three_hour_ot_out_time, $out_time);
+			} else if ($out_time < $three_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($three_hour_ot, $out_time);
 			}
 
 			// four hour ot cal and get buyer time
@@ -762,6 +780,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $four_hour_ot_out_time AND $out_time < $five_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($four_hour_ot_out_time, $out_time);
+			} else if ($out_time < $four_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($four_hour_ot, $out_time);
 			}
 
 			// five hour ot cal and get buyer time
@@ -769,6 +789,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $five_hour_ot_out_time AND $out_time < $six_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($five_hour_ot_out_time, $out_time);
+			} else if ($out_time < $five_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($five_hour_ot, $out_time);
 			}
 
 			// six hour ot cal and get buyer time
@@ -776,6 +798,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $six_hour_ot_out_time AND $out_time < $seven_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($six_hour_ot_out_time, $out_time);
+			} else if ($out_time < $six_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($six_hour_ot, $out_time);
 			}
 
 			// seven hour ot cal and get buyer time
@@ -785,6 +809,8 @@ class Job_card_model extends CI_Model{
 				} else {
 					return $out_time = $this->get_buyer_in_time($seven_hour_ot_out_time, $out_time);
 				}
+			} else if ($out_time > $seven_hour_ot) {
+				return  $out_time = $this->get_buyer_in_time($seven_hour_ot, $out_time);
 			}
 
 			if ($out_time > $seven_hour_ot_out_time) {
@@ -856,8 +882,12 @@ class Job_card_model extends CI_Model{
 			if ($ot_start >= $out_time) { 
 				return $out_time = $this->time_am_pm_format($out_time);
 			} else if ($one_hour_ot_out_time >= $out_time) {
+				if ($out_time < $one_hour_ot) {
+					return $out_time = $this->get_buyer_in_time($one_hour_ot, $out_time);
+				}
 				return $out_time = $this->get_buyer_half_time($out_time, $out_time);
 			}
+			// dd($one_hour_ot .'===='. $one_hour_ot_out_time);
 
 			// one hour ot cal and get buyer time
 			if ($out_time >= $one_hour_ot && $out_time < $one_hour_ot_out_time) {
@@ -866,6 +896,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->get_buyer_half_time($one_hour_ot_out_time, $out_time);
 			} else if ($out_time >= $one_hour_ot_out_time && $out_time < $two_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($one_hour_ot_out_time, $out_time);
+			}  else if ($out_time < $one_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($one_hour_ot, $out_time);
 			}
 
 			// two hour ot cal and get buyer time
@@ -875,6 +907,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->get_buyer_half_time($two_hour_ot_out_time, $out_time);
 			} else if ($out_time >= $two_hour_ot_out_time && $out_time < $three_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($two_hour_ot_out_time, $out_time);
+			} else if ($out_time < $two_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($two_hour_ot, $out_time);
 			}
 
 			// after open but back to employe home (no work)
@@ -890,6 +924,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $three_hour_ot_out_time AND $out_time < $four_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($three_hour_ot_out_time, $out_time);
+			} else if ($out_time < $three_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($three_hour_ot, $out_time);
 			}
 
 			// four hour ot cal and get buyer time
@@ -897,6 +933,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $four_hour_ot_out_time AND $out_time < $five_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($four_hour_ot_out_time, $out_time);
+			} else if ($out_time < $four_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($four_hour_ot, $out_time);
 			}
 
 			// five hour ot cal and get buyer time
@@ -904,6 +942,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $five_hour_ot_out_time AND $out_time < $six_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($five_hour_ot_out_time, $out_time);
+			} else if ($out_time < $five_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($five_hour_ot, $out_time);
 			}
 
 			// six hour ot cal and get buyer time
@@ -911,6 +951,8 @@ class Job_card_model extends CI_Model{
 				return $out_time = $this->time_format_ten_plus($out_time);
 			} else if ($out_time >= $six_hour_ot_out_time AND $out_time < $seven_hour_ot) {
 				return $out_time = $this->get_buyer_in_time($six_hour_ot_out_time, $out_time);
+			} else if ($out_time < $six_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($six_hour_ot, $out_time);
 			}
 
 			// seven hour ot cal and get buyer time
@@ -920,7 +962,10 @@ class Job_card_model extends CI_Model{
 				} else {
 					return $out_time = $this->get_buyer_in_time($seven_hour_ot_out_time, $out_time);
 				}
+			} else if ($out_time > $seven_hour_ot) {
+				return $out_time = $this->get_buyer_in_time($seven_hour_ot, $out_time);
 			}
+			
 			return  $out_time = $this->get_buyer_in_time($out_time, $out_time);
 		} else {
 			// eight hour ot cal and get buyer time

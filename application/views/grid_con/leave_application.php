@@ -64,7 +64,13 @@
             <p>webxZ wb‡e`b GB ‡h, 
             Avwg <span style="font-family:SutonnyMJ;font-size:17px"><?php echo $values['emp_info']->name_bn?></span> 
 
-            <?php echo date('d-m-Y',strtotime($apply_date)) > date('d-m-Y',strtotime($first_date)) ? "MZ":"AvMvgx"?> 
+            <?php 
+                 $typessss = 'AvMvgx';
+                if (strtotime($apply_date) > strtotime($first_date)) {
+                    $typessss = 'MZ';
+                } 
+                echo $typessss;
+            ?> 
             
             <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($first_date))."</span>"?>  Bs ZvwiL n‡Z <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($second_date))."</span>"?> ZvwiL  <span style='font-family:sutonnyMJ;font-size:18px'>পর্যন্ত</span> ‡gvU
                 <?php $f_date = $first_date;$s_date = $second_date; ?>  <?php  $date1 = new DateTime($first_date);
@@ -220,7 +226,9 @@
             <br>
             <br>
             <p class="text-justify">Av‡e`bKvix‡K  
-                <?php echo date('d-m-Y',strtotime($f_date)) < date('d-m-Y')?"MZ":"AvMvgx"?>
+
+            <?php echo $typessss; ?> 
+
                 <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($f_date))."</span>"?> ZvwiL n‡Z  
                 <?php echo "<span style='font-family:SutonnyMJ;font-size:20px'>".date('d/m/Y',strtotime($s_date))."</span>"?> <span style="font-family:SutonnyMJ;font-size:17px">পর্যন্ত</span> ‡gvU 
                 <?php  $date1 = new DateTime($f_date);

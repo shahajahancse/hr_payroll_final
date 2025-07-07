@@ -435,6 +435,9 @@ class Salary_process_model extends CI_Model{
 					//======================= ATTN. BONUS ========================
 					$att_bouns = $this->get_attn_bonus($rows, $attendances, $salary_month, $attn_rule);
 					//======================= ATTN. BONUS END ========================
+					if (empty($att_bouns)) {
+						$att_bouns = 0;
+					}
 					// dd($att_bouns);
 				
 					//HOLIDAY ALLOWANCE (APPLICABLE FOR OT = NO)
@@ -662,7 +665,7 @@ class Salary_process_model extends CI_Model{
 						$data['emp_status'] = $emp_cat_id;
 						$this->db->insert("pay_salary_sheet",$data);
 					}
-					// dd($data_com);
+					// dd($data);
 					//COMPLIENCE
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
@@ -696,9 +699,8 @@ class Salary_process_model extends CI_Model{
 		$this->db->from("emp_designation as dg");
 		$this->db->join("allowance_attn_bonus as ab", 'dg.attn_id = ab.id', 'left');
 		$query = $this->db->where("dg.id", $rows->emp_desi_id)->get()->row();
-		// dd($query);
 		// check rule amt
-
+		
 		if ($query->rule1_end <= $salary_month) {
 			$amt = $query->rule;
 		}else if ($query->prev_end >= $salary_month && $query->rule1_end <= $salary_month) {
@@ -706,7 +708,8 @@ class Salary_process_model extends CI_Model{
 		} else {
 			$amt = $query->prev_rule;
 		}
-
+		
+		// dd($amt);
 		// initialize bonus amt
 		if (($attn->absent <= $rule->max_absent) && ($attn->late_status <= $rule->max_late_day) && ($attn->late_time <= $rule->max_late_minute) && ($attn->total_leave <= $rule->max_leave) && ($w_day >= $n_day)) {
 			$bonus = $amt;
