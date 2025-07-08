@@ -968,8 +968,10 @@ class Salary_process_model extends CI_Model{
         $this->db->where("leave_start >=", $start_date);
         $this->db->where("leave_end <=", $end_date);
         $query = $this->db->get('pr_leave_trans')->row();
+
 		$dd2 = $this->leave_db2($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
 		$dd3 = $this->leave_db3($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
+
 		if (!empty($dd2)) {
 			if ($dd2['leave_type'] == 'cl') {
 				$query->cl = $query->cl + $dd2['day'];
@@ -987,6 +989,7 @@ class Salary_process_model extends CI_Model{
 				$query->sp = $query->sp + $dd2['day'];
 			}
 		}
+
 		if (!empty($dd3)) {
 			if ($dd3['leave_type'] == 'cl') {
 				$query->cl = $query->cl + $dd3['day'];
@@ -1012,11 +1015,11 @@ class Salary_process_model extends CI_Model{
 		$array = array();
         $this->db->select("*");
         $this->db->where("emp_id",$emp_id);
-        $this->db->where("leave_start <", $start_date);
+        $this->db->where("leave_start <=", $start_date);
         $this->db->where("leave_end >=", $start_date);
         $this->db->order_by("id", 'DESC');
         $query = $this->db->get('pr_leave_trans')->row();
-		// dd($query);
+		// dd($this->db->last_query());
 
 		if (!empty($query)) {
 			$end_date  = $query->leave_end;
@@ -1034,9 +1037,10 @@ class Salary_process_model extends CI_Model{
 		$array = array();
         $this->db->select("*");
         $this->db->where("emp_id",$emp_id);
-        $this->db->where("leave_start <", $end_date);
-        $this->db->where("leave_end >", $end_date);
+        $this->db->where("leave_start <=", $end_date);
+        $this->db->where("leave_end >=", $end_date);
         $query = $this->db->get('pr_leave_trans')->row();
+
 		if (!empty($query)) {
 			$start_date = $query->leave_start;
 			$day_diff = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) + 1;

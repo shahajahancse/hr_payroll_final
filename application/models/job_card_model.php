@@ -827,7 +827,7 @@ class Job_card_model extends CI_Model{
 		if($out_time =='00:00:00'){
 			return $out_time ='';
 		}
-
+		// dd($schedule);
 		$out_start				= $schedule[0]["out_start"];
 		$ot_start				= $schedule[0]["ot_start"];
 		$ot_minute				= $schedule[0]["ot_minute_to_one_hour"];
@@ -836,6 +836,8 @@ class Job_card_model extends CI_Model{
 
 		$two_hour_ot 			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($one_hour_ot_out_time)));
 		$two_hour_ot_out_time	= $schedule[0]["two_hour_ot_out_time"];
+
+		$three_hour_ot			= date("H:i:s", strtotime("+$ot_minute minutes", strtotime($two_hour_ot_out_time)));
 
 		$tfb_start =  $schedule[0]['tiffin_break'];
 		$tiffin_minute =  $schedule[0]['tiffin_minute'];
@@ -876,6 +878,8 @@ class Job_card_model extends CI_Model{
 		$fourteen_hour_ot = date("H:i:s", strtotime("+$ot_minute minutes", strtotime($thirteen_hour_ot_out_time)));
 		$fourteen_hour_ot_out_time	= date("H:i:59", strtotime("+59 minutes", strtotime($thirteen_hour_ot_out_time)));
 
+		$fiveteen_hour_ot = date("H:i:s", strtotime("+$ot_minute minutes", strtotime($fourteen_hour_ot_out_time)));
+		// dd($fourteen_hour_ot .'==='. $fiveteen_hour_ot .'===='. $three_hour_ot .'==='. $four_hour_ot .'==='. $three_hour_ot_out_time);
 
 		if($out_start < $out_time) {
 			// with out ot
@@ -1029,7 +1033,8 @@ class Job_card_model extends CI_Model{
 					return $out_time = $this->get_buyer_in_time($fourteen_hour_ot_out_time, $out_time);
 				}
 			}
-			return $out_time = $this->get_buyer_in_time($out_time, $out_time);
+			return $out_time = $this->time_am_pm_format($out_time);
+			// return $out_time = $this->get_buyer_in_time($out_time, $out_time);
 		}
 	}
 	// end out time for 7 hours
