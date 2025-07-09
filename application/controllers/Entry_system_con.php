@@ -517,6 +517,82 @@ class Entry_system_con extends CI_Controller
         $this->data['subview'] = 'entry_system/shift_change';
         $this->load->view('layout/template', $this->data);
     }
+
+    public function present_entry_rand()
+    {
+        $sql         = $_POST['emp_id'];
+        $unit_id     = $_POST['unit_id'];
+        $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
+        $second_date = date('Y-m-d', strtotime($_POST['second_date']));
+        $time        = date('H:i:s', strtotime($_POST['time']));
+
+        if($time=='00:00:00'){
+            echo 'Please Enter valid time'; exit;
+        }
+        $emp_ids     = explode(',', $sql);
+        $mm = array();
+
+        // final process check
+		$slm = date("Y-m-01", strtotime($first_date));
+		$check = $this->db->where('unit_id', $unit_id)->where('block_month',$slm)->get('pay_salary_block');
+		if ($check->num_rows() > 0) {
+			echo "Sorry! This Month Already Final Processed";
+			return false; exit();
+		} 
+		// final process check end
+
+        $emp_data = $this->Attn_process_model->get_all_employee($emp_ids);
+
+        while ($first_date <= $second_date) {
+            $data = array();
+            foreach ($emp_data->result() as $rows) {
+                $com_id         = $rows->id;
+                $emp_id         = $rows->emp_id;
+                $proxi_id       = $rows->proxi_id;
+                $shift_id       = $rows->shift_id;
+                $schedule_id    = $rows->schedule_id;
+
+                $emp_shift = $this->Attn_process_model->emp_shift_check_process($emp_id,$shift_id,$schedule_id,$first_date);
+                $schedule  = $this->Attn_process_model->get_emp_schedule($emp_shift->schedule_id);
+                $out_end   = $schedule[0]["out_end"];
+
+                if($schedule[0]['sh_type'] == 'Worker_HGL'){
+                    if (strtotime($time) >= strtotime($out_end) && strtotime($time) <= strtotime('23:59:59')) {
+                      $date = $first_date;
+                    }
+                }
+
+                if (strtotime($time) <= strtotime($out_end)) {
+                    $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
+                } else {
+                    $date = $first_date;
+                }
+
+                list($hour, $minute,$sec) = explode(':', trim($time));	
+                $min_start = $minute-2; $min_end = $minute+3;
+                $sec_start = 0; $sec_end = 60;
+                $rand_minutes = rand($min_start, $min_end);
+                $rand_sec = rand($sec_start, $sec_end);
+                $manual_time = mktime($hour, $rand_minutes, $rand_sec);
+                $manual_time = date('H:i:s', $manual_time);
+
+                $data = array(
+                    'date_time'       => $date ." ".$manual_time,
+                    'proxi_id'         => $proxi_id,
+                    'device_id'         => 0,
+                );
+                $mm = $this->insert_attn_process($data, $first_date, $unit_id, $rows->emp_id, $proxi_id);
+            }
+            $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
+		}
+
+        if (!empty($mm) && $mm['massage'] == 1) {
+            echo 'success';
+        } else {
+            echo 'Record Not Inserted';
+        }
+    }
+
     public function present_entry()
     {
         $sql         = $_POST['emp_id'];
@@ -554,20 +630,12 @@ class Entry_system_con extends CI_Controller
                 $emp_shift = $this->Attn_process_model->emp_shift_check_process($emp_id,$shift_id,$schedule_id,$first_date);
                 $schedule  = $this->Attn_process_model->get_emp_schedule($emp_shift->schedule_id);
                 $out_end   = $schedule[0]["out_end"];
-                // dd($schedule);
-                // dd($time."=====". $out_end);
 
                 if($schedule[0]['sh_type'] == 'Worker_HGL'){
                     if (strtotime($time) >= strtotime($out_end) && strtotime($time) <= strtotime('23:59:59')) {
                       $date = $first_date;
                     }
                 }
-
-                // if($schedule[0]['sh_type'] == 'Day_shift(Loader)'){
-                //     if (strtotime($time) >= strtotime($out_end) && strtotime($time) <= strtotime('23:59:59')) {
-                //       $date = $first_date;
-                //     }
-                // }
 
                 if (strtotime($time) <= strtotime($out_end)) {
                     $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
@@ -579,7 +647,6 @@ class Entry_system_con extends CI_Controller
                     'proxi_id'         => $proxi_id,
                     'device_id'         => 0,
                 );
-                // dd($data);
                 $mm = $this->insert_attn_process($data, $first_date, $unit_id, $rows->emp_id, $proxi_id);
             }
             $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
@@ -591,6 +658,7 @@ class Entry_system_con extends CI_Controller
             echo 'Record Not Inserted';
         }
     }
+
     function insert_attn_process($data, $date, $unit_id, $emp_id, $proxi_id) {
         $this->load->model('Attn_process_model');
         $att_table = "att_". date("Y_m", strtotime($date));

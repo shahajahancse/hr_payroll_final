@@ -145,7 +145,13 @@
                                     <div class="input-group">
                                         <span class="input-group-btn" style="display: flex; gap: 15px;">
                                             <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
-                                            <input <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
+
+                                            <?php $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); ?>
+
+                                            <input <?php if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> class="btn btn-success" onclick='present_entry_rand(event)' type="button" value='Rand Time' />
+
+                                            <input <?php if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
+
                                             <input <?php  if(!in_array(137,$acl)) {echo 'style="display:none;"';} else { echo '';}?>  class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
 
                                             <input <?php  if(!in_array(138,$acl)) {echo 'style="display:none;"';} else { echo '';}?>  class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
@@ -432,6 +438,62 @@
             }
         }
     </script>
+
+    <script>
+        function present_entry_rand(e) {
+            e.preventDefault();
+            var checkboxes = document.getElementsByName('emp_id[]');
+            var sql = get_checked_value(checkboxes);
+            let emp_id = sql.split(",");
+            if (emp_id == '') {
+                showMessage('error', 'Please select employee Id');
+                return false;
+            }
+            unit_id = document.getElementById('unit_id').value;
+            if (unit_id == '') {
+                showMessage('error', 'Please select Unit');
+                return false;
+            }
+
+            first_date = document.getElementById('first_date').value;
+            if (first_date == '') {
+                showMessage('error', 'Please select First date');
+                return false;
+            }
+            second_date = document.getElementById('second_date').value;
+            if (second_date == '') {
+                showMessage('error', 'Please select Second date');
+                return false;
+            }
+            time = document.getElementById('time').value;
+            if (time == '') {
+                showMessage('error', 'Please select Time');
+                return false;
+            }
+
+            var formdata = $("#present_entry_form").serialize();
+            var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
+
+            $.ajax({
+                type: "POST",
+                url: hostname + "entry_system_con/present_entry_rand",
+                data: data,
+                success: function(data) {
+                    $("#loader").hide();
+                    if (data == 'success') {
+                        showMessage('success', 'Record Inserted Successfully');
+                    } else {
+                        showMessage('error', data);
+                    }
+                },
+                error: function(data) {
+                    $("#loader").hide();
+                    showMessage('error', 'Record Not Inserted');
+                }
+            })
+        }
+    </script>
+
     <script>
         function present_entry(e) {
             e.preventDefault();
