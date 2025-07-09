@@ -94,7 +94,6 @@ class Grid_con extends CI_Controller {
 		} else {
 			$data["values"] = $this->Grid_model->continuous_report($girstdate, $seconddate, $status, $grid_emp_id);
 		}
-		// dd($data["values"]);
 
 		if($status =="A")
 		{

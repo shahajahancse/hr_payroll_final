@@ -94,7 +94,7 @@
                     ?>
                     QywUi Rb¨ Av‡e`b KiwQ|
             </p><br>
-            <div style="line-height:10px">
+            <div style="line-height:17px">
                 <span style='display: flex'>Av‡e`bKvixi bvg t 
                     <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 17px;border-bottom: 1px dotted black;width:75%;"> 
                         <?php echo $values['emp_info']->name_bn?>
@@ -128,17 +128,17 @@
                 </span>
 
                 <span style='display: flex'>QzwUi KviY t 
-                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 15px;border-bottom: 1px dotted black;width: 80%;"> 
+                    <p style="margin-top: 17px;margin-left:10px;font-family: SutonnyMJ;font-size: 15px;border-bottom: 1px dotted black;width: 80%;"> 
                         <?php echo $reason?>
                     </p>
                 </span>
                 <span style='display: flex'>QzwU‡Z Ae¯’vbiZ wVKvbv t 
-                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 15px;border-bottom: 1px dotted black;width: 70%;"> 
+                    <p style="margin-top: 17px;margin-left:10px;font-family: SutonnyMJ;font-size: 15px;border-bottom: 1px dotted black;width: 70%;"> 
                         <?php echo $add_on_vacation?>
                     </p>
                 </span>
                 <span style='display: flex'>Av‡e`bKvixi Kv‡R †hvM`v‡bi/ wb‡qv‡Mi ZvwiL t 
-                    <p style="margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 52%;"> 
+                    <p style="margin-top: 0px;margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 52%;"> 
                         <?php echo $values['emp_info']->emp_join_date?>
                     </p>
                 </span>

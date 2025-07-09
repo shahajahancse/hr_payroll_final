@@ -677,6 +677,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 			emp_depertment.dept_name,
 			emp_section.sec_name_en,
 			COALESCE(SUM(CASE WHEN pr_emp_shift_log.late_status = 1 AND pr_emp_com_info.emp_join_date <= pr_emp_shift_log.shift_log_date THEN 1 ELSE 0 END), 0) AS total,
+			SUM(pr_emp_shift_log.late_time) AS late_time,
 		');
 
 		$this->db->from('pr_emp_com_info');

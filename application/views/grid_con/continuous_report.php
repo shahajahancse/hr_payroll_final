@@ -45,23 +45,20 @@
 		<br />
 		<br />
 		<table class="sal" border="1" cellpadding="0" cellspacing="0" align="center" style="font-size:13px;">
-
-
-					<!-- // if($section != $row["emp_sec_id"]){
-					// echo "<tr bgcolor='#CCCCCC'>";
-					// echo "<td colspan='7' style='font-size:16px'>Section :".$row["sec_name_en"]."</td>";
-					// echo "</tr>";  -->
 		
-						<tr>
-							<th style="padding:5px">SL</th>
-							<th style="padding:5px">Emp ID</th>
-							<th style="padding:5px">Name</th>
-							<th style="padding:5px">Designation</th>
-							<th style="padding:5px"> Line</th>
-							<th style="padding:5px"> Emp Join Date</th>
-							<th style="padding:5px">Total <?php echo $status; ?></th>
-						</tr>
-					<!-- < ?php } ?> -->
+				<tr>
+					<th style="padding:5px">SL</th>
+					<th style="padding:5px">Emp ID</th>
+					<th style="padding:5px">Name</th>
+					<th style="padding:5px">Designation</th>
+					<th style="padding:5px"> Line</th>
+					<th style="padding:5px"> Emp Join Date</th>
+					<th style="padding:5px">Total <?php echo $status; ?></th>
+					<?php if ($status == "Late") { ?>
+						<th style="padding:5px"> Total Late</th>
+					<?php } ?>
+				</tr>
+
 				<?php $i=1; foreach ($values as $key => $row) {
 					
 					if ($row["total"] == 0){ 
@@ -76,6 +73,16 @@
 						<td style="padding:2px 5px"> <?= $row["line_name_en"] ?> </td>
 						<td style="padding:2px 5px"> <?= date('d M Y',strtotime($row["emp_join_date"])) ?> </td>
 						<td style="padding:2px 5px"> <?= $row["total"] ?> </td>
+
+						<?php if ($status == "Late") { 
+							// Get whole minutes
+							$minutes = floor($row["late_time"]);
+							// Get remaining seconds
+							$seconds = round(($row["late_time"] - $minutes) * 60);
+							$seconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
+						?>
+							<td style="padding:5px"> <?= $minutes.'.'.$seconds ?> </td>
+						<?php } ?>
 					<tr>
 				<?php }}?>
 		</table>

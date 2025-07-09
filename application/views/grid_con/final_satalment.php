@@ -242,7 +242,7 @@
     
         <!-- emp basic info start here -->
         <div class='d-flex' style="margin-top: 10px">
-            <h4 class="text-center unicode-to-bijoy" style="border-bottom: 2px solid black;width: 300px;margin: 0 auto;">চুড়ান্ত (হিসাব) নিস্পত্তি প্রতিবেদন </h4> <span style="position:absolute;margin-left:800px">তারিখঃ</span>
+            <h4 class="text-center unicode-to-bijoy" style="border-bottom: 2px solid black;width: 300px;margin: 0 auto;">PyovšÍ  (হিসাব) নিস্পত্তি প্রতিবেদন </h4> <span style="position:absolute;margin-left:800px">তারিখঃ</span>
         </div>
 
         <?php   foreach($values as $row){ ?>
