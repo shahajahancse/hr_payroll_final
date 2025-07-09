@@ -1932,9 +1932,11 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where("pay_salary_sheet_com.salary_month = '$sal_year_month'");
 		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
+		$this->db->where("pay_salary_sheet_com.net_pay >", 0);
 		$query = $this->db->get();
 		return $query->result();
 	}
+
 	function grid_monthly_salary_sheet_for_allowance($date, $grid_status, $grid_emp_id,$type){
 		$this->db->select('
 			pay_salary_sheet.*,
