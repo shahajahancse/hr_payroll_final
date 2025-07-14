@@ -18,6 +18,12 @@
             border: 1px solid #000000;
             padding:2px;
         }
+        @media print{
+            @page{
+                margin-top: 0px ;
+                padding-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -139,7 +145,7 @@
                 </span>
                 <span style='display: flex'>Av‡e`bKvixi Kv‡R †hvM`v‡bi/ wb‡qv‡Mi ZvwiL t 
                     <p style="margin-top: 0px;margin-left:10px;font-family: SutonnyMJ;font-size: 21px;border-bottom: 1px dotted black;width: 52%;"> 
-                        <?php echo $values['emp_info']->emp_join_date?>
+                        <?php echo date('d-m-Y',strtotime($values['emp_info']->emp_join_date))?>
                     </p>
                 </span>
             </div>

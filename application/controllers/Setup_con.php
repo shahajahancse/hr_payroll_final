@@ -244,13 +244,13 @@ class Setup_con extends CI_Controller
             $this->db->where('name_bn', $post_bn);
             $this->db->or_where('name_en', $post_en);
             $query = $this->db->get('emp_post_offices');
-            if ($query->num_rows()  >0) {
-                $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
-            }else{
+            // if ($query->num_rows()  >0) {
+                // $this->session->set_flashdata('failuer', 'Sorry!, Duplicate Entry.');
+            // }else{
                 $this->db->where('id', $id);
                 $this->db->update('emp_post_offices', $formArray);
                 $this->session->set_flashdata('success', 'Record Updated successfully!');
-            }
+            // }
             redirect('/setup_con/post_office');
         }
         $this->data['divisions'] = $this->db->get('emp_divisions')->result_array();

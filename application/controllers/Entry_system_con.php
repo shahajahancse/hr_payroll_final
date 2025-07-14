@@ -15,7 +15,7 @@ class Entry_system_con extends CI_Controller
             redirect("authentication");
         }
         $this->data['user_data'] = $this->session->userdata('data');
-        if (!check_acl_list($this->data['user_data']->id, 3)) {
+        if (!check_acl_list($this->data['user_data']->id, 2)) {
             echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
             redirect("payroll_con");
             exit;
