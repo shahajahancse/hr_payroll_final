@@ -59,6 +59,7 @@
                         <th width="50">04 AM</th>
                         <th width="50">05 AM</th>
                         <th width="50">06 AM</th>
+                        <th width="50">Others</th>
                         <?php } ?>
                         <th width="80">P.Error</th>
                         <th width="80" style="white-space:nowrap">TTL O.T</th>
@@ -84,10 +85,11 @@
                         $total_four_am=0;
                         $total_five_am=0;
                         $total_six_am=0;
+                        $total_others=0;
                         foreach($values as $row){
                             $total            += $row->all_present;
                             $total_error      += $row->present_error;
-                            $total_ot      += $row->total_ot;
+                            $total_ot         += $row->total_ot;
                             $total_four_pm    += $row->four_pm;
                             $total_five_pm    += $row->five_pm;
                             $total_six_pm     += $row->six_pm;
@@ -96,13 +98,17 @@
                             $total_nine_pm    += $row->nine_pm;
                             $total_ten_pm     += $row->ten_pm;
                             $total_eleven_pm += $row->eleven_pm;
-                            $total_tweelve_pm += $row->tweelve_pm;
+
+                            $tweelve_pm = $row->tweelve_pm1 + $row->tweelve_pm2;
+                            $total_tweelve_pm += $tweelve_pm; 
+
                             $total_one_am     += $row->one_am;
                             $total_two_am     += $row->two_am;
                             $total_three_am   += $row->three_am;
                             $total_four_am    += $row->four_am;
                             $total_five_am    += $row->five_am;
                             $total_six_am    += $row->six_am;
+                            $total_others    += $row->others;
                         ?>
                         <tr>
                             <th width="30"><?php  echo $i++?></th>
@@ -123,20 +129,21 @@
                             <th width="120"><?php echo $row->nine_pm?></th>
                             <th width="120"><?php echo $row->ten_pm?></th>
                             <th width="120"><?php echo $row->eleven_pm?></th>
-                            <th width="120"><?php echo $row->tweelve_pm?></th>
+                            <th width="120"><?php echo $tweelve_pm?></th>
                             <?php } if($user_mode==0){ ?>
                             <th width="120"><?php echo $row->seven_pm?></th>
                             <th width="120"><?php echo $row->eight_pm?></th>
                             <th width="120"><?php echo $row->nine_pm?></th>
                             <th width="120"><?php echo $row->ten_pm?></th>
                             <th width="120"><?php echo $row->eleven_pm?></th>
-                            <th width="120"><?php echo $row->tweelve_pm?></th>
+                            <th width="120"><?php echo $tweelve_pm?></th>
                             <th width="120"><?php echo $row->one_am?></th>
                             <th width="120"><?php echo $row->two_am?></th>
                             <th width="120"><?php echo $row->three_am?></th>
                             <th width="120"><?php echo $row->four_am?></th>
                             <th width="120"><?php echo $row->five_am?></th>
                             <th width="120"><?php echo $row->six_am?></th>
+                            <th width="120"><?php echo $row->others?></th>
                             <?php } ?>
                             <th width="120"><?php echo $row->present_error?></th>
                             <th width="120"><?php echo $row->total_ot?></th>
@@ -175,6 +182,7 @@
                         <th><?php echo $total_four_am;?></th>
                         <th><?php echo $total_five_am;?></th>
                         <th><?php echo $total_six_am;?></th>
+                        <th><?php echo $total_others;?></th>
                         <?php } ?>
                         <th><?php echo $total_error;?></th>
                         <th><?php echo $total_ot;?></th>

@@ -823,7 +823,6 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 
 
 		$user_mode = $_SESSION['data']->user_mode;
-		// dd($user_mode);
 		$select = "
 			num.id as line_id, num.line_name_en, num.line_name_bn,
 			SUM( CASE WHEN log.present_status = 'P' THEN 1 ELSE 0 END ) AS all_present,
@@ -831,44 +830,48 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 			SUM(ot + eot) AS total_ot,
 			SUM( CASE WHEN log.out_time > '11:30:00' AND log.out_time <= '16:49:59' THEN 1 ELSE 0 END ) AS four_pm,
 			SUM( CASE WHEN log.out_time > '16:50:00' AND log.out_time <= '17:49:59' THEN 1 ELSE 0 END ) AS five_pm,
-			SUM( CASE WHEN log.out_time > '17:50:00' AND log.out_time <= '18:59:59' THEN 1 ELSE 0 END ) AS six_pm";
+			SUM( CASE WHEN log.out_time > '17:50:00' AND log.out_time <= '18:49:59' THEN 1 ELSE 0 END ) AS six_pm";
 
 		// Add more columns conditionally
 		if ($user_mode == 7) {
 			$select .= ",
-			SUM( CASE WHEN (log.out_time > '18:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS seven_pm";
+			SUM( CASE WHEN (log.out_time >= '18:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS seven_pm";
 		}
 		if ($user_mode == 9) {
 			$select .= ",
-			SUM( CASE WHEN log.out_time > '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
-			SUM( CASE WHEN log.out_time > '19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
-			SUM( CASE WHEN (log.out_time > '20:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS nine_pm";
+			SUM( CASE WHEN log.out_time >= '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
+			SUM( CASE WHEN log.out_time >='19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
+			SUM( CASE WHEN (log.out_time >= '20:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS nine_pm";
 		}
 		if ($user_mode == 12) {
 			$select .= ",
-			SUM( CASE WHEN log.out_time > '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
-			SUM( CASE WHEN log.out_time > '19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
-			SUM( CASE WHEN log.out_time > '20:50:00' AND log.out_time <= '21:49:59' THEN 1 ELSE 0 END ) AS nine_pm,
-			SUM( CASE WHEN log.out_time > '21:50:00' AND log.out_time <= '22:49:59' THEN 1 ELSE 0 END ) AS ten_pm,
-			SUM( CASE WHEN log.out_time > '22:50:00' AND log.out_time <= '23:49:59' THEN 1 ELSE 0 END ) AS eleven_pm,
-			SUM( CASE WHEN log.out_time > '23:50:00' AND log.out_time <= '07:15:59' THEN 1 ELSE 0 END ) AS tweelve_pm";
+			SUM( CASE WHEN log.out_time >= '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
+			SUM( CASE WHEN log.out_time >= '19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
+			SUM( CASE WHEN log.out_time >= '20:50:00' AND log.out_time <= '21:49:59' THEN 1 ELSE 0 END ) AS nine_pm,
+			SUM( CASE WHEN log.out_time >= '21:50:00' AND log.out_time <= '22:49:59' THEN 1 ELSE 0 END ) AS ten_pm,
+			SUM( CASE WHEN log.out_time >= '22:50:00' AND log.out_time <= '23:49:59' THEN 1 ELSE 0 END ) AS eleven_pm,
+			SUM( CASE WHEN log.out_time >= '23:50:00' AND log.out_time <= '07:15:59' THEN 1 ELSE 0 END ) AS tweelve_pm";
 		}
 		if ($user_mode == 0) {
 			$select .= ",
-			SUM( CASE WHEN log.out_time > '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
-			SUM( CASE WHEN log.out_time > '19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
-			SUM( CASE WHEN log.out_time > '20:50:00' AND log.out_time <= '21:49:59' THEN 1 ELSE 0 END ) AS nine_pm,
-			SUM( CASE WHEN log.out_time > '21:50:00' AND log.out_time <= '22:49:59' THEN 1 ELSE 0 END ) AS ten_pm,
-			SUM( CASE WHEN log.out_time > '22:50:00' AND log.out_time <= '23:49:59' THEN 1 ELSE 0 END ) AS eleven_pm,
-			SUM( CASE WHEN log.out_time > '23:50:00' AND log.out_time <= '00:49:59' THEN 1 ELSE 0 END ) AS tweelve_pm,
-			SUM( CASE WHEN log.out_time > '00:50:00' AND log.out_time <= '01:49:59' THEN 1 ELSE 0 END ) AS one_am,
-			SUM( CASE WHEN log.out_time > '01:50:00' AND log.out_time <= '02:49:59' THEN 1 ELSE 0 END ) AS two_am,
-			SUM( CASE WHEN log.out_time > '02:50:00' AND log.out_time <= '03:49:59' THEN 1 ELSE 0 END ) AS three_am,
-			SUM( CASE WHEN log.out_time > '03:50:00' AND log.out_time <= '04:49:59' THEN 1 ELSE 0 END ) AS four_am,
-			SUM( CASE WHEN log.out_time > '04:50:00' AND log.out_time <= '05:49:59' THEN 1 ELSE 0 END ) AS five_am,
-			SUM( CASE WHEN log.out_time > '05:00:00' AND log.out_time <= '06:15:59' THEN 1 ELSE 0 END ) AS six_am,
-			SUM( CASE WHEN log.out_time > '06:00:00' AND log.out_time <= '07:15:59' THEN 1 ELSE 0 END ) AS six_am";
+			SUM( CASE WHEN log.out_time >= '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
+			SUM( CASE WHEN log.out_time >= '19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
+			SUM( CASE WHEN log.out_time >= '20:50:00' AND log.out_time <= '21:49:59' THEN 1 ELSE 0 END ) AS nine_pm,
+			SUM( CASE WHEN log.out_time >= '21:50:00' AND log.out_time <= '22:49:59' THEN 1 ELSE 0 END ) AS ten_pm,
+			SUM( CASE WHEN log.out_time >= '22:50:00' AND log.out_time <= '23:49:59' THEN 1 ELSE 0 END ) AS eleven_pm,
+
+			SUM( CASE WHEN log.out_time >= '23:50:00' AND log.out_time <= '24:00:00' THEN 1 ELSE 0 END ) AS tweelve_pm1,
+			SUM( CASE WHEN log.out_time >= '00:00:01' AND log.out_time <= '00:49:59' THEN 1 ELSE 0 END ) AS tweelve_pm2,
+
+			SUM( CASE WHEN log.out_time >= '00:50:00' AND log.out_time <= '01:49:59' THEN 1 ELSE 0 END ) AS one_am,
+			SUM( CASE WHEN log.out_time >= '01:50:00' AND log.out_time <= '02:49:59' THEN 1 ELSE 0 END ) AS two_am,
+			SUM( CASE WHEN log.out_time >= '02:50:00' AND log.out_time <= '03:49:59' THEN 1 ELSE 0 END ) AS three_am,
+			SUM( CASE WHEN log.out_time >= '03:50:00' AND log.out_time <= '04:49:59' THEN 1 ELSE 0 END ) AS four_am,
+			SUM( CASE WHEN log.out_time >= '04:50:00' AND log.out_time <= '05:49:59' THEN 1 ELSE 0 END ) AS five_am,
+			SUM( CASE WHEN log.out_time >= '05:50:00' AND log.out_time <= '06:49:59' THEN 1 ELSE 0 END ) AS six_am,
+			SUM( CASE WHEN log.out_time >= '06:50:00' AND log.out_time <= '08:15:01' THEN 1 ELSE 0 END ) AS others";
 		}
+
 
 		$this->db->select($select);
 		$this->db->from("emp_line_num as num");
@@ -877,12 +880,16 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->where("com.unit_id", $unit_id);
 		$this->db->where("log.shift_log_date", $date);
 		$this->db->where("log.present_status","P");
+		// $this->db->where("num.id", 227);
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
 		// dd($this->db->get()->result());
+		// $this->db->get()->result();
 
+		// dd($this->db->last_query());
 		return $this->db->get()->result();
 	}
+	// }
 
 	function leave_application($first_date,$second_date,$emp_id,$unit_id){
 		// dd($emp_id);
