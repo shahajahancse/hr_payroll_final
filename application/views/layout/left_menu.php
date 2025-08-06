@@ -169,7 +169,10 @@
           <?php if(in_array(38,$acl)) { ?>
             <li class="start <?= activate_method('shift_schedule') ?>"> <a href="<?=base_url('setup_con/shift_schedule')?>" class="anchor_cls">Shift Schedules</a> </li>
             <li class="start <?= activate_method('shift_management') ?>"> <a href="<?=base_url('setup_con/shift_management')?>" class="anchor_cls">Shift Manage</a> </li>
-          <?php } ?>
+            <?php } ?>
+            <?php if(in_array(14,$acl)) { ?>
+              <li class="start <?= activate_method('emp_roster_shift') ?>"> <a href="<?=base_url('setup_con/emp_shift_change')?>" class="anchor_cls">Shift Change</a> </li>
+            <?php } ?>
           <?php if(in_array(40,$acl)) { ?>
             <li class="start <?= activate_method('emp_roster_shift') ?>"> <a href="<?=base_url('setup_con/emp_roster_shift')?>" class="anchor_cls">Roster Shift</a> </li>
           <?php } ?>

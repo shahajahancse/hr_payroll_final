@@ -434,11 +434,15 @@ class Salary_process_model extends CI_Model{
 
 					//======================= ATTN. BONUS ========================
 					$att_bouns = $this->get_attn_bonus($rows, $attendances, $salary_month, $attn_rule);
+					
 					//======================= ATTN. BONUS END ========================
 					if (empty($att_bouns)) {
 						$att_bouns = 0;
 					}
-					// dd($att_bouns);
+					$att_bouns_acc = $rows->att_bonus_acc == 1 ? $att_bouns : 0;
+					// dd($rows->att_bonus_acc);
+					$att_bouns_com = $rows->att_bonus_com == 1 ? $att_bouns : 0;
+					// dd($rows->att_bonus_acc);
 				
 					//HOLIDAY ALLOWANCE (APPLICABLE FOR OT = NO)
 					if (!empty($attendances->holiday_allo) && !empty($allowances->hw_bill)) {
@@ -475,7 +479,7 @@ class Salary_process_model extends CI_Model{
 
 					$total_allaw = $weekend_allowance + $holiday_allowance + $night_allowance;
 
-					$data["att_bonus"] 				= $att_bouns;
+					$data["att_bonus"] 				= $att_bouns_acc;
 					$data["holiday_alo_count"] 		= $holiday_alo_count;
 					$data["holiday_allowance"] 		= $holiday_allowance;
 					$data["holiday_allowance_rate"] = $holiday_allowance_rate;
@@ -488,7 +492,7 @@ class Salary_process_model extends CI_Model{
 					$data["total_allaw"] 			= $total_allaw;
 					
 					//COMPLIENCE
-					$data_com["att_bonus"] 				= $att_bouns;
+					$data_com["att_bonus"] 				= $att_bouns_com;
 					$data_com["holiday_alo_count"] 		= $holiday_alo_count;
 					$data_com["holiday_allowance"] 		= $holiday_allowance;
 					$data_com["holiday_allowance_rate"] = $holiday_allowance_rate;
@@ -643,8 +647,8 @@ class Salary_process_model extends CI_Model{
 					//***************************End of Festival bonus***********************//
 					
 					// net_pay NON COMPLIENCE and COMPLIENCE
-					$data["net_pay"]  = $gross_sal + $att_bouns + $ot_amount - $total_deduction;
-					$data_com["net_pay"] = $gross_sal_com + $att_bouns + $ot_amount_com - $total_deduction_com ;//Zuel 140420
+					$data["net_pay"]  = $gross_sal + $att_bouns_acc + $ot_amount - $total_deduction;
+					$data_com["net_pay"] = $gross_sal_com + $att_bouns_com + $ot_amount_com - $total_deduction_com ;//Zuel 140420
 
 					
 					// dd($data);
@@ -745,6 +749,8 @@ class Salary_process_model extends CI_Model{
 			pr_emp_com_info.com_gross_sal, 
 			pr_emp_com_info.ot_entitle, 
 			pr_emp_com_info.com_ot_entitle,
+			pr_emp_com_info.attn_bonus_non_complaince as att_bonus_acc,
+			pr_emp_com_info.attn_bonus_complaince as att_bonus_com,
 			pr_emp_per_info.gender
 		FROM pr_emp_com_info
 		LEFT JOIN pr_emp_per_info ON pr_emp_com_info.emp_id = pr_emp_per_info.emp_id

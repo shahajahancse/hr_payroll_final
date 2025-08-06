@@ -3260,6 +3260,64 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
 
     }
+
+
+    public function manual_entry_repot(){
+        // dd($_POST);
+        $table   = "att_".date("Y_m",strtotime($_POST['report_date']));
+        $table = "`$table`";
+        $unit_id = $this->session->userdata['data']->unit_name;
+        $id_check = ($unit_id == 1) ? '100' : (($unit_id == 2) ? '200' : '500');
+
+        $att_table_data = $this->db->select("$table.date_time, com.emp_id,per.name_en, per.name_bn,dept.dept_name,sec.sec_name_en, line.line_name_en, desig.desig_name")
+            ->from($table)
+            ->join('pr_emp_com_info as com',  "com.emp_id       = $table.proxi_id", 'left')
+            ->join('pr_emp_per_info as per',  "per.emp_id       = $table.proxi_id", 'left')
+            ->join('emp_depertment as dept',  'com.emp_dept_id  = dept.dept_id', 'left')
+            ->join('emp_section as sec',      'com.emp_sec_id   = sec.id', 'left')
+            ->join('emp_line_num as line',    'com.emp_line_id  = line.id', 'left')
+            ->join('emp_designation as desig','com.emp_desi_id = desig.id', 'left')
+            ->where("$table.device_id", 0)
+            ->where("DATE($table.date_time)", date('Y-m-d', strtotime($_POST['report_date'])))
+            ->where("$table.proxi_id LIKE", "$id_check%")
+            ->order_by("$table.proxi_id", 'ASC')
+            ->order_by("$table.date_time", 'ASC')
+            ->get()
+            ->result();
+            // dd($att_table_data);
+        $this->data['att_table_data'] = $att_table_data;
+        // $this->data['com_details'] = ;
+        $this->data['report_date'] = date('Y-m-d', strtotime($_POST['report_date']));
+        $this->data['title'] = 'Manual Entry Report';
+        $this->load->view('entry_system/manual_entry_report', $this->data);
+    }
+    public function emp_ids() {
+        $emp_ids = explode(',', $this->input->post('emp_id'));
+        $date    = date('Y-m-d', strtotime($this->input->post('report_date')));
+        $type    = $this->input->post('type');
+
+        if ($type == 1) {
+            foreach ($emp_ids as $emp_id) {
+                $emp_id = trim($emp_id); 
+                $exists = $this->db->where('emp_id', $emp_id)
+                                ->where('date', $date)
+                                ->get('emp_ids')
+                                ->row();
+                if (!$exists) {
+                    $this->db->insert('emp_ids', [
+                        'emp_id' => $emp_id,
+                        'date'   => $date
+                    ]);
+                }
+            }
+        }
+        if ($type == 2) {
+            $this->db->where_in('emp_id', $emp_ids)
+                    ->where('date', $date)
+                    ->delete('emp_ids');
+        }
+        echo $type;
+    }
 }
 
 

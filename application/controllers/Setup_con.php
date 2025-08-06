@@ -2804,4 +2804,80 @@ class Setup_con extends CI_Controller
         $this->crud_output($output);
     }
 
+
+    public function set_bonus_rules()
+    {
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+
+        if (!empty($this->data['user_data']->unit_name)) {
+	        $this->data['employees'] = $this->Common_model->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
+        // dd($this->data);
+        $this->data['title']   = 'Set Bonus Rules';
+        $this->data['subview'] = 'setup/set_attn_bonus_rule';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function set_attn_bonus_rule()
+    {
+        // dd($_POST);
+        // Insert into pr_emp_com_info table
+        $data = array(
+            'attn_bonus_complaince' => $this->input->post('attn_bonus_complaince'),
+            'attn_bonus_non_complaince' => $this->input->post('attn_bonus_non_complaince')
+        );
+        $emp_id = $this->input->post('emp_id');
+        // Check if record exists
+        $query = $this->db->where('emp_id', $emp_id)->get('pr_emp_com_info');
+        if ($query->num_rows() > 0) {
+            $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $data);
+            $this->session->set_flashdata('success', 'Attendance bonus rule updated successfully!');
+        } else {
+            $data['emp_id'] = $emp_id;
+            $this->db->insert('pr_emp_com_info', $data);
+            $this->session->set_flashdata('success', 'Attendance bonus rule added successfully!');
+        }
+         redirect(base_url('setup_con/set_bonus_rules'));
+
+    }
+
+    function emp_shift_change(){
+        $this->data['employees'] = array();
+        $this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
+
+        if (!empty($this->data['user_data']->unit_name)) {
+	        $this->data['employees'] = $this->Common_model->get_emp_by_unit($this->data['user_data']->unit_name);
+        }
+        // dd($this->data);
+        $this->data['title']   = 'Shift Change';
+        $this->data['subview'] = 'setup/shift_change';
+        $this->load->view('layout/template', $this->data);
+    }
+    function changeShift()
+    {
+        // dd($_POST);
+        $emp_id = $this->input->post('emp_id');
+        $shift_type = $this->input->post('shift_type');
+
+        // Check if record exists
+        $query = $this->db->where('emp_id', $emp_id)->get('pr_emp_com_info');
+        if ($query->num_rows() > 0) {
+            $data = array(
+                'emp_shift' => $shift_type,
+            );
+            $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $data);
+            $this->session->set_flashdata('success', 'Shift changed successfully!');
+        } else {
+            $data = array(
+                'emp_id' => $emp_id,
+                'emp_shift' => $shift_type,
+            );
+            $this->db->insert('pr_emp_com_info', $data);
+            $this->session->set_flashdata('success', 'Shift added successfully!');
+        }
+        redirect(base_url('setup_con/emp_shift_change'));
+    }
+
 }

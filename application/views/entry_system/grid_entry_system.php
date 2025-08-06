@@ -194,6 +194,41 @@
                         </div>
                     </div>
                 </div>
+                <div  class="row nav_head" style="margin-top: 13px;">
+                    <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
+                        <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 0px;">
+                                <div class="">
+                                    <div class="col-md-4" style="padding: 5px !important">
+                                        <div class="form-group" style="margin-bottom: 3px !important;">
+                                            <label class="control-label">Daily Manual Entry Report</label>
+                                            <input class="form-control input-sm" type="date" id="report_date" name="report_date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="padding: 5px !important">
+                                        <div class="input-group" style="top: 15px;">
+                                            <span class="input-group-btn" style="display: flex;">
+                                                <input class="btn btn-primary" onclick="manual_entry_repot()" type="submit" value="Manual Entry Report">
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 5px !important">
+                                        <div class="input-group" style="top: 15px;">
+                                            <span class="input-group-btn" style="display: flex;">
+                                                <input class="btn btn-success" onclick="emp_ids(1)" type="submit" value="Insert ">
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 5px !important">
+                                        <div class="input-group" style="top: 15px;">
+                                            <span class="input-group-btn" style="display: flex;">
+                                                <input class="btn btn-danger" onclick="emp_ids(2)" type="submit" value="Delete">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
             <?php } ?>
             <style>
                 .hints {
@@ -812,5 +847,104 @@
                 .map(checkbox => checkbox.value)
                 .join(",");
             return vals;
+        }
+        function manual_entry_repot() {
+            var ajaxRequest;  // The variable that makes Ajax possible!
+            
+            try {
+                // Opera 8.0+, Firefox, Safari
+                ajaxRequest = new XMLHttpRequest();
+            } catch (e) {
+                // Internet Explorer Browsers
+                try {
+                    ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    try {
+                        ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e) {
+                        // Something went wrong
+                        alert("Your browser broke!");
+                        return false;
+                    }
+                }
+            }
+            var report_date = document.getElementById('report_date').value;
+            if (report_date == '') {
+                alert("Please select Date !");
+                return;
+            }
+
+
+
+            
+            var queryString =  "report_date=" + report_date;
+            url = hostname + "entry_system_con/manual_entry_repot/";
+            // $(".").dialog("open");
+            ajaxRequest.open("POST", url, true);
+            ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            ajaxRequest.send(queryString);
+            ajaxRequest.onreadystatechange = function () {
+                if (ajaxRequest.readyState == 4) {
+
+                    var resp = ajaxRequest.responseText;
+                    // $(".clearfix").dialog("close");		
+                    service_book = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                    service_book.document.write(resp);
+                    service_book.stop();
+                }
+            }
+        }
+        function emp_ids(r) {
+            var ajaxRequest;  // The variable that makes Ajax possible!
+            
+            try {
+                // Opera 8.0+, Firefox, Safari
+                ajaxRequest = new XMLHttpRequest();
+            } catch (e) {
+                // Internet Explorer Browsers
+                try {
+                    ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    try {
+                        ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e) {
+                        // Something went wrong
+                        alert("Your browser broke!");
+                        return false;
+                    }
+                }
+            }
+            var report_date = document.getElementById('report_date').value;
+            if (report_date == '') {
+                alert("Please select Date !");
+                return;
+            }
+            var checkboxes = document.getElementsByName('emp_id[]');
+            var sql = get_checked_value(checkboxes);
+            let emp_id = sql.split(",");
+            if (emp_id == '') {
+                showMessage('error', 'Please select employee Id');
+                return false;
+            }
+            
+            var queryString =  "report_date=" + report_date+ "&emp_id=" + emp_id+ "&type=" + r;
+            url = hostname + "entry_system_con/emp_ids/";
+            // $(".").dialog("open");
+            ajaxRequest.open("POST", url, true);
+            ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            ajaxRequest.send(queryString);
+            ajaxRequest.onreadystatechange = function () {
+                if (ajaxRequest.readyState == 4) {
+                    var resp = ajaxRequest.responseText;	
+
+                    console.log(resp);
+                    
+                    if(resp == 1){
+                        showMessage("success","Data Inserted Successfully");
+                    }else{
+                        showMessage("warning","Data Deleted Successfully");
+                    }
+                }
+            }
         }
     </script>

@@ -14,6 +14,7 @@ class Grid_model extends CI_Model{
 
 	// ==================  compliance salary report generate  ======================
 	function salary_sheet_com($salary_month, $status = null, $emp_id = null, $unit_id = null, $stop_salary=null){
+		
 		$this->db->select('
 			pr_emp_per_info.name_en,
 			pr_emp_per_info.name_bn,
@@ -41,7 +42,7 @@ class Grid_model extends CI_Model{
 		$this->db->join('emp_section',     'pay_salary_sheet_com.sec_id    = emp_section.id', 'left');
 		$this->db->join('emp_line_num',    'pay_salary_sheet_com.line_id   = emp_line_num.id', 'left');
 		$this->db->join('pr_grade',        'pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id', 'left');
-
+		$this->db->where('pay_salary_sheet_com.net_pay 	  >',0);
 		// Filtering conditions
 		if (!empty($emp_id)) {
 			$this->db->where_in('pay_salary_sheet_com.emp_id', $emp_id);
@@ -49,7 +50,7 @@ class Grid_model extends CI_Model{
 		$this->db->where('pay_salary_sheet_com.salary_month', $salary_month);
 		$this->db->where('pay_salary_sheet_com.stop_salary', $stop_salary);
 		$this->db->where('pay_salary_sheet_com.unit_id', $unit_id);
-		if ($status === '') {
+		if ($status == '') {
 			$this->db->where_in('pay_salary_sheet_com.emp_status', [1, 2, 3]);
 		} else {
 			$this->db->where('pay_salary_sheet_com.emp_status', $status);
@@ -260,7 +261,7 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		if($status == ''){
 		 $this->db->where_in('pay_salary_sheet.emp_status',[1,2,3]);
 		}else{
-		 $this->db->where('pay_salary_sheet.emp_status',$status);
+		 	$this->db->where('pay_salary_sheet.emp_status',$status);
 		}	
 		$this->db->where("pay_salary_sheet.salary_month  = '$salary_month'");
 		// if ($type != null) {
@@ -11495,7 +11496,7 @@ function grid_emp_job_application($grid_emp_id){
 		return $desig_bangla;
 	}
 
-	function grid_earn_leave_report($grid_emp_id){
+	function grid_earn_leave_report($grid_emp_id,$y,$m){
 		// dd($grid_emp_id);
 		$data = array();
 		$this->db->select('pr_emp_com_info.emp_id,
@@ -11522,10 +11523,17 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->join('pr_emp_shift', 'pr_emp_shift.id = pr_emp_com_info.emp_shift', 'left');
 		$this->db->join('pr_earn_leave', 'pr_emp_com_info.emp_id = pr_earn_leave.emp_id', 'left');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+		$this->db->where('year(pr_earn_leave.earn_month)', date('Y'));
+		$this->db->where('month(pr_earn_leave.earn_month)', date('m'));
 		$this->db->group_by('pr_emp_com_info.emp_id');
 		$this->db->order_by('pr_emp_com_info.emp_id', 'ASC');
 
 		$query = $this->db->get();
+
+		if($query->result() == null){
+			dd($this->db->last_query());
+			return "Requested list is empty";	
+		}
 
 
 		// dd($query->result());
@@ -12467,8 +12475,6 @@ function service_book_info($grid_emp_id){
 		return $query;
 	}
 }
-
-
 
 
 

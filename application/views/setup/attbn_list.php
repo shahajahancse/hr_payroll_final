@@ -33,6 +33,7 @@
             <div class="navbar-header col-md-5">
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/attn_bonus_add') ?>">Add Attendence Bonus</a>
+                    <a class="btn btn-info" href="<?php echo base_url('setup_con/set_bonus_rules') ?>"> Set Rules</a>
                     <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
                 </div>
             </div>

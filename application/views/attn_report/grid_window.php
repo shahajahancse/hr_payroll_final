@@ -113,7 +113,7 @@
 					</div>
 				</div>
 				<!-- status -->
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<?php $categorys = $this->db->get('emp_category_status')->result(); ?>
 					<div class="form-group">
 						<label class="control-label">Status </label>
@@ -123,6 +123,16 @@
 							<option value="<?= $row->id ?>" <?= ($row->id==1)?'selected':'' ?>><?= $row->status_type; ?>
 							</option>
 							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="control-label">Emp Type </label>
+						<select name="emp_type" id="emp_type" class="form-control input-sm" onChange="grid_emp_list()">
+							<option value="">Select Type</option>
+							<option value="1">Worker</option>
+							<option value="2">Staff</option>
 						</select>
 					</div>
 				</div>
@@ -467,13 +477,16 @@
 			var line = document.getElementById('line').value;
 			var desig = document.getElementById('desig').value;
 			var status = document.getElementById('status').value;
+			var emp_type = document.getElementById('emp_type').value;
 
 			url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
 			$.ajax({
 				url: url,
 				type: 'GET',
 				data: {
-					"status": status
+					"status": status,
+					"emp_type": emp_type,
+
 				},
 				contentType: "application/json",
 				dataType: "json",

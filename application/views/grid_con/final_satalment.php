@@ -400,7 +400,7 @@
                     <td class="unicode-to-bijoy"><?php echo $net_pay = round(($ptt + $eot_amt + $at + $bp + $ep + $earnp + $seb + $and),2); ?></td>
                 </tr>
 
-
+                <?php $stamp = $net_pay > 1000 ? 10 : 0 ?>
 
 
                 <tr>
@@ -415,8 +415,8 @@
                 <tr>
                     <td class="unicode-to-bijoy">ষ্ট্যাম্প বাবদ কর্তন</td>
                     <td class="unicode-to-bijoy">০</td>
-                    <td class="unicode-to-bijoy">10</td>
-                    <td class="unicode-to-bijoy">10</td>
+                    <td class="unicode-to-bijoy"><?= $stamp ?></td>
+                    <td class="unicode-to-bijoy"><?= $stamp ?></td>
                 </tr>
                 <tr>
                     <td class="unicode-to-bijoy">অনুপস্থিত বাবদ কর্তন (মূল মজুরি থেকে)</td>
@@ -430,11 +430,11 @@
                 </tr>
                 <tr>
                     <td colspan="3" class="unicode-to-bijoy">মোট কর্তন</td>
-                    <td class="unicode-to-bijoy"><?php echo $gg + $total_value->advanced_salary + $dd + 10 ?></td>
+                    <td class="unicode-to-bijoy"><?php echo $gg + $total_value->advanced_salary + $dd + $stamp ?></td>
                 </tr>
                 <tr>
                     <td colspan="3" class="unicode-to-bijoy"><b>নিট প্রাপ্য / প্রদেয় টাকা</b></td>
-                    <td class="unicode-to-bijoy"><?php $total_taka =  $net_pay - 10 - $total_value->total_deduct; echo ceil($total_taka) ?></td>
+                    <td class="unicode-to-bijoy"><?php $total_taka =  $net_pay - $stamp - $total_value->total_deduct; echo ceil($total_taka) ?></td>
                 </tr>
 
             </table>

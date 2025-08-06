@@ -197,8 +197,8 @@ class Attn_process_model extends CI_Model{
 				$tiffin_break_time2 = date("Y-m-d H:i:s",strtotime("+ $tiffin_minute2 minutes",strtotime($tiffin_break2)));
 
 				//WEEKEND CHECK FOR SPECIFIC ID: RETURN TRUE OR FALSE
-				$weekend 	= $this->check_weekend($emp_id, $process_date);
-				$holiday = $this->check_holiday($emp_id, $process_date);
+				$weekend 	 = $this->check_weekend($emp_id, $process_date);
+				$holiday     = $this->check_holiday($emp_id, $process_date);
 				$night_rules = $this->get_night_allowance_rules($process_date, $unit, $emp_desi_id);
 
 				//============= Check employee attendance status =============
@@ -345,10 +345,10 @@ class Attn_process_model extends CI_Model{
 
 				// week and holiday allownance check
 				if($attn_status == "W" && $in_time != ''){
-				 	$weekly_allo = 1;
+					$weekly_allo = 1;
 				}
 				if($attn_status == "H" && $in_time != ''){
-				 	$holiday_allo = 1;
+					$holiday_allo = 1;
 				}
 				// week and holiday end
 				// dd($schedule[0]["sh_type"]);
@@ -379,31 +379,58 @@ class Attn_process_model extends CI_Model{
 				// dd($iffter_allow);
 				//  dd(date('H:i:s', strtotime('06:59:59')).'=='.date('H:i:s', strtotime($out_time)));
 
-				$data = array(
-					'in_time' 			=> $in_time,
-					'out_time' 			=> $out_time,
-					'ot' 				=> $ot_entitle == 1 ? 0:  $ot_hour,
-					'eot' 				=> $ot_entitle == 1 ? 0: $eot_hour,
-					'com_ot' 			=> $com_ot_entitle == 1 ? 0:  $ot_hour,
-					'com_eot' 			=> $com_ot_entitle == 1 ? 0: $eot_hour,
-					'false_ot_4' 		=> null,
-					'false_ot_12' 		=> null,
-					'false_ot_all' 		=> null,
-					'ot_eot_4pm' 		=> $com_ot_entitle == 1 ? 0 : $ot_eot_4pm,
-					'ot_eot_12am' 		=> $com_ot_entitle == 1 ? 0 : $ot_eot_12am,
-					'with_out_friday_ot'=> ($ot_hour == 0 && $eot_hour !=0) ?$eot_hour: 0 ,
-					'deduction_hour' 	=> $deduction_hour,
-					'late_status' 		=> ($attn_status == 'W' || $late_status == 'H') ? 0 : $late_status,
-					'late_time' 		=> $late_time,
-					'present_status' 	=> $attn_status,
-					'tiffin_allo' 		=> 0,
-					'ifter_allo' 		=> $iffter_allow,
-					'night_allo' 		=> $night_allo,
-					'holiday_allo'	    => $holiday_allo,
-					'weekly_allo'		=> $weekly_allo,
-					'unit_id'			=> $unit,
-				);
-
+				$check_emp_id = $this->db->where('emp_id', $emp_id)->where('date', $process_date)->get('emp_ids')->row();
+				if(!empty($check_emp_id)){
+						$data = array(
+						'in_time' 			=> '00:00:00',
+						'out_time' 			=> '00:00:00',
+						'ot' 				=> 0,
+						'eot' 				=> 0,
+						'com_ot' 			=> 0,
+						'com_eot' 			=> 0,
+						'false_ot_4' 		=> 0,
+						'false_ot_12' 		=> 0,
+						'false_ot_all' 		=> 0,
+						'ot_eot_4pm' 		=> 0,
+						'ot_eot_12am' 		=> 0,
+						'with_out_friday_ot'=> 0,
+						'deduction_hour' 	=> 0,
+						'late_status' 		=> 0,
+						'late_time' 		=> 0,
+						'present_status' 	=> 'A',
+						'tiffin_allo' 		=> 0,
+						'ifter_allo' 		=> 0,
+						'night_allo' 		=> 0,
+						'holiday_allo'	    => 0,
+						'weekly_allo'		=> 0,
+						'unit_id'			=> $unit,
+					);
+				}else{
+					$data = array(
+						'in_time' 			=> $in_time,
+						'out_time' 			=> $out_time,
+						'ot' 				=> $ot_entitle == 1 ? 0:  $ot_hour,
+						'eot' 				=> $ot_entitle == 1 ? 0: $eot_hour,
+						'com_ot' 			=> $com_ot_entitle == 1 ? 0:  $ot_hour,
+						'com_eot' 			=> $com_ot_entitle == 1 ? 0: $eot_hour,
+						'false_ot_4' 		=> null,
+						'false_ot_12' 		=> null,
+						'false_ot_all' 		=> null,
+						'ot_eot_4pm' 		=> $com_ot_entitle == 1 ? 0 : $ot_eot_4pm,
+						'ot_eot_12am' 		=> $com_ot_entitle == 1 ? 0 : $ot_eot_12am,
+						'with_out_friday_ot'=> ($ot_hour == 0 && $eot_hour !=0) ?$eot_hour: 0 ,
+						'deduction_hour' 	=> $deduction_hour,
+						'late_status' 		=> ($attn_status == 'W' || $late_status == 'H') ? 0 : $late_status,
+						'late_time' 		=> $late_time,
+						'present_status' 	=> $attn_status,
+						'tiffin_allo' 		=> 0,
+						'ifter_allo' 		=> $iffter_allow,
+						'night_allo' 		=> $night_allo,
+						'holiday_allo'	    => $holiday_allo,
+						'weekly_allo'		=> $weekly_allo,
+						'unit_id'			=> $unit,
+					);
+				}	
 				// dd($data);
 				
 				$this->db->where('shift_log_date', $process_date);
@@ -1535,7 +1562,7 @@ class Attn_process_model extends CI_Model{
 
 	function present_check($date, $emp_id)
 	{
-		//echo $date;
+		// dd( $date);
 		$year  = trim(substr($date,0,4));
 		$month = trim(substr($date,5,2));
 		$day   = trim(substr($date,8,2));

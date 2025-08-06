@@ -8,6 +8,7 @@ class Grid_con extends CI_Controller {
 		ini_set('max_execution_time', 0);
 	    set_time_limit(0);
 
+
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
@@ -2711,6 +2712,7 @@ class Grid_con extends CI_Controller {
 
 	function grid_earn_leave_report(){
 		$grid_data = $this->input->post('spl');
+		$date = $this->input->post('date');
 		$grid_emp_id = explode(',', trim( (string) $grid_data ) );
 		$data['values'] = $this->Grid_model->grid_earn_leave_report($grid_emp_id);
 		// dd($data);
@@ -2805,6 +2807,7 @@ class Grid_con extends CI_Controller {
 			pr_emp_per_info.name_en, 
 			emp_designation.desig_name,
 			emp_depertment.dept_name, 
+
 			emp_section.sec_name_en,
 			emp_line_num.line_name_en, 
 			pr_emp_com_info.emp_join_date, 
