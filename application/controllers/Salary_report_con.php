@@ -56,7 +56,7 @@ class Salary_report_con extends CI_Controller {
 		$this->load->model('Common_model');
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
 		$data["values"] = $this->Grid_model->salary_sheet_com($salary_month,$status, $grid_emp_id, $unit_id, $stop_salary);
-		// dd($status);
+		// dd($data['values']);
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
 		$data["grid_status"]  = $status;
@@ -806,6 +806,7 @@ class Salary_report_con extends CI_Controller {
 		$year_month = date("Y-m", strtotime($grid_firstdate));
 		$query['unit_id'] = $grid_unit;
 		$query['values'] = $this->Grid_model->grid_pay_slip($year_month, $grid_emp_id);
+		// dd($query['values']);
 		if(is_string($query['values']))
 		{
 			echo $query['values'];

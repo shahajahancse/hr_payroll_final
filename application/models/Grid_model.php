@@ -273,9 +273,14 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->group_by("pay_salary_sheet.emp_id","ASC");
 		// $this->db->order_by("emp_section.sec_name_bn");
 		$query = $this->db->get();
-		// $data = $query->result();
+		$data = $query->result();
 		// dd($query->result());
-		return $query->result();
+		if (empty($data)) {
+			echo "Requested List Is Empty";
+			exit;
+		}else{
+			return $data;
+		}
 	}
 
 	function com_salary_sheet($salary_month = null, $status = null,$type=null, $emp_id = null, $unit_id = null ){

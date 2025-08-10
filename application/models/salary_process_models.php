@@ -298,6 +298,9 @@ class Salary_process_model extends CI_Model{
 				$total_holiday 		= $weekend + $holiday;
 				//echo $m_leave.'+'.$attend .'+'. $total_holiday .'+'. $total_pay_leave;
 				$pay_days = $attend + $total_holiday + $total_pay_leave-$m_leave;
+
+
+				dd($attend);
 				
 								
 				$data["num_of_workday"] 		= $num_working_days;

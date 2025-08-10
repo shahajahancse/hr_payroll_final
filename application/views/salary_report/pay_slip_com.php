@@ -337,7 +337,7 @@
                                         <td>:</td>
                                         <td width="78" style="padding-right: 9px;" align="right">
                                             <font style="font-family: SutonnyMJ; font-size:12px;">
-                                                <?php  echo $rows->net_pay+$total_ot_amount;    ?>
+                                                <?php  echo $rows->net_pay;    ?>
                                             </font>
                                         </td>
                                     </tr>
@@ -643,7 +643,7 @@
                                         <td>:</td>
                                         <td width="78" style="padding-right: 9px;" align="right">
                                             <font style="font-family: SutonnyMJ; font-size:12px;">
-                                                <?php  echo $rows->net_pay+$total_ot_amount;  ?>
+                                                <?php  echo $rows->net_pay;  ?>
                                             </font>
                                         </td>
                                     </tr>
