@@ -75,7 +75,7 @@ class Salary_report_con extends CI_Controller {
 		$sql 		  = $this->input->post('sql');
 		$grid_emp_id  = explode(',', trim($sql));
 		$data["values"] = $this->Grid_model->summary_report_com($salary_month,$status,$unit_id, $stop_salary);
-		dd($data["values"]);
+		// dd($data["values"]);
 		
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
@@ -219,7 +219,7 @@ class Salary_report_con extends CI_Controller {
 		$grid_emp_id  = explode(',', trim($sql));
 		// dd($unit_id);
 		$data["values"] = $this->Grid_model->actual_summary_report($salary_month,$status,$unit_id, $stop_salary);
-		dd($data["values"]);
+		// dd($data["values"]);
 		$data["salary_month"] = $salary_month;
 		$data["grid_emp_id"]  = $grid_emp_id;
 		$data["grid_status"]  = $status;

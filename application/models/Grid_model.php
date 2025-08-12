@@ -133,8 +133,6 @@ class Grid_model extends CI_Model{
 		$this->db->where("ss.emp_id  = com.emp_id");
 		$this->db->where("ss.sec_id  = sec.id");
 
-		$this->db->where("ss.line_id", 212);
-		$this->db->where_in('ss.emp_id', 5000474);
 		$this->db->where("ss.salary_month", $salary_month);
 		$this->db->where("ss.unit_id", $unit_id);
 		$this->db->where("ss.net_pay >",0);
@@ -581,8 +579,6 @@ class Grid_model extends CI_Model{
 		$this->db->where("ss.line_id = num.id");
 		$this->db->where("ss.emp_id  = com.emp_id");
 		$this->db->where("ss.sec_id  = sec.id");
-
-		$this->db->where("ss.line_id", 212);
 
 		$this->db->where("ss.salary_month", $salary_month);
 		$this->db->where("ss.unit_id", $unit_id);

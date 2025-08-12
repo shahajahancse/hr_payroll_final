@@ -518,6 +518,8 @@ class Salary_process_model extends CI_Model{
 						$ot_amount = 0;
 					}
 
+					// dd($ot_rate .'======'. $attendances->ot * $ot_rate);
+
 					//EXTRA OT CALCULATION
     				if (!empty($ot_hour)) {
 						$collect_eot_hour = $attendances->eot;
@@ -587,6 +589,8 @@ class Salary_process_model extends CI_Model{
 						$ot_hour = 0;
 						$ot_amount_com = 0;
 					}
+					// dd($ot_ratec .'======'. $attendances->com_ot * $ot_ratec);
+
 
 					// dd($ot_amount_com);
 
@@ -620,7 +624,7 @@ class Salary_process_model extends CI_Model{
 					if($rows->com_ot_entitle != 1){
 						$data_com["ot_hour"] 			= $ot_hour;
 						$data_com["ot_amount"] 			= $ot_amount_com;
-						$data_com["ot_rate"] 			= $ot_ratec,
+						$data_com["ot_rate"] 			= $ot_ratec;
 						$data_com["collect_eot_hour"] 	= $collect_eot_hour;
 						$data_com["modify_eot_hour"] 	= $modify_eot_hour;
 						$data_com["eot_hour"] 			= $eot_hour;
@@ -659,7 +663,7 @@ class Salary_process_model extends CI_Model{
 					$data_com["net_pay"] = $gross_sal_com + $att_bouns_com + $ot_amount_com - $total_deduction_com ;//Zuel 140420
 
 					
-					// dd($ot_amount);
+					// dd($data_com);
 
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);

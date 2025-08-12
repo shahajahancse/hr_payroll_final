@@ -394,7 +394,7 @@ for ( $counter = 1; $counter <= $page; $counter ++){?>
 		print_r ($value[$k]->ot_rate);
 		echo "</td>";
 		
-		$ot_amount 					= ceil($value[$k]->ot_rate*$t_ot_hour);	
+		$ot_amount 					= $value[$k]->ot_amount;	
 		$ot_eot_amount 				= $ot_amount;
 		$total_ot_eot_amount 		= $total_ot_eot_amount + $ot_eot_amount;
 		$grand_total_ot_eot_amount 	= $grand_total_ot_eot_amount + $ot_eot_amount;
