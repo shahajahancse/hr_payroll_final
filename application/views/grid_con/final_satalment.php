@@ -124,6 +124,7 @@
             padding: 0;
             box-sizing: border-box;
             /* font-family: SutonnyMJ; */
+            line-height:25px;
         }
         .table-bordered td, .table-bordered th {
             border: 1px solid #000000;
@@ -142,7 +143,7 @@
             }
         }
         /* p{
-            font-size:19px;
+            font-size:23px;
         } */
     </style>
     <style>
@@ -242,13 +243,13 @@
     
         <!-- emp basic info start here -->
         <div class='d-flex' style="margin-top: 10px">
-            <h4 class="text-center unicode-to-bijoy" style="border-bottom: 2px solid black;width: 300px;margin: 0 auto;">PyovšÍ  (হিসাব) নিস্পত্তি প্রতিবেদন </h4> <span style="position:absolute;margin-left:800px">তারিখঃ</span>
+            <h3 class="text-center unicode-to-bijoy" style="border-bottom: 2px solid black;width: 300px;margin: 0 auto;">PyovšÍ  (হিসাব) নিস্পত্তি প্রতিবেদন </h3> <span style="position:absolute;margin-left:800px">তারিখঃ</span>
         </div>
 
         <?php   foreach($values as $row){ ?>
             <br>
             <div class="ml-3">
-                <table class="table table-bordered" style="font-size:19px">
+                <table class="table table-bordered" style="font-size:23px">
                     <tr>
                         <td class="unicode-to-bijoy">নাম</td>
                         <td class="unicode-to-bijoy"><?php echo $row->name_bn?></td>
@@ -263,24 +264,24 @@
                     </tr>
                 
                     <tr>
-                        <td class="unicode-to-bijoy">সেকশন</td>
-                        <td class="unicode-to-bijoy" style='font-family:SutonnyMJ'><?php echo $row->sec_name_bn?></td>
+                        <td class="unicode-to-bijoy">সেকশন এন্ড লাইন</td>
+                        <td class="unicode-to-bijoy" style='font-family:SutonnyMJ'><?php echo $row->sec_name_bn.', '.$row->line_name_bn?></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td class="unicode-to-bijoy">লাইন</td>
-                        <td class="unicode-to-bijoy" style='font-family:SutonnyMJ'><?php echo $row->line_name_bn?></td>
-                    </tr>
+                        <td class="unicode-to-bijoy" style='font-family:SutonnyMJ'>< ?php echo $row->line_name_bn?></td>
+                    </tr> -->
                     <tr>
                         <td class="unicode-to-bijoy">গ্রেড</td>
                         <td class="unicode-to-bijoy" style=" font-size:20px;font-family:SutonnyMJ"> <?php echo $row->gr_str_basic?> </td>
                     </tr>
                     <tr>
                         <td class="unicode-to-bijoy">যোগদানের তারিখ</td>
-                        <td class="unicode-to-bijoy" style="font-size:19px;font-family:SutonnyMJ"> <?php echo $join_date = date('d-m-Y', strtotime($row->emp_join_date))?> Bs</td>
+                        <td class="unicode-to-bijoy" style="font-size:23px;font-family:SutonnyMJ"> <?php echo $join_date = date('d-m-Y', strtotime($row->emp_join_date))?> Bs</td>
                     </tr>
                     <tr>    
                         <td class="unicode-to-bijoy">শেষ কর্মদিবস</td>
-                        <td class="unicode-to-bijoy" style=" font-size:19px;font-family:SutonnyMJ"> 
+                        <td class="unicode-to-bijoy" style=" font-size:23px;font-family:SutonnyMJ"> 
                         <?php echo $last_day = $row->resign_date==null ? '':date('d-m-Y', strtotime($row->resign_date))?> Bs</td>
                     </tr>
                     <tr>
@@ -291,7 +292,7 @@
                             $date2 = new DateTime($last_day);
                             $interval = $date1->diff($date2);
                             $interval->d += 1;
-                            echo $interval->format('<span style="font-size:19px;font-family:SutonnyMJ"> %y eQi %m gvm %d w`b</span>');
+                            echo $interval->format('<span style="font-size:23px;font-family:SutonnyMJ"> %y eQi %m gvm %d w`b</span>');
                         ?>
                         </td>
                     </tr>
@@ -312,15 +313,15 @@
                     ?>
                     <tr>
                         <td class="unicode-to-bijoy">মোট বেতন</td>
-                        <td style=" font-size:19px;font-family:SutonnyMJ" class="unicode-to-bijoy"> <?php echo $gross_sal?> UvKv</td>
+                        <td style=" font-size:23px;font-family:SutonnyMJ" class="unicode-to-bijoy"> <?php echo $gross_sal?> UvKv</td>
                     </tr>
                     <tr>
                         <td class='unicode-to-bijoy'>মূল বেতন</td>
-                        <td style="font-size:19px;font-family:SutonnyMJ" class="unicode-to-bijoy"> <?=$basic_sal?> UvKv</td>
+                        <td style="font-size:23px;font-family:SutonnyMJ" class="unicode-to-bijoy"> <?=$basic_sal?> UvKv</td>
                     </tr>
                     <tr>
                         <td class='unicode-to-bijoy'>প্রতি ঘন্টার ওভার টাইম হার</td>
-                        <td class="unicode-to-bijoy" style="font-size:19px;font-family:SutonnyMJ"> <?= $ot_rate ?> UvKv </td>
+                        <td class="unicode-to-bijoy" style="font-size:23px;font-family:SutonnyMJ"> <?= $ot_rate ?> UvKv </td>
                     </tr>
                 </table>
             </div>
@@ -328,7 +329,7 @@
 
             <!-- emp balance claculation here -->
             <h4 class="text-center unicode-to-bijoy" ><b>প্রাপ্য বিষয়াদির হিসাব</b></h4>
-            <table class="table table-bordered ml-3 new_table" style="font-size:19px">
+            <table class="table table-bordered ml-3 new_table" style="font-size:23px">
                 <tr>
                     <th class='unicode-to-bijoy'>বিষয় </th>
                     <th class='unicode-to-bijoy'>দিন/ ঘন্টা </th>
@@ -438,7 +439,7 @@
                 </tr>
 
             </table>
-            <table style="margin-left: 15px;font-size:19px">
+            <table style="margin-left: 15px;font-size:23px">
                 <tr>
                     <td class="unicode-to-bijoy">মোট প্রাপ্যঃ</td>
                     <td class="unicode-to-bijoy"><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা</td>
@@ -446,23 +447,22 @@
             </table>
  
 
-            <div style="margin-top: 20px;font-size:19px" class="mt-5 ml-3 d-flex justify-content-between">
+            <div style="margin-top: 20px;font-size:23px" class="mt-5 ml-3 d-flex justify-content-between">
                 <p style='border-top:1px solid black;' class="unicode-to-bijoy">প্রস্তুতকারী</p>
                 <p style='border-top:1px solid black;' class="unicode-to-bijoy">নিরিক্ষক</p>
                 <p style='border-top:1px solid black;' class="unicode-to-bijoy">মানব সম্পদ বিভাগ</p>
                 <p style='border-top:1px solid black;' class="unicode-to-bijoy">অনুমোদনকারী</p>
             </div>
-            <h6 class="text-center unicode-to-bijoy" style="border:2px solid black;width: fit-content;margin: 0 auto;padding: 4px;font-size:19px">প্রাপ্তি স্বীকার</h6>
+            <h6 class="text-center unicode-to-bijoy" style="border:2px solid black;width: fit-content;margin: 0 auto;padding: 4px;font-size:23px">প্রাপ্তি স্বীকার</h6>
 
-            <p style="font-size:19px" class="text-justify ml-3 unicode-to-bijoy">আমি  <?php echo $row->name_bn?>, পদবীঃ <?php echo $row->desig_bangla?>, র্কাড নম্বরঃ <?php echo $row->emp_id?>, সেকশন এন্ড লাইনঃ <?php $row->sec_name_bn.' ,'.$row->line_name_bn?>, চুড়ান্ত  নিষ্পত্তকিরন বাবদঃ <?php echo ceil($total_taka); ?> টাকা এর প্রাপ্তি স্বীকার করছি এবং এই প্রতিষ্ঠানে আমার আর কোন আর্থিক পাওনা কিংবা দাবী-দাওয়া নাই। </p>
-            <p class="text-right unicode-to-bijoy" style="font-size:19px;margin-right:200px"> স্বাক্ষরঃ</p>
+            <p style="font-size:23px;margin-top:10px" class="text-justify ml-3 unicode-to-bijoy">আমি  <?php echo $row->name_bn?>, পদবীঃ <?php echo $row->desig_bangla?>, র্কাড নম্বরঃ <?php echo $row->emp_id?>, সেকশন এন্ড লাইনঃ <?php $row->sec_name_bn.' ,'.$row->line_name_bn?>, চুড়ান্ত  নিষ্পত্তকিরন বাবদঃ <?php echo ceil($total_taka); ?> টাকা এর প্রাপ্তি স্বীকার করছি এবং এই প্রতিষ্ঠানে আমার আর কোন আর্থিক পাওনা কিংবা দাবী-দাওয়া নাই। </p>
+            <p class="text-right unicode-to-bijoy" style="font-size:23px;margin-right:200px;margin-top:80px"> স্বাক্ষরঃ</p>
       
     </div>
-    <br>
-    <br>
+    <div style="page-break-after: always;"></div>
 
 
-    <div class="container" style="border:1px solid black">
+    <div class="container w-75" style="border:1px solid black">
         <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
@@ -495,51 +495,51 @@
         <div class="d-flex justify-content-between">
             <p>Voucher No:</p>
             <p class="voucher-title">Payment Voucher</p>
-            <p style="margin-left: 20px;">Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            <p style="margin-left: 18px;">Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
         </div>
 
         <table  class='table table-bordered' >
             <tr>
-                <th>Name</th>
-                <td class='unicode-to-bijoy'><?php echo $row->name_bn?></td>
-                <th class='text-center'>Description</th>
-                <th class='text-center'>Net Amount </th>
+                <th style="font-size:18px" >Name</th>
+                <td style="font-size: 23px;" class='unicode-to-bijoy'><?php echo $row->name_bn?></td>
+                <th style="font-size:18px" class='text-center'>Description</th>
+                <th style="font-size:18px" class='text-center'>Net Amount </th>
             </tr>
               <tr>
-                <th>Card No</th>
-                <td><?php echo $row->emp_id?></td>
-                <td class='unicode-to-bijoy' rowspan='3' style='text-align:center;vertical-align:middle'><?php $month = $row->resign_date==null ? '': date('M', strtotime($row->resign_date));
+                <th style="font-size:18px">Card No</th>
+                <td style="font-size: 23px;" class="unicode-to-bijoy"><?php echo $row->emp_id?></td>
+                <td class='unicode-to-bijoy' rowspan='3' style='text-align:center;vertical-align:middle;font-size: 23px;'><?php $month = $row->resign_date==null ? '': date('M', strtotime($row->resign_date));
                     echo englishToBengaliMonth($month)." <span style='font-family:SutonnyMJ;font-size:21px'>".date('Y', strtotime($row->resign_date))."</span>";
                     ?> মাসের চূড়ান্ত <br/> নিষ্পত্তি করণ বাবদ পাওনাদি</td>
-                <td rowspan='3' class='unicode-to-bijoy' style='vertical-align: middle;text-align: center;'><?php echo ceil($total_taka); ?></td>
+                <td rowspan='3' class='unicode-to-bijoy' style='vertical-align: middle;text-align: center;font-size: 23px;'><?php echo ceil($total_taka); ?></td>
             </tr>
             <tr>
-                <th>Designation</th>
-                <td class='unicode-to-bijoy' style='font-family:SutonnyMJ'><?php echo $row->desig_bangla?></td>
+                <th style="font-size:18px">Designation</th>
+                <td class='unicode-to-bijoy' style='font-family:SutonnyMJ;font-size: 23px;'><?php echo $row->desig_bangla?></td>
                 
             </tr>
             <tr>
-                <th>Section & Line</th>
-                <td class='unicode-to-bijoy' style='font-family:SutonnyMJ'><?php echo $row->sec_name_bn.', '.$row->line_name_bn?></td>
+                <th style="font-size:18px">Section & Line</th>
+                <td style="font-size: 23px;" class='unicode-to-bijoy' style='font-family:SutonnyMJ'><?php echo $row->sec_name_bn.', '.$row->line_name_bn?></td>
             </tr>
             <tr>
-                <th colspan='3' class='text-right'>Payable Amount</th>
-                <td class='text-center unicode-to-bijoy'><?php echo ceil($total_taka); ?></td>
+                <th style="font-size:18px" colspan='3' class='text-right'>Payable Amount</th>
+                <td style="font-size: 23px;" class='text-center unicode-to-bijoy'><?php echo ceil($total_taka); ?></td>
             </tr>
             <tr>
-                <th>In Word</th>
-                <td colspan='3' class='unicode-to-bijoy'><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা।</td>
+                <th style="font-size:18px">In Word</th>
+                <td colspan='3' style="font-size: 23px;"  class='unicode-to-bijoy'><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা।</td>
             </tr>
         </table>
         <table class='table table-bordered' style='width: 9% !important;margin-top: -17px;margin-left: 600px;'>
             <tr>
-                <th>Signature</th>
+                <th style="font-size:18px">Signature</th>
             </tr>
         </table>
 
 
 
-        <div class="d-flex justify-content-between mt-5" style="margin-top: 100px !important">
+        <div class="d-flex justify-content-between mt-5" style="margin-top: 100px !important;font-size: 18px;">
             <?php if($unit_id == 1 || $unit_id == 2){ ?>
                 <p>Prepared by</p>
                 <p>Manger(HDR)</p>

@@ -527,7 +527,7 @@ class Salary_process_model extends CI_Model{
 						$eot_hour_for_sa  = $this->eot_without_holi_weekend($emp_id, $start_date, $end_date);
 						$eot_hour 		  = $collect_eot_hour + $modify_eot_hour - $deduct_hour;
 						
-						$eot_amount 		= round($eot_hour * $ot_rate);;
+						$eot_amount 		= round($eot_hour * $ot_rate);
 						$ot_eot_12am_amount = round($ot_eot_12am_hour * $ot_rate);
 						$ot_eot_4pm_amount  = round($ot_eot_4pm_hour * $ot_rate);
 						$eot_amount_for_sa  = round($eot_hour_for_sa * $ot_rate);
@@ -582,15 +582,13 @@ class Salary_process_model extends CI_Model{
 					if (!empty($attendances->com_ot) && $rows->com_ot_entitle != 1) {
 						$ot_hour = $attendances->com_ot;
 						$ot_amount_com = $attendances->com_ot * $ot_ratec;
-						// dd('ok');
 					} else {
-						// dd('ko');
 						$ot_ratec = 0;
 						$ot_hour = 0;
 						$ot_amount_com = 0;
 					}
 
-					// dd($ot_amount);
+					// dd($ot_amount_com);
 
 					//EXTRA OT CALCULATION
     				if (!empty($ot_hour)) {
@@ -601,7 +599,7 @@ class Salary_process_model extends CI_Model{
 						$eot_hour_for_sa  = $this->eot_without_holi_weekend2($emp_id, $start_date, $end_date);
 						$eot_hour 		  = $collect_eot_hour + $modify_eot_hour - $deduct_hour;
 
-						$eot_amount 		= round($eot_hour * $ot_ratec);;
+						$eot_amount 		= round($eot_hour * $ot_ratec);
 						$ot_eot_12am_amount = round($ot_eot_12am_hour * $ot_ratec);
 						$ot_eot_4pm_amount  = round($ot_eot_4pm_hour * $ot_ratec);
 						$eot_amount_for_sa  = round($eot_hour_for_sa * $ot_ratec);
@@ -620,13 +618,13 @@ class Salary_process_model extends CI_Model{
 					$data_com["salary_month"] 		= $salary_month;
 					// dd($ot_ratec);
 					if($rows->com_ot_entitle != 1){
-						$data_com["ot_hour"] 			= $attendances->com_ot;
-						$data_com["ot_amount"] 			= ceil($ssc['basic_sal']/104)*$attendances->com_ot;
-						$data_com["ot_rate"] 			= round($ssc['basic_sal']/104,2);
+						$data_com["ot_hour"] 			= $ot_hour;
+						$data_com["ot_amount"] 			= $ot_amount_com;
+						$data_com["ot_rate"] 			= $ot_ratec,
 						$data_com["collect_eot_hour"] 	= $collect_eot_hour;
 						$data_com["modify_eot_hour"] 	= $modify_eot_hour;
-						$data_com["eot_hour"] 			= $attendances->com_eot;
-						$data_com["eot_amount"] 		= floor($ssc['basic_sal']/104)*$attendances->com_eot;
+						$data_com["eot_hour"] 			= $eot_hour;
+						$data_com["eot_amount"] 		= $eot_amount;
 						$data_com["ot_eot_12am_hour"] 	= $ot_eot_12am_hour;
 						$data_com["ot_eot_12am_amt"] 	= $ot_eot_12am_amount;
 

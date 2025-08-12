@@ -50,96 +50,110 @@ class Grid_model extends CI_Model{
 		$this->db->where('pay_salary_sheet_com.salary_month', $salary_month);
 		$this->db->where('pay_salary_sheet_com.stop_salary', $stop_salary);
 		$this->db->where('pay_salary_sheet_com.unit_id', $unit_id);
+
 		if ($status == '') {
 			$this->db->where_in('pay_salary_sheet_com.emp_status', [1, 2, 3]);
 		} else {
 			$this->db->where('pay_salary_sheet_com.emp_status', $status);
 		}
+
 		$this->db->order_by('pay_salary_sheet_com.emp_id', 'ASC');
 		$query = $this->db->get()->result();
 		// dd($this->db->last_query()); 
 		return $query;
 	}
 
-	function summary_report_com($salary_month = null, $status = null, $grid_emp_id = null, $unit_id = null, $type=null)
+	function summary_report_com($salary_month = null,$status=null, $unit_id = null, $type=null, $ot_entitle = 1)
 	{
-		// dd($grid_emp_id);
-		$this->db->select("
-				num.id as line_id, num.line_name_en, num.line_name_bn,emp_section.sec_name_en,
+ 		$this->db->distinct();
+ 		$this->db->select("
+ 				num.id as line_id, num.line_name_en, num.line_name_bn, sec.sec_name_en,
+ 				IFNULL(SUM(CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END), 0) AS emp_cash,
+ 				IFNULL(SUM(CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END), 0) AS emp_bank,
+ 				IFNULL(SUM(CASE WHEN com.salary_draw = 1 THEN ss.gross_sal ELSE 0 END), 0) AS cash_sum,
+ 				IFNULL(SUM(CASE WHEN com.salary_draw = 2 THEN ss.gross_sal ELSE 0 END), 0) AS bank_sum,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.basic_sal ELSE 0 END) AS cash_sum_basic_sal,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.basic_sal ELSE 0 END) AS bank_sum_basic_sal,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.house_r ELSE 0 END) AS cash_sum_house_r,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.house_r ELSE 0 END) AS bank_sum_house_r,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.medical_a ELSE 0 END) AS cash_sum_medical_a,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.medical_a ELSE 0 END) AS bank_sum_medical_a,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.food_allow ELSE 0 END) AS cash_sum_food_allow,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.food_allow ELSE 0 END) AS bank_sum_food_allow,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.trans_allow ELSE 0 END) AS cash_sum_trans_allow,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.trans_allow ELSE 0 END) AS bank_sum_trans_allow,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.ot_hour ELSE 0 END) AS cash_sum_ot_hour,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.ot_hour ELSE 0 END) AS bank_sum_ot_hour,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.eot_hour ELSE 0 END) AS eot_cash_sum,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.eot_hour ELSE 0 END) AS eot_bank_sum,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.ot_amount ELSE 0 END) AS cash_ot_amount,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.ot_amount ELSE 0 END) AS bank_ot_amount,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.eot_amount ELSE 0 END) AS eot_amount_cash_sum,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.eot_amount ELSE 0 END) AS eot_amount_bank_sum,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.eot_hr_for_sa ELSE 0 END) AS eot_hr_for_sa_cash_sum,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.eot_hr_for_sa ELSE 0 END) AS eot_hr_for_sa_bank_sum,
 
-                SUM( CASE WHEN com.salary_draw = 1 THEN 1 ELSE 0 END ) AS emp_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN 1 ELSE 0 END ) AS emp_bank,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.gross_sal ELSE 0 END ) AS cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.gross_sal ELSE 0 END ) AS bank_sum,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.basic_sal ELSE 0 END ) AS cash_sum_basic_sal,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.basic_sal ELSE 0 END ) AS bank_sum_basic_sal,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.house_r ELSE 0 END ) AS cash_sum_house_r,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.house_r ELSE 0 END ) AS bank_sum_house_r,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.medical_a ELSE 0 END ) AS cash_sum_medical_a,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.medical_a ELSE 0 END ) AS bank_sum_medical_a,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.food_allow ELSE 0 END ) AS cash_sum_food_allow,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.food_allow ELSE 0 END ) AS bank_sum_food_allow,
-
-				SUM( CASE WHEN com.salary_draw = 1 THEN ss.trans_allow ELSE 0 END ) AS cash_sum_trans_allow,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.trans_allow ELSE 0 END ) AS bank_sum_trans_allow,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.ot_hour ELSE 0 END ) AS cash_sum_ot_hour,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.ot_hour ELSE 0 END ) AS bank_sum_ot_hour,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_hour ELSE 0 END ) AS eot_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_hour ELSE 0 END ) AS eot_bank_sum,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.ot_amount ELSE 0 END ) AS cash_ot_amount,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.ot_amount ELSE 0 END ) AS bank_ot_amount,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.eot_amount ELSE 0 END ) AS eot_amount_cash_sum,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.eot_amount ELSE 0 END ) AS eot_amount_bank_sum,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.att_bonus ELSE 0 END ) AS cash_att_bonus,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.att_bonus ELSE 0 END ) AS bank_att_bonus,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.net_pay ELSE 0 END ) AS cash_sum_net_pay,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.net_pay ELSE 0 END ) AS bank_sum_net_pay,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.festival_bonus ELSE 0 END ) AS festival_bonus_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.festival_bonus ELSE 0 END ) AS festival_bonus_bank,
-
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.adv_deduct ELSE 0 END ) AS adv_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.adv_deduct ELSE 0 END ) AS adv_deduct_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.abs_deduction ELSE 0 END ) AS abs_deduction_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.abs_deduction ELSE 0 END ) AS abs_deduction_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.late_deduct ELSE 0 END ) AS late_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.late_deduct ELSE 0 END ) AS late_deduct_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.others_deduct ELSE 0 END ) AS others_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.others_deduct ELSE 0 END ) AS others_deduct_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.tax_deduct ELSE 0 END ) AS tax_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.tax_deduct ELSE 0 END ) AS tax_deduct_bank,
-                SUM( CASE WHEN com.salary_draw = 1 THEN ss.stamp ELSE 0 END ) AS stam_deduct_cash,
-                SUM( CASE WHEN com.salary_draw = 2 THEN ss.stamp ELSE 0 END ) AS stam_deduct_bank,
-            ");
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.att_bonus ELSE 0 END) AS cash_att_bonus,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.att_bonus ELSE 0 END) AS bank_att_bonus,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.net_pay ELSE 0 END) AS cash_sum_net_pay,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.net_pay ELSE 0 END) AS bank_sum_net_pay,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.festival_bonus ELSE 0 END) AS festival_bonus_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.festival_bonus ELSE 0 END) AS festival_bonus_bank,
+ 				
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.adv_deduct ELSE 0 END) AS adv_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.adv_deduct ELSE 0 END) AS adv_deduct_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.abs_deduction ELSE 0 END) AS abs_deduction_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.abs_deduction ELSE 0 END) AS abs_deduction_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.late_deduct ELSE 0 END) AS late_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.late_deduct ELSE 0 END) AS late_deduct_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.others_deduct ELSE 0 END) AS others_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.others_deduct ELSE 0 END) AS others_deduct_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.tax_deduct ELSE 0 END) AS tax_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.tax_deduct ELSE 0 END) AS tax_deduct_bank,
+ 				SUM(CASE WHEN com.salary_draw = 1 THEN ss.stamp ELSE 0 END) AS stam_deduct_cash,
+ 				SUM(CASE WHEN com.salary_draw = 2 THEN ss.stamp ELSE 0 END) AS stam_deduct_bank,
+ 			");
+			
 		$this->db->from('pay_salary_sheet_com as ss');
 		$this->db->from('pr_emp_com_info as com');
 		$this->db->from('emp_line_num as num');
-		$this->db->from('emp_section as emp_section');
+		$this->db->from('emp_section as sec');
 
-		$this->db->where("ss.emp_id = com.emp_id");
-		$this->db->where("num.id = com.emp_line_id");
-		
+		$this->db->where("ss.line_id = num.id");
+		$this->db->where("ss.emp_id  = com.emp_id");
+		$this->db->where("ss.sec_id  = sec.id");
+
+		$this->db->where("ss.line_id", 212);
+		$this->db->where_in('ss.emp_id', 5000474);
 		$this->db->where("ss.salary_month", $salary_month);
 		$this->db->where("ss.unit_id", $unit_id);
-		if ($type != null) {
-			$this->db->where("ss.eot_amount   != ",0);
-			$this->db->where("ss.eot_hour     > ",0);
+		$this->db->where("ss.net_pay >",0);
+		$this->db->where("ss.stop_salary", $type);
+		if($status == ''){
+			$this->db->where_in("ss.emp_status", $status == '' ? [1,2,3] : $status);
+		}else{
+			$this->db->where("ss.emp_status",$status);
 		}
+		if ($type != null && $type == 2) {
+			$this->db->where("ss.eot_amount   != ",0);
+			$this->db->where("ss.eot_hour     >",0);
+		}
+		
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
-		$data=$this->db->get()->result();
-		return $data;
-
+		return $this->db->get()->result();
 	}
+
 
 	function get_emp_info($grid_emp_id, $start_date=null){
 		$data = array();
@@ -179,33 +193,33 @@ class Grid_model extends CI_Model{
 		return $query->result();
 	}
 
-function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
-{
-    $this->db->select("
-        COALESCE(SUM(log.ot), 0) AS ot,
-        COALESCE(SUM(log.eot), 0) AS eot,
-        COALESCE(SUM(log.with_out_friday_ot), 0) AS with_out_friday_ot,
-        COALESCE(SUM(log.ot_eot_4pm), 0) AS actual_eot_4pm,
-        COALESCE(SUM(log.ot_eot_12am), 0) AS actual_eot_12am,
-        COALESCE(SUM(log.false_ot_4), 0) AS eot_4,
-        COALESCE(SUM(log.false_ot_12), 0) AS eot_12,
-        COALESCE(SUM(CASE WHEN log.present_status = 'W' THEN log.ot ELSE 0 END), 0) AS w_ot,
-        COALESCE(SUM(CASE WHEN log.present_status = 'H' THEN log.ot ELSE 0 END), 0) AS h_ot,
-        COALESCE(SUM(CASE WHEN log.present_status = 'H' THEN log.eot ELSE 0 END), 0) AS h_eot,
-        COALESCE(SUM(CASE WHEN log.present_status = 'W' THEN log.eot ELSE 0 END), 0) AS w_eot
-    ");
+	function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
+	{
+		$this->db->select("
+			COALESCE(SUM(log.ot), 0) AS ot,
+			COALESCE(SUM(log.eot), 0) AS eot,
+			COALESCE(SUM(log.with_out_friday_ot), 0) AS with_out_friday_ot,
+			COALESCE(SUM(log.ot_eot_4pm), 0) AS actual_eot_4pm,
+			COALESCE(SUM(log.ot_eot_12am), 0) AS actual_eot_12am,
+			COALESCE(SUM(log.false_ot_4), 0) AS eot_4,
+			COALESCE(SUM(log.false_ot_12), 0) AS eot_12,
+			COALESCE(SUM(CASE WHEN log.present_status = 'W' THEN log.ot ELSE 0 END), 0) AS w_ot,
+			COALESCE(SUM(CASE WHEN log.present_status = 'H' THEN log.ot ELSE 0 END), 0) AS h_ot,
+			COALESCE(SUM(CASE WHEN log.present_status = 'H' THEN log.eot ELSE 0 END), 0) AS h_eot,
+			COALESCE(SUM(CASE WHEN log.present_status = 'W' THEN log.eot ELSE 0 END), 0) AS w_eot
+		");
 
-    $this->db->from('pr_emp_shift_log as log');
-    $this->db->where('log.emp_id', $emp_id);
-    $this->db->where("log.shift_log_date BETWEEN '$start_date' AND '$end_date'");
-    // $this->db->where("log.with_out_friday_ot",0 );
-    // $this->db->where("log.ot !=",0 );
-    $this->db->group_by("log.emp_id");
+		$this->db->from('pr_emp_shift_log as log');
+		$this->db->where('log.emp_id', $emp_id);
+		$this->db->where("log.shift_log_date BETWEEN '$start_date' AND '$end_date'");
+		// $this->db->where("log.with_out_friday_ot",0 );
+		// $this->db->where("log.ot !=",0 );
+		$this->db->group_by("log.emp_id");
 
-    // $query = $this->db->get()->row();
-    return $query = $this->db->get()->row();
-	// dd($query);
-}
+		// $query = $this->db->get()->row();
+		return $query = $this->db->get()->row();
+		// dd($query);
+	}
 
 	// ================== end compliance salary report generate  ======================
 
@@ -498,7 +512,6 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 
 	function actual_summary_report($salary_month = null,$status=null, $unit_id = null, $type=null, $ot_entitle = 1)
 	{
-		// dd($type);
  		$this->db->distinct();
  		$this->db->select("
  				num.id as line_id, num.line_name_en, num.line_name_bn, sec.sec_name_en,
@@ -568,8 +581,10 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		$this->db->where("ss.line_id = num.id");
 		$this->db->where("ss.emp_id  = com.emp_id");
 		$this->db->where("ss.sec_id  = sec.id");
+
+		$this->db->where("ss.line_id", 212);
+
 		$this->db->where("ss.salary_month", $salary_month);
-		$this->db->where("ss.unit_id", $unit_id);
 		$this->db->where("ss.unit_id", $unit_id);
 		$this->db->where("ss.net_pay >",0);
 		$this->db->where("ss.stop_salary", $type);
@@ -584,8 +599,6 @@ function cal_eot_com($emp_id, $start_date, $end_date, $unit_id=null)
 		}
 		$this->db->group_by("num.id");
 		$this->db->order_by("num.line_name_en");
-		// $this->db->get()->result();
-		// dd($this->db->last_query());
 		return $this->db->get()->result();
 	}
 
