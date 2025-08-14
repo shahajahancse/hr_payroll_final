@@ -2599,6 +2599,7 @@ class Entry_system_con extends CI_Controller
         $advanced_salary       = $_POST['advanced_salary'];
         $service_benifit       = $_POST['service_benifit'];
         $get_info              = $this->final_log_info($info);
+        $liv_info              = $this->leave_db($info->emp_id, $resign_date1, $resign_date2, $get_info->livess);
         $rpay                  = round($resign_pay_day * ($basic_salary / 30), 2);
         $extra_pay             = round($extra_payoff * ($basic_salary / 30), 2);
         $earn_pay              = round(($earn_leave_day / 18), 2) * round($gross_salary / 30, 2);
@@ -2609,6 +2610,7 @@ class Entry_system_con extends CI_Controller
 
         $data = array(
             'working_days'          => $get_info->absent + $get_info->present,
+            'pay_days'              => $get_info->present - $liv_info,
             'per_day_rate'          => $basic_salary / 30,
             'ot_eot'                => $get_info->ot_hour + $get_info->eot_hour,
             'ot_2pm'                => $get_info->com_ot,
@@ -2631,23 +2633,25 @@ class Entry_system_con extends CI_Controller
             'net_pay'               => $emp_total_pay,
             'status'                => 1,
         );
+        // dd($data);
         $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);
         echo json_encode(array('success' => true));
     }
 
     public function final_log_info($info){
         $this->db->select('
-                SUM(ot) as ot_hour, 
-                SUM(eot) as eot_hour, 
-                SUM(com_ot) as com_ot, 
-                SUM(com_eot) as com_eot, 
-                SUM(ot_eot_4pm) as ot_eot_4pm, 
-                SUM(ot_eot_12am) as ot_eot_12am, 
-                SUM(with_out_friday_ot) as with_out_friday_ot, 
-                SUM(CASE WHEN present_status = "W" THEN com_eot ELSE 0 END) as all_eot_wday, 
-                SUM(CASE WHEN present_status = "H" THEN com_eot ELSE 0 END) as all_eot_hday, 
-                SUM(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as present, 
-                SUM(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as absent', FALSE
+            SUM(ot) as ot_hour, 
+            SUM(eot) as eot_hour, 
+            SUM(com_ot) as com_ot, 
+            SUM(com_eot) as com_eot, 
+            SUM(ot_eot_4pm) as ot_eot_4pm, 
+            SUM(ot_eot_12am) as ot_eot_12am, 
+            SUM(with_out_friday_ot) as with_out_friday_ot, 
+            SUM(CASE WHEN present_status = "W" THEN com_eot ELSE 0 END) as all_eot_wday, 
+            SUM(CASE WHEN present_status = "H" THEN com_eot ELSE 0 END) as all_eot_hday, 
+            SUM(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as present, 
+            SUM(CASE WHEN present_status = "L" THEN 1 ELSE 0 END) as livess, 
+            SUM(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as absent', FALSE
         );
         $this->db->from('pr_emp_shift_log');
         $this->db->where('pr_emp_shift_log.emp_id',$info->emp_id);
@@ -2655,6 +2659,128 @@ class Entry_system_con extends CI_Controller
         $this->db->where('shift_log_date <=',date('Y-m-d',strtotime($info->resign_date)));
         return $this->db->get()->row();	
 	}
+
+    function leave_db($emp_id, $start_date, $end_date, $livess){
+		$this->db->select("
+            SUM(CASE WHEN leave_type = 'cl' THEN total_leave ELSE 0 END ) AS cl,
+            SUM(CASE WHEN leave_type = 'sl' THEN total_leave ELSE 0 END ) AS sl,
+            SUM(CASE WHEN leave_type = 'el' THEN total_leave ELSE 0 END ) AS el,
+            SUM(CASE WHEN leave_type = 'ml' THEN total_leave ELSE 0 END ) AS ml,
+            SUM(CASE WHEN leave_type = 'wp' THEN total_leave ELSE 0 END ) AS wp,
+            SUM(CASE WHEN leave_type = 'sp' THEN total_leave ELSE 0 END ) AS sp
+        ");
+        $this->db->where("emp_id",$emp_id);
+        $this->db->where("leave_start >=", $start_date);
+        $this->db->where("leave_end <=", $end_date);
+        $query = $this->db->get('pr_leave_trans')->row();
+        $liv1 = $query->cl + $query->sl + $query->el + $query->ml + $query->wp + $query->sp;
+        if (!empty($liv1) && $livess <= $liv1) {
+            return ($query->ml + $query->wp);
+        }
+        
+        $dd2 = $this->leave_db2($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
+        $ccc = new stdClass();
+        $ccc->cl = 0;
+        $ccc->sl = 0;
+        $ccc->el = 0;
+        $ccc->ml = 0;
+        $ccc->wp = 0;
+        $ccc->sp = 0;
+		if (!empty($dd2)) {
+			if ($dd2['leave_type'] == 'cl') {
+				$ccc->cl = $dd2['day'];
+			}
+			if ($dd2['leave_type'] == 'sl') {
+				$ccc->sl = $dd2['day'];
+			}
+			if ($dd2['leave_type'] == 'el') {
+				$ccc->el = $dd2['day'];
+			}
+			if ($dd2['leave_type'] == 'wp') {
+				$ccc->wp = $dd2['day'];
+			}		
+			if ($dd2['leave_type'] == 'sp') {
+				$ccc->sp = $dd2['day'];
+			}
+		}
+        $liv2 = $ccc->cl + $ccc->sl + $ccc->el + $ccc->ml + $ccc->wp + $ccc->sp + $liv1;
+        if (!empty($liv2) && $livess <= $liv2) {
+            return ($query->ml + $query->wp + $ccc->ml + $ccc->wp);
+        }
+
+        $dd3 = $this->leave_db3($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
+        $ccc1 = new stdClass();
+        $ccc1->cl = 0;
+        $ccc1->sl = 0;
+        $ccc1->el = 0;
+        $ccc1->ml = 0;
+        $ccc1->wp = 0;
+        $ccc1->sp = 0;
+		if (!empty($dd3)) {
+			if ($dd2['leave_type'] == 'cl') {
+				$ccc1->cl = $dd3['day'];
+			}
+			if ($dd2['leave_type'] == 'sl') {
+				$ccc1->sl = $dd3['day'];
+			}
+			if ($dd2['leave_type'] == 'el') {
+				$ccc1->el = $dd3['day'];
+			}
+			if ($dd2['leave_type'] == 'ml') {
+				$ccc1->ml = $dd3['day'];
+			}		
+			if ($dd2['leave_type'] == 'wp') {
+				$ccc1->wp = $dd3['day'];
+			}		
+			if ($dd2['leave_type'] == 'sp') {
+				$ccc1->sp = $dd3['day'];
+			}
+		}
+		return ($query->ml + $query->wp + $ccc->ml + $ccc->wp + $ccc1->ml + $ccc1->wp);
+    }
+
+	function leave_db2($emp_id, $start_date, $end_date)
+    {
+		$array = array();
+        $this->db->select("*");
+        $this->db->where("emp_id",$emp_id);
+        $this->db->where("leave_start <", $start_date);
+        $this->db->where("leave_end >", $start_date);
+        $this->db->order_by("id", 'DESC');
+        $query = $this->db->get('pr_leave_trans')->row();
+		// dd($this->db->last_query());
+
+		if (!empty($query)) {
+			$end_date  = $query->leave_end;
+			$day_diff = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) +1;
+			$array = array(
+				'leave_type' => $query->leave_type,
+				'day' => $day_diff,
+			);
+		}
+        return $array;
+    }
+
+	function leave_db3($emp_id, $start_date, $end_date)
+    {
+
+		$this->db->select('leave_type');
+		$this->db->select('SUM(
+			DATEDIFF(
+				LEAST(leave_end, "' . $end_date . '"),
+				GREATEST(leave_start, "' . $start_date . '")
+			) + 1
+		) AS day', false);
+
+		$this->db->from('pr_leave_trans');
+        $this->db->where("emp_id",$emp_id);
+		$this->db->where('leave_start <=', $end_date);
+		$this->db->where('leave_end >=', $start_date);
+        
+		$query = $this->db->get()->result_array();
+        return $query[0];
+    }
+
     //---------------------------------------------------------------------------
     // Left/Resign end
     //----------------------------------------------------------------------------

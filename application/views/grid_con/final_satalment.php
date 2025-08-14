@@ -342,7 +342,7 @@
                     ?> </td>
                    <td class="unicode-to-bijoy"> <?php echo isset($total_value->working_days) ? $total_value->working_days : 0 ?> </td>
                    <td class="unicode-to-bijoy"><?php echo $row->resign_date == null ? 0 : round($gross_rate,2) ?></td>
-                   <td class="unicode-to-bijoy"><?php echo isset($total_value->working_days) ? $ptt =  round($gross_rate * $total_value->working_days,2) : 0 ?></td>
+                   <td class="unicode-to-bijoy"><?php echo isset($total_value->pay_days) ? $ptt =  round($gross_rate * $total_value->pay_days,2) : 0 ?></td>
                 </tr>
                 <tr>
                     <td class="unicode-to-bijoy">চলতি মাসের ওভার টাইম </td>
