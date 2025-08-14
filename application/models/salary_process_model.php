@@ -43,10 +43,11 @@ class Salary_process_model extends CI_Model{
 
 		$prev_month = date("Y-m-d",strtotime("-1 month",strtotime($start_date)));
 		$pvm = $this->db->where('block_month',$prev_month)->where('unit_id',$unit_id)->get('pay_salary_block')->num_rows();
-		if($pvm < 1  && $unit_id != 4)
-		{
-			return "Please Finally Processed Previous Month..";
-		}
+
+		// if($pvm < 1  && $unit_id != 4)
+		// {
+		// 	return "Please Finally Processed Previous Month..";
+		// }
 		
 		$dddd=implode(',', $grid_emp_id);
 		$query = $this->get_emp_info($dddd, $unit_id);
@@ -988,11 +989,10 @@ class Salary_process_model extends CI_Model{
         $this->db->where("leave_end <=", $end_date);
         $query = $this->db->get('pr_leave_trans')->row();
 		// dd($this->db->last_query());
-		
-		$dd2 = $this->leave_db2($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
-		$dd3 = $this->leave_db3($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
-		// dd($dd3);
-		// dd($query);
+		if(empty($query)){
+			$dd2 = $this->leave_db2($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
+			$dd3 = $this->leave_db3($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
+		}
 		if (!empty($dd2)) {
 			if ($dd2['leave_type'] == 'cl') {
 				$query->cl = $query->cl + $dd2['day'];

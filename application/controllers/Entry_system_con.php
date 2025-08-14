@@ -2644,8 +2644,8 @@ class Entry_system_con extends CI_Controller
                 SUM(ot_eot_4pm) as ot_eot_4pm, 
                 SUM(ot_eot_12am) as ot_eot_12am, 
                 SUM(with_out_friday_ot) as with_out_friday_ot, 
-                SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
-                SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
+                SUM(CASE WHEN present_status = "W" THEN com_eot ELSE 0 END) as all_eot_wday, 
+                SUM(CASE WHEN present_status = "H" THEN com_eot ELSE 0 END) as all_eot_hday, 
                 SUM(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as present, 
                 SUM(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as absent', FALSE
         );
