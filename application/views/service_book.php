@@ -107,7 +107,7 @@
             <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                 <thead>
                     <tr class="text-center" >
-                        <th style="padding: 14px;"><span class="unicode-to-bijoy">কারখানা/প্রতিষ্ঠানেরনাম ও ঠিকানা </span></th>
+                        <th style="padding: 12px;"><span class="unicode-to-bijoy">কারখানা/প্রতিষ্ঠানেরনাম ও ঠিকানা </span></th>
                         <th class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষেরনাম</th>
                     </tr>
                     <tr class="text-center">
@@ -118,9 +118,9 @@
                     <tbody>
                         <?php if($unit_id == 1){ ?>
                             <tr class="text-center">
-                                <td class="unicode-to-bijoy">এ জে ফ্যাসনস্ লিঃ<br>
+                                <td class="unicode-to-bijoy" style="font-size:14px">এ জে ফ্যাসনস্ লিঃ<br>
                                 ২৩৪/৪ কচুক্ষেত, ক্যান্টরমেন্ট, ঢাকা-১২০৬।</td>
-                                <td class="unicode-to-bijoy" style="padding: 10px;"> আনোয়ার হোসেন চৌধুরী</td>
+                                <td class="unicode-to-bijoy font-weight-bold" style="padding: 8px;font-size:16px"> আনোয়ার হোসেন চৌধুরী</td>
                             </tr>
                         <?php } elseif($unit_id == 4){ ?>    
                             <tr class="text-center">
@@ -342,7 +342,7 @@
         </table>
     </div>
 </div>
-<br><br>
+<br>
 <!-- Additional pages if needed -->
 <?php
 if ($pages > 1) {
@@ -351,7 +351,6 @@ if ($pages > 1) {
         $end_row = min(($page + 1) * $rows_per_page, $total_rows);
         $rows_on_page = $end_row - $start_row;
 ?>  
-<div style="page-break-after: always;"></div>
 <div class="d-flex">
     <!-- Left Side for additional pages -->
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
@@ -623,7 +622,7 @@ if ($pages > 1) {
                     <?php
                         $earn_leave_balance=0;
                         foreach($leaves as $row){?>
-                            <tr>
+                            <!-- <tr>
                                 <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;width: 80px;"><?php echo $row->leave_start==''?'-': date('d-m-Y',strtotime($row->leave_start)).''?> </td>
                                 <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;width: 80px;"><?php echo $row->leave_end =='' ? '-' : date('d-m-Y',strtotime($row->leave_end)).''?> </td>
                                 <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px"><?php $qty = ( date_diff(date_create($row->leave_start),date_create($row->leave_end))->format("%a") +1 );echo $qty;?></td>
@@ -633,7 +632,7 @@ if ($pages > 1) {
                                 <td style="font-family:sutonnyMJ;font-size:15px"><?php echo "" ?></td>
                                 <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 25px"></td>
                                 <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 25px"></td>
-                            </tr>   
+                            </tr>    -->
                         <?php }?>
                 </tbody>
             </table>

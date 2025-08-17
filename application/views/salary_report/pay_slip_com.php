@@ -44,7 +44,7 @@
                 $row_count=count($values);
                 if($row_count >3)
                 {
-                $page=ceil($row_count/3);
+                $page=round($row_count/3);
                 }
                 else
                 {
@@ -322,7 +322,7 @@
                                         <td></td>
                                         <td width="210" style="font-weight: bold; padding-left: 5px;">(ঘ) অতিরিক্ত কাজ :
                                             <span style="font-family: SutonnyMJ; font-size: 12px;">
-                                                <?php $total_ot_amount = ceil($rows->ot_rate*$total_ot_hour); echo ceil($total_ot_amount);?>
+                                                <?php $total_ot_amount = round($rows->ot_rate*$total_ot_hour); echo round($total_ot_amount);?>
                                             </span>
                                         </td>
                                     </tr>

@@ -510,15 +510,16 @@ class Salary_process_model extends CI_Model{
 				
 					//OT CALCULATION Non COMPLIANCE
 					$ot_rate = $ss['ot_rate'];
+					// dd($ot_rate);
 					if (!empty($attendances->ot) && $rows->ot_entitle != 1) {
 						$ot_hour = $attendances->ot;
-						$ot_amount = $attendances->ot * $ot_rate;
+						$ot_amount = round($attendances->ot * $ot_rate);
 					} else {
 						$ot_rate = 0;
 						$ot_hour = 0;
 						$ot_amount = 0;
 					}
-
+					// dd($ot_amount);
 					// dd($ot_rate .'======'. $attendances->ot * $ot_rate);
 
 					//EXTRA OT CALCULATION
@@ -584,7 +585,7 @@ class Salary_process_model extends CI_Model{
 					// dd($ot_ratec);
 					if (!empty($attendances->com_ot) && $rows->com_ot_entitle != 1) {
 						$ot_hour = $attendances->com_ot;
-						$ot_amount_com = $attendances->com_ot * $ot_ratec;
+						$ot_amount_com = round($attendances->com_ot * $ot_ratec);
 					} else {
 						$ot_ratec = 0;
 						$ot_hour = 0;
@@ -651,7 +652,7 @@ class Salary_process_model extends CI_Model{
 						$data_com["ot_eot_4pm_amt"] 	= 0;
 						$data_com["eot_hr_for_sa"] 		= 0;
 					}
-					// dd($data);
+					// dd($data_com);
 					//***************************Festival bonus***********************
 
 					$data["festival_bonus"] 	= 0;
