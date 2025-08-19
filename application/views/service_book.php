@@ -541,6 +541,7 @@ if ($pages > 1) {
                 </thead>
                 <?php 
                     $leave  = $this->db->select('*')->where('emp_id',$value->emp_id)->where('leave_type','el')->order_by('leave_start','asc')->get('pr_leave_trans')->result();
+
                     $leaves=[];
                     foreach($leave as $key => $row){
                         $leave[$key]->leave_start = $row->leave_start;
@@ -550,22 +551,50 @@ if ($pages > 1) {
                             $leaves[] = $row;
                         }  
                     }
+                    // dd($leaves);
+
                     $earn_leave  = $this->db->select('*')->where('emp_id',$value->emp_id)->get('pr_earn_leave')->row();
-                ?>
+                    ?>
                 <tbody>
                     <?php
                         $earn_leave_balance=0;
-                        foreach($leaves as $row){?>
+                        foreach($leaves as $row){
+                            $year = date('Y', strtotime($row->leave_end));
+                           $earn_leaves = $this->db->select('*')
+                            ->where('emp_id', $value->emp_id)
+                            ->where('year', $year)
+                            ->get('pr_earn_leave_paid')
+                            ->row();
+                            // dd($earn_leave);    
+                        ?>
                             <tr>
-                                <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;width: 80px;"><?php echo $row->leave_start==''?'-': date('d-m-Y',strtotime($row->leave_start)).''?> </td>
-                                <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;width: 80px;"><?php echo $row->leave_end =='' ? '-' : date('d-m-Y',strtotime($row->leave_end)).''?> </td>
-                                <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px"><?php $qty = ( date_diff(date_create($row->leave_start),date_create($row->leave_end))->format("%a") +1 );echo $qty;?></td>
-                                <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px"><?php $earn_leave_balance += $qty ;  echo $earn_leave->earn_leave - $earn_leave_balance  ;?></td>
-                                <td style="font-family:sutonnyMJ;font-size:15px;width: 25px;"><?php echo ""?></td>
-                                <td class="unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;white-space: nowrap"><?php echo $earn_leave->earn_month ?></td>
-                                <td style="font-family:sutonnyMJ;font-size:15px"><?php echo "" ?></td>
-                                <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 25px"></td>
-                                <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 25px"></td>
+                                <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;width: 80px;">
+                                    <?php echo $row->leave_start==''?'-': date('d-m-Y',strtotime($row->leave_start)).''?> 
+                                </td>
+                                <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;width: 80px;">
+                                    <?php echo $row->leave_end =='' ? '-' : date('d-m-Y',strtotime($row->leave_end)).''?> 
+                                </td>
+                                <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px">
+                                    <?php $qty = ( date_diff(date_create($row->leave_start),date_create($row->leave_end))->format("%a") +1 );echo $qty;?>
+                                </td>
+                                <td class="text-center unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px">
+                                    <?php $earn_leave_balance += $qty ;  echo $earn_leave->earn_leave - $earn_leave_balance ;?>
+                                </td>
+                                <td style="font-family:sutonnyMJ;font-size:15px;width: 25px;">
+                                    <?php echo ""?>
+                                </td>
+                                <td class="unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px;white-space: nowrap">
+                                    <?php echo $earn_leaves->paid_date ?>
+                                </td>
+                                <td style="font-family:sutonnyMJ;font-size:15px">
+                                    <?php echo "" ?>
+                                </td>
+                                <td>
+                                    <img  src="<?php echo base_url('images/'.$register)?>" style="height: 25px">
+                                </td>
+                                <td>
+                                    <img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 25px">
+                                </td>
                             </tr>   
                         <?php }?>
                 </tbody>

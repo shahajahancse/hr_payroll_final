@@ -46,28 +46,30 @@
                 <?php } ?>
             </tbody>
         </table>
-    <?php } elseif ($type==1) { ?>
+    <?php } else{ ?>
         <h3 align="center" height="auto" style="padding: 0;margin: 7px;">Not Done Training List</h3>
         <table class="heading" border="1" cellspacing="0" align="center" height="auto">
             <thead>
                 <tr>
                     <th>SL.</th>
-                    <th>Employee ID</th>
+                    <th >Employee ID</th>
                     <th style="width: 200px;">Employee Name</th>
-                    <th style="width: 200px;">Designation Name</th>
-                    <th style="width: 200px;">Line Name</th>
-                    <th>Remarks</th>
+                    <th style="width: 200px;">Training Name</th>
+                    <th style="width: 200px;">Unit Name</th>
+                    <th style="width: 200px;">Date</th>
+                    <th style="width: 200px;">Time</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($not_done as $key => $value) { ?>
                 <tr>
-                    <td><?php echo $key + 1; ?></td>
-                    <td><?php echo $value->emp_id; ?></td>
-                    <td><?php echo $value->name_en; ?></td>
-                    <td><?php echo $value->desig_name; ?></td>
-                    <td><?php echo $value->line_name_en; ?></td>
-                    <td></td>
+               <td><?php echo $key + 1; ?></td>
+                    <td><?php echo $value->emp_id2; ?></td>
+                    <td><?php echo $value->emp_name; ?></td>
+                    <td><?php echo $value->training_name; ?></td>
+                    <td><?php echo $value->unit_name; ?></td>
+                    <td><?php echo $value->date; ?></td>
+                    <td><?php echo $value->time; ?></td>
                 </tr>
                 <?php } ?>
             </tbody>
