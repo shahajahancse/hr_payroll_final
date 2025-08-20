@@ -531,6 +531,9 @@ $unit = $this->common_model->get_unit_id_name();
             $(".line > option").remove();
             $(".desig > option").remove();
             var id = $('#unit_id').val();
+            if (typeof id === "undefined" || id === '') {
+                return false;
+            }
             $.ajax({
                 type: "POST",
                 url: hostname + "common/ajax_department_by_unit_id/" + id,

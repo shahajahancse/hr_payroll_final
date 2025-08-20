@@ -165,27 +165,28 @@ $obj = new BanglaNumberToWord();
         <!-- niog -->
         <?php
             // dd($values);
+            // dd($unit_id);
             $company_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row();
             $image = $company_info->company_logo;
             $company_name_bangla = $company_info->company_name_bangla;
             $company_add_bangla = $company_info->company_add_bangla;
             foreach($values as $value){
-                // dd($value);
+            // dd($value);
         ?>
         <div class="container break_page" style=" font-family: sutonnymj;">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php if($unit_id ==1){ ?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
             </div>
-            <?php } else if($unit_id == 2){?>
+            <?php }  if($unit_id == 2){ ?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;"> Document Code : LSAL/HR/03/084</p>
             </div>
-            <?php }else if($unit_id == 4){?>
+            <?php } if($unit_id == 4){ ?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
@@ -195,11 +196,11 @@ $obj = new BanglaNumberToWord();
             <div class="mt-3">
                 <?php  $com_info = $this->db->where('unit_id', $unit_id)->get('company_infos')->row(); ?>
                 <div class="d-flex">
-                    <?php if($unit_id ==4){?>
+                    <?php if($unit_id == 4){ ?>
                     <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute;">
-                    <?php }else{?>
-                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 230px;">
-                    <?php }?>
+                    <?php } else{ ?>
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 210px;">
+                    <?php  }?>
                     <h1 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h1>
                 </div>
             </div>
@@ -209,7 +210,7 @@ $obj = new BanglaNumberToWord();
             <div class="d-flex mt-2">
                 <div class="col-md-4">
                 <p>ZvwiLt <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</p>
-                    <!-- <p style="font-size:21px !important;line-height:22px !important;">myÎt <?php echo $unit_id == 1 ? "G‡R.Gd.Gj":($unit_id ==2?"Gj.Gm.G.Gj":"GBP.wR.Gj")?>/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiLt <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</span></p> -->
+                    <!-- <p style="font-size:21px !important;line-height:22px !important;">myÎt < ?php echo $unit_id == 1 ? "G‡R.Gd.Gj":($unit_id ==2?"Gj.Gm.G.Gj":"GBP.wR.Gj")?>/GBP.Avi.wW/G.Gj/5523 <br><span>ZvwiLt < ?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</span></p> -->
                 </div>
                 <div class="col-md-4">
                     <h2 class="text-center"><b style="border: 2px solid black;padding-left:4px;padding-right:6px;">wb‡qvM cÎ</b></h2>
@@ -384,7 +385,7 @@ $obj = new BanglaNumberToWord();
 
 
         <div class="container break_page" style=" font-family: sutonnymj;">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php  if($unit_id ==1){?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
@@ -409,7 +410,7 @@ $obj = new BanglaNumberToWord();
                     <?php if($unit_id ==4){?>
                     <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute;">
                     <?php }else{?>
-                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 230px;">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 210px;">
                     <?php }?>
                     <h1 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h1>
                 </div>
@@ -594,7 +595,7 @@ $obj = new BanglaNumberToWord();
 
         <!-- jogdan -->
         <div class="container break_page" style="font-family:sutonnymj;">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php if($unit_id ==1){?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
@@ -619,7 +620,7 @@ $obj = new BanglaNumberToWord();
                     <?php if($unit_id ==4){?>
                     <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute;">
                     <?php }else{?>
-                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 230px;">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 210px;">
                     <?php }?>
                     <h1 class="text-center unicode-to-bijoy" style="margin:0 auto" ><?= $com_info->company_name_bangla ?></h1>
                 </div>
@@ -684,7 +685,7 @@ $obj = new BanglaNumberToWord();
 
         <!-- potovumi -->
         <div class="container break_page" style=" font-family: sutonnymj;">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php  if($unit_id ==1){?>
                 <div class="d-flex flex-row justify-content-between">
                     <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                     <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
@@ -709,7 +710,7 @@ $obj = new BanglaNumberToWord();
                     <?php if($unit_id ==4){?>
                     <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute;">
                     <?php }else{?>
-                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 230px;">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 210px;">
                     <?php }?>
                     <h1 class="text-center unicode-to-bijoy" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h1>
                 </div>
@@ -798,7 +799,7 @@ $obj = new BanglaNumberToWord();
 
         <div class='container'>
                     <div class="container break_page" style=" font-family: sutonnymj;margin-left:-15px">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php if($unit_id ==1){?>
                 <div class="d-flex flex-row justify-content-between">
                     <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                     <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
@@ -824,7 +825,7 @@ $obj = new BanglaNumberToWord();
                     <?php if($unit_id ==4){?>
                     <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute;">
                     <?php }else{?>
-                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 230px;">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 210px;">
                     <?php }?>
                         <h1 class="text-center unicode-to-bijoy" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h1>
                     </div>
@@ -950,7 +951,7 @@ $obj = new BanglaNumberToWord();
         <br>
         <!-- nominee -->
         <div class="container-fluid break_page" style="margin-left:-10px">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php if($unit_id ==1){?>
                 <div class="d-flex flex-row justify-content-between">
                     <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                     <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
@@ -975,7 +976,7 @@ $obj = new BanglaNumberToWord();
                     <?php if($unit_id ==4){?>
                     <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute;">
                     <?php }else{?>
-                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 230px;">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 210px;">
                     <?php }?>
                     <h1 class="text-center unicode-to-bijoy" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h1>
                 </div>
@@ -1134,7 +1135,7 @@ $obj = new BanglaNumberToWord();
         <!-- account  -->
 
         <div class="container break_page w-100" style="margin-left:-10px">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php  if($unit_id ==1){?>
                 <div class="d-flex flex-row justify-content-between">
                     <p style="font-family: Arial, Helvetica, sans-serif;"></p>
                     <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
@@ -1162,7 +1163,7 @@ $obj = new BanglaNumberToWord();
                     <?php if($unit_id ==4){?>
                     <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute;">
                     <?php }else{?>
-                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 230px;">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 210px;">
                     <?php }?>
                     <h1 class="text-center unicode-to-bijoy" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h1>
                 </div>
@@ -1202,7 +1203,7 @@ $obj = new BanglaNumberToWord();
 
         <!-- job description -->
         <div class="container break_page" >
-           <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+           <?php  if($unit_id ==1){?>
                 <div class="d-flex flex-row justify-content-between">
                     <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :01-08-2024</p>
                     <p style="font-family: Arial, Helvetica, sans-serif;">Revision: 01</p>
@@ -1228,7 +1229,7 @@ $obj = new BanglaNumberToWord();
                     <?php if($unit_id ==4){?>
                     <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute;">
                     <?php }else{?>
-                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 230px;">
+                    <img src="<?php echo base_url('/images/AJ_Logo_copy4.png')?>" alt="Logo" style="margin-top: 5px;width: 80px;height: 50px;position: absolute; margin-left: 210px;">
                     <?php }?>
                     <h1 class="text-center" style="margin:0 auto"><?= $com_info->company_name_bangla ?></h1>
                 </div>

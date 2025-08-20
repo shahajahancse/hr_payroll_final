@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Common extends CI_Controller {
 
-    function grid_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
+    function grid_emp_list($unit = null, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
 
         ini_set("pcre.backtrack_limit", 100000000000);
         ini_set("pcre.recursion_limit", 10000000000);
@@ -19,7 +19,9 @@ class Common extends CI_Controller {
         //     $this->db->where('pay_salary_sheet.salary_month', date('Y-m-01'));
         // }
 
-        $this->db->where('com.unit_id', $unit);
+        if (!empty($unit)) {
+            $this->db->where('com.unit_id', $unit);
+        }
         if (isset($emp_id_not) && !empty($emp_id_not)) {
             $this->db->where_not_in('com.emp_id', $emp_id_not);
         }
@@ -176,12 +178,14 @@ class Common extends CI_Controller {
         return;
     }
 
-    function ajax_department_by_unit_id($id){
+    function ajax_department_by_unit_id($id = null){
 
         $data = array();
         $this->db->select('*');
         $this->db->from('emp_depertment');
-        $this->db->where('unit_id', $id);
+        if (!empty($id)) {
+            $this->db->where('unit_id', $id);
+        }
         $this->db->order_by('dept_name', 'ASC');
         $query = $this->db->get()->result();
 

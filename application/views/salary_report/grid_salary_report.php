@@ -312,7 +312,7 @@
             var salary_month = document.getElementById('salary_month').value;
 
             if (typeof unit === "undefined" || unit === '') {
-                 alert('Please Select Unit First'); return;
+               return false;
             }
             
             url = hostname + "common/salary_emp_list/";

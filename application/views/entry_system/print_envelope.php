@@ -101,10 +101,15 @@
 <body>
     <?php
 		$unit_id = $this->session->userdata('data');
-		if ($unit_id->unit_name== 0) {
-			echo "Please Login as unit user (Not allow Super admin)";
-			exit();
-		}
+        if (empty($unit_id)) {
+            $unit_ids = $this->session->userdata('data');
+            if ($unit_ids->unit_name == 0) {
+                echo "Please Login as unit user (Not allow Super admin)";
+                exit();
+            } else {
+                $unit_id = $unit_ids->unit_name;
+            }
+        } 
         $com_info = $this->db->where('unit_id',$unit_id->unit_name)->get('company_infos')->row()
     ?>
 

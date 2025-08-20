@@ -747,6 +747,9 @@
 
         $('#unit_id').change(function() {
             var id = $('#unit_id').val();
+            if (typeof id === "undefined" || id === '') {
+                return false;
+            }
             $.ajax({
                 type: "POST",
                 url: hostname + "common/ajax_department_by_unit_id/" + id,

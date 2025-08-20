@@ -368,6 +368,7 @@ class Grid_con extends CI_Controller {
 
 		// $query['values'] = $this->Grid_model->grid_job_card($grid_firstdate, $grid_seconddate, $grid_emp_id);
 		$data['values'] = $this->Grid_model->get_ot_emp_info($grid_emp_id);
+		$data['unit_id'] = $_POST['unit_id'];
 
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
@@ -1952,7 +1953,6 @@ class Grid_con extends CI_Controller {
 		// dd();
 		$query['unit_id'] = $this->input->post('unit_id');
 		$query['values'] = $this->Grid_model->grid_emp_job_application($grid_emp_id);
-		$query['unit_id'] = $this->input->post('unit_id');
 		if(is_string($query['values'])){
 			echo $query['values'];
 		}else{

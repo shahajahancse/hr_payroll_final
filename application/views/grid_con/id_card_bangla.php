@@ -67,7 +67,7 @@
     <div class="box">
       <div class="d-flex">
         <div class="col-md-3">
-          <?php $image =$this->db->where('unit_id', $unit_id)->get('company_infos')->row();?>
+          <?php $image =$this->db->where('unit_id', $_POST['unit_id'])->get('company_infos')->row();?>
           <img src="<?php echo base_url('/images'.'/'.$image->company_logo)?>" alt="logo" height="40px" width="60px" style="margin-top:5px">
         </div>
         <div class="col-md-6 printt mt-2 text-center" >

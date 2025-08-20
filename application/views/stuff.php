@@ -134,7 +134,7 @@ $obj = new NumberToWord();
     foreach($values as $value){?>
     <!-- niog -->
        <div class="container break_page">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php  if($unit_id ==1){?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
@@ -312,7 +312,7 @@ $obj = new NumberToWord();
     foreach($values as $value){?>
     <!-- niog -->
             <div class="container break_page">
-            <?php $unit_id= $this->session->userdata('data')->unit_name; if($unit_id ==1){?>
+            <?php  if($unit_id ==1){?>
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>

@@ -11510,7 +11510,7 @@ function grid_emp_job_application($grid_emp_id){
 		return $desig_bangla;
 	}
 
-	function grid_earn_leave_report($grid_emp_id,$y,$m){
+	function grid_earn_leave_report($grid_emp_id){
 		// dd($grid_emp_id);
 		$data = array();
 		$this->db->select('pr_emp_com_info.emp_id,
@@ -11545,7 +11545,7 @@ function grid_emp_job_application($grid_emp_id){
 		$query = $this->db->get();
 
 		if($query->result() == null){
-			dd($this->db->last_query());
+			// dd($this->db->last_query());
 			return "Requested list is empty";	
 		}
 
