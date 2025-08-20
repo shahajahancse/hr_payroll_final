@@ -2595,7 +2595,7 @@ function grid_extra_ot_9pm(){
 		return false;
 	}
 	document.getElementById('loaader').style.display = 'flex';
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+'&unit_id='+unit_id;
     url =  hostname+"grid_con/grid_extra_ot_9pm/";
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -2653,7 +2653,7 @@ function grid_extra_ot_12am(){
 		return false;
 	}
 	document.getElementById('loaader').style.display = 'flex';
-	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql;
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&spl="+sql+'&unit_id='+unit_id;
     url =  hostname+"grid_con/grid_extra_ot_12am/";
     ajaxRequest.open("POST", url, true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -2712,7 +2712,7 @@ function grid_extra_ot_all() {
 	}
 
 	document.getElementById("loaader").style.display = "flex";
-	var queryString = "firstdate=" + firstdate + "&seconddate=" + seconddate + "&spl=" + sql;
+	var queryString = "firstdate=" + firstdate + "&seconddate=" + seconddate + "&spl=" + sql+'&unit_id='+unit_id;
 	var url = hostname + "grid_con/grid_extra_ot_all/";
 	ajaxRequest.open("POST", url, true);
 	ajaxRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded;charset=utf-8");

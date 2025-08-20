@@ -220,7 +220,9 @@
         var line = document.getElementById('line').value;
         var desig = document.getElementById('desig').value;
         var status = document.getElementById('status').value;
-
+        if (typeof unit === "undefined" || unit === '') {
+            return false;
+        }
         url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
         $.ajax({
             url: url,
@@ -338,6 +340,9 @@
             $(".line > option").remove();
             $(".desig > option").remove();
             var id = $('#unit_id').val();
+            if (typeof id === "undefined" || id === '') {
+                return false;
+            }
             $.ajax({
                 type: "POST",
                 url: hostname + "common/ajax_department_by_unit_id/" + id,

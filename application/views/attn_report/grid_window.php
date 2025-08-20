@@ -478,7 +478,9 @@
 			var desig = document.getElementById('desig').value;
 			var status = document.getElementById('status').value;
 			var emp_type = document.getElementById('emp_type').value;
-
+            if (typeof unit === "undefined" || unit === '') {
+                return false;
+            }
 			url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
 			$.ajax({
 				url: url,

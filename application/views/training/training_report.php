@@ -201,7 +201,9 @@
         var line = document.getElementById('line').value;
         var desig = document.getElementById('desig').value;
         var status = document.getElementById('status').value;
-
+        if (typeof unit === "undefined" || unit === '') {
+            return false;
+        }
         url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
         $.ajax({
             url: url,

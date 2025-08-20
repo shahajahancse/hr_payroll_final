@@ -346,6 +346,7 @@ class Grid_con extends CI_Controller {
 		// dd($data['values'] );
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
+		$data['unit_id']    = $unit_id;
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}else{
@@ -390,6 +391,8 @@ class Grid_con extends CI_Controller {
 		$data['values']  = $this->Grid_model->get_ot_emp_info($grid_emp_id);
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
+		$data['unit_id']    = $_POST['unit_id'];
+
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}else{
@@ -422,6 +425,7 @@ class Grid_con extends CI_Controller {
 		$data['values'] = $this->Grid_model->get_ot_emp_info($grid_emp_id);
 		$data['grid_firstdate'] = $grid_firstdate;
 		$data['grid_seconddate'] = $grid_seconddate;
+		$data['unit_id']		= $unit_id;
 		if(is_string($data['values'])){
 			echo $data['values'];
 		}else{
