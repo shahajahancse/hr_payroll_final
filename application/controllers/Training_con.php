@@ -63,6 +63,7 @@ class Training_con extends CI_Controller {
         } else {
             $formArray = array(
                 'title' => $this->input->post('title'),
+                'title_bn' => $this->input->post('title_bn'),
                 'unit_id' => $this->input->post('unit_id'),
                 'description' => $this->input->post('description'),
 				'status' => 1
@@ -101,6 +102,7 @@ class Training_con extends CI_Controller {
         } else {
             $formArray = array(
 				'title' => $this->input->post('title'),
+				'title_bn' => $this->input->post('title_bn'),
 				'unit_id' => $this->input->post('unit_id'),
 				'description' => $this->input->post('description'),
 				'status' => 1
@@ -207,7 +209,7 @@ class Training_con extends CI_Controller {
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
         $this->db->where_in('training_management.emp_id', $emp_ids);
         $this->db->where('training_management.training_id', $training_id);
-        $this->db->where('training_management.status', 2);
+        $this->db->where('training_management.status', 1);
         // $data =  $this->db->get()->result();
         // dd($this->db->last_query());
         return $this->db->get()->result();
@@ -215,21 +217,41 @@ class Training_con extends CI_Controller {
 
     private function get_training_not_done($emp_ids, $training_id)
     {
-        $this->db->select('training_management.*, pr_units.unit_name, pr_emp_per_info.emp_id as emp_id2, training_type.title as training_name, pr_emp_per_info.name_en as emp_name');
-        $this->db->from('training_management');
-        $this->db->join('pr_units', 'pr_units.unit_id = training_management.unit_id');
-        $this->db->join('training_type', 'training_type.id = training_management.training_id');
-        $this->db->join('pr_emp_com_info', 'pr_emp_com_info.emp_id = training_management.emp_id');
+        $completed_emp_ids = $this->get_training_done_ids($emp_ids, $training_id);
+
+        $this->db->select('
+            pr_emp_per_info.emp_id as emp_id2,
+            pr_emp_per_info.name_en as emp_name
+        ');
+        $this->db->from('pr_emp_com_info');
+        $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
-        $this->db->where_in('training_management.emp_id', $emp_ids);
-        $this->db->where('training_management.training_id', $training_id);
-        $this->db->where('training_management.status', 1);
+        $this->db->where_in('pr_emp_com_info.emp_id', $emp_ids);
+
+        if (!empty($completed_emp_ids)) {
+            $this->db->where_not_in('pr_emp_com_info.emp_id', $completed_emp_ids);
+        }
+
         return $this->db->get()->result();
+
+    }
+
+    function get_training_done_ids($emp_ids, $training_id)
+    {
+        $this->db->select('emp_id');
+        $this->db->from('training_management');
+        $this->db->where_in('emp_id', $emp_ids);
+        $this->db->where('training_id', $training_id);
+        $data = $this->db->get()->result();
+        $emp_ids_list = array_column($data, 'emp_id');
+        return $emp_ids_list;
+        // dd($emp_ids_list);
+
     }
 
 	function employee_training_add()
 	{
-		if (!isset($_POST['training_id']) || !isset($_POST['unit_id']) || !isset($_POST['date']) || !isset($_POST['time'])) {
+		if (!isset($_POST['training_id']) || !isset($_POST['unit_id']) || !isset($_POST['date']) || !isset($_POST['area'])) {
 			echo '0';
 			exit;
 		}
@@ -238,7 +260,7 @@ class Training_con extends CI_Controller {
 		$unit_id = $_POST['unit_id'];
 		$date = date('Y-m-d', strtotime($_POST['date']));
 
-		$time = $_POST['time'];
+		$area = $_POST['area'];
 		$status = 1;
 		$created_at = date('Y-m-d H:i:s');
 
@@ -260,7 +282,7 @@ class Training_con extends CI_Controller {
 				'training_id' => $training_id,
 				'unit_id' => $unit_id,
 				'date' => $date,
-				'time' => $time,
+				'area' => $area,
 				'status' => $status,
 				'created_at' => $created_at
 			);
@@ -295,7 +317,7 @@ class Training_con extends CI_Controller {
 	}
     function employee_training_delete()
     {
-        // dd();
+        // dd($_POST);
         $this->db->where_in('id',$_POST['delete']);
         $this->db->delete('training_management');
         $this->session->set_flashdata('success', 'Record Deleted successfully!');

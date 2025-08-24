@@ -1996,6 +1996,75 @@ function grid_resign_report()
 		}
 	}
 }
+function grid_resign_report_with_image()
+{
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate =='')
+	{
+		alert("Please select Second date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select unit !");
+		return false;
+	}
+
+	var status = document.getElementById('status').value;
+	if(status != 3)
+	{
+		alert("Please select category status to Resign");
+		return false;
+	}
+
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&status="+status+"&unit_id="+unit_id;
+    url =  hostname+"grid_con/grid_resign_report_with_image/";
+
+	document.getElementById('loaader').style.display = 'flex';
+
+   ajaxRequest.open("POST", url, true);
+   ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+
+			resign_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			resign_report.document.write(resp);
+			//resign_report.stop();
+		}
+	}
+}
 function grid_left_report(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	try{
@@ -2046,6 +2115,73 @@ function grid_left_report(){
 
 	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&status="+status;
    	url =  hostname+"grid_con/grid_left_report/";
+
+	document.getElementById('loaader').style.display = 'flex';
+
+   	ajaxRequest.open("POST", url, true);
+   	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+   	ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			left_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			left_report.document.write(resp);
+			// left_report.stop();
+		}
+	}
+}
+function grid_left_report_with_image(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+
+	var firstdate = document.getElementById('firstdate').value;
+	if(firstdate =='')
+	{
+		alert("Please select First date");
+		return false;
+	}
+
+	var seconddate = document.getElementById('seconddate').value;
+	if(seconddate =='')
+	{
+		alert("Please select Second date");
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id == 'Select')
+	{
+		alert("Please select Category options");
+		return false;
+	}
+
+	var status = document.getElementById('status').value;
+	if(status != 2)
+	{
+		alert("Please select category status to Left");
+		return false;
+	}
+
+	var queryString="firstdate="+firstdate+"&seconddate="+seconddate+"&unit_id="+unit_id+"&status="+status;
+   	url =  hostname+"grid_con/grid_left_report_with_image/";
 
 	document.getElementById('loaader').style.display = 'flex';
 

@@ -2010,6 +2010,7 @@ class Grid_model extends CI_Model{
 		$data = array();
 		$this->db->select('pr_emp_com_info.emp_id,
 							pr_emp_per_info.name_en,
+							pr_emp_per_info.img_source,
 							emp_designation.desig_name,
 							pr_emp_com_info.emp_join_date,
 							emp_depertment.dept_name,
@@ -2052,6 +2053,7 @@ class Grid_model extends CI_Model{
 			$data["gross_sal"][] 	= $rows->gross_sal;
 			$data["e_date"][] 		= $rows->left_date;
 			$data["emp_dob"][] 		= $rows->emp_dob;
+			$data["img_source"][] 		= $rows->img_source;
 		}
 		if($data){
 			return $data;
@@ -2072,7 +2074,7 @@ class Grid_model extends CI_Model{
 						   pr_emp_com_info.emp_cat_id,
 						   pr_emp_com_info.gross_sal,
 						   pr_emp_resign_history.resign_date as e_date,
-						   pr_emp_per_info.emp_dob');
+						   pr_emp_per_info.emp_dob,pr_emp_per_info.img_source');
 		$this->db->from('pr_emp_per_info');
 		$this->db->from('pr_emp_com_info');
 		$this->db->from('emp_designation');
@@ -2091,6 +2093,7 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("emp_line_num.line_name_en","ASC");
 		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
 		$query = $this->db->get();
+		// dd($query->result() );
 		//echo $this->db->last_query();exit();
 		foreach($query->result() as $rows){
 			$data["emp_id"][] 		= $rows->emp_id;
@@ -2104,6 +2107,7 @@ class Grid_model extends CI_Model{
 			$data["gross_sal"][] 	= $rows->gross_sal;
 			$data["e_date"][] 		= $rows->e_date;
 			$data["emp_dob"][] 		= $rows->emp_dob;
+			$data["img_source"][] 	= $rows->img_source;
 		}
 		if($data){
 			return $data;

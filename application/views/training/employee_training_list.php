@@ -26,7 +26,6 @@
     .center-text {
         vertical-align: center;
         padding: 5px 10px;
-        /* line-height: 40px; Should be equal to the button's height */
 
     }
 </style>
@@ -80,9 +79,6 @@
         <!-- MULTI ACTION FORM -->
         <form id="multiActionForm" method="post">
             <div style="margin-bottom:10px;">
-                <button type="submit" formaction="<?= base_url('training_con/employee_training_done') ?>" 
-                        class="btn btn-success btn-mini" id="doneSelectedBtn" disabled>Done Selected</button>
-
                 <button type="submit" formaction="<?= base_url('training_con/employee_training_delete') ?>" 
                         class="btn btn-danger btn-mini" id="deleteSelectedBtn" disabled>Delete Selected</button>
             </div>
@@ -97,7 +93,6 @@
                         <th>Training Name</th>
                         <th>Training Date</th>
                         <th>Unit</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -106,10 +101,10 @@
                         <tr>
                             <td>
                                 <input type="checkbox" 
-                                    name="done[]" 
+                                    name="delete[]" 
                                     class="actionCheck" 
                                     value="<?php echo $pr_lines["id"] ?>" 
-                                    <?php echo (!empty($pr_lines["status"]) && $pr_lines["status"] == "2") ? 'disabled' : ''; ?> />
+                                    />
                             </td>
                             <td><?php echo $key + 1 ?></td>
                             <td><?php echo $pr_lines["emp_id2"] ?></td>
@@ -118,19 +113,6 @@
                             <td><?php echo $pr_lines["date"] ?></td>
                             <td><?php echo $pr_lines["unit_name"] ?></td>
                             <td>
-                                <?php if (!empty($pr_lines["status"]) && $pr_lines["status"] == "2") { ?>
-                                    <span style="background:#79ca10;padding:3px 5px;border-radius:4px;color:#ffffff"><b>Done</b></span>
-                                <?php } else { ?>
-                                    <span  style="background:#5e8300;padding:3px 5px;border-radius:4px;color:white"><b>Pending</b></span>
-                                <?php } ?>
-                            </td>
-                            <td>
-                                <?php if (!empty($pr_lines["status"]) && $pr_lines["status"] == "2") { ?>
-                                    <!-- Disable Done button if already Done -->
-                                    <button class="btn btn-success btn-mini" disabled>Done</button>
-                                <?php } else { ?>
-                                    <a class="btn btn-success btn-mini" href="<?= base_url('training_con/single_employee_training_done/'.$pr_lines["id"]) ?>" role="button">Done</a>
-                                <?php } ?>
                                 <a class="btn btn-danger btn-mini" href="<?= base_url('training_con/single_employee_training_delete/'.$pr_lines["id"]) ?>" role="button">Delete</a>
                             </td>
                         </tr>
@@ -171,7 +153,8 @@ $(document).ready(function() {
 
     function toggleButtons() {
         const hasChecked = $('.actionCheck:checked').length > 0;
-        $('#deleteSelectedBtn, #doneSelectedBtn').prop('disabled', !hasChecked);
+        $('#deleteSelectedBtn').prop('disabled', !hasChecked);
+        // $('#deleteSelectedBtn, #doneSelectedBtn').prop('disabled', !hasChecked);
     }
 
     // Confirm before bulk action

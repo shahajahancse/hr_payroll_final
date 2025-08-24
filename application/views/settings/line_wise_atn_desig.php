@@ -77,7 +77,7 @@
                         <th>Sl. No.</th>
                         <th>Id</th>
                         <th>Employee Name</th>
-                        <th>Actual Line name</th>
+                        <th>Designation name</th>
                         <th>Unit</th>
                         <th>Attaedence samary line</th>
                         <th>Delete</th>
@@ -93,7 +93,7 @@
                             <td><?php echo $key + 1  ?></td>
                             <td><?php echo $pr_lines["emp_id"] ?></td>
                             <td><?php echo $pr_lines["name_en"] ?></td>
-                            <td><?php echo $pr_lines["line_name_en"] ?></td>
+                            <td><?php echo $pr_lines["desig_name"] ?></td>
                             <td><?php echo $pr_lines["unit_name"] ?></td>
                             <td><?php echo $pr_lines["snum"] ?></td>
                             <td>

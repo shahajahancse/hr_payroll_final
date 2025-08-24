@@ -325,8 +325,14 @@
 							<?php if(in_array(106,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_resign_report()">Resign Report</button>
 							<?php } ?>
+							<?php if(in_array(217,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_resign_report_with_image()">Resign Report(with Image)</button>
+							<?php } ?>
 							<?php if(in_array(107,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_left_report()">Left Report</button>
+							<?php } ?>
+							<?php if(in_array(218,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="grid_left_report_with_image()">Left Report(with Image)</button>
 							<?php } ?>
 							<?php if(in_array(108,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="grid_general_info()">General Report</button>

@@ -206,6 +206,23 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/resign_emp_report',$data);
 		}
 	}
+	function grid_resign_report_with_image(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_seconddate = $this->input->post('seconddate');
+		$unit_id = $this->input->post('unit_id');
+		$status  = $this->input->post('status');
+		$grid_firstdate  = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate  = date("Y-m-d", strtotime($grid_seconddate));
+		$data['values'] = $this->Grid_model->grid_resign_report($grid_firstdate, $grid_seconddate, $unit_id);
+		$data['start_date'] = $grid_firstdate;
+		$data['end_date'] 	= $grid_seconddate;
+		$data['unit_id']    = $unit_id;
+		if(is_string($data['values'])){
+			echo $data['values'];
+		}else{
+			$this->load->view('grid_con/resign_emp_reportt',$data);
+		}
+	}
     // left report
 	function grid_left_report(){
 
@@ -223,6 +240,24 @@ class Grid_con extends CI_Controller {
 			echo $data['values'];
 		}else{
 			$this->load->view('grid_con/left_emp_report',$data);
+		}
+	}
+	function grid_left_report_with_image(){
+
+		$grid_firstdate     = $this->input->post('firstdate');
+		$grid_seconddate    = $this->input->post('seconddate');
+		$unit_id    		= $this->input->post('unit_id');
+		$status  			= $this->input->post('status');
+		$grid_firstdate     = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate    = date("Y-m-d", strtotime($grid_seconddate));
+		$data['values']     = $this->Grid_model->grid_left_report($grid_firstdate, $grid_seconddate, $unit_id);
+		$data['start_date'] = $grid_firstdate;
+		$data['end_date'] 	= $grid_seconddate;
+		$data['unit_id']    = $unit_id;
+		if(is_string($data['values'])){
+			echo $data['values'];
+		}else{
+			$this->load->view('grid_con/left_emp_reportt',$data);
 		}
 	}
 

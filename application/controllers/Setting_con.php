@@ -524,11 +524,12 @@ class Setting_con extends CI_Controller {
     //-------------------------------------------------------------------------------------------------------
 	public function line_wise_atn_desig()
     {
-        $this->db->select('per.*,info.*,pr_units.unit_name,n.line_name_en, num.line_name_en snum');
+        $this->db->select('per.*,info.*,pr_units.unit_name,n.line_name_en,emp_designation.desig_name, num.line_name_en snum');
         $this->db->from('pr_emp_com_info info');
         $this->db->join('pr_units', 'pr_units.unit_id = info.unit_id');
         $this->db->join('emp_line_num n', 'n.id = info.emp_line_id');
         $this->db->join('emp_line_num num', 'num.id = info.attn_sum_line_id');
+        $this->db->join('emp_designation emp_designation', 'info.emp_desi_id = emp_designation.id');
         $this->db->join('pr_emp_per_info per', 'per.emp_id = info.emp_id', 'left');
         $this->db->where('info.attn_sum_line_id IS NOT NULL');
         $this->db->where('info.unit_id', $_SESSION['data']->unit_name);

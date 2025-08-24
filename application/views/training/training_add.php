@@ -42,7 +42,7 @@
         <form action="<?= base_url('training_con/training_add')?>" enctype="multipart/form-data" method="post">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="unit_id">Unit</label>
                         <select name="unit_id" id="unit_id" class="form-control">
                             <option value="">Select Unit</option>
@@ -53,9 +53,15 @@
                         </select>
                         <?= (isset($failuer['unit_id'])) ? '<div class="alert alert-failuer">' . $failuer['unit_id'] . '</div>' : ''; ?>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label>Title</label>
+                    <div class="form-group col-md-3">
+                        <label>Title (English)</label>
                         <input type="text" name="title" value="" placeholder="Title"
+                            class="form-control">
+                        <?=(isset($failuer['title'])) ? '<div class="alert alert-failuer">' . $failuer['title'] . '</div>' : ''; ?>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Title (Bangla)</label>
+                        <input type="text" name="title_bn" value="" placeholder="Title"
                             class="form-control">
                         <?=(isset($failuer['title'])) ? '<div class="alert alert-failuer">' . $failuer['title'] . '</div>' : ''; ?>
                     </div>

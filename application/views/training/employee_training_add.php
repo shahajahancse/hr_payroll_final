@@ -143,8 +143,8 @@
 						<input type="date" name="date" id="date" class="form-control" required>
 					</div><!-- /input-group -->
 					<div class="input-group col-md-4">
-						<label for="">Time</label>
-						<input type="time" name="time" id="time" class="form-control" required>
+						<label for="">Area</label>
+						<input type="text" name="area" id="area" class="form-control" required>
 					</div><!-- /input-group -->
 					<div class="input-group col-md-4">
 						<label style="color:white">.</label>
@@ -359,7 +359,7 @@
             e.preventDefault();
             var url = '<?= base_url('training_con/employee_training_add')?>';
 
-            // id	emp_id	unit_id	training_id	date	time	status	created_at	
+            // id	emp_id	unit_id	training_id	date	area	status	created_at	
 
 
             var checkboxes = document.getElementsByName('emp_id[]');
@@ -379,8 +379,8 @@
             }
             var training_id = document.getElementById('training_id').value;
             var date = document.getElementById('date').value;
-            var time = document.getElementById('time').value;
-            var data="training_id="+training_id+"&date="+date+"&unit_id="+unit_id+"&spl="+sql+"&time="+time;
+            var area = document.getElementById('area').value;
+            var data="training_id="+training_id+"&date="+date+"&unit_id="+unit_id+"&spl="+sql+"&area="+area;
             $.ajax({
                 type: "POST",
                 url: url,
