@@ -850,13 +850,16 @@ class Grid_model extends CI_Model{
 		// Add more columns conditionally
 		if ($user_mode == 7) {
 			$select .= ",
-			SUM( CASE WHEN (log.out_time >= '18:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS seven_pm";
+			SUM( CASE WHEN (log.out_time >= '18:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS seven_pm,
+			SUM( CASE WHEN (log.out_time >= '17:0:00' OR log.out_time <='07:15:59') THEN ot ELSE 0 END ) AS seven_pm_ot";
 		}
 		if ($user_mode == 9) {
 			$select .= ",
 			SUM( CASE WHEN log.out_time >= '18:50:00' AND log.out_time <= '19:49:59' THEN 1 ELSE 0 END ) AS seven_pm,
 			SUM( CASE WHEN log.out_time >='19:50:00' AND log.out_time <= '20:49:59' THEN 1 ELSE 0 END ) AS eight_pm,
-			SUM( CASE WHEN (log.out_time >= '20:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS nine_pm";
+			SUM( CASE WHEN (log.out_time >= '20:50:00' OR log.out_time <= '07:15:59') THEN 1 ELSE 0 END ) AS nine_pm,
+			SUM( CASE WHEN (log.out_time >= '17:0:00' OR log.out_time <='07:15:59') THEN ot ELSE 0 END ) AS nine_pm_ot,
+			SUM( CASE WHEN (log.out_time >= '17:0:00' OR log.out_time <='07:15:59') THEN eot ELSE 0 END ) AS nine_pm_eot";
 		}
 		if ($user_mode == 12) {
 			$select .= ",
@@ -865,7 +868,9 @@ class Grid_model extends CI_Model{
 			SUM( CASE WHEN log.out_time >= '20:50:00' AND log.out_time <= '21:49:59' THEN 1 ELSE 0 END ) AS nine_pm,
 			SUM( CASE WHEN log.out_time >= '21:50:00' AND log.out_time <= '22:49:59' THEN 1 ELSE 0 END ) AS ten_pm,
 			SUM( CASE WHEN log.out_time >= '22:50:00' AND log.out_time <= '23:49:59' THEN 1 ELSE 0 END ) AS eleven_pm,
-			SUM( CASE WHEN log.out_time >= '23:50:00' AND log.out_time <= '07:15:59' THEN 1 ELSE 0 END ) AS tweelve_pm";
+			SUM( CASE WHEN log.out_time >= '23:50:00' AND log.out_time <= '07:15:59' THEN 1 ELSE 0 END ) AS tweelve_pm,
+			SUM( CASE WHEN (log.out_time >= '17:0:00' OR log.out_time <='07:15:59') THEN ot ELSE 0 END ) AS tweelve_pm_ot,
+			SUM( CASE WHEN (log.out_time >= '17:0:00' OR log.out_time <='07:15:59') THEN eot ELSE 0 END ) AS tweelve_pm_eot";
 		}
 		if ($user_mode == 0) {
 			$select .= ",
@@ -901,8 +906,8 @@ class Grid_model extends CI_Model{
 		// dd($this->db->get()->result());
 		// $this->db->get()->result();
 
-		// dd($this->db->last_query());
 		return $this->db->get()->result();
+		// dd($this->db->last_query());
 	}
 	// }
 
@@ -1023,6 +1028,7 @@ class Grid_model extends CI_Model{
 			emp_section.sec_name_en,
 			emp_line_num.line_name_en,
 			pr_emp_shift_schedule.sh_type as shift_name,
+			pr_emp_shift_schedule.random_minute as random_minute,
 			pr_emp_com_info.emp_cat_id,
 			pr_emp_com_info.emp_sec_id,
 			pr_emp_shift_log.in_time,

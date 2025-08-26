@@ -63,6 +63,7 @@
                 <option value="7" <?= ($row->user_mode == '7')? 'selected':'' ?> >7pm</option>
                 <option value="9" <?= ($row->user_mode == '9')? 'selected':'' ?> >9pm</option>
                 <option value="12" <?= ($row->user_mode == '12')? 'selected':'' ?> >12pm</option>
+                <option value="11" <?= ($row->user_mode == '11')? 'selected':'' ?> >Without Friday</option>
               </select>
           </div>
           <div class="form-group">

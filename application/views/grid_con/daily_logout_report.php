@@ -119,10 +119,16 @@
                             <th width="120"><?php echo $row->six_pm?></th>
                             <?php if($user_mode==7){ ?>
                             <th width="120"><?php echo $row->seven_pm?></th>
+                            <th width="120"><?php echo $row->present_error?></th>
+                            <th width="120"><?php echo $row->seven_pm_ot?></th>
+                            <th width="120"><?php echo ''?></th>
                             <?php } if($user_mode==9){ ?>
                             <th width="120"><?php echo $row->seven_pm?></th>
                             <th width="120"><?php echo $row->eight_pm?></th>
                             <th width="120"><?php echo $row->nine_pm?></th>
+                            <th width="120"><?php echo $row->present_error?></th>
+                            <th width="120"><?php echo ($row->nine_pm_ot+$row->nine_pm_eot)?></th>
+                            <th width="120"><?php echo ''?></th>
                             <?php } if($user_mode==12){ ?>
                             <th width="120"><?php echo $row->seven_pm?></th>
                             <th width="120"><?php echo $row->eight_pm?></th>
@@ -130,6 +136,9 @@
                             <th width="120"><?php echo $row->ten_pm?></th>
                             <th width="120"><?php echo $row->eleven_pm?></th>
                             <th width="120"><?php echo $tweelve_pm?></th>
+                            <th width="120"><?php echo $row->present_error?></th>
+                            <th width="120"><?php echo ($row->tweelve_pm_ot+$row->tweelve_pm_eot)?></th>
+                            <th width="120"><?php echo ''?></th>
                             <?php } if($user_mode==0){ ?>
                             <th width="120"><?php echo $row->seven_pm?></th>
                             <th width="120"><?php echo $row->eight_pm?></th>
@@ -144,10 +153,11 @@
                             <th width="120"><?php echo $row->five_am?></th>
                             <th width="120"><?php echo $row->six_am?></th>
                             <th width="120"><?php echo $row->others?></th>
-                            <?php } ?>
                             <th width="120"><?php echo $row->present_error?></th>
                             <th width="120"><?php echo $row->total_ot?></th>
                             <th width="120"><?php echo ''?></th>
+                            <?php } ?>
+
                         </tr>
                     <?php } ?>
                     <tr style="background:#C1E0FF">

@@ -83,6 +83,7 @@
                 <option value="7">7pm</option>
                 <option value="9">9pm</option>
                 <option value="12">12pm</option>
+                <option value="11">Without Friday</option>
               </select>
           </div>
           <div class="form-group">

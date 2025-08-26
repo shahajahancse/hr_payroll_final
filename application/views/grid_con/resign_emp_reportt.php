@@ -32,7 +32,7 @@ for ($page = 0; $page < $page_count; $page++) {
 	$this->load->view("head_english");
 ?>
 <span style="font-size:13px; text-align: center;">
-	<p style="text-align: center;padding: 0px;margin: 0;">Left Employee  Information </br>
+	<p style="text-align: center;padding: 0px;margin: 0;">Resign Employee  Information </br>
 		<?php echo date('d M Y', strtotime($start_date)) . "  TO  " . date('d M Y', strtotime($end_date)); ?>
 	</p>
 </span>

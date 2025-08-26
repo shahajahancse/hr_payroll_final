@@ -171,6 +171,7 @@ class Grid_con extends CI_Controller {
 
     // New Joining
 	function grid_new_join_report(){
+		// dd($_SESSION);
 		$grid_firstdate 	= $this->input->post('firstdate');
 		$grid_seconddate	= $this->input->post('seconddate');
 		$unit_id		 	= $this->input->post('unit_id');

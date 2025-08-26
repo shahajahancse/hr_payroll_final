@@ -1662,8 +1662,8 @@ class Entry_system_con extends CI_Controller
     }
 
     public function inter_unit_transfer_add(){
-        $last_working_date = date('Y-m-d', $this->input->post('last_working_date'));
-        $joining_date = date('Y-m-d', $this->input->post('joining_date'));
+        $last_working_date = date('Y-m-d', strtotime($this->input->post('last_working_date')));
+        $joining_date = date('Y-m-d', strtotime($this->input->post('joining_date')));
 
         $sql = $this->input->post('sql');
         $new_unit_id = $this->input->post('new_unit_id');
@@ -2367,7 +2367,7 @@ class Entry_system_con extends CI_Controller
             // $this->db->insert_batch('pr_emp_left_history', $data);
 
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 2))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 2, 'attn_sum_line_id' => null))) {
                 echo 'success';
             }else{
                 echo 'error';
@@ -2380,7 +2380,7 @@ class Entry_system_con extends CI_Controller
                 $this->db->insert('pr_emp_resign_history', $data);
             }
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3,'attn_sum_line_id' => null))) {
                 echo 'success';
             }else{
                 echo 'error';

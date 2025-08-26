@@ -51,8 +51,20 @@
             <th>Designation</th>
             <th>Line</th>
             <th>Grade</th>
-            <th>OT Entitle</th>
-            <th>Att.Bonus</th>
+			<?php 
+				$acl = $this->db
+					->select('acl_id')
+					->where('username_id', $_SESSION['data']->id)
+					->get('member_acl_level')
+					->result_array(); 
+
+				$acl_ids = array_column($acl, 'acl_id');
+
+				if (!in_array(10, $acl_ids)) { 
+			?>
+				<th>OT Entitle</th>
+				<th>Att.Bonus</th>
+			<?php } ?>
             <th>Salary</th>
             <th>Remarks</th>
         </tr>
@@ -93,21 +105,24 @@
 		echo $values["gr_name"][$k];
 		echo "</td>";
 
-		echo "<td  style='text-align:center;'>";
-		if($values["com_ot_entitle"][$k] == 0){
-			echo "Yes";
-		}else{
-			echo "No";
-		}
-		echo "</td>";
+		if (!in_array(10, $acl_ids)) { 
+		
+			echo "<td  style='text-align:center;'>";
+			if($values["com_ot_entitle"][$k] == 0){
+				echo "Yes";
+			}else{
+				echo "No";
+			}
+			echo "</td>";
 
-		echo "<td  style='text-align:center;'>";
-		if($values["att_bonus"][$k] == 2){
-			echo "No";
-		}else{
-			echo $values["rule"][$k];
+			echo "<td  style='text-align:center;'>";
+			if($values["att_bonus"][$k] == 2){
+				echo "No";
+			}else{
+				echo $values["rule"][$k];
+			}
+			echo "</td>";	
 		}
-		echo "</td>";
 
 		echo "<td   style='text-align:center;'>";
 		echo $values["com_gross_sal"][$k];

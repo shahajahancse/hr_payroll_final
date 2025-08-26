@@ -15,12 +15,12 @@ class Training_con extends CI_Controller {
 		$this->load->model('Acl_model');
 		$this->load->model('Common_model');
         $this->load->model('grid_model');
-
-
+        
         if ($this->session->userdata('logged_in') == false) {
             redirect("authentication");
         }
         $this->data['user_data'] = $this->session->userdata('data');
+        // dd($this->data['user_data']);
         if (!check_acl_list($this->data['user_data']->id, 4)) {
             echo "<SCRIPT LANGUAGE=\"JavaScript\">alert('Sorry! Acess Deny');</SCRIPT>";
             redirect("payroll_con");
@@ -201,17 +201,18 @@ class Training_con extends CI_Controller {
 
     private function get_training_done($emp_ids, $training_id)
     {
-        $this->db->select('training_management.*, pr_units.unit_name, pr_emp_per_info.emp_id as emp_id2, training_type.title as training_name, pr_emp_per_info.name_en as emp_name');
+        $this->db->select('training_management.*, pr_units.unit_name,pr_emp_per_info.name_bn as emp_name_bn, pr_emp_per_info.emp_id as emp_id2, training_type.title as training_name, pr_emp_per_info.name_en as emp_name,emp_depertment.dept_bangla,emp_line_num.line_name_bn,emp_designation.desig_bangla');
         $this->db->from('training_management');
         $this->db->join('pr_units', 'pr_units.unit_id = training_management.unit_id');
         $this->db->join('training_type', 'training_type.id = training_management.training_id');
         $this->db->join('pr_emp_com_info', 'pr_emp_com_info.emp_id = training_management.emp_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+        $this->db->join('emp_depertment', 'emp_depertment.dept_id = pr_emp_com_info.emp_dept_id');
+        $this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id');
+        $this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id');
         $this->db->where_in('training_management.emp_id', $emp_ids);
         $this->db->where('training_management.training_id', $training_id);
         $this->db->where('training_management.status', 1);
-        // $data =  $this->db->get()->result();
-        // dd($this->db->last_query());
         return $this->db->get()->result();
     }
 
@@ -221,17 +222,19 @@ class Training_con extends CI_Controller {
 
         $this->db->select('
             pr_emp_per_info.emp_id as emp_id2,
-            pr_emp_per_info.name_en as emp_name
+            pr_emp_per_info.name_bn as emp_name,
+            emp_designation.desig_bangla,
+            emp_line_num.line_name_bn
         ');
         $this->db->from('pr_emp_com_info');
         $this->db->join('pr_units', 'pr_units.unit_id = pr_emp_com_info.unit_id');
         $this->db->join('pr_emp_per_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id', 'left');
+        $this->db->join('emp_designation', 'emp_designation.id = pr_emp_com_info.emp_desi_id');
+        $this->db->join('emp_line_num', 'emp_line_num.id = pr_emp_com_info.emp_line_id');
         $this->db->where_in('pr_emp_com_info.emp_id', $emp_ids);
-
         if (!empty($completed_emp_ids)) {
             $this->db->where_not_in('pr_emp_com_info.emp_id', $completed_emp_ids);
         }
-
         return $this->db->get()->result();
 
     }

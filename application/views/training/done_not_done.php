@@ -29,23 +29,25 @@
                 <tr>
                     <th class='unicode-to-bijoy'>ক্রমিক নং</th>
                     <th class='unicode-to-bijoy'>কার্ড নাম্বার</th>
-                    <th class='unicode-to-bijoy'>নাম</th>
-                    <th class='unicode-to-bijoy'>ডিপার্টমেন্ট</th>
                     <th class='unicode-to-bijoy'>লাইন</th>
+                    <th class='unicode-to-bijoy'>নাম</th>
+                    <th class='unicode-to-bijoy'>পদবী</th>
                     <th class='unicode-to-bijoy'>ফ্লোর</th>
-                    <th class='unicode-to-bijoy'>মন্তব্য</th>
+                    <th class='unicode-to-bijoy'>তারিখ</th>
+                    <th class='unicode-to-bijoy' >মন্তব্য</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="text-center">
                 <?php foreach ($done as $key => $value) { ?>
-                    <tr>
-                        <td><?php echo $key + 1; ?></td>
-                        <td><?php echo $value->emp_id2; ?></td>
-                        <td><?php echo $value->emp_name; ?></td>
-                        <td><?php echo $value->training_name; ?></td>
-                        <td><?php echo $value->unit_name; ?></td>
-                        <td><?php echo $value->date; ?></td>
-                        <td><?php echo $value->time; ?></td>
+                    <tr style="text-center">
+                        <td class='unicode-to-bijoy' style="text-center"><?php echo $key + 1; ?></td>
+                        <td class='unicode-to-bijoy' style="text-center"><?php echo $value->emp_id2; ?></td>
+                        <td class='unicode-to-bijoy' style="text-center"><?php echo $value->emp_name_bn; ?></td>
+                        <td class='unicode-to-bijoy' style="text-center"><?php echo $value->line_name_bn; ?></td>
+                        <td class='unicode-to-bijoy' style="text-center"><?php echo $value->desig_bangla; ?></td>
+                        <td class='unicode-to-bijoy' style="text-center"><?php echo $value->area; ?></td>
+                        <td class='unicode-to-bijoy' style="text-center"><?php echo $value->date; ?></td>
+                        <td class='unicode-to-bijoy' style="padding: 30px 100px;"><?php echo $value->time; ?></td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -58,22 +60,18 @@
                     <th class='unicode-to-bijoy'>ক্রমিক নং</th>
                     <th class='unicode-to-bijoy'>কার্ড নাম্বার</th>
                     <th class='unicode-to-bijoy'>নাম</th>
-                    <th class='unicode-to-bijoy'>ডিপার্টমেন্ট</th>
                     <th class='unicode-to-bijoy'>লাইন</th>
-                    <th class='unicode-to-bijoy'>ফ্লোর</th>
-                    <th class='unicode-to-bijoy'>মন্তব্য</th>
+                    <th class='unicode-to-bijoy'>পদবী</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($not_done as $key => $value) { ?>
                 <tr>
-                    <td><?php echo $key + 1; ?></td>
-                    <td><?php echo $value->emp_id2; ?></td>
-                    <td><?php echo $value->emp_name; ?></td>
-                    <td><?php echo $value->training_name; ?></td>
-                    <td><?php echo $value->unit_name; ?></td>
-                    <td><?php echo $value->date; ?></td>
-                    <td><?php echo $value->time; ?></td>
+                    <td class='unicode-to-bijoy'><?php echo $key + 1; ?></td>
+                    <td class='unicode-to-bijoy'><?php echo $value->emp_id2; ?></td>
+                    <td class='unicode-to-bijoy'><?php echo $value->emp_name; ?></td>
+                    <td class='unicode-to-bijoy'><?php echo $value->line_name_bn; ?></td>
+                    <td class='unicode-to-bijoy'><?php echo $value->desig_bangla; ?></td>
                 </tr>
                 <?php } ?>
             </tbody>

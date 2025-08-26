@@ -99,6 +99,7 @@
         <table border="1" cellpadding="0" cellspacing="0" style="font-size:12px; width:700px; margin-bottom:20px;">
             <?php $this->load->model('Grid_model'); $i=1;
 			$groupedData = array();
+			// dd($values);
 			
 			foreach ($values as $employee) {
 				if($employee['out_time'] == '00:00:00' && $employee['in_time'] == '00:00:00' && in_array($daily_status,array(7,8))) {
@@ -176,18 +177,31 @@
                 <?php if($daily_status==1 || $daily_status== 5 || $daily_status==6 || $daily_status==7 || $daily_status==8){?>
 					<td style="text-align:center; padding:0 4px">
 						<?php 
-							echo $employee['in_time'] !='00:00:00' ? date('h:i:s A',strtotime($employee['in_time'])) : "";
+							$in_time = $employee['in_time'] ;
+							list($hour, $minute, $second) = explode(':', $in_time);
+							if ((int)$minute < 45 ) {
+								// dd($minute);
+
+							$minuteDigits = str_split($minute);
+							$minuteSum = array_sum($minuteDigits);                                
+							$n_m = 60 - $minuteSum;
+							$in_time = sprintf("%02d:%02d:%02d", (int)$hour, $n_m, (int)$second);
+							} else{
+								$in_time =  $employee['in_time'] != "00:00:00" ? $employee['in_time'] : '';
+							}
+							echo $in_time;
 						?>
 					</td>
 					<td style="text-align:center; padding:0 4px">
 					<?php 
-						$out_time = ($employee['out_time'] != '00:00:00') ? date('h:i:s A', strtotime($employee['out_time'])) : "";
+					// dd($employee['out_time']);
+						$out_time = ($employee['out_time'] != '00:00:00') ? date('H:i:s ', strtotime($employee['out_time'])) : "";
 						$times  = explode(':', $employee['out_time']);
 						$hour   = $times[0];
 						$minute = $times[1];
 						$second = $times[2];
-						// dd($hour);
-						if ($hour >18 && ($minute > 14 && $minute < 50)) {
+						// dd($minute);
+						if ($hour >18 && ($minute > 11 && $minute < 50)) {
 							$minute = array_sum(str_split($minute));
 						}
 						if($minute >=50 && $minute <= 60){
@@ -198,16 +212,19 @@
 						$formattedMinute = str_pad($minute, 2, '0', STR_PAD_LEFT);
 						if ($_SESSION['data']->user_mode == 7) {
 							$h = ($hour== 5 || $hour == 6|| $hour == 7|| $hour == 17 || $hour == 18|| $hour == 19)  ? $hour: 19;
-							$formattedTime = "$h:$formattedMinute:$second";
-							echo date('h:i:s A', strtotime($formattedTime));
+							$m = ($minute > 11 && $minute < 50) ? (array_sum(str_split($minute))) : $formattedMinute;
+							$formattedTime = "$h:$m:$second";
+							echo date('H:i:s ', strtotime($formattedTime));
 						}elseif ($_SESSION['data']->user_mode == 9) {
 							$h = $hour < 21 ? $hour : 21; 
-							$formattedTime = "$h:$formattedMinute:$second";
-							echo date('h:i:s A', strtotime($formattedTime));
+							$m = ($minute > 11 && $minute < 50) ? (array_sum(str_split($minute))) : $formattedMinute;
+							$formattedTime = "$h:$m:$second";
+							echo date('H:i:s ', strtotime($formattedTime));
 						} elseif ($_SESSION['data']->user_mode == 12) {
 							$h = $hour < 23 ? $hour : 12; 
-							$formattedTime = "$h:$formattedMinute:$second";
-							echo date('h:i:s A', strtotime($formattedTime));
+							$m = ($minute > 11 && $minute < 50) ? (array_sum(str_split($minute))) : $formattedMinute;
+							$formattedTime = "$h:$m:$second";
+							echo date('H:i:s ', strtotime($formattedTime));
 						} else {
 							echo $out_time;
 						}
