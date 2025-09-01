@@ -87,8 +87,8 @@
             <p class='unicode-to-bijoy'> c~‡e©i jvBbt  <?php echo "<span class='unicode-to-bijoy' style='font-family:arial;font-size:14px'>".$row->prev_line_name?></p>
             <p class='unicode-to-bijoy'> ‡hvM`vbt 
                 <span style="font-family:SutonnyMJ;font-size:19px">
-                    <?php echo date('m/Y',strtotime($row->effective_month))?>
-                </span>Bs
+                    <?php echo date('d/m/Y',strtotime($row->emp_join_date))?></span> Bs</p>
+                </span>
             </p>
         </div>
         <br>
