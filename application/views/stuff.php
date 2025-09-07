@@ -283,7 +283,18 @@ $obj = new NumberToWord();
                         <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
                     </div>
-                <?php } else{?>
+                <?php }  if($unit_id ==2 ){?>
+                    <div>
+                        <!-- <p style='text-align:center'><b></b></p> -->
+                        <p style='border-top: 1px solid black;width:fit-content'><b>Maminul Islam </b></p>
+                        <p style=''><b>Group GM (Operations & Sustainability)</b></p>
+                        <p><b><?= $com_info->company_name_english?></b></p>
+                        <p style="line-height:1.3;margin-left: 35px;">1) GM (Project Head)</p>
+                        <p style="line-height:1.3;margin-left: 35px;">2) HR Department</p>
+                        <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
+                        <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
+                    </div>
+                <?php } else{?>    
                     <div>
                         <p style='border-top: 1px solid black;width:fit-content'><b>Department Head</b></p>
                         <p>(HR, Admin Compliance)</p>
@@ -455,7 +466,18 @@ $obj = new NumberToWord();
                         <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
                     </div>
-                <?php } else{?>
+                <?php }  if($unit_id ==2 ){?>
+                    <div>
+                        <!-- <p style='text-align:center'><b></b></p> -->
+                        <p style='border-top: 1px solid black;width:fit-content'><b>Maminul Islam </b></p>
+                        <p style=''><b>Group GM (Operations & Sustainability)</b></p>
+                        <p><b><?= $com_info->company_name_english?></b></p>
+                        <p style="line-height:1.3;margin-left: 35px;">1) GM (Project Head)</p>
+                        <p style="line-height:1.3;margin-left: 35px;">2) HR Department</p>
+                        <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
+                        <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
+                    </div>
+                <?php } else{?> 
                     <div>
                         <p style='border-top: 1px solid black;width:fit-content'><b>Department Head</b></p>
                         <p>(HR, Admin Compliance)</p>

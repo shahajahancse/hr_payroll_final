@@ -1309,67 +1309,62 @@ class Entry_system_con extends CI_Controller
                 'emp_line_id'       => $line,
                 'emp_desi_id'       => $designation,
             );
-
+        // dd($r);
         $check = $this->db->where('ref_id', $emp_id)->where('effective_month', $line_date)->get('pr_incre_prom_pun');
         if ($check->num_rows() > 0) {
             $rr = $check->row();
             $data = array(
-                'prev_emp_id'       => $emp_id,
-                'prev_dept'         => $rr->prev_dept,
-                'prev_section'      => $rr->prev_section,
-                'prev_line'         => $rr->prev_line,
-                'prev_desig'        => $rr->prev_desig,
-                'prev_grade'        => $rr->prev_grade,
-                'prev_salary'       => $rr->prev_salary,
-                'prev_com_salary'   => $rr->prev_com_salary,
-                'new_emp_id'        => $emp_id,
-                'new_dept'          => $department,
-                'new_section'       => $section,
-                'new_line'          => $line,
-                'new_desig'         => $designation,
-                'new_grade'         => $rr->new_grade,
-                'new_salary'        => $rr->new_salary,
-                'new_com_salary'    => $rr->new_com_salary,
-                'effective_month'   => $line_date,
-                'ref_id'            => $emp_id,
-                'status'            => 3,
+            'prev_emp_id'     => $emp_id,
+            'prev_dept'       => $rr->prev_dept,
+            'prev_section'    => $rr->prev_section,
+            'prev_line'       => $rr->prev_line,
+            'prev_desig'      => $rr->prev_desig,
+            'prev_grade'      => $rr->prev_grade,
+            'prev_salary'     => $rr->prev_salary,
+            'prev_com_salary' => $rr->prev_com_salary,
+            'new_emp_id'      => $emp_id,
+            'new_dept'        => $department,
+            'new_section'     => $section,
+            'new_line'        => $line,
+            'new_desig'       => $designation,
+            'new_grade'       => $rr->new_grade,
+            'new_salary'      => $rr->new_salary,
+            'new_com_salary'  => $rr->new_com_salary,
+            'effective_month' => $line_date,
+            'ref_id'          => $emp_id,
+            'status'          => 3,
             );
-
-            $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
-            if ( $this->db->update('pr_incre_prom_pun', $data) ) {
-                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
-                echo 'success';
-            }else{
-                echo 'error';
-            }
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $line_date);
+            $result = $this->db->update('pr_incre_prom_pun', $data);
         } else {
             $data = array(
-                'prev_emp_id'       => $emp_id,
-                'prev_dept'         => $r->emp_dept_id,
-                'prev_section'      => $r->emp_sec_id,
-                'prev_line'         => $r->emp_line_id,
-                'prev_desig'        => $r->emp_desi_id,
-                'prev_grade'        => $r->emp_sal_gra_id,
-                'prev_salary'       => $r->gross_sal,
-                'prev_com_salary'   => $r->com_gross_sal,
-                'new_emp_id'        => $emp_id,
-                'new_dept'          => $department,
-                'new_section'       => $section,
-                'new_line'          => $line,
-                'new_desig'         => $designation,
-                'new_grade'         => $r->emp_sal_gra_id,
-                'new_salary'        => $r->gross_sal,
-                'new_com_salary'    => $r->com_gross_sal,
-                'effective_month'   => $line_date,
-                'ref_id'            => $emp_id,
-                'status'            => 3,
+            'prev_emp_id'     => $emp_id,
+            'prev_dept'       => $r->emp_dept_id,
+            'prev_section'    => $r->emp_sec_id,
+            'prev_line'       => $r->emp_line_id,
+            'prev_desig'      => $r->emp_desi_id,
+            'prev_grade'      => $r->emp_sal_gra_id,
+            'prev_salary'     => $r->gross_sal,
+            'prev_com_salary' => $r->com_gross_sal,
+            'new_emp_id'      => $emp_id,
+            'new_dept'        => $department,
+            'new_section'     => $section,
+            'new_line'        => $line,
+            'new_desig'       => $designation,
+            'new_grade'       => $r->emp_sal_gra_id,
+            'new_salary'      => $r->gross_sal,
+            'new_com_salary'  => $r->com_gross_sal,
+            'effective_month' => $line_date,
+            'ref_id'          => $emp_id,
+            'status'          => 3,
             );
-            if ( $this->db->insert('pr_incre_prom_pun', $data) ) {
-                $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
-                echo 'success';
-            }else{
-                echo 'error';
-            }
+            $result = $this->db->insert('pr_incre_prom_pun', $data);
+        }
+        if ($result) {
+            $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
+            echo 'success';
+        } else {
+            echo 'error';
         }
     }
     public function line_delete_ajax(){
@@ -2358,6 +2353,7 @@ class Entry_system_con extends CI_Controller
                 echo 'error';
             }
         } else if ($type == 2 && !empty($date)) {
+            $this->db->where('unit_id', $unit_id)->where('emp_id', $sql)->delete('pr_emp_resign_history');
             $data = [];
             $data = array('unit_id' => $unit_id, 'emp_id' => $sql, 'left_date' => $date, 'remark' => $remark);
             $dd = $this->db->where('unit_id', $unit_id)->where('emp_id', $sql)->get('pr_emp_left_history');
@@ -2373,6 +2369,8 @@ class Entry_system_con extends CI_Controller
                 echo 'error';
             }
         } else {
+            
+            $this->db->where('unit_id', $unit_id)->where('emp_id', $sql)->delete('pr_emp_left_history');
             $data = [];
             $data = array('unit_id' => $unit_id, 'emp_id' => $sql, 'resign_date' => $date, 'remark' => $remark);
             $dd = $this->db->where('unit_id', $unit_id)->where('emp_id', $sql)->get('pr_emp_resign_history');
@@ -3369,7 +3367,16 @@ class Entry_system_con extends CI_Controller
         $this->db->where('present_status', 'P');
         $this->db->order_by('shift_log_date', 'DESC');
         $this->db->limit(1);
+        // dd($status);
         $date = $this->db->get('pr_emp_shift_log')->row('shift_log_date');
+
+        if($status == 2){
+           $date = $this->db->select('left_date')->where('emp_id', $emp_id)->get('pr_emp_left_history')->row('left_date');
+        } 
+        if($status == 3){
+           $date = $this->db->select('resign_date')->where('emp_id', $emp_id)->get('pr_emp_resign_history')->row('resign_date');
+        }
+        // dd($left);
         echo json_encode(['emp_cat_id' => $status,'shift_log_date'=> $date]);
         // dd($staus);
     }
