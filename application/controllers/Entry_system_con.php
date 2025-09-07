@@ -2608,7 +2608,7 @@ class Entry_system_con extends CI_Controller
 
         $data = array(
             'working_days'          => $get_info->absent + $get_info->present,
-            'pay_days'              => $get_info->present - $liv_info,
+            'pay_days'              => ($get_info->present+$get_info->absent) - $liv_info,
             'per_day_rate'          => $basic_salary / 30,
             'ot_eot'                => $get_info->ot_hour + $get_info->eot_hour,
             'ot_2pm'                => $get_info->com_ot,
@@ -2631,7 +2631,7 @@ class Entry_system_con extends CI_Controller
             'net_pay'               => $emp_total_pay,
             'status'                => 1,
         );
-        // dd($data);
+        // dd($liv_info);
         $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);
         echo json_encode(array('success' => true));
     }

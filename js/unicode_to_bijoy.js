@@ -873,7 +873,7 @@ function Insert(field, text) {
     হ: "p",
     ড়: "r",
     ঢ়: "s",
-    য়: "t",
+    য়: "q",
     থ: "a",
     ৎ: "u",
     "ং": "v",
