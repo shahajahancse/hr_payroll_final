@@ -151,6 +151,7 @@ class Setting_con extends CI_Controller {
         $this->data['departments'] = $this->db->get()->result();
 
 
+
 		$this->data['users'] = $this->get_member();
         $this->data['title'] = 'Hide Designation Employee';
         $this->data['username'] = $this->data['user_data']->id_number;
@@ -247,11 +248,13 @@ class Setting_con extends CI_Controller {
 		$this->db->select('pr_units.*');
         $this->data['units'] = $this->db->get('pr_units')->result_array();
 
-		$this->db->select('pr_report_setting.*, pr_units.unit_name');
-		$this->db->join('pr_units', 'pr_report_setting.unit_id = pr_units.unit_id', 'left');
+		$this->db->select('rs.*, ,ss.sh_type, pr_units.unit_name');
+		$this->db->join('pr_emp_shift_schedule ss', 'ss.id = rs.schedule_id', 'left');
+		$this->db->join('pr_units', 'rs.unit_id = pr_units.unit_id', 'left');
 		$this->db->where('pr_units.unit_id', $_SESSION['data']->unit_name);
 		$this->db->order_by('id', 'desc');
-		$this->data['data'] = $this->db->get('pr_report_setting')->result_array();
+		$this->data['data'] = $this->db->get('pr_report_setting rs')->result_array();
+		
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['title'] = 'Report setting';
         $this->data['subview'] = 'settings/report_setting';
@@ -259,83 +262,233 @@ class Setting_con extends CI_Controller {
 	}
 
 	public function report_setting_save($id){
-		// dd($id);
 		$unit_id = $this->input->post('unit_id');
-		$date = date('Y-m-d', strtotime($this->input->post('date')));
-		$end_date = date('Y-m-d', strtotime($this->input->post('end_date')));
+		$schedule_id = $this->input->post('schedule_id');
+		$first_date = date('Y-m-d', strtotime($this->input->post('first_date')));
+		$second_date = date('Y-m-d', strtotime($this->input->post('second_date')));
 		$max_ot = $this->input->post('max_ot');
 		$type = $this->input->post('type');
 		$active_status = $this->input->post('active_status');
 
 		$data = array(
 			'unit_id' => $unit_id,
-			'date' => $date,
-			'end_date' => $end_date,
+			'schedule_id' => $schedule_id,
+			'first_date' => $first_date,
+			'second_date' => $second_date,
 			'max_ot' => $max_ot,
-			'type' => $type,
+			'type' => $type,  // 1=9pm job card, 2=12pm job card, 3=without fri/holiday ot
 			'status' => $active_status,
 			'created_by' =>  $this->data['user_data']->id,
 		);
+
 		if ($id == 0) {
 			$this->db->insert('pr_report_setting', $data);
 		}else{
-			$row = $this->db->where('id', $id)->get('pr_report_setting')->row();
-			if ($row->type == 1) {
-				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
-				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
-				$this->db->update('pr_emp_shift_log', array('false_ot_4' => null));
-			} else if ($row->type == 2) {
-				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
-				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
-				$this->db->update('pr_emp_shift_log', array('false_ot_12' => null));
-			} else {
-				$this->db->where('unit_id', $row->unit_id)->where('present_status', 'P')->where('eot !=', 0);
-				$this->db->where('shift_log_date between "'.$row->date.'" and "'.$row->end_date.'"');
-				$this->db->update('pr_emp_shift_log', array('false_ot_all' => null));
-			}
-
 			$this->db->where('id', $id);
 			$this->db->update('pr_report_setting', $data);
 		}
-		if ($type == 1) {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
-			$this->db->update('pr_emp_shift_log', array('false_ot_4' => $max_ot));
-		} else if ($type == 2) {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
-			$this->db->update('pr_emp_shift_log', array('false_ot_12' => $max_ot));
-		} else {
-			$this->db->where('unit_id', $unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$date.'" and "'.$end_date.'"');
-			$this->db->update('pr_emp_shift_log', array('false_ot_all' => $max_ot));
+		
+		$schedule = $this->db->where('id', $schedule_id)->get('pr_emp_shift_schedule')->row();
+		$results = $this->db->distinct()->select('log.emp_id, com.com_ot_entitle')
+			->from('pr_emp_com_info AS com')->join('pr_emp_shift_log AS log', 'com.emp_id = log.emp_id', 'left')
+			->where("log.shift_log_date BETWEEN '{$first_date}' AND '{$second_date}'", null, false)
+			// ->where('log.emp_id', 5006248) // comment on for all employee
+			// ->where('log.shift_log_date', '2025-08-04')
+			->where('log.present_status', 'P')->where('log.schedule_id', $schedule_id)->get()->result();
+		// dd($results);
+
+		foreach ($results as $key => $value) {
+			$emp_id = $value->emp_id;
+			$com_ot_entitle = $value->com_ot_entitle;
+			// $logs = $this->db->where('shift_log_date', '2025-08-04')
+			$logs = $this->db->where("shift_log_date BETWEEN '{$first_date}' AND '{$second_date}'", null, false)
+			->where('emp_id', $emp_id)->where('present_status', 'P')->get('pr_emp_shift_log')->result();
+			foreach ($logs as $key => $log) {
+				$log_id = $log->id;
+				$out_time = $log->out_time;
+				if ($type == 1 && $active_status == 1) {
+					if ($log->ot_eot_4pm <= $max_ot) {
+						$up_data = array(
+							'false_4_out' => $this->get_time_format_buyer($out_time),
+							'false_ot_4' => $com_ot_entitle == 0 ? $log->ot_eot_4pm : 0,
+							'false_4_st' => 1
+						);
+					} else {
+						$up_data = array(
+							'false_4_out' => $this->get_schedule_out_time($schedule, $max_ot, $out_time),
+							'false_ot_4' => $com_ot_entitle == 0 ? $max_ot : 0,
+							'false_4_st' => 1
+						);
+					}
+				} else if ($type == 2 && $active_status == 1) {
+					if ($log->ot_eot_12am <= $max_ot) {
+						$up_data = array(
+							'false_12_out' => $this->get_time_format_buyer($out_time),
+							'false_ot_12' => $com_ot_entitle == 0 ? $log->ot_eot_12am : 0,
+							'false_12_st' => 1
+						);
+					} else {
+						$up_data = array(
+							'false_12_out' => $this->get_schedule_out_time($schedule, $max_ot, $out_time),
+							'false_ot_12' => $com_ot_entitle == 0 ? $max_ot : 0,
+							'false_12_st' => 1
+						);
+					}
+				} else if ($type == 3 && $active_status == 1) {
+					if ($log->com_eot <= $max_ot) {
+						$up_data = array(
+							'false_wof_out' => $this->get_time_format_buyer($out_time),
+							'with_out_friday_ot' => $com_ot_entitle == 0 ? $log->com_eot : 0,
+							'false_wof_st' => 1
+						);
+					} else {
+						$up_data = array(
+							'false_wof_out' => $this->get_schedule_out_time($schedule, $max_ot, $out_time),
+							'with_out_friday_ot' => $com_ot_entitle == 0 ? $max_ot : 0,
+							'false_wof_st' => 1
+						);
+					}
+				} else if ($type == 1 && $active_status == 2) {
+					$up_data = array(
+						'false_4_out' => null,
+						'false_ot_4' => 0,
+						'false_4_st' => 0
+					);
+				} else if ($type == 2 && $active_status == 2) {
+					$up_data = array(
+						'false_12_out' => null,
+						'false_ot_12' => 0,
+						'false_12_st' => 0
+					);
+				} else {
+					$up_data = array(
+						'false_wof_out' => null,
+						'with_out_friday_ot' => 0,
+						'false_wof_st' => 0
+					);
+				} 
+				$this->db->where('id', $log_id);
+				$this->db->update('pr_emp_shift_log', $up_data);
+			}
 		}
+
 		echo 'true';
 	}
+
+	function get_time_format_buyer($out_time){
+		$real_hour_min_sec  = $this->get_hour_min_sec($out_time);
+		$real_minute  		= $real_hour_min_sec['minute'];
+		if (49 < $real_minute) {
+			$time = strtotime($out_time);
+			return date("H:i:s ", strtotime('+11 minutes', $time));
+		} else {
+			return $this->get_buyer_in_time($out_time);
+		}
+	}
+
+	function get_buyer_in_time($out_time){
+		$real_hour_min_sec = $this->get_hour_min_sec($out_time);
+		$exact_hour   		= $real_hour_min_sec['hour'];
+		$real_minute  		= $real_hour_min_sec['minute'];
+		$real_second 		= $real_hour_min_sec['second'];
+
+		$min_1st_digit = substr($real_minute,0,1);
+		$min_2nd_digit = substr($real_minute,1,1);
+
+		$buyer_minute = $min_1st_digit + $min_2nd_digit;
+		return $time_format = date("H:i:s ", mktime($exact_hour, $buyer_minute, $real_second, 0, 0, 0));
+	}	
+
+	function get_schedule_out_time($schedule, $hour, $out_time) {
+    	$th_out_time = date('H:i:s', strtotime($schedule->two_hour_ot_out_time) + (int)$hour * 60 * 60);
+		
+		$exact_hour_min_sec = $this->get_hour_min_sec($th_out_time);
+		$exact_hour   		= $exact_hour_min_sec['hour'];
+		
+		$hour_min_sec 		= $this->get_hour_min_sec($out_time);
+		$real_minute  		= $hour_min_sec['minute'];
+		$real_second 		= $hour_min_sec['second'];
+
+		$min_1st_digit = substr($real_minute,0,1);
+		$min_2nd_digit = substr($real_minute,1,1);
+		$buyer_minute = $min_1st_digit + $min_2nd_digit;
+
+		$time_format = date("H:i:s ", mktime($exact_hour, $buyer_minute, $real_second, 0, 0, 0));
+		return $time_format;
+	}
+	function get_hour_min_sec($time){
+		$data = array();
+		$data['hour']   = substr($time,0,2);
+		$data['minute'] = substr($time,3,2);
+		$data['second'] = substr($time,6,2);
+		return $data;
+	}
+
+	public function get_schedule(){
+		$id = $this->input->post('id');
+		$this->db->where('unit_id', $id);
+		$data = $this->db->get('pr_emp_shift_schedule')->result();
+		echo json_encode($data);
+	}
+
 	public function get_report_setting(){
 		$id = $this->input->post('id');
-		$this->db->where('id', $id);
-		$data=$this->db->get('pr_report_setting')->row();
+		$this->db->select('rs.*, ,ss.sh_type');
+		$this->db->join('pr_emp_shift_schedule ss', 'ss.id = rs.schedule_id', 'left');
+		$this->db->where('rs.id', $id);
+		$data=$this->db->get('pr_report_setting rs')->row();
 		$data->date=date('Y-m-d',strtotime($data->date));
 
 		echo json_encode($data);
 	}
+
 	public function delete_report_setting(){
 		$id = $this->input->post('id');
 		$data = $this->db->where('id', $id)->get('pr_report_setting')->row();
+		$type = $data->type;
+		$schedule_id = $data->schedule_id;
+		$first_date = $data->first_date;
+		$second_date = $data->second_date;
 
-		if ($data->type == 1) {
-			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
-			$this->db->update('pr_emp_shift_log', array('false_ot_4' => null));
-		} else if ($data->type == 2) {
-			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
-			$this->db->update('pr_emp_shift_log', array('false_ot_12' => null));
-		} else {
-			$this->db->where('unit_id', $data->unit_id)->where('present_status', 'P')->where('eot !=', 0);
-			$this->db->where('shift_log_date between "'.$data->date.'" and "'.$data->end_date.'"');
-			$this->db->update('pr_emp_shift_log', array('false_ot_all' => null));
+		$schedule = $this->db->where('id', $schedule_id)->get('pr_emp_shift_schedule')->row();
+		$results = $this->db->distinct()->select('emp_id')
+			->from('pr_emp_shift_log')
+			->where("shift_log_date BETWEEN '{$first_date}' AND '{$second_date}'", null, false)
+			->where('emp_id', 5006248) // comment on for all employee
+			// ->where('shift_log_date', '2025-08-04')
+			->where('present_status', 'P')->where('schedule_id', $schedule_id)->get()->result();
+		// dd($results);
+
+		foreach ($results as $key => $value) {
+			$emp_id = $value->emp_id;
+			// $logs = $this->db->where('shift_log_date', '2025-08-04')
+			$logs = $this->db->where("shift_log_date BETWEEN '{$first_date}' AND '{$second_date}'", null, false)
+			->where('emp_id', $emp_id)->where('present_status', 'P')->get('pr_emp_shift_log')->result();
+			foreach ($logs as $key => $log) {
+				$log_id = $log->id;
+				$out_time = $log->out_time;
+				if ($type == 1) {
+					$up_data = array(
+						'false_4_out' => null,
+						'false_ot_4' => 0,
+						'false_4_st' => 0
+					);
+				} else if ($type == 2) {
+					$up_data = array(
+						'false_12_out' => null,
+						'false_ot_12' => 0,
+						'false_12_st' => 0
+					);
+				} else {
+					$up_data = array(
+						'false_wof_out' => null,
+						'with_out_friday_ot' => 0,
+						'false_wof_st' => 0
+					);
+				} 
+				$this->db->where('id', $log_id);
+				$this->db->update('pr_emp_shift_log', $up_data);
+			}
 		}
 		$this->db->where('id', $id);
 		$this->db->delete('pr_report_setting');

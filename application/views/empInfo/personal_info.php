@@ -982,32 +982,34 @@
                             </div>
                         </div>
                         <div class="col-md-5 d-flex">
-                            <div class="col-md-4 d-flex flex-column align-items-center">
+                            <div class="col-md-6 d-flex flex-column align-items-center">
                                 <label>Employee Photo</label>
-                                <img id="image" style="max-width: 65%;" src="" alt="image">
+                                <img id="image" style="max-width: 80%;position: absolute;height: 180px;" src="" alt="image">
                             </div>
 
-                            <div class="col-md-4 d-flex flex-column align-items-center">
+                            <div class="col-md-6 d-flex flex-column align-items-center">
                                 <label>Employee Signature</label>
                                 <img id="image_signature" style="width: 100px; height: 50px;" src="" alt="Signature Image">
                             </div>
-                            <div class="col-md-4">
-                                <div class="col-12">
-                                        <label>Age</label>
-                                        <span id="age" style="border: 1px solid #8b8b8b;padding: 2px 16px;width: fit-content;display: block;">-</span>
-                                    </div>
-                                    <div class="col-12">
-                                        <label>Job Duration</label>
-                                        <span id="job_duration" style="border: 1px solid #8b8b8b;padding: 2px 16px;width: fit-content;display: block;">-</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                <!-- <div class="row"> -->
+                    <div class="col-md-12 d-flex justify-content-end gap-4" >
+                        <div class="col-md-4">
+                            <label>Age</label>
+                            <span id="age" style="border: 1px solid #8b8b8b; padding: 2px 16px; min-width: 80px; ">-</span>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Job Duration</label>
+                            <span id="job_duration" style="border: 1px solid #8b8b8b; padding: 2px 16px; min-width: 120px; ">-</span>
+                        </div>
+                    </div>
+
+                <!-- </div> -->
 
                         <br>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group pull-right">
+                        <div class="form-group pull-right" style="margin-right: 15px;">
                             <input type="hidden" name="submit_type" id="submit_type">
                             <?php if(in_array(213,$acl)) { ?>
                                 <a href="" class="btn-warning btn">Cancel</a>

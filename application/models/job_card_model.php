@@ -269,34 +269,213 @@ class Job_card_model extends CI_Model{
 		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
 		// dd($data['weekend']);
 
-		// $id = $this->db->select('id')->where('emp_id',$emp_id)->get('pr_emp_com_info')->row()->id;
 		$this->db->select('
-				pr_emp_shift_log.in_time ,
-				pr_emp_shift_log.out_time,
-				pr_emp_shift_log.shift_log_date,
-				pr_emp_shift_log.schedule_id,
-				pr_emp_shift_log.ot,
-				pr_emp_shift_log.eot,						
-				pr_emp_shift_log.com_ot,
-				pr_emp_shift_log.com_eot,
-				pr_emp_shift_log.ot_eot_4pm,
-				pr_emp_shift_log.ot_eot_12am,
-				pr_emp_shift_log.false_ot_4,
-				pr_emp_shift_log.false_ot_12,
-				pr_emp_shift_log.false_ot_all,
-				pr_emp_shift_log.late_status,
-				pr_emp_shift_log.present_status,
-				pr_emp_shift_log.deduction_hour,
-				pr_emp_shift_log.modify_eot,
-				pr_emp_shift_schedule.sh_type as shift_name
+				log.in_time,
+				log.out_time,
+				log.shift_log_date,
+				log.schedule_id,
+				log.ot,
+				log.eot,		
+				log.com_ot,
+				log.com_eot,
+				(CASE WHEN log.false_4_st = 1 THEN false_ot_4 ELSE log.ot_eot_4pm END) as ot_eot_4pm,
+				(CASE WHEN log.false_12_st = 1 THEN false_ot_12 ELSE log.ot_eot_12am END) as ot_eot_12am,
+				(CASE WHEN log.false_wof_st = 1 THEN with_out_friday_ot ELSE log.com_eot END) as with_out_friday_ot,
+				log.late_status,
+				log.present_status,
+				log.deduction_hour,
+				log.modify_eot,
+				ss.sh_type as shift_name
 			');
-		$this->db->from('pr_emp_shift_log');
-		$this->db->from('pr_emp_shift_schedule');
-		$this->db->where('pr_emp_shift_log.emp_id', $emp_id);
-		$this->db->where('pr_emp_shift_schedule.id = pr_emp_shift_log.schedule_id');
-		$this->db->where("pr_emp_shift_log.shift_log_date >=", $start_date);
-		$this->db->where("pr_emp_shift_log.shift_log_date <=", $end_date);
-		$this->db->order_by("pr_emp_shift_log.shift_log_date");
+		$this->db->from('pr_emp_shift_log as log');
+		$this->db->from('pr_emp_shift_schedule as ss');
+		$this->db->where('log.emp_id', $emp_id);
+		$this->db->where('ss.id = log.schedule_id');
+		$this->db->where("log.shift_log_date >=", $start_date);
+		$this->db->where("log.shift_log_date <=", $end_date);
+		$this->db->order_by("log.shift_log_date");
+		$query = $this->db->get()->result();
+
+		$data['emp_data'] = $query;
+		// dd($data);
+		return $data;
+	}
+	function emp_job_card4($grid_firstdate, $grid_seconddate, $emp_id){
+		$data = array();
+		$grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
+
+		$joining_check = $this->get_join_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if( $joining_check != false){
+			$start_date = $joining_check;
+		} else{
+			$start_date = $grid_firstdate;
+		}
+
+		$resign_check  = $this->get_resign_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if($resign_check != false){
+			$end_date = $resign_check;
+		} else{
+			$end_date = $grid_seconddate;
+		}
+
+		$left_check  = $this->get_left_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if($left_check != false){
+			$end_date = $left_check;
+		} else{
+			$end_date = $grid_seconddate;
+		}
+
+
+		$data['leave'] = $this->leave_per_emp($start_date, $end_date, $emp_id);
+		$data['weekend'] = $this->check_weekend($start_date, $end_date, $emp_id);
+		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
+		// dd($data['weekend']);
+
+		$this->db->select('
+				log.in_time,
+				(CASE WHEN log.false_4_st = 1 THEN false_4_out ELSE log.out_time END) as out_time,
+				log.shift_log_date,
+				log.schedule_id,
+				log.ot,
+				log.eot,		
+				log.com_ot,
+				(CASE WHEN log.false_4_st = 1 THEN false_ot_4 ELSE log.com_eot END) as com_eot,
+				log.late_status,
+				log.present_status,
+				log.deduction_hour,
+				log.modify_eot,
+				ss.sh_type as shift_name
+			');
+		$this->db->from('pr_emp_shift_log as log');
+		$this->db->from('pr_emp_shift_schedule as ss');
+		$this->db->where('log.emp_id', $emp_id);
+		$this->db->where('ss.id = log.schedule_id');
+		$this->db->where("log.shift_log_date >=", $start_date);
+		$this->db->where("log.shift_log_date <=", $end_date);
+		$this->db->order_by("log.shift_log_date");
+		$query = $this->db->get()->result();
+
+		$data['emp_data'] = $query;
+		// dd($data);
+		return $data;
+	}
+	function emp_job_card12($grid_firstdate, $grid_seconddate, $emp_id){
+		$data = array();
+		$grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
+
+		$joining_check = $this->get_join_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if( $joining_check != false){
+			$start_date = $joining_check;
+		} else{
+			$start_date = $grid_firstdate;
+		}
+
+		$resign_check  = $this->get_resign_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if($resign_check != false){
+			$end_date = $resign_check;
+		} else{
+			$end_date = $grid_seconddate;
+		}
+
+		$left_check  = $this->get_left_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if($left_check != false){
+			$end_date = $left_check;
+		} else{
+			$end_date = $grid_seconddate;
+		}
+
+
+		$data['leave'] = $this->leave_per_emp($start_date, $end_date, $emp_id);
+		$data['weekend'] = $this->check_weekend($start_date, $end_date, $emp_id);
+		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
+		// dd($data['weekend']);
+
+		$this->db->select('
+				log.in_time,
+				(CASE WHEN log.false_12_st = 1 THEN false_12_out ELSE log.out_time END) as out_time,
+				log.shift_log_date,
+				log.schedule_id,
+				log.ot,
+				log.eot,		
+				log.com_ot,
+				log.com_eot,
+				(CASE WHEN log.false_12_st = 1 THEN false_ot_12 ELSE log.ot_eot_12am END) as ot_eot_12am,
+				log.late_status,
+				log.present_status,
+				log.deduction_hour,
+				log.modify_eot,
+				ss.sh_type as shift_name
+			');
+		$this->db->from('pr_emp_shift_log as log');
+		$this->db->from('pr_emp_shift_schedule as ss');
+		$this->db->where('log.emp_id', $emp_id);
+		$this->db->where('ss.id = log.schedule_id');
+		$this->db->where("log.shift_log_date >=", $start_date);
+		$this->db->where("log.shift_log_date <=", $end_date);
+		$this->db->order_by("log.shift_log_date");
+		$query = $this->db->get()->result();
+
+		$data['emp_data'] = $query;
+		// dd($data);
+		return $data;
+	}
+	function emp_job_card_all($grid_firstdate, $grid_seconddate, $emp_id){
+		$data = array();
+		$grid_firstdate = date("Y-m-d", strtotime($grid_firstdate));
+		$grid_seconddate = date("Y-m-d", strtotime($grid_seconddate));
+
+		$joining_check = $this->get_join_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if( $joining_check != false){
+			$start_date = $joining_check;
+		} else{
+			$start_date = $grid_firstdate;
+		}
+
+		$resign_check  = $this->get_resign_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if($resign_check != false){
+			$end_date = $resign_check;
+		} else{
+			$end_date = $grid_seconddate;
+		}
+
+		$left_check  = $this->get_left_date($emp_id, $grid_firstdate, $grid_seconddate);
+		if($left_check != false){
+			$end_date = $left_check;
+		} else{
+			$end_date = $grid_seconddate;
+		}
+
+
+		$data['leave'] = $this->leave_per_emp($start_date, $end_date, $emp_id);
+		$data['weekend'] = $this->check_weekend($start_date, $end_date, $emp_id);
+		$data['holiday'] = $this->holiday_calculation($start_date, $end_date, $emp_id);
+		// dd($data['weekend']);
+
+		$this->db->select('
+				log.in_time,
+				(CASE WHEN log.false_wof_st = 1 THEN false_wof_out ELSE log.out_time END) as out_time,
+				log.shift_log_date,
+				log.schedule_id,
+				log.ot,
+				log.eot,		
+				log.com_ot,
+				log.com_eot,
+				(CASE WHEN log.false_wof_st = 1 THEN with_out_friday_ot ELSE log.com_eot END) as with_out_friday_ot,
+				log.late_status,
+				log.present_status,
+				log.deduction_hour,
+				log.modify_eot,
+				ss.sh_type as shift_name
+			');
+		$this->db->from('pr_emp_shift_log as log');
+		$this->db->from('pr_emp_shift_schedule as ss');
+		$this->db->where('log.emp_id', $emp_id);
+		$this->db->where('ss.id = log.schedule_id');
+		$this->db->where("log.shift_log_date >=", $start_date);
+		$this->db->where("log.shift_log_date <=", $end_date);
+		$this->db->order_by("log.shift_log_date");
 		$query = $this->db->get()->result();
 
 		$data['emp_data'] = $query;

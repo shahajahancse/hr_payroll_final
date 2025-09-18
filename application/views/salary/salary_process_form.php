@@ -9,6 +9,14 @@
 		margin-bottom: 10px !important;
 	}
 </style>
+<style>
+    .input-group .form-control {
+        width: 90% !important;
+    }
+    .input-group-btn .btn {
+        padding: 8px 10px !important;
+    }
+</style>	
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
 <?php
@@ -198,14 +206,7 @@
                 <span style="font-size: 20px;">Festival Bonus</span>
             </div><!-- /.col-lg-4 -->
 
-            <style>
-            	.input-group .form-control {
-				    width: 90% !important;
-				}
-            	.input-group-btn .btn {
-				    padding: 8px 10px !important;
-				}
-            </style>	
+
             <div class="col-lg-9" style="padding-left: 0px !important;">
                 <div class="input-group" style="display:flex">
 					<input type="month" class="form-control" id="bonus_process_month" >
@@ -216,7 +217,33 @@
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-4 -->
         </div>
+
+
+       
+        <div class="row nav_head" style="margin-top:20px">
+            <div class="col-lg-4" >
+                <span style="font-size: 20px;">Update Status</span>
+            </div><!-- /.col-lg-4 -->
+
+
+
+            <div class="col-lg-8" >
+                <div class="input-group" style="display:flex">
+                    <input type="month" class="form-control" id="check_process_month" >
+
+                    
+                    <input style="margin-left: 8px !important;" class="btn btn-info" onclick="check_status()" type="button" value='Check List' />
+                    
+                </div>
+            </div>
+        
+        </div>
+
+
+        
     </div>
+
+
 
 	<!-- employee list for right side -->
 	<div class="col-md-4 tablebox">
@@ -487,4 +514,49 @@
 				}
 			}
 		}
+	function check_status(){
+        var ajaxRequest;  // The variable that makes Ajax possible!
+        try{
+        // Opera 8.0+, Firefox, Safari
+        ajaxRequest = new XMLHttpRequest();
+        }catch (e){
+        // Internet Explorer Browsers
+            try{
+                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+            }catch (e) {
+                try{
+                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }catch (e){
+                    // Something went wrong
+                    alert("Your browser broke!");
+                    return false;
+                }
+            }
+        }
+        var unit_id = document.getElementById('unit_id').value;
+        var check_process_month = document.getElementById('check_process_month').value;
+        if(check_process_month ==''){
+            alert("Please select year");
+            return;
+        }
+       
+        // var sal_year_month = report_year_sal+"-"+report_month_sal+"-"+"01";
+        var queryString="month="+check_process_month+"&unit_id="+unit_id;
+        url =  hostname+"grid_con/check_emp_status/";
+        
+        ajaxRequest.open("POST", url, true);
+        ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        ajaxRequest.send(queryString);
+        ajaxRequest.onreadystatechange = function(){
+            if(ajaxRequest.readyState == 4){
+                var resp = ajaxRequest.responseText;
+                // $(".clearfix").dialog("close");		
+                // if(resp != "")
+                    // alert(resp);
+                earn_leave_payment_report = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                earn_leave_payment_report.document.write(resp);		
+            }
+        }
+        
+    }
 	</script>

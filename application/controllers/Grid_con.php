@@ -2270,6 +2270,45 @@ class Grid_con extends CI_Controller {
 
 		$this->load->view('current_info',$data);
 	}
+	function check_emp_status()
+	{
+		$month = $this->input->post('month');
+		$unit_id = $this->input->post('unit_id');
+		$data["values"] = $this->Grid_model->check_emp_status($month,$unit_id);
+		// dd($data);
+		$data['unit_id'] = $unit_id;
+		$data['month'] = $month;
+
+		$this->load->view('check_emp_status',$data);
+	}
+
+
+	public function update_status()
+	{
+		$emp_id = $this->input->post('emp_id');
+		$table  = $this->input->post('table');
+		$field  = $this->input->post('field');
+		$value  = $this->input->post('value');
+
+		// dd($_POST);
+
+		// Validate table and field to prevent SQL injection
+		$allowedTables = [
+			'pr_emp_com_info' => ['emp_cat_id'],
+			'pay_salary_sheet' => ['emp_status'],
+			'pay_salary_sheet_com' => ['emp_status']
+		];
+
+		if (!isset($allowedTables[$table]) || !in_array($field, $allowedTables[$table])) {
+			show_error("Invalid table or field", 400);
+		}
+
+		$this->db->where('emp_id', $emp_id);
+		$this->db->update($table, [$field => $value]);
+
+		echo json_encode(['status' => 'success']);
+	}
+
 
 
 

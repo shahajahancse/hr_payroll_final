@@ -248,7 +248,7 @@ class Salary_process_model extends CI_Model{
 					$holiday =  $attendances->holiday;
 					$total_leave =  $attendances->total_leave;
 					
-					$leaves = $this->leave_db($rows->emp_id, $start_date, $end_date);
+					$leaves = (object) $this->get_monthly_leave($rows->emp_id, $start_date, $end_date);
 					// dd($leaves);
 					
 					$cas_leave  = isset($leaves->cl) ? $leaves->cl : 0;
@@ -976,123 +976,174 @@ class Salary_process_model extends CI_Model{
         return $query;
     }
 
-    function leave_db($emp_id, $start_date, $end_date){
+
+
+	public function get_monthly_leave($emp_id, $start_date,$end_date)
+	{
+		// Get first and last day of month
+		// $start_date = date("Y-m-01", strtotime($year_month));
+		// $end_date   = date("Y-m-t", strtotime($year_month));
+
 		$this->db->select("
-            SUM(CASE WHEN leave_type = 'cl' THEN total_leave ELSE 0 END ) AS cl,
-            SUM(CASE WHEN leave_type = 'sl' THEN total_leave ELSE 0 END ) AS sl,
-            SUM(CASE WHEN leave_type = 'el' THEN total_leave ELSE 0 END ) AS el,
-            SUM(CASE WHEN leave_type = 'ml' THEN total_leave ELSE 0 END ) AS ml,
-            SUM(CASE WHEN leave_type = 'wp' THEN total_leave ELSE 0 END ) AS wp,
-            SUM(CASE WHEN leave_type = 'sp' THEN total_leave ELSE 0 END ) AS sp
-        ");
-        $this->db->where("emp_id",$emp_id);
-        $this->db->where("leave_start >=", $start_date);
-        $this->db->where("leave_end <=", $end_date);
-        $query = $this->db->get('pr_leave_trans')->row();
-		// dd($this->db->last_query());
-		if(empty($query)){
-			$dd2 = $this->leave_db2($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
-			$dd3 = $this->leave_db3($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
-		}
-		if (!empty($dd2)) {
-			if ($dd2['leave_type'] == 'cl') {
-				$query->cl = $query->cl + $dd2['day'];
-			}
-			if ($dd2['leave_type'] == 'sl') {
-				$query->sl = $query->sl + $dd2['day'];
-			}
-			if ($dd2['leave_type'] == 'el') {
-				$query->el = $query->el + $dd2['day'];
-			}
-			if ($dd2['leave_type'] == 'wp') {
-				$query->wp = $query->wp + $dd2['day'];
-			}		
-			if ($dd2['leave_type'] == 'sp') {
-				$query->sp = $query->sp + $dd2['day'];
-			}
-		}
+			leave_type,
+			SUM(
+				DATEDIFF(
+					LEAST(leave_end, " . $this->db->escape($end_date) . "),
+					GREATEST(leave_start, " . $this->db->escape($start_date) . ")
+				) + 1
+			) AS days
+		", false);
 
-		if (!empty($dd3)) {
-			if ($dd3['leave_type'] == 'cl') {
-				$query->cl = $query->cl + $dd3['day'];
-			}
-			if ($dd3['leave_type'] == 'sl') {
-				$query->sl = $query->sl + $dd3['day'];
-			}
-			if ($dd3['leave_type'] == 'el') {
-				$query->el = $query->el + $dd3['day'];
-			}
-			if ($dd3['leave_type'] == 'wp') {
-				$query->wp = $query->wp + $dd3['day'];
-			}		
-			if ($dd3['leave_type'] == 'sp') {
-				$query->sp = $query->sp + $dd3['day'];
-			}
-		}
-
-		// dd($query);
-		return $query;
-    }
-
-	function leave_db2($emp_id, $start_date, $end_date)
-    {
-		$array = array();
-        $this->db->select("*");
-        $this->db->where("emp_id",$emp_id);
-        $this->db->where("leave_start <", $start_date);
-        $this->db->where("leave_end >", $start_date);
-        $this->db->order_by("id", 'DESC');
-        $query = $this->db->get('pr_leave_trans')->row();
-		// dd($this->db->last_query());
-
-		if (!empty($query)) {
-			$end_date  = $query->leave_end;
-			$day_diff = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) +1;
-			$array = array(
-				'leave_type' => $query->leave_type,
-				'day' => $day_diff,
-			);
-		}
-        return $array;
-    }
-
-	function leave_db3($emp_id, $start_date, $end_date)
-    {
-
-		$this->db->select('leave_type');
-		$this->db->select('SUM(
-			DATEDIFF(
-				LEAST(leave_end, "' . $end_date . '"),
-				GREATEST(leave_start, "' . $start_date . '")
-			) + 1
-		) AS day', false);
-
-		$this->db->from('pr_leave_trans');
-        $this->db->where("emp_id",$emp_id);
-		$this->db->where('leave_start <=', $end_date);
-		$this->db->where('leave_end >=', $start_date);
-		// $this->db->group_by('emp_id');
+		$this->db->from("pr_leave_trans");
+		$this->db->where("emp_id", $emp_id);
+		$this->db->where("leave_start <=", $end_date);
+		$this->db->where("leave_end >=", $start_date);
+		$this->db->group_by("leave_type");
 
 		$query = $this->db->get()->result_array();
-		// $array = array();
-        // $this->db->select("*");
-        // $this->db->where("emp_id",$emp_id);
-        // $this->db->where("leave_start <", $end_date);
-        // $this->db->where("leave_end >", $end_date);
-        // $query = $this->db->get('pr_leave_trans')->row();
-		// // dd($this->db->last_query());
 
-		// if (!empty($query)) {
-		// 	$start_date = $query->leave_start;
-		// 	$day_diff = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) + 1;
-		// 	$array = array(
-		// 		'leave_type' => $query->leave_type,
-		// 		'day' => $day_diff,
-		// 	);
-		// }
-		// dd($query);
-        return $query[0];
-    }
+		// Initialize with 0
+		$leave_data = [
+			'cl' => 0,
+			'sl' => 0,
+			'el' => 0,
+			'ml' => 0,
+			'wp' => 0,
+			'sp' => 0,
+		];
+
+		foreach ($query as $row) {
+			if (isset($leave_data[$row['leave_type']])) {
+				$leave_data[$row['leave_type']] = (int)$row['days'];
+			}
+		}
+		// Optional total
+		// $leave_data['total'] = array_sum($leave_data);
+
+		// dd($leave_data);
+
+		return $leave_data;
+	}
+
+
+    // function leave_db($emp_id, $start_date, $end_date){
+	// 	$this->db->select("
+    //         SUM(CASE WHEN leave_type = 'cl' THEN total_leave ELSE 0 END ) AS cl,
+    //         SUM(CASE WHEN leave_type = 'sl' THEN total_leave ELSE 0 END ) AS sl,
+    //         SUM(CASE WHEN leave_type = 'el' THEN total_leave ELSE 0 END ) AS el,
+    //         SUM(CASE WHEN leave_type = 'ml' THEN total_leave ELSE 0 END ) AS ml,
+    //         SUM(CASE WHEN leave_type = 'wp' THEN total_leave ELSE 0 END ) AS wp,
+    //         SUM(CASE WHEN leave_type = 'sp' THEN total_leave ELSE 0 END ) AS sp
+    //     ");
+    //     $this->db->where("emp_id",$emp_id);
+    //     $this->db->where("leave_start >=", $start_date);
+    //     $this->db->where("leave_end <=", $end_date);
+    //     $query = $this->db->get('pr_leave_trans')->row();
+		
+	// 	// dd($this->db->last_query());
+	// 	if(empty($query)){
+	// 		$dd2 = $this->leave_db2($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
+	// 		$dd3 = $this->leave_db3($emp_id, $start_date, $end_date);  // 13-04-2025 Shahajahan
+	// 	}
+	// 	if (!empty($dd2)) {
+	// 		if ($dd2['leave_type'] == 'cl') {
+	// 			$query->cl = $query->cl + $dd2['day'];
+	// 		}
+	// 		if ($dd2['leave_type'] == 'sl') {
+	// 			$query->sl = $query->sl + $dd2['day'];
+	// 		}
+	// 		if ($dd2['leave_type'] == 'el') {
+	// 			$query->el = $query->el + $dd2['day'];
+	// 		}
+	// 		if ($dd2['leave_type'] == 'wp') {
+	// 			$query->wp = $query->wp + $dd2['day'];
+	// 		}		
+	// 		if ($dd2['leave_type'] == 'sp') {
+	// 			$query->sp = $query->sp + $dd2['day'];
+	// 		}
+	// 	}
+
+	// 	if (!empty($dd3)) {
+	// 		if ($dd3['leave_type'] == 'cl') {
+	// 			$query->cl = $query->cl + $dd3['day'];
+	// 		}
+	// 		if ($dd3['leave_type'] == 'sl') {
+	// 			$query->sl = $query->sl + $dd3['day'];
+	// 		}
+	// 		if ($dd3['leave_type'] == 'el') {
+	// 			$query->el = $query->el + $dd3['day'];
+	// 		}
+	// 		if ($dd3['leave_type'] == 'wp') {
+	// 			$query->wp = $query->wp + $dd3['day'];
+	// 		}		
+	// 		if ($dd3['leave_type'] == 'sp') {
+	// 			$query->sp = $query->sp + $dd3['day'];
+	// 		}
+	// 	}
+
+	// 	// dd($query);
+	// 	return $query;
+    // }
+
+	// function leave_db2($emp_id, $start_date, $end_date)
+    // {
+	// 	$array = array();
+    //     $this->db->select("*");
+    //     $this->db->where("emp_id",$emp_id);
+    //     $this->db->where("leave_start <", $start_date);
+    //     $this->db->where("leave_end >", $start_date);
+    //     $this->db->order_by("id", 'DESC');
+    //     $query = $this->db->get('pr_leave_trans')->row();
+	// 	// dd($this->db->last_query());
+
+	// 	if (!empty($query)) {
+	// 		$end_date  = $query->leave_end;
+	// 		$day_diff = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) +1;
+	// 		$array = array(
+	// 			'leave_type' => $query->leave_type,
+	// 			'day' => $day_diff,
+	// 		);
+	// 	}
+    //     return $array;
+    // }
+
+	// function leave_db3($emp_id, $start_date, $end_date)
+    // {
+
+	// 	$this->db->select('leave_type');
+	// 	$this->db->select('SUM(
+	// 		DATEDIFF(
+	// 			LEAST(leave_end, "' . $end_date . '"),
+	// 			GREATEST(leave_start, "' . $start_date . '")
+	// 		) + 1
+	// 	) AS day', false);
+
+	// 	$this->db->from('pr_leave_trans');
+    //     $this->db->where("emp_id",$emp_id);
+	// 	$this->db->where('leave_start <=', $end_date);
+	// 	$this->db->where('leave_end >=', $start_date);
+	// 	// $this->db->group_by('emp_id');
+
+	// 	$query = $this->db->get()->result_array();
+	// 	// $array = array();
+    //     // $this->db->select("*");
+    //     // $this->db->where("emp_id",$emp_id);
+    //     // $this->db->where("leave_start <", $end_date);
+    //     // $this->db->where("leave_end >", $end_date);
+    //     // $query = $this->db->get('pr_leave_trans')->row();
+	// 	// // dd($this->db->last_query());
+
+	// 	// if (!empty($query)) {
+	// 	// 	$start_date = $query->leave_start;
+	// 	// 	$day_diff = (strtotime($end_date) - strtotime($start_date)) / (60 * 60 * 24) + 1;
+	// 	// 	$array = array(
+	// 	// 		'leave_type' => $query->leave_type,
+	// 	// 		'day' => $day_diff,
+	// 	// 	);
+	// 	// }
+	// 	// dd($query);
+    //     return $query[0];
+    // }
 
 	function ml_leave_db($emp_id, $start_date, $end_date, $gross_sal, $gross_sal_com)
     {

@@ -1,4 +1,7 @@
 <?php
+
+
+// exit("System under maintenance. Please wait...");
 /**
  * CodeIgniter
  *

@@ -9104,6 +9104,52 @@ class Grid_model extends CI_Model{
 			return "Requested list is empty";
 		}
 	}
+	function check_emp_status($month,$unit_id)
+	{
+		$month = date('Y-m-01', strtotime($month));
+
+		$this->db->select("
+			e.emp_id,
+			e.emp_cat_id,
+			p.name_en,
+			d.dept_name,
+			s.sec_name_en,
+			l.line_name_en,
+			desig.desig_name,
+			desig.id as desig_id,
+			e.emp_join_date,
+			g.gr_name,
+			e.gross_sal,
+			p.emp_dob,
+			ps.emp_status,
+			psc.emp_status as emp_status_com
+		");
+		$this->db->from('pr_emp_com_info e');
+		$this->db->join('pr_emp_per_info p', 'p.emp_id = e.emp_id', 'left');
+		$this->db->join('pay_salary_sheet ps', "ps.emp_id = e.emp_id AND ps.salary_month = '{$month}'", 'left');
+		$this->db->join('pay_salary_sheet_com psc', "psc.emp_id = e.emp_id AND psc.salary_month = '{$month}'", 'left');
+		$this->db->join('emp_designation desig', 'desig.id = e.emp_desi_id', 'left');
+		$this->db->join('emp_depertment d', 'd.dept_id = e.emp_dept_id', 'left');
+		$this->db->join('emp_section s', 's.id = e.emp_sec_id', 'left');
+		$this->db->join('emp_line_num l', 'l.id = e.emp_line_id', 'left');
+		$this->db->join('pr_grade g', 'g.gr_id = e.emp_sal_gra_id', 'left');
+
+		$this->db->where('e.unit_id', $unit_id);
+		$this->db->where('ps.salary_month', $month);
+		// exclude mismatched employee category
+		$this->db->group_start();
+		$this->db->where('e.emp_cat_id !=', 'ps.emp_status', false);
+		$this->db->or_where('e.emp_cat_id !=', 'psc.emp_status', false);
+		$this->db->group_end();
+
+
+		$this->db->order_by('e.emp_id', 'ASC');
+
+		$query = $this->db->get();
+
+		return $query->num_rows() > 0 ? $query->result() : "Requested list is empty";
+
+	}
 
 	function grid_general_info($grid_emp_id){
 
