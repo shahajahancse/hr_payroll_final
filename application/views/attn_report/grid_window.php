@@ -104,7 +104,7 @@
 					</div>
 				</div>
 				<!-- Designation -->
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label class="control-label">Designation</label>
 						<select class="form-control input-sm desig" id='desig' name='desig' onChange="grid_emp_list()">
@@ -133,6 +133,18 @@
 							<option value="">Select Type</option>
 							<option value="1">Worker</option>
 							<option value="2">Staff</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="control-label">Religion Status </label>
+						<select name="religion_status" id="religion_status" class="form-control input-sm" onChange="grid_emp_list()">
+							<option value="">Select Type</option>
+							<option value="Islam">Islam</option>
+							<option value="Hindu">Hindu</option>
+							<option value="Christian">Christian</option>
+							<option value="Buddhish">Buddhish</option>
 						</select>
 					</div>
 				</div>
@@ -240,6 +252,7 @@
 							<?php } ?>
 							<?php if(in_array(83,$acl)) { ?>
 								<button class="btn input-sm sbtn" onclick="grid_monthly_att_register()">Attendance Register</button>
+								<button class="btn input-sm sbtn" onclick="grid_attn_report_16_49()">Attn Report (16-49)</button>
 							<?php } ?>
 						</div>
 						<!-- Monthly Reports end -->
@@ -484,6 +497,7 @@
 			var desig = document.getElementById('desig').value;
 			var status = document.getElementById('status').value;
 			var emp_type = document.getElementById('emp_type').value;
+			var religion_status = document.getElementById('religion_status').value;
             if (typeof unit === "undefined" || unit === '') {
                 return false;
             }
@@ -492,13 +506,12 @@
 				url: url,
 				type: 'GET',
 				data: {
-					"status": status,
-					"emp_type": emp_type,
-
+					"status"          : status,
+					"emp_type"        : emp_type,
+					"religion_status" : religion_status,
 				},
 				contentType: "application/json",
 				dataType: "json",
-
 
 				success: function(response) {
 					$('.removeTr').remove();

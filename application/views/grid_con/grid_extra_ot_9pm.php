@@ -86,7 +86,11 @@
 					echo "</tr>";
 
 					echo "<table>";
-					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
+					if ($unit_id == 4) {
+						$emp_data = $this->job_card_model->emp_job_card4($grid_firstdate,$grid_seconddate, $value->emp_id);
+					} else {
+						$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
+					}
 					// dd($emp_data);
 					echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0' style='text-align:center; font-size:13px; '>
 						<tr>
@@ -120,7 +124,7 @@
 						if ($row->out_time <= $after_open_back && $row->ot_eot_4pm <= 1) {
 							$extra_ot_hour = 0;
 						}
-
+						
 						if($row->present_status == 'L'){
 							$leave_type = $this->job_card_model->get_leave_type($row->shift_log_date,$value->emp_id);
 							$att_status_count = "Leave";
@@ -183,20 +187,20 @@
 
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							if($row->com_eot == 1 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
-								$extra_ot_hour = 0;
-								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							} else if($row->com_eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
-								$extra_ot_hour = 0;
-								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->com_eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 1){
-								$extra_ot_hour = 1;
-								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							}
+							// if($row->com_eot == 1 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
+							// 	$extra_ot_hour = 0;
+							// 	$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							// } else if($row->com_eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 0){
+							// 	$extra_ot_hour = 0;
+							// 	$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							// } else if($row->com_eot >= 2 && $row->false_ot_4 != null && $row->false_ot_4 == 1){
+							// 	$extra_ot_hour = 1;
+							// 	$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							// }
 						}else{
 							$out_time = "00:00:00";
 						}
-
+						
 						// get format buyer time
 						$out_time = $this->job_card_model->get_formated_out_time_9pm($value->emp_id, $out_time, $schedule);
 

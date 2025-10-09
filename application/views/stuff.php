@@ -274,7 +274,7 @@ $obj = new NumberToWord();
                 <br><br>
                 <div style="display: flex; justify-content: space-between;margin-left:-10px;">
 
-                   <?php if($unit_id ==4){?>
+                   <?php if($unit_id == 1 || $unit_id ==4){?>
                     <div>
                         <p style='border-top: 1px solid black;width:fit-content'><b>Group GM (Operations & Sustainability)</b></p>
                         <p><?= $com_info->company_name_english?></p>
@@ -283,7 +283,7 @@ $obj = new NumberToWord();
                         <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
                     </div>
-                <?php }  if($unit_id ==2 ){?>
+                <?php }  if($unit_id == 2 ){?>
                     <div>
                         <!-- <p style='text-align:center'><b></b></p> -->
                         <p style='border-top: 1px solid black;width:fit-content'><b>Maminul Islam </b></p>
@@ -294,20 +294,22 @@ $obj = new NumberToWord();
                         <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
                     </div>
-                <?php } else{?>    
-                    <div>
+                <?php } 
+                // else{
+                    ?>    
+                    <!-- <div>
                         <p style='border-top: 1px solid black;width:fit-content'><b>Department Head</b></p>
                         <p>(HR, Admin Compliance)</p>
-                        <p><?= $com_info->company_name_english?></p>
-                        <!-- <span style="float:right">Signature...................√.............</span> -->
+                        <p>< ?= $com_info->company_name_english?></p>
+                        <<span style="float:right">Signature...................√.............</span> -->
 
-                        <p style="line-height:1.3">Cc: 1)  Group GM (HR, Admin & Compliance).</p>
+                        <!-- <p style="line-height:1.3">Cc: 1)  Group GM (HR, Admin & Compliance).</p>
                         <p style="line-height:1.3;margin-left: 35px;">2) GM (Project Head)</p>
                         <p style="line-height:1.3;margin-left: 35px;">3) HR Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">5) Personal File</p>
-                    </div>
-                <?php }?>  
+                    </div> -->
+                <!-- < ?php ?>   -->
                     <div>
                         <p style="text-align:center;">Recived By</p>
                         <p style="text-align:center"><?= $value->name_en?></p>
@@ -457,7 +459,7 @@ $obj = new NumberToWord();
                 <br><br>
                 <br><br>
                 <div style="display: flex; justify-content: space-between;margin-left:-10px;">
-                <?php if($unit_id ==4){?>
+                <?php if($unit_id == 1 || $unit_id ==4){?>
                     <div>
                         <p style='border-top: 1px solid black;width:fit-content'><b>Group GM (Operations & Sustainability)</b></p>
                         <p><?= $com_info->company_name_english?></p>
@@ -477,18 +479,20 @@ $obj = new NumberToWord();
                         <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
                     </div>
-                <?php } else{?> 
-                    <div>
+                <?php } 
+                // else{
+                    ?> 
+                    <!-- <div>
                         <p style='border-top: 1px solid black;width:fit-content'><b>Department Head</b></p>
                         <p>(HR, Admin Compliance)</p>
-                        <p><?= $com_info->company_name_english?></p>
+                        <p>< ?= $com_info->company_name_english?></p>
                         <p style="line-height:1.3">Cc: 1)  Group GM (HR, Admin & Compliance).</p>
                         <p style="line-height:1.3;margin-left: 35px;">2) GM (Project Head)</p>
                         <p style="line-height:1.3;margin-left: 35px;">3) HR Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">5) Personal File</p>
-                    </div>
-                <?php }?>    
+                    </div> -->
+                <!-- < ?php }?>     -->
                     <div>
                         <p style="text-align:center;">Recived By</p>
                         <p style="text-align:center"><?= $value->name_en?></p>

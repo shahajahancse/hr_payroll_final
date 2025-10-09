@@ -141,7 +141,41 @@
             border: 1px solid #000000;
             padding: 2px;
         }
-    </style>
+
+        .approvals p {
+            margin: 0 30px !important;
+            font-size: 12px;
+            border-top: 1px solid #000;
+            padding-top: 5px;
+            width: fit-content
+        }
+
+        .text-right .signature-line {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        @media print {
+            .container {
+                max-width: 1140px;
+            }
+            .text-center {
+                text-align: center !important;
+            }
+            .row {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                margin-right: -15px;
+                margin-left: -15px;
+            }
+            .col-md-4 {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+            }
+        }
+    </style>   
 </head>
 
 <body>
@@ -169,7 +203,7 @@
                 <div class="d-flex flex-row justify-content-between">
                     <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 15.01.2022 </p>
                     <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/HR/03/009 </p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : HGL/HRD/COM/03/161 </p>
                 </div>
             <?php } ?>
 
@@ -185,8 +219,8 @@
             </div>
             <div class="d-flex flex-row justify-content-between" style="margin-top:15px;">
                 <p class="unicode-to-bijoy" style="font-family: Arial, Helvetica, sans-serif;">তারিখ: <?= english_to_bangla_date_convert($row->first_pay)?></p>
-                <p class="unicode-to-bijoy" style="font-family: Arial, Helvetica, sans-serif;">মাতৃত্বকালীন সুবিধা প্রদানের হিসাব</p>
-                <p style="font-size: 14px;">প্রথম কিস্তি</p>
+                <p class="unicode-to-bijoy" style="font-size: 25px !important;font-family: Arial, Helvetica, sans-serif;"><b>মাতৃত্বকালীন সুবিধা প্রদানের হিসাব</b></p>
+                <p class="unicode-to-bijoy" style="font-size: 14px;"><b> প্রথম কিস্তি</b></p>
             </div>
             <div style="width:1000px; margin:0 auto; overflow:hidden; font-family: Arial, Helvetica, sans-serif; font-size:12px; clear: both;">
                 <div style="width:50%;font-size:16px;">
@@ -360,67 +394,59 @@
                     <p style="border: 1px solid #000;padding:58px 80px;"></p>
                 </div>
             </div>
+
+            <div class="container">
+                <!-- Summary Section -->
+                <div class="row approvals text-center">
+                    <div class="col-md-6">
+                        <p class="unicode-to-bijoy">প্রস্তুতকারী</p>
+                    </div> 
+                </div>
+                <br><br>
+                <br><br>
+                <!-- Approvals Section -->
+                <div class="row approvals text-center">
+                    <div class="col-md-4">
+                        <p class="unicode-to-bijoy">ব্যবস্থাপক
+                        <br>এইচ.আর.ডি</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="unicode-to-bijoy">মহাব্যবস্থাপক 
+                        <br>প্রজেক্ট হেড</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="unicode-to-bijoy">MÖæc মহাব্যবস্থাপক
+                        <br> (GBP.Avi.wW) </p>
+                    </div>
+                </div>
+                <br><br>
+                <br>
+                <br>
+                <?php 
+                    $id = $_SESSION['data']->id;
+                    if($id == 7){
+                ?>
+                <div class="row approvals text-center">
+                    <div class="col-md-4">
+                        <p class="unicode-to-bijoy">প্রধান পরিচালনাকারী কর্মকর্তা</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="unicode-to-bijoy">উপ-ব্যবস্থাপনা পরিচালক</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="unicode-to-bijoy">ব্যবস্থাপনা পরিচালক</p>
+                    </div>
+                </div>
+                <?php }?>
+            </div>
+            <div style="page-break-after:always"></div>
             
         <?php } ?>
     </div>
-    <br><br>
-    <div class="container">
-        <!-- Summary Section -->
-        <div class="row approvals text-center">
-            <div class="col-md-6">
-                <p class="unicode-to-bijoy">প্রস্তুতকারী</p>
-            </div> 
-        </div>
-        <br><br>
-        <!-- Approvals Section -->
-        <div class="row approvals text-center">
-            <div class="col-md-4">
-                <p class="unicode-to-bijoy">ব্যবস্থাপক
-                <br>এইচ.আর.ডি</p>
-            </div>
-            <div class="col-md-4">
-                <p class="unicode-to-bijoy">মহাব্যবস্থাপক 
-                <br>প্রজেক্ট হেড</p>
-            </div>
-            <div class="col-md-3">
-                <p class="unicode-to-bijoy">MÖæc মহাব্যবস্থাপক
-                 <br> (GBP.Avi.wW) </p>
-            </div>
-        </div>
-        <br><br>
-        <div class="row approvals text-center">
-            <div class="col-md-4">
-                <p class="unicode-to-bijoy">প্রধান পরিচালনাকারী কর্মকর্তা</p>
-            </div>
-            <div class="col-md-4">
-                <p class="unicode-to-bijoy">উপ-ব্যবস্থাপনা পরিচালক</p>
-            </div>
-            <div class="col-md-4">
-                <p class="unicode-to-bijoy">ব্যবস্থাপনা পরিচালক</p>
-            </div>
-        </div>
-    </div>
-    <br><br><br>
-    <style>
-        .approvals p {
-            margin: 0 30px !important;
-            font-size: 12px;
-            border-top: 1px solid #000;
-            padding-top: 5px;
-            width: fit-content
-        }
-
-        .text-right .signature-line {
-            margin-left: auto;
-            margin-right: 0;
-        }
-    </style>    
-
 
     <script src="<?=base_url()?>js/unicode_to_bijoy.js" type="text/javascript"></script>
     <?php echo "<script>applyUnicodeToBijoy()</script>"?>
 </body>
 
 </html>
-<br><br><br>
 <?php exit(); ?>

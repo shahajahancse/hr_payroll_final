@@ -45,6 +45,9 @@ class Common extends CI_Controller {
         if (!empty($_GET['emp_type'])) {
             $this->db->where('com.emp_type', $_GET['emp_type']);
         }
+        if (!empty($_GET['religion_status'])) {
+            $this->db->where('per.religion', $_GET['religion_status']);
+        }
 
         $this->db->group_by('com.emp_id');
         $this->db->order_by('com.emp_id', 'asc');
@@ -98,79 +101,120 @@ class Common extends CI_Controller {
     }
 
     function salary_emp_list(){
-        $unit_id        = $_GET['unit'];
-        $dept           = $_GET['dept'];
-        $section        = $_GET['section'];
-        $line           = $_GET['line'];
-        $desig          = $_GET['desig'];
-        $status         = $_GET['status'];
-        $stop_salary    = $_GET['stop_salary'];
-        $salary_month   = date('Y-m-01', strtotime($_GET['salary_month']));
-        $end_month      = date('Y-m-t', strtotime($_GET['salary_month']));
-        // dd($status);
+        // $unit_id        = $_GET['unit'];
+        // $dept           = $_GET['dept'];
+        // $section        = $_GET['section'];
+        // $line           = $_GET['line'];
+        // $desig          = $_GET['desig'];
+        // $status         = $_GET['status'];
+        // $stop_salary    = $_GET['stop_salary'];
+        // $salary_month   = date('Y-m-01', strtotime($_GET['salary_month']));
+        // $end_month      = date('Y-m-t', strtotime($_GET['salary_month']));
 
-        if (!empty($status) && $status == 1) {
-            $this->db->select('emp_id');
-            $this->db->from('pay_salary_sheet');
-            $this->db->where('unit_id', $unit_id);
-            $this->db->where('salary_month', $salary_month);
-            $this->db->where('emp_status', 1);
-            $emp_ids = $this->db->get()->result();
-            $emp_id = array_column($emp_ids, 'emp_id');
-        } elseif (!empty($status) && $status == 2) {
-            $this->db->select('lf.emp_id');
-            $this->db->from('pr_emp_left_history as lf');
-            $this->db->where('lf.unit_id', $unit_id);
-            $this->db->where("lf.left_date BETWEEN '$salary_month' AND '$end_month'");
-            $emp_ids = $this->db->get()->result();
-            $emp_id = array_column($emp_ids, 'emp_id');
-        } elseif (!empty($status) && $status == 3) {
-            $this->db->select('lf.emp_id');
-            $this->db->from('pr_emp_resign_history as lf');
-            $this->db->where('lf.unit_id', $unit_id);
-            $this->db->where("lf.resign_date BETWEEN '$salary_month' AND '$end_month'");
-            $emp_ids = $this->db->get()->result();
-            $emp_id = array_column($emp_ids, 'emp_id');
-        } else {
-            $emp_id = array();
-        }
-        // dd($emp_id);
-        $this->db->select('ss.emp_id, per.name_en, per.name_bn');
-        $this->db->from('pay_salary_sheet as ss');
-        $this->db->join('pr_emp_per_info as per', 'per.emp_id = ss.emp_id', 'left');
-        $this->db->join('emp_designation as deg', 'deg.id = ss.desig_id', 'left');
+        // if (!empty($status) && $status == 1) {
+        //     $this->db->select('emp_id');
+        //     $this->db->from('pay_salary_sheet');
+        //     $this->db->where('unit_id', $unit_id);
+        //     $this->db->where('salary_month', $salary_month);
+        //     $this->db->where('emp_status', 1);
+        //     $emp_ids = $this->db->get()->result();
+        //     $emp_id = array_column($emp_ids, 'emp_id');
+        // } elseif (!empty($status) && $status == 2) {
+        //     $this->db->select('lf.emp_id');
+        //     $this->db->from('pr_emp_left_history as lf');
+        //     $this->db->where('lf.unit_id', $unit_id);
+        //     $this->db->where("lf.left_date BETWEEN '$salary_month' AND '$end_month'");
+        //     $emp_ids = $this->db->get()->result();
+        //     $emp_id = array_column($emp_ids, 'emp_id');
+        // } elseif (!empty($status) && $status == 3) {
+        //     $this->db->select('lf.emp_id');
+        //     $this->db->from('pr_emp_resign_history as lf');
+        //     $this->db->where('lf.unit_id', $unit_id);
+        //     $this->db->where("lf.resign_date BETWEEN '$salary_month' AND '$end_month'");
+        //     $emp_ids = $this->db->get()->result();
+        //     $emp_id = array_column($emp_ids, 'emp_id');
+        // } else {
+        //     $emp_id = array();
+        // }
+
+        // $this->db->select('ss.emp_id, per.name_en, per.name_bn');
+        // $this->db->from('pay_salary_sheet as ss');
+        // $this->db->join('pr_emp_per_info as per', 'per.emp_id = ss.emp_id', 'left');
+        // $this->db->join('emp_designation as deg', 'deg.id = ss.desig_id', 'left');
+        // $this->db->where('ss.unit_id', $unit_id);
+        // if (!empty($emp_id) && !empty($status) && $status == 1) {
+        //     $this->db->where_in('ss.emp_id', $emp_id);
+        //     $this->db->where('emp_status', 1);
+        // } elseif (!empty($emp_id) && !empty($status) && $status == 2) {
+        //     $this->db->where_in('ss.emp_id', $emp_id);
+        //     $this->db->where('emp_status', 2);
+        // } elseif (!empty($emp_id) && !empty($status) && $status == 3) {
+        //     $this->db->where_in('ss.emp_id', $emp_id);
+        //     $this->db->where('emp_status', 3);
+        // }
+        // $this->db->where('ss.salary_month', $salary_month);
+        // $this->db->where('deg.hide_status', 1);
+
+        // if (!empty($dept)) {
+        //     $this->db->where('ss.dept_id', $dept);
+        // }
+        // if (!empty($section)) {
+        //     $this->db->where('ss.sec_id', $section);
+        // }
+        // if (!empty($line)) {
+        //     $this->db->where('ss.line_id', $line);
+        // }
+        // if (!empty($desig)) {
+        //     $this->db->where('ss.desig_id', $desig);
+        // }
+        // if (!empty($_GET['stop_salary'])) {
+        //     $this->db->where('ss.stop_salary', $_GET['stop_salary']);
+        // }
+
+        // $this->db->group_by('ss.emp_id');
+        // $this->db->order_by('ss.emp_id', 'asc');
+        // $result = $this->db->get()->result();
+
+        // ✅ Get and sanitize GET parameters
+        $unit_id      = $this->input->get('unit', true);
+        $dept         = $this->input->get('dept', true);
+        $section      = $this->input->get('section', true);
+        $line         = $this->input->get('line', true);
+        $desig        = $this->input->get('desig', true);
+        $status       = $this->input->get('status', true);
+        $stop_salary  = $this->input->get('stop_salary', true);
+        $salary_month = $this->input->get('salary_month', true); // e.g. '2025-10'
+
+        // ✅ Convert month to year-month format
+        $yearMonth = date('Y-m', strtotime($salary_month)); // '2025-10'
+
+        // ✅ Build optimized query
+        $this->db->distinct();
+        $this->db->select('
+            ss.emp_id,
+            per.name_en,
+            per.name_bn
+        ');
+        $this->db->from('pay_salary_sheet ss');
+        $this->db->join('pr_emp_per_info per', 'per.emp_id = ss.emp_id', 'left');
+        $this->db->join('emp_designation deg', 'deg.id = ss.desig_id AND deg.hide_status = 1', 'left');
+
+        // ✅ Core filters
         $this->db->where('ss.unit_id', $unit_id);
-        if (!empty($emp_id) && !empty($status) && $status == 1) {
-            $this->db->where_in('ss.emp_id', $emp_id);
-            $this->db->where('emp_status', 1);
-        } elseif (!empty($emp_id) && !empty($status) && $status == 2) {
-            $this->db->where_in('ss.emp_id', $emp_id);
-            $this->db->where('emp_status', 2);
-        } elseif (!empty($emp_id) && !empty($status) && $status == 3) {
-            $this->db->where_in('ss.emp_id', $emp_id);
-            $this->db->where('emp_status', 3);
-        }
-        $this->db->where('ss.salary_month', $salary_month);
-        $this->db->where('deg.hide_status', 1);
+        $this->db->like('ss.salary_month', $yearMonth, 'after'); // month-wise filter (YYYY-MM%)
 
-        if (!empty($dept)) {
-            $this->db->where('ss.dept_id', $dept);
-        }
-        if (!empty($section)) {
-            $this->db->where('ss.sec_id', $section);
-        }
-        if (!empty($line)) {
-            $this->db->where('ss.line_id', $line);
-        }
-        if (!empty($desig)) {
-            $this->db->where('ss.desig_id', $desig);
-        }
-        if (!empty($_GET['stop_salary'])) {
-            $this->db->where('ss.stop_salary', $_GET['stop_salary']);
-        }
+        // ✅ Conditional filters
+        if (!empty($status))       $this->db->where('ss.emp_status', $status);
+        if (!empty($dept))         $this->db->where('ss.dept_id', $dept);
+        if (!empty($section))      $this->db->where('ss.sec_id', $section);
+        if (!empty($line))         $this->db->where('ss.line_id', $line);
+        if (!empty($desig))        $this->db->where('ss.desig_id', $desig);
+        if (!empty($stop_salary))  $this->db->where('ss.stop_salary', $stop_salary);
 
-        $this->db->group_by('ss.emp_id');
+        // ✅ Order results
         $this->db->order_by('ss.emp_id', 'asc');
+
+        // ✅ Execute query
         $result = $this->db->get()->result();
 
         header('Content-Type: application/x-json; charset=utf-8');

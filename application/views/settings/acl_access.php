@@ -53,8 +53,8 @@
                 <label for="acl_name">ACL Type</label>
                 <select name="type" id="">
                     <option value="1">Left Menu</option>
-                    <option value="2">Hr Report</option>
-                    <option value="3">Payroll Report</option>
+                    <option value="2">Payroll Report</option>
+                    <option value="3">Hr Report</option>
                     <option value="4">Other Report</option>
                 </select>
             </div>
@@ -90,9 +90,9 @@
             if ($value->type == 1) {
                 echo '<td>Left Menu</td>';
             } elseif ($value->type == 2) {
-                echo '<td>Attendance Button</td>';
+                echo '<td>Payroll ButtonAttendance Button</td>';
             } elseif ($value->type == 3) {
-                echo '<td>Payroll Button</td>';
+                echo '<td>HR Button</td>';
             } else {
                 echo '<td>Other Button</td>';
             }

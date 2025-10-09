@@ -48,7 +48,7 @@ class Setting_con extends CI_Controller {
 	}
 
 	function acl_access_add(){
-		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'), 'type' => $this->input->post('type')))) {
+		if ($this->db->insert('member_acl_list', array('acl_name' => $this->input->post('acl_name'),'main_id'=>$this->input->post('type') ,'type' => $this->input->post('type')))) {
 			$this->session->set_flashdata('success', 'ACL Added Successfully');
 		}else{
 			$this->session->set_flashdata('failuer', 'ACL Added Failed');
@@ -454,7 +454,7 @@ class Setting_con extends CI_Controller {
 		$results = $this->db->distinct()->select('emp_id')
 			->from('pr_emp_shift_log')
 			->where("shift_log_date BETWEEN '{$first_date}' AND '{$second_date}'", null, false)
-			->where('emp_id', 5006248) // comment on for all employee
+			// ->where('emp_id', 5006248) // comment on for all employee
 			// ->where('shift_log_date', '2025-08-04')
 			->where('present_status', 'P')->where('schedule_id', $schedule_id)->get()->result();
 		// dd($results);

@@ -63,7 +63,7 @@
 			<tr>
 				<th style="padding:2px 10px;">SL</th>
 				<th style="padding:2px 10px;">ID</th>
-				<th style="padding:4px;">row Name</th>
+				<th style="padding:4px;">Emp. Name</th>
 				<th style="padding:4px">Designation</th>
 				<th style="padding:4px">Line</th>
 				<th style="padding:4px">Shift</th>
@@ -71,18 +71,16 @@
 				<th style="padding:4px">Out Time</th>
 				<th style="padding:4px">OT Hour</th>
 				<th style="padding:4px">EOT Hour</th>
-				<!-- <th style="padding:4px">Modify EOT</th>
-				<th style="padding:4px">Deduct EOT</th> -->
 				<th style="padding:4px">Total OT</th>
 			</tr>
 
 			<?php $emp_sec = '';
 				foreach ($values as $key => $row) {
-					if ($emp_sec != $row['emp_sec_id']) {
-					echo "<tr bgcolor='#CCCCCC'>";
-					echo "<td colspan='17' style='font-size:16px; font-weight:bold;'>Line :".$row['sec_name_en']."</td>";
-					echo "</tr>";
-					}
+					// if ($emp_sec != $row['emp_sec_id']) {
+					// echo "<tr bgcolor='#CCCCCC'>";
+					// echo "<td colspan='17' style='font-size:16px; font-weight:bold;'>Line :".$row['sec_name_en']."</td>";
+					// echo "</tr>";
+					// }
 				?>
 
 				<tr>

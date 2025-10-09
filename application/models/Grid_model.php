@@ -642,6 +642,44 @@ class Grid_model extends CI_Model{
 		else {return "Requested List Is Empty";}
 	}
 	// ==================  end actual salary report generate   ======================
+	function grid_attn_report_16_49($firstdate, $unit_id){
+		$date1 = date('Y-m-01', strtotime($firstdate));
+		$date2 = date('Y-m-t', strtotime($firstdate));
+
+		$this->db->select('
+			com.emp_id,
+			com.emp_join_date,
+			per.name_en,
+			log.shift_log_date,
+			log.in_time,
+			log.out_time
+		');
+		$this->db->from('pr_emp_shift_log AS log');
+		$this->db->join('pr_emp_com_info AS com', 'com.emp_id = log.emp_id', 'left');
+		$this->db->join('pr_emp_per_info AS per', 'per.emp_id = com.emp_id', 'left');
+
+		$this->db->where([
+			'com.emp_cat_id' => 1,
+			'com.ot_entitle' => 0,
+			'log.unit_id' => $unit_id
+		]);
+
+		$this->db->where('log.shift_log_date >=', $date1);
+		$this->db->where('log.shift_log_date <=', $date2);
+
+		// ✅ Optimized time filter — no function calls
+		// Matches any hour where time between HH:15:01 and HH:49:59
+		$this->db->where("
+			TIME_FORMAT(log.out_time, '%i:%s') BETWEEN '15:01' AND '49:59'
+		", null, false);
+
+		$this->db->order_by('log.shift_log_date', 'ASC');
+		$this->db->order_by('log.out_time', 'ASC');
+		$query = $this->db->get()->result_array();
+
+		return (!empty($query)) ? $query : 'No Data Found';
+	}
+
 	function continuous_report($date1, $date2, $status, $grid_emp_id){
 		$data = array();
 

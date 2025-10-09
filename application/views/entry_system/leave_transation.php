@@ -8,9 +8,12 @@
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
 <?php
-		$this->load->model('common_model');
-		$unit = $this->common_model->get_unit_id_name();
-	?>
+    $this->load->model('common_model');
+    $unit = $this->common_model->get_unit_id_name();
+    $user_id = $_SESSION['data']->id;
+    $get_acl_list = $this->db->select('acl_id')->where('username_id',$user_id)->get('member_acl_level')->result_array();
+    $acl_ids = array_column($get_acl_list, 'acl_id');
+?>
 <div class="content">
     <div class="row">
         <div class="col-md-8">
@@ -180,7 +183,11 @@
                     <div class="row">
                         <div class="col-md-12" style="margin: 8px -16px; display: flex; justify-content: flex-end;">
                             <input type="button" onclick="leave_applications(event)" value="Application Form" class="btn btn-info">
+                            <?php 
+                                if(in_array(219, $acl_ids)){
+                            ?>
                             <input type="button" onclick="leave_add(event)" value="Submit" class="btn btn-primary" style="margin-left:15px">
+                            <?php }?>
                         </div>
                     </div>
                 </div>

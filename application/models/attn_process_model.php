@@ -152,7 +152,7 @@ class Attn_process_model extends CI_Model{
 
 				// dd($in_time);
 
-				// dd($in_time .'->'. $out_time);
+				// dd($in_end_time .'->'. $out_end_time);
 				
 				if (empty($out_time) && date('t',strtotime($process_date))==date('d',strtotime($process_date))) {
 					$next_day = date('Y-m-d', strtotime($out_date. ' + 1 days'));
@@ -408,7 +408,7 @@ class Attn_process_model extends CI_Model{
 				}else{
 					$data = array(
 						'in_time' 			=> $in_time,
-						'out_time' 			=> $out_time,
+						'out_time' 			=> ($attn_status == 'W' || $late_status == 'H') && empty($in_time) ? "" : $out_time,
 						'ot' 				=> $ot_entitle == 1 ? 0:  $ot_hour,
 						'eot' 				=> $ot_entitle == 1 ? 0: $eot_hour,
 						'com_ot' 			=> $com_ot_entitle == 1 ? 0:  $ot_hour,
@@ -432,6 +432,7 @@ class Attn_process_model extends CI_Model{
 					);
 				}	
 				// dd($data);
+
 				
 				$this->db->where('shift_log_date', $process_date);
 				$this->db->where('emp_id', $emp_id);

@@ -279,7 +279,7 @@ class Salary_process_model extends CI_Model{
 					// pay days calculation
 					$total_pay_leave  = $cas_leave + $sick_leave + $earn_leave + $sp_leave; // $wp_leave + $do_leave;
 					$num_working_days = $num_of_days - $holiday - $weekend - $before_after_absent;
-					$pay_days 		  = $attend + $absent + $weekend + $holiday + $total_pay_leave;
+					$pay_days 		  = $attend + $weekend + $holiday + $total_pay_leave;
 					// pay days calculation
 
 					// dd($sick_leave);

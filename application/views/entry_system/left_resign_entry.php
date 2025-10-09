@@ -9,6 +9,9 @@
     <?php
         $this->load->model('common_model');
         $unit = $this->common_model->get_unit_id_name();
+        $user_id = $_SESSION['data']->id;
+        $get_acl_list = $this->db->select('acl_id')->where('username_id',$user_id)->get('member_acl_level')->result_array();
+        $acl_ids = array_column($get_acl_list, 'acl_id');
     ?>
 <div class="content">
     <div class="row">
@@ -136,7 +139,7 @@
 
 
         <br><br>
-
+    <?php if (in_array(221, $acl_ids)){?>
         <div class="row nav_head">
             <div class="col-lg-3">
                 <span style="font-size: 20px;"><?= 'Left / Resign'; ?></span>
@@ -160,6 +163,9 @@
         <div class="row nav_head">
             <input type="text" class="form-control" id="remark" placeholder="please enter comment">
         </div><!-- /.row -->
+
+    <?php }?>
+
     </div>
 
     <div class="col-md-4 tablebox">

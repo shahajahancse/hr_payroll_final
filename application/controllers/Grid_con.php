@@ -991,6 +991,19 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_reportt',$data);
 		}
 	}
+	function grid_attn_report_16_49(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query = $this->Grid_model->grid_attn_report_16_49($grid_firstdate, $data['unit_id']);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["date"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('grid_con/grid_attn_report_16_49',$data);
+		}
+	}
+
 	function grid_monthly_att_register_ot(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');

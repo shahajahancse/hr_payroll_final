@@ -176,14 +176,13 @@ table.main_table tr,table.main_table tr td,table.main_table tr th{
 						echo (isset($values["new_com_salary"][$k])) ? $values["new_com_salary"][$k] : '';
 						echo "</td>";
 						
-						$sub_total_prev_com_salary += isset($values["prev_com_salary"][$k]) ? $values["prev_com_salary"][$k] : 0;
-						$sub_total_inc_amount = $sub_total_inc_amount + $inc_amount;
-						$sub_total_new_com_salary += isset($values["new_com_salary"][$k]) ? $values["new_com_salary"][$k] : 0;
+						$sub_total_prev_com_salary  += isset($values["prev_com_salary"][$k]) ? $values["prev_com_salary"][$k] : 0;
+						$sub_total_inc_amount 		 = $sub_total_inc_amount + $inc_amount;
+						$sub_total_new_com_salary   += isset($values["new_com_salary"][$k]) ? $values["new_com_salary"][$k] : 0;
 						
 						$grand_total_prev_com_salary += isset($values["prev_com_salary"][$k]) ? $values["prev_com_salary"][$k] : 0;
-						$grand_total_inc_amount = $grand_total_inc_amount + $inc_amount;
-						$grand_total_new_com_salary += isset($values["new_com_salary"][$k]) ? $values["new_com_salary"][$k] : 0;
-						$grand_total_new_com_salary += (isset($values["new_com_salary"][$k]) ? $values["new_com_salary"][$k] : 0);
+						$grand_total_inc_amount 	  = $grand_total_inc_amount + $inc_amount;
+						$grand_total_new_com_salary  += isset($values["new_com_salary"][$k]) ? $values["new_com_salary"][$k] : 0;
 						
 					    $sStartDate = isset($values["effective_month"][$k]) ? date("d-M-Y", strtotime($values["effective_month"][$k])) : '';
 						
