@@ -306,7 +306,6 @@ class Attn_process_model extends CI_Model{
 								$ot_eot_12am = 5;
 							} else {
 							// dd($eot_hour);
-
 								if ($eot_hour > 5) {
 									if( (date('H:i:s',strtotime($out_time)) >= '01:00:00' && $unit == 4)){
 										$eot_hour = $eot_hour - 1;
@@ -322,7 +321,6 @@ class Attn_process_model extends CI_Model{
 							}
 							// dd($ot_eot_12am);
 						}
-						// dd($eot_hour);
 						// Late Status check
 						$late_start_time = "$process_date $late_start_time";
 						$late_compare_time = "$process_date $late_compare_time";
@@ -335,6 +333,14 @@ class Attn_process_model extends CI_Model{
 						// Late Status
 					}
 				}
+				// dd($out_time);
+				if($out_time == '' && $in_time != ''){
+					$eot_hour = 0;
+				}
+				
+				// dd($eot_hour);
+				
+
 				//============ End  Working day/Weeked/Holiday OT Calculation =============
 				// dd($late_time);
 				// Night Allowance unit
@@ -361,24 +367,12 @@ class Attn_process_model extends CI_Model{
 					$ramadan = 0;  // Handle cases where "Ramadan" isn't found
 				}
 
-				// echo $ramadan;exit;
-				// dd($ramadan .'=='. 'Ramadan');
-
-				//  if((date('H:i:s',strtotime($out_time)) >= $iffter_allow_time && date('H:i:s',strtotime($out_time)) <= '06:59:59') && $ramadan == 'Ramadan'){
-				// 	$iffter_allow = 1;
-				//  }else{
-				// 	$iffter_allow = 0;
-				//  }
 				if($in_time == '' && $out_time == ''){
 					$iffter_allow =0;
 				}else{
 					// dd('ko');
 					$iffter_allow = ($ramadan === 'Ramadan' && date('H:i:s', strtotime($out_time)) > date('H:i:s', strtotime($iffter_allow_time)) || date('H:i:s', strtotime($out_time)) < date('H:i:s', strtotime('06:59:59'))) ? 1 : 0;
 				}
-
-				// dd($iffter_allow);
-				//  dd(date('H:i:s', strtotime('06:59:59')).'=='.date('H:i:s', strtotime($out_time)));
-
 				$check_emp_id = $this->db->where('emp_id', $emp_id)->where('date', $process_date)->get('emp_ids')->row();
 				if(!empty($check_emp_id)){
 						$data = array(
@@ -418,7 +412,7 @@ class Attn_process_model extends CI_Model{
 						'false_ot_all' 		=> null,
 						'ot_eot_4pm' 		=> $com_ot_entitle == 1 ? 0 : $ot_eot_4pm,
 						'ot_eot_12am' 		=> $com_ot_entitle == 1 ? 0 : $ot_eot_12am,
-						'with_out_friday_ot'=> ($ot_hour == 0 && $eot_hour !=0) ?$eot_hour: 0 ,
+						'with_out_friday_ot'=> ($ot_hour == 0 && $eot_hour !=0) ? $eot_hour: 0 ,
 						'deduction_hour' 	=> $deduction_hour,
 						'late_status' 		=> ($attn_status == 'W' || $late_status == 'H') ? 0 : $late_status,
 						'late_time' 		=> $late_time,

@@ -42,10 +42,15 @@
     <div class="d-flex">
         <div class="flex-fill" style="height:95vh;width:100vw;border: 3px solid black;">
             <div class="text-center" >
+                <?php if($unit_id == 1){?>
+                    <span style="float:right;margin-right:10px;font-size:12px;font-weight:600">Document Code-AJFL/HRAC(HR)/03/010</span>
+                <?php }?>
                 <br><br><br><br><br><br>
+                <?php if($unit_id != 1){?>
                 <h5>Document Code-HGL/HRD(HR)/03/010</h5>
+                <?php }?>
                 <br><br>
-                <h1 class="unicode-to-bijoy font-weight-bold" style="text-shadow: -2px 0px 2px gray; text-color:black">সার্ভিসবহি </h1>
+                <h1 class="unicode-to-bijoy font-weight-bold" style="text-shadow: -2px 0px 2px gray; text-color:black">সার্ভিস বহি </h1>
                 <br>
                 <h4 class="unicode-to-bijoy">ফরম-৭ </h4>
                 <p class="unicode-to-bijoy">[ধারা ৭ এবং বিধি ২০ (১) ও (২) দ্রষ্টব্য]</p>
@@ -71,16 +76,16 @@
                     &nbsp; জেলাঃ <?php echo $value->per_dis_name_bn?> 
                 </p>
                 <p class="unicode-to-bijoy">৬। বর্তমান ঠিকানা: <?php echo $value->pre_village_bn.', '.$value->pre_post_name_bn.', '.$value->pre_upa_name_bn.', '.$value->pre_dis_name_bn?></p>
-                <p class="unicode-to-bijoy">৭। জন্ম তারিখ/বয়স: <?php echo date('d-m-Y',strtotime($value->emp_dob))?></p>
+                <p class="unicode-to-bijoy">৭। জন্ম তারিখ/বয়স: <?php echo date('d-m-Y',strtotime($value->emp_dob))?> ইং</p>
                 <p class="unicode-to-bijoy">৮। জাতীয় পরিচয় পত্র নং (যদি থাকে): <?php echo $value->nid_dob_id?></p>
                 <p class="unicode-to-bijoy">৯।  শিক্ষাগত যোগ্যতা: <?php echo $value->education==''? 'নাই' : $value->education?></p>
-                <p class="unicode-to-bijoy">১০। বিশেষ দক্ষতা (যদি থাকে): <?php echo $value->exp_factory_name.','. $value->exp_duration.','.$value->exp_dasignation ?></p>
+                <p class="unicode-to-bijoy">১০। cÖwkÿY বা বিশেষ দক্ষতা (যদি থাকে): <?php echo $value->exp_factory_name.','. $value->exp_duration.','.$value->exp_dasignation ?></p>
                 <p> <span class="unicode-to-bijoy" >১১। উচ্চতা:   <?php echo $value->hight?>  সেঃ মিঃ</span> &nbsp;&nbsp;&nbsp;
                 <span class="unicode-to-bijoy">১২। রক্তের গ্রুপ (যদি থাকে):</span> <?php echo $value->blood == 'None'? ' <span class="unicode-to-bijoy">নাই </span>' : '<span style="font-size:15px">'.$value->blood.'</span>' ?></p> 
                 <!-- <p></p> -->
                 <p class="unicode-to-bijoy">১৩। সনাক্ত করিবার জন্য বিশেষ কোনচিহ্ন (যদি থাকে): নাই</p>
                 <p class="unicode-to-bijoy">১৪। সার্ভিস বহি খুলিবার তারিখ: <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> ইং</p>
-                <p class="unicode-to-bijoy">১৫। বাম হাতের বৃদ্ধাঙ্গুলীর ছাপ: </p>
+                <p class="unicode-to-bijoy">১৫। বাম হাতের e„Øv½yjxi  ছাপ: </p>
                 <div style="position: absolute; top: 60px;right: 35px;">
                     <img style="border: 3px solid black;" src="<?php echo base_url('uploads/photo/'.$value->img_source.'')?>" alt="" width="70px" height="100px">
                 </div>
@@ -102,13 +107,13 @@
     <div class="d-flex">
         <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
             <p style="padding: 5px 0px 0px 5px;" class="unicode-to-bijoy"> ফরম নং - ৭(খ)</p>
-            <h6 class="text-center unicode-to-bijoy"> দ্বিতীয়ভাগ</h6>
+            <h6 class="text-center unicode-to-bijoy"> দ্বিতীয় ভাগ</h6>
             <p style="padding: 5px 0px 0px 5px;" class="unicode-to-bijoy"> মালিকের ও চাকুরীর তথ্যসমূহঃ</p>
             <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                 <thead>
                     <tr class="text-center" >
-                        <th style="padding: 12px;"><span class="unicode-to-bijoy">কারখানা/প্রতিষ্ঠানেরনাম ও ঠিকানা </span></th>
-                        <th class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষেরনাম</th>
+                        <th style="padding: 12px;"><span class="unicode-to-bijoy">কারখানা/প্রতিষ্ঠানের নাম ও ঠিকানা </span></th>
+                        <th class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষের নাম</th>
                     </tr>
                     <tr class="text-center">
                         <th class="unicode-to-bijoy">১</th>
@@ -118,8 +123,8 @@
                     <tbody>
                         <?php if($unit_id == 1){ ?>
                             <tr class="text-center">
-                                <td class="unicode-to-bijoy" style="font-size:14px">এ জে ফ্যাসনস্ লিঃ<br>
-                                ২৩৪/৪ কচুক্ষেত, ক্যান্টরমেন্ট, ঢাকা-১২০৬।</td>
+                                <td class="unicode-to-bijoy" style="font-size:14px">এ জে ফ্যাশনস্ লিঃ<br>
+                                ২৩৪/৪ কচুক্ষেত, ক্যান্টনমেন্ট, ঢাকা-১২০৬।</td>
                                 <td class="unicode-to-bijoy font-weight-bold" style="padding: 8px;font-size:16px"> আনোয়ার হোসেন চৌধুরী</td>
                             </tr>
                         <?php } elseif($unit_id == 4){ ?>    
@@ -133,7 +138,7 @@
                         <?php } else{ ?>
                             <tr class="text-center">
                                 <td class="unicode-to-bijoy">এ জে ফ্যাসনস্ লিঃ<br>
-                                ২৩৪/৪ কচুক্ষেত, ক্যান্টরমেন্ট, ঢাকা-১২০৬।</td>
+                                ২৩৪/৪ কচুক্ষেত, ক্যান্টনমেন্ট, ঢাকা-১২০৬।</td>
                                 <td class="unicode-to-bijoy" style="padding: 10px;">মোঃআবদুররহিম<br>
                                 সহঃম্যানেজার (এইচ.আর.ডি)<br>
                                 হানিওয়েলগার্মেন্টস লিঃ</td>
@@ -146,15 +151,15 @@
         <div style="width:1% !important"></div>
         <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
             <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px">ফরম নং - ৭(খ)</p>
-            <h6 class="text-center unicode-to-bijoy"> দ্বিতীয়ভাগ</h6>
+            <h6 class="text-center unicode-to-bijoy"> দ্বিতীয় ভাগ</h6>
             <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px">মালিকের ও চাকুরীর তথ্যসমূহঃ</p>
             <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                 <thead>
                     <tr class="text-center">
                         <th class="unicode-to-bijoy">যোগদানের তারিখ</th>
-                        <th class="unicode-to-bijoy">চাকরিত্যাগ/ অবসানেরতারিখ</th>
-                        <th class="unicode-to-bijoy">ত্যগ/অবসানেরধরন/কারন </th>
-                        <th class="unicode-to-bijoy">মালিক/প্রাধিকারপ্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                        <th class="unicode-to-bijoy">চাকরিত্যাগ/ অবসানের তারিখ</th>
+                        <th class="unicode-to-bijoy">ত্যগ/অবসানের ধরন/কারন </th>
+                        <th class="unicode-to-bijoy">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
                         <th class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর/টিপসই </th>
                     </tr>
                     <tr class="text-center">
@@ -192,8 +197,8 @@
     <!-- First Page - Left Side -->
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
         <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
-        <h6 class="unicode-to-bijoy text-center" style="font-weight:700;"> তৃতীয়ভাগ</h6>
-        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্য</p>
+        <h6 class="unicode-to-bijoy text-center" style="font-weight:700;"> তৃতীয় ভাগ</h6>
+        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্যসমূহঃ</p>
         <table class="table-sm" style="font-size: 0.8em; width:100%;" border="1">
             <thead>
                 <tr class="text-center">
@@ -280,8 +285,8 @@
     <!-- First Page - Right Side -->
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
         <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
-        <h6 class="text-center unicode-to-bijoy" style="font-weight:700;"> তৃতীয়ভাগ</h6>
-        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্য</p>
+        <h6 class="text-center unicode-to-bijoy" style="font-weight:700;"> তৃতীয় ভাগ</h6>
+        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্যসমূহঃ</p>
         <table class="table-sm" style="font-size: 0.8em;width: 100%;" border="1">
             <thead>
                 <tr class="text-center"> 
@@ -356,7 +361,7 @@ if ($pages > 1) {
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
         <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
         <h6 class="unicode-to-bijoy text-center" style="font-weight:700;"> তৃতীয়ভাগ</h6>
-        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্য</p>
+        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্যসমূহঃ</p>
         <table class="table-sm" style="font-size: 0.8em; width:100%;" border="1">
             <thead>
                 <tr class="text-center">
@@ -436,8 +441,8 @@ if ($pages > 1) {
     <!-- Right Side for additional pages -->
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
         <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
-        <h6 class="text-center unicode-to-bijoy" style="font-weight:700;"> তৃতীয়ভাগ</h6>
-        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্য</p>
+        <h6 class="text-center unicode-to-bijoy" style="font-weight:700;"> তৃতীয় ভাগ</h6>
+        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্যসমূহঃ</p>
         <table class="table-sm" style="font-size: 0.8em;width: 100%;" border="1">
             <thead>
                 <tr class="text-center"> 

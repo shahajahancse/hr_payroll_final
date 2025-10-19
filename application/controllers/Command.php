@@ -24,6 +24,38 @@ class Command extends CI_Controller {
 		// exit('only for developer');
 	}
 
+    // this api use for testing to another system
+	function get_emp($limit=100){
+		$this->db->distinct();
+		$this->db->select('per.*, com.emp_join_date, com.gross_sal');
+		$this->db->from('pr_emp_com_info com')->from('pr_emp_per_info per');
+		$this->db->where('com.emp_id = per.emp_id')->where('com.emp_cat_id', 1)->where('com.unit_id', 4);
+		$result = $this->db->limit($limit)->get()->result();
+		header('Content-Type: application/json');
+		echo json_encode($result);
+	}
+	function get_emp_inc($id){
+		$result = $this->db->where('ref_id', $id)->get('pr_incre_prom_pun')->result();
+		header('Content-Type: application/json');
+		echo json_encode($result);
+	}
+	function get_emp_leave($id){
+		$result = $this->db->where('emp_id', $id)->get('pr_leave_trans')->result();
+		header('Content-Type: application/json');
+		echo json_encode($result);
+	}
+	function get_emp_log($id, $date1, $date2){
+		$$date1 = date('Y-m-d', strtotime($date1));
+		$$date2 = date('Y-m-d', strtotime($date2));
+		$this->db->select('shift_log_date, in_time, out_time');
+		$this->db->where('shift_log_date >=', $date1)->where('shift_log_date <=', $date2);
+		$result = $this->db->where('emp_id', $id)->get('pr_emp_shift_log')->result();
+		header('Content-Type: application/json');
+		echo json_encode($result);
+	}
+    // this api use for testing to another system
+	
+
 	function file(){
 		dd('only for developer');
 		date_default_timezone_set('Asia/Dhaka');

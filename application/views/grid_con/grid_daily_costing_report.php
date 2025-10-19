@@ -58,11 +58,11 @@
 				?>
 
 				<?php foreach ($values as $key => $row) {
-					if ($emp_line_id != $row->emp_line_id) {
-					echo "<tr bgcolor='#CCCCCC'>";
-					echo "<td colspan='17' style='font-size:16px; font-weight:bold;'>Line :".$row->line_name."</td>";
-					echo "</tr>";
-					}
+					// if ($emp_line_id != $row->emp_line_id) {
+					// echo "<tr bgcolor='#CCCCCC'>";
+					// echo "<td colspan='17' style='font-size:16px; font-weight:bold;'>Line :".$row->line_name."</td>";
+					// echo "</tr>";
+					// }
 				?>
 
 				<tr>

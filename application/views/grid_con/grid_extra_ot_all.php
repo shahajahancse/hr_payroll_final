@@ -148,7 +148,7 @@
 							$att_status = "A";
 							$att_status_count = "A";
 							$row->com_ot = 0;
-							 $row->com_eot = 0;
+							$row->com_eot = 0;
 						}
 
 						// in time
@@ -170,65 +170,69 @@
 						// out time
 						if($row->out_time != "00:00:00"){
 							$out_time = $row->out_time;
-							if($row->com_eot == 1 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
-								$extra_ot_hour = 0;
-								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							}
+							// dd($row);
+							// if($row->com_eot == 1 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+							// 	$extra_ot_hour = 0;
+							// 	$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							// }
 
-							if($row->com_eot == 2 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
-								$extra_ot_hour = 0;
-								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->com_eot == 2 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
-								$extra_ot_hour = 1;
-								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							}
+							// if($row->com_eot == 2 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+							// 	$extra_ot_hour = 0;
+							// 	$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
 
-							if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
-								$extra_ot_hour = 0;
-								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
-							} else if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
-								$extra_ot_hour = 1;
-								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
-								$extra_ot_hour = 2;
-								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							}
+							// } else if($row->com_eot == 2 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+							// 	$extra_ot_hour = 1;
+							// 	$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							// }
 
-							if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
-								$extra_ot_hour = 0;
-								$out_time = date('H:i:s ', strtotime('-4 hour', strtotime($out_time)));
-							} else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
-								$extra_ot_hour = 1;
-								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
-							} else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
-								$extra_ot_hour = 2;
-								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 3){
-								$extra_ot_hour = 3;
-								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							}
+							// if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+							// 	$extra_ot_hour = 0;
+							// 	$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							// } else if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+							// 	$extra_ot_hour = 1;
+							// 	$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							// } else if($row->com_eot == 3 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
+							// 	$extra_ot_hour = 2;
+							// 	$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							// }
 
-							if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
-								$extra_ot_hour = 0;
-								$out_time = date('H:i:s ', strtotime('-5 hour', strtotime($out_time)));
-							} else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
-								$extra_ot_hour = 1;
-								$out_time = date('H:i:s ', strtotime('-4 hour', strtotime($out_time)));
-							} else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
-								$extra_ot_hour = 2;
-								$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
-							} else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 3){
-								$extra_ot_hour = 3;
-								$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
-							} else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 4){
-								$extra_ot_hour = 4;
-								$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
-							}
+							// if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+							// 	$extra_ot_hour = 0;
+							// 	$out_time = date('H:i:s ', strtotime('-4 hour', strtotime($out_time)));
+							// } else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+							// 	$extra_ot_hour = 1;
+							// 	$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							// } else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
+							// 	$extra_ot_hour = 2;
+							// 	$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							// } else if($row->com_eot == 4 && $row->false_ot_12 != null && $row->false_ot_12 == 3){
+							// 	$extra_ot_hour = 3;
+							// 	$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							// }
+
+							// if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 0){
+							// 	$extra_ot_hour = 0;
+							// 	$out_time = date('H:i:s ', strtotime('-5 hour', strtotime($out_time)));
+							// 	// dd($out_time);
+							// } else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 1){
+							// 	$extra_ot_hour = 1;
+							// 	$out_time = date('H:i:s ', strtotime('-4 hour', strtotime($out_time)));
+							// } else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 2){
+							// 	$extra_ot_hour = 2;
+							// 	$out_time = date('H:i:s ', strtotime('-3 hour', strtotime($out_time)));
+							// } else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 3){
+							// 	$extra_ot_hour = 3;
+							// 	$out_time = date('H:i:s ', strtotime('-2 hour', strtotime($out_time)));
+							// } else if($row->com_eot == 5 && $row->false_ot_12 != null && $row->false_ot_12 == 4){
+							// 	$extra_ot_hour = 4;
+							// 	$out_time = date('H:i:s ', strtotime('-1 hour', strtotime($out_time)));
+							// }
+							// dd($out_time);
 						} else {
 							$out_time = "00:00:00";
 						}
 						$out_time = $this->job_card_model->get_formated_out_time_all($value->emp_id, $out_time, $schedule);
-
+						// dd($out_time);
 						echo "<tr>";
 							echo "<td>&nbsp;";
 							echo $shift_log_date;

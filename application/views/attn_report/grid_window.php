@@ -316,6 +316,9 @@
 							<?php if(in_array(101,$acl)) { ?>
 							<button class="btn input-sm sbtn" onclick="emp_conformation_list(3)">Conformation Letter</button>
 							<?php } ?>
+							<?php if(in_array(101,$acl)) { ?>
+							<button class="btn input-sm sbtn" onclick="emp_summary_record()">Summary Record</button>
+							<?php } ?>
 						</div>
 						<!-- Continuous Reports end -->
 

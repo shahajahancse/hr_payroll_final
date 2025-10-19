@@ -975,5 +975,13 @@ class Import extends CI_Controller {
 			echo "Upload successfully done";
 		}
 	}
+
+	// function get_id(){
+	// 	$lists = $this->db->select('emp_id')->where('unit_id',1)->where('eot_hour !=',0)->where('salary_month','2025-03-01')->get('pay_salary_sheet')->result();
+
+	// 	foreach($lists as $list){
+	// 		echo $list->emp_id."<br>";
+	// 	}
+	// }
 }
 ?>

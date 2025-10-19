@@ -217,6 +217,8 @@ class Common extends CI_Controller {
         // ✅ Execute query
         $result = $this->db->get()->result();
 
+        // dd($this->db->last_query());
+
         header('Content-Type: application/x-json; charset=utf-8');
         echo json_encode($result);
         return;

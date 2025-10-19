@@ -254,7 +254,7 @@ class Salary_report_con extends CI_Controller {
     	$this->load->model('Common_model');
 		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
 
-		$data["values"] = $this->Grid_model->actual_salary_sheet($salary_month,$status, $grid_emp_id,$stop_salary, $unit_id,$ot_entitle=1);
+		$data["values"] = $this->Grid_model->actual_eot_sheet($salary_month,$status, $grid_emp_id,$stop_salary, $unit_id,$ot_entitle=1);
 
 		$data["salary_month"] = $salary_month;
 		$data["second_date"]  = $second_date;

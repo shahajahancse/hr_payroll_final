@@ -158,7 +158,7 @@ $i = 1;
 
         <?php if($daily_status==1 || $daily_status==5 || $daily_status==6 || $daily_status==7 || $daily_status==8){ ?>
             <td style="text-align:center; padding:0 4px"><?php echo $employee['in_time'] ?></td>
-            <td style="text-align:center; padding:0 4px"><?php echo $employee['out_time'] ?></td>
+            <td style="text-align:center; padding:0 4px"><?php echo $employee['out_time'] == "00:00:00" ? "" : $employee['out_time'] ?></td>
         <?php } ?>
 
         <?php if($daily_status == 5){?>

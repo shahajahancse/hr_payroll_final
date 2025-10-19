@@ -243,6 +243,23 @@ class Grid_con extends CI_Controller {
 			$this->load->view('grid_con/left_emp_report',$data);
 		}
 	}
+	function emp_summary_record(){
+
+		$data['values']     = $this->Grid_model->emp_summary_record(
+			date("Y-m-d", strtotime($this->input->post('firstdate'))),
+			date("Y-m-d", strtotime($this->input->post('seconddate'))),
+			$this->input->post('unit_id')
+		);
+		// dd($data);
+		$data['first_date'] = date("Y-m-d", strtotime($this->input->post('firstdate')));
+		$data['second_date']= date("Y-m-d", strtotime($this->input->post('seconddate')));
+		$data['unit_id']    = $this->input->post('unit_id');
+		if(is_string($data['values'])){
+			echo $data['values'];
+		}else{
+			$this->load->view('grid_con/emp_summary_record',$data);
+		}
+	}
 	function grid_left_report_with_image(){
 
 		$grid_firstdate     = $this->input->post('firstdate');

@@ -220,7 +220,7 @@
             <div class="d-flex flex-row justify-content-between" style="margin-top:15px;">
                 <p class="unicode-to-bijoy" style="font-family: Arial, Helvetica, sans-serif;">তারিখ: <?= english_to_bangla_date_convert($row->first_pay)?></p>
                 <p class="unicode-to-bijoy" style="font-size: 25px !important;font-family: Arial, Helvetica, sans-serif;"><b>মাতৃত্বকালীন সুবিধা প্রদানের হিসাব</b></p>
-                <p class="unicode-to-bijoy" style="font-size: 14px;"><b> প্রথম কিস্তি</b></p>
+                <p class="unicode-to-bijoy" style="font-size: 14px;"><b> cÖ_g wKw¯Í</b></p>
             </div>
             <div style="width:1000px; margin:0 auto; overflow:hidden; font-family: Arial, Helvetica, sans-serif; font-size:12px; clear: both;">
                 <div style="width:50%;font-size:16px;">
@@ -303,12 +303,14 @@
                             $this->db->where("salary_month BETWEEN '$a2' and '$a1'"); 
                             $this->db->where('emp_id', $row->emp_id)->order_by('salary_month', 'asc');
                             $sals = $this->db->get('pay_salary_sheet_com')->result();
+                            // dd($sals);
                             $total_gross = 0;
                             $total_attn = 0;
                             $total_fb = 0;
                             $total_ab = 0;
                             $total = 0;
                             $p_days = 0;
+                            $net_p = 0;
                         ?> 
                         <?php foreach ($sals as $s) { ?>
                         <?php $a =  eng2bn_month($s->salary_month); ?> 
@@ -321,13 +323,16 @@
                             if ($row->abenifit_month == $s->salary_month) {
                                 $abonus = $row->ather_benifit;
                             }; 
+                            $p_days = $p_days + $s->att_days;
                             $total_gross = $s->gross_sal + $total_gross;
                             $total_attn = $s->att_bonus + $total_attn;
+                            $net = $s->gross_sal + $s->att_bonus + $s->ot_amount - $s->total_deduct;
+                            $net_p = $net + $net_p;
                             $total_fb = $fbonus + $total_fb;
                             $total_ab = $abonus + $total_ab;
-                            $sub_total = $s->gross_sal + $s->att_bonus + $fbonus + $abonus+$s->ot_amount;
+                            // $sub_total = $s->gross_sal + $s->att_bonus + $fbonus + $abonus + $s->ot_amount;
+                            $sub_total = $s->gross_sal + $s->att_bonus + $fbonus + $abonus + $s->ot_amount - $s->total_deduct;
                             $total = $sub_total + $total;
-                            $p_days = $p_days + $s->att_days;
                         ?> 
                         <tr style="font-size:16px; text-align:center;font-family:SutonnyMJ;font-size:19px">
                             <td class="unicode-to-bijoy" style="padding:5px; width:15%;font-family:arial"><?= $a; ?>  </td>
@@ -335,7 +340,7 @@
                             <td><?= $s->att_days ?></td>
                             <td><?= $s->gross_sal ?></td>
                             <td><?= $s->att_bonus ?></td>
-                            <td><?= $s->att_bonus + $s->gross_sal ?></td>
+                            <td><?= $net ?></td>
                             <td><?= $fbonus ?></td>
                             <td><?= $abonus ?></td>
                             <td><?= $sub_total ?></td>
@@ -346,7 +351,7 @@
                             <td style="padding:5px; font-size:19px" ><?= $p_days ?></td>
                             <td style="padding:5px; font-size:19px" ><?= $total_gross ?></td>
                             <td style="padding:5px; font-size:19px" ><?= $total_attn ?></td>
-                            <td style="padding:5px; font-size:19px" ><?= $total_gross + $total_attn ?></td>
+                            <td style="padding:5px; font-size:19px" ><?= $net_p ?></td>
                             <td style="padding:5px; font-size:19px" ><?= $total_fb ?></td>
                             <td style="padding:5px; font-size:19px" ><?= $total_ab ?></td>
                             <td style="padding:5px; font-size:19px"><?= ($total) ?></td>
@@ -366,18 +371,18 @@
                         <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
                             <td style="padding:5px">c«wZw`‡bi Mo ‡eZb (‡gvU ‡eZb <?= $total ?> <span style="font-size: 12px;" >➗</span> <?= $p_days ?> w`b)</td>
                             <td style="padding:5px"><?= round($total / $p_days, 2) ?></td>
-                            <td style="padding:5px">ivR¯ KZ©b</td>
+                            <td style="padding:5px">ivR¯^ KZ©b</td>
                             <td style="padding:5px">10</td>
                         </tr>
                         <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
                             <td style="padding:5px">‡gvU c«‡`q UvKvi cwigvY ( c«wZw`‡bi Mo ‡eZb <?= round($total / $p_days, 2) ?> &#10005; <?= $row->total_day * 2 ?> w`b) </td>
-                            <td style="padding:5px"><?= round((($total / $p_days) * ($row->total_day * 2)), 2) ?></td>
+                            <td style="padding:5px"><?= round((($total / $p_days) * ($row->total_day * 2)), 0) ?></td>
                             <td style="padding:5px">‡gvU UvKv </td>
-                            <td style="padding:5px"><?= round((($total / $p_days) * $row->total_day), 2) - 10 ?></td>
+                            <td style="padding:5px"><?= round((($total / $p_days) * $row->total_day), 0) - 10 ?></td>
                         </tr>
                         <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
                             <td style="padding:5px">cÖ_g wKw¯Í ( c«wZw`‡bi Mo ‡eZb <?= round($total / $p_days, 2) ?> &#10005; <?= $row->total_day ?> w`b) </td>
-                            <td style="padding:5px"><?= round((($total / $p_days) * $row->total_day), 2) ?></td>
+                            <td style="padding:5px"><?= round((($total / $p_days) * $row->total_day), 0) ?></td>
                         </tr>
                     </thead>
                 </table>
@@ -390,16 +395,18 @@
                     <p style="font-size:19px"><span>K_vq </span> : <?=  $obj->numToWord((int)$totall) ?>  UvKv </p>
                 </div>
                 <div style="width: 30%; display: flex; align-items: center;">
-                    <p style="width: 29%;border: 1px solid #000;padding:38px 0px 30px 0px;text-align: center;">গ্রহণকারীর স্বাক্ষর</p>
+                    <p style="width: 29%;border: 1px solid #000;padding:38px 0px 30px 0px;text-align: center;">MÖnYKvixi ¯^v¶i</p>
                     <p style="border: 1px solid #000;padding:58px 80px;"></p>
                 </div>
             </div>
+            <br><br>
 
             <div class="container">
                 <!-- Summary Section -->
                 <div class="row approvals text-center">
                     <div class="col-md-6">
-                        <p class="unicode-to-bijoy">প্রস্তুতকারী</p>
+                        <p class="bijoy">cÖ¯‘ZKvix</p>
+                 
                     </div> 
                 </div>
                 <br><br>
