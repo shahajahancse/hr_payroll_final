@@ -1173,9 +1173,9 @@ class Grid_model extends CI_Model{
 		}
 
 		if($type == 3){
-			$this->db->select('pr_leave_trans.leave_type');
-			$this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
-			$this->db->where('pr_leave_trans.leave_start',$date);
+			// $this->db->select('pr_leave_trans.leave_type');
+			// $this->db->join('pr_leave_trans', 'pr_leave_trans.emp_id = pr_emp_com_info.emp_id', 'LEFT');
+			// $this->db->where('pr_emp_shift_log.shift_log_date',$date);
 			$this->db->where('pr_emp_shift_log.present_status', "L");
 		}
 

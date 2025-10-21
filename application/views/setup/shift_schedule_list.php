@@ -89,6 +89,7 @@
                         <th>Tiffin break 2</th>
                         <th>Tiffin minute 2</th>
                         <th>Random minute</th>
+                        <th>Ifftar Allowance Time</th>
                         <th>Ot Half</th>
                         <th style="width:80px !important">Edit</th>
                         <th <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(in_array(148,$acl)) {echo '';} else { echo 'style="display:none;"';}?>>Delete</th>

@@ -2335,12 +2335,14 @@ class Entry_system_con extends CI_Controller
 
     public function add_left_regign()
     {
+        $this->load->model('Salary_process_model');
         $sql = $_POST['sql'];
         $date = date('Y-m-d', strtotime($_POST['date']));
+        $resign_month = date('Y-m', strtotime($_POST['date']));
         $type = $_POST['type'];
         $unit_id = $_POST['unit_id'];
         $remark = $_POST['remark'];
-        // $emp_ids = explode(',', $sql);
+        $emp_ids = explode(',', $sql);
 
         if ($type == 1) {
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql)->delete('pr_emp_left_history');
@@ -2360,10 +2362,9 @@ class Entry_system_con extends CI_Controller
             if (empty($dd->row())) {
                 $this->db->insert('pr_emp_left_history', $data);
             }
-            // $this->db->insert_batch('pr_emp_left_history', $data);
-
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
             if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 2, 'attn_sum_line_id' => null))) {
+                $this->Salary_process_model->salary_process($unit_id,$resign_month,$emp_ids);
                 echo 'success';
             }else{
                 echo 'error';
@@ -2379,6 +2380,7 @@ class Entry_system_con extends CI_Controller
             }
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
             if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3,'attn_sum_line_id' => null))) {
+                $this->Salary_process_model->salary_process($unit_id,$resign_month,$emp_ids);
                 echo 'success';
             }else{
                 echo 'error';

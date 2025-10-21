@@ -16,7 +16,6 @@ class Salary_process_model extends CI_Model{
 		set_time_limit(0);
 		ini_set('memory_limit', -1);
 		ini_set('max_execution_time', 0);
-
 		$num_of_days   = date("t", strtotime($process_month));
 		$start_date    = date("Y-m-01", strtotime($process_month));
 		$year_month    = date("Y-m", strtotime($process_month));

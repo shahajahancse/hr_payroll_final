@@ -89,11 +89,11 @@
 
 
 					echo "<table>";
-					if ($unit_id == 4) {
-						$emp_data = $this->job_card_model->emp_job_card12($grid_firstdate,$grid_seconddate, $value->emp_id);
-					} else {
-						$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
-					}
+					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
+					// if ($unit_id == 4) {
+					// 	$emp_data = $this->job_card_model->emp_job_card12($grid_firstdate,$grid_seconddate, $value->emp_id);
+					// } else {
+					// }
 					// dd($emp_data);
 					echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0'  style='text-align:center; font-size:13px; '>
 						<tr>

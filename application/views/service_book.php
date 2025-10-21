@@ -66,14 +66,13 @@
                 <p class="unicode-to-bijoy">২। পিতার নাম: <?php echo $value->father_name?></p>
                 <p class="unicode-to-bijoy">৩। মাতার নাম: <?php echo $value->mother_name?></p>
                 <p class="unicode-to-bijoy">৪। স্বামী/স্ত্রীর নাম (প্রযোজ্য ক্ষেত্রে): <?php echo $value->spouse_name?></p>
-                <p class="unicode-to-bijoy">৫। স্থায়ী ঠিকানা: &nbsp; 
-                    গ্রামঃ <?php echo $value->per_village_bn?>,  &nbsp; &nbsp;
+                <p class="unicode-to-bijoy" >৫। স্থায়ী ঠিকানা: 
+                    গ্রামঃ <?php echo $value->per_village_bn?>,
                     ডাকঘরঃ <?php echo $value->per_post_name_bn?>, 
                 </p>
-                <p class="unicode-to-bijoy">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp; থানাঃ <?php echo $value->per_upa_name_bn?>, 
-                    &nbsp; জেলাঃ <?php echo $value->per_dis_name_bn?> 
+                <p class="unicode-to-bijoy" style="margin-left: 88px;">
+                    থানাঃ <?php echo $value->per_upa_name_bn?>, 
+                    জেলাঃ <?php echo $value->per_dis_name_bn?> 
                 </p>
                 <p class="unicode-to-bijoy">৬। বর্তমান ঠিকানা: <?php echo $value->pre_village_bn.', '.$value->pre_post_name_bn.', '.$value->pre_upa_name_bn.', '.$value->pre_dis_name_bn?></p>
                 <p class="unicode-to-bijoy">৭। জন্ম তারিখ/বয়স: <?php echo date('d-m-Y',strtotime($value->emp_dob))?> ইং</p>
@@ -89,14 +88,16 @@
                 <div style="position: absolute; top: 60px;right: 35px;">
                     <img style="border: 3px solid black;" src="<?php echo base_url('uploads/photo/'.$value->img_source.'')?>" alt="" width="70px" height="100px">
                 </div>
-                <div style="display: flex; justify-content: space-between">
-                    <img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px;width:70px;margin-left: 0px;margin-top: 25px;">
-                    <img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px;margin-right: 60px;    margin-top: 25px;">
-                </div>
-                <div style="display:flex; justify-contant:space-between;position: fiexd ">
-                <p  style="width:fit-content;position: relative;bottom: -8px;"><span class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর</span>
-                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>   
-                <p style="position: relative;bottom: -8px;" class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর</p>
+                <div style=" position: relative; margin-top: 80px; padding: 5px;">
+                    <div style="display: flex; justify-content: space-between">
+                        <img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px;width:70px;margin-left: 0px;margin-top: 25px;">
+                        <img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px;margin-right: 60px;    margin-top: 25px;">
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <p style="width:fit-content;position: relative;bottom: -8px;"><span class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর</span>
+                        </p>   
+                        <p style="position: relative;bottom: -8px;" class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষের স্বাক্ষর</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -107,12 +108,12 @@
     <div class="d-flex">
         <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
             <p style="padding: 5px 0px 0px 5px;" class="unicode-to-bijoy"> ফরম নং - ৭(খ)</p>
-            <h6 class="text-center unicode-to-bijoy"> দ্বিতীয় ভাগ</h6>
+            <h6 class="text-center unicode-to-bijoy" style="font-weight:700;"> দ্বিতীয় ভাগ</h6>
             <p style="padding: 5px 0px 0px 5px;" class="unicode-to-bijoy"> মালিকের ও চাকুরীর তথ্যসমূহঃ</p>
             <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                 <thead>
                     <tr class="text-center" >
-                        <th style="padding: 12px;"><span class="unicode-to-bijoy">কারখানা/প্রতিষ্ঠানের নাম ও ঠিকানা </span></th>
+                        <th class="unicode-to-bijoy"> কারখানা/প্রতিষ্ঠানের নাম ও ঠিকানা </th>
                         <th class="unicode-to-bijoy">মালিক/ব্যবস্থাপনা কর্তৃপক্ষের নাম</th>
                     </tr>
                     <tr class="text-center">
@@ -123,9 +124,11 @@
                     <tbody>
                         <?php if($unit_id == 1){ ?>
                             <tr class="text-center">
-                                <td class="unicode-to-bijoy" style="font-size:14px">এ জে ফ্যাশনস্ লিঃ<br>
-                                ২৩৪/৪ কচুক্ষেত, ক্যান্টনমেন্ট, ঢাকা-১২০৬।</td>
-                                <td class="unicode-to-bijoy font-weight-bold" style="padding: 8px;font-size:16px"> আনোয়ার হোসেন চৌধুরী</td>
+                                <td style="font-size:14px">
+                                    <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:15px;margin-top:10px'> এ জে ফ্যাশনস্ লিঃ</p>
+                                    <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:10px'> ২৩৪/৪ কচুক্ষেত, ক্যান্টনমেন্ট, ঢাকা-১২০৬।</p>
+                                </td>
+                                <td class="unicode-to-bijoy font-weight-bold" style="font-size:16px"> আনোয়ার হোসেন চৌধুরী</td>
                             </tr>
                         <?php } elseif($unit_id == 4){ ?>    
                             <tr class="text-center">
@@ -151,16 +154,16 @@
         <div style="width:1% !important"></div>
         <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
             <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px">ফরম নং - ৭(খ)</p>
-            <h6 class="text-center unicode-to-bijoy"> দ্বিতীয় ভাগ</h6>
+            <h6 class="text-center unicode-to-bijoy" style="font-weight:700;"> দ্বিতীয় ভাগ</h6>
             <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px">মালিকের ও চাকুরীর তথ্যসমূহঃ</p>
             <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                 <thead>
                     <tr class="text-center">
                         <th class="unicode-to-bijoy">যোগদানের তারিখ</th>
-                        <th class="unicode-to-bijoy">চাকরিত্যাগ/ অবসানের তারিখ</th>
-                        <th class="unicode-to-bijoy">ত্যগ/অবসানের ধরন/কারন </th>
-                        <th class="unicode-to-bijoy">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
-                        <th class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর/টিপসই </th>
+                        <th class="unicode-to-bijoy">চাকরি ত্যাগ/ অবসানের তারিখ</th>
+                        <th class="unicode-to-bijoy">ত্যাগ/অবসানের ধরন/কারন </th>
+                        <th class="unicode-to-bijoy" style="width: 90px;">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                        <th class="unicode-to-bijoy" style="width: 66px;">শ্রমিকের স্বাক্ষর/টিপসই </th>
                     </tr>
                     <tr class="text-center">
                         <th class="unicode-to-bijoy">৩</th>
@@ -173,7 +176,7 @@
                 <tbody>
                     <tr class="text-center">
                         <?php $image =  $this->db->select('*')->where('unit_id',1)->get('company_infos')->row()?>
-                        <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
+                        <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px;height: 46px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
                         <td><?php echo $value->left_date=='' ? 'বর্তমান': '<span style="font-family:sutonnyMJ;font-size:15px">'.date('d-m-Y',strtotime($value->left_date)).' Bs </span>'?> </td>
                         <td><?php echo $value->left_date=='' ? '-': cc($value->resign_reason)?> </td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px"></td>
@@ -198,7 +201,7 @@
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
         <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
         <h6 class="unicode-to-bijoy text-center" style="font-weight:700;"> তৃতীয় ভাগ</h6>
-        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্যসমূহঃ</p>
+        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতা সংক্রান্ত তথ্যসমূহঃ</p>
         <table class="table-sm" style="font-size: 0.8em; width:100%;" border="1">
             <thead>
                 <tr class="text-center">
@@ -286,16 +289,20 @@
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
         <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
         <h6 class="text-center unicode-to-bijoy" style="font-weight:700;"> তৃতীয় ভাগ</h6>
-        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্যসমূহঃ</p>
+        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতা সংক্রান্ত তথ্যসমূহঃ</p>
         <table class="table-sm" style="font-size: 0.8em;width: 100%;" border="1">
             <thead>
                 <tr class="text-center"> 
-                    <th class="unicode-to-bijoy">অন্যান্য ভাতা</th>
-                    <th class="unicode-to-bijoy">মোট, প্রভিডেন্ট ফান্ড (যদি থাকে)</th>
+                    <th class="unicode-to-bijoy" rowspan="2" style="height: 89px;">অন্যান্য ভাতা</th>
+                    <th class="unicode-to-bijoy" rowspan="2">মোট</th>
+                    <th class="unicode-to-bijoy" colspan="2">প্রভিডেন্ট ফান্ড (যদি থাকে)</th>
+                    <th class="unicode-to-bijoy" rowspan="2" style="width: 90px;">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                    <th class="unicode-to-bijoy" rowspan="2" style="width: 66px;">শ্রমিকের স্বাক্ষর/টিপসই</th>
+                </tr>
+                <tr>
                     <th class="unicode-to-bijoy">শ্রমিকের প্রদেয় চাঁদা</th>
                     <th class="unicode-to-bijoy">মালিকের প্রদেয় চাঁদা</th>
-                    <th class="unicode-to-bijoy" style="padding: 25px;">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
-                    <th class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর/টিপসই</th>
+                    
                 </tr>
                 <tr class="text-center">
                     <td class="unicode-to-bijoy">7</td>
@@ -315,12 +322,12 @@
                         $oss = $ss['trans_allow'] + $ss['food_allow'];
                     ?>
                     <tr class="text-center">
-                        <td style="padding:14px 0px" class='unicode-to-bijoy'><?php echo $oss ?></td>
+                        <td style="padding:14px 0px" class='unicode-to-bijoy'><?php echo 'যাতায়াত-'.$ss['trans_allow'] . ' , খাদ্য-' . $ss['food_allow'] ?></td>
                         <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $gross_sal ?></td>
                         <td></td>
                         <td></td>
-                        <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                        <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
+                        <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 25px;width:50px"></td>
+                        <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 24px;width:50px"></td>
                     </tr>
                     <?php
                     }
@@ -333,12 +340,13 @@
                         $oss = $ss['trans_allow'] + $ss['food_allow'];
                     ?>
                     <tr>
-                        <td style="padding:15px 0px" class='unicode-to-bijoy'><?= $oss ?></td>
+                        <td style="padding:14px 0px" class='unicode-to-bijoy'><?php echo 'যাতায়াত-'.$ss['trans_allow'] . ' , খাদ্য-' . $ss['food_allow'] ?></td>
+
                         <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($incProm->new_salary))?></td>
                         <td></td>
                         <td></td>
-                        <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                        <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
+                        <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 25px;width:50px"></td>
+                        <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 25px;width:50px"></td>
                     </tr>
                     <?php
                     }
@@ -360,8 +368,8 @@ if ($pages > 1) {
     <!-- Left Side for additional pages -->
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
         <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
-        <h6 class="unicode-to-bijoy text-center" style="font-weight:700;"> তৃতীয়ভাগ</h6>
-        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্যসমূহঃ</p>
+        <h6 class="unicode-to-bijoy text-center" style="font-weight:700;"> তৃতীয় ভাগ</h6>
+        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতা সংক্রান্ত তথ্যসমূহঃ</p>
         <table class="table-sm" style="font-size: 0.8em; width:100%;" border="1">
             <thead>
                 <tr class="text-center">
@@ -442,16 +450,20 @@ if ($pages > 1) {
     <div class="flex-fill" style="height:95vh;width:100vw;border: 1px solid black;">
         <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(গ)</p>
         <h6 class="text-center unicode-to-bijoy" style="font-weight:700;"> তৃতীয় ভাগ</h6>
-        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতাসংক্রান্ত তথ্যসমূহঃ</p>
+        <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> সার্ভিস রেকর্ড ও মজুরি এবং ভাতা সংক্রান্ত তথ্যসমূহঃ</p>
         <table class="table-sm" style="font-size: 0.8em;width: 100%;" border="1">
-            <thead>
+           <thead>
                 <tr class="text-center"> 
-                    <th class="unicode-to-bijoy">অন্যান্য ভাতা</th>
-                    <th class="unicode-to-bijoy">মোট, প্রভিডেন্ট ফান্ড (যদি থাকে)</th>
+                    <th class="unicode-to-bijoy" rowspan="2" style="height: 89px;">অন্যান্য ভাতা</th>
+                    <th class="unicode-to-bijoy" rowspan="2">মোট</th>
+                    <th class="unicode-to-bijoy" colspan="2">প্রভিডেন্ট ফান্ড (যদি থাকে)</th>
+                    <th class="unicode-to-bijoy" rowspan="2" style="width: 90px;">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                    <th class="unicode-to-bijoy" rowspan="2" style="width: 66px;">শ্রমিকের স্বাক্ষর/টিপসই</th>
+                </tr>
+                <tr>
                     <th class="unicode-to-bijoy">শ্রমিকের প্রদেয় চাঁদা</th>
                     <th class="unicode-to-bijoy">মালিকের প্রদেয় চাঁদা</th>
-                    <th class="unicode-to-bijoy" style="padding: 25px;">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
-                    <th class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর/টিপসই</th>
+                    
                 </tr>
                 <tr class="text-center">
                     <td class="unicode-to-bijoy">7</td>
@@ -472,7 +484,7 @@ if ($pages > 1) {
                         $oss = $ss['trans_allow'] + $ss['food_allow'];
                 ?>
                 <tr class="text-center">
-                    <td style="padding:14px 0px" class='unicode-to-bijoy'><?php echo $oss ?></td>
+                    <td style="padding:14px 0px" class='unicode-to-bijoy'><?php echo 'যাতায়াত-'.$ss['trans_allow'] . ' , খাদ্য-' . $ss['food_allow'] ?></td>
                     <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $gross_sal ?></td>
                     <td></td>
                     <td></td>
@@ -488,12 +500,12 @@ if ($pages > 1) {
                         $oss = $ss['trans_allow'] + $ss['food_allow'];
                 ?>
                 <tr>
-                    <td style="padding:15px 0px" class='unicode-to-bijoy'><?= $oss ?></td>
+                    <td style="padding:14px 0px" class='unicode-to-bijoy'><?php echo 'যাতায়াত-'.$ss['trans_allow'] . ' , খাদ্য-' . $ss['food_allow'] ?></td>
                     <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($incProm->new_salary))?></td>
                     <td></td>
                     <td></td>
-                    <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
-                    <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
+                    <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 25px;width:50px"></td>
+                    <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 25px;width:50px"></td>
                 </tr>
                 <?php
                     }
@@ -684,9 +696,9 @@ if ($pages > 1) {
                 <thead>
                     <tr  class="text-center" >
                         <th class="unicode-to-bijoy">তারিখ</th>
-                        <th class="unicode-to-bijoy">আচরণ বিষয়ক বিবরণ</th>
-                        <th class="unicode-to-bijoy">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
-                        <th class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর/টিপসই</th>
+                        <th class="unicode-to-bijoy">আচরণবিষয়ক বিবরণ</th>
+                        <th class="unicode-to-bijoy" style="width: 80px">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                        <th class="unicode-to-bijoy" style="width: 80px">শ্রমিকের স্বাক্ষর/টিপসই</th>
                     </tr>
                     <tr  class="text-center" >
                         <th class="unicode-to-bijoy">১</th>
@@ -697,8 +709,8 @@ if ($pages > 1) {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>-</td>
-                        <td>-</td>
+                        <td></td>
+                        <td style="height: 20vh"></td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
                         <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>
@@ -716,20 +728,20 @@ if ($pages > 1) {
                     <tr  class="text-center" >
                         <th class="unicode-to-bijoy">তারিখ</th>
                         <th class="unicode-to-bijoy">আচরণ বিষয়ক বিবরণ</th>
-                        <th class="unicode-to-bijoy">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
-                        <th class="unicode-to-bijoy">শ্রমিকের স্বাক্ষর/টিপসই</th>
+                        <th class="unicode-to-bijoy" style="width: 80px">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                        <th class="unicode-to-bijoy" style="width: 80px">শ্রমিকের স্বাক্ষর/টিপসই</th>
                     </tr>
                     <tr  class="text-center" >
-                        <th>১</th>
-                        <th>২</th>
-                        <th>৩</th>
-                        <th>৪</th>
+                        <th class='unicode-to-bijoy'>১</th>
+                        <th class='unicode-to-bijoy'>২</th>
+                        <th class='unicode-to-bijoy'>৩</th>
+                        <th class='unicode-to-bijoy'>৪</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>-</td>
-                        <td>-</td>
+                        <td></td>
+                        <td style="height: 20vh"></td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
                         <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>

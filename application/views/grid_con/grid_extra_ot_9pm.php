@@ -86,11 +86,11 @@
 					echo "</tr>";
 
 					echo "<table>";
-					if ($unit_id == 4) {
-						$emp_data = $this->job_card_model->emp_job_card4($grid_firstdate,$grid_seconddate, $value->emp_id);
-					} else {
-						$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
-					}
+					$emp_data = $this->job_card_model->emp_job_card($grid_firstdate,$grid_seconddate, $value->emp_id);
+					// if ($unit_id == 4) {
+					// 	$emp_data = $this->job_card_model->emp_job_card4($grid_firstdate,$grid_seconddate, $value->emp_id);
+					// } else {
+					// }
 					// dd($emp_data);
 					echo "<table class='sal' border='1' bordercolor='#000000' cellspacing='0' cellpadding='0' style='text-align:center; font-size:13px; '>
 						<tr>
@@ -119,7 +119,7 @@
 						} else {
 							$extra_ot_hour = $row->com_eot;
 						}
-
+						// dd($row->out_time .' ==== '. $after_open_back);
 						// ramadan fraction
 						if ($row->out_time <= $after_open_back && $row->ot_eot_4pm <= 1) {
 							$extra_ot_hour = 0;
