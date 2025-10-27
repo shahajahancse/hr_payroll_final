@@ -2423,17 +2423,6 @@ class Entry_system_con extends CI_Controller
     }
 
     public function resign_list(){
-        // $this->db->select('rs.*, pr_units.unit_name, per.name_en as user_name');
-        // $this->db->from('pr_emp_resign_history as rs');
-        // $this->db->join('pr_units', 'pr_units.unit_id = rs.unit_id', 'left');
-        // $this->db->join('pr_emp_per_info as per', 'per.emp_id = rs.emp_id', 'left');
-        // if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
-        //     $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
-        // }
-        // $this->db->order_by('rs.resign_date', 'DESC');
-        // $this->db->group_by('rs.emp_id');
-        // $this->data['results'] = $this->db->get()->result();
-
         $this->data['title'] = 'Left List';
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['subview'] = 'entry_system/resign_list';
@@ -2557,79 +2546,80 @@ class Entry_system_con extends CI_Controller
     }
 
     public function add_final_satalment(){
+        // dd($_POST);
         $info = $this->db->where('emp_id', $_POST['emp_id'])->get('pr_emp_resign_history')->row();
-        $resign_date1 = date('Y-m-01', strtotime($info->resign_date));
-        $resign_date2 = date('Y-m-d', strtotime($info->resign_date));
-        $diff = date_diff(date_create($resign_date1), date_create($resign_date2));
-        $resign_day = $diff->format('%a');
-
-        // attendance bonus calculation
-        $date11 = date('Y-m-t', strtotime($info->resign_date));
-        $num_of_days = date('t', strtotime($info->resign_date));
-        $attn_bonus = 0;
-        if ($date11 == $resign_date2) {
-            $emp_info = $this->db->where('emp_id', $_POST['emp_id'])->get('pr_emp_com_info')->row();
-            $attendances = $this->attendance_check($_POST['emp_id'], $resign_date1, $date11);
-            $attend  =  $attendances->attend;
-            $absent  =  $attendances->absent;
-            $weekend =  $attendances->weekend;
-            $holiday =  $attendances->holiday;
-            $total_leave =  $attendances->total_leave;
-
-            $att_check = $attend + $weekend  + $holiday + $total_leave;	
-            if($att_check >= $num_of_days && $absent == 0)
-            {
-                $allowances = $this->get_emp_allowances($emp_info->emp_desi_id);
-                $attn_bonus = isset($allowances->attn_bonus) ? $allowances->attn_bonus : 0;
-            }
-        }
+        // $resign_date1 = date('Y-m-01', strtotime($info->resign_date));
+        // $resign_date2 = date('Y-m-d', strtotime($info->resign_date));
+        // $diff = date_diff(date_create($resign_date1), date_create($resign_date2));
+        // $resign_day = $diff->format('%a');
 
         $emp_id                = $_POST['emp_id'];
-        $gross_salary          = $_POST['gross_salary'];
+        $com_gross_salary      = $_POST['com_gross_salary'];
         $basic_salary          = $_POST['basic_salary'];
         $ot_rate               = $_POST['ot_rate'];
         $hidden_gross_salary   = $_POST['hidden_gross_salary'];
         $hidden_basic_salary   = $_POST['hidden_basic_salary'];
         $hidden_ot_rate        = $_POST['hidden_ot_rate'];
-        $resign_pay_day        = $_POST['resign_pay_day'];
-        $extra_payoff          = $_POST['extra_payoff'];
-        $earn_leave_day        = $_POST['earn_leave_day'];
-        $another_deposit       = $_POST['another_deposit'];
-        $notice_deduct         = $_POST['notice_deduct'];
-        $advanced_salary       = $_POST['advanced_salary'];
-        $service_benifit       = $_POST['service_benifit'];
-        $get_info              = $this->final_log_info($info);
-        $liv_info              = $this->leave_db($info->emp_id, $resign_date1, $resign_date2, $get_info->livess);
-        $rpay                  = round($resign_pay_day * ($basic_salary / 30), 2);
-        $extra_pay             = round($extra_payoff * ($basic_salary / 30), 2);
-        $earn_pay              = round(($earn_leave_day / 18), 2) * round($gross_salary / 30, 2);
-        $emp_total_pay         = $rpay + $extra_pay + $earn_pay;
-        
-        $absent                = ($get_info->absent * round($basic_salary / 30, 2));
-        $ndeduct               = round($notice_deduct * ($basic_salary / 30), 2) + $absent;
+        $salary_pay_day        = $_POST['salary_pay_day'];
+        $working_pay_salary    = $_POST['working_pay_salary'];
+        $atten_bonus           = $_POST['atten_bonus'];
+
+        $ot_pay_7pm             = !empty($_POST['ot_pay_7pm']) ? $_POST['ot_pay_7pm'] : 0;
+        $ot_pay_9pm             = !empty($_POST['ot_pay_9pm']) ? $_POST['ot_pay_9pm'] : 0;
+        $ot_pay_12pm            = !empty($_POST['ot_pay_12pm']) ? $_POST['ot_pay_12pm'] : 0;
+        $ot_pay_all             = !empty($_POST['ot_pay_all']) ? $_POST['ot_pay_all'] : 0;
+        $ot_pay_actual          = !empty($_POST['ot_pay_actual']) ? $_POST['ot_pay_actual'] : 0;
+        $ot_pay_amt_7am         = !empty($_POST['ot_pay_amt_7am']) ? $_POST['ot_pay_amt_7am'] : 0;
+        $ot_pay_amt_9am         = !empty($_POST['ot_pay_amt_9am']) ? $_POST['ot_pay_amt_9am'] : 0;
+        $ot_pay_amt_12am        = !empty($_POST['ot_pay_amt_12am']) ? $_POST['ot_pay_amt_12am'] : 0;
+        $ot_pay_amt_all         = !empty($_POST['ot_pay_amt_all']) ? $_POST['ot_pay_amt_all'] : 0;
+        $ot_pay_amt_actual      = !empty($_POST['ot_pay_amt_actual']) ? $_POST['ot_pay_amt_actual'] : 0;
+
+        $resign_pay_day         = $_POST['resign_pay_day'];
+        $total_resign_pay_day   = $_POST['total_resign_pay_day'];
+        $extra_payoff           = $_POST['extra_payoff'];
+        $total_extra_payoff     = $_POST['total_extra_payoff'];
+        $earn_leave_day         = $_POST['earn_leave_day'];
+        $total_earn_leave       = $_POST['total_earn_leave'];
+        $another_deposit        = $_POST['another_deposit'];
+        $service_benifit        = $_POST['service_benifit'];
+
+        $notice_deduct          = $_POST['notice_deduct'];
+        $total_notice_deduct    = $_POST['total_notice_deduct'];
+        $absent_day             = $_POST['absent_day'];
+        $absent_deduct_amt      = $_POST['absent_deduct_amt'];
+        $advanced_salary        = !empty($_POST['advanced_salary']) ? $_POST['advanced_salary'] : 0;
+        $total_deduct           = round(((int)$total_notice_deduct + (int)$absent_deduct_amt + (int)$advanced_salary), 2);
+        $emp_total_pay          = (int)$working_pay_salary + (int)$atten_bonus + (int)$total_resign_pay_day + (int)$total_extra_payoff + (int)$total_earn_leave + (int)$another_deposit + (int)$service_benifit - (int)$total_deduct;
 
         $data = array(
-            'working_days'          => $get_info->absent + $get_info->present,
-            'pay_days'              => ($get_info->present+$get_info->absent) - $liv_info,
+            'working_days'          => $salary_pay_day,
+            'pay_days'              => $salary_pay_day,
             'per_day_rate'          => $basic_salary / 30,
-            'ot_eot'                => $get_info->ot_hour + $get_info->eot_hour,
-            'ot_2pm'                => $get_info->com_ot,
-            'ot_eot_4pm'            => $get_info->com_ot + $get_info->ot_eot_4pm,
-            'ot_eot_12am'           => $get_info->com_ot + $get_info->ot_eot_12am,
-            'all_eot_woh'           => $get_info->com_ot + $get_info->com_eot - ($get_info->all_eot_wday + $get_info->all_eot_hday),
+            'ot_eot'                => $ot_pay_7pm + $ot_pay_actual,
+            'ot_2pm'                => $ot_pay_7pm,
+            'ot_eot_4pm'            => $ot_pay_9pm + $ot_pay_7pm,
+            'ot_eot_12am'           => $ot_pay_12pm + $ot_pay_7pm,
+            'all_eot_woh'           => $ot_pay_all + $ot_pay_7pm,
             'ot_rate'               => $ot_rate,
+
             'resign_pay_day'        => $resign_pay_day,
-            'resign_pay'            => $rpay,
+            'resign_pay'            => $total_resign_pay_day,
             'service_benifit_rate'  => round($gross_salary / 30, 2),
             'extra_payoff'          => $extra_payoff,
+            'total_extra_payoff'    => $total_extra_payoff,
             'earn_leave'            => $earn_leave_day,
-            'service_benifit'       => $service_benifit,
+            'total_earn_leave'      => $total_earn_leave,
             'another_deposit'       => $another_deposit,
+            'service_benifit'       => $service_benifit,
+
             'notice_deduct'         => $notice_deduct,
-            'absent'                => $get_info->absent,
+            'total_notice_deduct'   => $total_notice_deduct,
+            'absent_day'            => $absent_day,
+            'absent_deduct_amt'     => $absent_deduct_amt,
             'advanced_salary'       => $advanced_salary,
-            'total_deduct'          => ($ndeduct + $advanced_salary),
-            'attn_bonus'            => $attn_bonus,
+            'total_deduct'          => $total_deduct,
+            'attn_bonus'            => $atten_bonus,
             'net_pay'               => $emp_total_pay,
             'status'                => 1,
         );

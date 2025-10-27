@@ -960,7 +960,49 @@ class Grid_con extends CI_Controller {
 		$data['type'] = $this->input->post('type');
 		$this->load->view('grid_con/final_satalment',$data,false);
 	}
+	
 	public function final_satalment(){
+		$emp_id = $this->input->post('id');
+		$emp_info = $this->Grid_model->grid_employee_information_final($emp_id);
+		// dd($emp_info->resign_date);
+		// $this->db->select('
+		// 	SUM(ot) as ot_hour, 
+		// 	SUM(eot) as eot_hour, 
+		// 	SUM(ot_eot_4pm) as ot_eot_4pm, 
+		// 	SUM(ot_eot_12am) as ot_eot_12am, 
+		// 	SUM(with_out_friday_ot) as with_out_friday_ot, 
+		// 	SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
+		// 	SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
+		// 	SUM(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
+		// 	SUM(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as absent_days
+		// ', FALSE);
+		// $this->db->from('pr_emp_shift_log');
+		// $this->db->where('pr_emp_shift_log.emp_id', $emp_id);
+		// $this->db->where('shift_log_date >=', date('Y-m-01', strtotime($emp_info->resign_date)));
+		// $this->db->where('shift_log_date <=', $emp_info->resign_date);
+		// $dd = $this->db->get()->row();
+		// $ssss = $this->common_model->salary_structure($emp_info->com_gross_sal);
+		
+		$this->db->where('salary_month', date('Y-m-01', strtotime($emp_info->resign_date))); 
+		$dd = $this->db->where('emp_id', $emp_id)->get('pay_salary_sheet_com')->row();
+		// dd($dd);
+
+		$emp_info->basic_sal      	 = $dd->basic_sal;
+		$emp_info->absent_days    	 = $dd->absent_days;
+		$emp_info->pay_days       	 = $dd->pay_days;
+		$emp_info->working_days      = $dd->pay_days + $dd->absent_days;
+		$emp_info->att_bonus      	 = $dd->att_bonus;
+		$emp_info->ot_rate        	 = $dd->ot_rate;
+		$emp_info->ot_hour        	 = $dd->ot_hour;
+		$emp_info->eot_hour       	 = $dd->eot_hour;
+		$emp_info->ot_eot_4pm_hour   = $dd->ot_eot_4pm_hour;
+		$emp_info->ot_eot_12am_hour  = $dd->ot_eot_12am_hour;
+		$emp_info->eot_hr_for_sa     = $dd->eot_hr_for_sa;
+		// dd($emp_info);
+		echo json_encode($emp_info);
+	}
+
+	public function final_satalment_old(){
 		$emp_ids = $this->input->post('id');
 		$d = $this->Grid_model->grid_employee_information($emp_ids);
 		$get_all=[];
@@ -994,6 +1036,7 @@ class Grid_con extends CI_Controller {
 		// dd($get_all);
 		echo json_encode($get_all[0]);
 	}
+
 	function grid_monthly_att_register(){
 		$grid_firstdate = $this->input->post('firstdate');
 		$grid_data = $this->input->post('spl');

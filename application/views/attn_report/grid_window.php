@@ -31,6 +31,7 @@
 		<!-- left side -->
 		<div class="col-md-8">
 			<!-- selection area -->
+			<!-- date selection area -->
 			<div class="row tablebox" style="margin-bottom: 10px;">
 				<div class="row">
 					<div class="col-md-6">
@@ -47,6 +48,7 @@
 					</div>
 				</div>
 			</div>
+			<!-- Filtering section -->
 			<div class="row tablebox" style="display: block; margin-bottom: 10px;">
 				<h3 class="h3" style="font-weight: 600;">Select Category</h3>
 				<div class="col-md-6">
@@ -86,7 +88,7 @@
 					</div>
 				</div>
 				<!-- section -->
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label">Section </label>
 						<select class="form-control input-sm section" id='section' name='section'>
@@ -95,7 +97,7 @@
 					</div>
 				</div>
 				<!-- line -->
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label">Line </label>
 						<select class="form-control input-sm line" id='line' name='line'>
@@ -104,7 +106,7 @@
 					</div>
 				</div>
 				<!-- Designation -->
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label">Designation</label>
 						<select class="form-control input-sm desig" id='desig' name='desig' onChange="grid_emp_list()">
@@ -145,6 +147,17 @@
 							<option value="Hindu">Hindu</option>
 							<option value="Christian">Christian</option>
 							<option value="Buddhish">Buddhish</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="control-label">Gender </label>
+						<select name="emp_gender" id="emp_gender" class="form-control input-sm" onChange="grid_emp_list()">
+							<option value="">Select gender</option>
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+							<option value="Common">Common</option>
 						</select>
 					</div>
 				</div>
@@ -501,6 +514,7 @@
 			var status = document.getElementById('status').value;
 			var emp_type = document.getElementById('emp_type').value;
 			var religion_status = document.getElementById('religion_status').value;
+			var emp_gender = document.getElementById('emp_gender').value;
             if (typeof unit === "undefined" || unit === '') {
                 return false;
             }
@@ -512,6 +526,8 @@
 					"status"          : status,
 					"emp_type"        : emp_type,
 					"religion_status" : religion_status,
+					"emp_gender" : emp_gender,
+
 				},
 				contentType: "application/json",
 				dataType: "json",

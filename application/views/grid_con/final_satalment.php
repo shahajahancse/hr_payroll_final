@@ -241,13 +241,14 @@
         <div class="d-flex"></div>
     
     
-        <!-- emp basic info start here -->
+        <!-- start calculation here -->
         <div class='d-flex' style="margin-top: 10px">
             <h3 class="text-center unicode-to-bijoy" style="border-bottom: 2px solid black;width: 300px;margin: 0 auto;">PyovšÍ  (হিসাব) নিস্পত্তি প্রতিবেদন </h3> <span style="position:absolute;margin-left:800px">তারিখঃ</span>
         </div>
 
-        <?php   foreach($values as $row){ ?>
+        <?php foreach($values as $row){ ?>
             <br>
+            <!-- emp basic info  -->
             <div class="ml-3">
                 <table class="table table-bordered" style="font-size:23px">
                     <tr>
@@ -342,7 +343,7 @@
                     ?> </td>
                    <td class="unicode-to-bijoy"> <?php echo isset($total_value->working_days) ? $total_value->working_days : 0 ?> </td>
                    <td class="unicode-to-bijoy"><?php echo $row->resign_date == null ? 0 : round($gross_rate,2) ?></td>
-                   <td class="unicode-to-bijoy"><?php echo isset($total_value->pay_days) ? $ptt =  round($gross_rate * $total_value->pay_days,2) : 0 ?></td>
+                   <td class="unicode-to-bijoy"><?php echo isset($total_value->pay_days) ? $ptt =  round($gross_rate * $total_value->pay_days) : 0 ?></td>
                 </tr>
                 <tr>
                     <td class="unicode-to-bijoy">চলতি মাসের ওভার টাইম </td>
@@ -421,9 +422,9 @@
                 </tr>
                 <tr>
                     <td class="unicode-to-bijoy">অনুপস্থিত বাবদ কর্তন (মূল মজুরি থেকে)</td>
-                    <td class="unicode-to-bijoy"><?php echo $total_value->absent ?></td>
+                    <td class="unicode-to-bijoy"><?php echo $total_value->absent_day ?></td>
                     <td class="unicode-to-bijoy"><?php echo $basic_rate ?></td>
-                    <td class="unicode-to-bijoy"><?php echo $dd = $total_value->absent*$basic_rate ?></td>
+                    <td class="unicode-to-bijoy"><?php echo $dd = round($total_value->absent_day*$basic_rate) ?></td>
                 </tr>
                 <tr>
                     <td colspan="3" class="unicode-to-bijoy">অগ্রীম বেতন</td>

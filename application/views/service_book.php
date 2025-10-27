@@ -75,14 +75,19 @@
                     জেলাঃ <?php echo $value->per_dis_name_bn?> 
                 </p>
                 <p class="unicode-to-bijoy">৬। বর্তমান ঠিকানা: <?php echo $value->pre_village_bn.', '.$value->pre_post_name_bn.', '.$value->pre_upa_name_bn.', '.$value->pre_dis_name_bn?></p>
-                <p class="unicode-to-bijoy">৭। জন্ম তারিখ/বয়স: <?php echo date('d-m-Y',strtotime($value->emp_dob))?> ইং</p>
+                <?php
+                    $join_date = new DateTime($value->emp_join_date);
+                    $dob = new DateTime($value->emp_dob);
+                    $diff = $join_date->diff($dob);
+                ?>
+                <p class="unicode-to-bijoy">৭। জন্ম তারিখ/বয়স: <?php echo date('d-m-Y',strtotime($value->emp_dob))?> ইং (<?= $diff->y . ' বছর'?>)</p>
                 <p class="unicode-to-bijoy">৮। জাতীয় পরিচয় পত্র নং (যদি থাকে): <?php echo $value->nid_dob_id?></p>
                 <p class="unicode-to-bijoy">৯।  শিক্ষাগত যোগ্যতা: <?php echo $value->education==''? 'নাই' : $value->education?></p>
                 <p class="unicode-to-bijoy">১০। cÖwkÿY বা বিশেষ দক্ষতা (যদি থাকে): <?php echo $value->exp_factory_name.','. $value->exp_duration.','.$value->exp_dasignation ?></p>
                 <p> <span class="unicode-to-bijoy" >১১। উচ্চতা:   <?php echo $value->hight?>  সেঃ মিঃ</span> &nbsp;&nbsp;&nbsp;
                 <span class="unicode-to-bijoy">১২। রক্তের গ্রুপ (যদি থাকে):</span> <?php echo $value->blood == 'None'? ' <span class="unicode-to-bijoy">নাই </span>' : '<span style="font-size:15px">'.$value->blood.'</span>' ?></p> 
                 <!-- <p></p> -->
-                <p class="unicode-to-bijoy">১৩। সনাক্ত করিবার জন্য বিশেষ কোনচিহ্ন (যদি থাকে): নাই</p>
+                <p class="unicode-to-bijoy">১৩। সনাক্ত করিবার জন্য বিশেষ কোনচিহ্ন (যদি থাকে): <?php echo $value->symbol ?? 'নাই'?></p>
                 <p class="unicode-to-bijoy">১৪। সার্ভিস বহি খুলিবার তারিখ: <?php echo date('d-m-Y',strtotime($value->emp_join_date))?> ইং</p>
                 <p class="unicode-to-bijoy">১৫। বাম হাতের e„Øv½yjxi  ছাপ: </p>
                 <div style="position: absolute; top: 60px;right: 35px;">
@@ -125,8 +130,8 @@
                         <?php if($unit_id == 1){ ?>
                             <tr class="text-center">
                                 <td style="font-size:14px">
-                                    <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:15px;margin-top:10px'> এ জে ফ্যাশনস্ লিঃ</p>
-                                    <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:10px'> ২৩৪/৪ কচুক্ষেত, ক্যান্টনমেন্ট, ঢাকা-১২০৬।</p>
+                                    <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:15px;margin-top:10px'> এজে ফ্যাশনস্ লিঃ</p>
+                                    <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:10px'> ২৩৪/৪ কচুক্ষেত,ঢাকা ক্যান্টনমেন্ট, ঢাকা-১২০৬।</p>
                                 </td>
                                 <td class="unicode-to-bijoy font-weight-bold" style="font-size:16px"> আনোয়ার হোসেন চৌধুরী</td>
                             </tr>
@@ -162,7 +167,7 @@
                         <th class="unicode-to-bijoy">যোগদানের তারিখ</th>
                         <th class="unicode-to-bijoy">চাকরি ত্যাগ/ অবসানের তারিখ</th>
                         <th class="unicode-to-bijoy">ত্যাগ/অবসানের ধরন/কারন </th>
-                        <th class="unicode-to-bijoy" style="width: 90px;">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                        <th class="unicode-to-bijoy" style="width: 90px;">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
                         <th class="unicode-to-bijoy" style="width: 66px;">শ্রমিকের স্বাক্ষর/টিপসই </th>
                     </tr>
                     <tr class="text-center">
@@ -296,12 +301,12 @@
                     <th class="unicode-to-bijoy" rowspan="2" style="height: 89px;">অন্যান্য ভাতা</th>
                     <th class="unicode-to-bijoy" rowspan="2">মোট</th>
                     <th class="unicode-to-bijoy" colspan="2">প্রভিডেন্ট ফান্ড (যদি থাকে)</th>
-                    <th class="unicode-to-bijoy" rowspan="2" style="width: 90px;">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                    <th class="unicode-to-bijoy" rowspan="2" style="width: 90px;">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
                     <th class="unicode-to-bijoy" rowspan="2" style="width: 66px;">শ্রমিকের স্বাক্ষর/টিপসই</th>
                 </tr>
                 <tr>
-                    <th class="unicode-to-bijoy">শ্রমিকের প্রদেয় চাঁদা</th>
-                    <th class="unicode-to-bijoy">মালিকের প্রদেয় চাঁদা</th>
+                    <th class="unicode-to-bijoy">শ্রমিকের দেয় চাঁদা</th>
+                    <th class="unicode-to-bijoy">মালিকের দেয় চাঁদা</th>
                     
                 </tr>
                 <tr class="text-center">
@@ -457,12 +462,12 @@ if ($pages > 1) {
                     <th class="unicode-to-bijoy" rowspan="2" style="height: 89px;">অন্যান্য ভাতা</th>
                     <th class="unicode-to-bijoy" rowspan="2">মোট</th>
                     <th class="unicode-to-bijoy" colspan="2">প্রভিডেন্ট ফান্ড (যদি থাকে)</th>
-                    <th class="unicode-to-bijoy" rowspan="2" style="width: 90px;">মালিক/প্রাধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
+                    <th class="unicode-to-bijoy" rowspan="2" style="width: 90px;">মালিক/প্রধিকার প্রাপ্ত ব্যক্তির স্বাক্ষর</th>
                     <th class="unicode-to-bijoy" rowspan="2" style="width: 66px;">শ্রমিকের স্বাক্ষর/টিপসই</th>
                 </tr>
                 <tr>
-                    <th class="unicode-to-bijoy">শ্রমিকের প্রদেয় চাঁদা</th>
-                    <th class="unicode-to-bijoy">মালিকের প্রদেয় চাঁদা</th>
+                    <th class="unicode-to-bijoy">শ্রমিকের দেয় চাঁদা</th>
+                    <th class="unicode-to-bijoy">মালিকের দেয় চাঁদা</th>
                     
                 </tr>
                 <tr class="text-center">

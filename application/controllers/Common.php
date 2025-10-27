@@ -48,6 +48,9 @@ class Common extends CI_Controller {
         if (!empty($_GET['religion_status'])) {
             $this->db->where('per.religion', $_GET['religion_status']);
         }
+        if (!empty($_GET['emp_gender'])) {
+            $this->db->where('per.gender', $_GET['emp_gender']);
+        }
 
         $this->db->group_by('com.emp_id');
         $this->db->order_by('com.emp_id', 'asc');
@@ -184,6 +187,7 @@ class Common extends CI_Controller {
         $status       = $this->input->get('status', true);
         $stop_salary  = $this->input->get('stop_salary', true);
         $salary_month = $this->input->get('salary_month', true); // e.g. '2025-10'
+        $emp_gender   = $this->input->get('emp_gender', true); 
 
         // ✅ Convert month to year-month format
         $yearMonth = date('Y-m', strtotime($salary_month)); // '2025-10'
@@ -210,6 +214,7 @@ class Common extends CI_Controller {
         if (!empty($line))         $this->db->where('ss.line_id', $line);
         if (!empty($desig))        $this->db->where('ss.desig_id', $desig);
         if (!empty($stop_salary))  $this->db->where('ss.stop_salary', $stop_salary);
+        if (!empty($emp_gender))   $this->db->where('per.gender', $emp_gender);
 
         // ✅ Order results
         $this->db->order_by('ss.emp_id', 'asc');

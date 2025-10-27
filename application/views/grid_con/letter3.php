@@ -72,8 +72,9 @@
          <div class="col-md-6 text-right">তারিখঃ <span style="font-family: SutonnyMJ;font-size:21px">
           <?php 
             // set date left date to letter one print date
-            $l_date = strtotime($value->left_date);
             // get latter one print date
+            $s1_date = strtotime($value->left_date);
+            $l_date = $s1_date;
             $days_added = 0;
             while ($days_added < 11) {
                 $l_date = strtotime('+1 day', $l_date);
@@ -81,13 +82,39 @@
                   $days_added++;
                 }
             }
-            if (date('N', $l_date) == 6) {
-              $l_date = strtotime('+1 day', $l_date); // Skip Friday (5) and Saturday (6)
+            // dd(date('Y-m-d', $s1_date) .' = '. date('Y-m-d', $l_date));
+            $l_date = gov_holiday(date('Y-m-d', $s1_date), date('Y-m-d', $l_date));
+            $l_date = coff_day($l_date);
+            // again check
+            if (date('N', strtotime($l_date)) == 5) {
+              $l_date = date("Y-m-d", strtotime("+1 days".$l_date));
             }
-            // latter one print date end
+            if (date('N', strtotime($l_date)) == 6) {
+              $l_date = date("Y-m-d", strtotime("+1 days".$l_date));
+            }
+          ?>
 
-            // get latter two print date
-            $s2_date = strtotime('+1 day', $l_date);
+          <?php 
+            // set date left date to letter one print date
+            // get latter one print date
+            // $l_date = strtotime($value->left_date);
+            // $days_added = 0;
+            // while ($days_added < 11) {
+            //     $l_date = strtotime('+1 day', $l_date);
+            //     if (!in_array(date('N', $l_date), [5])) { // Skip Friday (5) and Saturday (6)
+            //       $days_added++;
+            //     }
+            // }
+            // if (date('N', $l_date) == 6) {
+            //   $l_date = strtotime('+1 day', $l_date); // Skip Friday (5) and Saturday (6)
+            // }
+            // latter one print date end
+          ?>
+          <!-- // latter one print date end -->
+
+          <!-- // get latter two print date -->
+          <?php 
+            $s2_date = strtotime('+1 day', strtotime($l_date));
             $l2_date = $s2_date;
 
             $days_added = 0;
@@ -178,27 +205,13 @@
       </div>
 
     
-      <h6 class="ml-3 mt-5 unicode-to-bijoy" style="font-size:21px"><b>বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭ (৩ক) ধারা মোতাবেক শ্রমিক কর্তৃক সে¦চ্ছায় চাকুরী হইতে ইস্তফা প্রসঙ্গে।</b></h6>
+      <h6 class="ml-3 mt-5" style="font-size:16px">বিষয়: বাংলাদেশ শ্রম আইন ২০০৬ এর ২৭ (৩ক) ধারা মোতাবেক শ্রমিক কর্তৃক সে¦চ্ছায় চাকুরী হইতে ইস্তফা প্রসঙ্গে।</h6>
       <div class="ml-3 mt-5">
           <span class="unicode-to-bijoy" style="font-size:21px">জনাব/জনাবা,</span><br>
           <p class="text-justify unicode-to-bijoy" style="font-size:21px"> 
           আপনি গত <b><span style="font-family: SutonnyMJ;font-size:19px"><?php echo date('d/m/Y',strtotime($value->left_date . '+1 days'))?></span></b> ইং তারিখ হতে অদ্যবদি পর্যন্ত কর্তৃপক্ষের বিনা অনুমতিতে কর্মস্থলে অনুপস্থিত থাকার কারনে আপনাকে গত
           <b><span style="font-family: SutonnyMJ;font-size:19px">
-          <?php 
-            $l_date = strtotime($value->left_date);
-            $days_added = 0;
-
-            while ($days_added < 11) {
-                $l_date = strtotime('+1 day', $l_date);
-                if (!in_array(date('N', $l_date), [5])) { // Skip Friday (5) and Saturday (6)
-                    $days_added++;
-                }
-            }
-            if (date('N', $l_date) == 6) {
-              $l_date = strtotime('+1 day', $l_date);
-            }
-            echo date('d/m/Y', $l_date);
-          ?>
+          <?php  echo date('d/m/Y', strtotime($l_date)); ?>
           </span></b> ইং তারিখে যার <b><span  style="font-family: SutonnyMJ;font-size:19px">m~Ît- 
             <?php echo ($unit_id == 1) ? 'G‡RGdGj' : (($unit_id == 2) ? 'GjGmGGj' : 'GBPwRGj') ?>/ Aby 
             <span style="font-family: SutonnyMJ;font-size:19px">

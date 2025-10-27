@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <!-- section -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">Section </label>
                         <select class="form-control input-sm section" id='section' name='section'>
@@ -108,7 +108,7 @@
                     </div>
                 </div>
                 <!-- line -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">Line </label>
                         <select class="form-control input-sm line" id='line' name='line'>
@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <!-- Designation -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">Designation</label>
                         <select class="form-control input-sm desig" id='desig' name='desig' onChange="grid_emp_list()">
@@ -126,7 +126,7 @@
                     </div>
                 </div>
                 <!-- status -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <?php $categorys = $this->db->get('emp_category_status')->result(); ?>
                     <div class="form-group">
                         <label class="control-label">Status </label>
@@ -141,7 +141,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">Salary </label>
                         <select name="stop_salary" id="stop_salary" class="form-control input-sm" onChange="grid_emp_list()">
@@ -150,6 +150,17 @@
                         </select>
                     </div>
                 </div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label">Gender </label>
+						<select name="emp_gender" id="emp_gender" class="form-control input-sm" onChange="grid_emp_list()">
+							<option value="">Select gender</option>
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+							<option value="Common">Common</option>
+						</select>
+					</div>
+				</div>
             </div>
             <!-- selection area -->
 
@@ -310,6 +321,7 @@
             var status = document.getElementById('status').value;
             var stop_salary = document.getElementById('stop_salary').value;
             var salary_month = document.getElementById('salary_month').value;
+            var emp_gender = document.getElementById('emp_gender').value;
 
             if (typeof unit === "undefined" || unit === '') {
                return false;
@@ -328,6 +340,7 @@
                     "status"      : status,
                     "stop_salary" : stop_salary,
                     "salary_month": salary_month,
+                    "emp_gender"  : emp_gender
                 },
                 contentType: "application/json",
                 dataType: "json",
