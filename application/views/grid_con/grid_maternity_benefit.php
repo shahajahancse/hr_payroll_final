@@ -181,12 +181,15 @@
 <body>
     <div class="container">
         <?php
-		if(empty($values))
-		{
-			echo '<span style="font-family: Arial, Helvetica, sans-serif;">Requested list is empty</span>';
-			exit();
-		}
-		foreach($values as $row){  $unit_id=$row->unit_id ?>
+            if(empty($values))
+                {
+                    echo '<span style="font-family: Arial, Helvetica, sans-serif;">Requested list is empty</span>';
+                    exit();
+                    }
+                    foreach($values as $row){  $unit_id=$row->unit_id;
+                    $check_date = date('Y',strtotime($row->probability));            
+        ?>
+                    
 		    <?php if ($unit_id == 1) { ?>
                 <div class="d-flex flex-row justify-content-between">
                     <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date : 03.10.2020 </p>
@@ -285,25 +288,34 @@
                 <table style="width: 100%; padding:0px 10px; font-size:16px;" border="1" cellpadding="0" cellspacing="0">
                     <thead>
                         <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
-                            <th style="padding:5px">gvm</th>
-                            <th style="padding:5px">UvKv cwi‡kv‡ai we¯ÍvwiZ</th>
-                            <th style="padding:5px">Kg© w`em</th>
-                            <th style="padding:5px">‡gvU †eZb/gRyix</th>
-                            <th style="padding:5px">nvwRiv †evbvm</th>
-                            <th style="padding:5px">gv‡mi †gvU Avq</th>
-                            <th style="padding:5px">Drme †evbvm</th>
-                            <th style="padding:5px">Ab¨vb¨</th>
-                            <th style="padding:5px">me©‡kl gv‡m cÖvß †gvU</th>
+                            <?php if($check_date >= date('Y')){?>
+                                <th style="padding:5px">gvm</th>
+                                <th style="padding:5px;text-align:right">me©‡kl †gvU gRywi</th>
+                            <?php    }else{ ?>
+                                <th style="padding:5px">gvm</th>
+                                <th style="padding:5px">UvKv cwi‡kv‡ai we¯ÍvwiZ</th>
+                                <th style="padding:5px">Kg© w`em</th>
+                                <th style="padding:5px">‡gvU †eZb/gRyix</th>
+                                <th style="padding:5px">nvwRiv †evbvm</th>
+                                <th style="padding:5px">gv‡mi †gvU Avq</th>
+                                <th style="padding:5px">Drme †evbvm</th>
+                                <th style="padding:5px">Ab¨vb¨</th>
+                                <th style="padding:5px;text-align:right">me©‡kl †gvU gRywi</th>
+                            <?php }?>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $a1 =  date('Y-m-01', strtotime($row->start_date .' -1 month')); ?> 
                         <?php $a2 =  date('Y-m-01', strtotime($a1 .' -2 month')); ?> 
                         <?php 
-                            $this->db->where("salary_month BETWEEN '$a2' and '$a1'"); 
+                            if($check_date >= date('Y')){
+                                    $this->db->where("salary_month BETWEEN '$a1' and '$a1'"); 
+                                }else{
+                                    $this->db->where("salary_month BETWEEN '$a2' and '$a1'"); 
+                            }
                             $this->db->where('emp_id', $row->emp_id)->order_by('salary_month', 'asc');
                             $sals = $this->db->get('pay_salary_sheet_com')->result();
-                            // dd($sals);
+                            // dd($this->db->last_query());
                             $total_gross = 0;
                             $total_attn = 0;
                             $total_fb = 0;
@@ -313,7 +325,7 @@
                             $net_p = 0;
                         ?> 
                         <?php foreach ($sals as $s) { ?>
-                        <?php $a =  eng2bn_month($s->salary_month); ?> 
+                        <?php $a =  eng2bn_month( date('Y-m-d', strtotime('+1 month', strtotime($s->salary_month)))); ?> 
                         <?php 
                             $fbonus = 0;
                             if ($row->festival_month == $s->salary_month) {
@@ -331,30 +343,45 @@
                             $total_fb = $fbonus + $total_fb;
                             $total_ab = $abonus + $total_ab;
                             // $sub_total = $s->gross_sal + $s->att_bonus + $fbonus + $abonus + $s->ot_amount;
-                            $sub_total = $s->gross_sal + $s->att_bonus + $fbonus + $abonus + $s->ot_amount - $s->total_deduct;
+                            
+                            if($check_date >= date('Y')){
+                                $sub_total = $s->gross_sal + $s->att_bonus + $fbonus + $abonus + $s->ot_amount - $s->total_deduct;
+                            }else{
+                                $sub_total = $s->gross_sal; 
+                            }
                             $total = $sub_total + $total;
                         ?> 
                         <tr style="font-size:16px; text-align:center;font-family:SutonnyMJ;font-size:19px">
-                            <td class="unicode-to-bijoy" style="padding:5px; width:15%;font-family:arial"><?= $a; ?>  </td>
-                            <td><span>‡eZb</span></td>
-                            <td><?= $s->att_days ?></td>
-                            <td><?= $s->gross_sal ?></td>
-                            <td><?= $s->att_bonus ?></td>
-                            <td><?= $net ?></td>
-                            <td><?= $fbonus ?></td>
-                            <td><?= $abonus ?></td>
-                            <td><?= $sub_total ?></td>
+                             <?php if($check_date >= date('Y')){?>
+                                <td class="unicode-to-bijoy" style="padding:5px; font-family:arial"><?= $a; ?>  </td>
+                                <td style="text-align:right;padding:5px"><?= $sub_total ?></td>
+                            <?php    }else{ ?>
+                                <td class="unicode-to-bijoy" style="padding:5px; font-family:arial"><?= $a; ?>  </td>
+                                <td><span>‡eZb</span></td>
+                                <td><?= $s->att_days ?></td>
+                                <td><?= $s->gross_sal ?></td>
+                                <td><?= $s->att_bonus ?></td>
+                                <td><?= $net ?></td>
+                                <td><?= $fbonus ?></td>
+                                <td><?= $abonus ?></td>
+                                <td style="text-align:right;padding:5px"><?= $sub_total ?></td>
+                            <?php }?>
                         </tr>
                         <?php } ?>
                         <tr style="text-align:center;font-family:SutonnyMJ">
-                            <td colspan="2" style="font-size:19px" ><span>‡gvU</span></td>
-                            <td style="padding:5px; font-size:19px" ><?= $p_days ?></td>
-                            <td style="padding:5px; font-size:19px" ><?= $total_gross ?></td>
-                            <td style="padding:5px; font-size:19px" ><?= $total_attn ?></td>
-                            <td style="padding:5px; font-size:19px" ><?= $net_p ?></td>
-                            <td style="padding:5px; font-size:19px" ><?= $total_fb ?></td>
-                            <td style="padding:5px; font-size:19px" ><?= $total_ab ?></td>
-                            <td style="padding:5px; font-size:19px"><?= ($total) ?></td>
+                            <?php if($check_date >= date('Y')){?>
+                                <td colspan="1" style="font-size:19px;font-weight:bold" ><span>‡gvU</span></td>
+                                <td style="padding:5px;text-align:right; font-size:19px"><?= ($total) ?></td>
+                            <?php }else{?>
+                                <td colspan="2" style="font-size:19px;font-weight:bold" ><span>‡gvU</span></td>
+                                <td style="padding:5px; font-size:19px" ><?= $p_days ?></td>
+                                <td style="padding:5px; font-size:19px" ><?= $total_gross ?></td>
+                                <td style="padding:5px; font-size:19px" ><?= $total_attn ?></td>
+                                <td style="padding:5px; font-size:19px" ><?= $net_p ?></td>
+                                <td style="padding:5px; font-size:19px" ><?= $total_fb ?></td>
+                                <td style="padding:5px; font-size:19px" ><?= $total_ab ?></td>
+                                <td style="padding:5px;text-align:right; font-size:19px"><?= ($total) ?></td>
+                            <?php }?>
                         </tr>
                     </tbody>
                 </table>
@@ -369,20 +396,20 @@
                             <th style="padding:5px"><?= round((($total / $p_days) * $row->total_day), 2) ?></th>
                         </tr>
                         <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
-                            <td style="padding:5px">c«wZw`‡bi Mo ‡eZb (‡gvU ‡eZb <?= $total ?> <span style="font-size: 12px;" >➗</span> <?= $p_days ?> w`b)</td>
-                            <td style="padding:5px"><?= round($total / $p_days, 2) ?></td>
+                            <td style="padding:5px">c«wZw`‡bi Mo ‡eZb (‡gvU ‡eZb <?= $total ?> <span style="font-size: 12px;" >➗</span> <?= ($check_date >= date('Y') ? "26" : $p_days) ?> w`b)</td>
+                            <td style="padding:5px"><?= round($total /(($check_date >= date('Y') ? "26" : $p_days)), 2) ?></td>
                             <td style="padding:5px">ivR¯^ KZ©b</td>
                             <td style="padding:5px">10</td>
                         </tr>
                         <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
-                            <td style="padding:5px">‡gvU c«‡`q UvKvi cwigvY ( c«wZw`‡bi Mo ‡eZb <?= round($total / $p_days, 2) ?> &#10005; <?= $row->total_day * 2 ?> w`b) </td>
-                            <td style="padding:5px"><?= round((($total / $p_days) * ($row->total_day * 2)), 0) ?></td>
+                            <td style="padding:5px">‡gvU c«‡`q UvKvi cwigvY ( c«wZw`‡bi Mo ‡eZb <?= round($total /(($check_date >= date('Y') ? "26" : $p_days)), 2) ?> &#10005; <?= $row->total_day * 2 ?> w`b) </td>
+                            <td style="padding:5px"><?= round((($total / (($check_date >= date('Y') ? "26" : $p_days))) * ($row->total_day * 2)), 0) ?></td>
                             <td style="padding:5px">‡gvU UvKv </td>
-                            <td style="padding:5px"><?= round((($total / $p_days) * $row->total_day), 0) - 10 ?></td>
+                            <td style="padding:5px"><?= round((($total / (($check_date >= date('Y') ? "26" : $p_days))) * $row->total_day), 0) - 10 ?></td>
                         </tr>
                         <tr style="font-family:SutonnyMJ; font-size:19px; text-align:center">
-                            <td style="padding:5px">cÖ_g wKw¯Í ( c«wZw`‡bi Mo ‡eZb <?= round($total / $p_days, 2) ?> &#10005; <?= $row->total_day ?> w`b) </td>
-                            <td style="padding:5px"><?= round((($total / $p_days) * $row->total_day), 0) ?></td>
+                            <td style="padding:5px">cÖ_g wKw¯Í ( c«wZw`‡bi Mo ‡eZb <?= round($total / ($check_date >= date('Y') ? "26" : $p_days), 2) ?> &#10005; <?= $row->total_day ?> w`b) </td>
+                            <td style="padding:5px"><?= round((($total / ($check_date >= date('Y') ? "26" : $p_days)) * $row->total_day), 0) ?></td>
                         </tr>
                     </thead>
                 </table>
@@ -390,8 +417,8 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center; font-size:16px; clear: both; padding:20px 10px;">
                 <div style="width: 70%; font-family:; font-family:SutonnyMJ">
-                    <p style="font-size:19px"><span>cÖvß UvKv </span> : <?= ceil((($total / $p_days) * $row->total_day)) ?>  UvKv </p>
-                    <?php $totall = ceil((($total / $p_days) * $row->total_day)); ?>
+                    <p style="font-size:19px"><span>cÖvß UvKv </span> : <?= ceil((($total / ($check_date >= date('Y') ? "26" : $p_days)) * $row->total_day)) ?>  UvKv </p>
+                    <?php $totall = ceil((($total / ($check_date >= date('Y') ? "26" : $p_days)) * $row->total_day)); ?>
                     <p style="font-size:19px"><span>K_vq </span> : <?=  $obj->numToWord((int)$totall) ?>  UvKv </p>
                 </div>
                 <div style="width: 30%; display: flex; align-items: center;">
@@ -405,8 +432,7 @@
                 <!-- Summary Section -->
                 <div class="row approvals text-center">
                     <div class="col-md-6">
-                        <p class="bijoy">cÖ¯‘ZKvix</p>
-                 
+                        <p class="bijoy" style="font-size:20px">cÖ¯‘ZKvix</p>
                     </div> 
                 </div>
                 <br><br>

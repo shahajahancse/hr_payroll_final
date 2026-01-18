@@ -386,8 +386,10 @@
 
 					echo "</tr>";
 					echo "</table>";
+					if($value->unit_id == 4 && (date('Y-m',strtotime($grid_firstdate)) == "2025-11" || date('Y-m',strtotime($grid_seconddate)) == "2025-11")){
+						echo "<br><div style='width:700px;text-align:left'><strong>[NOTE]:</strong><p>As per Section 13(1) of the Bangladesh Labour Law (BLL), the establishment remained closed from 25–30 November 2025. Based on workers’ written applications and subsequent management approval, wages for the five (05) days of closure have been duly paid to the concerned workers.</p></div>"	;
+					}
 					echo "<br /><br />";
-
 					echo "</div>";
 					echo "<br>";
 				}

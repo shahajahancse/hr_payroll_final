@@ -45,6 +45,7 @@
 	</style>
 <body>
 	<?php 
+		// dd($values);
 		if(empty($values)){
 			echo "No data found"; exit;
 		}
@@ -159,10 +160,10 @@
 					echo "</td>";
 
 					echo "<td >";
-					echo $values["com_gross_sal"][$k];
+					echo $values["gross_sal"][$k];
 					echo "</td>";
-					$total_gross = $total_gross + $values["com_gross_sal"][$k];
-					$grand_total_gross = $grand_total_gross + $values["com_gross_sal"][$k];
+					$total_gross = $total_gross + $values["gross_sal"][$k];
+					$grand_total_gross = $grand_total_gross + $values["gross_sal"][$k];
 
 					echo "<td >";
 					echo $values["basic_sal"][$k];
@@ -215,7 +216,8 @@
 					$total_net_el = $total_net_el + number_format($net_el, 2);
 					$grand_total_net_el = $grand_total_net_el + number_format($net_el, 2);
 					
-					$net_amount = ($values["com_gross_sal"][$k]/30)*number_format($net_el, 2);
+					$net_amount = ($values["net_pay"][$k]);
+					// $net_amount = ($values["com_gross_sal"][$k]/30)*number_format($net_el, 2);
 					
 					echo "<td align='right' style='padding-right:5px; font-weight:bold;'>";
 					echo number_format($net_amount,0);

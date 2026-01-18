@@ -1,47 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Monthly EOT Summary Report</title>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/table.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Monthly EOT Summary Report</title>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/table.css" />
 
-<style type="text/css">
-.sal tr td{
-border:1px #000000 solid;
-border-top-style:none;
-border-left-style:none;
-padding-right:2px;
+	<style type="text/css">
+		.sal tr td{
+			border:1px #000000 solid;
+			border-top-style:none;
+			border-left-style:none;
+			padding-right:2px;
 
-}
-.sal{
-border:1px #000000 solid;
-   border-bottom-style: none;
-   border-right-style: none;
-   }
-   
-.det tr td{
-border:1px #000000 solid;
-border-top-style:none;
-border-left-style:none;
+		}
+		.sal{
+		border:1px #000000 solid;
+		border-bottom-style: none;
+		border-right-style: none;
+		}
+		
+		.det tr td{
+			border:1px #000000 solid;
+			border-top-style:none;
+			border-left-style:none;
 
-}
-.det{
-border:1px #000000 solid;
-   border-bottom-style: none;
-   border-right-style: none;
-   }
-.bottom_txt_design
-{
-	 border-top:1px solid;
-	 width:170px;
-	 font-weight:bold;
-}
-.bottom_txt_manager_design
-{
-	border-top:1px solid;
-	 width:170px;
-}
-</style>
+		}
+		.det{
+		border:1px #000000 solid;
+		border-bottom-style: none;
+		border-right-style: none;
+		}
+		.bottom_txt_design
+		{
+			border-top:1px solid;
+			width:170px;
+			font-weight:bold;
+		}
+		.bottom_txt_manager_design
+		{
+			border-top:1px solid;
+			width:170px;
+		}
+	</style>
 </head>
 
 <body>
@@ -53,12 +53,10 @@ border:1px #000000 solid;
 <tr>
 <td colspan="10">
 <?php 
-$data['unit_id'] = $unit_id;
-$this->load->view("head_english",$data);
+	$data['unit_id'] = $unit_id;
+	$this->load->view("head_english",$data);
 ?>
-
-
-	<div  style="font-size:13px; font-weight:bold; text-align:center; width:100%;">
+<div  style="font-size:13px; font-weight:bold; text-align:center; width:100%;">
 	<?php 
 	if($grid_status == 1)
 	{ echo 'Reguler Employee '; }
@@ -228,9 +226,6 @@ $this->load->view("head_english",$data);
 		echo number_format($total_gross_cash_bank);
 		echo "</td>";
 		
-		
-		
-		
 		echo "<td align='right'>";
 		echo number_format($total_cash_bank_eot_hour);
 		echo "</td>";
@@ -255,19 +250,23 @@ $this->load->view("head_english",$data);
 	?>
 	</table>
 	<table width="80%" height="80px" border="0" align="center" style="margin-bottom:85px; font-family:Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold;">
-			<tr height="80%" >
+		<tr height="80%" >
 			<td colspan="28"></td>
-			</tr>
-			<tr height="20%">
+		</tr>
+		<tr height="20%">
 			<td  align="center" style="width:15%;"><dt class="bottom_txt_design" >Prepared By</dt></td>
-            <td align="center"  style="width:25%" ><dt class="bottom_txt_design" >Account Executive</dt></td>
+			<td  align="center" style="width:15%;"><dt class="bottom_txt_design" >Manager (HR,Admin & Compl.)</dt></td>
+			<td  align="center" style="width:15%;"><dt class="bottom_txt_design" >Audit</dt></td>
+			<td  align="center" style="width:15%;"><dt class="bottom_txt_design" >Approved By</dt></td>
+		</tr>
+			<!-- <td  align="center" style="width:15%;"><dt class="bottom_txt_design" >Prepared By</dt></td>
+			<td align="center"  style="width:25%" ><dt class="bottom_txt_design" >Account Executive</dt></td>
 			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >HR/SR Manager</dt></td>
 			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >GM (HRD)</dt></td>
-            <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >General Manager (GM)</dt></td>
-            <td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Director</dt></td>
-			</tr>
-			
-			</table>
+			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >General Manager (GM)</dt></td>
+			<td  align="center" style="width:20%" ><dt class="bottom_txt_design" >Director</dt></td> -->
+		</tr>
+	</table>
 </div>
 </div>
 </body>

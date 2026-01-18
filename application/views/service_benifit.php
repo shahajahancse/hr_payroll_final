@@ -178,9 +178,9 @@ foreach ($values->result() as $row)
 		<p style="text-align: center;">Web: www.creativegroupbd.net</p>
 	</div>
   
- </div>
+</div>
 
- <?php } ?>
+<?php } ?>
 
 <?php
 

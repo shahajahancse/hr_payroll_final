@@ -740,7 +740,7 @@ class Entry_system_con extends CI_Controller
         $this->data['unit'] = $this->db->get('pr_units')->row();
 
         $this->data['results']     = $this->Common_model->get_shift_log($row, $emp_id, $first_date, $second_date);
-        //dd($this->data['results']);
+        // dd($this->data['results']);
         $this->data['first_date']  = date('d-m-Y', strtotime($first_date));
         $this->data['second_date'] = date('d-m-Y', strtotime($second_date));
         $this->data['unit_id']     = $unit_id;
@@ -812,6 +812,7 @@ class Entry_system_con extends CI_Controller
             }else {
                 $data1 = array();
             }
+            // dd($data1);
             $mm = $this->update_attn_log($data, $data1, $d, $emp_id, $unit_id, $proxi_id);
         }
 
@@ -2364,7 +2365,7 @@ class Entry_system_con extends CI_Controller
             }
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
             if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 2, 'attn_sum_line_id' => null))) {
-                $this->Salary_process_model->salary_process($unit_id,$resign_month,$emp_ids);
+                // $this->Salary_process_model->salary_process($unit_id,$resign_month,$emp_ids);
                 echo 'success';
             }else{
                 echo 'error';
@@ -2380,7 +2381,7 @@ class Entry_system_con extends CI_Controller
             }
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
             if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3,'attn_sum_line_id' => null))) {
-                $this->Salary_process_model->salary_process($unit_id,$resign_month,$emp_ids);
+                // $this->Salary_process_model->salary_process($unit_id,$resign_month,$emp_ids);
                 echo 'success';
             }else{
                 echo 'error';
@@ -2545,13 +2546,16 @@ class Entry_system_con extends CI_Controller
         redirect(base_url('entry_system_con/resign_list'));
     }
 
+    public function final_satalment_reset(){
+        //  dd($_POST);
+        $this->db->where('emp_id', $_POST['id'])->update('pr_emp_resign_history', array('status' => 0));
+        echo json_encode(array('success' => true));
+    }
+
     public function add_final_satalment(){
         // dd($_POST);
         $info = $this->db->where('emp_id', $_POST['emp_id'])->get('pr_emp_resign_history')->row();
-        // $resign_date1 = date('Y-m-01', strtotime($info->resign_date));
-        // $resign_date2 = date('Y-m-d', strtotime($info->resign_date));
-        // $diff = date_diff(date_create($resign_date1), date_create($resign_date2));
-        // $resign_day = $diff->format('%a');
+        $emp_info = $this->db->where('emp_id', $_POST['emp_id'])->get('pr_emp_com_info')->row();
 
         $emp_id                = $_POST['emp_id'];
         $com_gross_salary      = $_POST['com_gross_salary'];
@@ -2563,6 +2567,7 @@ class Entry_system_con extends CI_Controller
         $salary_pay_day        = $_POST['salary_pay_day'];
         $working_pay_salary    = $_POST['working_pay_salary'];
         $atten_bonus           = $_POST['atten_bonus'];
+        $count_year           = $_POST['count_year'];
 
         $ot_pay_7pm             = !empty($_POST['ot_pay_7pm']) ? $_POST['ot_pay_7pm'] : 0;
         $ot_pay_9pm             = !empty($_POST['ot_pay_9pm']) ? $_POST['ot_pay_9pm'] : 0;
@@ -2583,6 +2588,7 @@ class Entry_system_con extends CI_Controller
         $total_earn_leave       = $_POST['total_earn_leave'];
         $another_deposit        = $_POST['another_deposit'];
         $service_benifit        = $_POST['service_benifit'];
+        $total_service_years    = $_POST['total_service_years'];
 
         $notice_deduct          = $_POST['notice_deduct'];
         $total_notice_deduct    = $_POST['total_notice_deduct'];
@@ -2591,12 +2597,13 @@ class Entry_system_con extends CI_Controller
         $advanced_salary        = !empty($_POST['advanced_salary']) ? $_POST['advanced_salary'] : 0;
         $total_deduct           = round(((int)$total_notice_deduct + (int)$absent_deduct_amt + (int)$advanced_salary), 2);
         $emp_total_pay          = (int)$working_pay_salary + (int)$atten_bonus + (int)$total_resign_pay_day + (int)$total_extra_payoff + (int)$total_earn_leave + (int)$another_deposit + (int)$service_benifit - (int)$total_deduct;
+        // dd($basic_salary);
 
         $data = array(
             'working_days'          => $salary_pay_day,
             'pay_days'              => $salary_pay_day,
             'per_day_rate'          => $basic_salary / 30,
-            'ot_eot'                => $ot_pay_7pm + $ot_pay_actual,
+            'ot_eot'                => $emp_info->ot_entitle == 0 ? $ot_pay_7pm + $ot_pay_actual : 0,
             'ot_2pm'                => $ot_pay_7pm,
             'ot_eot_4pm'            => $ot_pay_9pm + $ot_pay_7pm,
             'ot_eot_12am'           => $ot_pay_12pm + $ot_pay_7pm,
@@ -2622,8 +2629,9 @@ class Entry_system_con extends CI_Controller
             'attn_bonus'            => $atten_bonus,
             'net_pay'               => $emp_total_pay,
             'status'                => 1,
+            'count_year'            => $total_service_years,
         );
-        // dd($liv_info);
+        // dd($data);
         $this->db->where('emp_id', $_POST['emp_id'])->update('pr_emp_resign_history', $data);
         echo json_encode(array('success' => true));
     }
@@ -2905,6 +2913,35 @@ class Entry_system_con extends CI_Controller
         $data = $this->grid_model->manual_entry_Delete($grid_firstdate, $grid_seconddate, $grid_emp_id);
 
         echo $data;
+    }
+    public function present_to_absent()
+    {
+        $date = $this->input->post('report_date');
+        $grid_data = $this->input->post('emp_id');
+        $grid_emp_ids = explode(',', trim($grid_data));
+        foreach ($grid_emp_ids as $id) {
+            $exists = $this->db->where([
+                'emp_id'        => $id,
+                'unit_id'       => $_SESSION['data']->unit_name,
+                'p_to_a_date'   => $date
+            ])->get('present_to_absent')->row();
+
+            $data = [
+                'emp_id'        => $id,
+                'unit_id'       => $_SESSION['data']->unit_name,
+                'p_to_a_date'   => $date,
+                'created_by'    => $_SESSION['data']->id,
+                'created_at'    => date('Y-m-d H:i:s')
+            ];
+
+            if ($exists) {
+                $this->db->where('id', $exists->id)->update('present_to_absent', $data);
+            } else {
+                $this->db->insert('present_to_absent', $data);
+            }
+        }
+
+        return true;
     }
 
     public function manual_attendance_sheet()
@@ -3385,6 +3422,161 @@ class Entry_system_con extends CI_Controller
         $this->load->view('layout/template', $this->data);
 
     }
+    public function missing_emp_info(){
+
+        $this->data['title'] = 'Increment / Promotion';
+        $this->data['subview'] = 'entry_system/missing_emp_info';
+        $this->load->view('layout/template', $this->data);
+    }
+    // public function missing_update(){
+    //     $emp_id = $this->input->post('emp_id');
+
+    //     $emp_data = $this->db->select('
+    //         p.status,
+    //         p.prev_emp_id,
+    //         p.prev_dept,
+    //         d1.dept_name AS prev_dept_name,
+    //         p.prev_section,
+    //         s1.sec_name_en AS prev_section_name,
+    //         p.prev_line,
+    //         l1.line_name_en AS prev_line_name,
+    //         p.prev_desig,
+    //         des1.desig_name AS prev_desig_name,
+
+    //         p.prev_grade,
+    //         p.prev_salary,
+    //         p.prev_com_salary,
+
+    //         p.new_emp_id,
+    //         p.new_dept,
+    //         d2.dept_name AS new_dept_name,
+    //         p.new_section,
+    //         s2.sec_name_en AS new_section_name,
+    //         p.new_line,
+    //         l2.line_name_en AS new_line_name,
+    //         p.new_desig,
+    //         des2.desig_name AS new_desig_name,
+
+    //         p.new_grade,
+    //         p.new_salary,
+    //         p.new_com_salary,
+    //         p.effective_month,
+    //         e.name_en
+    //     ')
+    //     ->from('pr_incre_prom_pun p')
+    //     ->join('pr_emp_per_info e', 'e.emp_id = p.prev_emp_id', 'left')
+
+    //     // Previous info joins
+    //     ->join('emp_depertment d1', 'd1.dept_id = p.prev_dept', 'left')
+    //     ->join('emp_section s1', 's1.id = p.prev_section', 'left')
+    //     ->join('emp_line_num l1', 'l1.id = p.prev_line', 'left')
+    //     ->join('emp_designation des1', 'des1.id = p.prev_desig', 'left')
+
+    //     // New info joins
+    //     ->join('emp_depertment d2', 'd2.dept_id = p.new_dept', 'left')
+    //     ->join('emp_section s2', 's2.id = p.new_section', 'left')
+    //     ->join('emp_line_num l2', 'l2.id = p.new_line', 'left')
+    //     ->join('emp_designation des2', 'des2.id = p.new_desig', 'left')
+
+    //     ->where('p.prev_emp_id', $emp_id)
+    //     ->get()
+    //     ->result();
+
+    //     $departments  = $this->db->get('emp_depertment')->result();
+    //     $sections     = $this->db->get('emp_section')->result();
+    //     $lines        = $this->db->get('emp_line_num')->result();
+    //     $designations = $this->db->get('emp_designation')->result();
+    //     // dd($emp_data);
+
+    //     return $this->load->view('entry_system/missing_emp_info_view', ['emp_data' => $emp_data, 'departments' => $departments, 'sections' => $sections, 'lines' => $lines, 'designations' => $designations]);
+    // }
+
+    // Controller: Entry_system.php
+
+    public function missing_update() {
+        $emp_id = $this->input->post('emp_id');
+
+        // Fetch essential columns + names for pre-selection
+        $emp_data = $this->db->select('
+                p.id, 
+                p.prev_emp_id, 
+                p.new_emp_id, 
+                p.prev_dept, 
+                d1.dept_name AS prev_dept_name,
+                p.new_dept, 
+                d2.dept_name AS new_dept_name,
+                p.prev_section, 
+                s1.sec_name_en AS prev_section_name,
+                p.new_section, 
+                s2.sec_name_en AS new_section_name,
+                p.prev_line, 
+                l1.line_name_en AS prev_line_name,
+                p.new_line, 
+                l2.line_name_en AS new_line_name,
+                p.prev_desig, 
+                des1.desig_name AS prev_desig_name,
+                p.new_desig, 
+                des2.desig_name AS new_desig_name,
+                p.effective_month, 
+                p.status,
+                e.name_en,
+                com_info.emp_join_date
+            ')
+            ->from('pr_incre_prom_pun p')
+            ->join('pr_emp_per_info e', 'e.emp_id = p.prev_emp_id', 'left')
+            ->join('pr_emp_com_info com_info', 'com_info.emp_id = p.prev_emp_id', 'left')
+            ->join('emp_depertment d1', 'd1.dept_id = p.prev_dept', 'left')
+            ->join('emp_section s1', 's1.id = p.prev_section', 'left')
+            ->join('emp_line_num l1', 'l1.id = p.prev_line', 'left')
+            ->join('emp_designation des1', 'des1.id = p.prev_desig', 'left')
+            ->join('emp_depertment d2', 'd2.dept_id = p.new_dept', 'left')
+            ->join('emp_section s2', 's2.id = p.new_section', 'left')
+            ->join('emp_line_num l2', 'l2.id = p.new_line', 'left')
+            ->join('emp_designation des2', 'des2.id = p.new_desig', 'left')
+            ->where('p.prev_emp_id', $emp_id)
+            ->get()
+            ->result();
+
+        return $this->load->view('entry_system/missing_emp_info_view', ['emp_data' => $emp_data]);
+    }
+
+    // Ajax endpoints for Select2
+    public function get_departments() {
+        $departments = $this->db->select('dept_id AS id, dept_name AS text')->get('emp_depertment')->result();
+        echo json_encode($departments);
+    }
+
+    public function get_sections() {
+        $sections = $this->db->select('id, sec_name_en AS text')->get('emp_section')->result();
+        echo json_encode($sections);
+    }
+
+    public function get_lines() {
+        $lines = $this->db->select('id, line_name_en AS text')->get('emp_line_num')->result();
+        echo json_encode($lines);
+    }
+
+    public function get_designations() {
+        $designations = $this->db->select('id, desig_name AS text')->get('emp_designation')->result();
+        echo json_encode($designations);
+    }
+
+    public function update_missing_field() {
+        $id = $this->input->post('id');
+        $field = $this->input->post('field');
+        $value = $this->input->post('value');
+
+        if ($id && $field) {
+            $this->db->where('id', $id);
+            $this->db->update('pr_incre_prom_pun', [$field => $value]);
+
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error', 'msg' => 'Missing parameters']);
+        }
+    }
+
+
 
 
     public function manual_entry_repot(){
@@ -3443,6 +3635,61 @@ class Entry_system_con extends CI_Controller
         }
         echo $type;
     }
+
+    public function comment_employee(){
+        $this->data['title'] = 'Comment to Employee';
+        $this->data['subview'] = 'entry_system/comment_employee';
+        $this->load->view('layout/template', $this->data);
+    }
+    public function comment_employee_save(){
+        // dd($_SESSION);
+        // Check if comment already exists for this employee in same year
+        $date = date('Y', strtotime($_POST['date']));
+        $exists = $this->db->where('emp_id', $_POST['emp_id'])
+            ->where('YEAR(date_time)', $date)
+            ->get('comments')
+            ->num_rows();
+
+        if ($exists > 0) {
+            echo "Comment already exists for this employee in $date";
+            return;
+        }
+
+        $data = [
+            'emp_id'    => $_POST['emp_id'],
+            'date_time' => $_POST['date'], 
+            'comment'   => $_POST['comment']
+        ];
+        $this->db->insert('comments', $data);
+        echo  "done";
+    }
+    public function show_comments() {
+        // dd($_POST);
+        $data = $this->db
+            ->select('per.name_en, comments.*')
+            ->where('comments.emp_id', $_POST['emp_id'])
+            ->join('pr_emp_per_info as per', 'per.emp_id = comments.emp_id', 'left')
+            ->get('comments')->result_array();
+
+        // Return JSON to AJAX
+        echo json_encode($data);
+    }
+
+    public function update_comment() {
+        $comment_id = $this->input->post('comment_id');
+        $data = [
+            'comment' => $this->input->post('comment'),
+            'date_time' => $this->input->post('date_time')
+        ];
+        $this->db->where('id', $comment_id)->update('comments', $data);
+        echo json_encode(['status' => 'success']);
+    }
+
+    public function delete_comment($id) {
+        $this->db->where('id', $id)->delete('comments');
+        echo json_encode(['status' => 'success']);
+    }
+
 }
 
 

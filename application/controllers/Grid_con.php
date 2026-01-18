@@ -337,21 +337,26 @@ class Grid_con extends CI_Controller {
 		$data['second_date'] 	 = $second_date;
 		$data['apply_date']  	 = $apply_date;
 		$data['values']      	 = $this->Grid_model->leave_application($first_date,$second_date,$emp_id,$unit_id);
-		$date1 					 = new DateTime($first_date);
-		$date2 					 = new DateTime($second_date);
-		$interval 				 = $date2->diff($date1);
-		$interval->d += 1;
-		// dd($data['values']['leave_balance_paternity']);
+		$diff_days = (strtotime($second_date) - strtotime($first_date)) / 86400;
+		$total_days = $diff_days + 1;
 
-		if ($data['type'] == 'sl' && $data['values']['leave_balance_sick'] >= $interval->format('%d')) {
+		// $date1 					 = new DateTime($first_date);
+		// $date2 					 = new DateTime($second_date);
+		// $interval 				 = $date2->diff($date1);
+		// $interval->d += 1;
+		// dd($data['values']['leave_balance_paternity']);
+		// dd($total_days);
+		if ($data['type'] == 'sl' && $data['values']['leave_balance_sick'] >= $total_days) {
 			$this->load->view('grid_con/leave_application',$data);
-		}elseif($data['type'] == 'cl' && $data['values']['leave_balance_casual'] >= $interval->format('%d')){
+		}elseif($data['type'] == 'cl' && $data['values']['leave_balance_casual'] >= $total_days){
 			$this->load->view('grid_con/leave_application',$data);
-		} elseif($data['type'] == 'ml' && $data['values']['leave_balance_maternity'] >= $interval->format('%d')){
+		} elseif($data['type'] == 'ml' && $data['values']['leave_balance_maternity'] >= $total_days){
 			$this->load->view('grid_con/leave_application',$data);
-		} elseif($data['type'] == 'sp' && $data['values']['leave_balance_paternity'] >= $interval->format('%d')){
+		} elseif($data['type'] == 'sp' && $data['values']['leave_balance_paternity'] >= $total_days){
 			$this->load->view('grid_con/leave_application',$data);
 		} elseif($data['type'] == 'wp'){
+			$this->load->view('grid_con/leave_application',$data);
+		}elseif($data['type'] == 'el'){
 			$this->load->view('grid_con/leave_application',$data);
 		}else{
 			echo false;
@@ -956,6 +961,7 @@ class Grid_con extends CI_Controller {
 		// dd($data);
 		$data['total_value']= $this->db->select('*')->where_in('emp_id',$grid_emp_id)->get('pr_emp_resign_history')->row();
 		// dd($data['total_value']);
+		// dd($data);
 		$data['unit_id'] = $this->input->post('unit_id');
 		$data['type'] = $this->input->post('type');
 		$this->load->view('grid_con/final_satalment',$data,false);
@@ -964,25 +970,6 @@ class Grid_con extends CI_Controller {
 	public function final_satalment(){
 		$emp_id = $this->input->post('id');
 		$emp_info = $this->Grid_model->grid_employee_information_final($emp_id);
-		// dd($emp_info->resign_date);
-		// $this->db->select('
-		// 	SUM(ot) as ot_hour, 
-		// 	SUM(eot) as eot_hour, 
-		// 	SUM(ot_eot_4pm) as ot_eot_4pm, 
-		// 	SUM(ot_eot_12am) as ot_eot_12am, 
-		// 	SUM(with_out_friday_ot) as with_out_friday_ot, 
-		// 	SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
-		// 	SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
-		// 	SUM(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
-		// 	SUM(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as absent_days
-		// ', FALSE);
-		// $this->db->from('pr_emp_shift_log');
-		// $this->db->where('pr_emp_shift_log.emp_id', $emp_id);
-		// $this->db->where('shift_log_date >=', date('Y-m-01', strtotime($emp_info->resign_date)));
-		// $this->db->where('shift_log_date <=', $emp_info->resign_date);
-		// $dd = $this->db->get()->row();
-		// $ssss = $this->common_model->salary_structure($emp_info->com_gross_sal);
-		
 		$this->db->where('salary_month', date('Y-m-01', strtotime($emp_info->resign_date))); 
 		$dd = $this->db->where('emp_id', $emp_id)->get('pay_salary_sheet_com')->row();
 		// dd($dd);
@@ -994,10 +981,10 @@ class Grid_con extends CI_Controller {
 		$emp_info->att_bonus      	 = $dd->att_bonus;
 		$emp_info->ot_rate        	 = $dd->ot_rate;
 		$emp_info->ot_hour        	 = $dd->ot_hour;
-		$emp_info->eot_hour       	 = $dd->eot_hour;
-		$emp_info->ot_eot_4pm_hour   = $dd->ot_eot_4pm_hour;
-		$emp_info->ot_eot_12am_hour  = $dd->ot_eot_12am_hour;
-		$emp_info->eot_hr_for_sa     = $dd->eot_hr_for_sa;
+		$emp_info->eot_hour       	 = $emp_info->ot_entitle == 0 ? $dd->eot_hour : 0;
+		$emp_info->ot_eot_4pm_hour   = $emp_info->com_ot_entitle == 0 ? $dd->ot_eot_4pm_hour : 0;
+		$emp_info->ot_eot_12am_hour  = $emp_info->com_ot_entitle == 0 ? $dd->ot_eot_12am_hour : 0;
+		$emp_info->eot_hr_for_sa     = $emp_info->com_ot_entitle == 0 ? $dd->eot_hr_for_sa : 0;
 		// dd($emp_info);
 		echo json_encode($emp_info);
 	}
@@ -1009,15 +996,15 @@ class Grid_con extends CI_Controller {
 		foreach($d as $key => $row){
 			$get_all[$key] = $row;
 			$this->db->select('
-					SUM(ot) as ot_hour, 
-					SUM(eot) as eot_hour, 
-					SUM(ot_eot_4pm) as ot_eot_4pm, 
-					SUM(ot_eot_12am) as ot_eot_12am, 
-					SUM(with_out_friday_ot) as with_out_friday_ot, 
-					SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
-					SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
-					COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
-					COUNT(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as status', FALSE
+				SUM(ot) as ot_hour, 
+				SUM(eot) as eot_hour, 
+				SUM(ot_eot_4pm) as ot_eot_4pm, 
+				SUM(ot_eot_12am) as ot_eot_12am, 
+				SUM(with_out_friday_ot) as with_out_friday_ot, 
+				SUM(CASE WHEN present_status = "W" THEN eot ELSE 0 END) as all_eot_wday, 
+				SUM(CASE WHEN present_status = "H" THEN eot ELSE 0 END) as all_eot_hday, 
+				COUNT(CASE WHEN present_status != "A" THEN 1 ELSE 0 END) as working_days, 
+				COUNT(CASE WHEN present_status = "A" THEN 1 ELSE 0 END) as status', FALSE
 			);
 			$this->db->from('pr_emp_shift_log');
 			$this->db->where('pr_emp_shift_log.emp_id',$row->emp_id);

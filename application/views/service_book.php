@@ -34,6 +34,7 @@
     <br>
     <?php $session = $this->session->userdata('data'); 
     foreach($values as $value){ 
+        // dd($value);
         $emp_signature =$this->db->select('signature')->where('emp_id',$value->emp_id)->get('pr_emp_per_info')->row('signature');    
         $register =$this->db->select('register')->where('unit_id',$unit_id)->get('company_infos')->row('register');
     ?>
@@ -46,9 +47,9 @@
                     <span style="float:right;margin-right:10px;font-size:12px;font-weight:600">Document Code-AJFL/HRAC(HR)/03/010</span>
                 <?php }?>
                 <br><br><br><br><br><br>
-                <?php if($unit_id != 1){?>
-                <h5>Document Code-HGL/HRD(HR)/03/010</h5>
-                <?php }?>
+                <?php if($unit_id == 4){?>
+                    <h5>Document Code-HGL/HRD(HR)/03/010</h5>
+                <?php } if($unit_id == 2){ echo "Document Code-LSAL/HR/03/092"; }?>
                 <br><br>
                 <h1 class="unicode-to-bijoy font-weight-bold" style="text-shadow: -2px 0px 2px gray; text-color:black">সার্ভিস বহি </h1>
                 <br>
@@ -130,26 +131,26 @@
                         <?php if($unit_id == 1){ ?>
                             <tr class="text-center">
                                 <td style="font-size:14px">
-                                    <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:15px;margin-top:10px'> এজে ফ্যাশনস্ লিঃ</p>
+                                    <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:15px;margin-top:10px'> এজে ফ্যাশনস্ লিঃ,</p>
                                     <p class="unicode-to-bijoy" style='line-height:0px;margin-bottom:10px'> ২৩৪/৪ কচুক্ষেত,ঢাকা ক্যান্টনমেন্ট, ঢাকা-১২০৬।</p>
                                 </td>
                                 <td class="unicode-to-bijoy font-weight-bold" style="font-size:16px"> আনোয়ার হোসেন চৌধুরী</td>
                             </tr>
                         <?php } elseif($unit_id == 4){ ?>    
                             <tr class="text-center">
-                                <td class="unicode-to-bijoy">হানিওয়েলগার্মেন্টস লিঃ<br>
+                                <td class="unicode-to-bijoy">হানিওয়েলগার্মেন্টস লিঃ,<br>
                                 ৭৯৯ (১০১০/১০১১) আমবাগ, কোনাবাড়ী, গাজীপুর-১৭০০।</td>
-                                <td class="unicode-to-bijoy" style="padding: 10px;">মোঃআবদুররহিম<br>
-                                সহঃম্যানেজার (এইচ.আর.ডি)<br>
-                                হানিওয়েলগার্মেন্টস লিঃ</td>
+                                <td class="unicode-to-bijoy" style="padding: 10px;">মোঃআবদুর রহিম,<br>
+                                ম্যানেজার (এইচ.আর.ডি),<br>
+                                হানিওয়েল গার্মেন্টস লিঃ</td>
                             </tr>
                         <?php } else{ ?>
                             <tr class="text-center">
-                                <td class="unicode-to-bijoy">এ জে ফ্যাসনস্ লিঃ<br>
-                                ২৩৪/৪ কচুক্ষেত, ক্যান্টনমেন্ট, ঢাকা-১২০৬।</td>
-                                <td class="unicode-to-bijoy" style="padding: 10px;">মোঃআবদুররহিম<br>
-                                সহঃম্যানেজার (এইচ.আর.ডি)<br>
-                                হানিওয়েলগার্মেন্টস লিঃ</td>
+                                <td class="unicode-to-bijoy">লাকী স্টার এ্যাপারেলস্ লিমিটেড,<br>
+                                95,`ÿxb Lvucvov,AvDPcvov,U½x,MvRxcyi-1711</td>
+                                <td class="unicode-to-bijoy" style="padding: 10px;">ফজলে আজিম,<br>
+                                ম্যানেজার (এইচ.আর.ডি),<br>
+                                লাকী স্টার এ্যাপারেলস্ লিমিটেড</td>
                             </tr>
                         <?php } ?>    
 
@@ -182,8 +183,8 @@
                     <tr class="text-center">
                         <?php $image =  $this->db->select('*')->where('unit_id',1)->get('company_infos')->row()?>
                         <td style="white-space: nowrap;font-family:sutonnyMJ;font-size:15px;height: 46px"><?php echo date('d-m-Y',strtotime($value->emp_join_date))?> Bs</td>
-                        <td><?php echo $value->left_date=='' ? 'বর্তমান': '<span style="font-family:sutonnyMJ;font-size:15px">'.date('d-m-Y',strtotime($value->left_date)).' Bs </span>'?> </td>
-                        <td><?php echo $value->left_date=='' ? '-': cc($value->resign_reason)?> </td>
+                        <td><?php echo ($value->left_date=='' && $value->resign_date =='') ? ' <span class="unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px">বর্তমান</span>': ($value->left_date !='' ?  '<span style="font-family:sutonnyMJ;font-size:15px">'.date('d-m-Y',strtotime($value->left_date)).' Bs </span>' : '<span style="font-family:sutonnyMJ;font-size:15px">'.date('d-m-Y',strtotime($value->resign_date)).' Bs </span>')?> </td>
+                        <td><?php echo ($value->left_date !='' && $value->resign_date =='' ? '<span class="unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px">ত্যাগ</span>' : ($value->left_date =='' && $value->resign_date !='' ? '<span class="unicode-to-bijoy" style="font-family:sutonnyMJ;font-size:15px">অবসান </span>' : '-' )) ?> </td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px;width:70px"></td>
                         <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px;width:70px"></td>
                     </tr>
@@ -254,7 +255,7 @@
                         <?= date('d-m-Y', strtotime($value->emp_join_date)) ?> Bs
                     </td>
                     <td style="font-size:13px; font-family:sutonnyMJ;">
-                        <span style="font-size:10px;"><?= $value->desig_bangla ?></span> <?= $value->emp_id ?>
+                        <p class="unicode-to-bijoy" style="font-size:13px;"><?= $incProms[0]->desig_bangla.' '.$value->emp_id ?></p> 
                     </td>
                     <td style="font-size:15px; font-family:sutonnyMJ;padding:13px"><?= $ss['basic_sal'] ?></td>
                     <td style="font-size:15px; font-family:sutonnyMJ;"><?= $ss['house_rent'] ?></td>
@@ -274,7 +275,7 @@
                 <tr class="text-center">
                     <td style="font-size:15px; font-family:sutonnyMJ;"><?= $dad ?> Bs</td>
                     <td style="font-size:13px; font-family:sutonnyMJ;">
-                        <span style="font-size:10px;"><?= $incProm->desig_bangla ?></span> <?= $value->emp_id ?>
+                        <p class="unicode-to-bijoy" style="font-size:13px;"><?= $incProm->desig_bangla.' '.$value->emp_id ?></p> 
                     </td>
                     <td style="font-size:15px; font-family:sutonnyMJ; padding:13px"><?= $ss['basic_sal'] ?></td>
                     <td style="font-size:15px; font-family:sutonnyMJ;"><?= $ss['house_rent'] ?></td>
@@ -305,8 +306,8 @@
                     <th class="unicode-to-bijoy" rowspan="2" style="width: 66px;">শ্রমিকের স্বাক্ষর/টিপসই</th>
                 </tr>
                 <tr>
-                    <th class="unicode-to-bijoy">শ্রমিকের দেয় চাঁদা</th>
-                    <th class="unicode-to-bijoy">মালিকের দেয় চাঁদা</th>
+                    <th class="unicode-to-bijoy">শ্রমিকের প্রদেয় চাঁদা</th>
+                    <th class="unicode-to-bijoy">মালিকের প্রদেয় চাঁদা</th>
                     
                 </tr>
                 <tr class="text-center">
@@ -331,8 +332,8 @@
                         <td style="font-size:15px;font-family:sutonnyMJ"><?php echo $gross_sal ?></td>
                         <td></td>
                         <td></td>
-                        <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 25px;width:50px"></td>
-                        <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 24px;width:50px"></td>
+                        <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 39px;width:50px"></td>
+                        <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 39px;width:50px"></td>
                     </tr>
                     <?php
                     }
@@ -350,8 +351,8 @@
                         <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($incProm->new_salary))?></td>
                         <td></td>
                         <td></td>
-                        <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 25px;width:50px"></td>
-                        <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 25px;width:50px"></td>
+                        <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 39px;width:50px"></td>
+                        <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 39px;width:50px"></td>
                     </tr>
                     <?php
                     }
@@ -416,7 +417,7 @@ if ($pages > 1) {
                         <?= date('d-m-Y', strtotime($value->emp_join_date)) ?> Bs
                     </td>
                     <td style="font-size:13px; font-family:sutonnyMJ;">
-                        <span style="font-size:10px;"><?= $value->desig_bangla ?></span> <?= $value->emp_id ?>
+                        <span style="font-size:10px;"><?= $incProms[0]->desig_bangla ?></span> <?= $value->emp_id ?>
                     </td>
                     <td style="font-size:15px; font-family:sutonnyMJ;padding:13px"><?= $ss['basic_sal'] ?></td>
                     <td style="font-size:15px; font-family:sutonnyMJ;"><?= $ss['house_rent'] ?></td>
@@ -509,8 +510,8 @@ if ($pages > 1) {
                     <td style="font-size:15px;font-family:sutonnyMJ"><?php echo round(($incProm->new_salary))?></td>
                     <td></td>
                     <td></td>
-                    <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 25px;width:50px"></td>
-                    <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 25px;width:50px"></td>
+                    <td><img src="<?php echo base_url('images/'.$register)?>" style="height: 39px;width:50px"></td>
+                    <td><img src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 39px;width:50px"></td>
                 </tr>
                 <?php
                     }
@@ -697,7 +698,7 @@ if ($pages > 1) {
             <p  class="unicode-to-bijoy " style="padding: 5px 0px 0px 5px;">ফরম নং - ৭(ঙ)</p>
             <h6 class="text-center attendance_bonus unicode-to-bijoy" style="font-weight:700;"> পঞ্চম ভাগ</h6>
             <p class="unicode-to-bijoy" style="padding: 5px 0px 0px 5px;font-weight:600;"> আচরণের রেকর্ডঃ </p>
-            <table class=" table-sm" style="font-size: 0.8em;width: 100%;" border="1">
+            <table class="table-sm" style="font-size: 0.8em;width: 100%;" border="1">
                 <thead>
                     <tr  class="text-center" >
                         <th class="unicode-to-bijoy">তারিখ</th>
@@ -713,12 +714,17 @@ if ($pages > 1) {
                     </tr>
                 </thead>
                 <tbody>
+                    <?php 
+                        $comments = $this->db->where('emp_id', $value->emp_id)->get('comments')->result();
+                        foreach($comments as $comment){
+                    ?>
                     <tr>
-                        <td></td>
-                        <td style="height: 20vh"></td>
+                        <td class="unicode-to-bijoy" style="font-size:15px"><?= date('d-m-Y',strtotime($comment->date_time))?> Bs</td>
+                        <td class="unicode-to-bijoy" style="font-size:15px"><?= $comment->comment?></td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
                         <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
                     </tr>
+                    <?php }?>
                 </tbody>
             </table>
     
@@ -744,12 +750,11 @@ if ($pages > 1) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <!-- <tr>
                         <td></td>
-                        <td style="height: 20vh"></td>
                         <td><img  src="<?php echo base_url('images/'.$register)?>" style="height: 30px"></td>
                         <td><img  src="<?php echo base_url('uploads/emp_signature/'.$emp_signature)?>" style="height: 30px"></td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div> 

@@ -78,7 +78,7 @@
             if($employee->weekend_alo_count==0){
                 continue;
             }
-            $holiday_allowance = $employee->weekend_allowance_rate*$employee->weekend_alo_count; 
+            $holiday_allowance = ($employee->weekend_allowance_rate*$employee->weekend_alo_count)+($employee->holiday_allowance_rate*$employee->holiday_alo_count); 
             $total_page_allowance += $holiday_allowance;
             $grand_total_allowance += $holiday_allowance; 
 
@@ -91,7 +91,7 @@
                 <td style='white-space:nowrap'><?php echo $employee->line_name_en; ?></td>
                 <td style='white-space:nowrap'><?php echo date("d-M-y", strtotime($employee->emp_join_date)); ?></td>
                 <td style='white-space:nowrap'><?php echo $employee->gr_name; ?></td>
-                <td style='white-space:nowrap'><?php echo $employee->weekend_alo_count; ?></td>
+                <td style='white-space:nowrap'><?php echo $employee->weekend_alo_count + $employee->holiday_alo_count; ?></td>
                 <td style='white-space:nowrap'><?php echo (int)$employee->weekend_allowance_rate; ?></td>
                 <td style='white-space:nowrap'><?php echo $holiday_allowance; ?></td>
                 <td>&nbsp;</td>

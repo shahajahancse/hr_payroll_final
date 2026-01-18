@@ -83,7 +83,7 @@
           <?php if(in_array(27,$acl)) { ?>
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan & Tax</a> </li>
           <?php } ?>
-          <!-- <li class="start <?= activate_method('letter_notification')?> "><a href="<?= base_url('entry_system_con/letter_notification')?>" class="anchor_cls">Letter Notification</a> </li> -->
+          <li class="start <?= activate_method('comment_employee')?> "><a href="<?= base_url('entry_system_con/comment_employee')?>" class="anchor_cls">Comments to Employee</a> </li>
           <!-- <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li> -->
         </ul>
       </li>

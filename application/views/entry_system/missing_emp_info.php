@@ -10,7 +10,7 @@
     <?php
 		$this->load->model('common_model');
 		$unit = $this->common_model->get_unit_id_name();
-	?>
+        ?>
 <div class="content">
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
@@ -21,7 +21,8 @@
                     <select name="unit_id" id="unit_id" class="form-control input-sm">
                         <option value="">Select Unit</option>
                         <?php
-							foreach ($dept as $row) {
+                        // dd();
+							foreach ($unit->result_array() as $row) {
 								if($row['unit_id'] == $user_data->unit_name){
 								$select_data="selected";
 								}else{
@@ -92,6 +93,7 @@
                 </div>
             </div>
         </div>
+        <br>
         <div class="row nav_head">
             <div class="col-lg-5">
                 <span style="font-size: 20px;"><?= $title ?></span>
@@ -99,7 +101,7 @@
             <div class="col-lg-7">
                 <div class="input-group" style="display:flex; gap: 5px">
                     <span class="input-group-btn" style="display: flex; gap: 10px;">
-                        <input class="btn btn-primary" onclick='missing_update(event)' type="button" value='Save' />
+                        <input class="btn btn-primary" onclick='missing_update(event)' type="button" value='Show Employee Info' />
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
@@ -163,39 +165,36 @@
             return false;
         }
 
-        department = document.getElementById('dept').value;
-        if (department == '') {
-            showMessage('error', 'Please select Department');
-            return false;
-        }
-        section = document.getElementById('section').value;
-        if (section == '') {
-            showMessage('error', 'Please select Section');
-            return false;
-        }
-        line = document.getElementById('line').value;
-        if (line == '') {
-            showMessage('error', 'Please select Line');
-            return false;
-        }
-        designation = document.getElementById('desig').value;
-        if (designation == '') {
-            showMessage('error', 'Please select Designation');
-            return false;
-        }
+        // department = document.getElementById('dept').value;
+        // if (department == '') {
+        //     showMessage('error', 'Please select Department');
+        //     return false;
+        // }
+        // section = document.getElementById('section').value;
+        // if (section == '') {
+        //     showMessage('error', 'Please select Section');
+        //     return false;
+        // }
+        // line = document.getElementById('line').value;
+        // if (line == '') {
+        //     showMessage('error', 'Please select Line');
+        //     return false;
+        // }
+        // designation = document.getElementById('desig').value;
+        // if (designation == '') {
+        //     showMessage('error', 'Please select Designation');
+        //     return false;
+        // }
 
-        var data = "emp_id="+numbersArray + "&unit_id="+unit_id +"&department="+department +"&section="+section +"&line="+line +"&designation="+designation; // Merge the data
+        var data = "emp_id="+numbersArray; // Merge the data
         $.ajax({
             type: "POST",
             url: hostname + "entry_system_con/missing_update",
             data: data,
-            success: function(data) {
+            success: function(res) {
                 $("#loader").hide();
-                if (data == 'success') {
-                    showMessage('success', 'Updated Successfully');
-                } else {
-                    showMessage('error', 'Sorry Not Updated');
-                }
+                response = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+                response.document.write(res);
             },
             error: function(data) {
                 $("#loader").hide();
@@ -230,6 +229,7 @@
                     });
                 }
             });
+            grid_emp_list();
         });
 
         //Line dropdown
@@ -251,6 +251,7 @@
                     });
                 }
             });
+            grid_emp_list();
         });
 
         //Section dropdown
@@ -273,6 +274,7 @@
                     });
                 }
             });
+            grid_emp_list();
         });
 
         //Department dropdown
@@ -299,6 +301,7 @@
                     });
                 }
             });
+            grid_emp_list();
         });
     });
 </script>
@@ -328,5 +331,49 @@
 <script>
     function loading_open() {
         $('#loader').css('display', 'block');
+    }
+    function grid_emp_list() {
+        var unit = document.getElementById('unit_id').value;
+        var dept = document.getElementById('dept').value;
+        var section = document.getElementById('section').value;
+        var line = document.getElementById('line').value;
+        var desig = document.getElementById('desig').value;
+        var status = document.getElementById('status').value;
+        if (typeof unit === "undefined" || unit === '') {
+            return false;
+        }
+        url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                "status": status
+            },
+            contentType: "application/json",
+            dataType: "json",
+
+
+            success: function(response) {
+                $('.removeTr').remove();
+                if (response.length != 0) {
+                    $('.removeTrno').hide();
+                    var items = '';
+                    $.each(response, function(index, value) {
+                        items += '<tr class="removeTr">';
+                        items +=
+                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
+                            value.emp_id + '" ></td>';
+                        items += '<td class="success">' + value.emp_id + '</td>';
+                        items += '<td class="warning ">' + value.name_en + '</td>';
+                        items += '</tr>';
+                    });
+                    // console.log(items);
+                    $('#fileDiv tr:last').after(items);
+                } else {
+                    $('.removeTrno').show();
+                    $('.removeTr').remove();
+                }
+            }
+        });
     }
 </script>

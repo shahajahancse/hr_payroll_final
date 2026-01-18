@@ -464,8 +464,9 @@ class Grid_model extends CI_Model{
 		// dd($status);
 		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
 		$this->db->where("pay_salary_sheet_com.ot_eot_4pm_hour !=",0);
-		$this->db->where("pr_emp_com_info.ot_entitle =",0);
-		$this->db->where("pr_emp_com_info.gross_sal !=",0);
+		// $this->db->where("pr_emp_com_info.ot_entitle =", 0);  // shahajahan 27-10-2025
+		$this->db->where("pr_emp_com_info.com_ot_entitle =", 0);
+		// $this->db->where("pr_emp_com_info.gross_sal !=", 0);
 		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
 		$query = $this->db->get();
 		// dd($query->result());
@@ -519,8 +520,8 @@ class Grid_model extends CI_Model{
 		// dd($status);
 		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
 		$this->db->where("pay_salary_sheet_com.ot_eot_12am_hour !=",0);
-		$this->db->where("pr_emp_com_info.ot_entitle =",0);
-		$this->db->where("pr_emp_com_info.gross_sal !=",0);
+		$this->db->where("pr_emp_com_info.com_ot_entitle =",0);
+		// $this->db->where("pr_emp_com_info.gross_sal !=",0);
 		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
 		$query = $this->db->get();
 		// dd($query->result());
@@ -574,8 +575,8 @@ class Grid_model extends CI_Model{
 		// dd($status);
 		$this->db->where("pay_salary_sheet_com.salary_month  = '$salary_month'");
 		$this->db->where("pay_salary_sheet_com.eot_hr_for_sa !=",0);
-		$this->db->where("pr_emp_com_info.ot_entitle =",0);
-		$this->db->where("pr_emp_com_info.gross_sal !=",0);
+		$this->db->where("pr_emp_com_info.com_ot_entitle =",0);
+		// $this->db->where("pr_emp_com_info.gross_sal !=",0);
 		$this->db->order_by("pay_salary_sheet_com.emp_id","ASC");
 		$query = $this->db->get();
 		// dd($query->result());
@@ -1067,6 +1068,7 @@ class Grid_model extends CI_Model{
 				SUM( CASE WHEN trans.leave_type = 'ml' THEN trans.total_leave ELSE 0 END ) AS leave_taken_maternity,
 				SUM( CASE WHEN trans.leave_type = 'pl' THEN trans.total_leave ELSE 0 END ) AS leave_taken_paternity,
 				SUM( CASE WHEN trans.leave_type = 'wp' THEN trans.total_leave ELSE 0 END ) AS leave_taken_wp,
+				SUM( CASE WHEN trans.leave_type = 'el' THEN trans.total_leave ELSE 0 END ) AS leave_taken_el,
 			");
         $this->db->where_in('trans.emp_id', $emp_id);
         $this->db->where('trans.leave_start >=', date('Y-01-01',strtotime($first_date)));
@@ -1077,6 +1079,7 @@ class Grid_model extends CI_Model{
         $data['leave_taken_sick']        = $leavei->leave_taken_sick ?? 0;
         $data['leave_taken_paternity']   = $leavei->leave_taken_paternity ?? 0;
 		$data['leave_taken_maternity']   = $leavei->leave_taken_maternity ?? 0;
+		$data['leave_taken_el']   		 = $leavei->leave_taken_el ?? 0;
 
 		if($emp_info[0]->gender !='Male'){
 			$data['leave_balance_maternity'] = $data['leave_entitle_maternity'] - $data['leave_taken_maternity'];
@@ -1087,7 +1090,7 @@ class Grid_model extends CI_Model{
         $data['leave_balance_casual']    = $data['leave_entitle_casual'] - $data['leave_taken_casual'];
         $data['leave_balance_sick'] 	 = $data['leave_entitle_sick'] - $data['leave_taken_sick'];
         $data['leave_balance_paternity'] = $data['leave_entitle_paternity'] - $data['leave_taken_paternity'];
-
+		// dd($data);
 		return $data;
 	}
 
@@ -2046,7 +2049,39 @@ class Grid_model extends CI_Model{
 	// ========================  end maternity leave   ========================
 
 	// ========================  Salary with eot sheet bank  ========================
+	// salary com to salary actual sheet
 	function grid_salary_sheet_with_eot_bank($sal_year_month, $grid_status, $grid_emp_id)
+	{
+		$this->db->select('
+			emp_line_num.*,
+			pr_emp_per_info.name_en,
+			pr_emp_per_info.bank_bkash_no,
+			emp_designation.desig_name,
+			emp_designation.desig_bangla,
+			emp_section.*,
+			pr_emp_com_info.ot_entitle,
+			pr_emp_com_info.emp_join_date,
+			pr_grade.gr_name,
+			pr_grade.gr_name,
+			pay_salary_sheet.*,
+			emp_line_num.line_name_en
+		');
+		$this->db->from('pr_emp_per_info');
+		$this->db->join('pr_emp_com_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','left');
+		$this->db->join('pr_grade','pr_emp_com_info.emp_sal_gra_id = pr_grade.gr_id','left');
+		$this->db->join('pay_salary_sheet','pr_emp_per_info.emp_id = pay_salary_sheet.emp_id','left');
+		$this->db->join('emp_depertment','pr_emp_com_info.emp_dept_id = emp_depertment.dept_id','left');
+		$this->db->join('emp_section','pr_emp_com_info.emp_sec_id = emp_section.id','left');
+		$this->db->join('emp_line_num','pr_emp_com_info.emp_line_id = emp_line_num.id','left');
+		$this->db->join('emp_designation','pr_emp_com_info.emp_desi_id = emp_designation.id','left');
+		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
+		$this->db->where("pay_salary_sheet.salary_month = '$sal_year_month'");
+		$this->db->order_by("pr_emp_com_info.emp_id","ASC");
+		$this->db->where("pay_salary_sheet.net_pay >", 0);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	function grid_salary_sheet_bank($sal_year_month, $grid_status, $grid_emp_id)
 	{
 		$this->db->select('
 			emp_line_num.*,
@@ -2119,6 +2154,7 @@ class Grid_model extends CI_Model{
 		$this->db->order_by("emp_designation.desig_name");
 		$this->db->group_by("pay_salary_sheet.emp_id");
 		$query = $this->db->get();
+		// dd( $query->result());
 		return $query->result();
 	}
 	// ========================  Salary with eot sheet bank end ========================
@@ -9529,6 +9565,8 @@ class Grid_model extends CI_Model{
 	function grid_employee_information_final($grid_emp_id){
 		// dd($grid_emp_id);
 		$this->db->select('
+			pr_emp_com_info.ot_entitle,
+			pr_emp_com_info.com_ot_entitle,
 			pr_emp_com_info.id as com_id,
 			pr_emp_com_info.emp_id,
 			pr_emp_per_info.*,
@@ -9585,7 +9623,46 @@ class Grid_model extends CI_Model{
 		$this->db->group_by("pr_emp_com_info.emp_id");
 		$query = $this->db->get()->row();
 
-		// dd($query);
+		// dd($query->resign_date.' == '.$query->emp_join_date);
+	    $join   = new DateTime($query->emp_join_date);
+		$resign = new DateTime($query->resign_date);
+
+		// Full calendar years
+		$diff = $join->diff($resign);
+		$full_years = $diff->y;
+		$start_date = (clone $join)
+			->modify("+{$full_years} years")
+			->modify('+1 day')
+			->format('Y-m-d');
+
+		$end_date = $resign->format('Y-m-d');
+		$shiftSubQuery = $this->db
+			->select('COUNT(*)')
+			->from('pr_emp_shift_log s')
+			->where('s.emp_id', $query->emp_id)
+			->where('s.shift_log_date >=', $start_date)
+			->where('s.shift_log_date <=', $end_date)
+			->where_in('s.present_status', ['P', 'L'])
+			->get_compiled_select();
+		$leaveSubQuery = $this->db
+			->select('COUNT(*)')
+			->from('pr_leave_trans l')
+			->where('l.emp_id', $query->emp_id)
+			->where('l.leave_start >=', $start_date)
+			->where('l.leave_end <=', $end_date)
+			->where_in('l.leave_type', ['sl', 'ml'])
+			->get_compiled_select();
+		$this->db->select("(($shiftSubQuery) + ($leaveSubQuery)) AS total_days", false);
+		$result = $this->db->get()->row();
+
+		$total_days = (int) ($result->total_days ?? 0);
+		$total_service_years = $full_years;
+
+		if ($total_days >= 240) {
+			$total_service_years += 1;
+		}
+
+	    $query->total_service_years = $total_service_years;
 		return $query;
 	}
 
@@ -9935,13 +10012,13 @@ function grid_emp_job_application($grid_emp_id){
 
 		$this->db->select("present_status,shift_log_date")->where('emp_id',$emp_id);
 		if( $first_date == '' && $second_date == ''){
-			$this->db->where('shift_log_date >',$query->emp_join_date);
+			$this->db->where('shift_log_date >=',$query->emp_join_date);
 		}elseif( !$first_date == '' && $second_date == ''){
-			$this->db->where('shift_log_date >',date('Y-01-01',strtotime($first_date)));
-			$this->db->where('shift_log_date <',date('Y-12-31',strtotime($first_date)));
+			$this->db->where('shift_log_date >=',date('Y-01-01',strtotime($first_date)));
+			$this->db->where('shift_log_date <=',date('Y-12-31',strtotime($first_date)));
 		}else{
-			$this->db->where('shift_log_date >',date('Y-01-01',strtotime($first_date)));
-			$this->db->where('shift_log_date <',date('Y-m-d',strtotime($second_date)));
+			$this->db->where('shift_log_date >=',date('Y-01-01',strtotime($first_date)));
+			$this->db->where('shift_log_date <=',date('Y-m-d',strtotime($second_date)));
 		}
 		$office_days = $this->db->get('pr_emp_shift_log')->result();
 		// dd($office_days);
@@ -9963,6 +10040,7 @@ function grid_emp_job_application($grid_emp_id){
 	}
 
 		$data['yearly_total_info'] = $yearlyStatus;
+		// dd($data['yearly_total_info']);
 		if($data){
 			return $data;
 		}
@@ -11771,14 +11849,14 @@ function grid_emp_job_application($grid_emp_id){
 		$this->db->join('pr_earn_leave', 'pr_emp_com_info.emp_id = pr_earn_leave.emp_id', 'left');
 		$this->db->where_in('pr_emp_com_info.emp_id', $grid_emp_id);
 		$this->db->where('year(pr_earn_leave.earn_month)', date('Y'));
-		$this->db->where('month(pr_earn_leave.earn_month)', date('m'));
+		$this->db->where('month(pr_earn_leave.earn_month)', date('8'));
 		$this->db->group_by('pr_emp_com_info.emp_id');
 		$this->db->order_by('pr_emp_com_info.emp_id', 'ASC');
 
 		$query = $this->db->get();
 
 		if($query->result() == null){
-			// dd($this->db->last_query());
+			dd($this->db->last_query());
 			return "Requested list is empty";	
 		}
 

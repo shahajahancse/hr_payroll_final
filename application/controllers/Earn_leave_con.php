@@ -62,6 +62,7 @@ class Earn_leave_con extends CI_Controller {
 		$grid_data 		= $this->input->post('spl');
 		$grid_emp_id = explode(',', trim($grid_data));
 		$data["values"] = $this->Earn_leave_model->grid_earn_leave_payment_buyer($year, $grid_emp_id);
+		// dd($data);
 		$data["unit_id"] = $unit_id;
 		$data["year"] = $year;
 		if($data["values"] == "empty"){

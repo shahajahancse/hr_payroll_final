@@ -150,18 +150,21 @@
                 </span>
             </div>
             <?php
-                $year = date('Y', strtotime($first_date));
-                if ($this->db->table_exists('pr_earn_'.$year)) {
+                $year_month = date('Y-m', strtotime($first_date));
+                list($year, $month) = explode('-', $year_month);
+                // if ($this->db->table_exists('pr_earn_'.$year)) {
                     $this->db->where('emp_id', $_POST['emp_id']);
-                    $earn_l=$this->db->get('pr_earn_'.$year)->row();
+                    $this->db->like('earn_month', $year);
+                    $earn_l=$this->db->get('pr_earn_leave')->row();
+                    // dd($this->db->last_query());
                     if (!empty($earn_l)) {
                         $earn_leave = $earn_l->earn_leave;
                     }else{
                         $earn_leave = 0;
                     }
-                }else{
-                    $earn_leave = 0;
-                }
+                // }else{
+                //     $earn_leave = 0;
+                // }
 
                 $first_date = $year . "-01-01";
                 $last_date = $year . "-12-31";
@@ -179,7 +182,7 @@
                 }
                 $leave_ba_earn = $earn_leave - $leave_taken_earn;
             ?>
-             <h2 class="text-center mt-2" style="border-radius:4px;border: 1px solid #57cf77;width: 250px;margin: 0 auto;">Awdm KZ…©K c~iYxq</h2> <br>
+            <h2 class="text-center mt-2" style="border-radius:4px;border: 1px solid #57cf77;width: 250px;margin: 0 auto;">Awdm KZ…©K c~iYxq</h2> <br>
             <table   border="1" collupse="collapse" style="width:100%">
             <tr class="text-center">
                 <td>QzwUi aiY</td>

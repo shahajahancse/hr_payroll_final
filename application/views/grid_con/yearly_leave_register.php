@@ -119,7 +119,7 @@
                     <td class="tg-8jvv text-center unicode-to-bijoy">13</td>
                 </tr>
 				<?php 
-					// dd($take_leaves); 
+					// dd($values); 
 					$separated_data = [];
 					foreach ($take_leaves as $object) {
 						$year = date('Y', strtotime($object->start_date));
@@ -148,7 +148,7 @@
                                 $array = $values['yearly_total_info'];
                                 // dd($array);
                                 if (isset($array[$year]["P"])) {
-                                    $total_el_leave = round($array[$year]["P"]/18,2);
+                                    $total_el_leave =  round($array[$year]["P"]/18,2);
                                 } else {
                                     // Handle the case when the key is undefined
                                     $total_el_leave = 0; // or any other default value
@@ -183,7 +183,7 @@
                             <tr>
                                 <td class="text-center unicode-to-bijoy">
                                     <!-- < ?php dd($array[$year]["P"]) ?> -->
-                                    <?php echo isset($array[$year]) ? round($array[$year]["P"]/18,2).'দিন' : ''?>
+                                    <?php echo isset($array[$year]) ? (int) round($array[$year]["P"]/18,2).' দিন ' : ''?>
                                 </td>
                                 <td><?php echo ""?></td>
                                 <td><?php echo ""?></td>
@@ -196,10 +196,11 @@
                                 ?>
                                 <td class="text-center unicode-to-bijoy">
                                     <?php 
-                                        echo (isset($el_leaves) && $el_leaves != '') ? round($el_leaves,2).' দিন , <br>':'';
-                                        // echo round($el_leaves,2).' দিন , <br>';
-                                        echo "</br>";
-                                        echo isset($paid_date)? $paid_date:'';
+                                   echo isset($el_leaves) && $el_leaves != '' ? round($el_leaves, 2).' দিন,': (isset($paid_date) &&$paid_date != '' ? (int)$total_el_leave.' দিন , ' : ' ');
+
+                                    echo "<br>";
+                                    echo isset($paid_date) ? $paid_date : '';
+
                                     ?>
                                 </td>
                                 <td><?php echo ""?></td>

@@ -499,7 +499,7 @@ class Import extends CI_Controller {
 
 	function inc_pro(){
 		date_default_timezone_set('Asia/Dhaka');
-		$file_name = "import/promotion.txt";
+		$file_name = "import/increment.txt";
 		if (file_exists($file_name)){
 			$lines = file($file_name);
 			// dd($lines);
@@ -531,7 +531,7 @@ class Import extends CI_Controller {
 					'new_com_salary'  => $salary,
 					'effective_month' => date('Y-m-d',strtotime($effect_date)),
 					'ref_id' 		  =>  $emp_pre_info->emp_id,
-					'status' 		  =>2
+					'status' 		  =>1
 				);
 				// echo "<pre>";print_r($data);
 				// dd($data);
@@ -539,8 +539,8 @@ class Import extends CI_Controller {
 				if($insert){
 					$data = array(
 							// 'emp_id'		 =>$id,
-							'emp_desi_id'	 =>$desig_id,	
-							'emp_sal_gra_id' =>$grade,		
+							// 'emp_desi_id'	 =>$desig_id,	
+							// 'emp_sal_gra_id' =>$grade,		
 							'gross_sal'		 =>$salary,
 							'com_gross_sal'  =>$salary 		
 					);
@@ -553,13 +553,18 @@ class Import extends CI_Controller {
 	}
 
 	function inc(){
+		// dd("lo");
 		date_default_timezone_set('Asia/Dhaka');
 		$file_name = "import/incre.txt";
 		if (file_exists($file_name)){
 			$lines = file($file_name);
+			// dd($lines);
 			foreach(array_values($lines)  as $line) {
-				list($id,$salary,$grade,$effect_date) = preg_split('/\s+/', trim($line));
+				// dd($line);
+				list($id,$salary,$effect_date) = preg_split('/\s+/', trim($line));
+				// dd($id.'==='.$salary.'==='.$effect_date);
 				$emp_pre_info = $this->db->select('emp_id,emp_dept_id,emp_sec_id,emp_line_id,emp_desi_id,emp_sal_gra_id,gross_sal,com_gross_sal')->from('pr_emp_com_info')->where('emp_id',$id)->get()->row();
+				// dd($emp_pre_info);
 				if (empty($emp_pre_info)) {
 					echo @$i++;
 					continue;
@@ -578,7 +583,7 @@ class Import extends CI_Controller {
 					'new_section'     => $emp_pre_info->emp_sec_id,
 					'new_line'        => $emp_pre_info->emp_line_id,
 					'new_desig'       => $emp_pre_info->emp_desi_id,
-					'new_grade'       => $grade,
+					'new_grade'       => $emp_pre_info->emp_sal_gra_id,
 					'new_salary'      => $salary,
 					'new_com_salary'  => $salary,
 					'effective_month' => date('Y-m-d',strtotime($effect_date)),
@@ -589,7 +594,7 @@ class Import extends CI_Controller {
 				// dd($data);
 				$insert = $this->db->where('prev_emp_id', $id)->insert('pr_incre_prom_pun', $data);
 				if($insert){
-					dd($emp_pre_info->id);
+					// dd($emp_pre_info->id);
 					$data = array(
 							'emp_sal_gra_id' =>$grade,		
 							'gross_sal'		 =>$salary,
@@ -982,6 +987,66 @@ class Import extends CI_Controller {
 	// 	foreach($lists as $list){
 	// 		echo $list->emp_id."<br>";
 	// 	}
+	// }
+
+
+	function sp_leavsssse(){
+		$get_emps = $this->db->select('emp_id')->where('emp_cat_id',1)->where('unit_id',4)->get('pr_emp_com_info')->result_array();
+		// dd($get_emps);
+		foreach ($get_emps as $emp_id) {
+			// dd($emp_id);
+			// ---------- CHECK ALREADY EXISTS ----------
+			$exists = $this->db
+				->where('emp_id', $emp_id['emp_id'])
+				->where('leave_start', '2025-12-01')
+				->where('leave_end', '2025-12-01')
+				->where('leave_type', 'sp')
+				->get('pr_leave_trans')
+				->row();
+
+			if ($exists) {
+				echo "Emp ID {$emp_id['emp_id']} : Already exists<br>";
+				continue;
+			}
+
+			// ---------- INSERT DATA ----------
+			$data = [
+				'emp_id'       => $emp_id['emp_id'],
+				'unit_id'      => 4,
+				'start_date'   => '2025-12-01',
+				'leave_type'   => 'sp',
+				'leave_start'  => '2025-12-01',
+				'leave_end'    => '2025-12-01',
+				'total_leave'  => 1
+			];
+			// dd($data);
+
+			$insert = $this->db->insert('pr_leave_trans', $data);
+
+			if ($insert) {
+				echo "Emp ID {$emp_id['emp_id']} : Inserted successfully<br>";
+			} else {
+				echo "Emp ID {$emp_id['emp_id']} : Insert failed<br>";
+			}
+		}
+
+		echo 'Success';
+	}
+
+	// function grade(){
+	// 	$get_grade = $this->db
+	// 		->select('prev_emp_id, prev_grade')
+	// 		->like('prev_emp_id', '200', 'after')
+	// 		->where('effective_month', '2025-12-01')
+	// 		->get('pr_incre_prom_pun')
+	// 		->result();
+
+	// 	// foreach ($get_grade as $grade) {
+	// 	// 	$this->db
+	// 	// 		->where('emp_id', $grade->prev_emp_id)
+	// 	// 		->update('pr_emp_com_info', ['emp_sal_gra_id' => $grade->prev_grade]);
+	// 	// 	echo "Emp ID {$grade->prev_emp_id} : Grade updated to {$grade->prev_grade}<br>";
+	// 	// }
 	// }
 }
 ?>

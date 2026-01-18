@@ -232,6 +232,9 @@
                             <?php if(in_array(196,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_salary_sheet_with_eot_bank()">Mobile Banking Report</button>
                             <?php } ?>
+                            <?php if(in_array(222,$acl)) { ?>
+                            <button class="btn input-sm sbtn" onclick="grid_salary_sheet_bank()">Mobile Bank Report</button>
+                            <?php } ?>
                             <?php if(in_array(197,$acl)) { ?>
                             <button class="btn input-sm sbtn" onclick="grid_monthly_allowance_sheet(1)">Monthly Night Bill Report</button>
                             <?php } ?>

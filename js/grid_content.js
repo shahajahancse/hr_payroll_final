@@ -3616,6 +3616,68 @@ function grid_salary_sheet_with_eot_bank()
 		}
 	}
 }
+function grid_salary_sheet_bank()
+{
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	try{
+	   // Opera 8.0+, Firefox, Safari
+	   ajaxRequest = new XMLHttpRequest();
+	}catch (e){
+	   // Internet Explorer Browsers
+	   try{
+	      ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+	   }catch (e) {
+	      try{
+	         ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+	      }catch (e){
+	         // Something went wrong
+	         alert("Your browser broke!");
+	         return false;
+	      }
+	   }
+	}
+	
+	var salary_month = document.getElementById('salary_month').value;
+	if(salary_month =='')
+	{
+		alert("Please select year and month");
+		return;
+	}
+	
+	var status = document.getElementById('status').value;
+	
+	var checkboxes = document.getElementsByName('emp_id[]');
+	var sql = get_checked_value(checkboxes);
+
+	if (sql == '') {
+		alert('Please select employee Id');
+		return false;
+	}
+
+	var unit_id = document.getElementById('unit_id').value;
+	if(unit_id =='Select')
+	{
+		alert("Please select Unit");
+		return false;
+	}
+
+	var queryString="salary_month="+salary_month+"&status="+status+"&sql="+sql+"&unit_id="+unit_id;
+	url =  hostname+"salary_report_con/grid_salary_sheet_bank/";
+	document.getElementById('loaader').style.display = 'flex';
+
+	ajaxRequest.open("POST", url, true);
+	ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajaxRequest.send(queryString);
+
+	ajaxRequest.onreadystatechange = function(){
+		document.getElementById('loaader').style.display = 'none';
+		if(ajaxRequest.readyState == 4){
+			var resp = ajaxRequest.responseText;
+			festival_bonus_summary = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+			festival_bonus_summary.document.write(resp);
+		}
+	}
+}
 function grid_monthly_allowance_sheet(type)
 {
 	var ajaxRequest;  // The variable that makes Ajax possible!

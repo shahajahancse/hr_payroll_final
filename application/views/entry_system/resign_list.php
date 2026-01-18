@@ -141,6 +141,10 @@
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-4">
                                 প্রতি ঘন্টার ওভার টাইম হার	:	<span id="ot_rate" style="font-family:SutonnyMJ"> </span> টাকা
+                            </div>
+                            <div class="col-md-4">
+                                বছর গণনা :	<span id="count_year" style="font-family:SutonnyMJ"> </span> বছর
+                            </div>
                         </div>
 
                         <table class="table table-bordered ml-3 inputs tables" style="border: 1px solid #d6d1d1 !important;">
@@ -293,9 +297,37 @@
 </div>
 
 <script>
+    function final_reset(id) {
+        $.ajax({
+            url: "<?php echo base_url('entry_system_con/final_satalment_reset'); ?>",
+            type: 'POST',
+            data: {id : id},
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                var dataObj = (typeof data == "string") ? JSON.parse(data) : data;
+                if(dataObj.success == true){
+                    Swal.fire({
+                        icon: 'success',
+                        title: "Updated Successfully"
+                    }).then((result) => {
+                        setTimeout(function(){ window.location.href = window.location.href }, 500);
+                    });
+                }
+            },
+            error: function (jqXHR, exception) {
+                console.error('error message:', jqXHR.responseText);
+                console.error('error status:', jqXHR.status);
+                console.error('error statusText:', jqXHR.statusText);
+            }
+        });
+    }
+</script>
+
+<script>
     $('#myModal').on('hidden.bs.modal', function () {
         $(this).find("input,textarea,select").val('').end().find("input[type=checkbox], input[type=radio]").prop("checked", "").end().find("option:selected").removeAttr("selected");
     })
+
     function final_satalment(id) {
         document.getElementById("form").reset();
         $.ajax({
@@ -311,21 +343,20 @@
                 $("#section_name").html(employeeData.sec_name_bn);
                 $("#year").html(employeeData.resign_year);
                 $("#joining_date").html(employeeData.emp_join_date.split('-').reverse().join('-'));
-
                 var d = new Date(employeeData.resign_date);
                 var bnMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
                 var resign_date = d.toLocaleString('bn-BD', { year: 'numeric', month: 'long' });
                 var year_str = "<span style='font-family:sutonnyMJ;font-size:16px'>"+d.getFullYear()+'</span>';
-
                 $("#resign_date").html(bnMonths[d.getMonth()] + " " + year_str);
                 $("#last_working_date").html(d.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/[^0-9]/g, "-").replace(/^(..)-(..)-(....)$/, "$2-$1-$3"));
                 $("#job_duration").html(calculateJobDuration(employeeData.emp_join_date, employeeData.resign_date));
+               
                 $("#gross_salary").html(employeeData.gross_sal);
                 $("#com_gross_salary").html(employeeData.com_gross_sal);
                 $("#basic_salary").html(employeeData.basic_sal);
                 $("#ot_rate").html(employeeData.ot_rate);  
+                $("#count_year").html(employeeData.total_service_years);  
                 $(".ot_rate_ot").html(employeeData.ot_rate);  
-
                 // salaray and ot calculation
                 $("#salary_pay_day").val(employeeData.working_days);
                 $("#atten_bonus").val(employeeData.att_bonus);
@@ -335,7 +366,6 @@
                 $("#ot_pay_12pm").val(employeeData.ot_eot_12am_hour);
                 $("#ot_pay_all").val(employeeData.eot_hr_for_sa);
                 $("#ot_pay_actual").val(employeeData.eot_hour);
-                
                 // absent deduction
                 $("#absent_day").val(employeeData.absent_days);
                 
@@ -349,7 +379,7 @@
                 $("#another_deposit").val(0); 
                 $("#notice_deduct").val(0); 
                 $("#advanced_salary").val(0); 
-                $("#service_benifit").val(calculateServiceBenifit(employeeData.emp_join_date, employeeData.resign_date));
+                $("#service_benifit").val(calculateServiceBenifit(employeeData.total_service_years));
             },
             complete: function () {
                 current_sal_cal();
@@ -378,46 +408,36 @@
         days = days % 30;
         return "<span style='font-family:SutonnyMJ'> " + years + " </span>  বছর <span style='font-family:SutonnyMJ'>" + months + "</span> মাস <span style='font-family:SutonnyMJ'>" + days + "</span> দিন";
     }
+
     function calculatePerDayRate(grossSalary) {
         var basic = ((parseFloat(grossSalary)/30));
         return basic.toFixed(2);
     }
-    function calculateServiceBenifit(startDate, endDate) {
-        var start = new Date(startDate);
-        var end = new Date(endDate);
-        var duration = end - start;
-        var days = duration / (1000 * 60 * 60 * 24);
-        var years = Math.floor(days / 365);
-        //var years = 18;
-        days = days % 365;
-        var months = Math.floor(days / 30);
-        // var months = 5;
-        // alert(months);return false;
-        
-        days = days % 30;
-        if(years >=4 && months >=10){
-        // alert("4 yeasr and 10 months");
-            return 14*5;
-        }
-        if (years >= 5) {
-        // alert("6 years");
-            if (months < 11) {
-                if (years > 9) {
-                    return 30*years;
-                }else{
-                    return 14*years;
-                }
-            }else if(months > 11) {
-                    if (years > 9) {
-                    return 30*(years++);
-                }else{
-                    return 14*years;
-                }
-            } 
-        }else{
+    function calculateServiceBenifit(years) {
+        // var start = new Date(startDate);
+        // var end = new Date(endDate);
+        // var duration = end - start;
+        // var days = duration / (1000 * 60 * 60 * 24);
+        // var years = Math.floor(days / 365);
+        // days = days % 365;
+        // var months = Math.floor(days / 30);
+        // days = days % 30;
+        // // Round up if months >= 10
+        // if (months >= 10) {
+        //     years += 1;
+        // }
+        // Apply the new benefit rules
+        if (years < 3) {
             return 0;
+        } else if (years === 3) {
+            return 7*years;
+        } else if (years >= 4 && years <= 9) {
+            return 15 * years;
+        } else { // years >= 10
+            return 30 * years;
         }
     }
+
 
     function absent_deduct_cal(){
         var d_day=$('#absent_day').val();
@@ -603,6 +623,7 @@
             'another_deposit'        : $("#another_deposit").val(),
             
             'service_benifit'        : $("#service_benifit").val(),
+            'total_service_years'    : $("#count_year").html(),
 
             // deduction section
             'notice_deduct'          : $("#notice_deduct").val(),
@@ -708,6 +729,9 @@
                         <?php if(in_array(136,$acl)) { ?>
                         lid+= `<li><a class="btn btn-sm" onclick="report(${element.emp_id}, 5)">Satalement(W/H)</a></li>`
                         <?php } ?>
+
+                        lid+= `<li><a class="btn btn-sm" onclick="final_reset(${element.emp_id}, 5)">Reset</a></li>`
+
                     }else{
                         lid+= `<li><a class="btn btn-sm" data-toggle="modal" data-target="#myModal" onclick="final_satalment(${element.emp_id})">Add Final Satalment</a></li>`
                     }

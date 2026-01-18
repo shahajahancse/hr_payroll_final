@@ -200,7 +200,7 @@ class Attn_process_model extends CI_Model{
 				$weekend 	 = $this->check_weekend($emp_id, $process_date);
 				$holiday     = $this->check_holiday($emp_id, $process_date);
 				$night_rules = $this->get_night_allowance_rules($process_date, $unit, $emp_desi_id);
-
+				// dd($schedule[0]);
 				//============= Check employee attendance status =============
 				$leaves = $this->leave_chech($process_date, $emp_id);
 				// dd($leaves);
@@ -253,7 +253,15 @@ class Attn_process_model extends CI_Model{
 						$start_date_time = strtotime($ot_start);
 						$end_date_time 	 = strtotime($out_time);
 						if ($end_date_time > $start_date_time && $in_time != '') {
-							$minute = round(($end_date_time - $start_date_time)/60);
+							if( $process_date >= '2025-12-01'){
+								// dd('lo');
+								$minute = (int) (($end_date_time - $start_date_time)/60);
+							}else{
+								// dd('ko');
+								$minute = round(($end_date_time - $start_date_time)/60);
+							}
+
+							// dd($minute);
 
 							
 							// Tiffin break Deduction Hour
@@ -284,7 +292,7 @@ class Attn_process_model extends CI_Model{
 
 							// OT Calculation
 							$ot_hour = floor($minute / 60);
-							if ($minute % 60 > $ot_last_hour) {
+							if ($minute % 60 >= $ot_last_hour) {
 								$ot_hour = $ot_hour + 1;
 								// dd("KO");
 							}
@@ -345,7 +353,10 @@ class Attn_process_model extends CI_Model{
 				// dd($late_time);
 				// Night Allowance unit
 				if (!empty($night_rules) && strtotime($out_time) > strtotime($night_rules)) {
-					$night_allo = 1;
+					if($schedule[0]['in_start']>'18:00:00' && $unit == 4){
+						$night_allo = 1;
+					}
+					else {$night_allo = 0;}
 				}
                 // echo $night_allowance;exit;
 
@@ -374,6 +385,8 @@ class Attn_process_model extends CI_Model{
 					$iffter_allow = ($ramadan === 'Ramadan' && date('H:i:s', strtotime($out_time)) > date('H:i:s', strtotime($iffter_allow_time)) || date('H:i:s', strtotime($out_time)) < date('H:i:s', strtotime('06:59:59'))) ? 1 : 0;
 				}
 				$check_emp_id = $this->db->where('emp_id', $emp_id)->where('date', $process_date)->get('emp_ids')->row();
+				$check_datess = $this->db->where('emp_id', $emp_id)->where('p_to_a_date', $process_date)->get('present_to_absent')->row();
+
 				if(!empty($check_emp_id)){
 						$data = array(
 						'in_time' 			=> '00:00:00',
@@ -391,7 +404,32 @@ class Attn_process_model extends CI_Model{
 						'deduction_hour' 	=> 0,
 						'late_status' 		=> 0,
 						'late_time' 		=> 0,
-						'present_status' 	=> 'A',
+						'present_status' 	=> "A",
+						'tiffin_allo' 		=> 0,
+						'ifter_allo' 		=> 0,
+						'night_allo' 		=> 0,
+						'holiday_allo'	    => 0,
+						'weekly_allo'		=> 0,
+						'unit_id'			=> $unit,
+					);
+				}elseif($attn_status == "L" || !empty($check_datess)){
+						$data = array(
+						'in_time' 			=> '00:00:00',
+						'out_time' 			=> '00:00:00',
+						'ot' 				=> 0,
+						'eot' 				=> 0,
+						'com_ot' 			=> 0,
+						'com_eot' 			=> 0,
+						'false_ot_4' 		=> 0,
+						'false_ot_12' 		=> 0,
+						'false_ot_all' 		=> 0,
+						'ot_eot_4pm' 		=> 0,
+						'ot_eot_12am' 		=> 0,
+						'with_out_friday_ot'=> 0,
+						'deduction_hour' 	=> 0,
+						'late_status' 		=> 0,
+						'late_time' 		=> 0,
+						'present_status' 	=> $attn_status,
 						'tiffin_allo' 		=> 0,
 						'ifter_allo' 		=> 0,
 						'night_allo' 		=> 0,

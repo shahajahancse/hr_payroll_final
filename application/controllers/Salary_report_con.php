@@ -381,6 +381,24 @@ class Salary_report_con extends CI_Controller {
 
 		$this->load->view('salary_sheet_actual_with_eot',$data);
 	}
+	function grid_salary_sheet_bank()
+	{
+		$grid_data 		= $this->input->post('sql');//$this->uri->segment(5);
+		$grid_emp_id    = explode(',', trim($grid_data));
+		$salary_month   = date('Y-m-01', strtotime($this->input->post('salary_month')));
+		$status 		= $this->input->post('status');
+		$unit_id   		= $this->input->post('unit_id');
+
+		$this->load->model('Common_model');
+		$data["deduct_status"]= $this->Common_model->get_setup_attributes(1);
+
+		$data["value"] = $this->Grid_model->grid_salary_sheet_bank($salary_month, $status, $grid_emp_id);
+		$data["salary_month"] = $salary_month;
+		$data["grid_status"]  = $status;
+		$data["unit_id"]  = $unit_id;
+
+		$this->load->view('salary_sheet_buyer_bank',$data);
+	}
 	function grid_monthly_allowance_sheet()
 	{
 		$grid_data 		= $this->input->post('sql');//$this->uri->segment(5);

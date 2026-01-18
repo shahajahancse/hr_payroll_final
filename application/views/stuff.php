@@ -258,15 +258,10 @@ $obj = new NumberToWord();
                 </div>
                 </li>
             </ol>
-            <ol start='9'  style="line-height:1.3;font-size:17px;margin-left:-25px">
+            <ol start='10'  style="line-height:1.3;font-size:17px;margin-left:-25px">
                 <li >You need to follow the company Rules Regulations and policies. Breaking of any such may cause the Termination of your service at AJ Group. </li>
                 <li>Permanent employees may resign from employment with 60 days written notice. If you choose to resign without notice, you must have to pay 60 days basic wages to the employer. In case of terminate of any  worker without notice by the owner, the owner will follow Bangladesh Labor Law.</li>  
             </ol>
-
-
-
-
-
                 <p style="margin-left:-10px;">Thank you to be a member of AJ Group family.</p>
                 <br>
                 <p style="margin-left:-10px;">Thanking You </p>
@@ -274,7 +269,7 @@ $obj = new NumberToWord();
                 <br><br>
                 <div style="display: flex; justify-content: space-between;margin-left:-10px;">
 
-                   <?php if($unit_id == 1 || $unit_id ==4){?>
+                <?php if($unit_id ==4){?>
                     <div>
                         <p style='border-top: 1px solid black;width:fit-content'><b>Group GM (Operations & Sustainability)</b></p>
                         <p><?= $com_info->company_name_english?></p>
@@ -283,7 +278,18 @@ $obj = new NumberToWord();
                         <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
                     </div>
-                <?php }  if($unit_id == 2 ){?>
+                <?php }  if($unit_id == 1 ){?>
+                    <div>
+                        <p style='border-top: 1px solid black;width:fit-content'><b>Department Head</b></p>
+                        <p>(HR, Admin Compliance)</p>
+                        <p><?= $com_info->company_name_english?></p>
+                        <p style="line-height:1.3">Cc: 1)  Group GM (Operations & Sustainability).</p>
+                        <p style="line-height:1.3;margin-left: 35px;">2) GM (Project Head)</p>
+                        <p style="line-height:1.3;margin-left: 35px;">3) HR Department</p>
+                        <p style="line-height:1.3;margin-left: 35px;">4) Accounts Department</p>
+                        <p style="line-height:1.3;margin-left: 35px;">5) Personal File</p>
+                    </div>
+                <?php } if($unit_id == 2 ){?>
                     <div>
                         <!-- <p style='text-align:center'><b></b></p> -->
                         <p style='border-top: 1px solid black;width:fit-content'><b>Maminul Islam </b></p>
@@ -459,7 +465,7 @@ $obj = new NumberToWord();
                 <br><br>
                 <br><br>
                 <div style="display: flex; justify-content: space-between;margin-left:-10px;">
-                <?php if($unit_id == 1 || $unit_id ==4){?>
+                <?php if( $unit_id ==4){?>
                     <div>
                         <p style='border-top: 1px solid black;width:fit-content'><b>Group GM (Operations & Sustainability)</b></p>
                         <p><?= $com_info->company_name_english?></p>
@@ -468,7 +474,19 @@ $obj = new NumberToWord();
                         <p style="line-height:1.3;margin-left: 35px;">3) Accounts Department</p>
                         <p style="line-height:1.3;margin-left: 35px;">4) Personal File</p>
                     </div>
-                <?php }  if($unit_id ==2 ){?>
+                    <?php } if($unit_id == 1){  ?>
+                    <div>
+                        <p style='border-top: 1px solid black;width:fit-content'><b>Department Head</b></p>
+                        <p>(HR, Admin Compliance)</p>
+                        <p><?= $com_info->company_name_english?></p>
+                        <p style="line-height:1.3">Cc: 1)  Group GM (Operations & Sustainability).</p>
+                        <p style="line-height:1.3;margin-left: 35px;">2) GM (Project Head)</p>
+                        <p style="line-height:1.3;margin-left: 35px;">3) HR Department</p>
+                        <p style="line-height:1.3;margin-left: 35px;">4) Accounts Department</p>
+                        <p style="line-height:1.3;margin-left: 35px;">5) Personal File</p>
+                    </div>
+                
+                <?php } if($unit_id ==2 ){?>
                     <div>
                         <!-- <p style='text-align:center'><b></b></p> -->
                         <p style='border-top: 1px solid black;width:fit-content'><b>Maminul Islam </b></p>

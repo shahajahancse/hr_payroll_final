@@ -13,6 +13,7 @@ class Salary_process_model extends CI_Model{
 	
 	function salary_process($unit_id,$process_month,$grid_emp_id)
 	{
+		// dd("l");
 		set_time_limit(0);
 		ini_set('memory_limit', -1);
 		ini_set('max_execution_time', 0);
@@ -280,9 +281,7 @@ class Salary_process_model extends CI_Model{
 					$num_working_days = $num_of_days - $holiday - $weekend - $before_after_absent;
 					$pay_days 		  = $attend + $weekend + $holiday + $total_pay_leave;
 					// pay days calculation
-
 					// dd($sick_leave);
-
 					
 					$attend_data = array(
 						'total_days' 	 => $num_of_days,	
@@ -355,15 +354,16 @@ class Salary_process_model extends CI_Model{
 					{ 
 						if($resign_check != false or $left_check != false)
 						{
+							// dd
 							$before_after_deduct = ($gross_sal_com / $num_of_days) * $before_after_absent;
-							$abs_deduction_com = ($basic_sal / 30) * $absent;
-							$abs_deduction_com = round($abs_deduction_com + $before_after_deduct);
+							$abs_deduction_com = (($ssc['basic_sal']) / 30) * $absent;
+							$abs_deduction_com = round($abs_deduction_com + $before_after_deduct+$ml_deduct);
 						}
 						else if($salary_month == $join_month)
 						{
-							$before_after_deduct = ($gross_sal_com / $num_of_days) * $before_after_absent;
+							$before_after_deduct = ($gross_sal_com / $num_of_days) * $before_after_absent+ $ml_deduct;
 							$abs_deduction_com = ($ssc['basic_sal'] / 30) * $absent;
-							$abs_deduction_com = round($abs_deduction_com + $before_after_deduct);
+							$abs_deduction_com = round($abs_deduction_com + $before_after_deduct+$ml_deduct);
 						}
 						else
 						{
@@ -375,6 +375,8 @@ class Salary_process_model extends CI_Model{
 					{
 						$abs_deduction_com = $gross_sal_com;
 					}
+
+					// dd($abs_deduction_com);
 					
 					$advance_deduct = $this->advance_loan_deduction($emp_id, $salary_month);
 					//DEDUCTION
@@ -415,8 +417,8 @@ class Salary_process_model extends CI_Model{
 					// dd($abs_deduction);
 					
 					//COMPLIENCE
-					// $total_deduction_com = $advance_deduct + $abs_deduction_com + $others_deduct + $tax_deduct + $stamp ;//+ $deduct_amount;
-					$total_deduction_com =  $total_deduction;
+
+					$total_deduction_com =  $advance_deduct + $abs_deduction_com + $others_deduct + $tax_deduct + $stamp + $ml_deduct_com;
 					// dd($total_deduction_com);
 					
 					$data_com["abs_deduction"] 		= $abs_deduction_com;
@@ -651,7 +653,8 @@ class Salary_process_model extends CI_Model{
 						$data_com["ot_eot_4pm_amt"] 	= 0;
 						$data_com["eot_hr_for_sa"] 		= 0;
 					}
-					// dd($data_com);
+					// dd($emp_cat_id);
+					// dd($data);
 					//***************************Festival bonus***********************
 
 					$data["festival_bonus"] 	= 0;
@@ -660,11 +663,11 @@ class Salary_process_model extends CI_Model{
 					
 					// net_pay NON COMPLIENCE and COMPLIENCE
 					$net_pay  = $gross_sal + $att_bouns_acc + $ot_amount - $total_deduction;
+					// dd($total_deduction);
 					$data["net_pay"]  = $gross_sal == 0 ? 0 : $net_pay;
 					$data_com["net_pay"] = $gross_sal_com + $att_bouns_com + $ot_amount_com - $total_deduction_com ;//Zuel 140420
 
 					
-					// dd($data_com);
 
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
@@ -683,7 +686,7 @@ class Salary_process_model extends CI_Model{
 						$data['emp_status'] = $emp_cat_id;
 						$this->db->insert("pay_salary_sheet",$data);
 					}
-					// dd($data);
+					// dd($ml_deduct.'l');
 					//COMPLIENCE
 					$this->db->select("emp_id");
 					$this->db->where("emp_id", $rows->emp_id);
@@ -703,6 +706,7 @@ class Salary_process_model extends CI_Model{
 					}
 				}
 			}
+			// dd($this->db->last_query());
 			return "Process completed successfully";
 		}
 	}

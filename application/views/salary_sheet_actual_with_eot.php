@@ -290,7 +290,7 @@ echo $date_format;
 				$total_ot_amount_per_page = $total_ot_amount_per_page + $ot_eot_amount;
 				$grand_total_ot_amount = $grand_total_ot_amount + $ot_eot_amount;
 				
-				$total_amount = $ot_amount + $ot_eot_amount + $net_pay;
+				$total_amount =  $ot_eot_amount + $net_pay;
 				echo "<td>";
 				echo $total_amount;
 				echo "</td>";

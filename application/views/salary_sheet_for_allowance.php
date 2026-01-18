@@ -13,7 +13,7 @@
                 6 => 'Promoted Employee'
             ];
             echo $status_labels[$grid_status] ?? 'Employee';
-        ?> Monthly Holiday Allowance Sheet -
+        ?> Monthly Night Bill Allowance Sheet -
         <?php echo date("F-Y", strtotime($salary_month)); ?>
     </title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>css/print.css" media="all" />
@@ -73,7 +73,7 @@
 		<tr>
 			<td colspan="12">
 				<?php $this->load->view("head_english");?>
-                <strong><?php echo $status_labels[$grid_status] ?? 'Employee'; ?> Monthly Holiday Allowance Sheet - <?php echo date("F-Y", strtotime($salary_month)); ?></strong>
+                <strong><?php echo $status_labels[$grid_status] ?? 'Employee'; ?> Monthly Night Bill Allowance Sheet - <?php echo date("F-Y", strtotime($salary_month)); ?></strong>
             </td>
         </tr>
         <tr>

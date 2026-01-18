@@ -213,7 +213,7 @@
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/037</p>
             </div>
             <?php } else if($unit_id == 2){?>
             <div class="d-flex flex-row justify-content-between">
@@ -274,7 +274,7 @@
                     </tr> -->
                     <tr>
                         <td class="unicode-to-bijoy">গ্রেড</td>
-                        <td class="unicode-to-bijoy" style=" font-size:20px;font-family:SutonnyMJ"> <?php echo $row->gr_str_basic?> </td>
+                        <td class="unicode-to-bijoy" style=" font-size:23px;font-family:SutonnyMJ"> <?php echo $row->gr_str_basic?> </td>
                     </tr>
                     <tr>
                         <td class="unicode-to-bijoy">যোগদানের তারিখ</td>
@@ -286,7 +286,7 @@
                         <?php echo $last_day = $row->resign_date==null ? '':date('d-m-Y', strtotime($row->resign_date))?> Bs</td>
                     </tr>
                     <tr>
-                        <td class="unicode-to-bijoy">চাকুরীকাল</td>
+                        <td class="unicode-to-bijoy">চাকুরীর সময়কাল</td>
                         <td class="unicode-to-bijoy">
                         <?php 
                             $date1 = new DateTime($join_date);
@@ -296,6 +296,11 @@
                             echo $interval->format('<span style="font-size:23px;font-family:SutonnyMJ"> %y eQi %m gvm %d w`b</span>');
                         ?>
                         </td>
+                    </tr>
+                    <tr>    
+                        <td class="unicode-to-bijoy">বছর গণনা</td>
+                        <td class="unicode-to-bijoy" style=" font-size:23px;font-family:SutonnyMJ"> 
+                        <?php echo $total_value->count_year?> বছর</td>
                     </tr>
                     <?php 
                         $gross_sal = $row->com_gross_sal;
@@ -318,7 +323,7 @@
                     </tr>
                     <tr>
                         <td class='unicode-to-bijoy'>মূল বেতন</td>
-                        <td style="font-size:23px;font-family:SutonnyMJ" class="unicode-to-bijoy"> <?=$basic_sal?> UvKv</td>
+                        <td style="font-size:23px;font-family:SutonnyMJ" class="unicode-to-bijoy"> <?= $basic_sal?> UvKv</td>
                     </tr>
                     <tr>
                         <td class='unicode-to-bijoy'>প্রতি ঘন্টার ওভার টাইম হার</td>
@@ -339,7 +344,7 @@
                 </tr>
                 <tr>
                     <td class="unicode-to-bijoy"><?php $month = $row->resign_date==null ? '': date('M', strtotime($row->resign_date));
-                    echo englishToBengaliMonth($month)." <span style='font-family:SutonnyMJ;font-size:21px'>".date('Y', strtotime($row->resign_date))."</span>";
+                    echo englishToBengaliMonth($month)."<span style='font-family:SutonnyMJ;font-size:21px'>-".date('Y', strtotime($row->resign_date)). " মাসের বেতন/ভাতা</span>";
                     ?> </td>
                    <td class="unicode-to-bijoy"> <?php echo isset($total_value->working_days) ? $total_value->working_days : 0 ?> </td>
                    <td class="unicode-to-bijoy"><?php echo $row->resign_date == null ? 0 : round($gross_rate,2) ?></td>
@@ -427,7 +432,7 @@
                     <td class="unicode-to-bijoy"><?php echo $dd = round($total_value->absent_day*$basic_rate) ?></td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="unicode-to-bijoy">অগ্রীম বেতন</td>
+                    <td colspan="3" class="unicode-to-bijoy">অগ্রীম বেতন/ অন্যান্য কর্তন</td>
                     <td><?php echo $total_value->advanced_salary ?></td>
                 </tr>
                 <tr>
@@ -440,19 +445,19 @@
                 </tr>
 
             </table>
-            <table style="margin-left: 15px;font-size:23px">
+            <table style="margin-left: 15px;font-size:21px">
                 <tr>
                     <td class="unicode-to-bijoy">মোট প্রাপ্যঃ</td>
-                    <td class="unicode-to-bijoy"><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা</td>
+                    <td colspan='3' style="font-size: 16px;"  class="unicode-to-Bijoy"><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা</td>
                 </tr>
             </table>
  
 
-            <div style="margin-top: 20px;font-size:23px" class="mt-5 ml-3 d-flex justify-content-between">
-                <p style='border-top:1px solid black;' class="unicode-to-bijoy">প্রস্তুতকারী</p>
-                <p style='border-top:1px solid black;' class="unicode-to-bijoy">নিরিক্ষক</p>
-                <p style='border-top:1px solid black;' class="unicode-to-bijoy">মানব সম্পদ বিভাগ</p>
-                <p style='border-top:1px solid black;' class="unicode-to-bijoy">অনুমোদনকারী</p>
+            <div style="margin-top: 20px;font-size:17px" class="mt-5 ml-3 d-flex justify-content-between">
+                <p style='border-top:1px solid black;' class="unicode-to-Bijoy">প্রস্তুতকারী</p>
+                <p style='border-top:1px solid black;' class="unicode-to-Bijoy">নিরিক্ষক</p>
+                <p style='border-top:1px solid black;' class="unicode-to-Bijoy">মানব সম্পদ বিভাগ</p>
+                <p style='border-top:1px solid black;' class="unicode-to-Bijoy">অনুমোদনকারী</p>
             </div>
             <h6 class="text-center unicode-to-bijoy" style="border:2px solid black;width: fit-content;margin: 0 auto;padding: 4px;font-size:23px">প্রাপ্তি স্বীকার</h6>
 
@@ -468,7 +473,7 @@
             <div class="d-flex flex-row justify-content-between">
                 <p style="font-family: Arial, Helvetica, sans-serif;">Effective Date :03.10.2020</p>
                 <p style="font-family: Arial, Helvetica, sans-serif;">Version # 00</p>
-                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/008</p>
+                <p style="font-family: Arial, Helvetica, sans-serif;">Document Code : AJFL/HRAC(HR)/03/037</p>
             </div>
             <?php } else if($unit_id == 2){?>
             <div class="d-flex flex-row justify-content-between">
@@ -529,7 +534,7 @@
             </tr>
             <tr>
                 <th style="font-size:18px">In Word</th>
-                <td colspan='3' style="font-size: 23px;"  class='unicode-to-bijoy'><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা।</td>
+                <td colspan='3' style="font-size: 16px;"  class='unicode-to-Bijoy'><?php $a = ceil($total_taka); echo $obj->numToWord($a)?> টাকা।</td>
             </tr>
         </table>
         <table class='table table-bordered' style='width: 9% !important;margin-top: -17px;margin-left: 600px;'>
@@ -541,7 +546,12 @@
 
 
         <div class="d-flex justify-content-between mt-5" style="margin-top: 100px !important;font-size: 18px;">
-            <?php if($unit_id == 1 || $unit_id == 2){ ?>
+            <?php if($unit_id == 1){ ?> 
+                <p style='border-top:1px solid black;' class="unicode-to-bijoy">প্রস্তুতকারী</p>
+                <p style='border-top:1px solid black;' class="unicode-to-bijoy">নিরিক্ষক</p>
+                <p style='border-top:1px solid black;' class="unicode-to-bijoy">মানব সম্পদ বিভাগ</p>
+                <p style='border-top:1px solid black;' class="unicode-to-bijoy">অনুমোদনকারী</p>
+            <?php } if($unit_id == 2){ ?>
                 <p>Prepared by</p>
                 <p>Manger(HDR)</p>
                 <p>G.M (Protect Head)</p>
