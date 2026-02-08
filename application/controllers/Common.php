@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Common extends CI_Controller {
 
     function grid_emp_list($unit, $dept=NULL, $section=NULL, $line=NULL, $desig=NULL){
-        $searchi = $_GET['searchi'];
+        $searchInput = isset($_GET['searchi']) ? $_GET['searchi'] : null;
         // if (empty($_GET['status'])) {
         //     $this->db->select('emp_id');
         //     $this->db->from('pr_emp_resign_history');
@@ -52,11 +52,16 @@ class Common extends CI_Controller {
         if (!empty($_GET['status'])) {
             $this->db->where('com.emp_cat_id', $_GET['status']);
         }
-        if (!empty($searchi)) {
-            //dd($searchi);
-            $searchi_array = explode(",", $searchi);
-            foreach ($searchi_array as $key => $value) {
-                $this->db->like('com.emp_id', $value);
+        if (!empty($searchInput)) {
+            $searchTerms = explode(',', $searchInput);
+            foreach ($searchTerms as $index => $term) {
+                $trimmedTerm = trim($term);
+                // dd($trimmedTerm);
+                if ($index === 0) {
+                    $this->db->like('com.emp_id', $trimmedTerm);
+                } else {
+                    $this->db->or_like('com.emp_id', $trimmedTerm);
+                }
             }
         }
 
@@ -77,10 +82,10 @@ class Common extends CI_Controller {
         $line           = $_GET['line'];
         $desig          = $_GET['desig'];
         $status         = $_GET['status'];
-        $stop_salary    = $_GET['stop_salary'];
         $salary_month   = date('Y-m-01', strtotime($_GET['salary_month']));
         $end_month      = date('Y-m-t', strtotime($_GET['salary_month']));
-        // dd($_GET);
+        // dd($_GET); 
+        $searchInput = isset($_GET['searchi']) ? $_GET['searchi'] : null;
 
         if (!empty($status) && $status == 1) {
             $this->db->select('lf.emp_id');
@@ -90,7 +95,7 @@ class Common extends CI_Controller {
             $emp_ids = $this->db->get()->result();
             $emp_id = array_column($emp_ids, 'emp_id');
         } elseif (!empty($status) && $status == 2) {
-            $this->db->select('lf.emp_id');
+            $this->db->select('lf.emp_id');  
             $this->db->from('pr_emp_left_history as lf');
             $this->db->where('lf.unit_id', $unit_id);
             $this->db->where("lf.left_date BETWEEN '$salary_month' AND '$end_month'");
@@ -107,7 +112,7 @@ class Common extends CI_Controller {
             $emp_id = array();
         }
         // dd($emp_id);
-        $this->db->select('ss.emp_id, per.name_en, per.name_bn');
+        $this->db->select('MAX(ss.emp_id) as emp_id, MAX(per.name_en) as name_en, MAX(per.name_bn) as name_bn');
         $this->db->from('pay_salary_sheet as ss');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = ss.emp_id', 'left');
         $this->db->join('emp_designation as deg', 'deg.id = ss.desig_id', 'left');
@@ -133,6 +138,19 @@ class Common extends CI_Controller {
         if (!empty($_GET['stop_salary'])) {
             $this->db->where('ss.stop_salary', $_GET['stop_salary']);
         }
+        if (!empty($searchInput)) {
+            $searchTerms = explode(',', $searchInput);
+            foreach ($searchTerms as $index => $term) {
+                $trimmedTerm = trim($term);
+                // dd($trimmedTerm);
+                if ($index === 0) {
+                    $this->db->like('ss.emp_id', $trimmedTerm);
+                } else { 
+                    $this->db->or_like('ss.emp_id', $trimmedTerm);
+
+                }
+            }
+        }
 
         $this->db->group_by('ss.emp_id');
         $this->db->order_by('ss.emp_id', 'asc');
@@ -144,6 +162,8 @@ class Common extends CI_Controller {
         echo json_encode($result);
         return;
     }
+
+
 
     function ajax_department_by_unit_id($id){
 

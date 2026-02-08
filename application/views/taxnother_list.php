@@ -1,5 +1,4 @@
 
-
 <div class="content">
   <nav  class="navbar navbar-inverse bg_none">
     <div class="container-fluid nav_head">
@@ -22,7 +21,7 @@
       </div>
     </div>
   </nav>
-      
+
   <div class="row">
     <div class="col-md-8">
       <?php

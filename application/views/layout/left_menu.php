@@ -34,7 +34,7 @@
 
       <!-- Enty System -->
       <?php if(in_array(2,$acl)) { ?>
-      <li class="start <?= activate_class('entry_system_con') ?>"> <a href="javascript:;"> <i class="fa fa-users"></i>
+      <li class="start <?= activate_class('entry_system_con') ?>"> <a href="javascript:;"> <i class="fa fa-pencil-square-o"></i>
         <span class="title">Entry System</span> <span class="selected"></span> <span class="arrow <?= arrow_open('entry_system_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <?php if(in_array(13,$acl)) { ?>
@@ -73,7 +73,6 @@
           <?php if(in_array(24,$acl)) { ?>
             <li class="start <?= activate_method('incre_prom_entry')?> "><a href="<?= base_url('entry_system_con/incre_prom_entry')?>" class="anchor_cls">Increment / Promotion</a> </li>
           <?php } ?>
-          <li class="start <?= activate_method('missing_emp_info') ?>"> <a href="<?=base_url('entry_system_con/missing_emp_info')?>" >Missing Employee List</a></li>
           <?php if(in_array(25,$acl)) { ?>
             <li class="start <?= activate_method('inter_unit_transfer') ?>"> <a href="<?=base_url('entry_system_con/inter_unit_transfer')?>" class="anchor_cls" id="acl">Unit Transfer</a> </li>
           <?php } ?>
@@ -83,7 +82,6 @@
           <?php if(in_array(27,$acl)) { ?>
             <li class="start <?= activate_method('advance_loan')?> "><a href="<?= base_url('entry_system_con/advance_loan')?>" class="anchor_cls">Advance Loan & Tax</a> </li>
           <?php } ?>
-          <!-- <li class="start <?= activate_method('letter_notification')?> "><a href="<?= base_url('entry_system_con/letter_notification')?>" class="anchor_cls">Letter Notification</a> </li> -->
           <!-- <li class="start <?= activate_method('tax_others_deduction')?> "><a href="<?= base_url('entry_system_con/tax_others_deduction')?>" class="anchor_cls">Tax & Others Deduction</a> </li> -->
         </ul>
       </li>
@@ -101,6 +99,11 @@
             <li class="start <?= activate_method('attn_process_form') ?>"> <a href="<?=base_url('attn_process_con/attn_process_form')?>" class="anchor_cls">Attendance Process</a> </li>
           <?php } ?>
           <?php if(in_array(30,$acl)) { ?>
+            <li class="start <?= activate_method('alert_msg_list') ?>">
+              <a href="<?=base_url('attn_process_con/alert_msg_list')?>" class="anchor_cls">Alert List
+                <span style="margin-right: 10px;" class="badge badge-danger pull-right"> <?= alt_ntf(); ?> </span>
+              </a>
+            </li>
             <li class="start <?= activate_method('grid_window') ?>"> <a href="<?=base_url('attn_process_con/grid_window')?>" class="anchor_cls">Reports</a> </li>
           <?php } ?>
         </ul>
@@ -121,21 +124,32 @@
           <?php if(in_array(33,$acl)) { ?>
             <li class="start <?= activate_method('grid_salary_report') ?>"> <a href="<?=base_url('salary_process_con/grid_salary_report')?>" class="anchor_cls">Reports</a> </li>
           <?php } ?>
-          <!-- < ?php if(in_array(125,$acl)) { ?>
-            <li class="start < ?= activate_method('grid_salary_report') ?>"> <a href="< ?=base_url('salary_process_con/festival_bonus_form')?>" class="anchor_cls">Festival Bonus</a> </li>
-          < ?php } ?> -->
         </ul>
       </li>
       <?php } ?>
 
       <!-- Training -->
       <?php if(in_array(6,$acl)) { ?>
-        <li class="start <?= activate_class('training_con') ?>"> <a href="javascript:;"> <i class="fa fa-users"></i>
+        <li class="start <?= activate_class('training_con') ?>"> <a href="javascript:;"> <i class="fa fa-book fa-fw"></i>
           <span class="title">Training</span> <span class="selected"></span> <span class="arrow <?= arrow_open('training_con') ?>"></span> </a>
           <ul class="sub-menu ">
             <li class="start <?= activate_method('training_list') ?>"> <a href="<?=base_url('training_con/training_list')?>" >Training List</a></li>
             <li class="start <?= activate_method('training') ?>"> <a href="<?=base_url('training_con/training')?>" >Training Type</a></li>
             <li class="start <?= activate_method('training_report') ?>"> <a href="<?=base_url('training_con/training_report')?>" >Training Report</a></li>
+          </ul>
+        </li>
+      <?php } ?>
+
+      <!-- Monitoring -->
+      <?php if(in_array(8,$acl)) { ?>
+        <li class="start <?= activate_class('monitoring_con') ?>"><a href="javascript:;"><i class="fa fa-desktop"></i>
+          <span class="title">Monitoring</span> <span class="selected"></span> <span class="arrow <?= arrow_open('monitoring_con') ?>"></span> </a>
+          <ul class="sub-menu ">
+            <li class="start <?= activate_method('entry_list') ?>"> <a href="<?=base_url('monitoring_con/entry_list')?>" >Manual Entry</a></li>
+            <li class="start <?= activate_method('emp_list') ?>"> <a href="<?=base_url('monitoring_con/emp_list')?>" >Employee List</a></li>
+            <li class="start <?= activate_method('emp_inc_list') ?>"> <a href="<?=base_url('monitoring_con/emp_inc_list')?>" >Increment / Promotion</a></li>
+            <li class="start <?= activate_method('left_list') ?>"> <a href="<?=base_url('monitoring_con/left_list')?>">Left List</a></li>
+            <li class="start <?= activate_method('resign_list') ?>"> <a href="<?=base_url('monitoring_con/resign_list')?>" >Resign List</a></li>
           </ul>
         </li>
       <?php } ?>
@@ -196,7 +210,7 @@
 
       <!-- Setting -->
       <?php if($this->session->userdata('data')->level == "All" || in_array(7,$acl)) { ?>
-      <li class="start <?= activate_class('setting_con') ?>"> <a href="javascript:;"> <i class="fa fa-cog"></i>
+      <li class="start <?= activate_class('setting_con') ?>"> <a href="javascript:;"> <i class="fa fa-wrench"></i>
         <span class="title">Settings </span> <span class="selected"></span> <span class="arrow <?= arrow_open('setting_con') ?>"></span> </a>
         <ul class="sub-menu ">
           <?php if(in_array(44,$acl)) { ?>
@@ -240,9 +254,10 @@
 
 <a href="#" class="scrollup">Scroll</a>
 <div class="footer-widget">
-  <div class="copyrights text-center" style="width: 100%">
-  <span style=" float: right;"> <span style="vertical-align: bottom; font-size: 11px;">Developed By |</span> <a href="https:mysoftheaven.com/" target="_blank">
-  <img src="<?=base_url()?>awedget/assets/img/mysoft-logo.png" height="18"> Mysoftheaven (BD) Ltd.</a> </span>
+  <div class="copyrights" style="width: 100%;display: flex;align-items: center;justify-content: space-around;">
+    <div style="border-right: 2px solid white;padding-right: 15px;color: white;">Developed By</div>
+    <div><img src="<?=base_url()?>awedget/assets/img/mysoft-logo_full.png" alt="" style="height: 34px;"></div>
+            
   </div>
 </div>
 <!-- END SIDEBAR -->

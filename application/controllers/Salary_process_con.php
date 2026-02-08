@@ -38,6 +38,7 @@ class Salary_process_con extends CI_Controller {
         if (!empty($this->data['user_data']->unit_name)) {
 	        $this->data['employees'] = $this->Common_model->get_emp_by_unit($this->data['user_data']->unit_name);
         }
+		
 
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['title'] = 'Salary Process';
@@ -127,7 +128,7 @@ class Salary_process_con extends CI_Controller {
 
         $this->data['employees'] = array();
         if ($this->data['user_data']->level == 'Unit') {
-        	$this->db->select('ss.emp_id, per.name_en');
+        	$this->db->select('max(ss.emp_id) as emp_id, MAX(per.name_en) as name_en');
         	$this->db->from('pay_salary_sheet as ss');
         	$this->db->join('pr_emp_per_info as per', 'ss.emp_id = per.emp_id', 'left');
         	$this->db->where('ss.unit_id', $this->data['user_data']->unit_name);

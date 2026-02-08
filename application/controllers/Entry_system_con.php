@@ -21,9 +21,53 @@ class Entry_system_con extends CI_Controller
         }
     }
 
-    //-------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
+    // GRID Display for Alert System
+    //----------------------------------------------------------------------------------------
+    public function alert_system()
+    {
+        $emp_id       = $_POST['emp_id'];
+        $unit_id      = $_POST['unit_id'];
+        $msg          = $_POST['msg'];
+
+        $this->db->where('unit_id', $unit_id)->where('emp_id',$emp_id);
+        $check = $this->db->where('date', date("Y-m-d"))->get('emp_alert_message')->row();
+        if (empty($check)) {
+            $data = array(
+                'unit_id'   => $unit_id,
+                'emp_id'    => $emp_id,
+                'msg'       => $msg,
+                'date'      => date("Y-m-d"),
+            );
+            if ($this->db->insert('emp_alert_message', $data)) {
+                echo 'success';
+                exit;
+            } else {
+                echo 'Record Not Inserted';
+                exit;
+            }
+        } else {
+            $data = array(
+                'msg'       => $msg,
+            );
+            $this->db->where('unit_id', $unit_id)->where('emp_id', $emp_id)->where('date', date("Y-m-d"));
+            if ($this->db->update('emp_alert_message', $data)) {
+                echo 'success';
+                exit;
+            } else {
+                echo 'Record Not Inserted';
+                exit;
+            }
+        }
+        echo 'Record Not Inserted';
+    }
+    //----------------------------------------------------------------------------------------
+    // GRID Display for Alert System
+    //----------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------
     // GRID Display for Stop Salary System
-    //-------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
     public function stop_salary()
     {
         $sql           = $_POST['emp_id'];
@@ -1016,13 +1060,13 @@ class Entry_system_con extends CI_Controller
     }
     public function increment_entry()
     {
-        $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
         $incr_date      = date('Y-m-01', strtotime($_POST['incr_date']));
         $new_salary     = $_POST['gross_sal'];
-        $new_com_salary = $_POST['com_gross_sal'];
-        $old_salary     = $_POST['salary'];
-        $old_com_salary = $_POST['com_salary'];
+        $new_com_salary = $_POST['com_gross_sal'] ?? $new_salary;
+        $emp_id         = $_POST['emp_id'];
+        $old_salary     = $_POST['inc_salary'];
+        $old_com_salary = $_POST['inc_com_salary'];
         $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
         $data = array(
             'prev_emp_id' => $emp_id,
@@ -1095,17 +1139,18 @@ class Entry_system_con extends CI_Controller
 
     public function promotion_entry()
     {
+        // dd($_POST);
         $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
         $prom_date      = date('Y-m-01', strtotime($_POST['prom_date']));
         $new_salary     = $_POST['prom_gross_sal'];
-        $new_com_salary = $_POST['prom_com_gross_sal'];
+        $new_com_salary = $_POST['prom_com_gross_sal'] ?? $new_salary ;
         $department     = $_POST['department'];
         $section        = $_POST['section'];
         $line           = $_POST['line'];
         $designation    = $_POST['designation'];
         $grade_id       = $_POST['grade_id'];
-        $old_salary     = $_POST['salary'];
+        $old_salary     = $_POST['salary'] ?? $new_salary ;
         $old_com_salary = $_POST['com_salary'];
 
         $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
@@ -1209,13 +1254,13 @@ class Entry_system_con extends CI_Controller
 
     public function line_entry()
     {
-        $emp_id         = $_POST['emp_id'];
         $unit_id        = $_POST['unit_id'];
-        $line_date      = date('Y-m-01', strtotime($_POST['line_date']));
         $department     = $_POST['department'];
         $section        = $_POST['section'];
         $line           = $_POST['line'];
         $designation    = $_POST['designation'];
+        $line_date      = date('Y-m-01', strtotime($_POST['line_date']));
+        $emp_id         = $_POST['emp_id'];
 
         $r = $this->db->where('emp_id', $emp_id)->where('unit_id', $unit_id)->get('pr_emp_com_info')->row();
             $dd = array(
@@ -1250,7 +1295,7 @@ class Entry_system_con extends CI_Controller
                 'status'            => 3,
             );
 
-            $this->db->where('ref_id', $emp_id)->where('effective_month', $incr_date);
+            $this->db->where('ref_id', $emp_id)->where('effective_month', $line_date);
             if ( $this->db->update('pr_incre_prom_pun', $data) ) {
                 $this->db->where('emp_id', $emp_id)->update('pr_emp_com_info', $dd);
                 echo 'success';
@@ -1287,6 +1332,7 @@ class Entry_system_con extends CI_Controller
             }
         }
     }
+
     public function line_delete_ajax(){
         $emp_id         = $_POST['sql'];
         $unit_id        = $_POST['unit_id'];
@@ -2339,7 +2385,7 @@ class Entry_system_con extends CI_Controller
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql)->delete('pr_emp_resign_history');
 
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 1))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 1,'monotor_com'=>2))) {
                 echo 'success';
             }else{
                 echo 'error';
@@ -2354,7 +2400,7 @@ class Entry_system_con extends CI_Controller
             // $this->db->insert_batch('pr_emp_left_history', $data);
 
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 2))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 2,'monotor_com'=>2))) {
                 echo 'success';
             }else{
                 echo 'error';
@@ -2367,7 +2413,7 @@ class Entry_system_con extends CI_Controller
                 $this->db->insert('pr_emp_resign_history', $data);
             }
             $this->db->where('unit_id', $unit_id)->where('emp_id', $sql);
-            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3))) {
+            if ($this->db->update('pr_emp_com_info', array('emp_cat_id' => 3,'monotor_com'=>2))) {
                 echo 'success';
             }else{
                 echo 'error';
@@ -2384,17 +2430,18 @@ class Entry_system_con extends CI_Controller
     }
     public function left_list_ajax()
     {
+
         $offset = $this->input->post('offset');
         $limit = $this->input->post('limit');
         $deptSearch = $this->input->post('deptSearch');
-        $this->db->select('lf.*, pr_units.unit_name, per.name_en as user_name');
+        $this->db->select('lf.left_id, lf.unit_id,lf.status, lf.emp_id, lf.left_date, lf.remark, pr_units.unit_name, per.name_en as user_name');
         $this->db->from('pr_emp_left_history as lf');
         $this->db->join('pr_units', 'pr_units.unit_id = lf.unit_id', 'left');
         $this->db->join('pr_emp_per_info as per', 'per.emp_id = lf.emp_id', 'left');
         if (!empty($this->data['user_data']->unit_name) && $this->data['user_data']->unit_name != 'All') {
             $this->db->where('pr_units.unit_id', $this->data['user_data']->unit_name);
         }
-        $this->db->group_by('lf.emp_id');
+        $this->db->group_by('lf.emp_id, lf.left_id, lf.unit_id, lf.left_date, lf.remark, pr_units.unit_name, per.name_en');
         $this->db->order_by('lf.left_date', 'DESC');
         $this->db->limit($limit, $offset);
         if (!empty($deptSearch) && $deptSearch != '') {
@@ -2404,9 +2451,9 @@ class Entry_system_con extends CI_Controller
             $this->db->or_like('per.emp_id', $deptSearch);
             $this->db->group_end();
         }
-        $results= $this->db->get()->result();
-
+        $results = $this->db->get()->result();
         echo json_encode($results);
+
     }
 
     public function resign_list(){
@@ -3151,18 +3198,6 @@ class Entry_system_con extends CI_Controller
 
     }
 
-
-
-
-
-    public function letter_notification(){
-
-        $this->data['title'] = 'Increment / Promotion';
-        $this->data['username'] = $this->data['user_data']->id_number;
-        $this->data['subview'] = 'letter_notification';
-        $this->load->view('layout/template', $this->data);
-
-    }
 }
 
 

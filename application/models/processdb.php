@@ -52,8 +52,9 @@ class Processdb extends CI_Model{
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
 			'emp_join_date'		=> $ejd,
-			'hight'		=> $this->input->post('hight'),
-			'symbol'		=> $this->input->post('symbol'),
+			'hight'			    => $this->input->post('hight'),
+			'symbol'			=> $this->input->post('symbol'),
+			'monotor_com'		=>2,
 		);
 		// dd($data);
 
@@ -234,6 +235,7 @@ class Processdb extends CI_Model{
 			'salary_type'		=> $this->input->post('salary_type'),
 			'position_id'	    => $this->input->post('position_id'),
 			'emp_join_date'		=> $ejd,
+			'monotor_com'		=>2,
 
 		);
 		// dd($data);
@@ -713,8 +715,8 @@ class Processdb extends CI_Model{
 			'salary_draw'		=> $this->input->post('salary_draw'),
 			'salary_type'		=> $this->input->post('salary_type'),
 			'emp_join_date'		=> $ejd,
-			'hight'		=> $this->input->post('hight'),
-			'symbol'		=> $this->input->post('symbol'),
+			'hight'		        => $this->input->post('hight'),
+			'symbol'		    => $this->input->post('symbol'),
 		);
 		//dd($data);
 
@@ -947,6 +949,7 @@ class Processdb extends CI_Model{
 			'bank_ac_no'		=> $this->input->post('bank_ac_no'),
 			'hight'				=> $this->input->post('ft').'-'.$this->input->post('inches'),
 			'symbol'			=> $this->input->post('symbol'),
+			'monotor_com'		=>2,
 			);
 
 		$this->db->insert('pr_emp_per_info', $data);

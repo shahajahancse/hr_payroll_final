@@ -143,6 +143,11 @@
         <div class="row nav_head">
             <input type="text" class="form-control" id="remark" placeholder="please enter comment">
         </div><!-- /.row -->
+        <div class="row nav_head" style="gap: 10px;">
+            <a href="javascript:void(0)" class="btn btn-info" onclick='get_letters(1)'>Get 1st Letter</a>
+            <a href="javascript:void(0)" class="btn btn-info" onclick='get_letters(2)'>Get 2nd Letter</a>
+            <a href="javascript:void(0)" class="btn btn-info" onclick='get_letters(3)'>Get 3rd Letter</a>
+        </div><!-- /.row -->
     </div>
 
     <div class="col-md-4 tablebox">
@@ -178,14 +183,70 @@
     <!-- </div> -->
 </div>
 
+
+<script type="text/javascript">
+function get_letters(status) {
+    var ajaxRequest; // The variable that makes Ajax possible!
+    try {
+        // Opera 8.0+, Firefox, Safari
+        ajaxRequest = new XMLHttpRequest();
+    } catch (e) {
+        // Internet Explorer Browsers
+        try {
+            ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+                // Something went wrong
+                alert("Your browser broke!");
+                return false;
+            }
+        }
+    }
+
+    var date = $('#date').val()
+    if (date == '') {
+        alert('Please select date');
+        $("#loader").hide();
+
+        return false;
+    }
+    var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        if (sql =='') {
+            alert('Please select employee Id');
+            $("#loader").hide();
+            return false;
+        }
+
+        if (sql.length > 7) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+
+
+    // document.getElementById('loaader').style.display = 'flex';
+    var queryString = "emp_id=" + emp_id + "&status=" + status + "&date=" + date + "&sql=" + sql;
+    url = hostname + "grid_con/grid_letter_report_print_no_left/";
+    ajaxRequest.open("POST", url, true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+    ajaxRequest.send(queryString);
+    ajaxRequest.onreadystatechange = function() {
+        // document.getElementById('loaader').style.display = 'none';
+        if (ajaxRequest.readyState == 4) {
+            var resp = ajaxRequest.responseText;
+            letter_1 = window.open('', '_blank', 'menubar=1,resizable=1,scrollbars=1,width=1600,height=800');
+            letter_1.document.write(resp);
+        }
+    }
+}
+</script>
+
 <script>
     $(document).ready(function() {
         $("#searchi").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-            $(".removeTrno").toggle($(".removeTr").length === 0);
+            grid_emp_list()
         });
     });
 </script>
@@ -197,19 +258,23 @@
 <script type="text/javascript">
     // on load employee
     function grid_emp_list() {
+        $('.removeTr').remove();
+
         var unit = document.getElementById('unit_id').value;
         var dept = document.getElementById('dept').value;
         var section = document.getElementById('section').value;
         var line = document.getElementById('line').value;
         var desig = document.getElementById('desig').value;
         var status = document.getElementById('status').value;
+        var searchi = document.getElementById('searchi').value;
 
         url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
         $.ajax({
             url: url,
             type: 'GET',
             data: {
-                "status": status
+                "status": status,
+                "searchi": searchi
             },
             contentType: "application/json",
             dataType: "json",
@@ -221,14 +286,14 @@
                     $('.removeTrno').hide();
                     var items = '';
                     $.each(response, function(index, value) {
-                        items += '<tr class="removeTr">';
-                        items +=
-                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                            value.emp_id + '" ></td>';
-                        items += '<td class="success">' + value.emp_id + '</td>';
-                        items += '<td class="warning ">' + value.name_en + '</td>';
-                        items += '</tr>';
+                        items += `
+                            <tr class="removeTr">
+                                <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+                                <td class="success">${value.emp_id}</td>
+                                <td class="warning ">${value.name_en}</td>
+                            </tr>`
                     });
+                    // console.log(items);
                     $('#fileDiv tr:last').after(items);
                 } else {
                     $('.removeTrno').show();
@@ -339,6 +404,7 @@
         });
     });
 </script>
+
 <script>
     function get_checked_value(checkboxes) {
         var vals = Array.from(checkboxes)
@@ -350,67 +416,67 @@
 </script>
 
 <script>
-  function add_left_regign() {
-    var checkboxes = document.getElementsByName('emp_id[]');
-    var sql = get_checked_value(checkboxes);
-    if (sql =='') {
-      alert('Please select employee Id');
-      $("#loader").hide();
-      return false;
-    }
-
-    if (sql.length > 7) {
-        showMessage('error', 'Please select max one employee Id');
-        return false;
-    }
-
-    var unit_id = document.getElementById('unit_id').value;
-    if (unit_id =='') {
-      alert('Please select Unit');
-      $("#loader").hide();
-      return false;
-    }
-
-    var types = document.getElementById('types').value;
-    if (types =='') {
-      alert('Please select Type');
-      $("#loader").hide();
-      return false;
-    }
-
-    var date = document.getElementById('date').value;
-    if (date == '' && types != 1) {
-      alert('Please select Effect Date');
-      $("#loader").hide();
-      return false;
-    }
-
-    var remark = document.getElementById('remark').value;
-    $("#loader").show();
-    $.ajax({
-      type: "POST",
-      url: hostname + "entry_system_con/add_left_regign",
-      data: {
-        sql: sql,
-        date: date,
-        type: types,
-        unit_id: unit_id,
-        remark: remark,
-      },
-      success: function(data) {
-          $("#loader").hide();
-          if (data == 'success') {
-              showMessage('success', 'Updated Successfully');
-          }else {
-              showMessage('error', 'Sorry! Not Updated');
-          }
-      } ,
-      error: function () {
+    function add_left_regign() {
+        var checkboxes = document.getElementsByName('emp_id[]');
+        var sql = get_checked_value(checkboxes);
+        if (sql =='') {
+        alert('Please select employee Id');
         $("#loader").hide();
-        showMessage('error', 'Sorry! Not Updated');
-      }
-    })
-  }
+        return false;
+        }
+
+        if (sql.length > 7) {
+            showMessage('error', 'Please select max one employee Id');
+            return false;
+        }
+
+        var unit_id = document.getElementById('unit_id').value;
+        if (unit_id =='') {
+        alert('Please select Unit');
+        $("#loader").hide();
+        return false;
+        }
+
+        var types = document.getElementById('types').value;
+        if (types =='') {
+        alert('Please select Type');
+        $("#loader").hide();
+        return false;
+        }
+
+        var date = document.getElementById('date').value;
+        if (date == '' && types != 1) {
+        alert('Please select Effect Date');
+        $("#loader").hide();
+        return false;
+        }
+
+        var remark = document.getElementById('remark').value;
+        $("#loader").show();
+        $.ajax({
+            type: "POST",
+            url: hostname + "entry_system_con/add_left_regign",
+            data: {
+                sql: sql,
+                date: date,
+                type: types,
+                unit_id: unit_id,
+                remark: remark,
+            },
+            success: function(data) {
+            $("#loader").hide();
+            if (data == 'success') {
+                showMessage('success', 'Updated Successfully');
+            }else {
+                showMessage('error', 'Sorry! Not Updated');
+            }
+            } ,
+            error: function () {
+                $("#loader").hide();
+                showMessage('error', 'Sorry! Not Updated');
+            }
+        })
+    }
 </script>
 
 

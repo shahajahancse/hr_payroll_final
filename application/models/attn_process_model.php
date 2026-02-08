@@ -26,8 +26,9 @@ class Attn_process_model extends CI_Model{
         return;
     }
 
-	function attn_process($process_date,$unit,$grid_emp_id, $type = null)
-	{
+	function attn_process($process_date,$unit,$grid_emp_id, $type = null){
+
+		$this->autoNewToRegular($process_date);
 		//=========================== Get emplpoyee list ============================
 		$table = 'att_'.date('Y_m',strtotime($process_date));
 		$this->attn_month_table_check($table);
@@ -261,7 +262,13 @@ class Attn_process_model extends CI_Model{
 				 	$holiday_allo = 1;
 				}
 				// week and holiday end
-				// dd($ot_entitle);
+
+				// get alert message
+				$alert_msg = 0;
+				if ($attn_status == "P") {
+					$alert_msg = $this->get_alert_message($emp_id, $process_date, 1);
+				}
+
 				$data = array(
 					'in_time' 			=> $in_time,
 					'out_time' 			=> $out_time,
@@ -281,6 +288,7 @@ class Attn_process_model extends CI_Model{
 					'holiday_allo'	    => $holiday_allo,
 					'weekly_allo'		=> $weekly_allo,
 					'unit_id'			=> $unit,
+					'alert_msg'			=> $alert_msg
 				);
 				$this->db->where('shift_log_date', $process_date);
 				$this->db->where('emp_id', $emp_id);
@@ -296,6 +304,26 @@ class Attn_process_model extends CI_Model{
 		return true;
 	}
 
+	function autoNewToRegular($process_date)
+	{
+		$this->db->where('emp_cat_id',4)
+			->where('emp_join_date <=', date('Y-m-d', strtotime('-1 month'.$process_date)))
+			->update('pr_emp_com_info',['emp_cat_id'=>1]);
+	}
+
+	// get alert message
+	function get_alert_message($emp_id, $process_date, $type)
+	{
+		$this->db->where('emp_id', $emp_id);
+		$this->db->where('date', $process_date);
+		$this->db->where('status', $type);
+		$result = $this->db->get('emp_alert_message')->row();
+		if (!empty($result)) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 
 	// check roster shift and chage it
 	function check_shift_roster($date, $unit)

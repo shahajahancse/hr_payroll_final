@@ -159,7 +159,7 @@
 
                 <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                     <form class="col-md-12" method="post" id="special_entry_form">
-                        <?php if(in_array(10,$acl)) { ?>
+                        <?php if(!in_array(10,$acl)) { ?>
                         <div class="row">
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
@@ -280,26 +280,26 @@
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="inc_salary" name="salary">
+                                    <input class="form-control" readonly id="inc_salary" name="inc_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="inc_gross_sal" name="gross_sal">
+                                    <input class="form-control" id="inc_gross_sal" name="inc_gross_sal">
 
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Salary</label>
-                                    <input class="form-control" readonly id="inc_com_salary" name="com_salary">
+                                    <input class="form-control" readonly id="inc_com_salary" name="inc_com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="inc_com_gross_sal" name="com_gross_sal">
+                                    <input class="form-control" id="inc_com_gross_sal" name="inc_com_gross_sal">
                                 </div>
                             </div>
                         </div>
@@ -312,7 +312,7 @@
                                     <input type="text" class="form-control date" id="incr_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: 10px">
                                         <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='increment_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(1)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="incr_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -320,21 +320,23 @@
                         </div>
                         <?php } else { ?>
                         <div class="raw">
-                            <input type="hidden" name="inc_salary" id="salary">
-                            <input type="hidden" name="gross_sal" id="inc_gross_sal">
-
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Salary</label>
-                                    <input class="form-control" readonly id="inc_com_salary" name="com_salary">
+                                    <input class="form-control" readonly id="inc_salary" name="inc_salary">
                                 </div>
                             </div>
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">New Salary</label>
-                                    <input class="form-control" id="inc_com_gross_sal" name="com_gross_sal">
+                                    <input class="form-control" id="inc_gross_sal" name="inc_gross_sal">
                                 </div>
                             </div>
+
+                            <input type="hidden" id="inc_com_salary" name="inc_com_salary">
+                            <input type="hidden" id="inc_com_gross_sal" name="inc_com_gross_sal">
+
+
                             <div class="col-md-4" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
                                     <label class="control-label">Effective Date</label>
@@ -348,7 +350,7 @@
                                 <div class="input-group pull-right" style="gap: 14px; display: flex;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: 10px">
                                         <input class="btn btn-primary" onclick='increment_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='increment_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(1)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="incr_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -430,7 +432,7 @@
                             <div class="col-md-6" style="padding-left: 5px!important; padding-right: 0px!important;">
                                 <div class="form-group">
                                     <label class="control-label">New Designation</label>
-                                    <select id="pro_designation" class="form-control input-sm pro_designation">
+                                    <select id="pro_designationn" class="form-control input-sm pro_designation">
                                         <option value="">Select Designation</option>
                                     </select>
                                 </div>
@@ -483,10 +485,12 @@
                                  <label class="control-label">Effective Date :</label>
                                 <input type="text" class="form-control date" id="prom_date" placeholder="select date">
                             </div>
+
                             <div class="col-md-3">
                                 <div class="input-group" style="gap: 14px; display: flex;margin-top: 20px;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px;">
                                         <input class="btn btn-primary" onclick='promotion_entry(event)' type="button" value='Save' />
+                                        <input class="btn btn-info" onclick='lprint(2)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="prom_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -534,7 +538,7 @@
                                 <div class="input-group pull-right" style="gap: 14px; display: flex; margin-bottom: 10px;">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: -10px">
                                         <input class="btn btn-primary" onclick='promotion_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='promotion_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(2)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="prom_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -621,7 +625,7 @@
                                     <input type="text" class="form-control date" id="line_date" placeholder="select date">
                                     <span class="input-group-btn" style="display: flex; gap: 10px; right: 10px">
                                         <input class="btn btn-primary" onclick='line_entry(event)' type="button" value='Save' />
-                                        <input class="btn btn-info" onclick='line_entry(event)' type="button" value='Print' />
+                                        <input class="btn btn-info" onclick='lprint(3)' type="button" value='Print' />
                                         <input class="btn btn-danger" onclick="line_delete(event)" type="button" value="Delete">
                                     </span>
                                 </div><!-- /input-group -->
@@ -633,6 +637,7 @@
         </div>
     </div>
 
+    <!-- left menu to select employee/search employee -->
     <div class="col-md-4 tablebox">
         <input type="text" id="searchi" class="form-control" placeholder="Search">
         <div style="height: 80vh; overflow-y: scroll;">
@@ -665,6 +670,7 @@
     </div>
     <!-- </div> -->
 </div>
+
 <!-- line_entry -->
 <script>
     function line_entry(e) {
@@ -779,6 +785,7 @@
     }
 </script>
 <!-- promotion_entry -->
+
 <script>
     function promotion_entry(e) {
         e.preventDefault();
@@ -800,10 +807,10 @@
         }
 
         prom_gross_sal = document.getElementById('prom_gross_sal').value;
-        if (prom_gross_sal == '') {
-            showMessage('error', 'Please input the New Salary');
-            return false;
-        }
+        // if (prom_gross_sal == '') {
+        //     showMessage('error', 'Please input the New Salary');
+        //     return false;
+        // }
 
         prom_com_gross_sal = document.getElementById('prom_com_gross_sal').value;
         if (prom_com_gross_sal == '') {
@@ -831,7 +838,7 @@
             showMessage('error', 'Please select Line');
             return false;
         }
-        designation = document.getElementById('pro_designation').value;
+        designation = document.getElementById('pro_designationn').value;
         if (designation == '') {
             showMessage('error', 'Please select Designation');
             return false;
@@ -904,6 +911,7 @@
         })
     }
 </script>
+
 <!-- increment_entry -->
 <script>
     function increment_entry(e) {
@@ -932,10 +940,10 @@
         }
 
         com_gross_sal = document.getElementById('inc_com_gross_sal').value;
-        if (com_gross_sal == '') {
-            showMessage('error', 'Please input the New Com. Salary');
-            return false;
-        }
+        // if (com_gross_sal == '') {
+        //     showMessage('error', 'Please input the New Com. Salary');
+        //     return false;
+        // }
 
         incr_date = document.getElementById('incr_date').value;
         if (incr_date == '') {
@@ -1176,7 +1184,9 @@
             }
         })
     }
+    
     function get_emp_info_promotion() {
+
 
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
@@ -1219,7 +1229,7 @@
             dataType: "json",
             url: hostname + "common/get_emp_info_by_id/"+numbersArray[0]+"/"+unit_id,
             success: function(d) {
-                // console.log(d);
+                console.log(d);
                 $("#loader").hide();
                 $("#promotion_entry").show();
                 $('#profile_image').attr('src', hostname + 'uploads/photo/' + d.img_source);
@@ -1231,6 +1241,19 @@
                 $('#desigs_id').html(d.desig_name);
                 $('#salary').val(d.gross_sal);
                 $('#com_salary').val(d.com_gross_sal);
+                $('#pro_department').val(d.emp_dept_id).trigger('change');
+                setTimeout(() => {
+                    $('#pro_section').val(d.emp_sec_id).trigger('change');
+                }, 500);
+                setTimeout(() => {
+                    $('#pro_line').val(d.emp_line_id).trigger('change');
+                }, 1000);
+                setTimeout(() => {
+                    $('#pro_designation').val(d.emp_desi_id).trigger('change');
+                }, 1500);
+                setTimeout(() => {
+                    $('#grade_id').val(d.emp_sal_gra_id).trigger('change');
+                }, 1000);
             },
             error: function() {
                 $("#loader").hide();
@@ -1238,6 +1261,7 @@
             }
         })
     }
+
     function get_emp_info_increment() {
 
         var checkboxes = document.getElementsByName('emp_id[]');
@@ -1301,7 +1325,6 @@
         })
     }
     function get_emp_info_special() {
-
         var checkboxes = document.getElementsByName('emp_id[]');
         var sql = get_checked_value(checkboxes);
         let numbersArray = sql.split(",");
@@ -1493,11 +1516,7 @@
 <script>
     $(document).ready(function() {
         $("#searchi").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-            $(".removeTrno").toggle($(".removeTr").length === 0);
+            grid_emp_list()
         });
     });
 </script>
@@ -1511,23 +1530,25 @@
 <script type="text/javascript">
     // on load employee
     function grid_emp_list() {
+        $('.removeTr').remove();
         var unit = document.getElementById('unit_id').value;
         var dept = document.getElementById('dept').value;
         var section = document.getElementById('section').value;
         var line = document.getElementById('line').value;
         var desig = document.getElementById('desig').value;
         var status = document.getElementById('status').value;
+        var searchi = document.getElementById('searchi').value;
 
         url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
         $.ajax({
             url: url,
             type: 'GET',
             data: {
-                "status": status
+                "status": status,
+                "searchi": searchi
             },
             contentType: "application/json",
             dataType: "json",
-
 
             success: function(response) {
                 $('.removeTr').remove();
@@ -1535,13 +1556,12 @@
                     $('.removeTrno').hide();
                     var items = '';
                     $.each(response, function(index, value) {
-                        items += '<tr class="removeTr">';
-                        items +=
-                            '<td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="' +
-                            value.emp_id + '" ></td>';
-                        items += '<td class="success">' + value.emp_id + '</td>';
-                        items += '<td class="warning ">' + value.name_en + '</td>';
-                        items += '</tr>';
+                        items += `
+                            <tr class="removeTr">
+                                <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+                                <td class="success">${value.emp_id}</td>
+                                <td class="warning ">${value.name_en}</td>
+                            </tr>`
                     });
                     // console.log(items);
                     $('#fileDiv tr:last').after(items);
@@ -1696,6 +1716,7 @@
     $("#special_entry, #increment_entry, #promotion_entry, #line_change").hide();
 </script>
 
+<!-- letter print -->
 <script>
     function lprint(type){
         var ajaxRequest;  // The variable that makes Ajax possible!

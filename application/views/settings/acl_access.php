@@ -96,9 +96,14 @@
             } else {
                 echo '<td>Other Button</td>';
             }
-            echo '<td><a href="'.base_url('setting_con/acl_access_edit/'.$value->id).'" class="btn btn-primary">Edit</a>
-              <a href="'.base_url('setting_con/acl_access_delete/'.$value->id).'" class="btn btn-danger">Delete</a></td>';
-            echo '</tr>';
+            echo '<td>
+              <a href="'.base_url('setting_con/acl_access_edit/'.$value->id).'" class="btn btn-primary">Edit</a>';
+              if (!in_array($value->id, array(1,2,3,4,5,6,7,8,9,10))) {
+                echo '<a href="'.base_url('setting_con/acl_access_delete/'.$value->id).'" class="btn btn-danger">Delete</a>';
+              } else {
+                echo '<a href="#" class="btn btn-secondary disabled">Delete</a>';
+              }
+            echo '</td></tr>';
           }?>
         </tbody>
       </table>

@@ -55,18 +55,25 @@ class Grid_con extends CI_Controller {
 		$date 	= date("Y-m-d",strtotime($this->input->post('firstdate')));
 		$unit_id = $this->input->post('unit_id');
 		$status  = $this->input->post('status');
-
-		$data['values'] = $this->Grid_model->daily_attendance_summary($date, $unit_id);
-		// $data['values'] = $this->mars_model->line_attendance_summary($date, $unit_id);
-
+		$type = $this->input->post('type');
+		if ($type == 1) {
+			$data['values'] = $this->Grid_model->daily_attendance_summary($date, $unit_id);
+		} else {
+			$data['values'] = $this->Grid_model->daily_attendance_summary1($date, $unit_id);
+		}
+		// dd($data);
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $date;
 		$data['category']    = 'Line';
-		$data['unit_id']    = $unit_id;
-		$data['results']= $data['values']['results'];
-		$data['keys']= $data['values']['keys'];
-
-		$this->load->view('grid_con/daily_attendance_summary', $data);
+		$data['unit_id']     = $unit_id;
+		$data['results']     = $data['values']['results'];
+		$data['keys']        = $data['values']['keys'];
+		if ($type == 1) {
+			$this->load->view('grid_con/daily_attendance_summary', $data);
+		} else {
+			$this->load->view('grid_con/daily_attendance_summaryy', $data);
+		}
+		
 	}
 
 	function daily_logout_report(){
@@ -703,6 +710,7 @@ class Grid_con extends CI_Controller {
 	// ============================== end last increment or promotion Report ===============
 	// ============================== start left letter Report ===============
 	function grid_letter_report_print(){
+
 		$emp_id = $this->input->post('emp_id');
 		$status = $this->input->post('status');
 		$unit_id = $this->session->userdata('data')->unit_name;
@@ -713,6 +721,41 @@ class Grid_con extends CI_Controller {
 		$data['unit_id']	= $unit_id;
 		$data['unit_id']	= $id_number;
 		$data['no_change']	= 1;
+
+
+		if(empty($data)){
+			echo "Not Found Data"; exit();
+		}else{
+			if ($status == 2) {
+				$this->load->view('grid_con/letter1',$data);
+			} else if ($status == 3) {
+				$this->load->view('grid_con/letter2',$data);
+			} else {
+				$this->load->view('grid_con/letter3',$data);
+			}
+		}
+	}
+	function grid_letter_report_print_no_left(){
+
+		$emp_id = $this->input->post('emp_id');
+		$status = $this->input->post('status');
+		$date = $this->input->post('date');
+		$sql = $this->input->post('sql');
+
+		$unit_id = $this->session->userdata('data')->unit_name;
+		$id_number = $this->session->userdata('data')->id_number;
+
+
+		$data['values'] 	= $this->Grid_model->grid_letter_report_print_no_left($sql);
+
+		if ($data['values'][0]->left_date == '' || $data['values'][0]->left_date == null) {
+			$data['values'][0]->left_date = date("Y-m-d", strtotime($date));
+		}
+
+		$data['unit_id']	= $unit_id;
+		$data['unit_id']	= $id_number;
+		$data['no_change']	= 1;
+
 
 		if(empty($data)){
 			echo "Not Found Data"; exit();
@@ -726,6 +769,7 @@ class Grid_con extends CI_Controller {
 			}
 		}
 	}
+
 
 	function grid_letter_report(){
 		$unit_id = $this->input->post('unit_id');
@@ -984,6 +1028,20 @@ class Grid_con extends CI_Controller {
 			$this->load->view('monthly_reportt',$data);
 		}
 	}
+	// function grid_monthly_night_register(){
+	// 	$grid_firstdate = $this->input->post('firstdate');
+	// 	$grid_data = $this->input->post('spl');
+	// 	$grid_emp_id = explode(',', trim($grid_data));
+	// 	$data['unit_id'] = $this->input->post('unit_id');
+	// 	$query=$this->Grid_model->grid_monthly_night_register($grid_firstdate,$grid_emp_id);
+	// 	if(is_string($query)){
+	// 		echo $query;
+	// 	}else{
+	// 		$data["value"] = $query;
+	// 		$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+	// 		$this->load->view('monthly_report_night',$data);
+	// 	}
+	// }
 
 	function att_register_excel(){
 		$grid_firstdate = $this->input->post('hide_date');
@@ -2886,5 +2944,73 @@ class Grid_con extends CI_Controller {
 
 		$this->load->view('service_book_info',$data);
 	}
+
+	function grid_monthly_night_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_night_register($grid_firstdate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_report_night',$data);
+		}
+	}
+
+
+	function grid_monthly_ifter_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_ifter_register($grid_firstdate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_report_ifter',$data);
+		}
+	}
+	function grid_monthly_weekend_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_weekend_register($grid_firstdate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_report_weekend',$data);
+		}
+	}
+	function grid_monthly_holiday_register(){
+		$grid_firstdate = $this->input->post('firstdate');
+		$grid_data = $this->input->post('spl');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data['unit_id'] = $this->input->post('unit_id');
+		$query=$this->Grid_model->grid_monthly_holiday_register($grid_firstdate,$grid_emp_id);
+		if(is_string($query)){
+			echo $query;
+		}else{
+			$data["value"] = $query;
+			$data["year_month"] = date("M-Y", strtotime($grid_firstdate));
+			$this->load->view('monthly_report_holiday',$data);
+		}
+	}
+
+	function grid_employee_background(){
+		$grid_data = $this->input->post('emp_id');
+		$grid_emp_id = explode(',', trim($grid_data));
+		$data["values"]=$this->Grid_model->grid_employee_background($grid_emp_id);
+		$this->load->view('employee_background',$data);
+	}
+
+
 }
 ?>

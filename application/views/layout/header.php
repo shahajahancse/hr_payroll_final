@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/ico" href="<?=base_url()?>awedget/assets/img/loopdot.png" />
 
-    <title>ERP | AJ Group</title>
+    <title>Hr | Payroll</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="Mysoftheaven (BD) Ltd." name="author" />
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
@@ -38,8 +38,10 @@
     <link href="<?=base_url()?>awedget/assets/plugins/boostrap-3.3.7/css/bootstrap.min.css" rel="stylesheet"
         type="text/css" />
 
-    <link href="<?=base_url()?>awedget/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet"
-        type="text/css" />
+    <!-- <link href="<?=base_url()?>awedget/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet"
+        type="text/css" /> -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="<?=base_url()?>awedget/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
 
     <link href="<?=base_url()?>awedget/assets/croper/css/cropper.min.css" rel="stylesheet">
@@ -50,7 +52,7 @@
     <link href="<?=base_url()?>awedget/assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>awedget/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
     <script src="<?=base_url()?>awedget/assets/plugins/jquery-3.2.1.min.js" type="text/javascript"></script>
-   
+
     <!-- new -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
@@ -65,6 +67,18 @@
     <!--/.data table-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+
+
+<style>
+    *:not(i) {
+    font-family: roboto !important;
+}
+</style>
+
 
 
     <script type="text/javascript">
@@ -75,6 +89,7 @@
         /* input[type="text"] {
         font-family:"Helvetica Neue",Helvetica,Arial,"SutonnyMJ";
         } */
+
 
     .n_demand {
         position: absolute;

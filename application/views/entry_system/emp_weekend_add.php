@@ -181,61 +181,60 @@
 </script>
 
 <script>
-    $(document).ready(function() {
-        $("#searchi").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $(document).ready(function() {
+            $("#searchi").on("keyup", function() {
+                grid_emp_list()
             });
-            $(".removeTrno").toggle($(".removeTr").length === 0);
         });
-    });
-</script>
+    </script>
 
 <script type="text/javascript">
     // on load employee
     function grid_emp_list() {
-        var unit = document.getElementById('unit_id').value;
-        var dept = document.getElementById('dept').value;
-        var section = document.getElementById('section').value;
-        var line = document.getElementById('line').value;
-        var desig = document.getElementById('desig').value;
-        var status = document.getElementById('status').value;
+            $('.removeTr').remove();
 
-        url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {
-                "status": status
-            },
-            contentType: "application/json",
-            dataType: "json",
+            var unit = document.getElementById('unit_id').value;
+            var dept = document.getElementById('dept').value;
+            var section = document.getElementById('section').value;
+            var line = document.getElementById('line').value;
+            var desig = document.getElementById('desig').value;
+            var status = document.getElementById('status').value;
+            var searchi = document.getElementById('searchi').value;
+
+            url = hostname + "common/grid_emp_list/" + unit + "/" + dept + "/" + section + "/" + line + "/" + desig;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    "status": status,
+                    "searchi": searchi
+                },
+                contentType: "application/json",
+                dataType: "json",
 
 
-            success: function(response) {
-                $('.removeTr').remove();
-                if (response.length != 0) {
-                    $('.removeTrno').hide();
-                    var items = '';
-                    $.each(response, function(index, value) {
-                        items += `
-                            <tr class="removeTr">
-                                <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
-                                <td class="success">${value.emp_id}</td>
-                                <td class="warning ">${value.name_en}</td>
-                            </tr>`
-                    });
-                    // console.log(items);
-                    $('#fileDiv tr:last').after(items);
-                } else {
-                    $('.removeTrno').show();
+                success: function(response) {
                     $('.removeTr').remove();
+                    if (response.length != 0) {
+                        $('.removeTrno').hide();
+                        var items = '';
+                        $.each(response, function(index, value) {
+                            items += `
+                                <tr class="removeTr">
+                                    <td><input type="checkbox" class="checkbox" id="emp_id" name="emp_id[]" value="${value.emp_id }" ></td>
+                                    <td class="success">${value.emp_id}</td>
+                                    <td class="warning ">${value.name_en}</td>
+                                </tr>`
+                        });
+                        // console.log(items);
+                        $('#fileDiv tr:last').after(items);
+                    } else {
+                        $('.removeTrno').show();
+                        $('.removeTr').remove();
+                    }
                 }
-            }
-        });
-    }
-
+            });
+        }
 
     $(document).ready(function() {
         // select all item or deselect all item

@@ -372,13 +372,31 @@ class Attn_process_con extends CI_Controller {
 	//-------------------------------------------------------------------------------------------------------
 	// Attendance report end
 	//-------------------------------------------------------------------------------------------------------
+	function alert_msg_list() {
+		if ($this->session->userdata('logged_in') == false) {
+            redirect("authentication");
+        }
 
+		$this->db->select('com.emp_id, per.name_en, line.line_name_en, deg.desig_name, mesg.msg');
+		$this->db->from('pr_emp_shift_log as log');
+		$this->db->join('pr_emp_com_info as com', 'com.emp_id = log.emp_id', 'left');
+		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
+		$this->db->join('emp_line_num as line', 'line.id = com.emp_line_id', 'left');
+		$this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
+		$this->db->join('emp_alert_message as mesg', 'mesg.emp_id = com.emp_id', 'left');
 
+        $this->db->where('alert_msg', 1)->where('shift_log_date', date('Y-m-d'))->limit(20);
+        $this->data['results'] = $this->db->order_by('mesg.id', 'desc')->order_by('log.id', 'desc')->get()->result();
 
+		$this->db->select('pr_units.*');
+        $this->data['dept'] = $this->db->get('pr_units')->result_array();
 
-
-
-
+		$this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['unit_id']=$this->data['user_data']->unit_name;
+		$this->data['title'] = 'Alert List';
+		$this->data['subview'] = 'attn_report/alert_ist';
+		$this->load->view('layout/template', $this->data);
+	}
 
 
 
