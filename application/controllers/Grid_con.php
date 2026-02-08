@@ -65,15 +65,11 @@ class Grid_con extends CI_Controller {
 		$data['title'] 		 = 'Daily Attendance Summary';
 		$data['report_date'] = $date;
 		$data['category']    = 'Line';
-		$data['unit_id']     = $unit_id;
-		$data['results']     = $data['values']['results'];
-		$data['keys']        = $data['values']['keys'];
-		if ($type == 1) {
-			$this->load->view('grid_con/daily_attendance_summary', $data);
-		} else {
-			$this->load->view('grid_con/daily_attendance_summaryy', $data);
-		}
-		
+		$data['unit_id']    = $unit_id;
+		$data['results']= $data['values']['results'];
+		$data['keys']= $data['values']['keys'];
+
+		$this->load->view('grid_con/daily_attendance_summary', $data);
 	}
 
 	function daily_logout_report(){
