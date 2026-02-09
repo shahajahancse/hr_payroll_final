@@ -943,7 +943,7 @@ function daily_costing_summary()
 		}
 	}
 }
-function daily_attendance_summary(type)
+function daily_attendance_summary()
 {
 	var firstdate = document.getElementById('firstdate').value;
 	if(firstdate ==''){
@@ -959,7 +959,7 @@ function daily_attendance_summary(type)
 	}
 	document.getElementById('loaader').style.display = 'flex';
 	var status = document.getElementById('status').value;
-	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&status="+status+"&type="+type;
+	var queryString="firstdate="+firstdate+"&unit_id="+unit_id+"&status="+status;
     url =  hostname+"grid_con/daily_attendance_summary/";
 
 

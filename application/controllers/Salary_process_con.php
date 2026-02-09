@@ -38,7 +38,7 @@ class Salary_process_con extends CI_Controller {
         if (!empty($this->data['user_data']->unit_name)) {
 	        $this->data['employees'] = $this->Common_model->get_emp_by_unit($this->data['user_data']->unit_name);
         }
-		
+
 
         $this->data['username'] = $this->data['user_data']->id_number;
         $this->data['title'] = 'Salary Process';
@@ -146,7 +146,7 @@ class Salary_process_con extends CI_Controller {
         $this->data['subview'] = 'salary_report/grid_salary_report';
         $this->load->view('layout/template', $this->data);
 	}
-	
+
 	function adv_salary_report()
 	{
         if ($this->session->userdata('logged_in') == false) {

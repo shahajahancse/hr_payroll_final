@@ -582,8 +582,7 @@ class Entry_system_con extends CI_Controller
 			return false; exit();
 		}
 		// final process check end
-
-        $emp_data = $this->Attn_process_model->get_all_employee($emp_ids);
+        $emp_data = $this->Attn_process_model->get_all_employee($emp_ids, 1);
 
         while ($first_date <= $second_date) {
             $data = array();
@@ -621,6 +620,7 @@ class Entry_system_con extends CI_Controller
             echo 'Record Not Inserted';
         }
     }
+
     function insert_attn_process($data, $date, $unit_id, $emp_id, $proxi_id) {
         $this->load->model('Attn_process_model');
         $att_table = "att_". date("Y_m", strtotime($date));
@@ -642,13 +642,15 @@ class Entry_system_con extends CI_Controller
                 $this->db->insert($att_table, $data);
             }
         }
+        return array('massage' => 1);
 
-        if ($this->Attn_process_model->attn_process($date, $unit_id, array($emp_id))) {
-            return array('massage' => 1);
-        } else {
-            return array('massage' => 0);
-        }
+        // if ($this->Attn_process_model->attn_process($date, $unit_id, array($emp_id))) {
+        //     return array('massage' => 1);
+        // } else {
+        //     return array('massage' => 0);
+        // }
     }
+
     public function log_sheet()
     {
         if ($this->session->userdata('logged_in') == false) {

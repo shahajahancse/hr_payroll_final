@@ -28,13 +28,12 @@ class Attn_process_model extends CI_Model{
 
 	function attn_process($process_date,$unit,$grid_emp_id, $type = null){
 
-		$this->autoNewToRegular($process_date);
+		// $this->autoNewToRegular($process_date);
 		//=========================== Get emplpoyee list ============================
 		$table = 'att_'.date('Y_m',strtotime($process_date));
 		$this->attn_month_table_check($table);
 
-		$all_employee = $this->get_all_employee($grid_emp_id, $type);
-
+		$all_employee = $this->get_all_employee($grid_emp_id, 1);
 		foreach ($all_employee->result() as $rows){
 			$com_id			= $rows->id;
 			$emp_id			= $rows->emp_id;
@@ -426,7 +425,7 @@ class Attn_process_model extends CI_Model{
 
 
 	// get employee list
-	function get_all_employee($grid_emp_id, $type){
+	function get_all_employee($grid_emp_id, $type = null){
 		$this->db->select('
 				pr_emp_com_info.id,
 				pr_emp_com_info.emp_id,
