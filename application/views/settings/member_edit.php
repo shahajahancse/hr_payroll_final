@@ -1,24 +1,12 @@
 <div class="content">
 <!-- Static navbar -->
-     <nav class="navbar navbar-inverse bg_none">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="btn" href="#">Update Member</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
-            </ul>
-
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </nav>
+  <div class="container-fluid">
+    <!-- <div class="navbar-header"> -->
+      <div class="col-md-6" style="padding: 7px;">
+        <h3 style="color: white; background-color: #86df13; padding: 10px; border-radius: 5px;">Update Member</h3>
+      </div>
+    <!-- </div> -->
+  </div><!--/.container-fluid -->
 
   <!-- <h3>Update Member</h3> -->
   <!-- <hr> -->
@@ -29,7 +17,7 @@
           <input type="hidden" name="id"value="<?=$row->id?>" class="form-control">
           <div class="form-group">
 
-            <label>Member Name</label>
+            <label>User ID</label>
             <input type="text" name="id_number"value="<?=set_value('id_number',$row->id_number)?>" class="form-control">
             <?php echo form_error('id_number');?>
           </div>
@@ -38,14 +26,20 @@
             <input type="password" name="password"value="<?=set_value('password',$row->password)?>" class="form-control">
             <?php echo form_error('password');?>
           </div>
+
           <div class="form-group">
             <label>Level</label>
-              <select name="level" id= "field-level" class="form-control chosen-select chzn-done">
-                <option value="">Select level</option>
-                <option value="All" <?php echo ($row->level == "All")? "selected":"";?>>All</option>
-                <option value="Unit" <?php echo ($row->level == "Unit")? "selected":"";?>>Unit</option>
+              <select name="level" id= "field-level" class="form-control chosen-select chzn-done" required>
+                <?php if ($user_level == 'Unit') { ?>
+                  <option value="Unit" selected>Unit</option>
+                <?php } else { ?>
+                  <option value="">Select level</option>
+                  <option value="All">All</option>
+                  <option value="Unit">Unit</option>
+                <?php } ?>
               </select>
           </div>
+
           <div class="form-group">
             <label>Unit Name</label>
               <select name="unit_name" id= "field-unit_name" class="form-control">
@@ -55,6 +49,18 @@
                 <?php } ?>
               </select>
           </div>
+
+          <div class="form-group">
+            <label>Buyer Mood</label>
+              <select name="user_mode" id= "field-mode" class="form-control">
+                <option value="">select buyer mood</option>
+                <option <?= ($row->user_mode == '0')? 'selected':'' ?> value="0">All</option>
+                <option <?= ($row->user_mode == '1')? 'selected':'' ?> value="1">7pm</option>
+                <option <?= ($row->user_mode == '2')? 'selected':'' ?> value="2">9pm</option>
+                <option <?= ($row->user_mode == '3')? 'selected':'' ?> value="3">12pm</option>
+              </select>
+          </div>
+
           <div class="form-group">
             <label>Status</label>
               <select name="status" id= "field-status" class="form-control">
@@ -69,7 +75,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <button class="btn btn-primary">Update</button>
-            <a href=""class="btn-warning btn">Cancel</a>
+            <a href="<?=base_url('setting_con/acl')?>" class="btn btn-warning">Cancel</a>
           </div>
         </div>
 

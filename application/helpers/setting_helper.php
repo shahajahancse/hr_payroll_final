@@ -34,15 +34,17 @@ if (!function_exists('alt_ntf'))
 
 if ( ! function_exists('get_all_emp_id'))
 {
-	function get_all_emp_id($emp_cat = array(), $unit_id = 0)
+	function get_all_emp_id($emp_cat = array(), $unit_id = null)
 	{
 		$CI =& get_instance();
       	$CI->db->select('emp_id');
       	$CI->db->from('pr_emp_com_info');
-      	$CI->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat);
-		if ($unit_id != 0) {
+		if ($unit_id != null) {
+			$CI->db->join('emp_designation as deg', 'deg.id = pr_emp_com_info.emp_desi_id', 'left');
+			$CI->db->where('deg.hide_status', 1);
 			$CI->db->where('pr_emp_com_info.unit_id',$unit_id);
 		}
+		$CI->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat);
 		$query = $CI->db->get()->result_array();
 
 

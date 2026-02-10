@@ -23,7 +23,7 @@ class Payroll_con extends CI_Controller {
 		$this->data['title'] = 'Dashboard';
 		$this->data['username'] = $this->data['user_data']->id_number;
 		$this->data['subview'] = 'at_a_glance';
-		$this->load->view('layout/template', $this->data);		
+		$this->load->view('layout/template', $this->data);
 	}
 
 
@@ -1010,7 +1010,7 @@ class Payroll_con extends CI_Controller {
 		$col_section = $this->uri->segment(9);
 		$col_dept = $this->uri->segment(10);
 		$col_all = $this->uri->segment(11);
-		
+
 		$data["values"] = $this->Processdb->daily_report($year, $month, $date, $status, $col_desig, $col_line, $col_section, $col_dept, $col_all);
 
 		$data["year"]			= $year;

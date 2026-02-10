@@ -11,30 +11,209 @@ class Mars_model extends CI_Model{
 	}
 
 	// 29/10/23  shahajahan
-	function dashboard_summary($report_date, $unit_id)
+	function dashboard_summary($report_date, $unit_id = null)
 	{
 		$data = array();
-		$all_id = get_all_emp_id(array(1), $unit_id=0);
-	 	$data['monthly_join_id'] = $this->monthly_join_emp($report_date);
-		$data['monthly_resign_id'] = $this->monthly_resign_emp($report_date);
-		$data['monthly_left_id'] = $this->monthly_left_emp($report_date);
-		$lm_expense = $this->last_month_expenses($report_date);
+		$all_id = get_all_emp_id(array(1), $unit_id);
+		$data['total_designation'] = $this->get_designation($unit_id);
+		$data['total_line'] = $this->get_line($unit_id);
+		$data['total_section'] = $this->get_section($unit_id);
+		$data['total_department'] = $this->get_department($unit_id);
+
+	 	$data['monthly_join_id'] = $this->monthly_join_emp($report_date, $unit_id);
+		$data['monthly_resign_id'] = $this->monthly_resign_emp($report_date, $unit_id);
+		$data['monthly_left_id'] = $this->monthly_left_emp($report_date, $unit_id);
+
+		// attendance summary
+		$attendance_summary = $this->attendance_summary($report_date, $all_id);
+		$data['all_emp'] = $attendance_summary['all_emp'];
+		$data['all_male'] = $attendance_summary['all_male'];
+		$data['all_female'] = $attendance_summary['all_female'];
+		$data['all_female'] = $attendance_summary['all_female'];
+		$data['all_employee'] = $attendance_summary['all_employee'];
+		$data['all_staff'] = $attendance_summary['all_staff'];
+
+		$data['all_present'] = $attendance_summary['all_present'];
+		$data['all_absent'] = $attendance_summary['all_absent'];
+		$data['all_late'] = $attendance_summary['all_late'];
+		$data['all_leave'] = $attendance_summary['all_leave'];
+
+		// pay salary
+		$lm_expense = $this->last_month_expenses($report_date, $all_id);
 		$data['salary'] = $lm_expense->net_pay;
 		$data['ot'] 	= $lm_expense->ot_amount;
 		$data['eot'] 	= $lm_expense->eot_amount;
 		$data['att_bonus'] = $lm_expense->att_bonus;
-		$attendance_summary = $this->attendance_summary($report_date, $all_id);
-		$data['all_emp'] = $attendance_summary['all_emp'];
-		$data['all_present'] = $attendance_summary['all_present'];
-		$data['all_absent'] = $attendance_summary['all_absent'];
-		$data['all_male'] = $attendance_summary['all_male'];
-		$data['all_female'] = $attendance_summary['all_female'];
-		$data['all_late'] = $attendance_summary['all_late'];
-		$data['all_leave'] = $attendance_summary['all_leave']; 
-		$data['all_staff'] = $attendance_summary['all_staff'];
-		$data['all_employee'] = $attendance_summary['all_employee'];
 		return $data;
 	}
+
+	function last_month_expenses($salary_month, $all_id)
+	{
+		$last_salary_month = date('Y-m-01',strtotime('-1 month',strtotime($salary_month)));
+		$this->db->select("
+				SUM(net_pay) AS net_pay,
+				SUM(ot_amount) AS ot_amount,
+				SUM(eot_amount) AS eot_amount,
+				SUM(att_bonus) AS att_bonus,
+			");
+		$this->db->from("pay_salary_sheet");
+		$this->db->where_in("emp_id", $all_id);
+		$this->db->where("salary_month", $last_salary_month);
+		return $this->db->get()->row();
+	}
+
+	function attendance_summary($report_date, $all_emp_id)
+	{
+		$data =array();
+		$this->db->select("
+			SUM(CASE WHEN present_status = 'P' THEN 1 ELSE 0 END) AS present,
+			SUM(CASE WHEN present_status = 'A' THEN 1 ELSE 0 END) AS absent,
+			SUM(CASE WHEN present_status = 'L' THEN 1 ELSE 0 END) AS leaves,
+			SUM(CASE WHEN late_status = '1' THEN 1 ELSE 0 END) AS late
+		", false);
+
+		$this->db->from("pr_emp_shift_log");
+		$this->db->where_in("emp_id", $all_emp_id);
+		$this->db->where("shift_log_date", $report_date);
+		$atten_data = $this->db->get()->row();
+		// dd($all_emp_id);
+
+		$data['all_present'] 	= $atten_data->present ? $atten_data->present : 0;
+		$data['all_absent'] 	= $atten_data->absent ? $atten_data->absent : 0;
+		$data['all_leave'] 		= $atten_data->leaves ? $atten_data->leaves : 0;
+		$data['all_late'] 		= $atten_data->late ? $atten_data->leaves : 0;
+
+		$this->db->select("
+			SUM(CASE WHEN pr_emp_per_info.gender = 'Male' THEN 1 ELSE 0 END) AS male,
+			SUM(CASE WHEN pr_emp_per_info.gender = 'Female' THEN 1 ELSE 0 END) AS female,
+			SUM(CASE WHEN pr_emp_com_info.emp_type = 2 THEN 1 ELSE 0 END) AS staff,
+			SUM(CASE WHEN pr_emp_com_info.emp_type = 1 THEN 1 ELSE 0 END) AS employee,
+		", false);
+		$this->db->from('pr_emp_per_info');
+		$this->db->join('pr_emp_com_info','pr_emp_per_info.emp_id = pr_emp_com_info.emp_id','left');
+		$this->db->where_in('pr_emp_per_info.emp_id', $all_emp_id);
+		$q = $this->db->get()->row();
+		// dd($q);
+
+		$data['all_male'] = $q->male ? $q->male : 0;
+		$data['all_female'] = $q->female ? $q->female : 0;
+		$data['all_staff'] = $q->staff ? $q->staff : 0;
+		$data['all_employee'] = $q->employee ? $q->employee : 0;
+		$data['all_emp'] = $data['all_staff'] + $data['all_employee'];
+		return $data;
+	}
+
+	function monthly_join_emp($report_date, $unit_id = null)
+	{
+
+		$fromdate = date("Y-m-01", strtotime($report_date));
+		$todate = date("Y-m-t", strtotime($report_date));
+		$emp_cat = array(1,2);
+
+		$this->db->select('pr_emp_com_info.emp_id');
+		$this->db->from('pr_emp_com_info');
+		if ($unit_id != null) {
+			$this->db->join('emp_designation as deg', 'deg.id = pr_emp_com_info.emp_desi_id', 'left');
+			$this->db->where('deg.hide_status', 1);
+			$this->db->where('pr_emp_com_info.unit_id', $unit_id);
+		}
+		$this->db->where("pr_emp_com_info.emp_join_date >=",$fromdate);
+		$this->db->where("pr_emp_com_info.emp_join_date <=",$todate);
+		$query = $this->db->get()->num_rows();
+		return $query;
+	}
+
+	function monthly_resign_emp($report_date, $unit_id = null)
+	{
+		$year = substr($report_date,0,4);
+		$month = substr($report_date,5,2);
+		$day = substr($report_date,8,2);
+		$days = date("t", mktime(0, 0, 0, $month, 1, $year));
+		$fromdate = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
+		$todate = date("Y-m-d", mktime(0, 0, 0, $month, $days, $year));
+
+		$this->db->select('pr_emp_resign_history.emp_id');
+		$this->db->from('pr_emp_resign_history');
+		if ($unit_id != null) {
+			$this->db->where('pr_emp_resign_history.unit_id', $unit_id);
+		}
+		$this->db->where("pr_emp_resign_history.resign_date >=",$fromdate);
+		$this->db->where("pr_emp_resign_history.resign_date <=",$todate);
+		//$query = $this->db->get();
+		$query = $this->db->get()->num_rows();
+
+		return $query;
+
+	}
+
+	function monthly_left_emp($report_date, $unit_id = null)
+	{
+		$year = substr($report_date,0,4);
+		$month = substr($report_date,5,2);
+		$day = substr($report_date,8,2);
+		$days = date("t", mktime(0, 0, 0, $month, 1, $year));
+		$fromdate = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
+		$todate = date("Y-m-d", mktime(0, 0, 0, $month, $days, $year));
+
+		$this->db->select('pr_emp_left_history.emp_id');
+		$this->db->from('pr_emp_left_history');
+		if ($unit_id != null) {
+			$this->db->where('pr_emp_left_history.unit_id', $unit_id);
+		}
+		$this->db->where("pr_emp_left_history.left_date >=",$fromdate);
+		$this->db->where("pr_emp_left_history.left_date <=",$todate);
+		//$query = $this->db->get();
+		$query = $this->db->get()->num_rows();
+
+		return $query;
+
+	}
+
+	function get_department($unit_id = null)
+	{
+		$this->db->select('COUNT(dept_id) AS total_dept');
+		$this->db->from('emp_depertment');
+		if($unit_id != null)
+		{
+			$this->db->where('unit_id', $unit_id);
+		}
+		return $this->db->get()->row()->total_dept;
+	}
+
+	function get_section($unit_id = null)
+	{
+		$this->db->select('COUNT(id) AS total_section');
+		$this->db->from('emp_section');
+		if($unit_id != null)
+		{
+			$this->db->where('unit_id', $unit_id);
+		}
+		return $this->db->get()->row()->total_section;
+	}
+
+	function get_line($unit_id = null)
+	{
+		$this->db->select('COUNT(id) AS total_line');
+		$this->db->from('emp_line_num');
+		if($unit_id != null)
+		{
+			$this->db->where('unit_id', $unit_id);
+		}
+		return $this->db->get()->row()->total_line;
+	}
+
+	function get_designation($unit_id = null)
+	{
+		$this->db->select('COUNT(id) AS total_designation');
+		$this->db->from('emp_designation');
+		if($unit_id != null)
+		{
+			$this->db->where('unit_id', $unit_id);
+		}
+		return $this->db->get()->row()->total_designation;
+	}
+
+
 	function weekly_attendance_summary($report_date = null, $all_emp_id = null)
 	{
 		$data = array();
@@ -213,126 +392,8 @@ class Mars_model extends CI_Model{
 	    return $data;
 	}
 
-	function last_month_expenses($salary_month)
-	{
-		$last_salary_month = date('Y-m-01',strtotime('-1 month',strtotime($salary_month)));
-		$this->db->select("
-				SUM(net_pay) AS net_pay,
-				SUM(ot_amount) AS ot_amount,
-				SUM(eot_amount) AS eot_amount,
-				SUM(att_bonus) AS att_bonus,
-			");
-		$this->db->from("pay_salary_sheet");
-		$this->db->where("salary_month", $last_salary_month);
-		return $this->db->get()->row();
-	}
-
-	function attendance_summary($report_date, $all_emp_id)
-	{
-		$data =array();
-
-			$this->db->distinct();
-			$this->db->select("
-					COUNT(CASE WHEN present_status = 'P' THEN 1 END) AS present,
-					COUNT(CASE WHEN present_status = 'A' THEN 1 END) AS absent,
-					COUNT(CASE WHEN present_status = 'L' THEN 1 END) AS leaves,
-					COUNT(CASE WHEN late_status    = '1' THEN 1 END) AS late,
-				");
-			$this->db->from("pr_emp_shift_log");
-			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
-			$this->db->group_by('pr_emp_shift_log.emp_id');
-			$this->db->where("pr_emp_shift_log.shift_log_date", $report_date);
-			$atten_data = $this->db->get()->row();
-
-			$data['all_present'] 	= $atten_data->present;
-			$data['all_absent'] 	= $atten_data->absent;
-			$data['all_leave'] 		= $atten_data->leaves;
-			$data['all_late'] 		= $atten_data->late;
 
 
-
-
-			$this->db->select("
-					COUNT(CASE WHEN pr_emp_per_info.gender = 'Male' THEN 1 END) AS male,
-					COUNT(CASE WHEN pr_emp_per_info.gender = 'Female' THEN 1 END) AS female,
-					COUNT(CASE WHEN pr_emp_com_info.emp_type = 2 THEN 1 END) AS staff,
-					COUNT(CASE WHEN pr_emp_com_info.emp_type = 1 THEN 1 END) AS employee
-					");
-			$this->db->from('pr_emp_per_info');
-			$this->db->join('pr_emp_com_info', 'pr_emp_per_info.emp_id = pr_emp_com_info.emp_id');
-			$this->db->where_in("pr_emp_per_info.emp_id", $all_emp_id);
-			$q = $this->db->get()->row();
-			$data['all_male'] = $q->male;
-			$data['all_female'] = $q->female;
-			$data['all_staff'] = $q->staff;
-			$data['all_employee'] = $q->employee;
-			$data['all_emp'] = $data['all_male'] + $data['all_female'];
-		return $data;
-	}
-
-	function monthly_join_emp($report_date)
-	{
-		
-		$fromdate = date("Y-m-01", strtotime($report_date));
-		$todate = date("Y-m-t", strtotime($report_date));
-	
-
-		$emp_cat = array(1,2);
-
-		$this->db->select('pr_emp_com_info.emp_id');
-		$this->db->from('pr_emp_com_info');
-		//$this->db->where_in('pr_emp_com_info.emp_cat_id',$emp_cat);
-		$this->db->where("pr_emp_com_info.emp_join_date >=",$fromdate);
-		$this->db->where("pr_emp_com_info.emp_join_date <=",$todate);
-		//$query = $this->db->get();
-		/*echo "<pre>";
-		echo $this->db->last_query();exit;*/
-		$query = $this->db->get()->num_rows();
-
-		return $query;
-	}
-
-	function monthly_resign_emp($report_date)
-	{
-		$year = substr($report_date,0,4);
-		$month = substr($report_date,5,2);
-		$day = substr($report_date,8,2);
-		$days = date("t", mktime(0, 0, 0, $month, 1, $year));
-		$fromdate = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
-		$todate = date("Y-m-d", mktime(0, 0, 0, $month, $days, $year));
-
-		$this->db->select('pr_emp_resign_history.emp_id');
-		$this->db->from('pr_emp_resign_history');
-		$this->db->where("pr_emp_resign_history.resign_date >=",$fromdate);
-		$this->db->where("pr_emp_resign_history.resign_date <=",$todate);
-		//$query = $this->db->get();
-		$query = $this->db->get()->num_rows();
-
-		return $query;
-
-	}
-
-	function monthly_left_emp($report_date)
-	{
-		$year = substr($report_date,0,4);
-		$month = substr($report_date,5,2);
-		$day = substr($report_date,8,2);
-		$days = date("t", mktime(0, 0, 0, $month, 1, $year));
-		$fromdate = date("Y-m-d", mktime(0, 0, 0, $month, 1, $year));
-		$todate = date("Y-m-d", mktime(0, 0, 0, $month, $days, $year));
-
-		$this->db->select('pr_emp_left_history.emp_id');
-		$this->db->from('pr_emp_left_history');
-		$this->db->where("pr_emp_left_history.left_date >=",$fromdate);
-		$this->db->where("pr_emp_left_history.left_date <=",$todate);
-		//$query = $this->db->get();
-		$query = $this->db->get()->num_rows();
-
-		return $query;
-
-	}
-
-	
 
 
 
@@ -348,14 +409,14 @@ class Mars_model extends CI_Model{
 	function department_attendance_summary($report_date, $unit_id)
 	{
 		$query = $this->db->select()->where('unit_id', $unit_id)->order_by('dept_name')->get('pr_dept');
-		//echo $num = $query->num_rows(); 
+		//echo $num = $query->num_rows();
 		$data = array();
 		foreach($query->result() as $rows)
 		{
 			$data['cat_name'][] = $rows->dept_name;
-			
+
 			$all_emp_id = $this->get_department_emp_by_id($rows->dept_id, $unit_id);
-			
+
 			if(!empty($all_emp_id))
 			{
 				$data['daily_att_sum'][] = $this->daily_attendance_summary($report_date, $all_emp_id);
@@ -364,14 +425,14 @@ class Mars_model extends CI_Model{
 			{
 				$data['daily_att_sum'][] = '';
 			}
-		
+
 		/*
-		$emp_desig = array( 
+		$emp_desig = array(
 								0 => array(21),
 								1 => array(115),
 								2 => array(1,3,4,187),
 								3 => array(76),
-								4 => array(39,150,188) 
+								4 => array(39,150,188)
              					);*/
 		$emp_desig =	$this->get_department_section_line_unit_wise($unit_id);
 			//echo $emp_desig[0]."---";
@@ -392,9 +453,9 @@ class Mars_model extends CI_Model{
 			}
 		}
 		return $data;
-		
+
 	}
-	
+
 	function get_department_emp_by_id($dept_id, $unit_id)
 	{
 		//$emp_cat = array(1,2);
@@ -406,7 +467,7 @@ class Mars_model extends CI_Model{
 		}
 		return $data;
 	}
-	
+
 	function desig_emp_id_by_dept($dept_id,$emp_desig)
 	{
 		//$emp_cat = array(1,2);
@@ -420,19 +481,19 @@ class Mars_model extends CI_Model{
 		}
 		return $data;
 	}
-	
-	
+
+
 	function section_attendance_summary($report_date, $unit_id)
 	{
 		$query = $this->db->select()->where('unit_id', $unit_id)->order_by('sec_name')->get('pr_section');
-		//echo $num = $query->num_rows(); 
+		//echo $num = $query->num_rows();
 		$data = array();
 		foreach($query->result() as $rows)
 		{
 			$data['cat_name'][] = $rows->sec_name;
-			
+
 			$all_emp_id = $this->get_section_emp_by_id($rows->sec_id, $unit_id);
-			
+
 			if(!empty($all_emp_id))
 			{
 				$data['daily_att_sum'][] = $this->daily_attendance_summary($report_date, $all_emp_id);
@@ -441,17 +502,17 @@ class Mars_model extends CI_Model{
 			{
 				$data['daily_att_sum'][] = '';
 			}
-			
+
 			/*
-			$emp_desig = array( 
+			$emp_desig = array(
 								0 => array(21),
 								1 => array(115),
 								2 => array(78,79,112),
 								3 => array(76),
-								4 => array(102) 
+								4 => array(102)
              					); */
 			$emp_desig =	$this->get_department_section_line_unit_wise($unit_id);
-		
+
 			//echo $emp_desig[0]."---";
 			for($i=0; $i<6; $i++)
 			{
@@ -469,9 +530,9 @@ class Mars_model extends CI_Model{
 			}
 		}
 		return $data;
-		
+
 	}
-	
+
 	function get_section_emp_by_id($sec_id, $unit_id)
 	{
 		//$emp_cat = array(1,2);
@@ -483,20 +544,20 @@ class Mars_model extends CI_Model{
 		}
 		return $data;
 	}
-	
+
 	function line_attendance_summary($report_date, $unit_id)
 	{
 		$arr=array('32','61');
 		$query = $this->db->select()->where('unit_id', $unit_id)->where_not_in('line_id',$arr)->order_by('line_name')->get('pr_line_num');
-		//echo $num = $query->num_rows(); 
+		//echo $num = $query->num_rows();
 
 		$data = array();
 		foreach($query->result() as $rows)
 		{
 			$data['cat_name'][] = $rows->line_name;
-			
+
 			$all_emp_id = $this->get_line_emp_by_id($rows->line_id, $unit_id);
-			
+
 			if(!empty($all_emp_id))
 			{
 				$data['daily_att_sum'][] = $this->daily_attendance_summary($report_date, $all_emp_id);
@@ -506,12 +567,12 @@ class Mars_model extends CI_Model{
 				$data['daily_att_sum'][] = '';
 			}
 			/*
-			$emp_desig = array( 
+			$emp_desig = array(
 								0 => array(21),
 								1 => array(115),
 								2 => array(1,3,4,187),
 								3 => array(76),
-								4 => array(39,150,188) 
+								4 => array(39,150,188)
              					); */
 			$emp_desig =	$this->get_department_section_line_unit_wise($unit_id);
 			// echo "<pre>"; print_r($emp_desig); exit();
@@ -532,9 +593,9 @@ class Mars_model extends CI_Model{
 			}
 		}
 		return $data;
-		
+
 	}
-	
+
 	function get_line_emp_by_id($line_id, $unit_id)
 	{
 		//$emp_cat = array(1,2);
@@ -547,8 +608,8 @@ class Mars_model extends CI_Model{
 		}
 		return $data;
 	}
-	
-	
+
+
 	function desig_emp_id_by_section($section_id,$emp_desig)
 	{
 		//$emp_cat = array(1,2);
@@ -561,7 +622,7 @@ class Mars_model extends CI_Model{
 		}
 		return $data;
 	}
-	
+
 	function desig_emp_id_by_line($line_id,$emp_desig)
 	{
 		//$emp_cat = array(1,2);
@@ -575,11 +636,11 @@ class Mars_model extends CI_Model{
 		}
 		return $data;
 	}
-		
+
 	function daily_attendance_summary($report_date, $all_emp_id)
 	{
 		$data =array();
-						
+
 		$this->db->select('emp_id');
 		$this->db->from("pr_emp_shift_log");
 		$this->db->where_in("emp_id", $all_emp_id);
@@ -587,7 +648,7 @@ class Mars_model extends CI_Model{
 		$this->db->where("pr_emp_shift_log.present_status !=", "W");
 		$this->db->group_by('emp_id');
 		$query = $this->db->get();
-		
+
 		$this->db->select('emp_id');
 		$this->db->from("pr_emp_shift_log");
 		$this->db->where_in("emp_id", $all_emp_id);
@@ -595,7 +656,7 @@ class Mars_model extends CI_Model{
 		$this->db->where("pr_emp_shift_log.present_status !=", "H");
 		$this->db->group_by('emp_id');
 		$query2 = $this->db->get();
-		
+
 		if($query->num_rows() == 0)
 		{
 			$data['all_emp'] 		= 0;
@@ -623,8 +684,8 @@ class Mars_model extends CI_Model{
 			$all_emp_id = $query->result_array();
 			$it =  new RecursiveIteratorIterator(new RecursiveArrayIterator($all_emp_id));
 			$all_emp_id = iterator_to_array($it, false);
-			//print_r($all_emp_id);		
-			
+			//print_r($all_emp_id);
+
 			$this->db->select("pr_emp_shift_log.emp_id");
 			$this->db->from("pr_emp_shift_log");
 			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
@@ -632,14 +693,14 @@ class Mars_model extends CI_Model{
 			$this->db->where("pr_emp_shift_log.in_time !=", "00:00:00");
 			$this->db->group_by('pr_emp_shift_log.emp_id');
 			$data['all_present'] = $this->db->get()->num_rows();
-			
+
 			$this->db->select("emp_id");
 			$this->db->from("pr_leave_trans");
 			$this->db->where_in("emp_id", $all_emp_id);
 			$this->db->where("start_date", $report_date);
 			$this->db->group_by('emp_id');
 			$data['all_leave'] = $this->db->get()->num_rows();
-					
+
 			$this->db->select("pr_emp_shift_log.emp_id");
 			$this->db->from("pr_emp_shift_log");
 			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
@@ -649,9 +710,9 @@ class Mars_model extends CI_Model{
 			$all_absent = $this->db->get()->num_rows();
 			$all_absent = $all_absent - $data['all_leave'];
 			$data['all_absent'] = $all_absent;
-			
-			
-			
+
+
+
 			$this->db->select("pr_emp_shift_log.emp_id");
 			$this->db->from("pr_emp_shift_log");
 			$this->db->where_in("pr_emp_shift_log.emp_id", $all_emp_id);
@@ -659,13 +720,13 @@ class Mars_model extends CI_Model{
 			$this->db->where("pr_emp_shift_log.late_status",1);
 			$this->db->group_by('pr_emp_shift_log.emp_id');
 			$data['all_late'] = $this->db->get()->num_rows();
-			
+
 			$this->db->select("pr_emp_per_info.emp_id");
 			$this->db->from('pr_emp_per_info');
 			$this->db->where_in("pr_emp_per_info.emp_id", $all_emp_id);
 			$this->db->where("pr_emp_per_info.emp_sex = 1");
 			$data['all_male'] = $this->db->get()->num_rows();
-			
+
 			$this->db->select("pr_emp_per_info.emp_id");
 			$this->db->from('pr_emp_per_info');
 			$this->db->where_in("pr_emp_per_info.emp_id", $all_emp_id);
@@ -678,10 +739,10 @@ class Mars_model extends CI_Model{
 	////////////////Department_section_line_unit_wise
 	function get_department_section_line_unit_wise($unit_id)
 	{
-		
+
 		$data = array();
 		if($unit_id ==1){
-		$data = array( 
+		$data = array(
 						0 => array(67,38,62,57,42,26),
 						1 => array(5,6,149,63,28,45,33,43),
 						2 => array(7,8,20,31,32,35,44,48,572,573,574,575,577,578,579),
@@ -689,12 +750,12 @@ class Mars_model extends CI_Model{
 						4 => array(39),
 						5 => array(106,30,417,356)
 						);
-					
+
 		return $data;
 
 		}
 		if($unit_id ==2){ //This For Lucky Star
-		$data = array( 
+		$data = array(
 						0 => array(91, 92, 111,121),//Line Chief a,b,c,d,
 						1 => array(73, 76, 87, 88, 110, 126),//cutting,fini,a,b,c,d--super
 						2 => array(78, 79, 84,112,254),//jr,operator,GR,Sr
@@ -705,7 +766,7 @@ class Mars_model extends CI_Model{
 		return $data;
 		}
 		if($unit_id ==3){
-		$data = array( 
+		$data = array(
 						0 => array(144,160),
 						1 => array(105),
 						2 => array(77,107,133,137,139,141,159),
@@ -717,7 +778,7 @@ class Mars_model extends CI_Model{
 		}
 
 		if($unit_id ==4){
-			$data = array( 
+			$data = array(
 				0 => array(1),
 				1 => array(2),
 				2 => array(648,671,705,724),//operator
@@ -732,18 +793,18 @@ class Mars_model extends CI_Model{
 function line_logout_summary($report_date, $unit_id)
 	{
 		$query = $this->db->select()->where('unit_id', $unit_id)->order_by('line_name')->get('pr_line_num');
-		//echo $num = $query->num_rows(); 
+		//echo $num = $query->num_rows();
 		//$data = array();
 		foreach($query->result() as $rows)
 		{
 			$data['cat_name'][] = $rows->line_name;
-			
+
 			$all_emp_id = $this->get_line_emp_by_id($rows->line_id, $unit_id);
-			
-			
+
+
 		}
 		return $all_emp_id;
-		
+
 	}
 
 		function get_line_emp_logout($line_id, $unit_id, $report_date, $first_time, $secoend_time)
@@ -752,7 +813,7 @@ function line_logout_summary($report_date, $unit_id)
 			// echo "<pre>";print_r($first_time.'==='.$secoend_time);exit;
 
 			$this->db->select("count(DISTINCT pr_emp_shift_log.emp_id) as emp_id, SUM(pr_emp_shift_log.ot) as ot_hour, SUM(pr_emp_shift_log.extra_ot_hour) as extra_ot_hour,SUM(pr_emp_shift_log.modify_eot) as modify_eot,SUM(pr_emp_shift_log.deduction_hour) as deduction_hour");
-			// $this->db->select("pr_emp_shift_log.in_time");	
+			// $this->db->select("pr_emp_shift_log.in_time");
 			// $this->db->select("pr_emp_shift_log.out_time");
 			$this->db->from("pr_emp_com_info");
 			$this->db->from("pr_emp_shift_log");
@@ -789,14 +850,14 @@ function line_logout_summary($report_date, $unit_id)
 		/*
 			Name 		:	get_dept_emp_logout
 			Param 		:	dept_id, unit_id, report_date, first_time, second_time
-			ShortDesc	:	
+			ShortDesc	:
 			LongDesc	:	get number of employee unit wise and dept wise
 							get total ot_hour of those emp
 							get total extra_ot_hour of those emp
 							get total modify_eot of those emp
 							get total deduction hour of those emp
-							from 'pr_emp_com_info' table 
-							from 'pr_emp_shift_log' table 
+							from 'pr_emp_com_info' table
+							from 'pr_emp_shift_log' table
 							where employee are loging out between first_time and second_time
 
 			Author 		:	Ismail
@@ -820,11 +881,11 @@ function line_logout_summary($report_date, $unit_id)
 			$this->db->where("pr_emp_shift_log.out_time BETWEEN '$first_time' AND '$secoend_time'");
 			$this->db->where("pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id");
 			$this->db->where("pr_emp_shift_log.in_time != '00:00:00'");
-			
+
 			$query = $this->db->get();
 			$num_rows = $query->num_rows();
 			//$data['num_rows'] = $num_rows;
-			
+
 			//echo $this->db->last_query();
 			if($num_rows > 0)
 			{
@@ -851,14 +912,14 @@ function line_logout_summary($report_date, $unit_id)
 		/*
 			Name 		:	get_sec_emp_logout
 			Param 		:	sec_id, unit_id, report_date, first_time, second_time
-			ShortDesc	:	
+			ShortDesc	:
 			LongDesc	:	get number of employee unit wise and section wise
 							get total ot_hour of those emp
 							get total extra_ot_hour of those emp
 							get total modify_eot of those emp
 							get total deduction hour of those emp
-							from 'pr_emp_com_info' table 
-							from 'pr_emp_shift_log' table 
+							from 'pr_emp_com_info' table
+							from 'pr_emp_shift_log' table
 							where employee are loging out between first_time and second_time
 
 			Author 		:	Ismail
@@ -882,11 +943,11 @@ function line_logout_summary($report_date, $unit_id)
 			$this->db->where("pr_emp_shift_log.out_time BETWEEN '$first_time' AND '$secoend_time'");
 			$this->db->where("pr_emp_shift_log.emp_id = pr_emp_com_info.emp_id");
 			$this->db->where("pr_emp_shift_log.in_time != '00:00:00'");
-			
+
 			$query = $this->db->get();
 			$num_rows = $query->num_rows();
 			//$data['num_rows'] = $num_rows;
-			
+
 			//echo $this->db->last_query();
 			if($num_rows > 0)
 			{
@@ -908,7 +969,7 @@ function line_logout_summary($report_date, $unit_id)
 			}
 			return $data;
 		}
-		
+
 
 	////////////////////////////////emp_present_linewise	///////////////
 
@@ -958,14 +1019,14 @@ function line_logout_summary($report_date, $unit_id)
 		$query = $this->db->get();
 		$num_rows = $query->num_rows();
 		//$data['num_rows'] = $num_rows;
-		
+
 		//echo $this->db->last_query();
 		if($num_rows > 0)
 		{
 			foreach($query->result() as $rows)
 			{
 				$data['emp_id_present'] = $rows->emp_id_present;
-				
+
 			}
 		}else{
 				$data['emp_id_present'] = 0;
@@ -995,21 +1056,21 @@ function line_logout_summary($report_date, $unit_id)
 		$query = $this->db->get();
 		$num_rows = $query->num_rows();
 		//$data['num_rows'] = $num_rows;
-		
+
 		//echo $this->db->last_query();
 		if($num_rows > 0)
 		{
 			foreach($query->result() as $rows)
 			{
 				$data['emp_id_present'] = $rows->emp_id_present;
-				
+
 			}
 		}else{
 				$data['emp_id_present'] = 0;
 		}
 		return $data;
 	}
-		
+
 
 ///////////////////////////////all_emp_present_error	///////////////
 
@@ -1027,14 +1088,14 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 					$query = $this->db->get();
 					$num_rows = $query->num_rows();
 					//$data['num_rows'] = $num_rows;
-					
+
 					//echo $this->db->last_query();
 					if($num_rows > 0)
 					{
 						foreach($query->result() as $rows)
 						{
 							$data['emp_id_present_error'] = $rows->emp_id_present_error;
-							
+
 						}
 					}else{
 							$data['emp_id_present_error'] = 0;
@@ -1047,9 +1108,9 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 		/*
 			Name 		:	get_all_emp_present_error_dept_wise
 			Param 		:	dept_id, unit_id, report_date
-			ShortDesc	:	get number of emp by emp_id_present_error 
-							from 'pr_emp_com_info' table 
-							from 'pr_emp_shift_log' table 
+			ShortDesc	:	get number of emp by emp_id_present_error
+							from 'pr_emp_com_info' table
+							from 'pr_emp_shift_log' table
 							where emp out time is not found or out_time = 00:00:00
 			LongDesc	:
 
@@ -1076,14 +1137,14 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 			$query = $this->db->get();
 			$num_rows = $query->num_rows();
 			//$data['num_rows'] = $num_rows;
-			
+
 			//echo $this->db->last_query();
 			if($num_rows > 0)
 			{
 				foreach($query->result() as $rows)
 				{
 					$data['emp_id_present_error'] = $rows->emp_id_present_error;
-					
+
 				}
 			}else{
 					$data['emp_id_present_error'] = 0;
@@ -1095,9 +1156,9 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 		/*
 			Name 		:	get_all_emp_present_error_section_wise
 			Param 		:	sec_id, unit_id, report_date
-			ShortDesc	:	get number of emp by emp_id_present_error 
-							from 'pr_emp_com_info' table 
-							from 'pr_emp_shift_log' table 
+			ShortDesc	:	get number of emp by emp_id_present_error
+							from 'pr_emp_com_info' table
+							from 'pr_emp_shift_log' table
 							where emp out time is not found or out_time = 00:00:00
 			LongDesc	:
 
@@ -1124,28 +1185,28 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 			$query = $this->db->get();
 			$num_rows = $query->num_rows();
 			//$data['num_rows'] = $num_rows;
-			
+
 			//echo $this->db->last_query();
 			if($num_rows > 0)
 			{
 				foreach($query->result() as $rows)
 				{
 					$data['emp_id_present_error'] = $rows->emp_id_present_error;
-					
+
 				}
 			}else{
 					$data['emp_id_present_error'] = 0;
 			}
 			return $data;
 		}
-		
 
-////////////////////////////////	
+
+////////////////////////////////
 
 	/*
 		Name 		:	get_dept_unit_wise
 		Param 		:	unit_id
-		ShortDesc	:	get dept id and name from 'pr_dept' table 
+		ShortDesc	:	get dept id and name from 'pr_dept' table
 						by unit_id
 		LongDesc	:
 
@@ -1165,13 +1226,13 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 		$this->db->order_by('dept_name', 'ASC');
 
 		return $this->db->get('pr_dept')->result_array();
-	}	
+	}
 
 
 	/*
 		Name 		:	get_sec_unit_wise
 		Param 		:	unit_id
-		ShortDesc	:	get section id and name from 'pr_section' table 
+		ShortDesc	:	get section id and name from 'pr_section' table
 						by unit_id
 		LongDesc	:
 
@@ -1197,7 +1258,7 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 	/*
 		Name 		:	get_line_unit_wise
 		Param 		:	unit_id
-		ShortDesc	:	get line id and name from 'pr_line_num' table 
+		ShortDesc	:	get line id and name from 'pr_line_num' table
 						by unit_id
 		LongDesc	:
 
@@ -1222,9 +1283,9 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 
 	/*
 		Name 		:	get_logout_emp
-		Param 		:	
-		ShortDesc	:	get logout chart (first_time and second_time) 
-						from 'pr_logout_emp' table 
+		Param 		:
+		ShortDesc	:	get logout chart (first_time and second_time)
+						from 'pr_logout_emp' table
 		LongDesc	:
 
 		Author 		:	Ismail
@@ -1239,7 +1300,7 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 	function get_logout_emp()
 	{
 		$this->db->order_by('id', 'ASC');
-		
+
 			return $this->db->get('pr_logout_emp')->result_array();
 	}
 
@@ -1247,9 +1308,9 @@ function get_all_emp_present_error($line_id, $unit_id, $report_date)
 	{
 		 $this->db->order_by('id', 'ASC');
 		 return $this->db->get('pr_ramadan_logout_emp')->result_array();
-		
+
 	}
 
-	
+
 }
 ?>

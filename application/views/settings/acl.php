@@ -2,7 +2,7 @@
     <div class="content">
     <nav class="navbar navbar-inverse bg_none">
         <div class="container-fluid nav_head">
-            <div class="navbar-header col-md-3" style="padding: 7px;">
+            <div class="navbar-header col-md-4" style="padding: 7px;">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -12,13 +12,13 @@
                 </button>
                 <div>
                     <a class="btn btn-info"href="<?=base_url('setting_con/member_add')?>" >Add Member</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="">
-                        <form class="navbar-form pull-right" role="search">
+                        <form class="pull-right" role="search">
                             <div class="input-group">
                                 <input id="acl_search" type="text" class="form-control" placeholder="Search">
                             </div>
@@ -58,8 +58,9 @@
                     <tr>
                         <th class="text-center">Sl.</th>
                         <th class="text-center">Username</th>
-                        <th class="text-center">Level</th>
                         <th class="text-center">Unit name</th>
+                        <th class="text-center">Level</th>
+                        <th class="text-center">User Type</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Action</th>
                     </tr>
@@ -69,11 +70,21 @@
                       //echo "<pre>"; print_r($members); exit;
                     if(!empty($members)){
                       foreach($members as $member){?>
+                      <?php if ($member['user_mode'] == 1) {
+                        $ttt = '7pm';
+                      } elseif ($member['user_mode'] == 2) {
+                        $ttt = '9pm';
+                      } elseif ($member['user_mode'] == 3) {
+                        $ttt = '12pm';
+                      } else {
+                        $ttt = 'All';
+                      }?>
                       <tr>
                           <td class="text-center"><?php echo @$i=$i+1 ?></td>
                           <td class="text-center"><?php echo $member['id_number'] ?></td>
-                          <td class="text-center"><?php echo $member['level'] ?></td>
                           <td class="text-center"><?php echo $member['unit_name'] ?></td>
+                          <td class="text-center"><?php echo $member['level'] ?></td>
+                          <td class="text-center"><?php echo $ttt ?></td>
                           <td class="text-center"><?php echo $member['status'] ?></td>
                           <td class="text-center">
                               <a href="<?=base_url('setting_con/member_edit').'/'.$member["id"]?>" class="btn btn-primary" role="button">Edit</a>

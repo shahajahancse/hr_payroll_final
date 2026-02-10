@@ -84,7 +84,7 @@ class Common extends CI_Controller {
         $status         = $_GET['status'];
         $salary_month   = date('Y-m-01', strtotime($_GET['salary_month']));
         $end_month      = date('Y-m-t', strtotime($_GET['salary_month']));
-        // dd($_GET); 
+        // dd($_GET);
         $searchInput = isset($_GET['searchi']) ? $_GET['searchi'] : null;
 
         if (!empty($status) && $status == 1) {
@@ -95,7 +95,7 @@ class Common extends CI_Controller {
             $emp_ids = $this->db->get()->result();
             $emp_id = array_column($emp_ids, 'emp_id');
         } elseif (!empty($status) && $status == 2) {
-            $this->db->select('lf.emp_id');  
+            $this->db->select('lf.emp_id');
             $this->db->from('pr_emp_left_history as lf');
             $this->db->where('lf.unit_id', $unit_id);
             $this->db->where("lf.left_date BETWEEN '$salary_month' AND '$end_month'");
@@ -145,7 +145,7 @@ class Common extends CI_Controller {
                 // dd($trimmedTerm);
                 if ($index === 0) {
                     $this->db->like('ss.emp_id', $trimmedTerm);
-                } else { 
+                } else {
                     $this->db->or_like('ss.emp_id', $trimmedTerm);
 
                 }

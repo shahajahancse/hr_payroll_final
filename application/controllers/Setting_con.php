@@ -44,7 +44,7 @@ class Setting_con extends CI_Controller {
         $this->data['title'] = 'Activity Log';
         $this->data['subview'] = 'settings/activity_log';
         $this->load->view('layout/template', $this->data);
-		
+
 	}
 
 	function acl_access_add(){
@@ -447,18 +447,22 @@ class Setting_con extends CI_Controller {
 		$this->data['username'] = $this->data['user_data']->id_number;
 		$this->db->select('SQL_CALC_FOUND_ROWS members.*, pr_units.unit_name', false);
 		$this->db->join('pr_units', 'pr_units.unit_id = members.unit_name', 'left');
-		$this->db->where('members.unit_name',$_SESSION['data']->unit_name);
+		$this->db->where('members.unit_name', $_SESSION['data']->unit_name);
 		$this->data['members'] = $this->db->get('members')->result_array();
 		$this->data['subview'] = 'settings/acl';
         $this->load->view('layout/template', $this->data);
 	}
 
 	function member_add(){
+		$this->data['title'] = 'Add Member';
 		$this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['user_level'] = null;
 
+		if ($this->data['user_data']->level == 'Unit') {
+			$this->data['user_level'] = 'Unit';
+			$this->db->where('id', $this->data['user_data']->unit_name);
+		}
 		$this->data['pr_units'] = $this->db->get('pr_units')->result();
-		// $param['acls'] = $this->db->select('cl.*')->get('member_acl_list as cl')->result();
-
 		$this->data['subview'] = 'settings/member_add';
         $this->load->view('layout/template', $this->data);
 	}
@@ -473,6 +477,7 @@ class Setting_con extends CI_Controller {
 		$data['password'] = $this->input->post('password');
 		$data['level'] = $this->input->post('level');
 		$data['unit_name'] = $this->input->post('unit_name');
+		$data['user_mode'] = $this->input->post('user_mode') ? $this->input->post('user_mode') : 0;
 		$data['status'] = $this->input->post('status');
 		$this->db->insert('members',$data);
 		$this->session->set_flashdata('success','Record Insert successfully!');
@@ -480,12 +485,16 @@ class Setting_con extends CI_Controller {
 	}
 
 	function member_edit($id){
-        $this->db->where('members.id', $id);
-		$this->data['row'] = $this->db->get('members')->row();
+		$this->data['username'] = $this->data['user_data']->id_number;
+		$this->data['user_level'] = null;
 
-        $this->data['username'] = $this->data['user_data']->id_number;
+		if ($this->data['user_data']->level == 'Unit') {
+			$this->data['user_level'] = 'Unit';
+			$this->db->where('id', $this->data['user_data']->unit_name);
+		}
 		$this->data['pr_units'] = $this->db->get('pr_units')->result();
 
+		$this->data['row'] = $this->db->where('members.id', $id)->get('members')->row();
 		$this->data['subview'] = 'settings/member_edit';
         $this->load->view('layout/template', $this->data);
 		// $this->load->view('', $param);
@@ -501,6 +510,7 @@ class Setting_con extends CI_Controller {
 		$data['password'] = $this->input->post('password');
 		$data['level'] = $this->input->post('level');
 		$data['unit_name'] = $this->input->post('unit_name');
+		$data['user_mode'] = $this->input->post('user_mode') ? $this->input->post('user_mode') : 0;
 		$data['status'] = $this->input->post('status');
 		$this->db->where('members.id',$id);
 		$this->db->update('members',$data);
@@ -560,7 +570,7 @@ class Setting_con extends CI_Controller {
 	{
 		$line_id = $_POST['line_id'];
 		$emp_id = $_POST['spl'];
-		
+
 		$this->db->where('emp_id', $emp_id);
 		$this->db->update('pr_emp_com_info', array('attn_sum_line_id' => $line_id));
 		echo '1';
