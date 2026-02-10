@@ -11,7 +11,7 @@
     }
     .table td {
         padding: 0px 3px !important;
-        font-size: 13px; 
+        font-size: 13px;
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
@@ -31,7 +31,7 @@
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/night_allowance_add') ?>">Add Night
                         Allowance</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">

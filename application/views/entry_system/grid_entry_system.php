@@ -111,28 +111,34 @@
                 <img src="<?php echo base_url('images/ajax-loader.gif'); ?>" />
             </div>
 
-            <!-- present entry form -->
+            <!-- present / absent entry form -->
             <div id="present_entry" class="row nav_head" style="margin-top: 13px;">
                 <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                     <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                         <form method="post" id="present_entry_form">
                             <div class="raw">
-                                <div class="col-md-4" style="padding: 5px !important">
+                                <div class="col-md-3" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">From Date</label>
                                         <input class="form-control date" id="first_date" name="first_date" autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="padding: 5px !important">
+                                <div class="col-md-3" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">To Date</label>
                                         <input class="form-control date" id="second_date" name="second_date" autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="padding: 5px !important">
+                                <div class="col-md-3" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
-                                        <label class="control-label">Time</label>
-                                        <input class="form-control" id="time" name="time" placeholder="hh:mm:ss">
+                                        <label class="control-label">In Time</label>
+                                        <input class="form-control" id="in_time" name="in_time" placeholder="hh:mm:ss">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 5px !important">
+                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                        <label class="control-label">Out Time</label>
+                                        <input class="form-control" id="out_time" name="out_time" placeholder="hh:mm:ss">
                                     </div>
                                 </div>
                             </div>
@@ -141,10 +147,19 @@
                                     <div class="input-group">
                                         <span class="input-group-btn" style="display: flex; gap: 15px;">
                                             <input class="btn btn-primary" onclick='present_entry(event)' type="button" value='Save' />
-                                            <input <?php  $user_id = $this->session->userdata('data')->id; $acl = check_acl_list($user_id); if(!in_array(10,$acl)) {echo '';} else { echo 'style="display:none;"';}?> class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
-                                            <input <?php  if(in_array(128,$acl)) {echo '';} else { echo 'style="display:none;"';}?>  class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
-
-                                            <input <?php  if(in_array(129,$acl)) {echo '';} else { echo 'style="display:none;"';}?>  class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
+                                            <?php
+                                                $user_id = $this->session->userdata('data')->id;
+                                                $acl = check_acl_list($user_id);
+                                            ?>
+                                            <?php  if(!in_array(10,$acl)) { ?>
+                                                <input class="btn btn-info" onclick="log_sheet(event)" type="button" value="Attn. Sheet">
+                                            <?php } ?>
+                                            <?php  if(in_array(128,$acl)) { ?>
+                                                <input class="btn btn-danger" onclick="present_absent(event)" type="button" value="Absent">
+                                            <?php } ?>
+                                            <?php  if(in_array(129,$acl)) { ?>
+                                                <input class="btn btn-danger" onclick="log_delete(event)" type="button" value="Log Delete">
+                                            <?php } ?>
                                         </span>
                                     </div><!-- /input-group -->
                                 </div>
@@ -522,14 +537,16 @@
                 showMessage('error', 'Please select Second date');
                 return false;
             }
-            time = document.getElementById('time').value;
-            if (time == '') {
-                showMessage('error', 'Please select Time');
+            in_time = document.getElementById('in_time').value;
+            out_time = document.getElementById('out_time').value;
+            // Check if BOTH are empty
+            if (in_time === '' && out_time === '') {
+                showMessage('error', 'Please select at least In Time or Out Time');
                 return false;
             }
 
             var formdata = $("#present_entry_form").serialize();
-            var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
+            var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&in_time=" + in_time + "&out_time=" + out_time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data
 
             $.ajax({
                 type: "POST",
@@ -575,7 +592,7 @@
                 showMessage('error', 'Please select Second date');
                 return false;
             }
-            time = document.getElementById('time').value;
+            time = document.getElementById('in_time').value;
 
             var formdata = $("#present_entry_form").serialize();
             var data = "unit_id=" + unit_id + "&first_date=" + first_date + "&second_date=" + second_date + "&time=" + time + "&emp_id=" + emp_id + "&" + formdata; // Merge the data

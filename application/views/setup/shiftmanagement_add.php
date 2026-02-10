@@ -16,7 +16,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?php echo base_url("payroll_con");?>">Home</a></li>
+                    <!-- <li class="active"><a href="<?php echo base_url("payroll_con");?>">Home</a></li> -->
                 </ul>
 
             </div>
@@ -33,7 +33,7 @@
             <div class="alert alert-success"><?php echo $success; ?></div>
             <?php
             }
-            $failuer = $this->session->flashdata('failure'); 
+            $failuer = $this->session->flashdata('failure');
             ?>
 
 
@@ -46,7 +46,7 @@
         name="creatsection">
         <div class="row">
             <div class="col-md-6">
-            
+
                 <div class="form-group">
                     <label>Shift Name</label>
                     <input type="text" name="shift_name" value="" placeholder="Shift Name "

@@ -6,7 +6,7 @@
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/department') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-6">
@@ -38,7 +38,7 @@
                         <div class="form-group col-md-6">
                             <select name="unit_id" id="unit_id" class="form-control input-sm select22">
                                 <option value="">Select Unit</option>
-                                <?php 
+                                <?php
                     foreach ($dept as $row) {
                       if($row['unit_id'] == $user_data->unit_name){
                         $select_data="selected";
@@ -48,7 +48,7 @@
                                 continue;
                             }
                         }
-                      }  
+                      }
                        echo '<option '.$select_data.'  value="'.$row['unit_id'].'">'.$row['unit_name'].
                        '</option>';
                     }

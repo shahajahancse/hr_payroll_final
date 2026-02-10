@@ -12,14 +12,14 @@
     .table td {
         padding: 0px 3px !important;
         font-size: 13px;
-      
+
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
     }
     table.dataTable tbody th, table.dataTable tbody td {
       padding: 4px !important;
-      
+
     }
     .center-text {
         vertical-align: center;
@@ -40,7 +40,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?=base_url('setup_con/shiftmanagement_add')?>">Add ShiftManagement</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">

@@ -11,7 +11,7 @@
     .table td {
         padding: 0px 3px !important;
         font-size: 13px;
-      
+
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
@@ -33,7 +33,7 @@
             <div class="navbar-header col-md-5">
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/designation_add') ?>">Add Designation</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">
@@ -89,7 +89,7 @@
                 <tbody>
                     <?php
                         if(!empty($emp_designation)){ foreach($emp_designation as $key => $data){
-                    
+
                             // dd($data);
                          $this->db->select('emp_depertment.dept_name, emp_section.sec_name_en, emp_line_num.line_name_en');
                          $this->db->from('emp_dasignation_line_acl');

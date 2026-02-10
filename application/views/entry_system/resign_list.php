@@ -2,7 +2,7 @@
 .inputs{
     background: white !important;
     width: 100% !important;
-    
+
 }
 td{
     text-align: center;
@@ -24,7 +24,7 @@ input[type=number] {
     font-size: 15px;
     font-family: SutonnyMJ;
 }
-</style>    
+</style>
 
 <div class="content">
 <nav class="navbar navbar-inverse bg_none">
@@ -39,7 +39,7 @@ input[type=number] {
             </button>
             <div>
                 <a class="btn btn-info" href="<?php echo base_url('entry_system_con/left_resign_entry') ?>">Add Resign</a>
-                <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
             </div>
         </div>
         <div class="col-md-7">
@@ -62,7 +62,7 @@ input[type=number] {
         <?php $success = $this->session->flashdata('success');
             if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
             $failuer = $this->session->flashdata('failuer');
             if ($failuer) { ?>
             <div class="alert alert-failuer"><?php echo $failuer; ?></div>
@@ -88,7 +88,7 @@ input[type=number] {
             </thead>
 
             <tbody id="tbody">
-                <!-- <?php  
+                <!-- <?php
                 if (!empty($results)) {foreach ($results as $key => $r) {?>
                 <tr>
                     <td style="padding: 1px !important;" ><?php echo $key + 1  ?></td>
@@ -177,7 +177,7 @@ input[type=number] {
                         </div>
                         <div class="col-md-4">
                             শেষ কর্মদিবস	:	<span id="last_working_date" style="font-family: SutonnyMJ;"> </span> ইং
-                        </div> 
+                        </div>
                     </div>
                     <div class="row" style="font-size: 15px;">
                         <div class="col-md-4">
@@ -313,16 +313,16 @@ function final_satalment(id) {
             $("#job_duration").html(calculateJobDuration(employeeData.emp_join_date, employeeData.resign_date));
             $("#gross_salary").html(employeeData.gross_sal);
             $("#basic_salary").html(employeeData.basic_sal);
-            $("#ot_rate").html(employeeData.ot_rate);   
+            $("#ot_rate").html(employeeData.ot_rate);
             $("#hidden_gross_salary").val(employeeData.gross_sal);
             $("#hidden_basic_salary").val(employeeData.basic_sal);
-            $("#hidden_ot_rate").val(employeeData.ot_rate); 
-            $("#resign_pay_day").val(0); 
-            $("#extra_payoff").val(0); 
-            $("#earn_leave_day").val(0); 
-            $("#another_deposit").val(0); 
-            $("#notice_deduct").val(0); 
-            $("#advanced_salary").val(0); 
+            $("#hidden_ot_rate").val(employeeData.ot_rate);
+            $("#resign_pay_day").val(0);
+            $("#extra_payoff").val(0);
+            $("#earn_leave_day").val(0);
+            $("#another_deposit").val(0);
+            $("#notice_deduct").val(0);
+            $("#advanced_salary").val(0);
             $("#service_benifit").val(calculateServiceBenifit(employeeData.emp_join_date, employeeData.resign_date));
         },
         complete: function () {
@@ -360,7 +360,7 @@ function calculateServiceBenifit(startDate, endDate) {
     var months = Math.floor(days / 30);
     // var months = 5;
     // alert(months);return false;
-    
+
     days = days % 30;
     if(years >=4 && months >=10){
     // alert("4 yeasr and 10 months");
@@ -380,7 +380,7 @@ function calculateServiceBenifit(startDate, endDate) {
             }else{
                 return 14*years;
             }
-        } 
+        }
     }else{
         return 0;
     }
@@ -444,18 +444,18 @@ function noticeDeduct() {
     var noticeDeduct = parseFloat($('#notice_deduct').val());
     noticeDeduct = isNaN(noticeDeduct) ? 0 : noticeDeduct;
     var basic_salary=Number($('#basic_salary').html());
-    
+
         var har=basic_salary/30;
         var har=har.toFixed(2);
         var pay=har*noticeDeduct;
         var pay=pay.toFixed(2);
 
-        $('#total_notice_deduct_rate').html(pay); 
-        total_deduct()  
+        $('#total_notice_deduct_rate').html(pay);
+        total_deduct()
 }
 
 function total_deduct() {
-        var total_notice_deduct_rate = parseFloat($('#total_notice_deduct_rate').html() || 0);   
+        var total_notice_deduct_rate = parseFloat($('#total_notice_deduct_rate').html() || 0);
         var advanced_salary=parseFloat($('#advanced_salary').val() || 0);
         var total_deduct = advanced_salary + total_notice_deduct_rate;
         $('.total_deduct').html(advanced_salary+total_notice_deduct_rate);
@@ -520,7 +520,7 @@ function report(id, type){
         type: 'POST',
         data: {spl: id, type: type},
         success: function (data) {
-            var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10'); 
+            var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10');
             win.document.write(data);
             win.document.close();
         },
@@ -550,7 +550,7 @@ function get_data(offset=0) {
     }else{
         e=false
     }
-    
+
     var deptSearch = $('#deptSearch').val()
     $.ajax({
         url: "<?php echo base_url('entry_system_con/resign_list_ajax') ?>",

@@ -96,7 +96,7 @@
                 </tr>
                 <?php } ?>
                 <tr>
-                    <td colspan="6"><input class="btn btn-info" onclick="log_update(event)" type="button" value="Attn. Sheet"></td>
+                    <td colspan="6"><input class="btn btn-info" onclick="log_update(event)" type="button" value="Save"></td>
                 </tr>
             </form>
         </table>

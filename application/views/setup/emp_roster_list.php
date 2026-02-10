@@ -2,7 +2,7 @@
     .inputs{
         background: white !important;
         width: 100% !important;
-        
+
     }
     td{
         text-align: center;
@@ -24,7 +24,7 @@
         font-size: 15px;
         font-family: SutonnyMJ;
     }
-</style>    
+</style>
 
 <div class="content">
     <nav class="navbar navbar-inverse bg_none">
@@ -39,7 +39,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/roster_entry') ?>">Add Roster shift</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">
@@ -62,7 +62,7 @@
             <?php $success = $this->session->flashdata('success');
                 if ($success != "") { ?>
                 <div class="alert alert-success"><?php echo $success; ?></div>
-                <?php } 
+                <?php }
                 $failuer = $this->session->flashdata('failuer');
                 if ($failuer) { ?>
                 <div class="alert alert-failuer"><?php echo $failuer; ?></div>
@@ -89,7 +89,7 @@
                 </thead>
                 </thead>
                 <tbody>
-                    <?php  
+                    <?php
                   if (!empty($results)) {foreach ($results as $key => $r) {?>
                     <tr>
                         <td><?php echo $key + 1  ?></td>
@@ -167,7 +167,7 @@
                             </div>
                             <div class="col-md-4">
                                 শেষ কর্মদিবস	:	<span id="last_working_date" style="font-family: SutonnyMJ;"> </span> ইং
-                            </div> 
+                            </div>
                         </div>
                         <div class="row" style="font-size: 15px;">
                             <div class="col-md-4">
@@ -364,7 +364,7 @@
                     return "<span style='font-family:SutonnyMJ'> " + years + " </span>  বছর <span style='font-family:SutonnyMJ'>" + months + "</span> মাস <span style='font-family:SutonnyMJ'>" + days + "</span> দিন";
                 }
 
-                //  employeeData.emp_join_date, 
+                //  employeeData.emp_join_date,
                 // employeeData.resign_date
 
 
@@ -430,7 +430,7 @@
                         return 0;
                     }
                 }
-                
+
                 // Function to calculate basic salary (assuming it's 40% of the gross salary)
                 function calculateBasicSalary(grossSalary) {
                     var basic = ((parseFloat(grossSalary) -2450)/1.5);
@@ -444,7 +444,7 @@
                     var basic = ((parseFloat(grossSalary)/30));
                     return basic.toFixed(2);
                 }
-                
+
 
                 $("#resign_pay_day").on("input", function() {
                     var resign_pay_day = parseFloat($(this).val());
@@ -496,7 +496,7 @@
                 $(".total_service_benifit").html(total_service_benifit.toFixed(2));
 
 
-                // absent_deduct 
+                // absent_deduct
 
                 var absent = parseFloat($("#absent").html());
                 var service_benifit_rate = parseFloat($(".service_benifit_rate").html());
@@ -527,7 +527,7 @@
                 $("#total_get").html(0);
                  $("#advanced_salary, #notice_deduct").val(0);
                 var total_deduct = 0;
-                
+
                 $('#advanced_salary, #notice_deduct').on('input', function() {
                     var total_deduct = 0;
                     $(".absent_deduct, .total_notice_deduct_rate").each(function(){
@@ -543,7 +543,7 @@
                     var total_get = parseFloat($('#total_get').html());
                     var total_deduct = parseFloat($('.total_deduct').html());
                     $('#net_pay').html(parseFloat(total_get - total_deduct -10).toFixed(2));
-                }); 
+                });
                    $(".total_deduct").html(0);
             }
         });
@@ -597,7 +597,7 @@
             data: {spl: id},
             success: function (data) {
                 // console.log(data);/
-                var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10'); 
+                var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10');
                 win.document.write(data);
                 win.document.close();
             },
@@ -681,7 +681,7 @@
     //                 return basic.toFixed(2);
     //             }
     //             // console.log(data);/
-    //             // var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10'); 
+    //             // var win = window.open('', '_blank', 'height=800,width=1024,scrollbars=yes,resizable=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,top=10,left=10');
     //             // win.document.write(data);
     //             // win.document.close();
     //         },

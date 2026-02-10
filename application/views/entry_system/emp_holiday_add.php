@@ -28,7 +28,7 @@
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
             <a class="btn btn-info" href="<?php echo base_url('entry_system_con/holiday_list') ?>">List</a>
-            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Dashboard</a>
+            <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Dashboard</a> -->
             <!-- <h3 style="font-weight: 600;"><?= $title ?></h3> -->
             <h3></h3>
             <div class="col-md-6">
@@ -180,7 +180,7 @@
                                 <td class="success"><?= $emp->emp_id ?></td>
                                 <td class="warning "><?= $emp->name_en ?></td>
                             </tr>
-                        <?php } 
+                        <?php }
                     } ?>
                     <tr class="removeTrno">
                         <td colspan="3" class="text-center"> No data found</td>

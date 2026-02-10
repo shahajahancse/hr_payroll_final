@@ -11,7 +11,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/section') ?>"> << Back</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-6">
@@ -128,7 +128,7 @@ function getDepertment(unit_id) {
             }
             $('#depertment_id').html(item);
 
-            $('#depertment_id').val(<?=$sec->depertment_id?>); 
+            $('#depertment_id').val(<?=$sec->depertment_id?>);
             console.log(<?=$sec->depertment_id?>);
         }
     })

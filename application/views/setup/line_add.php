@@ -13,7 +13,7 @@
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/line') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-6">
@@ -73,7 +73,7 @@
 
                 </div>
 
-                <div class="col-md-12">    
+                <div class="col-md-12">
                     <div class="form-group col-md-3">
                         <label>Line Name Bangla</label>
                         <input type="text" name="line_name_bn" value="" placeholder="" class="form-control bfont">
@@ -122,7 +122,7 @@
                         <input type="number" name="group_six" value="" placeholder="Enter Man Power" class="form-control efont">
                         <?=(isset($failuer['group_six'])) ? '<div class="alert alert-failuer">' . $failuer['group_six'] . '</div>' : ''; ?>
                     </div>
-            
+
                 </div>
 
                 <div class="form-group" style="margin-left: 30px;">

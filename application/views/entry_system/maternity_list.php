@@ -13,7 +13,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('entry_system_con/maternity_entry') ?>">Add Maternity</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">
@@ -97,7 +97,7 @@
                                 <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                    Action <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" 
+                                <ul class="dropdown-menu"
                                 <?=($cc-1==$key)?'style="position:relative!important"':''?> role="menu">
                                     <li><a class="btn btn-sm" data-toggle="modal" data-target="#myModal" onclick="edit_leave(<?= $r->id ?>)">Edit</a></li>
                                     <li><a onclick="return confirm('Are You Sure? To Permanently remove this record')" class="btn btn-sm" href="<?=base_url('entry_system_con/maternity_delete/'.$r->id)?>">Delete</a></li>

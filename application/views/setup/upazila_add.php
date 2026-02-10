@@ -14,7 +14,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="<?=base_url('payroll_con')?>" >Home</a></li>
+            <!-- <li class="active"><a href="<?=base_url('payroll_con')?>" >Home</a></li> -->
           </ul>
           <div class="pull-right">
             <form class="navbar-form pull-right" role="search">
@@ -44,7 +44,7 @@
                 <?php echo form_error('division'); ?>
                 <select name="division" id= "division" class="form-control input-sm" style="min-height: 35px !important; border: 1px solid #0aa699;">
                   <option value="">Select Unit</option>
-                  <?php 
+                  <?php
                     foreach ($divisions as $row) { ?>
                       <option value="<?= $row['id'] ?>"><?= $row['name_bn']; ?></option>
                   <?php } ?>
@@ -153,7 +153,7 @@
     // Function to get selected value for a dropdown
     function getSelectedValue(selectElement) {
       return $(selectElement).val();
-    } 
+    }
     var selectedDivision = getSelectedValue('#division');
     var selectedDistrict = getSelectedValue('#district');
     // var selectedUpazila = getSelectedValue('#upazila');

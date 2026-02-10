@@ -12,7 +12,7 @@
     .table td {
         padding: 0px 3px !important;
         font-size: 13px;
-      
+
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
@@ -37,7 +37,7 @@
             <div class="navbar-header col-md-5" style="padding: 7px;">
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('training_con/training_add') ?>">Add training</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">
@@ -96,9 +96,9 @@
                             <td> <?php echo $pr_lines["unit_name"] ?></td>
 
                             <td> <?php
-                            
+
                             if($pr_lines["status"] == 1) echo "Active"; else echo "Inactive"; ?> </td>
-                            
+
                             <td>
                                 <a href="<?=base_url('training_con/training_edit') . '/' . $pr_lines["id"]?>"
                                     class="btn btn-primary center-text" role="button">Edit</a>

@@ -12,7 +12,7 @@
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/bonus_setup') ?>">
                         << Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <!--/.nav-collapse -->
@@ -54,8 +54,8 @@
                             <label>Religion</label>
                             <select name="religion_id" class="form-control">
                                 <option value="">Select Religion</option>
-                                <?php foreach ($religion as $key => $value) { ?> 
-                                    <option value="<?php echo $value->religion_id; ?>"><?php echo $value->religion_name; ?></option> 
+                                <?php foreach ($religion as $key => $value) { ?>
+                                    <option value="<?php echo $value->religion_id; ?>"><?php echo $value->religion_name; ?></option>
                                 <?php } ?>
                             </select>
                             <?=(isset($failuer['emp_type'])) ? '<div class="alert alert-failuer">' . $failuer['emp_type'] . '</div>' : ''; ?>

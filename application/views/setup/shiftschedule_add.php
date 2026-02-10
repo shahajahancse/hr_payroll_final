@@ -11,7 +11,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/shift_schedule') ?>">Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-6">
@@ -235,7 +235,7 @@
                     }
                 </style>
             </div>
-            
+
             <div class="form-group">
                 <button class="btn btn-primary">Create</button>
                 <a href="" class="btn btn-warning">Cancel</a>

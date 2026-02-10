@@ -12,7 +12,7 @@
     .table td {
         padding: 0px 3px !important;
         font-size: 13px;
-      
+
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
@@ -35,7 +35,7 @@
       <div class="container-fluid nav_head">
           <div class="navbar-header col-md-5">
             <a class="btn btn-info" href="<?php echo base_url('setup_con/dept_add') ?>">Add Department</a>
-            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+            <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
           </div>
           <div class="col-md-7">
             <div id="navbar" class="navbar-collapse collapse">
@@ -55,7 +55,7 @@
       <?php $success = $this->session->flashdata('success');
       if ($success != "") { ?>
         <div class="alert alert-success"><?php echo $success; ?></div>
-        <?php } 
+        <?php }
         $failuer = $this->session->flashdata('failuer');
         if ($failuer) { ?>
         <div class="alert alert-failuer"><?php echo $failuer; ?></div>

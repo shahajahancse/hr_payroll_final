@@ -13,7 +13,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('entry_system_con/leave_transation') ?>">Add Leave</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">
@@ -142,7 +142,7 @@ function get_data(offset=0) {
         },
         success:function(data){
             var obj = JSON.parse(data)
-           
+
             obj.forEach(element => {
                 $('#tbody').append(`<tr>
                 <td>${++i}</td>

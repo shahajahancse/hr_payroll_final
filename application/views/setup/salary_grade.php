@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="<?php echo base_url('/assets/bootstrap/css/bootstrap.min.css') ?>">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="<?php echo base_url('/assets/bootstrap/js/bootstrap.js') ?>"></script>
-	
+
 <style type='text/css'>
 body
 {
@@ -52,26 +52,26 @@ a:hover
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li>
+                  <!-- <li class="active"><a href="<?php echo base_url('payroll_con') ?>">Home</a></li> -->
                 </ul>
-                
+
               </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->
         </nav>
       <div class="row">
         <div class="col-md-8">
-          <?php 
+          <?php
           $success = $this->session->flashdata('success');
           if ($success != "") {
            ?>
            <div class="alert alert-success"><?php echo $success; ?></div>
-           <?php 
+           <?php
             }
             $failuer = $this->session->flashdata('failuer');
             if ($failuer) {
              ?>
            <div class="alert alert-failuer"><?php echo $failuer; ?></div>
-           <?php 
+           <?php
             }
             ?>
 
@@ -82,36 +82,36 @@ a:hover
               <div class="col-md-6"><h3>Stop Salary List</h3></div>
                <div class="col-md-6 text-right">
                   <a href="<?=base_url('crud_con/salarystop_add')?>"target='_blank' class="btn btn-info" role="button">Add Stop Salary</a>
-              </div> 
-         </div>   
+              </div>
+         </div>
       </div>
-            
+
         <!-- <br> -->
            <div class="row">
 
                 <div class="col-md-8">
-                
-                  
+
+
                 <div class="pagination col-md-4"><?php echo $this->pagination->create_links(); ?></div>
                  <div class="col-md-6">
                   <br>
                     <form method='post' action="<?= base_url() ?>entry_system_con/leave_delete/" >
                           <input type='text' name='search' value='<?= $search ?>'><input type='submit' name='submit' value='Submit'>
                        </form>
-                     </div>     
+                     </div>
                     <table class="table table-striped">
 
-                    		
+
                         <tbody>
                             <tr>
                                 <th>Unit</th>
                                 <th>Emp. ID </th>
                                 <th>Salary Month</th>
                                 <th>Delete</th>
-                                
+
                             </tr>
 
-                            <?php 
+                            <?php
                          // print_r($pr_emp_stop_salary);exit('keno?');
 
 
@@ -121,14 +121,14 @@ a:hover
                                     <td><?php echo $pr_emp_stop_salarys['unit_name'] ?></td>
                                     <td><?php echo $pr_emp_stop_salarys['emp_id'] ?></td>
                                     <td><?php echo $pr_emp_stop_salarys['salary_month'] ?></td>
-                                    
-                                    
-                                    
-                                   
-                                    
-                                    <td>        
+
+
+
+
+
+                                    <td>
                                         <a href="<?=base_url('crud_con/salarystop_delete').'/'.$pr_emp_stop_salarys["id"]?>" class="btn btn-danger" role="button">Delete</a>
-                                        
+
                                     </td>
                                 </tr>
                             <?php } }else{?>
@@ -136,13 +136,13 @@ a:hover
                                 <tr>
                                     <td colspan="12">Records not Found</td>
                                 </tr>
-                            <?php }?>   
+                            <?php }?>
 
                     	</tbody>
                     </table>
-                 </div> 
-           </div>  
-        
+                 </div>
+           </div>
+
     </div>
 </body>
 </html>

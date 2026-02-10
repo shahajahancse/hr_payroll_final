@@ -10,7 +10,7 @@
             <div class="navbar-header col-md-3" style="padding: 7px;">
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/designation') ?>">  Back</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-6">
@@ -175,7 +175,7 @@
                         </div>
                     </div>
                 </div>
-            
+
                 <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
                 <script>
                     ClassicEditor.create(document.querySelector('#desig_desc'), {
@@ -193,7 +193,7 @@
                         window.editor = editor;
                     })
                     .catch(error => {
-                        console.error(error); 
+                        console.error(error);
                     });
                 </script>
         <br>

@@ -57,7 +57,7 @@
     .table td {
         padding: 0px 3px !important;
         font-size: 13px;
-      
+
     }
     table.dataTable thead th, table.dataTable thead td {
         border-bottom: none;
@@ -84,7 +84,7 @@
             <div class="navbar-header col-md-5" style="padding: 7px;">
                 <div>
                     <a class="btn btn-info"  href="<?=base_url('attn_process_con/file_add')?>"><?= $title ?></a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">
@@ -106,7 +106,7 @@
         <?php $success = $this->session->flashdata('success');
         if ($success != "") { ?>
          <div class="alert alert-success"><?php echo $success; ?></div>
-         <?php } 
+         <?php }
          $failuer = $this->session->flashdata('failuer');
          if ($failuer) { ?>
          <div class="alert alert-failuer"><?php echo $failuer; ?></div>
@@ -119,9 +119,9 @@
              <h3 style="font-weight:bold">File List</h3>
          </div>
       <!-- <div class="container"> -->
-        <?php 
-          $user_id = $this->session->userdata('data')->id; 
-	        $acl = check_acl_list($user_id);   
+        <?php
+          $user_id = $this->session->userdata('data')->id;
+	        $acl = check_acl_list($user_id);
         ?>
         <table class="table" id="mytable">
           <thead>

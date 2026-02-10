@@ -12,7 +12,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('entry_system_con/left_resign_entry') ?>">Add Left</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">
@@ -35,7 +35,7 @@
             <?php $success = $this->session->flashdata('success');
                 if ($success != "") { ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
-            <?php } 
+            <?php }
                 $failuer = $this->session->flashdata('failuer');
                 if ($failuer) { ?>
             <div class="alert alert-failuer"><?php echo $failuer; ?></div>
@@ -86,7 +86,7 @@
 
                         <td style="padding: 5px !important">
                             <div class="btn-group">
-                                <button style="padding: 5px 10px;" type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span> 
+                                <button style="padding: 5px 10px;" type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     <?php
@@ -192,7 +192,7 @@ $(document).ready(function() {
 })
 
 function get_data(offset=0) {
-    
+
     var deptSearch = $('#deptSearch').val()
     $.ajax({
         url: "<?php echo base_url('entry_system_con/left_list_ajax') ?>",
@@ -235,7 +235,7 @@ function get_data(offset=0) {
                 <td>${s_at}</td>
                 <td style="padding: 5px !important">
                     <div class="btn-group">
-                        <button style="padding: 5px 10px;" type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span> 
+                        <button style="padding: 5px 10px;" type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
                         ${s}
@@ -244,7 +244,7 @@ function get_data(offset=0) {
                         </ul>
                     </div>
                 </td>
-                
+
             </tr>`)
             });
         }

@@ -13,7 +13,7 @@
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/section') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-6">
@@ -127,7 +127,7 @@ function getDepertment(unit_id) {
              item+=`<option value="${parsedData[index].dept_id}">${parsedData[index].dept_name}</option>`
             }
             $('#depertment_id').html(item);
-           
+
         }
     })
 }

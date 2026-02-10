@@ -28,7 +28,7 @@
     <div class="col-md-8">
         <div class="row tablebox" style="display: block;">
         <a class="btn btn-info" href="<?= base_url('entry_system_con/weekend_list') ?>">List</a>
-        <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Dashboard</a>
+        <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Dashboard</a> -->
             <h3></h3>
             <!-- <h3 style="font-weight: 600;"><?= $title ?></h3> -->
             <div class="col-md-6">

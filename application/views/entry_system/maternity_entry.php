@@ -188,10 +188,10 @@
             </div>
             <div class="col-md-12" style="display: flex;justify-content: flex-end; padding: 4px 15px;gap: 10px;">
                 <?php if(in_array(129,$acl)) { ?>
-                    <button class="btn btn-success" style="padding:4px 7px;"  onclick="mprint(2)">Print 2</button>
+                    <button class="btn btn-success" style="padding:4px 7px;"  onclick="mprint(2)">Second Installment</button>
                 <?php } ?>
                 <?php if(in_array(128,$acl)) { ?>
-                    <button class="btn btn-success" style="padding:4px 7px;"  onclick="mprint(1)">Print 1</button>
+                    <button class="btn btn-success" style="padding:4px 7px;"  onclick="mprint(1)">First Installment</button>
                 <?php } ?>
                 <button id="save_btn" type="button" class="btn btn-primary" style="padding:4px 7px;" onclick="save()">save</button>
             </div>

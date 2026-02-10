@@ -36,7 +36,7 @@
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/company_add') ?>">Add Company
                         Info</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-6">
@@ -93,7 +93,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
                         // dd($company_infos);
                         if (is_array($company_infos) || is_object($company_infos)) {foreach ($company_infos as $cominfos) {?>
                     <tr>

@@ -566,10 +566,12 @@ class Entry_system_con extends CI_Controller
         $unit_id     = $_POST['unit_id'];
         $first_date  = date('Y-m-d', strtotime($_POST['first_date']));
         $second_date = date('Y-m-d', strtotime($_POST['second_date']));
-        $time        = date('H:i:s', strtotime($_POST['time']));
+        $in_time     = date('H:i:s', strtotime($_POST['in_time']));
+        $out_time    = date('H:i:s', strtotime($_POST['out_time']));
 
-        if($time=='00:00:00'){
-            echo 'Please Enter valid time'; exit;
+        if($in_time == '00:00:00' && $out_time == '00:00:00') {
+            echo 'Please enter at least In Time or Out Time';
+            exit;
         }
         $emp_ids     = explode(',', $sql);
         $mm = array();
@@ -598,18 +600,38 @@ class Entry_system_con extends CI_Controller
                 $out_end   = $schedule[0]["out_end"];
                 // dd($schedule);
 
-                if (strtotime($time) <= strtotime($out_end)) {
+                // in time insert here
+                if (strtotime($in_time) <= strtotime($out_end)) {
                     $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
                 } else {
                     $date = $first_date;
                 }
-                // dd($date ." ".$time);
                 $data = array(
-                    'date_time'       => $date ." ".$time,
-                    'proxi_id'         => $proxi_id,
-                    'device_id'         => 0,
+                    'date_time'       => $date ." ".$in_time,
+                    'proxi_id'        => $proxi_id,
+                    'device_id'       => 0,
+                    'monitor_con'     => 2
                 );
-                $mm = $this->insert_attn_process($data, $first_date, $unit_id, $rows->emp_id, $proxi_id);
+                if ($in_time != '00:00:00') {
+                    $mm = $this->insert_attn_process($data, $first_date, $unit_id, $rows->emp_id, $proxi_id);
+                }
+
+                // out time insert here
+                $date = $first_date;
+                if (strtotime($out_time) <= strtotime('11:59:59')) {
+                    $date = date('Y-m-d', strtotime($first_date . ' + 1 days'));
+                } else {
+                    $date = $first_date;
+                }
+                $data1 = array(
+                    'date_time'       => $date ." ".$out_time,
+                    'proxi_id'        => $proxi_id,
+                    'device_id'       => 0,
+                    'monitor_con'     => 2
+                );
+                if ($out_time != '00:00:00') {
+                    $mm = $this->insert_attn_process($data1, $first_date, $unit_id, $rows->emp_id, $proxi_id);
+                }
             }
             $first_date = date('Y-m-d', strtotime('+1 days'. $first_date));
 		}
@@ -733,7 +755,7 @@ class Entry_system_con extends CI_Controller
 		}
 		// final process check end
 
-        $emp_data = $this->Attn_process_model->get_all_employee(array($emp_id))->row();
+        $emp_data = $this->Attn_process_model->get_all_employee(array($emp_id), 1)->row();
 
         $com_id			= $emp_data->id;
         $emp_id			= $emp_data->emp_id;
@@ -756,6 +778,7 @@ class Entry_system_con extends CI_Controller
                     'date_time'  => $d ." ".$in_time[$key],
                     'proxi_id'   => $proxi_id,
                     'device_id'  => 0,
+                    'monitor_con' => 1
                 );
             } else {
                 $data = array();
@@ -772,6 +795,7 @@ class Entry_system_con extends CI_Controller
                     'date_time'  => $dd ." ". $out_time[$key],
                     'proxi_id'   => $proxi_id,
                     'device_id'  => 0,
+                    'monitor_con' => 2
                 );
             }else {
                 $data1 = array();

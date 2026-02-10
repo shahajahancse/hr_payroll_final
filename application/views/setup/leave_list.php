@@ -34,7 +34,7 @@
             <div class="navbar-header col-md-6">
               <div>
                 <a class="btn btn-info" href="<?php echo base_url('setup_con/leave_add') ?>">Add Leave</a>
-                <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
               </div>
             </div>
             <div class="col-md-9">
@@ -73,7 +73,7 @@
         <div class="col-md-6" style="margin-left:-16px">
             <h4 style="font-weight:bold">Leave List</h4>
         </div>
-          
+
         <!-- <div class="col-md-12"> -->
             <table class="table" id="mytable">
                 <thead>

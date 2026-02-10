@@ -12,7 +12,7 @@
                 </button>
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('setup_con/alternet_add') ?>">Add Alternate Day</a>
-                    <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-7">

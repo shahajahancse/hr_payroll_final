@@ -15,7 +15,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="<?=base_url('setup_con/upazila_add')?>" >Add Upazila</a></li>
-            <li class="active"><a href="<?=base_url('payroll_con')?>" >Home</a></li>
+            <!-- <li class="active"><a href="<?=base_url('payroll_con')?>" >Home</a></li> -->
           </ul>
           <div class="pull-right">
             <form class="navbar-form pull-right" role="search">
@@ -30,13 +30,13 @@
         </div><!--/.nav-collapse -->
       </div><!--/.container-fluid -->
     </nav>
-<!-- 
+<!--
     <div class="row">
       <div class="col-md-8">
         < ?php $success = $this->session->flashdata('success');
         if ($success != "") { ?>
          <div class="alert alert-success">< ?php echo $success; ?></div>
-         < ?php } 
+         < ?php }
          $failuer = $this->session->flashdata('failuer');
          if ($failuer) { ?>
          <div class="alert alert-failuer">< ?php echo $failuer; ?></div>
@@ -57,7 +57,7 @@
                 <?php echo form_error('division'); ?>
                 <select name="division" id= "division" class="form-control input-sm" style="min-height: 35px !important; border: 1px solid #0aa699;">
                   <option value="">Select Unit</option>
-                  <?php 
+                  <?php
                     foreach ($divisions as $row) { ?>
                       <option value="<?= $row['id'] ?>"><?= $row['name_bn']; ?></option>
                   <?php } ?>
@@ -82,7 +82,7 @@
                 <select name="upazila" class="upazila_thana form-control input-sm" id="upazila" style="min-height: 35px !important; border: 1px solid #0aa699;" required>
                   <option value="">Select Upazila</option>
                 </select>
-              </div> 
+              </div>
             </div>
 
             <div class="col-md-6">
@@ -175,7 +175,7 @@
     // Function to get selected value for a dropdown
     function getSelectedValue(selectElement) {
       return $(selectElement).val();
-    } 
+    }
     var selectedDivision = getSelectedValue('#division');
     var selectedDistrict = getSelectedValue('#district');
     var selectedUpazila = getSelectedValue('#upazila');

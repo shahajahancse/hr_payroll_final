@@ -13,7 +13,7 @@
                 <div>
                     <a class="btn btn-info" href="<?php echo base_url('training_con/training') ?>">
                         < < Back</a>
-                            <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a>
+                    <!-- <a class="btn btn-primary" href="<?php echo base_url('payroll_con') ?>">Home</a> -->
                 </div>
             </div>
             <div class="col-md-6">
@@ -63,7 +63,7 @@
                         <label>Description</label>
                         <textarea name="description" id="description" style="height: 100px; width: 100%;"  class="form-control"></textarea>
                     </div>
-                    
+
                 </div>
                 <div class="form-group" style="text-align: -webkit-right;padding-right: 30px;">
                         <button type="submit" class="btn btn-primary ">Submit</button></button>
