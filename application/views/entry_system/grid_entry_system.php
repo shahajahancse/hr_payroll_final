@@ -26,6 +26,7 @@
         </div>
         <!-- <div class="container-fluid">	 -->
         <div class="col-md-8">
+            <!-- start default panel (dept/section/line/desig) -->
             <div class="row tablebox" style="display: block;">
                 <!-- <h3 style="font-weight: 600;"><?= $title ?></h3> -->
                 <div class="col-md-6">
@@ -206,13 +207,20 @@
                     font-weight: bold;
                 }
             </style>
-            <!-- eot entry form   -->
+
+            <!-- alert entry form   -->
             <div id="alert_system" class="row nav_head" style="margin-top: 13px;">
                 <div class="col-md-12" style="display: flex;gap: 11px;flex-direction: column;">
                     <div class="col-md-12" style="box-shadow: 0px 0px 2px 2px #bdbdbd;border-radius: 4px;padding-top: 10px; padding-bottom: 10px;">
                         <form method="post" id="eot_modify_form">
                             <div class="raw">
-                                <div class="col-md-12" style="padding: 5px !important">
+                                <div class="col-md-3" style="padding: 5px !important">
+                                    <div class="form-group" style="margin-bottom: 3px !important;">
+                                        <label class="control-label">Date</label>
+                                        <input class="form-control date" id="alert_date" name="alert_date" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-md-9" style="padding: 5px !important">
                                     <div class="form-group" style="margin-bottom: 3px !important;">
                                         <label class="control-label">Alert Remark</label>
                                         <textarea class="form-control" name="alert_remark" id="alert_remark"></textarea>
@@ -288,13 +296,24 @@
                 return false;
             }
             unit_id = document.getElementById('unit_id').value;
-            msg = document.getElementById('alert_remark').value;
             if (unit_id == '') {
                 showMessage('error', 'Please select Unit');
                 return false;
             }
 
-            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&msg=" + msg;
+            alert_date = document.getElementById('alert_date').value;
+            if (alert_date == '') {
+                showMessage('error', 'Please select Alert Date');
+                return false;
+            }
+
+            msg = document.getElementById('alert_remark').value;
+            if (msg == '') {
+                showMessage('error', 'Please enter Alert Remark');
+                return false;
+            }
+
+            var data = "emp_id=" + emp_id + "&unit_id=" + unit_id + "&alert_date=" + alert_date + "&msg=" + msg;
             $.ajax({
                 type: "POST",
                 url: hostname + "entry_system_con/alert_system",

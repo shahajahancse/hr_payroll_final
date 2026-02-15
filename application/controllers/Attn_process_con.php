@@ -377,16 +377,41 @@ class Attn_process_con extends CI_Controller {
             redirect("authentication");
         }
 
-		$this->db->select('com.emp_id, per.name_en, line.line_name_en, deg.desig_name, mesg.msg');
-		$this->db->from('pr_emp_shift_log as log');
-		$this->db->join('pr_emp_com_info as com', 'com.emp_id = log.emp_id', 'left');
-		$this->db->join('pr_emp_per_info as per', 'per.emp_id = com.emp_id', 'left');
+		$today = date('Y-m-d');
+		$start_date = date('Y-m-d', strtotime('-2 days')); // 2 days back
+
+		$this->db->select('
+			mesg.id as msg_id,
+			mesg.date,
+			com.emp_id,
+			per.name_en,
+			line.line_name_en,
+			deg.desig_name,
+			mesg.msg
+		');
+		$this->db->from('emp_alert_message as mesg');
+
+		// Join shift log on the **same date as message** and present_status = 'P'
+		$this->db->join('(
+			SELECT emp_id, shift_log_date
+			FROM pr_emp_shift_log
+			WHERE present_status = "P"
+		) as log', 'mesg.emp_id = log.emp_id AND mesg.date = log.shift_log_date', 'inner');
+
+		// Join employee info
+		$this->db->join('pr_emp_com_info as com', 'com.emp_id = mesg.emp_id', 'left');
+		$this->db->join('pr_emp_per_info as per', 'per.emp_id = mesg.emp_id', 'left');
 		$this->db->join('emp_line_num as line', 'line.id = com.emp_line_id', 'left');
 		$this->db->join('emp_designation as deg', 'deg.id = com.emp_desi_id', 'left');
-		$this->db->join('emp_alert_message as mesg', 'mesg.emp_id = com.emp_id', 'left');
 
-        $this->db->where('alert_msg', 1)->where('shift_log_date', date('Y-m-d'))->limit(20);
-        $this->data['results'] = $this->db->order_by('mesg.id', 'desc')->order_by('log.id', 'desc')->get()->result();
+		// Fetch messages from last 3 days
+		$today = date('Y-m-d');
+		$start_date = date('Y-m-d', strtotime('-2 days'));
+		$this->db->where("mesg.date BETWEEN '$start_date' AND '$today'");
+
+		$this->data['results'] = $this->db->order_by('mesg.date', 'desc')->get()->result();
+
+
 
 		$this->db->select('pr_units.*');
         $this->data['dept'] = $this->db->get('pr_units')->result_array();

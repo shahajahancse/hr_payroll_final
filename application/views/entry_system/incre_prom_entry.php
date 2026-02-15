@@ -177,14 +177,14 @@
 
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label"> Gross Salary</label>
+                                    <label class="control-label"> Compliance Salary </label>
                                     <input class="form-control" readonly id="spc_com_salary" name="com_salary">
                                 </div>
                             </div>
 
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Gross Salary</label>
+                                    <label class="control-label">New Com. Salary</label>
                                     <input class="form-control" id="com_gross_sal" name="com_gross_sal">
                                 </div>
                             </div>
@@ -279,26 +279,26 @@
                         <div class="raw">
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Gross Salary</label>
+                                    <label class="control-label"> Salary </label>
                                     <input class="form-control" readonly id="inc_salary" name="inc_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important;">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Salary</label>
+                                    <label class="control-label"> New Salary </label>
                                     <input class="form-control" id="inc_gross_sal" name="inc_gross_sal">
 
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">Salary</label>
+                                    <label class="control-label"> Compliance Salary </label>
                                     <input class="form-control" readonly id="inc_com_salary" name="inc_com_salary">
                                 </div>
                             </div>
                             <div class="col-md-3" style="padding: 5px !important">
                                 <div class="form-group" style="margin-bottom: 3px !important;">
-                                    <label class="control-label">New Salary</label>
+                                    <label class="control-label"> New Com. Salary </label>
                                     <input class="form-control" id="inc_com_gross_sal" name="inc_com_gross_sal">
                                 </div>
                             </div>
@@ -441,18 +441,6 @@
 
                         <?php if(!in_array(10,$acl)) { ?>
                         <div class="row">
-                            <div class="col-md-3" style="padding-left: 0px!important; padding-right:5px!important">
-                                <div class="form-group">
-                                    <label class="control-label">Gross Salary</label>
-                                    <input class="form-control" readonly id="salary" name="salary">
-                                </div>
-                            </div>
-                            <div class="col-md-3" style="padding-left: 5px!important; padding-right:5px!important">
-                                <div class="form-group">
-                                    <label class="control-label">New Gross Salary</label>
-                                    <input class="form-control" id="prom_gross_sal" name="prom_gross_sal">
-                                </div>
-                            </div>
                             <div class="col-md-3" style="padding-left: 5px!important; padding-right: 5px!important;">
                                 <div class="form-group">
                                     <label class="control-label">Salary</label>
@@ -463,6 +451,18 @@
                                 <div class="form-group">
                                     <label class="control-label">New Salary</label>
                                     <input class="form-control" id="prom_com_gross_sal" name="prom_com_gross_sal">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding-left: 0px!important; padding-right:5px!important">
+                                <div class="form-group">
+                                    <label class="control-label">Compliance Salary</label>
+                                    <input class="form-control" readonly id="salary" name="salary">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding-left: 5px!important; padding-right:5px!important">
+                                <div class="form-group">
+                                    <label class="control-label">New com. Salary</label>
+                                    <input class="form-control" id="prom_gross_sal" name="prom_gross_sal">
                                 </div>
                             </div>
                         </div>
@@ -1184,7 +1184,7 @@
             }
         })
     }
-    
+
     function get_emp_info_promotion() {
 
 

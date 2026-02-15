@@ -273,10 +273,10 @@
         </li>
       <?php } ?>
 
-      <!-- Monitoring -->
+      <!-- Monitoring / Audit Log -->
       <?php if(in_array(8,$acl)) { ?>
         <li class="start <?= activate_class('monitoring_con') ?>"><a href="javascript:;"><i class="fa fa-desktop"></i>
-          <span class="title">Monitoring</span> <span class="selected"></span> <span class="arrow <?= arrow_open('monitoring_con') ?>"></span> </a>
+          <span class="title">Audit Log</span> <span class="selected"></span> <span class="arrow <?= arrow_open('monitoring_con') ?>"></span> </a>
           <ul class="sub-menu">
             <li class="<?= activate_method('entry_list') ?>">
               <a href="<?=base_url('monitoring_con/entry_list')?>">

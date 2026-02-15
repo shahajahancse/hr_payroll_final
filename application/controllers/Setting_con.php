@@ -467,21 +467,45 @@ class Setting_con extends CI_Controller {
         $this->load->view('layout/template', $this->data);
 	}
 
-	function member_insert(){
+	public function member_insert()
+	{
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('id_number', 'members Name', 'trim|required');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required');
+		$this->form_validation->set_rules(
+			'id_number',
+			'User ID',
+			'trim|required|is_unique[members.id_number]',
+			array(
+				'required'  => 'User ID is required!',
+				'is_unique' => 'This User ID already exists!'
+			)
+		);
 
-		$data = array();
-		$data['id_number'] = $this->input->post('id_number');
-		$data['password'] = $this->input->post('password');
-		$data['level'] = $this->input->post('level');
-		$data['unit_name'] = $this->input->post('unit_name');
-		$data['user_mode'] = $this->input->post('user_mode') ? $this->input->post('user_mode') : 0;
-		$data['status'] = $this->input->post('status');
-		$this->db->insert('members',$data);
-		$this->session->set_flashdata('success','Record Insert successfully!');
-		redirect(base_url('setting_con/acl'));
+		$this->form_validation->set_rules(
+			'password',
+			'Password',
+			'trim|required|min_length[6]',
+			array(
+				'required'   => 'Password is required!',
+				'min_length' => 'Password must be at least 6 characters!'
+			)
+		);
+
+		if ($this->form_validation->run() == FALSE) {
+			// Reload same form with validation errors
+			return $this->member_add();
+		} else {
+			$insert_data = array(
+				'id_number' => $this->input->post('id_number', TRUE),
+				'password'  => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+				'level'     => $this->input->post('level', TRUE),
+				'unit_name' => $this->input->post('unit_name', TRUE),
+				'user_mode' => $this->input->post('user_mode') ? $this->input->post('user_mode') : 0,
+				'status'    => $this->input->post('status', TRUE)
+			);
+			$this->db->insert('members', $insert_data);
+			$this->session->set_flashdata('success', 'Record Inserted Successfully!');
+			redirect('setting_con/acl');
+		}
 	}
 
 	function member_edit($id){
@@ -500,7 +524,79 @@ class Setting_con extends CI_Controller {
 		// $this->load->view('', $param);
 	}
 
-	function update_member($id=0){
+	public function update_member($id = 0)
+	{
+		$this->load->library('form_validation');
+
+		// Get existing record
+		$member = $this->db->where('id', $id)->get('members')->row();
+
+		if (!$member) {
+			show_404();
+		}
+
+		// Unique check (ignore current ID)
+		if ($this->input->post('id_number') != $member->id_number) {
+			$is_unique = '|is_unique[members.id_number]';
+		} else {
+			$is_unique = '';
+		}
+
+		$this->form_validation->set_rules(
+			'id_number',
+			'User ID',
+			'trim|required' . $is_unique,
+			array(
+				'required'  => 'User ID is required!',
+				'is_unique' => 'This User ID already exists!'
+			)
+		);
+
+		// Password optional in edit
+		if ($this->input->post('password')) {
+			$this->form_validation->set_rules(
+				'password',
+				'Password',
+				'min_length[6]',
+				array(
+					'min_length' => 'Password must be at least 6 characters!'
+				)
+			);
+		}
+
+		if ($this->form_validation->run() == FALSE) {
+
+			return $this->member_edit($id);
+
+		} else {
+
+			$update_data = array(
+				'id_number' => $this->input->post('id_number', TRUE),
+				'level'     => $this->input->post('level', TRUE),
+				'unit_name' => $this->input->post('unit_name', TRUE),
+				'user_mode' => $this->input->post('user_mode') ? $this->input->post('user_mode') : 0,
+				'status'    => $this->input->post('status', TRUE)
+			);
+
+			// Update password only if entered
+			if ($this->input->post('password')) {
+				$update_data['password'] = password_hash(
+					$this->input->post('password'),
+					PASSWORD_DEFAULT
+				);
+			}
+
+			$this->db->where('id', $id);
+			$this->db->update('members', $update_data);
+
+			$this->session->set_flashdata('success', 'Record Updated Successfully!');
+			redirect('setting_con/acl');
+		}
+	}
+
+
+
+	function update_membersss($id=0){
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('id_number', 'members Name', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');

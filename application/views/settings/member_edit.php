@@ -9,7 +9,13 @@
   </div><!--/.container-fluid -->
 
   <!-- <h3>Update Member</h3> -->
-  <!-- <hr> -->
+    <!-- Validation Errors -->
+    <?php if(validation_errors()){ ?>
+        <div class="alert alert-danger">
+            <?php echo validation_errors(); ?>
+        </div>
+    <?php } ?>
+
   <div style="padding-left: 20px; padding-top: 10px;">
     <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url('setting_con/update_member/').$row->id;?>">
       <div class="row">
@@ -19,12 +25,12 @@
 
             <label>User ID</label>
             <input type="text" name="id_number"value="<?=set_value('id_number',$row->id_number)?>" class="form-control">
-            <?php echo form_error('id_number');?>
+            <?php echo form_error('id_number','<div class="text-danger">','</div>'); ?>
           </div>
           <div class="form-group">
             <label>Password</label>
             <input type="password" name="password"value="<?=set_value('password',$row->password)?>" class="form-control">
-            <?php echo form_error('password');?>
+            <?php echo form_error('password','<div class="text-danger">','</div>'); ?>
           </div>
 
           <div class="form-group">

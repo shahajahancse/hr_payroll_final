@@ -24,10 +24,32 @@ if (!function_exists('alt_ntf'))
     function alt_ntf()
     {
         $CI =& get_instance();
-        $CI->db->select('count(*) as total');
-		$CI->db->where('shift_log_date', date('Y-m-d'))->where('alert_msg', 1);
-        $row = $CI->db->get('pr_emp_shift_log')->row();
-        return $row->total ? $row->total : 0;
+        // $CI->db->select('count(*) as total');
+		// $CI->db->where('shift_log_date', date('Y-m-d'))->where('alert_msg', 1);
+        // $row = $CI->db->get('pr_emp_shift_log')->row();
+        // return $row->total ? $row->total : 0;
+
+		$today = date('Y-m-d');
+		$start_date = date('Y-m-d', strtotime('-2 days'));
+
+		$CI->db->select('COUNT(*) as total');
+		$CI->db->from('emp_alert_message as mesg');
+
+		// Join shift log for exact message date
+		$join_condition = "mesg.emp_id = log.emp_id
+						AND log.present_status = 'P'
+						AND mesg.date = log.shift_log_date";
+		$CI->db->join('pr_emp_shift_log as log', $join_condition, 'inner');
+
+		// Filter messages in last 3 days
+		$CI->db->where("mesg.date BETWEEN '$start_date' AND '$today'");
+
+		$row = $CI->db->get()->row();
+		$total_messages = $row->total ? $row->total : 0;
+
+		return $total_messages;
+
+
     }
 }
 

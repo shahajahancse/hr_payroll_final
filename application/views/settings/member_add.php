@@ -11,8 +11,6 @@
 </head>
 <body>
 
-
-
 <div class="container" style="padding-top: 10px;">
   <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
@@ -37,6 +35,21 @@
 
   <!-- <h3>Update Member</h3> -->
   <!-- <hr> -->
+
+      <!-- Success Message -->
+    <?php if($this->session->flashdata('success')){ ?>
+        <div class="alert alert-success">
+            <?php echo $this->session->flashdata('success'); ?>
+        </div>
+    <?php } ?>
+
+    <!-- Validation Errors -->
+    <?php if(validation_errors()){ ?>
+        <div class="alert alert-danger">
+            <?php echo validation_errors(); ?>
+        </div>
+    <?php } ?>
+
   <div style="padding-left: 20px; padding-top: 10px;">
     <form enctype="multipart/form-data" method="post" name="creatcompanyunit" action="<?php echo base_url().'setting_con/member_insert';?>">
       <div class="row">
@@ -44,12 +57,12 @@
           <div class="form-group">
             <label>User ID</label>
             <input type="text" name="id_number" class="form-control" required>
-            <?php echo form_error('id_number');?>
+            <?php echo form_error('id_number','<div class="text-danger">','</div>'); ?>
           </div>
           <div class="form-group">
             <label>Password</label>
             <input type="password" name="password" class="form-control" required>
-            <?php echo form_error('password');?>
+            <?php echo form_error('password','<div class="text-danger">','</div>'); ?>
           </div>
           <div class="form-group">
             <label>Level</label>

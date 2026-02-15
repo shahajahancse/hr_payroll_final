@@ -9,23 +9,8 @@
         vertical-align: middle !important;
     }
     .table td {
-        padding: 0px 3px !important;
+        padding: 3px 7px !important;
         font-size: 13px;
-
-    }
-    table.dataTable thead th, table.dataTable thead td {
-        border-bottom: none;
-    }
-    table.dataTable tbody th, table.dataTable tbody td {
-      padding: 4px !important;
-    }
-    .center-text {
-        vertical-align: center;
-        padding: 5px 10px;
-        /* line-height: 40px; Should be equal to the button's height */
-    }
-    .bangla_font {
-        font-family: SutonnyMJ !important;
     }
 </style>
 
@@ -45,22 +30,24 @@
         <thead>
           <tr>
             <th>Sl. No.</th>
+            <th>Date</th>
             <th>Emp Id </th>
-            <th>Name </th>
-            <th>Line</th>
-            <th>Designation</th>
-            <th>Remark</th>
+            <th style="text-align : left;">Name </th>
+            <th style="text-align : left;">Line</th>
+            <th style="text-align : left;">Designation</th>
+            <th style="text-align : left;">Remark</th>
           </tr>
         </thead>
         <tbody>
           <?php if(!empty($results)){$i=1; foreach($results as $r){?>
             <tr>
                 <td><?php echo $i++ ?></td>
+                <td><?php echo $r->date ?></td>
                 <td><?php echo $r->emp_id ?></td>
-                <td><?php echo $r->name_en ?></td>
-                <td><?php echo $r->line_name_en ?></td>
-                <td><?php echo $r->desig_name ?></td>
-                <td><?php echo $r->msg ?></td>
+                <td style="text-align : left;"><?php echo $r->name_en ?></td>
+                <td style="text-align : left;"><?php echo $r->line_name_en ?></td>
+                <td style="text-align : left;"><?php echo $r->desig_name ?></td>
+                <td style="text-align : left;"><?php echo $r->msg ?></td>
             </tr>
           <?php } }else{?>
             <tr>

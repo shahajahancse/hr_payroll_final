@@ -28,16 +28,20 @@ class Entry_system_con extends CI_Controller
     {
         $emp_id       = $_POST['emp_id'];
         $unit_id      = $_POST['unit_id'];
+        $alert_date   = $_POST['alert_date'];
         $msg          = $_POST['msg'];
 
-        $this->db->where('unit_id', $unit_id)->where('emp_id',$emp_id);
-        $check = $this->db->where('date', date("Y-m-d"))->get('emp_alert_message')->row();
+        $this->db->where('unit_id', $unit_id)->where('emp_id', $emp_id);
+        $check = $this->db->where('date', date("Y-m-d", strtotime($alert_date)))->get('emp_alert_message')->row();
         if (empty($check)) {
             $data = array(
                 'unit_id'   => $unit_id,
                 'emp_id'    => $emp_id,
+                'date'      => date("Y-m-d", strtotime($alert_date)),
                 'msg'       => $msg,
-                'date'      => date("Y-m-d"),
+                'created_at' => date("Y-m-d H:i:s"),
+                'created_by' => $this->data['user_data']->id,
+
             );
             if ($this->db->insert('emp_alert_message', $data)) {
                 echo 'success';

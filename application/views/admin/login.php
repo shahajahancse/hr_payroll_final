@@ -30,7 +30,8 @@
   <div class="login-box-body">
     <div class="login-logo" style="border-bottom: 1px solid blue;padding-bottom: 25px;">
       <a href="http://mysoftheaven.com/" target="_blank">
-        <img src="<?=base_url()?>awedget/assets/img/loopdot.png" width="" height="70px">
+        <!-- <img src="<?=base_url()?>awedget/assets/img/loopdot.png" width="" height="70px"> -->
+        <img src="<?=base_url()?>awedget/assets/img/logo.png" width="160px" height="40px">
       </a>
     </div>
     <!-- <p class="login-box-msg" style="font-size: 20px;">MHL KORMOCHARI</p> -->
